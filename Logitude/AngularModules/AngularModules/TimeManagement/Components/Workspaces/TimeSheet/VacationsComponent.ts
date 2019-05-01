@@ -11,6 +11,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 export class VacationsComponent extends BaseComponent {
     public Years: number[] = [];
     public Types: string[] = [];
+    public ItemsSource: any[] = [];
     private mySerive: TimeManagementDomainService = null;
     constructor() {
         super();
@@ -19,7 +20,7 @@ export class VacationsComponent extends BaseComponent {
         this.Years = [];
         this.Types = [];
 
-        for (var i = new Date().getFullYear(); i >= 2019; i--) {
+        for (var i = new Date().getFullYear(); i >= 2018; i--) {
             this.Years.push(i);
         }
 
@@ -72,7 +73,7 @@ export class VacationsComponent extends BaseComponent {
     public SicknessVacations: number = 0;
     public SickLeaves: number = 0;
     GetVacationsSummary() {
-        this.mySerive.GetVacationsSummary().subscribe((myResponse: ServiceResponse) => {
+        this.mySerive.GetVacationsSummary(this.SelectedYear).subscribe((myResponse: ServiceResponse) => {
 
             //this.ItemSource.Clear();
 
@@ -92,16 +93,16 @@ export class VacationsComponent extends BaseComponent {
     }
 
     GetVacationsDetails() {
-        this.mySerive.GetVacationsDetails(this.SelectedType).subscribe((myResponse: ServiceResponse) => {
+        this.mySerive.GetVacationsDetails(this.SelectedYear, this.SelectedType).subscribe((myResponse: ServiceResponse) => {
 
-            //this.ItemSource.Clear();
+            this.ItemsSource = [];
 
             if (myResponse.HasError) {
                 //this.ShowMessage(myResponse.ErrorsArray[0]);
             }
 
             else {
-
+                this.ItemsSource = myResponse.Result;
             }
         });
     }

@@ -1,94 +1,129 @@
 
-    <div class="MediaFillRelative">
-        <div class="MarginAbsolute10">
-            <table>
-                <tr style="height: 1px;">
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width: 25px;">
-                                    <button class="Button" style="height:25px;width:25px;" (click)="RefreshButtonClicked()">
-                                        <img class="CenterCenter" style="padding-left:2px;padding-right:2px;" src="./Images/Buttons/Refresh.png" />
-                                    </button>
-                                </td>
+<div class="MediaFillRelative">
+    <div class="MarginAbsolute10">
+        <table>
+            <tr style="height: 1px;">
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width: 25px;">
+                                <button class="Button" style="height:25px;width:25px;" (click)="RefreshButtonClicked()">
+                                    <img class="CenterCenter" style="padding-left:2px;padding-right:2px;" src="./Images/Buttons/Refresh.png" />
+                                </button>
+                            </td>
 
-                                <td style="width: 1px; padding-left: 15px; padding-right: 5px;" class="Label">
-                                    Year:
-                                </td>
+                            <td style="width: 1px; padding-left: 15px; padding-right: 5px;" class="Label">
+                                Year:
+                            </td>
 
-                                <td style="width: 100px;">
-                                    <ComboBox [IsBlueBox]="true" [WaterMark]="'Year'" [ItemsSource]="Years" [SelectedItem]="SelectedYear" (SelectedItemChanged)="SelectedYear=$event"></ComboBox>
-                                </td>
+                            <td style="width: 100px;">
+                                <ComboBox [IsBlueBox]="true" [WaterMark]="'Year'" [ItemsSource]="Years" [SelectedItem]="SelectedYear" (SelectedItemChanged)="SelectedYear=$event"></ComboBox>
+                            </td>
 
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
+                            <td>
+                                <div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
 
-                <tr style="height: 10px;">
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
+            <tr style="height: 10px;">
+                <td>
+                    <div></div>
+                </td>
+            </tr>
 
-                <tr>
-                    <td>
-                        <table>
-                            <tr>
-                                <td style="width:265px;">
-                                    <div class="MediaFill">
-                                        <SectionBox>
-                                            <SectionHead>Totals</SectionHead>
-                                            <SectionBody>
-                                                <HyperlinkQuery>Holidays ({{Holidays}})</HyperlinkQuery>
-                                                <HyperlinkQuery>Vacations ({{Vacations}})</HyperlinkQuery>
-                                                <HyperlinkQuery>Half Vacations ({{HalfVacations}})</HyperlinkQuery>
-                                                <HyperlinkQuery>Unpaid Vacations ({{UnpaidVacations}})</HyperlinkQuery>
-                                                <HyperlinkQuery>Sickness Vacations ({{SicknessVacations}})</HyperlinkQuery>
-                                                <HyperlinkQuery>Sick Leaves ({{SickLeaves}})</HyperlinkQuery>
-                                            </SectionBody>
-                                        </SectionBox>
-                                    </div>
-                                </td>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td style="width:265px;">
+                                <div class="MediaFill">
+                                    <SectionBox>
+                                        <SectionHead>Totals</SectionHead>
+                                        <SectionBody>
+                                            <HyperlinkQuery>Holidays ({{Holidays}})</HyperlinkQuery>
+                                            <HyperlinkQuery>Vacations ({{Vacations}})</HyperlinkQuery>
+                                            <HyperlinkQuery>Half Vacations ({{HalfVacations}})</HyperlinkQuery>
+                                            <HyperlinkQuery>Unpaid Vacations ({{UnpaidVacations}})</HyperlinkQuery>
+                                            <HyperlinkQuery>Sickness Vacations ({{SicknessVacations}})</HyperlinkQuery>
+                                            <HyperlinkQuery>Sick Leaves ({{SickLeaves}})</HyperlinkQuery>
+                                        </SectionBody>
+                                    </SectionBox>
+                                </div>
+                            </td>
 
-                                <td style="width:10px;">
-                                    <div></div>
-                                </td>
+                            <td style="width:10px;">
+                                <div></div>
+                            </td>
 
-                                <td>
-                                    <div class="MediaFill">
-                                        <SectionBox>
-                                            <SectionHead>
-                                                <table>
-                                                    <tr>
-                                                        <td style="color: #45494A; font-size: 14px;">
-                                                            Details
-                                                        </td>
+                            <td>
+                                <div class="MediaFill">
+                                    <SectionBox>
+                                        <SectionHead>
+                                            <table>
+                                                <tr>
+                                                    <td style="color: #45494A; font-size: 14px;">
+                                                        Details ({{ItemsSource.length}})
+                                                    </td>
 
-                                                        <td class="Label" style="width:1px; padding-right: 10px;">By:</td>                                                        
+                                                    <td class="Label" style="width:1px; padding-right: 10px;">By:</td>
 
-                                                        <td style="width:130px;">
-                                                            <ComboBox [ItemsSource]="Types" [SelectedItem]="SelectedType" (SelectedItemChanged)="SelectedType = $event"></ComboBox>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </SectionHead>
-                                            <SectionBody>
+                                                    <td style="width:130px;">
+                                                        <ComboBox [ItemsSource]="Types" [SelectedItem]="SelectedType" (SelectedItemChanged)="SelectedType = $event"></ComboBox>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </SectionHead>
+                                        <SectionBody>
+                                            <div class="MediaFill">
+                                                <div class="SimpleGridView">
+                                                    <div class="SimpleGridViewHeader">
+                                                        <table>
+                                                            <tr>
+                                                                <td>Date</td>
 
-                                            </SectionBody>
-                                        </SectionBox>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="SelectedType == Sick Leaves">
+                                                                    Time
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="SimpleGridViewBody">
+                                                        <table>
+                                                            <tr class="SimpleGridViewRow" *ngFor="let item of ItemsSource;let i = index">
+
+                                                                <td class="GridViewCell">
+                                                                    {{item.DateOfWork | DateTimePipe:'D'}}
+                                                                </td>
+
+                                                                <td style="width: 100px; min-width: 100px; max-width: 100px;" *ngIf="SelectedType == Sick Leaves">
+                                                                    {{item.SickLeaves}}
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="7">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </SectionBody>
+                                    </SectionBox>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
     </div>
+</div>
 
 
 

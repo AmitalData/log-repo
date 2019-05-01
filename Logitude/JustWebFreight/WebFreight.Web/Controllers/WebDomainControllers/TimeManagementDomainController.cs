@@ -919,7 +919,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetVacationsSummary()
+        public HttpResponseMessage GetVacationsSummary(int Year)
         {
             try
             {
@@ -951,22 +951,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
                 var dataGroups = (from tMEmployeeTime in myContext.TMEmployeeTimes
                                   join tMProject in myContext.TMProjects on tMEmployeeTime.ProjectId equals tMProject.Id
-                                  where tMEmployeeTime.EmployeeUserId == loggedUserId
+                                  where
+                                  tMEmployeeTime.EmployeeUserId == loggedUserId
+                                  && tMEmployeeTime.DateOfWork.Year == Year
                                   && ProjectsNumbers.Contains(tMProject.ProjectNumber)
                                   group tMEmployeeTime by new { tMProject.ProjectNumber, tMEmployeeTime.ProjectId } into g
                                   select new
                                   {
                                       ProjectNumber = g.Key.ProjectNumber,
                                       TimeInMinutes = g.Sum(s => s.TimeInMinutes),
+                                      Count = g.Count(),
                                   }).ToList();
 
                 TMVacationsSummary iResult = new TMVacationsSummary();
-                iResult.Holidays = dataGroups.Where(d => d.ProjectNumber == "1125").Count();
-                iResult.Vacations = dataGroups.Where(d => d.ProjectNumber == "1014" || d.ProjectNumber == "1014-1").Count();
-                iResult.HalfVacations = dataGroups.Where(d => d.ProjectNumber == "1014-2").Count();
-                iResult.UnpaidVacations = dataGroups.Where(d => d.ProjectNumber == "1014-3").Count();
-                iResult.SicknessVacations = dataGroups.Where(d => d.ProjectNumber == "1015" || d.ProjectNumber == "1015-2").Count();
-                iResult.SickLeaves = dataGroups.Where(d => d.ProjectNumber == "1015-1").Sum(s => s.TimeInMinutes);
+                iResult.Holidays = dataGroups.Where(d => d.ProjectNumber == "1125").Sum(s => s.Count);
+                iResult.Vacations = dataGroups.Where(d => d.ProjectNumber == "1014" || d.ProjectNumber == "1014-1").Sum(s => s.Count);
+                iResult.HalfVacations = dataGroups.Where(d => d.ProjectNumber == "1014-2").Sum(s => s.Count);
+                iResult.UnpaidVacations = dataGroups.Where(d => d.ProjectNumber == "1014-3").Sum(s => s.Count);
+                iResult.SicknessVacations = dataGroups.Where(d => d.ProjectNumber == "1015" || d.ProjectNumber == "1015-2").Sum(s => s.Count);
+                iResult.SickLeavesMinutes = dataGroups.Where(d => d.ProjectNumber == "1015-1").Sum(s => s.TimeInMinutes);
+                iResult.SickLeaves = GetTimeFormatFromMinutes(iResult.SickLeavesMinutes);
 
                 return Request.CreateResponse(HttpStatusCode.OK, iResult);
             }
@@ -976,7 +980,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetVacationsDetails(string type)
+        public HttpResponseMessage GetVacationsDetails(int Year, string Type)
         {
             try
             {
@@ -987,14 +991,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
 
-                type = this.FixFilter(type);
+                Type = this.FixFilter(Type);
 
                 List<TMVacationsDetails> myResult = new List<TMVacationsDetails>();
 
-                if (string.IsNullOrEmpty(type))
+                if (!string.IsNullOrEmpty(Type))
                 {
                     List<string> ProjectsNumbers = new List<string>();
-                    switch (type)
+                    switch (Type)
                     {
                         case "Holidays": { ProjectsNumbers.Add("1125"); break; }
                         case "Vacations": { ProjectsNumbers.Add("1014"); ProjectsNumbers.Add("1014-1"); break; }
@@ -1018,13 +1022,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                         myResult = (from tMEmployeeTime in myContext.TMEmployeeTimes
                                     join tMProject in myContext.TMProjects on tMEmployeeTime.ProjectId equals tMProject.Id
-                                    where tMEmployeeTime.EmployeeUserId == loggedUserId
+                                    where
+                                    tMEmployeeTime.EmployeeUserId == loggedUserId
+                                    && tMEmployeeTime.DateOfWork.Year == Year
                                     && ProjectsNumbers.Contains(tMProject.ProjectNumber)
                                     select new TMVacationsDetails()
                                     {
                                         DateOfWork = tMEmployeeTime.DateOfWork,
                                         TimeInMinutes = tMEmployeeTime.TimeInMinutes
-                                    }).ToList();
+                                    }).OrderByDescending(o => o.DateOfWork).ToList();
+
+                        if(Type == "Sick Leaves")
+                        {
+                            foreach(TMVacationsDetails item in myResult)
+                            {
+                                item.SickLeaves= GetTimeFormatFromMinutes(item.TimeInMinutes);
+                            }
+                        }
                     }
                 }
 
@@ -1036,7 +1050,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
     }
 
     public class TimeManagementAPIHelper
@@ -1107,7 +1120,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public double HalfVacations { get; set; }
         public double UnpaidVacations { get; set; }
         public double SicknessVacations { get; set; }
-        public double SickLeaves { get; set; }
+        public double SickLeavesMinutes { get; set; }
+        public string SickLeaves { get; set; }
 
         //-- Sickness Vacations	    1015
         //-- Sick Leave			    1015-1
@@ -1124,5 +1138,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
     {
         public DateTime? DateOfWork { get; set; }
         public int TimeInMinutes { get; set; }
+        public string SickLeaves { get; set; }
     }
 }

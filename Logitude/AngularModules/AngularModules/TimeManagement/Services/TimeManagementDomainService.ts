@@ -210,11 +210,11 @@ export class TimeManagementDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetVacationsSummary() {
+    GetVacationsSummary(Year: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetVacationsSummary';
+        var url = this._apiUrl + '/GetVacationsSummary?Year=' + Year;
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
                 var myJsonResult = response.json();
@@ -224,11 +224,11 @@ export class TimeManagementDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetVacationsDetails(type:string) {
+    GetVacationsDetails(Year: number, Type:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetVacationsDetails?type=' + type;
+        var url = this._apiUrl + '/GetVacationsDetails?Year=' + Year + '&Type=' + Type;
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
                 var myJsonResult = response.json();
