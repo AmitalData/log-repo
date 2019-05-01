@@ -12,6 +12,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {DeclarationWebService} from '../Services/WebServices/DeclarationWebService';
 import { AppTool, ArrayTool, DateTool} from '../../Infrastructure/Tools';
 import { CourierMasterValidator } from '../../Customs/Validators/CourierMasterValidator';
+import { CustomsRequestsSheetPM } from '../../Customs/EntityPMs/CustomsRequestsSheetPM';
 
 export class DeclarationDisplayOnlyChecks {
 
@@ -97,15 +98,16 @@ export class DeclarationDisplayOnlyChecks {
             this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.CourierMasterId).subscribe((response: any) => {
                 var displayOnlyCheckResult = response.Result;
                 if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
-                    var errorMessage: string = "קיימת בקשה לשינוי אתר איחסון ברקע ";
-
-                    SessionLocator.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
-                    SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
-                    editComponentNeedsRefresh = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh;
-                    SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
-                    serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
-                    return serviceResponse;
-
+                    let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
+                    if (customsRequestsSheetPM != null) {
+                        var errorMessage: string = "קיימת בקשה לשינוי אתר איחסון ברקע ";
+                        SessionLocator.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
+                        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh = true;
+                        editComponentNeedsRefresh = SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.MustRefresh;
+                        SessionLocator.CurrentSession.CurrentEditComponent.EditComponentController.MustRefreshMessage = errorMessage;
+                        serviceResponse.Result = new DisplayOnlyCheckResult(true, errorMessage);
+                        return serviceResponse;
+                    }
                 }
             });
         }
