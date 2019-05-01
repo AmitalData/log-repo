@@ -352,8 +352,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (entityPOCO.IsCourierDeclaration == true)
             {
-                CourierDeclarationQueryService courierDeclarationQueryService = new CourierDeclarationQueryService(entityPOCO.Tenant);
-                entityPM.MAWBCourierMaster = courierDeclarationQueryService.GetMAWBCourierMasterByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+                //CourierDeclarationQueryService courierDeclarationQueryService = new CourierDeclarationQueryService(entityPOCO.Tenant);
+                //entityPM.MAWBCourierMaster = courierDeclarationQueryService.GetMAWBCourierMasterByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+
+                CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPOCO.Tenant);
+                CourierMasterPM courierMasterPM = courierMasterQueryService.GetByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+                if(courierMasterPM != null)
+                {
+                    entityPM.CourierMasterId = courierMasterPM.Id;
+                    entityPM.MAWBCourierMaster = courierMasterPM.MAWB;
+                }
             }
 
             if (entityPOCO.AcceptanceStatusCode != null)

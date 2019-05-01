@@ -9,6 +9,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Models;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -164,16 +165,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (declarationPM != null)
                 {
                     bool isUpdateDeclaration = true;
+                    long lCUSTOMFILENO;
+                    if (!long.TryParse(declarationPM.CustomFileNo, out lCUSTOMFILENO))
+                    {
+                        throw new BusinessErrorException("_DirtyDeclarationPaymentPM.DeclarationId could not convert to long ");
+                    }
+                    var myCCUFILEMRepository = new CCUFILEMRepository(declarationPM.Tenant);
+                    var ccufilem = myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
                     var myCCUQUELOCKRepository = new CCUQUELOCKRepository(requestParams.Tenant);
                     try
                     {
-                        var cculock = myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CCUFILEM", declarationPM.CustomFileNo);
+                        var cculock = myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CCUFILEM", ccufilem.ToString());
                     }
                     catch (System.Exception)
                     {
                         LogMessagingUtil.Instance.AppendLine($"GetSingleGeneralLockNOWAIT(CCUFILEM, {declarationPM.CustomFileNo}) ==> Already Lock => try later (*5) ");
                         isUpdateDeclaration = false;
                     }
+
                     if (!myDeclarationUpdateService.CheckIfUpdatingAllowed(declarationPM))
                     {
                         LogMessagingUtil.Instance.AppendLine($"CheckIfUpdatingAllowed({declarationPM.CustomFileNo}) ");

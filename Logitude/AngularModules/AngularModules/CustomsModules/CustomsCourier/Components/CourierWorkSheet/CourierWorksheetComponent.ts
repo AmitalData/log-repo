@@ -1436,9 +1436,11 @@ implements OnDestroy
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = false;
+
+        //Check if changing StorageSiteCode
         this._CourierMasterValidator.SetEntityPM(this.entityPM);
-        this._CourierMasterValidator.CheckStorageSiteCodeRequestInProgress().subscribe((response: any) => {
-            var displayOnlyCheckResult: CustomsRequestsSheetPM[] = response.Result;
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
                 if (customsRequestsSheetPM != null) {
