@@ -744,7 +744,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 }
                                 if (mainaddress.ZipCode != null)
                                 {
-                                    if (mainaddress.ZipCode.Length > 8) { mainaddress.ZipCode.Substring(0, 8); }
+                                    if (mainaddress.ZipCode.Length > 8) { mainaddress.ZipCode = mainaddress.ZipCode.Substring(0, 8); }
                                     myStringBuilder.Append(a + mainaddress.ZipCode.PadLeft(8, ' '));
                                 }
                                 else
@@ -754,7 +754,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 }
                                 if (mainaddress.CountryName != null)
                                 {
-                                    if (mainaddress.CountryName.Length > 30) { mainaddress.CountryName.Substring(0, 30); }
+                                    if (mainaddress.CountryName.Length > 30) { mainaddress.CountryName =  mainaddress.CountryName.Substring(0, 30); }
                                     myStringBuilder.Append(a + mainaddress.CountryName.PadLeft(30, ' '));
                                 }
                                 else
