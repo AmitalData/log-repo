@@ -1211,7 +1211,7 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
         else if (this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.DeliveryId)).length > 0
             || this.EntityPM.ShipmentPackages.filter(d => !AppTool.IsNullOrEmpty(d.EmptyContainerReturnId)).length > 0) {
-            errors.push("Cannot change shipment type when shipment packages are connected to a delivery or empty container return");
+            errors.push("Shipment packages are connected to a delivery or empty container return, can't change direction");
         }
 
         else if (this.EntityPM.ShipmentLevelCode == "H" && !AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
