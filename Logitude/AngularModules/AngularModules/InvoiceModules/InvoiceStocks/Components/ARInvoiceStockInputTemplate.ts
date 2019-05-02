@@ -111,7 +111,7 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
             this.ItemsSource.push(item);
         });
 
-        this.ItemsCount = this.ItemsSource.length;
+        this.ItemsCount = this.EntityPM.ARInvoiceStockLines.filter(d => !d.IsUsed).length;
     }
 
     get Name() { return this.EntityPM.Name; }
@@ -252,8 +252,6 @@ export class ARInvoiceStockInputTemplate extends BaseComponent implements OnDest
                         }
 
                         this.FillStockLines();
-
-                        this.EntityPM.Amount = this.ItemsCount;
                     }
                 });
             }
