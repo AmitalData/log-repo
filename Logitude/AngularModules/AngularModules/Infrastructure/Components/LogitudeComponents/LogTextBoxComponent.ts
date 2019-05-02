@@ -1163,7 +1163,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                         {
                             var ReadedText = false;
                             if (this.firstDigit == ".") {
-                                if (this.TextValue.includes(',') && this.TextValue.includes('.')) {
+                                if ((this.TextValue.includes(',') && this.TextValue.includes('.')) || (this.TextValue.includes('.') && this.DisableZeroPadding)) {
                                     ReadedText = true;
                                 }
                             }
@@ -1277,8 +1277,10 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 }
                                 var isDot: boolean = false;
                                 if (this.firstDigit == ".") {
-                                    this.TextValue = this.TextValue.replace(this.firstDigit, ",")
                                     isDot = true;
+                                }
+                                if (isDot && !this.DisableZeroPadding) {
+                                    this.TextValue = this.TextValue.replace(this.firstDigit, ",")
                                 }
                                 var textWithCommas: string = this.numberWithCommas(this.TextValue, this.firstDigit);
                                 if ((textWithCommas.indexOf(this.firstDigit) > -1) && !isDot) {
@@ -1377,7 +1379,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                     val = Number(txtval);
                                 }
 
-                                if (this.firstDigit == "." && val == null) {
+                                if ((this.firstDigit == "." && val == null) && !this.DisableZeroPadding) {
                                     var txtval = this.TextValue.replace(/,/g, ".");
                                     val = Number(txtval);
                                 }
@@ -1714,30 +1716,30 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 val = Number(txtval);
                             }
 
-                            if (this.firstDigit == "." && val == null) {
+                            if ((this.firstDigit == "." && val == null) && !this.DisableZeroPadding) {
                                 var txtval = this.TextValue.replace(/,/g, ".");
                                 val = Number(txtval);
                             }
                         }
                     }
                     if (!isNaN(Number(val)) && this.textValue != null) {
-                        if (this.ObjectField && this.ObjectField.IsCustom) {
-                            var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
-                            if (customFieldClass != null && customFieldClass != undefined) {
-                                customFieldClass.Value = customFieldClass.SetFieldDataType(this.ObjectField, val);// this.TextValue;
-                            }
-                            else {
-                                console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
-                            }
+                        //if (this.ObjectField && this.ObjectField.IsCustom) {
+                        //    var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                        //    if (customFieldClass != null && customFieldClass != undefined) {
+                        //        customFieldClass.Value = customFieldClass.SetFieldDataType(this.ObjectField, val);// this.TextValue;
+                        //    }
+                        //    else {
+                        //        console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
+                        //    }
 
-                            this.DataContext[this.ObjectFieldName] = customFieldClass;
-                        }
-                        else {
-                            this.DataContext[this.ObjectFieldName] = val;
-                        }
+                        //    this.DataContext[this.ObjectFieldName] = customFieldClass;
+                        //}
+                        //else {
+                        //    this.DataContext[this.ObjectFieldName] = val;
+                        //}
                     }
 
-                    if (isNaN(Number(val)) && this.textValue != null) {
+                    if ((isNaN(Number(val)) && this.textValue != null) && (this.firstDigit == "." && this.textValue != null && !this.DisableZeroPadding)) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         suppressValidation = true;
                     }
