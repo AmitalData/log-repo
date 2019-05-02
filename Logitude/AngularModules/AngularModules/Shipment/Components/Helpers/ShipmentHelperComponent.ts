@@ -27,9 +27,7 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsAnalyzeChampXMLButtonVisible: boolean = false;
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
-
-        //this.cd.detach();
+    constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {        
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
 
         this.EntityPM = this.entityArgs.EntityPM;
@@ -46,8 +44,6 @@ export class ShipmentHelperComponent implements OnDestroy {
             this.Listen();
             this.BuildComponent();
         }
-
-        //this.cd.detectChanges();
     }
 
     private SaveCompletedEvent: any = null;
@@ -151,32 +147,40 @@ export class ShipmentHelperComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
+
+    public IsUpdateSharedAgentButtonVisible: boolean = false;
+    public IsShareDocumentsButtonVisible: boolean = false;
+    public IsShareManifestButtonVisible: boolean = false;
     BuildComponent() {
         this.EntityTitle = this.EntityPM.ShipmentLevelCode == "C" ? "Master" : "Shipment";
         this.SetAWBWizardButton();
         this.setImportAWBWizardButton();
+
+        var isUpdateSharedAgentButtonVisible: boolean = false;
+        var isShareDocumentsButtonVisible: boolean = false;
+        var isShareManifestButtonVisible: boolean = false;
+
         if (FeatureLocator.HasFeaturePermession("Shipment", "AgentSharedManifest")) {
             if (this.EntityPM.DirectionId == "E" && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "D")) {
-                this.IsShareManifestButtonVisible = true;
+                isShareManifestButtonVisible = true;
             }
         }
-
 
         if (FeatureLocator.HasFeaturePermession("AgentSharedManifest", "UPDATESHAREDAGENT")) {
             if (this.EntityPM.DirectionId == "E" && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "D")) {
-                this.IsUpdateSharedAgentButtonVisible = true;
-
+                isUpdateSharedAgentButtonVisible = true;
             }
         }
-
 
         if (FeatureLocator.HasFeaturePermession("AgentSharedDocument", "NEW")) {
             if (this.EntityPM.DirectionId == "E" && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "D")) {
-                this.IsShareDocumentsButtonVisible = true;
+                isShareDocumentsButtonVisible = true;
             }
         }
 
-
+        this.IsUpdateSharedAgentButtonVisible = isUpdateSharedAgentButtonVisible;
+        this.IsShareDocumentsButtonVisible = isShareDocumentsButtonVisible;
+        this.IsShareManifestButtonVisible = isShareManifestButtonVisible;
 
         if (FeatureLocator.HasFeaturePermession("Shipment", "ShipmentCustomsTransmission")) {
             this.CheckArtemusVisibility_BOL();
@@ -393,14 +397,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             ServiceLocator.SendTotangoUserActivity("Shipment", "Notes update");
         }
     }
-
-    public IsUpdateSharedAgentButtonVisible: boolean = false;
-    public IsShareDocumentsButtonVisible: boolean = false;
-    public IsShareManifestButtonVisible: boolean = false;
-
-
-  
-
+    
     //ShareDocument
     isSharingDocumentRequested: boolean = false;
     ShareDocumentsClicked() {
