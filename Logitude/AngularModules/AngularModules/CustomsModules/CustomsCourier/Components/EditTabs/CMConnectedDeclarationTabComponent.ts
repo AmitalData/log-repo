@@ -10,7 +10,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { CourierMasterValidator } from '../../../../Customs/Validators/CourierMasterValidator';
-
+import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 
 @Component({
     moduleId: module.id,
@@ -381,8 +381,11 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
         this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.Id).subscribe((response: any) => {
             var displayOnlyCheckResult = response.Result;
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
-                this.IsDisplayOnly = true;
-                this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                }
             }
         });
     }

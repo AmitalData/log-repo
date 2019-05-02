@@ -414,13 +414,13 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             this.EntityPM.ImporterTypeName = "IL";
 
             this.EntityPM.MainImporterEntitlemntTypeCode = null;
-            this.EntityPM.ImporterAddress = null;
+            //this.EntityPM.ImporterAddress = null;
             this.EntityPM.ImporterPassportNumber = null;
            // this.EntityPM.ImporterName = null;
             this.EntityPM.ImporterPassCountryCode = null;
             if (!this.EntityPM.IsCourierDeclaration) {
                 this.EntityPM.ImporterName = "";//
-
+                this.EntityPM.ImporterAddress = null;
                 this.EntityPM.CasualImporterAddress1 = "";
                 this.EntityPM.CasualImporterAddress2 = "";
                 this.EntityPM.CasualImporterCity = "";
