@@ -920,7 +920,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append("0000");
                 if (card != null && card.VatNumber != null)
                 {
-                    if (card.VatNumber.Length > 9) { card.VatNumber.Substring(0, 9); }
+                    if (card.VatNumber.Length > 9) { card.VatNumber= card.VatNumber.Substring(0, 9); }
                     myStringBuilder.Append(a + card.VatNumber.PadLeft(9, '0'));
                 }
                 else
