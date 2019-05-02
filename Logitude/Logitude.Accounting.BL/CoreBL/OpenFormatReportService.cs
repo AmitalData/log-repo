@@ -1392,7 +1392,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                           
-                            myStringBuilder.Append('0', 15);
+                            myStringBuilder.Append(' ', 15);
                         }
 
 
@@ -1402,13 +1402,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                        myStringBuilder.Append(' ', 15);
                     }
                 }
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 15);
+                    myStringBuilder.Append(' ', 15);
                 }
 
                 string DocumentAmountAndVATAmount = Format((decimal)item.DocumentAmountAndVATAmount); // item.DocumentAmountAndVATAmount.ToString();
