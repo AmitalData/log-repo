@@ -368,7 +368,7 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
                                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             }
 
-                            this.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
 
                         else {
