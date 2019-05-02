@@ -30,9 +30,9 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
     public   class WebAPISendMessage2MasofService
     {
         //private string _communicationSubject = "שידור מסר  פעולות מיוחדות לממן";
-       
-        
-        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string InterfaceName,string PartnerCode)///using  by SendWEBAPIMessage2MamanWRWR
+
+
+        public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string InterfaceName, string PartnerCode)///using  by SendWEBAPIMessage2MamanWRWR
         {
             ObjectTableRepository repo = new ObjectTableRepository(tenant);
             var objectTableId = repo.GetObjectTableIdByName("Customs.Declaration"/*"Customs.CourierMaster"*/);
@@ -62,12 +62,12 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
             }
 
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
-            var defDefaultJSON =customsPartnerFtpDetails.GetAllInterfaceName().First(r => r.Key == InterfaceName).Value;
-            var defDefault=ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
+            var defDefaultJSON = customsPartnerFtpDetails.GetAllInterfaceName().First(r => r.Key == InterfaceName).Value;
+            var defDefault = ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
 
             var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
             var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, InterfaceName /*CustomsPartnerFtpDetails.InterfaceName_ECSPCL*/,
-                PartnerCode/*CustomsPartnerFtpDetails.PartnerCode_Mamam*/, 
+                PartnerCode/*CustomsPartnerFtpDetails.PartnerCode_Mamam*/,
                 CustomsPartnerFtpDetails.TypeCode_Out);
 
 
@@ -93,84 +93,87 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
             {
                 throw new Exception($" הינו שדה חובה {defDefault.Name} -סיסמא");
             }
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
-            string loggedContactId = "";
-            if (loggedContact != null)
+            using (var scop = TransactionFactory.GetTransaction())
             {
-                loggedContactId = loggedContact.Id;
+                ContactRepository contactRepository = new ContactRepository(tenant);
+                Contact loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(tenant), tenant);
+                string loggedContactId = "";
+                if (loggedContact != null)
+                {
+                    loggedContactId = loggedContact.Id;
+                }
+
+                //.PostIt("", "F_unitedf", "Unit2019", data);
+                var settings = new CourierWEBAPICommSettings()
+                {
+                    ///WEBAPICredentialType = defDefault.WEBAPICredentialType,
+                    MessageCode = InterfaceName,
+                    URIMethod = dtoWebApiDefinition.WEBAPIURL,/// @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
+                    URIToken = dtoWebApiDefinition.WEBAPIAuthenticationURL, ///@"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
+
+                    username = dtoWebApiDefinition.User, //"F_unitedf",
+                    password = dtoWebApiDefinition.Password,// "Unit2019",
+
+                    Tenant = tenant,
+                    DeclarationId = declarationId,
+                    LoggedContactId = loggedContactId
+                };
+                var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
+
+                Document document = new Document()
+                {
+                    CreateDate = DateTime.Now,
+                    Extension = "TXT",
+                    FileSize = bytearray.Length,
+                    Tenant = Convert.ToInt32(tenant),
+                    Id = IdCounter.GetNumber("Document", tenant),
+                    HasFile = true,
+                    Folder = /*CustomsPartnerFtpDetails.PartnerCode_Mamam*/PartnerCode.ToLower(),
+                };
+
+                documentRepository.Add(document);
+                documentRepository.SubmitChanges();
+
+
+                CommunicationLog commLog = new CommunicationLog()
+                {
+                    Id = IdCounter.GetNumber("CommunicationLog", tenant),
+                    LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    LastStatusDateUTC = DateTime.UtcNow,
+                    To = /*CustomsPartnerFtpDetails.PartnerCode_Mamam*/PartnerCode,
+                    InOut = "O",
+                    EntityId = declarationId,
+                    ObjectTableId = objectTableId,
+                    Subject = defDefault.Name,
+                    Tenant = tenant,
+                    CommunicationLogTypeCode = "T",
+                    CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    CommunicationStatusTypeCode = "W",
+                    DocumentId = document.Id,
+                    CreateDateUTC = DateTime.UtcNow,
+                    CreatedByUserId = loggedContactId,
+                    LogSettings = settingsData,
+                    QueueName = SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() ///using  by SendWEBAPIMessage2MamanWR
+                };
+
+                communicationLogRepository.Add(commLog);
+                communicationLogRepository.SubmitChanges();
+
+                Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = bytearray.Length,
+                };
+
+                Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                storageservice.Write(bytearray.ToArray(), fileInfo);
+
+                SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant);
+                scop.Complete();
             }
-
-            //.PostIt("", "F_unitedf", "Unit2019", data);
-            var settings = new CourierWEBAPICommSettings()
-            {
-                 ///WEBAPICredentialType = defDefault.WEBAPICredentialType,
-                MessageCode = InterfaceName,
-                URIMethod = dtoWebApiDefinition.WEBAPIURL,/// @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae ",
-                URIToken = dtoWebApiDefinition.WEBAPIAuthenticationURL, ///@"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
-
-                username = dtoWebApiDefinition.User, //"F_unitedf",
-                password = dtoWebApiDefinition.Password,// "Unit2019",
-
-                Tenant = tenant,
-                DeclarationId = declarationId,
-                LoggedContactId = loggedContactId
-            };
-            var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
-
-            Document document = new Document()
-            {
-                CreateDate = DateTime.Now,
-                Extension = "TXT",
-                FileSize = bytearray.Length,
-                Tenant = Convert.ToInt32(tenant),
-                Id = IdCounter.GetNumber("Document", tenant),
-                HasFile = true,
-                Folder = /*CustomsPartnerFtpDetails.PartnerCode_Mamam*/PartnerCode.ToLower(),
-            };
-
-            documentRepository.Add(document);
-            documentRepository.SubmitChanges();
-
-
-            CommunicationLog commLog = new CommunicationLog()
-            {
-                Id = IdCounter.GetNumber("CommunicationLog", tenant),
-                LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                LastStatusDateUTC = DateTime.UtcNow,
-                To = /*CustomsPartnerFtpDetails.PartnerCode_Mamam*/PartnerCode,
-                InOut = "O",
-                EntityId = declarationId,
-                ObjectTableId = objectTableId,
-                Subject = defDefault.Name,
-                Tenant = tenant,
-                CommunicationLogTypeCode = "T",
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                CommunicationStatusTypeCode = "W",
-                DocumentId = document.Id,
-                CreateDateUTC = DateTime.UtcNow,
-                CreatedByUserId = loggedContactId,
-                LogSettings = settingsData,
-                QueueName = SBQueueNames.SendWEBAPIMessage2MamanQ.ToString() ///using  by SendWEBAPIMessage2MamanWR
-            };
-
-            communicationLogRepository.Add(commLog);
-            communicationLogRepository.SubmitChanges();
-
-            Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
-            {
-                FileName = document.Id,
-                FolderName = document.Folder,
-                Extension = document.Extension,
-                Tenant = tenant,
-                FileSize = bytearray.Length,
-            };
-
-            Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-            storageservice.Write(bytearray.ToArray(), fileInfo);
-
-            SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, tenant);
-
 
 
         }
