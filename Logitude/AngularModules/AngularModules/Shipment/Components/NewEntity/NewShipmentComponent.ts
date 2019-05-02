@@ -599,10 +599,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
             this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
             this.EntityPM.Ratio = AppTool.GetRatio(this.DirectionId, this.TransportModeId, this.ShipmentTypeId, this.TenantPM.CountryCode);
             this.EntityPM.DimFactor = AppTool.GetDimFactorFromRatio(this.EntityPM.Ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.ChargeableWeightUnitCode);
+            this.ComputeOrderVolumetricWeight();
+            this.ComputeChargeableWeight();
         }
-
-        this.ComputeOrderVolumetricWeight();
-        this.ComputeChargeableWeight();
     }
     SetPartners() {
         if (!this.IsBuildFromQuote && !this.IsCopyFromShipment) {

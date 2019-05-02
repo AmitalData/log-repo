@@ -453,6 +453,8 @@ export class ShipmentTool {
             shipmentPM.OrderVolumetricWeight = oldShipment.OrderVolumetricWeight;
             shipmentPM.OrderGrossWeight = oldShipment.OrderGrossWeight;
             shipmentPM.OrderChargeableWeight = oldShipment.OrderChargeableWeight;
+            shipmentPM.OrderGrossWeightEdited = oldShipment.OrderGrossWeightEdited;
+            shipmentPM.OrderChargeableWeightEdited = oldShipment.OrderChargeableWeightEdited;
             shipmentPM.BookingNumberOfPackages = oldShipment.BookingNumberOfPackages;
             shipmentPM.OrderIsDangerouseGoods = oldShipment.OrderIsDangerouseGoods;
             shipmentPM.GrossWeight = oldShipment.GrossWeight;
@@ -481,7 +483,6 @@ export class ShipmentTool {
             shipmentPM.AWBChargeAmount = oldShipment.AWBChargeAmount;
             shipmentPM.AWBChargeRate = oldShipment.AWBChargeRate;
             shipmentPM.RateClassCode = oldShipment.RateClassCode;
-
         }
 
         oldShipment.ShipmentOrderPackages.forEach(item => {
