@@ -97,7 +97,7 @@ export class FilterField extends BaseComponent {
         }
 
         var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
-        if (currentQuery.SharedByUserId && currentQuery.SharedByUserId != SessionLocator.LoggedUserId) {
+        if (currentQuery && currentQuery.SharedByUserId && currentQuery.SharedByUserId != SessionLocator.LoggedUserId) {
             if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
                 if (this.ObjectField) {
                     this.TextFiltersEnabled = true;
