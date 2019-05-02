@@ -211,7 +211,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      //a.CreatedByUser != null ? (a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName) : null,
 
                                                      a.CreatedByUser.Code,
-
+                                                     ImporterAddress = a.ImporterAddress,
                                                      ImporterName = a.Importer != null ? a.Importer.FullName : a.ImporterName,
                                                      EntitleImporterName = a.EntitleImporter.FullName,
                                                      UserNotes = a.UserNotes,
