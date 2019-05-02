@@ -31,22 +31,46 @@ namespace CommunicationWorkerRole.Services
 
             foreach (string fileName in directoryFiles)
             {
-                DownloadFileToAnalyzeQueueAndDelete(schedulerDetails, ftpService, fileName);
+                string extention = Path.GetExtension(fileName);
+                if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
+                {
+                    byte[] fileData = DownloadFTPFile(schedulerDetails, ftpService, fileName);
+                    AddToAnalyzeQueue(fileName, fileData, schedulerDetails);
+                    DeleteFTPFile(schedulerDetails, ftpService, fileName);
+                }
             }
         }
 
-        private void DownloadFileToAnalyzeQueueAndDelete(SchedulerDetails schedulerDetails, FTPService ftpService, string fileName)
+        public byte[] DownloadFTPFile(SchedulerDetails schedulerDetails, FTPService ftpService, string fileName)
         {
-            string extention = Path.GetExtension(fileName);
-            if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
-            {
-                string p_message;
-                string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
-                byte[] fileData = ftpService.Download(filePath, out p_message);
-                AddToAnalyzeQueue(fileName, fileData, schedulerDetails);
-                ftpService.Delete(filePath);
-            }
+            string p_message;
+            string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
+            byte[] fileData = ftpService.Download(filePath, out p_message);
+            return fileData;
         }
+
+        private void DeleteFTPFile(SchedulerDetails schedulerDetails, FTPService ftpService, string fileName)
+        {
+            string p_message;
+            string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
+            ftpService.Delete(filePath);
+        }
+
+
+        //private void DownloadFileToAnalyzeQueueAndDelete(SchedulerDetails schedulerDetails, FTPService ftpService, string fileName)
+        //{
+        //    string extention = Path.GetExtension(fileName);
+        //    if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
+        //    {
+        //        string p_message;
+        //        string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
+        //        byte[] fileData = ftpService.Download(filePath, out p_message);
+        //        AddToAnalyzeQueue(fileName, fileData, schedulerDetails);
+        //        ftpService.Delete(filePath);
+        //    }
+
+        //    return fileData;
+        //}
 
         private static string GetFilePath(SchedulerDetails schedulerDetails, string fileName, out string p_message)
         {
