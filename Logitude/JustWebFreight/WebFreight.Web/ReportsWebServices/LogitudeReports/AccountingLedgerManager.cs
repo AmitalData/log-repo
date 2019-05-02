@@ -198,7 +198,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             IQueryable<APInvoice> iQueryable_APInvoice = aPInvoiceRepository.GetAccountingLedgerAPInvoices(tenant);
             IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetAccountingLedgerARPayments(tenant);
             IQueryable<APPayment> iQueryable_APPayment = aPPaymentRepository.GetAccountingLedgerAPPayments(tenant);
-            
+
+            IQueryable<ARInvoice> iQueryable_ARInvoice_All = iQueryable_ARInvoice;
+
             if (!string.IsNullOrEmpty(CustomerId))
             {
                 iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => d.BillToId == CustomerId);
@@ -274,8 +276,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == openARinvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.Notes = openARinvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = openARinvoice.BillToId;
-                accountingLedgerRecord.HouseNumber = openARinvoice.HouseNumber;
-                accountingLedgerRecord.MasterNumber = openARinvoice.MasterNumber;
 
                 if (openARinvoice.ARInvoiceTypeCode == "CD")
                 {
@@ -313,7 +313,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 {
                     accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
                 }
-                
+
                 OpeningAccounts.Add(accountingLedgerRecord);
             }
             #endregion
@@ -325,8 +325,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == openAPInvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.Notes = openAPInvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = openAPInvoice.VendorId;
-                accountingLedgerRecord.HouseNumber = openAPInvoice.HouseNumber;
-                accountingLedgerRecord.MasterNumber = openAPInvoice.MasterNumber;
 
                 if (openAPInvoice.AmountInInvoiceCurrency > 0)
                 {
@@ -338,7 +336,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     accountingLedgerRecord.ReferenceType = "A\\P Credit Note";
                     accountingLedgerRecord.Debit = (double)Math.Abs((decimal)openAPInvoice.AmountInInvoiceCurrency);
                 }
-                
+
                 OpeningAccounts.Add(accountingLedgerRecord);
             }
             #endregion
@@ -404,10 +402,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 OpeningAccounts.Add(accountingLedgerRecord);
             }
             #endregion
-            
+
             var OpenledgerGroups_Customer = from item in OpeningAccounts
-                                        group item by item.CustomerId into g
-                                        select new { CustomerId = g.Key, Items = g };
+                                            group item by item.CustomerId into g
+                                            select new { CustomerId = g.Key, Items = g };
 
             foreach (var ledgerGroup_Customer in OpenledgerGroups_Customer)
             {
@@ -459,21 +457,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             #region Accounting Balance            
             List<AccountingLedger> tempList = new List<AccountingLedger>();
-            
+
             #region AR/ Invoice
+
             foreach (ARInvoice arInvoice in iQueryable_ARInvoice)
             {
                 AccountingLedger accountingLedgerRecord = new AccountingLedger();
 
-                string creditedByARInvoiceTypeCode = arInvoice.CreditedByARInvoice == null ? null :ARInvoiceTypes.Where(d => d.Code == arInvoice.CreditedByARInvoice.ARInvoiceTypeCode).FirstOrDefault().Code;
+                string creditedByARInvoiceTypeCode = null;
+
+                if (!string.IsNullOrEmpty(arInvoice.CreditedByARInvoiceId))
+                {
+                    ARInvoice creditedByInvoice = iQueryable_ARInvoice_All.Where(d => d.Id == arInvoice.CreditedByARInvoiceId).FirstOrDefault();
+                    if (creditedByInvoice != null)
+                    {
+                        creditedByARInvoiceTypeCode = creditedByInvoice.ARInvoiceTypeCode;
+                    }
+                }
 
                 accountingLedgerRecord.ReferenceNumber = arInvoice.InvoiceNumber;
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == arInvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.DueDate = arInvoice.DueDate.Value;
                 accountingLedgerRecord.Notes = arInvoice.InternalNotes;
                 accountingLedgerRecord.CustomerId = arInvoice.BillToId;
-                accountingLedgerRecord.HouseNumber = arInvoice.HouseNumber;
-                accountingLedgerRecord.MasterNumber = arInvoice.MasterNumber;
 
                 if (!string.IsNullOrEmpty(arInvoice.BillToId))
                 {
@@ -562,9 +568,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = apInvoice.InternalNotes;
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == apInvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.CustomerId = apInvoice.VendorId;
-                accountingLedgerRecord.HouseNumber = apInvoice.HouseNumber;
-                accountingLedgerRecord.MasterNumber = apInvoice.MasterNumber;
-                
+
                 if (!string.IsNullOrEmpty(apInvoice.VendorId))
                 {
                     Card card = cardRepository.GetSingleCard(apInvoice.VendorId, tenant);
@@ -741,13 +745,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 customerRecord.CustomerId = item_customer.CustomerId;
 
                 Card myCustomer = CardRepository.GetSingleCard(item_customer.CustomerId, tenant, false);
-                if(myCustomer != null)
+                if (myCustomer != null)
                 {
                     customerRecord.CustomerName = myCustomer.EnglishName;
                 }
 
                 Address customerAddress = addressRepository.GetMainAddressByCardId(item_customer.CustomerId, tenant);
-                if(customerAddress != null)
+                if (customerAddress != null)
                 {
                     customerRecord.CustomerAddress = General.GetAddress_OneLine(customerAddress);
                 }
@@ -759,8 +763,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                 foreach (var ledgerGroup in ledgerGroups)
                 {
-                    balance = 0;                  
-                    
+                    balance = 0;
+
                     foreach (AccountingLedger ledger in ledgerGroup.Items)
                     {
                         switch (ledger.ReferenceType)
@@ -798,11 +802,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         currencyRecord.ShipmentNumber = ledger.ShipmentNumber;
                         currencyRecord.Notes = ledger.Notes;
                         currencyRecord.BillToVendor = ledger.BillToVendor;
-                        currencyRecord.HouseNumber = ledger.HouseNumber;
-                        currencyRecord.MasterNumber = ledger.MasterNumber;
 
                         customerRecord.AccountingLedgerList.Add(currencyRecord);
-                    }                    
+                    }
                 }
 
                 var list = (from item in customerRecord.AccountingLedgerList
@@ -835,7 +837,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                         if (i == 0)
                         {
-                            
+
                         }
 
                         if (i < ledgerList.Count && i != 0)
@@ -848,8 +850,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
 
                 myDataProvider.AccountingLedgerList_Customer.Add(customerRecord);
-            }         
-            
+            }
+
             return myDataProvider;
         }
     }
