@@ -69,7 +69,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage Put(GeneralEntitiesArgs args)
+        [ActionName("PutGeneralEntitiesArgs")]
+        public HttpResponseMessage PutGeneralEntitiesArgs(GeneralEntitiesArgs args)
         {
             try
             {
@@ -294,7 +295,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-
+        [ActionName("PutExportBIReportToExcel")]
         public HttpResponseMessage PutExportBIReportToExcel(BIReportXMLData bIReportXMLData)
         {
             try
