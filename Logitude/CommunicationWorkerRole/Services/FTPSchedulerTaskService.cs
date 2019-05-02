@@ -15,48 +15,79 @@ namespace CommunicationWorkerRole.Services
 {
     public class FTPSchedulerTaskService
     {
-        private SchedulerDetails schedulerDetails { get; set; }
-        private FTPService ftpService { get; set; }
-        public FTPSchedulerTaskService(SchedulerDetails theSchedulerDetails)
-        {
-            schedulerDetails = theSchedulerDetails;
-            ftpService = new FTPService(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
-        }
+        ////private SchedulerDetails schedulerDetails { get; set; }
+        ////private FTPService ftpService { get; set; }
+        //public FTPSchedulerTaskService()
+        //{
+        //    //schedulerDetails = theSchedulerDetails;
+           
+        //}
 
-        public void ReadFTPFilesBySchedulerDetailsToAnalyzeQueue()
+        public void ReadFTPFilesBySchedulerDetailsToAnalyzeQueue(SchedulerDetails schedulerDetails)
         {
+            FTPService ftpService = new FTPService(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
 
-            List<string> directoryFiles = FilterDirectoryFilesByFTPDetails(schedulerDetails);
+            List<string> directoryFiles = GetFilteredDirectoryFileNamesByFTPDetails(schedulerDetails);
 
             foreach (string fileName in directoryFiles)
             {
-                DownloadFileToAnalyzeQueueAndDelete(schedulerDetails, ftpService, fileName);
-            }
-        }
-
-        private void DownloadFileToAnalyzeQueueAndDelete(SchedulerDetails schedulerDetails, FTPService ftpService, string fileName)
-        {
-            string extention = Path.GetExtension(fileName);
-            if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
-            {
-                string p_message = "";
-                var filePath = fileName;
-                if (!string.IsNullOrEmpty(schedulerDetails.FTPDetails.Folder) && !fileName.Contains(schedulerDetails.FTPDetails.Folder))
+                string extention = Path.GetExtension(fileName);
+                if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
                 {
-                    filePath = schedulerDetails.FTPDetails.Folder + "/" + fileName;
+                    byte[] fileData = DownloadFTPFile(schedulerDetails, ftpService, fileName);
+                    AddToAnalyzeQueue(fileName, fileData, schedulerDetails);
+                    DeleteFTPFile(schedulerDetails, ftpService, fileName);
                 }
-
-                byte[] fileData = ftpService.Download(filePath, out p_message);
-
-                AddToAnalyzeQueu(fileName, fileData, schedulerDetails, schedulerDetails.Tenant);
-
-
-                ftpService.Delete(filePath);
             }
         }
 
-        public List<string> FilterDirectoryFilesByFTPDetails(SchedulerDetails schedulerDetails)
+        public byte[] DownloadFTPFile(SchedulerDetails schedulerDetails, FTPService ftpService, string fileName)
         {
+            string p_message;
+            string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
+            byte[] fileData = ftpService.Download(filePath, out p_message);
+            return fileData;
+        }
+
+        private void DeleteFTPFile(SchedulerDetails schedulerDetails, FTPService ftpService, string fileName)
+        {
+            string p_message;
+            string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
+            ftpService.Delete(filePath);
+        }
+
+
+        //private void DownloadFileToAnalyzeQueueAndDelete(SchedulerDetails schedulerDetails, FTPService ftpService, string fileName)
+        //{
+        //    string extention = Path.GetExtension(fileName);
+        //    if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
+        //    {
+        //        string p_message;
+        //        string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
+        //        byte[] fileData = ftpService.Download(filePath, out p_message);
+        //        AddToAnalyzeQueue(fileName, fileData, schedulerDetails);
+        //        ftpService.Delete(filePath);
+        //    }
+
+        //    return fileData;
+        //}
+
+        private static string GetFilePath(SchedulerDetails schedulerDetails, string fileName, out string p_message)
+        {
+            p_message = "";
+            string filePath = fileName;
+            if (!string.IsNullOrEmpty(schedulerDetails.FTPDetails.Folder) && !fileName.Contains(schedulerDetails.FTPDetails.Folder))
+            {
+                filePath = schedulerDetails.FTPDetails.Folder + "/" + fileName;
+            }
+
+            return filePath;
+        }
+
+        public List<string> GetFilteredDirectoryFileNamesByFTPDetails(SchedulerDetails schedulerDetails)
+        {
+            FTPService ftpService = new FTPService(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
+
             List<string> directoryFiles = ftpService.DirectoryListSimple(schedulerDetails.FTPDetails.Folder).Where(f => !string.IsNullOrWhiteSpace(f) && !string.IsNullOrWhiteSpace(Path.GetExtension(f))).ToList();
 
             if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Extension))
@@ -85,7 +116,7 @@ namespace CommunicationWorkerRole.Services
             return directoryFiles;
         }
 
-        private void AddToAnalyzeQueu(string fileName, byte[] fileData, SchedulerDetails schedulerDetails, int tenant)
+        private void AddToAnalyzeQueue(string fileName, byte[] fileData, SchedulerDetails schedulerDetails)
         {
             if (schedulerDetails.FTPDetails.Subject == "fail test")
             {
@@ -109,7 +140,7 @@ namespace CommunicationWorkerRole.Services
                     Retries = 0,
                     ConnectedToEntity = false,
                     ConnectedToTenant = true,
-                    Tenant = tenant,
+                    Tenant = schedulerDetails.Tenant,
                     FileSize = fileData.Length,
                     FileName = fileName,
                 };
