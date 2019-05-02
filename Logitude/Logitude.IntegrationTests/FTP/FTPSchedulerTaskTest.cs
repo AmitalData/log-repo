@@ -4,6 +4,7 @@ using Logitude.Server.Tools.FTP;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Transactions;
 
@@ -33,7 +34,15 @@ namespace Logitude.IntegrationTests.FTP
                 }
             };
 
+            //private static string filePath = HttpContext.Current.Server.MapPath(".") + "\\bin\\" + "exceptionslogfile.txt";
             FTPService ftpService = new FTPService(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
+            string startupPath = Environment.CurrentDirectory.Replace(@"bin\Debug", "FTPFiles");
+            //string filePath = HttpContext.Current.Server.MapPath(".") + "\\bin\\" + "exceptionslogfile.txt";
+            //foreach (string file in Directory.EnumerateFiles(folderPath, "*.xml"))
+            //{
+            //    string contents = File.ReadAllText(file);
+            //}
+
             //ftpService.Upload()
 
 
