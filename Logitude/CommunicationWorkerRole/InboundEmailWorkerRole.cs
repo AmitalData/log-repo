@@ -228,6 +228,8 @@ namespace CommunicationWorkerRole
                         myHTMLBody = this.BuildHTMLBody(oldLines, ticketNumber, false, false);
                         bytearray = enc.GetBytes(myHTMLBody);
 
+                        cCs_Emails = this.FilterCCsEmails(cCs_Emails);
+
                         if (!string.IsNullOrEmpty(cCs_Emails))
                         {
                             this.SendEmailCc(cCs_Emails, tenant, bytearray, false);
@@ -266,6 +268,88 @@ namespace CommunicationWorkerRole
                 ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "InboundEmailWorkerRole : Run() Method", null);
                 Thread.Sleep(5000);
             }
+        }
+
+        private string FilterCCsEmails(string emailsText)
+        {
+            string myResult = null;
+
+            if (!string.IsNullOrEmpty(emailsText))
+            {
+                string[] emails = emailsText.Split(';');
+
+                foreach(string email in emails)
+                {
+                    string iEmail = email.Replace(";", "").ToLower();
+
+                    if (!this.IsSupportEmail(iEmail))
+                    {
+                        if (!string.IsNullOrEmpty(iEmail))
+                        {
+                            if (this.IsEmail(iEmail))
+                            {
+                                if (string.IsNullOrEmpty(myResult))
+                                {
+                                    myResult = iEmail;
+                                }
+
+                                else
+                                {
+                                    myResult += ";" + emails;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return myResult;
+        }
+
+        private bool IsSupportEmail(string email)
+        {
+            bool myResult = false;
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                email = email.ToLower();
+
+                switch (email)
+                {
+                    case "s@test.unifreight.co.il":
+                    case "support@ilcargo.com":
+                    case "support@icl.unifreight.co.il":
+                        {
+                            myResult = true;
+                            break;
+                        }
+                }
+            }
+
+            return myResult;
+        }
+        private bool IsEmail(string email)
+        {
+            var myResult = true;
+
+            if (!string.IsNullOrEmpty(email))
+            {
+
+                Regex isEmail = new Regex(@"^(([^<>()[\]\\.,;:\s@\""]+"
+                                        + @"(\.[^<>()[\]\\.,;:\s@\""]+)*)|(\"".+\""))@"
+                                        + @"((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"
+                                        + @"\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+"
+                                        + @"[a-zA-Z]{2,}))$");
+
+                if (!isEmail.IsMatch(email))
+                {
+                    myResult = false;
+                }
+
+
+            }
+
+            return myResult;
         }
 
         private string GetTicketStageName(string Id, string objectTableId, int tenant)
