@@ -159,9 +159,11 @@
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'InvoiceNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
+
                                                 <td *ngIf="!AllowManualInvoiceNumber && !AllowStockInvoiceNumber">
                                                     <LogTextBox [ObjectFieldName]="'InvoiceNumber'" [Text]="InvoiceNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
+
                                                 <td *ngIf="AllowManualInvoiceNumber || AllowStockInvoiceNumber">
                                                     <table>
                                                         <tr>
@@ -180,6 +182,7 @@
                                                             <td>
                                                                 <div></div>
                                                             </td>
+
                                                             <td style="width: 18px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='MAS'">
                                                                 <HelpIcon [HideHeader]="true" [Text]="'ARInvoice.IsInvoiceNumberManuallySetHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
                                                             </td>
