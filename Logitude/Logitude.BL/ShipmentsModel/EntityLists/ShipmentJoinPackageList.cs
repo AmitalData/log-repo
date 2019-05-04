@@ -98,6 +98,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? ATA { get; set; }
         public DateTime? OnCarriageATD { get; set; }
         public DateTime? OnCarriageATA { get; set; }
+        public DateTime? OnCarriageETA { get; set; }
         public string ContainerNotes { get; set; }
 
         public string Transshipment3ToPortId { get; set; }
@@ -113,6 +114,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool? SplitOnCarriage { get; set; }
         public DateTime? PackageOnCarriageATD { get; set; }
         public DateTime? PackageOnCarriageATA { get; set; }
+        public DateTime? PackageOnCarriageETA { get; set; }
         public string PackageDliveryId { get; set; }
 
         public string Transshipment3FromPortId { get; set; }

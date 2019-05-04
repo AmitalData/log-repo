@@ -957,6 +957,14 @@
     <Compile Include="Migrations\201904291629073_AddIsTabsHiddenField.Designer.cs">
       <DependentUpon>201904291629073_AddIsTabsHiddenField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904241349034_AddQuoteWeightsEditedFields.cs" />
+    <Compile Include="Migrations\201904241349034_AddQuoteWeightsEditedFields.Designer.cs">
+      <DependentUpon>201904241349034_AddQuoteWeightsEditedFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905020921486_AddIsExternalEntityFix.cs" />
+    <Compile Include="Migrations\201905020921486_AddIsExternalEntityFix.Designer.cs">
+      <DependentUpon>201905020921486_AddIsExternalEntityFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1616,6 +1624,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904290620173_AddTariffLineValidationFields_Samar.resx">
       <DependentUpon>201904290620173_AddTariffLineValidationFields_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904241349034_AddQuoteWeightsEditedFields.resx">
+      <DependentUpon>201904241349034_AddQuoteWeightsEditedFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905020921486_AddIsExternalEntityFix.resx">
+      <DependentUpon>201905020921486_AddIsExternalEntityFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
