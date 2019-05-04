@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SquareIcon {
         width: 10px;
@@ -71,7 +71,7 @@
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{'Accounting.O.GLAccounts' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button  id="{{'NewGLAccount' | IdGeneratorPipe}}" class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>

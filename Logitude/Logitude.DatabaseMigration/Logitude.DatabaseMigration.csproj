@@ -945,6 +945,10 @@
     <Compile Include="Migrations\201904240638063_AddTariffNumberToTariff_Samar.Designer.cs">
       <DependentUpon>201904240638063_AddTariffNumberToTariff_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904290620173_AddTariffLineValidationFields_Samar.cs" />
+    <Compile Include="Migrations\201904290620173_AddTariffLineValidationFields_Samar.Designer.cs">
+      <DependentUpon>201904290620173_AddTariffLineValidationFields_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201904282045262_DeleteDownloadINIFileMenuButtonMigration.cs" />
     <Compile Include="Migrations\201904282045262_DeleteDownloadINIFileMenuButtonMigration.Designer.cs">
       <DependentUpon>201904282045262_DeleteDownloadINIFileMenuButtonMigration.cs</DependentUpon>
@@ -1609,6 +1613,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904291629073_AddIsTabsHiddenField.resx">
       <DependentUpon>201904291629073_AddIsTabsHiddenField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904290620173_AddTariffLineValidationFields_Samar.resx">
+      <DependentUpon>201904290620173_AddTariffLineValidationFields_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
