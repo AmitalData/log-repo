@@ -119,7 +119,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Number Format",
-			      				    Code =  "1059",
+			      				    Code =  "b06e",
 			      				    Name =  "NumberFormat",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
