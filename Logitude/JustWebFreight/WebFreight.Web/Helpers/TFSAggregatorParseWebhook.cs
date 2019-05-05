@@ -71,57 +71,73 @@ namespace WebFreight.Web.Helpers
                 {
                     if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Task" || workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Bug")
                     {
-                        string parent = workitem.Relations[0].Url.Split('/').Last();
-                        if (!string.IsNullOrEmpty(parent))
+                        if (workitem.Relations != null)
                         {
-                            WorkItem parentItem = GetWorkItemById(int.Parse(parent));
-                            if (parentItem != null)
+                            string parent = workitem.Relations[0].Url.Split('/').Last();
+                            if (!string.IsNullOrEmpty(parent))
                             {
-                                var effort = Convert.ToSingle(parentItem.Fields.GetValueOrDefault("Custom.TasksEffort"));
-                                var completedwork = Convert.ToSingle(parentItem.Fields.GetValueOrDefault("Microsoft.VSTS.Scheduling.CompletedWork"));
-
-                                List<WorkItemRelation> itemss = parentItem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Forward").ToList();
-                                double EffotSum = 0;
-                                double completedworkSum = 0;
-                                if (itemss.Count != 0)
+                                int parentId;
+                                bool ExistWI = int.TryParse(parent, out parentId);
+                                if (ExistWI)
                                 {
-                                    foreach (WorkItemRelation item in itemss)
+                                    WorkItem parentItem = GetWorkItemById(parentId);
+                                    if (parentItem != null)
                                     {
-                                        string childId = item.Url.Split('/').Last();
-                                        WorkItem childItem = GetWorkItemById(int.Parse(childId));
-                                        if (childItem != null)
+                                        var effort = Convert.ToSingle(parentItem.Fields.GetValueOrDefault("Custom.TasksEffort"));
+                                        var completedwork = Convert.ToSingle(parentItem.Fields.GetValueOrDefault("Microsoft.VSTS.Scheduling.CompletedWork"));
+
+                                        List<WorkItemRelation> itemss = parentItem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Forward").ToList();
+                                        double EffotSum = 0;
+                                        double completedworkSum = 0;
+                                        if (itemss.Count != 0)
                                         {
-                                            EffotSum += Convert.ToSingle(childItem.Fields.GetValueOrDefault("Microsoft.VSTS.Scheduling.Effort"));
-                                            completedworkSum += Convert.ToSingle(childItem.Fields.GetValueOrDefault("Microsoft.VSTS.Scheduling.CompletedWork"));
+                                            foreach (WorkItemRelation item in itemss)
+                                            {
+                                                string childId = item.Url.Split('/').Last();
+                                                WorkItem childItem = GetWorkItemById(int.Parse(childId));
+                                                if (childItem != null)
+                                                {
+                                                    EffotSum += Convert.ToSingle(childItem.Fields.GetValueOrDefault("Microsoft.VSTS.Scheduling.Effort"));
+                                                    completedworkSum += Convert.ToSingle(childItem.Fields.GetValueOrDefault("Microsoft.VSTS.Scheduling.CompletedWork"));
+                                                }
+                                            }
+
+                                            if (effort != EffotSum)
+                                            {
+                                                patchDocument.Add(new JsonPatchOperation()
+                                                {
+
+                                                    Operation = Operation.Replace,
+                                                    Path = "/fields/Custom.TasksEffort",
+                                                    Value = EffotSum.ToString("0.##")
+                                                });
+                                                witClient.UpdateWorkItemAsync(patchDocument, int.Parse((parentItem.Id + "")));
+                                            }
+
+
+                                            if (completedwork != completedworkSum)
+                                            {
+                                                patchDocument.Add(new JsonPatchOperation()
+                                                {
+
+                                                    Operation = Operation.Replace,
+                                                    Path = "/fields/Microsoft.VSTS.Scheduling.CompletedWork",
+                                                    Value = completedworkSum.ToString("0.##")
+                                                });
+                                                witClient.UpdateWorkItemAsync(patchDocument, int.Parse((parentItem.Id + "")));
+                                            }
                                         }
                                     }
-
-                                    if (effort != EffotSum)
-                                    {
-                                        patchDocument.Add(new JsonPatchOperation()
-                                        {
-
-                                            Operation = Operation.Replace,
-                                            Path = "/fields/Custom.TasksEffort",
-                                            Value = EffotSum.ToString("0.##")
-                                        });
-                                        witClient.UpdateWorkItemAsync(patchDocument, int.Parse((parentItem.Id + "")));
-                                    }
-
-
-                                    if (completedwork != completedworkSum)
-                                    {
-                                        patchDocument.Add(new JsonPatchOperation()
-                                        {
-
-                                            Operation = Operation.Replace,
-                                            Path = "/fields/Microsoft.VSTS.Scheduling.CompletedWork",
-                                            Value = completedworkSum.ToString("0.##") 
-                                        });
-                                        witClient.UpdateWorkItemAsync(patchDocument, int.Parse((parentItem.Id + "")));
-                                    }
+                                }
+                                else
+                                {
+                                    throw new ApplicationException("No Parent WI");
                                 }
                             }
+                        }
+                        else
+                        {
+                            throw new ApplicationException("WI Has No Relations");
                         }
 
                     }

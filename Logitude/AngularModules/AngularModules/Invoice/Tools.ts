@@ -213,20 +213,20 @@ export class InvoiceTool {
                                 var myComparativeDate: Date = null;
 
                                 if (entityPM.IsConsolidationInvoice) {
-                                    myComparativeDate = entityPM.InvoiceDate;
+                                    myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
                                 }
 
                                 else {
                                     if (list.FromDateTypeCode == "SHI") {
-                                        myComparativeDate = entityPM.OperationalDate;
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.OperationalDate).DateObject;
 
                                         if (myComparativeDate == null) {
-                                            myComparativeDate = entityPM.InvoiceDate;
+                                            myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
                                         }
                                     }
 
                                     else {
-                                        myComparativeDate = entityPM.InvoiceDate;
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
                                     }
                                 }
 
@@ -268,7 +268,7 @@ export class InvoiceTool {
 
                                     var myDate = new Date();
                                     myDate.setUTCFullYear(dateYear);
-                                    myDate.setUTCMonth(dateMonth-1);
+                                    myDate.setUTCMonth(dateMonth - 1);
                                     myDate.setUTCDate(dateDay);
                                     myDate.setUTCHours(0);
                                     myDate.setUTCMinutes(0);
@@ -285,7 +285,7 @@ export class InvoiceTool {
                             }
                         }
                     }
-                });                
+                });
             }
         }
     }
@@ -310,20 +310,20 @@ export class InvoiceTool {
                                 var myComparativeDate: Date = null;
 
                                 if (entityPM.IsMultipleEntities) {
-                                    myComparativeDate = entityPM.InvoiceDate;
+                                    myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
                                 }
 
                                 else {
                                     if (list.FromDateTypeCode == "SHI") {
-                                        myComparativeDate = entityPM.OperationalDate;
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.OperationalDate).DateObject;
 
                                         if (myComparativeDate == null) {
-                                            myComparativeDate = entityPM.InvoiceDate;
+                                            myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
                                         }
                                     }
 
                                     else {
-                                        myComparativeDate = entityPM.InvoiceDate;
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
                                     }
                                 }
 

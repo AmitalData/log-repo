@@ -425,6 +425,6 @@ namespace WebFreight.Web.DataProviders
         public double? ChargeableWeight{ get; set; }
         public string IssuingCarrierAgentName { get; set; }
         public string ARInvoices { get; set; }
-
+        public string SpecialServicesTypeName { get; set; }
     }
 }

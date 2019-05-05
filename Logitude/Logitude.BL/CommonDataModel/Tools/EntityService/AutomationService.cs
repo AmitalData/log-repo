@@ -72,9 +72,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
 
             SaveAutomationResultEmailRecipientLists();
+            SaveAutomationLastUpdate(entityPM.ObjectTableId, entityPM.Tenant);
+            SaveAutomationHistory();
 
             List<string> eventCodeLists = new List<string>(new string[] { "AUCR" });
             AddTraceEvent(eventCodeLists);
+
+     
         }
 
         private void SaveAutomationResultEmailRecipientLists()
@@ -227,7 +231,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             AutomationMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+
             SaveAutomationResultEmailRecipientLists();
+            SaveAutomationLastUpdate(entityPM.ObjectTableId, entityPM.Tenant);
+            SaveAutomationHistory();
 
 
             List<string> eventCodeLists = new List<string>(new string[] { "AUUP" });

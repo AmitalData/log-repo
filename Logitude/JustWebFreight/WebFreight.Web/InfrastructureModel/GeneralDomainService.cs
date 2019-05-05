@@ -5319,7 +5319,8 @@ namespace WebFreight.Web.InfrastructureModel
             {
                 throw new Exception("Sorry! this user is not the last signed user!");
             }
-            bool isUpgrading;
+
+            bool isBlocking;
             using (
                 TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
             {
@@ -5328,8 +5329,7 @@ namespace WebFreight.Web.InfrastructureModel
                 //if (connection.Contains("Main"))
                 //{ }
 
-                isUpgrading = (from a in globalcontext.GlobalDBs
-                                    select a).FirstOrDefault().IsUpgrading;
+                isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
                 GlobalContactRepository repository = new GlobalContactRepository(globalcontext);
                 GlobalContact contact = repository.GetGlobalContactByEmailAndTenant(authEmail,tenant);
                 if (contact != null && contact.InActive)
@@ -5354,7 +5354,7 @@ namespace WebFreight.Web.InfrastructureModel
                 isIpAuthenticated = false;
             }
 
-            if (isUpgrading)
+            if (isBlocking)
             {
                 if (!isIpAuthenticated)
                 {

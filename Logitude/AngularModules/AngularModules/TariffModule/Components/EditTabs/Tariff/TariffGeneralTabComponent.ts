@@ -359,39 +359,49 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnInit, 
             if (!response.HasError) {
                 var tariffLines: ExcelTariffLines[] = response.Result;
                 if (tariffLines) {
-                    // delete old
-                    if (this.EntityPM.TariffLines != null && this.EntityPM.TariffLines.length > 0) {
-                        this.EntityPM.TariffLines.forEach(item => {
-                            this.EntityPM.RemoveTariffLine(item);
-                        });
-                    }
-                    // draw lines
-                    tariffLines.forEach(item => {
-                        var tariff = new TariffLinePM(null);
-                        tariff.StartDate = this.StartDate;
-                        tariff.ExpirationDate = this.ExpirationDate;
-                        tariff.Tenant = SessionLocator.Tenant;
-                        tariff.OriginPortId = item.FromPortId;
-                        tariff.OriginPortCode = item.FromPortCode;
-                        tariff.OriginPortName = item.FromPortName;
-                        tariff.DestinationPortId = item.ToPortId;
-                        tariff.DestinationPortCode = item.ToPortCode;
-                        tariff.DestinationPortName = item.ToPortName;
-                        tariff.MinPrice = item.MinPrice;
-                        tariff.Step1Price = item.Step1Price;
-                        tariff.Step2Price = item.Step2Price;
-                        tariff.Step3Price = item.Step3Price;
-                        tariff.Step4Price = item.Step4Price;
-                        tariff.Step5Price = item.Step5Price;
-                        tariff.Step6Price = item.Step6Price;
-                        tariff.Step7Price = item.Step7Price;
-                        tariff.Step8Price = item.Step8Price; 
-                        
-                        this.EntityPM.AddTariffLine(tariff); 
-                    });
+                    this.EntityPM.TariffLines = [];
+                    this.InsertNewRowsFromExcel(tariffLines);
                     this.LoadTariffLines();
                 }
             }
+        });
+    }
+
+    private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
+        tariffLines.forEach(item => {
+            var tariff = new TariffLinePM(null);
+            tariff.StartDate = this.StartDate;
+            tariff.ExpirationDate = this.ExpirationDate;
+            tariff.Tenant = SessionLocator.Tenant;
+            tariff.OriginPortId = item.FromPortId;
+            tariff.OriginPortCode = item.FromPortCode;
+            tariff.OriginPortName = item.FromPortName;
+            tariff.DestinationPortId = item.ToPortId;
+            tariff.DestinationPortCode = item.ToPortCode;
+            tariff.DestinationPortName = item.ToPortName;
+            tariff.MinPrice = item.MinPrice;
+            tariff.Step1Price = item.Step1Price;
+            tariff.Step2Price = item.Step2Price;
+            tariff.Step3Price = item.Step3Price;
+            tariff.Step4Price = item.Step4Price;
+            tariff.Step5Price = item.Step5Price;
+            tariff.Step6Price = item.Step6Price;
+            tariff.Step7Price = item.Step7Price;
+            tariff.Step8Price = item.Step8Price;
+
+            tariff.OriginPortText = item.FromPortText;
+            tariff.DestinationPortText = item.ToPortText;
+            tariff.MinPriceText = item.MinPriceText;
+            tariff.Step1PriceText = item.Step1PriceText;
+            tariff.Step2PriceText = item.Step2PriceText;
+            tariff.Step3PriceText = item.Step3PriceText;
+            tariff.Step4PriceText = item.Step4PriceText;
+            tariff.Step5PriceText = item.Step5PriceText;
+            tariff.Step6PriceText = item.Step6PriceText;
+            tariff.Step7PriceText = item.Step7PriceText;
+            tariff.Step8PriceText = item.Step8PriceText;
+
+            this.EntityPM.AddTariffLine(tariff);
         });
     }
 
@@ -422,6 +432,79 @@ export class TariffLineData extends BaseComponent {
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
         this.SetUIProperties();
+
+        this.CheckIfLineHasError();
+    }
+
+    public HasError: boolean = false;
+    private CheckIfLineHasError() {
+        var error: boolean = false;
+
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+            error = true;
+        }
+
+        if (!error) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+                error = true;
+            }
+        }
+
+        if (!error) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.MinPriceText) && AppTool.IsNullOrZero(this.EntityPM.MinPrice)) {
+                error = true;
+            }
+        }
+
+        if (!error) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step1PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step1Price)) {
+                error = true;
+            }
+        }
+
+        if (!error) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step2PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step2Price)) {
+                error = true;
+            }
+        }
+
+        if (!error) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step3PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step3Price)) {
+                error = true;
+            }
+        }
+
+        if (!error) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step4PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step4Price)) {
+                error = true;
+            }
+        }
+
+        if (!error) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step5PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step5Price)) {
+                error = true;
+            }
+        }
+
+        if (!error) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step6PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step6Price)) {
+                error = true;
+            }
+        }
+
+        if (!error) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step7PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step7Price)) {
+                error = true;
+            }
+        }
+
+        if (!error) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step8PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step8Price)) {
+                error = true;
+            }
+        }
+
+        this.HasError = error;
     }
 
     private SetUIProperties() {

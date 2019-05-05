@@ -18,6 +18,8 @@ namespace WebFreight.Web.DataProviders
         public double? TotalGrossWeight { get; set; }
         public double? TotalVolume { get; set; }
         public int? TotalAWBs{ get; set; }
+        public string TotalWeight { get; set; }
+        public string TotalQuantity { get; set; }
 
         public List<FlightBookingRecord> FlightBookingRecordList { get; set; }
     }
@@ -33,5 +35,15 @@ namespace WebFreight.Web.DataProviders
         public double? Volume { get; set; }
         public string DescriptionOfGoods { get; set; }
         public string Dimensions { get; set; }
+        public string ChargeableWeight  { get; set; }
+        public string DestinationPortCode   { get; set; }
+        public string PC { get; set; }
+        public string House { get; set; }
+        public string ConsigneeName { get; set; }
+        public string ConsigneeAddress { get; set; }
+        public string ShipmentNumber  { get; set; }
+        public string ShipperAddress { get; set; }
+
+
     }
 }

@@ -10,7 +10,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -1987,7 +1987,9 @@
     <Content Include="Social\Components\SocialMessagesComponent.html" />
     <Content Include="styles.css" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.html" />
@@ -2010,6 +2012,7 @@
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\DailyTimeSheetComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\MonthlyTimeSheetComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\TimeSheetWorkspaceComponent.html" />
+    <Content Include="TimeManagement\Components\Workspaces\TimeSheet\VacationsComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\WeeklyTimeSheetComponent.html" />
     <Content Include="Warehouse\Components\CopyFromReleasesPackagesComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\ConnectionsTab\WarehouseConnectionsTabComponent.html" />
@@ -6344,7 +6347,9 @@
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\MenuButtons\TariffMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />
@@ -6354,6 +6359,7 @@
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffSettingList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffTypeList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffVersionList.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMInitServices\TariffPMInitService.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLinePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffPM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffSettingPM.ts" />
@@ -6388,6 +6394,7 @@
     <TypeScriptCompile Include="TimeManagement\Components\Workspaces\SettingsWorkspaceComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Workspaces\TimeManagementWorkspaceComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Workspaces\TimeSheet\TimeSheetWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="TimeManagement\Components\Workspaces\TimeSheet\VacationsComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Workspaces\TimeSheet\WeeklyTimeSheetComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityLists\SprintList.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityLists\TMBudgetList.ts" />
@@ -6396,6 +6403,7 @@
     <TypeScriptCompile Include="TimeManagement\EntityLists\TMOfficeHourList.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityLists\TMProjectCategoryList.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityLists\TMProjectList.ts" />
+    <TypeScriptCompile Include="TimeManagement\EntityPMInitServices\TMBudgetPMInitService.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityPMs\SprintPM.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityPMs\TMBudgetPM.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityPMs\TMEmployeeTimePM.ts" />

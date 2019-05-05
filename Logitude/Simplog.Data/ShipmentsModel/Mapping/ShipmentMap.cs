@@ -701,7 +701,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.To).HasColumnName("To");
             this.Property(t => t.Origin).HasColumnName("Origin");
             this.Property(t => t.ARInvoices).HasColumnName("ARInvoices");
-            
+            this.Property(t => t.OrderGrossWeightEdited).HasColumnName("OrderGrossWeightEdited");
+            this.Property(t => t.OrderChargeableWeightEdited).HasColumnName("OrderChargeableWeightEdited");
+
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {

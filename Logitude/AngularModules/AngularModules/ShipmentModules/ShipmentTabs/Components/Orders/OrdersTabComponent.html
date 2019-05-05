@@ -567,8 +567,12 @@
                                                                 <LogLabel [ObjectFieldName]="'BookingNumberOfPackages'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                             </td>
 
-                                                            <td style="width: 100px;">
+                                                            <td style="width: 90px;">
                                                                 <LogTextBox [HideColumns]="true" [ObjectFieldName]="'BookingNumberOfPackages'" [Text]="BookingNumberOfPackages" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+
+                                                            <td style="width: 20px;">
+                                                                <div></div>
                                                             </td>
                                                         </tr>
 
@@ -577,8 +581,17 @@
                                                                 <LogLabel [ObjectFieldName]="'OrderGrossWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="BookingGrossWeightLabel"></LogLabel>
                                                             </td>
 
-                                                            <td style="width: 100px;">
-                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OrderGrossWeight'" [Text]="OrderGrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            <td>
+                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OrderGrossWeight'" [Text]="OrderGrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="GrossWeightLostFocus($event)"></LogTextBox>
+                                                            </td>
+
+                                                            <td>
+                                                                <div style="float: right;">
+
+                                                                    <Hyperlink *ngIf="EntityPM.OrderGrossWeightEdited" [IsEnabled]="IsEditingEnabled" (click)="ResetGrossWeightEdited()" title="{{'Shipment.M.ValueEditedByUser' | TextCodeTranslationPipe}}">
+                                                                        <img src="./Images/Buttons/Edit.png" />
+                                                                    </Hyperlink>
+                                                                </div>
                                                             </td>
                                                         </tr>
 
@@ -587,8 +600,12 @@
                                                                 <LogLabel [ObjectFieldName]="'BookingVolume'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="BookingVolumeLabel"></LogLabel>
                                                             </td>
 
-                                                            <td style="width: 100px;">
+                                                            <td>
                                                                 <LogTextBox [HideColumns]="true" [ObjectFieldName]="'BookingVolume'" [Text]="BookingVolume" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
                                                             </td>
                                                         </tr>
 
@@ -597,8 +614,17 @@
                                                                 <LogLabel [ObjectFieldName]="'OrderChargeableWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="BookingChargeableWeightLabel"></LogLabel>
                                                             </td>
 
-                                                            <td style="width: 100px;">
-                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OrderChargeableWeight'" [Text]="OrderChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            <td>
+                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OrderChargeableWeight'" [Text]="OrderChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="ChargeableWeightLostFocus($event)" [DontUseTimer]="'true'"></LogTextBox>
+                                                            </td>
+
+                                                            <td>
+                                                                <div style="float: right;">
+
+                                                                    <Hyperlink *ngIf="EntityPM.OrderChargeableWeightEdited" [IsEnabled]="IsEditingEnabled" (click)="ResetChargeableWeightEdited()" title="{{'Shipment.M.ValueEditedByUser' | TextCodeTranslationPipe}}">
+                                                                        <img src="./Images/Buttons/Edit.png" />
+                                                                    </Hyperlink>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -636,9 +662,9 @@
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="FormFieldRow" style="height:auto;">
+                                                        <tr>
                                                             <td>
-                                                                <div class="FillParent">
+                                                                <div style="height: 100px;">
                                                                     <LogTextBox [HideColumns]="true" [ObjectFieldName]="'DescriptionOfGoods'" [Text]="DescriptionOfGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                                                 </div>
                                                             </td>

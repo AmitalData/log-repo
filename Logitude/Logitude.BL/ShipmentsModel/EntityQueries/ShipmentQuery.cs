@@ -662,6 +662,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.FromPortCountry = fromPort.CountryName;
                         shipmentPM.FromPortName = fromPort.EnglishName;
                         shipmentPM.FromCountryCode = fromPort.CountryCode;
+                        shipmentPM.FromCountryId = fromPort.CountryId;
+                        shipmentPM.FromCountryIsEC = fromPort.CountryEC;
                     }
 
                     PortPM toPort = portQuery.GetSinglePM(shipment.ToPortId, shipment.Tenant);
@@ -677,6 +679,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.ToPortCountry = toPort.CountryName;
                         shipmentPM.ToPortName = toPort.EnglishName;
                         shipmentPM.ToCountryCode = toPort.CountryCode;
+                        shipmentPM.ToCountryId = toPort.CountryId;
+                        shipmentPM.ToCountryIsEC = toPort.CountryEC;
 
                         shipmentPM.MainCarriageFinalDestinationPortCode = toPort.Code;
                         shipmentPM.MainCarriageFinalDestinationPortName = toPort.EnglishName;
@@ -1138,6 +1142,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.OrderChargeableWeight = shipment.OrderChargeableWeight;
             shipmentPM.BookingNumberOfPackages = shipment.BookingNumberOfPackages;
             shipmentPM.OrderIsDangerouseGoods = shipment.OrderIsDangerouseGoods;
+            shipmentPM.OrderGrossWeightEdited = shipment.OrderGrossWeightEdited;
+            shipmentPM.OrderChargeableWeightEdited = shipment.OrderChargeableWeightEdited;
             shipmentPM.CutoffDate = shipment.CutoffDate;
             shipmentPM.AsAgreedFreight = shipment.AsAgreedFreight;
             shipmentPM.AsAgreedOtherCharges = shipment.AsAgreedOtherCharges;
@@ -1490,7 +1496,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.To = shipment.To;
             shipmentPM.Origin = shipment.Origin;
             shipmentPM.AgentComputed = shipment.AgentComputed;
-            shipmentPM.ComputedShipmentNumber = shipment.AgentComputed;
+            shipmentPM.ComputedShipmentNumber = shipment.ComputedShipmentNumber;
 
             if (!string.IsNullOrEmpty(shipmentPM.UpdatedByUserId))
             {
@@ -10253,6 +10259,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      ATD = m.MainCarriageATD,
                      OnCarriageATD = shipment.OnCarriageATD,
                      OnCarriageATA = shipment.OnCarriageATA,
+                     OnCarriageETA = shipment.OnCarriageETA,
                      ContainerNotes = jd.Notes,
                      MainCarriageToPortId = m.MainCarriageToPortId,
                      Transshipment1ToPortId = m.Transshipment1ToPortId,
@@ -10267,6 +10274,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      SplitOnCarriage = shipment.SplitOnCarriage,
                      PackageOnCarriageATA = jd.OnCarriageATA,
                      PackageOnCarriageATD = jd.OnCarriageATD,
+                     PackageOnCarriageETA = jd.OnCarriageETA,
                      PackageDliveryId = jd.DeliveryId,
                      MainCarriageFromPortId = m.MainCarriageFromPortId,
                      Transshipment1FromPortId = m.Transshipment1FromPortId,

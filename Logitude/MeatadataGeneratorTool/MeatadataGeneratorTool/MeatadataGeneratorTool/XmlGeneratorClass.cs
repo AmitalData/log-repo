@@ -1519,7 +1519,14 @@ namespace MeatadataGeneratorTool
                 SetAttribute("ControlPath", GetStringValue(f.ControlPath), TabElement, null);
                 SetAttribute("TextCode", GetStringValue(f.TextCode), TabElement, null);
                 SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), TabElement, null);
-                SetAttribute("IndexOrder", f.IndexOrder.ToString(), TabElement, null);
+                if (table.TabsObsList.Count > 1 && table.TabsObsList.GroupBy(t => t.IndexOrder).Count() == 1)
+                {
+                    SetAttribute("IndexOrder", table.TabsObsList.IndexOf(f).ToString(), TabElement, null);
+                }
+                else
+                {
+                    SetAttribute("IndexOrder", f.IndexOrder.ToString(), TabElement, null);
+                }
                 SetAttribute("HtmlComponentURL", GetStringValue(f.HtmlComponentURL), TabElement, null);
                 SetAttribute("HtmlComponentName", GetStringValue(f.HtmlComponentName), TabElement, null);
                 if (!string.IsNullOrEmpty(f.FeatureCode))

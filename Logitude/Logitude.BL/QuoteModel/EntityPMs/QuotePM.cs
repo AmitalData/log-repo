@@ -387,6 +387,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string QuotationSections { get; set; }
         public string SameOrFixed { get; set; }
 
+        public bool GrossWeightEdited { get; set; }
+        public bool ChargeableWeightEdited { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? NumberOfFollowUps { get; set; }
 
