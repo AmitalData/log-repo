@@ -70,8 +70,9 @@ export class AddEditPackageComponent {
                 this.DataContext.fatherComponent.BuildItemsSource();   
             }
 
-            this.DataContext.fatherComponent.ComputeTotals();
             this.DataContext.IsNewEntity = false;
+            this.DataContext.fatherComponent.ResetTotalEditedValues();
+            this.DataContext.fatherComponent.ComputeTotals();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }

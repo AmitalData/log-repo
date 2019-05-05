@@ -45,7 +45,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             ContactPM loggedUser = GetLoggedContactPM(entityPM.Tenant);
-            bool useLocal = (bool)loggedUser?.DontShowLocal;
+            bool useLocal = !(bool)loggedUser?.DontShowLocal;
 
             string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant, useLocal);
 

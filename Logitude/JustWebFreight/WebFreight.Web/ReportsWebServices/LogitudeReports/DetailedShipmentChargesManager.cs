@@ -29,9 +29,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private bool IncludeDraftInvoices = false;
         private bool IncludeEstimations = false;
         private bool SplitByCharges = false;
-        private bool IsByRegistryDate = false;
-        private bool IsByCreateDate = false;
         private bool IncludeCancelledShipments = false;
+        private string SelectedDateType = null;
         private IInvoiceContext myInvoiceContext;
         private ICommonDataContext myCommonContext;
         private IShipmentsContext myShipmentsContext;
@@ -43,20 +42,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myInvoiceContext = InvoiceContext.GetContext(tenant);
             myCommonContext = CommonDataContext.GetContext(tenant);
             myShipmentsContext = ShipmentsContext.GetContext(tenant);
-
-            AccountingSetting myAccountingSetting = (from d in myCommonContext.AccountingSettings where d.Id == tenant select d).FirstOrDefault();
-            if (myAccountingSetting != null)
-            {
-                if (myAccountingSetting.RegistryDateTypeCode == "FARP")
-                {
-                    this.IsByRegistryDate = true;
-                }
-            }
-
+            
             MemoryStream memoryStream = new MemoryStream(xmlFilters);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations myQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
 
+            QueryFilterItem filterItem_SelectedDateType = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "SelectedDateType").FirstOrDefault();
             QueryFilterItem filterItem_FromDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_IsLocalCurrency = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IsLocalCurrency").FirstOrDefault();
@@ -64,7 +55,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             QueryFilterItem filterItem_IncludeDraftInvoices = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeDraftInvoices").FirstOrDefault();
             QueryFilterItem filterItem_IncludeEstimations = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeEstimations").FirstOrDefault();
             QueryFilterItem filterItem_SplitByCharges = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "SplitByCharges").FirstOrDefault();
-            QueryFilterItem filterItem_IsByCreateDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IsByCreateDate").FirstOrDefault();
             QueryFilterItem filterItem_IncludeCancelledShipments = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeCancelledShipments").FirstOrDefault();
 
             if (filterItem_FromDate != null)
@@ -132,20 +122,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     SplitByCharges = (bool)filterItem_SplitByCharges.FieldValue;
                 }
             }
-
-            if (filterItem_IsByCreateDate != null)
-            {
-                if (filterItem_IsByCreateDate.FieldValue != null)
-                {
-                    IsByCreateDate = (bool)filterItem_IsByCreateDate.FieldValue;
-                }
-            }
-
+            
             if (filterItem_IncludeCancelledShipments != null)
             {
                 if (filterItem_IncludeCancelledShipments.FieldValue != null)
                 {
                     IncludeCancelledShipments = (bool)filterItem_IncludeCancelledShipments.FieldValue;
+                }
+            }
+
+            if (filterItem_SelectedDateType != null)
+            {
+                if (filterItem_SelectedDateType.FieldValue != null)
+                {
+                    SelectedDateType = filterItem_SelectedDateType.FieldValue.ToString();
                 }
             }
         }
@@ -273,7 +263,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                             myRecord.Consignee = myShipment.ConsigneeName;
                             myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
-
+                            myRecord.Direction = myShipment.DirectionName;
 
                             if (!string.IsNullOrEmpty(myShipment.BranchId))
                             {
@@ -310,6 +300,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                         myRecord.Consignee = myShipment.ConsigneeName;
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
+                        myRecord.Direction = myShipment.DirectionName;
 
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
@@ -369,6 +360,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                         myRecord.Consignee = myShipment.ConsigneeName;
                         myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
+                        myRecord.Direction = myShipment.DirectionName;
+
                         Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
                         if (myCurrency != null)
                         {
@@ -624,6 +617,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                                     myRecord.Consignee = myShipment.ConsigneeName;
                                     myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
+                                    myRecord.Direction = myShipment.DirectionName;
+
                                     if (myBranch != null)
                                     {
                                         myRecord.BranchCode = myBranch.Code;
@@ -683,6 +678,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                                     myRecord.Consignee = myShipment.ConsigneeName;
                                     myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
+                                    myRecord.Direction = myShipment.DirectionName;
+
                                     if (myBranch != null)
                                     {
                                         myRecord.BranchCode = myBranch.Code;
@@ -748,6 +745,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                                 myRecord.Consignee = myShipment.ConsigneeName;
                                 myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
+                                myRecord.Direction = myShipment.DirectionName;
+
                                 if (myCurrency != null)
                                 {
                                     myRecord.InvoiceCurrencyCode = myCurrency.Code;
@@ -840,6 +839,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.ShipperNotExporter = myShipment.ShipperNotExporterName;
                                 myRecord.Consignee = myShipment.ConsigneeName;
                                 myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
+                                myRecord.Direction = myShipment.DirectionName;
+
                                 if (myCurrency != null)
                                 {
                                     myRecord.InvoiceCurrencyCode = myCurrency.Code;
@@ -922,7 +923,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     )
                                     select d);
 
-            if (this.IsByCreateDate)
+            if (this.SelectedDateType == "CRT")
             {
                 iQueryable_Shipments = iQueryable_Shipments.Where(d => d.CreateDateTime != null);
 
@@ -937,7 +938,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
             }
 
-            else if (this.IsByRegistryDate)
+            else if (this.SelectedDateType == "REG")
             {
                 iQueryable_Shipments = iQueryable_Shipments.Where(d => d.RegistryDate != null);
 
@@ -952,7 +953,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
             }
 
-            else
+            else if (this.SelectedDateType == "OPE")
             {
                 iQueryable_Shipments = iQueryable_Shipments.Where(d => d.OperationalDate != null);
 

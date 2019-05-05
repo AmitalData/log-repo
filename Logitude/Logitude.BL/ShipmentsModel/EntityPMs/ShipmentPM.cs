@@ -1116,6 +1116,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public double? OrderGrossWeight { get; set; }
         public double? BookingVolume { get; set; }
 
+        public bool OrderGrossWeightEdited { get; set; }
+        public bool OrderChargeableWeightEdited { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? BookingNumberOfPackages { get; set; }
         public bool OrderIsDangerouseGoods { get; set; }
