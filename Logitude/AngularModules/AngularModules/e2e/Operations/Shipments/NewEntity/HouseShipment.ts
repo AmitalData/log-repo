@@ -17,7 +17,7 @@ export class HouseShipment {
 
     var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
     this.Helper.WaitByIdAndClick('NEWHOUSE');
-    this.ShipmentModes.SelectDicrctionTransportMode(LogitudeShipType,Direction, TransportMode, ShipmentType);
+    this.ShipmentModes.SelectDicrctionTransportMode(Direction, TransportMode, ShipmentType);
 
     this.FillHouseShipmentFields(ReferenceNumber);
     this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
