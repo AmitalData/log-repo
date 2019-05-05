@@ -372,7 +372,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             }
                );
-
+            qDiffAmount = qDiffAmount
+                .Where(r => 
+                Math.Abs(r.LocalAmountCredit) > 0.001//fuck the round !!!!
+                || Math.Abs(r.LocalAmountDebit) > 0.001//fuck the round !!!!
+                || Math.Abs(r.ForeignAmountCredit) > 0.001//fuck the round !!!!
+                || Math.Abs(r.ForeignAmountDebit) > 0.001)//fuck the round !!!!
+                ;
             if (check20181209)
             {
                 var qtest = qDiffAmount.ToList();
