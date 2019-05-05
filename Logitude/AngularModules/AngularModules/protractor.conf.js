@@ -33,11 +33,15 @@ exports.config = {
      login: 'e2e/Login/**/Login.e2e-spec.ts',
     //  CRM: 'e2e/CRM/**/CRMModule-spec.ts',
 
-     NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+     //NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
     //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
 
      //EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
     //  ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
+
+    // ********************* FullAccounting **********************************
+       NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
+
 
 
   },

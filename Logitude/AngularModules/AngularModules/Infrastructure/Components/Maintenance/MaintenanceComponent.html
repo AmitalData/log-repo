@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .BoxItem:hover {
         background: #EAEEF5;
@@ -95,7 +95,7 @@
                                         <table>
                                             <tr style="height:30px;">
                                                 <td style="vertical-align: bottom">
-                                                    <div (click)="ItemClicked(item)" class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">{{item.TranslatedName}}</div>
+                                                    <div (click)="ItemClicked(item)" id="{{'MaintenanceItem'+item.Code | IdGeneratorPipe}}"  class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">{{item.TranslatedName}}</div>
                                                 </td>
                                             </tr>
 
