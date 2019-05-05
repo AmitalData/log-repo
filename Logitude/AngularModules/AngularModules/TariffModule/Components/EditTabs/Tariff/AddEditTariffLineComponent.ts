@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TariffLineData } from './TariffGeneralTabComponent';
+import { TariffLineData } from './VersionTabComponent';
 import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';

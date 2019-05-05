@@ -39,6 +39,15 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
      [Key]
         [Column("Version")]
 	    public int Version { get; set; }
+        [Column("IsDraft")]
+	    public bool IsDraft { get; set; }
+        [Column("ApproveDate")]
+	    public DateTime? ApproveDate { get; set; }
+        [ForeignKey("ApprovedByUser")]
+        [Column("ApprovedByUserId")]
+	    public string ApprovedByUserId { get; set; }
+	      
+        public virtual User ApprovedByUser { get; set; }
     }
 }
 	 
