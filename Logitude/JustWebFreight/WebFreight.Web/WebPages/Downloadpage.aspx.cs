@@ -127,7 +127,7 @@ namespace WebFreight.Web.WebPages
 
                         if (securityKey.Contains(','))
                         {
-                            GetOpenFormatReportDocument(securityKey);
+                            GetOpenFormatReportDocumentData(securityKey);
                             isValid = Valid;
                         }
 
@@ -311,7 +311,7 @@ namespace WebFreight.Web.WebPages
                 {
                     if (securityKey.Contains(','))
                     {
-                        GetOpenFormatDocuments();
+                        DownLoadOpenFormatDocuments();
                     }
                   else  if (_DatainByte != null)
                     {
@@ -510,7 +510,7 @@ ExceptionInErrorLog.ToString()
         public string INIdocumentExtension;
         public string INICustomName;
         public bool Valid = true;
-        public void GetOpenFormatReportDocument(string securityKey)
+        public void GetOpenFormatReportDocumentData(string securityKey)
         {
             string[] keys = securityKey.Split(',');
 
@@ -555,7 +555,7 @@ ExceptionInErrorLog.ToString()
             }
         }
 
-       public void GetOpenFormatDocuments()
+       public void DownLoadOpenFormatDocuments()
         {
            if (BMKDatainByte != null && INIDatainByte != null)
             {

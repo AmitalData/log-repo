@@ -51,9 +51,10 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
 
     BuildTabs() {
         this.Tabs = [];
-        this.Tabs.push(new TariffDetailsTab(0, "GN"));
-        this.Tabs.push(new TariffDetailsTab(1, "VH"));
-        this.Tabs.push(new TariffDetailsTab(2, "EV"));
+        this.Tabs.push(new TariffDetailsTab(0, "VR"));
+        this.Tabs.push(new TariffDetailsTab(1, "GN"));
+        this.Tabs.push(new TariffDetailsTab(2, "VH"));
+        this.Tabs.push(new TariffDetailsTab(3, "EV"));
     }
 
     private Retries: number = 0;
@@ -137,6 +138,12 @@ class TariffDetailsTab {
         this.Code = code;
 
         switch (this.Code) {
+            case "VR": {
+                this.Header = "Version";
+                this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/VersionTabComponent";
+                break;
+            }
+
             case "GN": {
                 this.Header = "General";
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent";
