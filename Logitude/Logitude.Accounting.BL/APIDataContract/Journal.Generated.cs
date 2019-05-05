@@ -58,5 +58,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     public List<JournalLine> JournalLines { get; set; }
     
     public string JournalNumber { get; set; }
+        public bool IsLedgerCreated { get; set; }
     }
 } 

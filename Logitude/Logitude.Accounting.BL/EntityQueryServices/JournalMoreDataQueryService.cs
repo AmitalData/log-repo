@@ -21,7 +21,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 Line = poco.Line,
                 Tenant = poco.Tenant,
                 GeneralData = poco.GeneralData,
-                IsLedgerCreated = poco.IsLedgerCreated
 
 
             };
