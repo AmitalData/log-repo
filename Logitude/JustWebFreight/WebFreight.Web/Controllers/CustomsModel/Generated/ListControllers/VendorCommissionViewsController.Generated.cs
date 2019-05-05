@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string vendorid, string customerid, string modificationstypecode)
+        public HttpResponseMessage GetSingle(string vendorid, string customerid)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 VendorCommissionListQueryService vendorCommissionQuery = new VendorCommissionListQueryService(MyContext);
-                VendorCommissionList vendorCommissionList = vendorCommissionQuery.GetSingle(vendorid, customerid, modificationstypecode);
+                VendorCommissionList vendorCommissionList = vendorCommissionQuery.GetSingle(vendorid, customerid);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  vendorCommissionList);

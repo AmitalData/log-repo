@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  VendorCommission GetSingle(string vendorid, string customerid, string modificationstypecode, int tenant)
+		public  VendorCommission GetSingle(string vendorid, string customerid, int tenant)
         {
             return (from a in context.VendorCommissions
-                    where a.VendorId == vendorid && a.CustomerId == customerid && a.ModificationsTypeCode == modificationstypecode && a.Tenant == tenant
+                    where a.VendorId == vendorid && a.CustomerId == customerid && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             VendorCommissionKeys keys = entityKeys as VendorCommissionKeys;
             return (from a in context.VendorCommissions
-                    where a.VendorId == keys.VendorId && a.CustomerId == keys.CustomerId && a.ModificationsTypeCode == keys.ModificationsTypeCode
+                    where a.VendorId == keys.VendorId && a.CustomerId == keys.CustomerId
                     select a).FirstOrDefault();
         }
 		         
