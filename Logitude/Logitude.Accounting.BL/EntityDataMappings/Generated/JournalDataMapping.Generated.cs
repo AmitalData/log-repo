@@ -45,7 +45,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsVoided, 
 	         VoidedByJournalId, 
 	         ExternalSystem, 
-	         QueueId,
+	         QueueId, 
+	         IsLedgerCreated,
 	      }
 
 
@@ -84,7 +85,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         VoidedByJournalId, 
 	         ExternalSystem, 
 	         QueueId, 
-	         StatusLocalName,
+	         StatusLocalName, 
+	         IsLedgerCreated,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -206,6 +208,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueId))
             {
 				entityPOCO.QueueId = entityPM.QueueId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLedgerCreated))
+            {
+				entityPOCO.IsLedgerCreated = entityPM.IsLedgerCreated;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -334,6 +341,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.QueueId = entityPOCO.QueueId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsLedgerCreated))
+            {
+					entityPM.IsLedgerCreated = entityPOCO.IsLedgerCreated;
+            }
+
 		}
 
 		public void PMToOldPM(JournalPM entityPM, JournalPM oldEntityPM)
@@ -453,6 +465,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QueueId))
             {
                 oldEntityPM.QueueId = entityPM.QueueId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLedgerCreated))
+            {
+                oldEntityPM.IsLedgerCreated = entityPM.IsLedgerCreated;
             }
 			
 		}

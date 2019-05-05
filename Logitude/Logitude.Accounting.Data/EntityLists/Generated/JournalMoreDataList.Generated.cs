@@ -24,8 +24,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public int Tenant  { get; set; }
        [DataMember]
        public string GeneralData  { get; set; }
-       [DataMember]
-       public bool IsLedgerCreated  { get; set; }
    }
 
 }

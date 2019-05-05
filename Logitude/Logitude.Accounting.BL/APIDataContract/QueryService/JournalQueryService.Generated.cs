@@ -113,6 +113,7 @@ using Logitude.Accounting.Data;
 
 							 
 				   temp.JournalNumber = MyEntityPM.JournalNumber;					
+				   temp.IsLedgerCreated = MyEntityPM.IsLedgerCreated;					
 				   return temp;
 			}
             catch (Exception ex)

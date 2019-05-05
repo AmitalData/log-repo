@@ -965,6 +965,10 @@
     <Compile Include="Migrations\201905020921486_AddIsExternalEntityFix.Designer.cs">
       <DependentUpon>201905020921486_AddIsExternalEntityFix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905050709246_MoveField_IsLedgerCreated.cs" />
+    <Compile Include="Migrations\201905050709246_MoveField_IsLedgerCreated.Designer.cs">
+      <DependentUpon>201905050709246_MoveField_IsLedgerCreated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201905050736575_changeTaeiffLinePricesFromIntegerToDecimal_Samar.cs" />
     <Compile Include="Migrations\201905050736575_changeTaeiffLinePricesFromIntegerToDecimal_Samar.Designer.cs">
       <DependentUpon>201905050736575_changeTaeiffLinePricesFromIntegerToDecimal_Samar.cs</DependentUpon>
@@ -1634,6 +1638,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905020921486_AddIsExternalEntityFix.resx">
       <DependentUpon>201905020921486_AddIsExternalEntityFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905050709246_MoveField_IsLedgerCreated.resx">
+      <DependentUpon>201905050709246_MoveField_IsLedgerCreated.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905050736575_changeTaeiffLinePricesFromIntegerToDecimal_Samar.resx">
       <DependentUpon>201905050736575_changeTaeiffLinePricesFromIntegerToDecimal_Samar.cs</DependentUpon>
