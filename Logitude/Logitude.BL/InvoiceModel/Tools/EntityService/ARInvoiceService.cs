@@ -234,9 +234,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            this.ARInvoiceStockNumber();
-
-
             ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
             ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
 
@@ -268,11 +265,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 shipmentReceivableRepository.SubmitChanges();
             }
 
-         
+            if (entityPM.IsInvoiceNumberFromStock)
+            {
+                this.ARInvoiceStockNumber();
+            }
+
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.OnApprovingInvoice();
-
           
             if (this.isApprovingInvoice || entityPM.IsAutoCredit)
             {
@@ -555,6 +555,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         }
                     }
                 }
+
                 else
                 {
                     if (entityPM.ARInvoiceStockId != this.invoice.ARInvoiceStockId)
@@ -574,6 +575,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             this.CreateInvoiceStockEvent("NRTS", entityPM.Id, stockLine.Number + " returned to " + stock.Name);
                             this.entityPM.IsInvoiceNumberFromStock = false; 
                         }
+
                         else
                         {
                             stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(entityPM.ARInvoiceStockId, tenant);

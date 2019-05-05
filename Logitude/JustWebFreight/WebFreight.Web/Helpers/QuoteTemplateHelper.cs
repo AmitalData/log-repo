@@ -570,11 +570,11 @@ namespace WebFreight.Web.Helpers
             QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(tenant);
             
 
-            QuoteTemplatePM orignalQuoteTemplatePM = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
+            QuoteTemplatePM orignalQuoteTemplatePM = quoteTemplateQuery.GetSinglePM(quoteTemplateId);
 
             if (orignalQuoteTemplatePM != null)
             {
-                QuoteTemplateSetting copySetting = CopyQuoteTemplaetSetting(orignalQuoteTemplatePM.QuoteTemplateSettingId, tenant);
+                QuoteTemplateSetting copySetting = CopyQuoteTemplaetSetting(orignalQuoteTemplatePM.QuoteTemplateSettingId, tenant , orignalQuoteTemplatePM.Tenant);
                 if (copySetting != null)
                 {
                     newQuoteTemplateCopy = new QuoteTemplatePM()
@@ -766,6 +766,15 @@ namespace WebFreight.Web.Helpers
                     ShowTitleTotalPerContainersTable = setting.ShowTitleTotalPerContainersTable,
                     TotalPerContainersCurrencyType = !string.IsNullOrEmpty(setting.TotalPerContainersCurrencyType)? setting.TotalPerContainersCurrencyType : "SALE",
                     ShowPageBreakBeforeTotalPerContainersTable = setting.ShowPageBreakBeforeTotalPerContainersTable,
+                    ShowSaleMaxMinAmountContainers = setting.ShowSaleMaxMinAmountContainers,
+                    ShowSaleMaxMinAmountPackages =  setting.ShowSaleMaxMinAmountPackages,
+                    ShowChargeNoteContainers = setting.ShowChargeNoteContainers,
+                    ShowChargeDescriptionContainers = setting.ShowChargeDescriptionContainers,
+                    ShowChargeDescriptionPackages = setting.ShowChargeDescriptionPackages,
+                    ShowChargeNotePackages = setting.ShowChargeNotePackages,
+                    ShowTotalPerChargeGroupContainers = setting.ShowTotalPerChargeGroupContainers,
+                    ShowTotalPerChargeGroupPackages = setting.ShowTotalPerChargeGroupPackages,
+                
                 };
 
                 if (string.IsNullOrEmpty(copySetting.TotalPerContainersTableDesignId))
