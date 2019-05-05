@@ -12,6 +12,8 @@ using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.Data;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.TariffModule.BL.EntityDataMappings
 {
@@ -61,6 +63,21 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             string mySearchFields = "";
 
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Name);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.Description);
+
+            if (entityPM.ContractNumber != null)
+            {
+                MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ContractNumber.ToString());
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.SellerId))
+            {
+                Card iCard = CardRepository.GetSingleCard(entityPM.SellerId, entityPM.Tenant, true);
+                if (iCard != null)
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, iCard.EnglishName);
+                }
+            }
 
             entityPM.SearchFields = mySearchFields;
             entityPOCO.SearchFields = mySearchFields;

@@ -581,7 +581,12 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.pubSubAdvanceQueryFiltersServiceRecived.Stream.emit(filters);
     }
     HasPermition: boolean = true;
+
+    NewButtonId: string;
+
     ngOnInit() {
+
+        this.NewButtonId = "NewButton_" + this.ObjectTableName;
 
         if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false)) {
             this.IsNewEntityButtonDisabled = true;
