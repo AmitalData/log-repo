@@ -599,10 +599,9 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
             this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
             this.EntityPM.Ratio = AppTool.GetRatio(this.DirectionId, this.TransportModeId, this.ShipmentTypeId, this.TenantPM.CountryCode);
             this.EntityPM.DimFactor = AppTool.GetDimFactorFromRatio(this.EntityPM.Ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.ChargeableWeightUnitCode);
+            this.ComputeOrderVolumetricWeight();
+            this.ComputeChargeableWeight();
         }
-
-        this.ComputeOrderVolumetricWeight();
-        this.ComputeChargeableWeight();
     }
     SetPartners() {
         if (!this.IsBuildFromQuote && !this.IsCopyFromShipment) {
@@ -3269,6 +3268,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
                 this.EntityPM.NumberOfPackages = this.SourceEntityPM.NumberOfPackages;
                 this.EntityPM.TEU = this.SourceEntityPM.TEU;
                 this.EntityPM.GrossWeightPerTon = this.SourceEntityPM.GrossWeightPerTon;
+
+                this.EntityPM.GrossWeightEdited = this.SourceEntityPM.GrossWeightEdited;
+                this.EntityPM.ChargeableWeightEdited = this.SourceEntityPM.ChargeableWeightEdited;
+                this.EntityPM.OrderGrossWeightEdited = this.SourceEntityPM.OrderGrossWeightEdited;
+                this.EntityPM.OrderChargeableWeightEdited = this.SourceEntityPM.OrderChargeableWeightEdited;
             }
 
             else {
@@ -3292,6 +3296,11 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
                 this.EntityPM.NumberOfPackages = null;
                 this.EntityPM.TEU = null;
                 this.EntityPM.GrossWeightPerTon = null;
+
+                this.EntityPM.GrossWeightEdited = false;
+                this.EntityPM.ChargeableWeightEdited = false;
+                this.EntityPM.OrderGrossWeightEdited = false;
+                this.EntityPM.OrderChargeableWeightEdited = false;
             }
 
             this.SetUIProperties_OrderDetails();

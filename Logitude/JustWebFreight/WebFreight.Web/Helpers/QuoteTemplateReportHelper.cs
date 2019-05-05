@@ -162,7 +162,7 @@ namespace Logitude.BL.Helpers
             byte[] footerdata = GetQuoteTemplatePageHeaderFooter(template, setting, quoteTemplateTextDesignsList, tenant, true, "Footer");
             footerHtmlString += GetBodyString(footerdata);
 
-            PdfConverter pdfConverter = new PdfConverter();
+            HtmlToPdfConverter pdfConverter = new HtmlToPdfConverter();
             pdfConverter.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
             pdfConverter.PdfDocumentOptions.PdfPageSize = PdfPageSize.A4;
             pdfConverter.HtmlViewerWidth = 800;
@@ -248,8 +248,9 @@ namespace Logitude.BL.Helpers
             bodyHtmlString = htmlDocument.DocumentNode.InnerHtml;
 
             bodyHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, bodyHtmlString, quotePM, template, ref objectTabelRepository, ref objectTable);
-
-            data = pdfConverter.GetPdfBytesFromHtmlString(bodyHtmlString);
+            pdfConverter.TriggeringMode = TriggeringMode.Auto;
+            //data = pdfConverter.GetPdfBytesFromHtmlString(bodyHtmlString);
+            data = pdfConverter.ConvertHtml(bodyHtmlString, null);
 
             return data;
         }

@@ -113,7 +113,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                                         else
                                         {
-                                            if (entity.ShipmentType.Code.Contains("FCL"))
+                                            if (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL"))
                                             {
                                                 if (item.Pieces == null || item.Pieces == 0)
                                                 {

@@ -230,12 +230,22 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
                      
             if (!isRequired) {
                 if (this.CardCode != null) {
-                    if (this.CardCode.length >= 5) {
-                        this.UIProperties.SetValidity("CardCode", this.ObjectTableName, false, "Code field must be less than 5 and more than 0");
+                    if (this.CardTableName == "Trucker") {
+                        if (this.CardCode.length >= 7) {
+                            this.UIProperties.SetValidity("CardCode", this.ObjectTableName, false, "Code field must be less than 7 and more than 0");
+                        }
+                        else {
+                            this.UIProperties.SetValidity("CardCode", this.ObjectTableName, true, "");
+                        }
                     }
-
                     else {
-                        this.UIProperties.SetValidity("CardCode", this.ObjectTableName, true, "");
+                        if (this.CardCode.length >= 5) {
+                            this.UIProperties.SetValidity("CardCode", this.ObjectTableName, false, "Code field must be less than 5 and more than 0");
+                        }
+
+                        else {
+                            this.UIProperties.SetValidity("CardCode", this.ObjectTableName, true, "");
+                        }
                     }
                 }
             }
@@ -883,8 +893,15 @@ export class NewPartnerTamplate extends BaseComponent implements OnInit {
             }
 
             else {
-                if (this.CardCode.length >= 5) {
-                    errors.push("Code must be less than 5");
+                if (this.CardTableName == "Trucker") {
+                    if (this.CardCode.length >= 7) {
+                        errors.push("Code must be less than 7");
+                    }
+                }
+                else {
+                    if (this.CardCode.length >= 5) {
+                        errors.push("Code must be less than 5");
+                    }
                 }
             }
         }

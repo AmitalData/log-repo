@@ -44,19 +44,17 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
         internal static void MapARInvoiceStockLine(ARInvoiceStockLinePM itemPM, ARInvoiceStockLine itemPoco, bool isNewEntity, string loggedContactId)
         {
-            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
-
             if (isNewEntity)
             {
                 itemPoco.Id = itemPM.Id;
                 itemPoco.Tenant = itemPM.Tenant;
                 itemPoco.ARInvoiceStockId = itemPM.ARInvoiceStockId;
-                itemPoco.CreateDate = todayDateTime;
+                itemPoco.CreateDate = itemPM.CreateDate;
                 itemPoco.CreatedByUserId = loggedContactId;
             }
 
             itemPoco.Number = itemPM.Number;
-            itemPoco.UpdateDate = todayDateTime;
+            itemPoco.UpdateDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
             itemPoco.UpdatedByUserId = loggedContactId;
             itemPoco.IsUsed = itemPM.IsUsed;
             itemPoco.ARInvoiceId = itemPM.ARInvoiceId;

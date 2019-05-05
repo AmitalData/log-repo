@@ -342,6 +342,9 @@ void SaveEntityControllerOutput(string outputFileName)
 
 		 if(tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting")
 			 contextTenantParam = "entityPM.Id";
+
+            if(tableName == "Distributor")
+                contextTenantParam = tenantStringParam= "authToken.Tenant";
     }
 
  
@@ -438,7 +441,7 @@ else
          
 		
 <#+
-		 if(hasTenant || tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting")
+		 if(hasTenant || tableName == "Tenant" || tableName == "TenantManagement" || tableName == "AccountingSetting" || tableName == "Distributor")
          {
 	#><#= ""
  #>

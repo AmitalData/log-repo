@@ -198,6 +198,7 @@
     <Content Include="2019.R1\03 - 2019\Day 03 [Abed] UpdateQuoteTemplateTextCodeFieldsChargeNots.sql" />
     <Content Include="2019.R1\03 - 2019\Day 21 [Abed]CustomerTenantAccessesAddSomeFieldsToSearchField.sql" />
     <Content Include="2019.R1\04 - 2019\Day 02 [Rabaia]Update Category For Level Field DW.sql" />
+    <Content Include="2019.R1\04 - 2019\Day 25 [Samar] set is veichle to false.sql" />
     <Content Include="2019.R1\04 - 2019\Day 09 [Maheera] Update Description of TMEmployee Table.sql" />
     <Content Include="2019.R1\04 - 2019\Day 8 [Khalid] Delete TextCodes and Features APInvoice ErrorInTransferInvoices.sql" />
     <Content Include="2019.R1\04 - 2019\Day 7 [Abed]DROPCONSTRAINTFK_dbo.APILogsData_dbo.APILogs_Id.sql" />

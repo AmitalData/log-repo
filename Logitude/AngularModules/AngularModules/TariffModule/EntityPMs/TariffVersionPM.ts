@@ -64,6 +64,21 @@ export class TariffVersionPM {
     public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
        
 	 
+    private isDraft: boolean;
+    public get IsDraft() { return this.isDraft; }
+    public set IsDraft(newValue: boolean) { if (this.isDraft != newValue) { this.isDraft = newValue; this.MarkAsDirty("IsDraft"); } }
+       
+	 
+    private approveDate: Date;
+    public get ApproveDate() { return this.approveDate; }
+    public set ApproveDate(newValue: Date) { if (this.approveDate != newValue) { this.approveDate = newValue; this.MarkAsDirty("ApproveDate"); } }
+       
+	 
+    private approvedByUserId: string;
+    public get ApprovedByUserId() { return this.approvedByUserId; }
+    public set ApprovedByUserId(newValue: string) { if (this.approvedByUserId != newValue) { this.approvedByUserId = newValue; this.MarkAsDirty("ApprovedByUserId"); } }
+       
+	 
 
     public OldEntityPM: TariffVersionPM;
 		
