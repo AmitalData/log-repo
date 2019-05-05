@@ -34,6 +34,8 @@ using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Counters;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -379,6 +381,65 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetApproveVersion(string tariffId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
+
+                string loggedContactId = null;
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                if (loggedContact != null)
+                {
+                    loggedContactId = loggedContact.Id;
+                }
+                
+                ITariffModuleContext context = TariffModuleContext.GetContext(tenant);
+                TariffRepository tariffRepository = new TariffRepository(context);
+                TariffVersionRepository tariffVersionRepository = new TariffVersionRepository(context);
+
+                Tariff tariff = tariffRepository.GetSingle(tariffId, tenant);
+
+                if (tariff != null)
+                {
+                    TariffVersion tariffVersion = tariffVersionRepository.GetSingle(tariffId, tariff.LastVersion, tenant);
+                    if(tariffVersion != null)
+                    {
+                        tariffVersion.IsDraft = false;
+                        tariffVersion.ApprovedByUserId = loggedContactId;
+                        tariffVersion.ApproveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                        tariffVersionRepository.Update(tariffVersion);
+                        tariffVersionRepository.SubmitChanges();
+
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            Tenant = tenant,
+                            EventTypeCode = "VNAP",
+                            UserId = loggedContactId,
+                            EntityId = tariffId,
+                            ObjectTableName = "Tariff",
+                            Notes = "Version " + tariffVersion.Version + " approved",
+                        });
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
             catch (Exception ex)
