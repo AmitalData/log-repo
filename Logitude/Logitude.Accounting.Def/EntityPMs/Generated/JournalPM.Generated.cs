@@ -847,7 +847,30 @@ namespace Logitude.Accounting.Def.EntityPMs
               }
              set {  deletedJournalReconciles = value; }
 	    }
-	     }
+	  	  private bool isLedgerCreated ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsLedgerCreated  
+	   {
+	    
+	     get
+		{
+		   return isLedgerCreated;
+		 }
+		 set
+		 {
+		   if(isLedgerCreated != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsLedgerCreated",OldValue=isLedgerCreated,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isLedgerCreated=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 
