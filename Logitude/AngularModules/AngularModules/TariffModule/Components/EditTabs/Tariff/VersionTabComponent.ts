@@ -14,6 +14,7 @@ import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
 import { AppTool, FontTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 declare var ResultAsArray: any;
 
 @Component({
@@ -30,11 +31,13 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
     public IsResourcesReady: boolean = false;
     private TariffDomainService: TariffDomainService;
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
+    public IsApproveVersionButtonVisible: boolean = false;
+    public IsDraftVersion: boolean = true;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityArgs = entityArgs;
-        this.Listen();
+        this.Listen();        
     }
 
     private SaveCompletedEvent: any = null;
@@ -70,9 +73,21 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
             this.EntityPM = this.EntityArgs.EntityPM;
             this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
             this.TariffDomainService = new TariffDomainService();
+
+            this.SetUIProperties();
             this.SetStepsLabelsAndVisibility();
             this.LoadTariffLines();
         });
+    }
+
+    SetUIProperties() {
+        var isApproveVersionButtonVisible: boolean = false;
+        
+        if (this.IsDraftVersion && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
+            isApproveVersionButtonVisible = true;
+        }
+
+        this.IsApproveVersionButtonVisible = isApproveVersionButtonVisible;
     }
 
     get StartDate() {
@@ -370,7 +385,17 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
             }
         });
     }
+
+    ApproveVersionClicked() {
+        this.TariffDomainService.ApproveVersion(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.IsDraftVersion = false;
+                this.SetUIProperties();
+            }
+        });
+    }
 }
+
 export class TariffLineData extends BaseComponent {
     public EntityPM: TariffLinePM;
     public DataContext: TariffLineData = this;
