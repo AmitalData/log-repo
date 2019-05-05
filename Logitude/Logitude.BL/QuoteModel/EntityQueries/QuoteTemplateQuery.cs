@@ -155,7 +155,38 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return entity;
 
         }
+        public QuoteTemplatePM GetSinglePM(string id)
+        {
+            QuoteTemplatePM entity;
+            entity = (from a in repository.quotesContext.QuoteTemplates
+                      where a.Id == id
+                      select new QuoteTemplatePM()
+                      {
+                          Id = a.Id,
+                          Tenant = a.Tenant,
+                          HeaderDocId = a.HeaderDocId,
+                          FooterDocId = a.FooterDocId,
+                          QuoteTemplateSettingId = a.QuoteTemplateSettingId,
+                          Name = a.Name,
+                          IsTemplate = a.IsTemplate,
+                          OriginalQuoteTemplateId = a.OriginalQuoteTemplateId,
+                          CreateDate = a.CreateDate,
+                          UpdateDate = a.UpdateDate,
+                          CreatedByUserId = a.CreatedByUserId,
+                          UpdatedByUserId = a.UpdatedByUserId,
+                          SearchFields = a.SearchFields,
+                          TemplateTypeCode = a.TemplateTypeCode,
+                          IsDefault = a.IsDefault,
+                          InActive = a.InActive,
+                          IsEnabledForCustomers = a.IsEnabledForCustomers,
+                          IsCopiedAtSignup = a.IsCopiedAtSignup,
+                      }).FirstOrDefault();
 
+
+
+            return entity;
+
+        }
 
         public QuoteTemplatePM GetSinglePMByQuoteId(string id, string quoteId, int tenant, string defultQuoteTemplate=null, string quotationSections=null)
         {
