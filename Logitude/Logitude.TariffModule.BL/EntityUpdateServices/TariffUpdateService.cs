@@ -19,7 +19,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 {
     public partial class TariffUpdateService
     {
-
         protected override void OnCreating(TariffPM entityPM, Server.Tools.EntityPM entityParentPM)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
@@ -78,6 +77,8 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 {
                     entityPM.CreatedByUserId = myLoggedUserId;
                 }
+
+                this.CreateTariffVersion(entityPM);
             }
         }
 
@@ -162,5 +163,25 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
         }
 
+        private void CreateTariffVersion(TariffPM entityPM)
+        {
+            entityPM.LastVersion += 1;
+
+            TariffVersionPM tariffVersionPM = new TariffVersionPM()
+            {
+                TariffId = entityPM.Id,
+                Tenant = entityPM.Tenant,
+                CreateDate = entityPM.CreateDate,
+                CreatedByUserId = entityPM.CreatedByUserId,
+                StartDate = entityPM.StartDate,
+                ExpirationDate = entityPM.ExpirationDate,
+                Version = entityPM.LastVersion,
+                SearchFields = entityPM.LastVersion.ToString(),
+                ChangeSetOp = ChangeSetOperation.Insert,
+            };
+
+            TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            tariffVersionUpdateService.Update(tariffVersionPM, true);
+        }
     }
 }

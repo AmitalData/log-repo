@@ -29,7 +29,7 @@ namespace Logitude.TariffModule.Data.EntityLists
        [DataMember]
        public int Version  { get; set; }
        [DataMember]
-       public int? MinPrice  { get; set; }
+       public decimal? MinPrice  { get; set; }
        [DataMember]
        public string OriginPortName  { get; set; }
        [DataMember]

@@ -252,6 +252,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.UpdateInvoiceLines();
             this.UpdateTotalVats();
             this.BuildSearchFields();
+            // Full Accounting - Tax Fields Work 
+            this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
 
             ARInvoiceHelper helper = new ARInvoiceHelper();
             helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity,this.objectContext,this.myCommonContext,isVoidingInvoice);

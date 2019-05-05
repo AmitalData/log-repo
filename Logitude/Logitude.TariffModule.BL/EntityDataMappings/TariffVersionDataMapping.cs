@@ -10,16 +10,23 @@ using Logitude.Server.Tools;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.BL.EntityPMs; 
 using Logitude.TariffModule.Data;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.TariffModule.BL.EntityDataMappings
 {
    
    public partial class TariffVersionDataMapping: IMapping<TariffVersionPM, TariffVersion>
    {
-
         public void CustomPMToPOCO(TariffVersionPM entityPM, TariffVersion entityPOCO)
         {
-            //throw new NotImplementedException();
+            AddPOCOPropertyName(POCOPropertyNames.TariffId);
+            AddPOCOPropertyName(POCOPropertyNames.Tenant);
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPOCO.TariffId = entityPM.TariffId;
+                entityPOCO.Tenant = entityPM.Tenant;
+            }
         }
 
         public void CustomPOCOToPM(TariffVersionPM entityPM, TariffVersion entityPOCO)

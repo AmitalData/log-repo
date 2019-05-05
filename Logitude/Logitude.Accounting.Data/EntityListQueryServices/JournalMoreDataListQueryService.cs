@@ -24,7 +24,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<JournalMoreDataList> query = (from a in iQueryable
                                                      select new JournalMoreDataList()
                                                      {
-                                                         IsLedgerCreated = a.IsLedgerCreated,
                                                          GeneralData = a.GeneralData,
                                                          JournalId = a.JournalId,
                                                          Line =a.Line,

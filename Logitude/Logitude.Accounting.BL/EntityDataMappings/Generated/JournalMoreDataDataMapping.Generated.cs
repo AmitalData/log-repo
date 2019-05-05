@@ -25,8 +25,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         JournalId, 
 	         Line, 
 	         Tenant, 
-	         GeneralData, 
-	         IsLedgerCreated,
+	         GeneralData,
 	      }
 
 
@@ -36,8 +35,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         JournalId, 
 	         Line, 
 	         Tenant, 
-	         GeneralData, 
-	         IsLedgerCreated,
+	         GeneralData,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -54,11 +52,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GeneralData))
             {
 				entityPOCO.GeneralData = entityPM.GeneralData;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLedgerCreated))
-            {
-				entityPOCO.IsLedgerCreated = entityPM.IsLedgerCreated;
 			}
 			}
 
@@ -85,11 +78,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.GeneralData = entityPOCO.GeneralData;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsLedgerCreated))
-            {
-					entityPM.IsLedgerCreated = entityPOCO.IsLedgerCreated;
-            }
-
 		}
 
 		public void PMToOldPM(JournalMoreDataPM entityPM, JournalMoreDataPM oldEntityPM)
@@ -104,11 +92,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GeneralData))
             {
                 oldEntityPM.GeneralData = entityPM.GeneralData;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLedgerCreated))
-            {
-                oldEntityPM.IsLedgerCreated = entityPM.IsLedgerCreated;
             }
 			
 		}

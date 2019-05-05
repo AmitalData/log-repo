@@ -206,6 +206,75 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isDraft ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsDraft  
+	   {
+	    
+	     get
+		{
+		   return isDraft;
+		 }
+		 set
+		 {
+		   if(isDraft != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDraft",OldValue=isDraft,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isDraft=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? approveDate ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? ApproveDate  
+	   {
+	    
+	     get
+		{
+		   return approveDate;
+		 }
+		 set
+		 {
+		   if(approveDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ApproveDate",OldValue=approveDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   approveDate=value;
+		   }
+			
+		 }
+	   }
+	  private string approvedByUserId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ApprovedByUserId  
+	   {
+	    
+	     get
+		{
+		   return approvedByUserId;
+		 }
+		 set
+		 {
+		   if(approvedByUserId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ApprovedByUserId",OldValue=approvedByUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   approvedByUserId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

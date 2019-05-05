@@ -239,6 +239,11 @@ export class JournalPM {
             this.journalReconciles = newValue;
         }
     }
+    private isLedgerCreated: boolean;
+    public get IsLedgerCreated() { return this.isLedgerCreated; }
+    public set IsLedgerCreated(newValue: boolean) { if (this.isLedgerCreated != newValue) { this.isLedgerCreated = newValue; this.MarkAsDirty("IsLedgerCreated"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		
