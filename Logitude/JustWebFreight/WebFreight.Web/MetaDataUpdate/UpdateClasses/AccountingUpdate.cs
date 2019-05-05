@@ -1784,6 +1784,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AuthoritiesReports", DefaultText = "Authorities Reports", LocalDefaultText = "דוחות לרשויות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.856Report", DefaultText = "856 Report", LocalDefaultText = "דוח 856", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OpenFormat", DefaultText = "Open Format", LocalDefaultText = "דוח מבנה אחיד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Generate1000",
+                DefaultText = "Generate a vendor file for the system 1000", LocalDefaultText = "הפקת קובץ ספקים למערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails()
+            {
+                Code = "Accounting.General.O.Generate1000",
+                DefaultText = "Generate a vendor file for the system 1000",
+                LocalDefaultText = "הפקת קובץ ספקים למערכת 1000",
+                ObjectTableId = objectTable.Id,
+                Tenant = 0,
+                TextCodeTypeCode = "O",
+            }, textCodeRepository, textcodes);
+            
+            AddTextCodes.AddTextCode(new TextCodeDetails()
+            {
+                Code = "Accounting.General.O.Receiving1000",
+                DefaultText = "Receiving file withholding tax system 1000",
+                LocalDefaultText = "קליטת קובץ ניכוי מס מערכת 1000",
+                ObjectTableId = objectTable.Id,
+                Tenant = 0,
+                TextCodeTypeCode = "O",
+            }, textCodeRepository, textcodes);
+
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountingPeriods", DefaultText = "Accounting Periods", LocalDefaultText = "תקופות חשבונאיות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountingPeriodsDefinition", DefaultText = "Accounting Periods Definition", LocalDefaultText = "הגדרת תקופות חשבונאיות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Fix", DefaultText = "Fix", LocalDefaultText = "תקן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);

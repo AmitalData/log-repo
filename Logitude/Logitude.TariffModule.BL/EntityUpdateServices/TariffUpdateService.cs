@@ -178,6 +178,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 Version = entityPM.LastVersion,
                 SearchFields = entityPM.LastVersion.ToString(),
                 ChangeSetOp = ChangeSetOperation.Insert,
+                IsDraft = true,
             };
 
             TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);

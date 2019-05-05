@@ -927,6 +927,7 @@
     <Compile Include="Controllers\AccountingModel\AccountingEntegrityCheckController.cs" />
     <Compile Include="Controllers\AccountingModel\AccountingNoteController.cs" />
     <Compile Include="Controllers\AccountingModel\AccountingNoteViewsController.cs" />
+    <Compile Include="Controllers\AccountingModel\AccountingOpController.cs" />
     <Compile Include="Controllers\AccountingModel\BankDepositController.cs" />
     <Compile Include="Controllers\AccountingModel\CashBookViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingIntegrityCheckViewsController.Generated.cs" />
