@@ -40,6 +40,7 @@ using System.Configuration;
 using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.BankAccountPages;
+using Logitude.Accounting.BL;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -1875,8 +1876,17 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             {
                 Tenant = 1051,
                 YYYY = 2019,
-                BuildFullAccountingSetting = true,
-                BuildFullAccountingSettingVAT = true,
+                BuildAccountingTenant = new BuildAccountingTenantParam()
+                {
+                    //OtherAccounts = true,
+                    VatAccounts = true,
+                    ControlAccounts = false,
+                    ExchangeRateDiff = false,
+                    RevenueExpense = false,
+                    TaxWithholding = false
+                },
+                //BuildFullAccountingSetting = true,
+                //BuildFullAccountingSettingVAT = true,
                 BuildGLAccountEachType = 30,
                 BuildJournalEachMonth = 20,
 
@@ -1899,9 +1909,9 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 //bool CheckControlAccountMode = param.CheckControlAccountMode;
                 int tenant = param.Tenant;
                 int YYYY = param.YYYY;
-                bool BuildFullAccountingSetting = param.BuildFullAccountingSetting;
-                bool BuildFullAccountingSettingVAT = param.BuildFullAccountingSettingVAT;
-
+                //bool BuildFullAccountingSetting = param.BuildFullAccountingSetting;
+                //bool BuildFullAccountingSettingVAT = param.BuildFullAccountingSettingVAT;
+                BuildAccountingTenantParam BuildAccountingTenant = param.BuildAccountingTenant;
                 int BuildGLAccountEachType = param.BuildGLAccountEachType;
                 int BuildJournalEachMonth = param.BuildJournalEachMonth;
 
@@ -1912,26 +1922,26 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 var chartOfAccountProvider = new ChartOfAccountProvider();
                 var displayNumberProvider = new DisplayNumberProvider();
-                if (BuildFullAccountingSetting)
+                if (BuildAccountingTenant!=null/*BuildFullAccountingSetting*/)
                 {
                     var BTFullAccountingService = new FullAccountingProvider(chartOfAccountProvider, displayNumberProvider);
-                    fullSetting = BTFullAccountingService.Insert(tenant, accountingContext);
+                    fullSetting = BTFullAccountingService.Insert(tenant, accountingContext, BuildAccountingTenant);
                 }
-                if (BuildFullAccountingSettingVAT)
-                {
-                    if (fullSetting == null)
-                    {
-                        var repo = new FullAccountingSettingRepository(tenant);
-                        fullSetting = repo.GetSingleFullAccountingSetting(tenant);
-                        if (fullSetting == null)
-                        {
-                            throw new Exception("BuildFullAccountingSettingVAT - but not BuildFullAccountingSetting");
-                        }
-                    }
-                    var BTFullAccountingService = new FullAccountingProvider(chartOfAccountProvider, displayNumberProvider);
+                //if (BuildFullAccountingSettingVAT)
+                //{
+                //    if (fullSetting == null)
+                //    {
+                //        var repo = new FullAccountingSettingRepository(tenant);
+                //        fullSetting = repo.GetSingleFullAccountingSetting(tenant);
+                //        if (fullSetting == null)
+                //        {
+                //            throw new Exception("BuildFullAccountingSettingVAT - but not BuildFullAccountingSetting");
+                //        }
+                //    }
+                //    var BTFullAccountingService = new FullAccountingProvider(chartOfAccountProvider, displayNumberProvider);
 
-                    BTFullAccountingService.CreateVatGLAccount(tenant, accountingContext, fullSetting);
-                }
+                //    BTFullAccountingService.CreateVatGLAccount(tenant, accountingContext, fullSetting);
+                //}
                 CacheManager.ClearCacheItems();
 
 

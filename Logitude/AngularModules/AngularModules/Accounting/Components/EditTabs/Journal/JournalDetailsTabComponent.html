@@ -461,11 +461,11 @@
                                     <log-column [width]="'100'" [binding]="'btn'" [Alignment]="isRTL ? 'right' : 'left'" [header]="txt_Amount + ' (' + (Currency ? Currency.Code : '') + ')'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
                                             <div style="width:100%;height:100%;">
-                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
                                                     <span>{{item.LocalAmount | NumbersPipe:'N3'}}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalAmount'" [InputType]="'double'" [DataContext]="item"
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalAmount'" [InputType]="'sigdouble'" [DataContext]="item"
                                                                 [Text]="item.LocalAmount" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </div>
@@ -494,7 +494,7 @@
                                     <!-- ForeignAmount -->
                                     <log-column [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'btn'" [header]="'JournalLine.F.ForeignAmount' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
                                                 <div [attr.id]="'tooltip-' + item.Line" id="t" class="small-tooltip" (mouseover)="item.OnMouseOver()" (mouseleave)="item.OnMouseLeave()">
                                                     <span>{{item.ForeignAmount | NumbersPipe:'N3'}}</span>
                                                     <div *ngIf="item.currencyRate" [attr.id]="'tooltip-body-' + item.Line" class="small-tooltip-body">
@@ -513,7 +513,7 @@
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
 
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [InputType]="'double'" [DataContext]="item"
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [InputType]="'sigdouble'" [DataContext]="item"
                                                             [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
 
                                             </div>
