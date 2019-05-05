@@ -239,21 +239,30 @@ namespace WebFreight.Web.Helpers
             ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
             TMEmployeeTimeRepository myTMEmployeeTimeRepository = new TMEmployeeTimeRepository(tenant);
             TMProjectRepository myTMProjectRepository = new TMProjectRepository(tenant);
+            int workItemNumber;
+            bool isAnyWIUpdated = false;
             foreach (var item in list)
             {
                 if (!string.IsNullOrEmpty(item.WINumber))
                 {
-                    projectNo = this.GetWorkItemById(Int32.Parse(item.WINumber), false);
-                    item.ProjectId = myTMProjectRepository.GetTMProjectByNumber(projectNo, tenant);
                     TMEmployeeTime tmEmployee = myTMEmployeeTimeRepository.GetSingle(item.Id, item.Tenant);
-                    tmEmployee.ProjectId = item.ProjectId;
-                    myTMEmployeeTimeRepository.Update(tmEmployee);
+                    if (string.IsNullOrEmpty(tmEmployee.ProjectId))
+                    {
+                        Int32.TryParse(item.WINumber, out workItemNumber);
+                        projectNo = this.GetWorkItemById(workItemNumber, false);
+                        item.ProjectId = myTMProjectRepository.GetTMProjectByNumber(projectNo, tenant);
+                        tmEmployee.ProjectId = item.ProjectId;
+                        myTMEmployeeTimeRepository.Update(tmEmployee);
+                        isAnyWIUpdated = true;
+                    }
                 }
             }
-            myTMEmployeeTimeRepository.SubmitChanges();
+            if (isAnyWIUpdated)
+            {
+                myTMEmployeeTimeRepository.SubmitChanges();
+            }
             return list;
         }
-
 
         public void CalculateCompletedWorkHours(int tenant)
         {
