@@ -330,5 +330,8 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("ValueOfGoodsCurrencyId")]
         public virtual Currency ValueOfGoodsCurrency { get; set; }
+
+        public bool GrossWeightEdited { get; set; }
+        public bool ChargeableWeightEdited { get; set; }
     }
 }

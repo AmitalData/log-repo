@@ -191,7 +191,7 @@
 
                     <!-- <td style="width: 96px;"> -->
                     <td style="width: 1px;" *ngIf="IsNewEntityButtonVisible">
-                      <button [disabled]="IsNewEntityButtonDisabled" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="AddNewEntity()">{{NewEntityButtonLabel}}</button>
+                      <button [attr.id]="NewButtonId  | IdGeneratorPipe " [disabled]="IsNewEntityButtonDisabled" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="AddNewEntity()">{{NewEntityButtonLabel}}</button>
                     </td>
 
                     <td style="width: 5px;">

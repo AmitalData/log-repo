@@ -142,19 +142,19 @@ export class BlockScreenComponent {
         if (SessionLocator.BlockType == "company") {
             this.BlockMessagePart1 = "Your company subscription has expired.";
             this.BlockMessagePart2 = "To renew or subscribe please use the links under the billing icon (marked with a $ sign) above";
-            this.BlockMessagePart3 = "For more information and help please contact ";
+            this.BlockMessagePart3 = "For more information and help please contact " ;
         }
         else if (SessionLocator.BlockType == "user") {
             this.BlockMessagePart1 = "Your temporary access has expired";
             this.BlockMessagePart2 = "To renew or subscribe please use the links under the billing icon (marked with a $ sign) above";
-            this.BlockMessagePart3 = "For more information and help please contact ";
+            this.BlockMessagePart3 = "For more information and help please contact " ;
 
         }
         else if (SessionLocator.BlockType == "suspend") {
             this.BlockMessagePart1 = "Your company subscription has expired. The recurring renew has failed due to credit";
             this.BlockMessagePart2 = "card authorization error.To renew or subscribe please use the links under the billing icon (marked with a $ sign) above";
             this.BlockMessagePart3 = "Please contact your e-commerce vendor or ";
-
+           
         }
     }
 

@@ -210,7 +210,34 @@ export class TimeManagementDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+    GetVacationsSummary(Year: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
+        var url = this._apiUrl + '/GetVacationsSummary?Year=' + Year;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
+                var myResponse = new ServiceResponse();
+                myResponse.Result = myJsonResult;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    GetVacationsDetails(Year: number, Type:string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetVacationsDetails?Year=' + Year + '&Type=' + Type;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
+                var myResponse = new ServiceResponse();
+                myResponse.Result = myJsonResult;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 export class TimeManagementAPIHelper {
     public Id: number;

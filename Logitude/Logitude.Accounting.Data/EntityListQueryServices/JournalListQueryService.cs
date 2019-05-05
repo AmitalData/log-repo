@@ -64,6 +64,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                           // VoidedByUserId = a.VoidedByUserId,
 
                                                            IsVoided = a.IsVoided,
+                                                           IsLedgerCreated = a.IsLedgerCreated,
                                                            
                                                         
                                                           
@@ -161,6 +162,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         LastActivityDate = lastActivity.ActivityDate,
                         LastActivityTypeName = lastActivity.ActivityType.Name,
                         LastActivityByUserName = lastActivity.User.Contact.EnglishName,
+
+                        IsLedgerCreated = a.IsLedgerCreated,
                     };
 
 

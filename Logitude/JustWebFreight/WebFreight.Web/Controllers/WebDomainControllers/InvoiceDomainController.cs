@@ -1655,7 +1655,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         List<ARInvoiceStockPM> aRInvoiceStocks = aRInvoiceStockQuery.GetARInvoiceStockPMsByTenant(tenant).ToList();
                         if(aRInvoiceStocks != null)
                         {
-                            aRInvoiceStocks = aRInvoiceStocks.Where(a => a.StatusCode != "E" && a.StatusCode != "U" && a.StatusCode != "C").ToList();
+                            aRInvoiceStocks = aRInvoiceStocks.Where(a => a.StatusCode != "E" && a.StatusCode != "U" && a.StatusCode != "C" && (a.StartDate == null || a.StartDate <= TenantServerConfigration.GetCurrentDateTime(a.Tenant))).ToList();
                         }
                         foreach (var item in aRInvoiceStocks)
                         {

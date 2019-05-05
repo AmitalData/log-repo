@@ -41,8 +41,6 @@ namespace Logitude.Accounting.Data.EntityMapping
 
 
             this.Property(t => t.GeneralData).HasColumnName("GeneralData").IsRequired().IsUnicode(true);
-
-            this.Property(t => t.IsLedgerCreated).HasColumnName("IsLedgerCreated");
         }
     }
 }

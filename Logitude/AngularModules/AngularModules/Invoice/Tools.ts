@@ -268,7 +268,7 @@ export class InvoiceTool {
 
                                     var myDate = new Date();
                                     myDate.setUTCFullYear(dateYear);
-                                    myDate.setUTCMonth(dateMonth-1);
+                                    myDate.setUTCMonth(dateMonth - 1);
                                     myDate.setUTCDate(dateDay);
                                     myDate.setUTCHours(0);
                                     myDate.setUTCMinutes(0);
@@ -285,7 +285,7 @@ export class InvoiceTool {
                             }
                         }
                     }
-                });                
+                });
             }
         }
     }

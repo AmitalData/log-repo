@@ -146,6 +146,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         IsBackToBack = a.IsBackToBack,
                                         SATExternalId = a.SATExternalId,
                                         IsExpense = a.IsExpense,
+                                        IsDomestic = a.IsDomestic,
+                                        IsImport = a.IsImport,
+                                        IsDrop = a.IsDrop,
+                                        IsExport = a.IsExport,
                                     }).FirstOrDefault();
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);

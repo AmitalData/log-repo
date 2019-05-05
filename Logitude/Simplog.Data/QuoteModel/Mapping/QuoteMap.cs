@@ -283,6 +283,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.NotifyAddressId).HasColumnName("NotifyAddressId");
             this.Property(t => t.NotifyContactId).HasColumnName("NotifyContactId");
             this.Property(t => t.NumberOfFollowUps).HasColumnName("NumberOfFollowUps");
+            this.Property(t => t.GrossWeightEdited).HasColumnName("GrossWeightEdited");
+            this.Property(t => t.ChargeableWeightEdited).HasColumnName("ChargeableWeightEdited");
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);

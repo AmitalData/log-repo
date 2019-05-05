@@ -1183,6 +1183,16 @@ export class QuotePM {
     public set SameOrFixed(newValue: string) { if (this.sameOrFixed != newValue) { this.sameOrFixed = newValue; this.MarkAsDirty("SameOrFixed"); } }
        
 	 
+    private grossWeightEdited: boolean;
+    public get GrossWeightEdited() { return this.grossWeightEdited; }
+    public set GrossWeightEdited(newValue: boolean) { if (this.grossWeightEdited != newValue) { this.grossWeightEdited = newValue; this.MarkAsDirty("GrossWeightEdited"); } }
+       
+	 
+    private chargeableWeightEdited: boolean;
+    public get ChargeableWeightEdited() { return this.chargeableWeightEdited; }
+    public set ChargeableWeightEdited(newValue: boolean) { if (this.chargeableWeightEdited != newValue) { this.chargeableWeightEdited = newValue; this.MarkAsDirty("ChargeableWeightEdited"); } }
+       
+	 
     private numberOfFollowUps: number;
     public get NumberOfFollowUps() { return this.numberOfFollowUps; }
     public set NumberOfFollowUps(newValue: number) { if (this.numberOfFollowUps != newValue) { this.numberOfFollowUps = newValue; this.MarkAsDirty("NumberOfFollowUps"); } }
