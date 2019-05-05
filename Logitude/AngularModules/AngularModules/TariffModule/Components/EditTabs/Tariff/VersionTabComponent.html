@@ -9,8 +9,12 @@
                             <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
-                        <td style="width:230px;">
+                        <td *ngIf="IsDraftVersion" style="width:230px;">
                             <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
+
+                        <td *ngIf="!IsDraftVersion" style="width:230px;">
+                            {{StartDate | DateTimeToDatePipe}}
                         </td>
 
                         <td style="width:15px;">
@@ -21,12 +25,20 @@
                             <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
-                        <td style="width:230px;">
+                        <td *ngIf="IsDraftVersion" style="width:230px;">
                             <LogDatePicker [ObjectFieldName]="'ExpirationDate'" [SelectedDateValue]="ExpirationDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
+
+                        <td *ngIf="!IsDraftVersion" style="width:230px;">
+                            {{ExpirationDate | DateTimeToDatePipe}}
                         </td>
 
                         <td>
                             <div></div>
+                        </td>
+
+                        <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
+                            <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
                         </td>
                     </tr>
                 </table>
@@ -52,7 +64,7 @@
                         </td>
 
                         <td style="width:95px;">
-                            <Hyperlink (click)="DownloadExcel()" [Text]="'Download Excel'"></Hyperlink>
+                            <Hyperlink [IsEnabled]="IsDraftVersion" (click)="DownloadExcel()" [Text]="'Download Excel'"></Hyperlink>
                         </td>
 
                         <td width="5px;">
@@ -64,7 +76,7 @@
                                    type="file" (change)="OnFileChanged($event)"
                                    #fileInput>
                             <a href="#">
-                                <button (click)="fileInput.click()">Upload Excel</button>
+                                <button [disabled]="!IsDraftVersion" (click)="fileInput.click()">Upload Excel</button>
                             </a>
                             <!--<Hyperlink (click)="UploadExcel()" [Text]="'Upload Excel'"></Hyperlink>-->
                         </td>
@@ -74,7 +86,7 @@
                         </td>
 
                         <td style="width: 20px; padding: 3px;">
-                            <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddTariffLine()"></IconButton>
+                            <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Add'" [IsSmall]="true" (click)="AddTariffLine()"></IconButton>
                         </td>
 
                         <td style="width:5px;">
@@ -274,10 +286,10 @@
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
                                             <span class="CellSeparator" style="float: left;"></span>
                                             <div style="width: 22px; float: left; height:20px; padding-top: 2px; display:block">
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditTariffButtonClicked(item)"></IconButton>
+                                                <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Edit'" [IsSmall]="true" (click)="EditTariffButtonClicked(item)"></IconButton>
                                             </div>
                                             <div style="width: 22px; float: left; height:20px; padding-top: 2px; display:block">
-                                                <IconButton [Name]="'delete'" [IsSmall]="true" (click)="DeleteTariffButtonClicked(item)"></IconButton>
+                                                <IconButton [IsEnabled]="IsDraftVersion" [Name]="'delete'" [IsSmall]="true" (click)="DeleteTariffButtonClicked(item)"></IconButton>
                                             </div>
                                         </log-cell-template>
                                     </log-column>

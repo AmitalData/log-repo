@@ -21,11 +21,13 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
         {
             AddPOCOPropertyName(POCOPropertyNames.TariffId);
             AddPOCOPropertyName(POCOPropertyNames.Tenant);
+            AddPOCOPropertyName(POCOPropertyNames.Version);
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 entityPOCO.TariffId = entityPM.TariffId;
                 entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.Version = entityPM.Version;
             }
         }
 
