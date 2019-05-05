@@ -29,7 +29,10 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         StartDate, 
 	         ExpirationDate, 
 	         CreateDate, 
-	         Version,
+	         Version, 
+	         IsDraft, 
+	         ApproveDate, 
+	         ApprovedByUserId,
 	      }
 
 
@@ -43,7 +46,10 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         StartDate, 
 	         ExpirationDate, 
 	         CreateDate, 
-	         Version,
+	         Version, 
+	         IsDraft, 
+	         ApproveDate, 
+	         ApprovedByUserId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -80,6 +86,21 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
             {
 				entityPOCO.CreateDate = entityPM.CreateDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDraft))
+            {
+				entityPOCO.IsDraft = entityPM.IsDraft;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApproveDate))
+            {
+				entityPOCO.ApproveDate = entityPM.ApproveDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovedByUserId))
+            {
+				entityPOCO.ApprovedByUserId = entityPM.ApprovedByUserId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -128,6 +149,21 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.Version = entityPOCO.Version;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsDraft))
+            {
+					entityPM.IsDraft = entityPOCO.IsDraft;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ApproveDate))
+            {
+					entityPM.ApproveDate = entityPOCO.ApproveDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ApprovedByUserId))
+            {
+					entityPM.ApprovedByUserId = entityPOCO.ApprovedByUserId;
+            }
+
 		}
 
 		public void PMToOldPM(TariffVersionPM entityPM, TariffVersionPM oldEntityPM)
@@ -162,6 +198,21 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
             {
                 oldEntityPM.CreateDate = entityPM.CreateDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsDraft))
+            {
+                oldEntityPM.IsDraft = entityPM.IsDraft;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApproveDate))
+            {
+                oldEntityPM.ApproveDate = entityPM.ApproveDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovedByUserId))
+            {
+                oldEntityPM.ApprovedByUserId = entityPM.ApprovedByUserId;
             }
 			
 		}

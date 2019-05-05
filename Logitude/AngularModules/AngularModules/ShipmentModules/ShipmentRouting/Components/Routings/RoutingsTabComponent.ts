@@ -74,6 +74,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.IsInlandDomestic = ShipmentTool.IsInlandDomestic(this.EntityPM);
                     this.UpdateScreen();
                 }
             });

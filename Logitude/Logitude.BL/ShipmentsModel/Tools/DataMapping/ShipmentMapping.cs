@@ -50,7 +50,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.DirectionId = entityPM.DirectionId;
                 entityPoco.ShipmentNumber = entityPM.ShipmentNumber;
 
-                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "H")
+                if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
                 {
                     entityPM.ComputedShipmentNumber = entityPM.ShipmentNumber;
                 }
@@ -203,7 +203,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             }
 
 
-
+            entityPoco.OrderGrossWeightEdited = entityPM.OrderGrossWeightEdited;
+            entityPoco.OrderChargeableWeightEdited = entityPM.OrderChargeableWeightEdited;
             entityPoco.CASSCode = entityPM.CASSCode;
             entityPoco.OrderGrossWeight = entityPM.OrderGrossWeight;
             entityPoco.BookingVolume = entityPM.BookingVolume;
@@ -491,7 +492,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             string myRoutingField = null;
             AddressRepository addressRepository = new AddressRepository(entityPoco.Tenant);
 
-            if (entityPoco.DirectionId == "D" && entityPoco.TransportModeId == "I")
+            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
             {
                 if (entityMasterData.MainCarriageFromAddressId != null)
                 {

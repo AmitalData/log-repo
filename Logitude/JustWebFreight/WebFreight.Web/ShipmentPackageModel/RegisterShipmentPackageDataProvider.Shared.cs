@@ -119,6 +119,9 @@ namespace WebFreight.Web.ShipmentPackageModel
             public string ContainerPackageItemsDescription { get; set; }
             public string ContainerPackageItemsValue { get; set; }
             public string ContainerPackageItemsQuantity { get; set; }
+
+            public DateTime? ETARamp { get; set; }
+            public DateTime? OnCarriageETA { get; set; }
         }
     }
 }

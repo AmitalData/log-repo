@@ -1,13 +1,15 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ShipmentPM } from '../../EntityPMs/ShipmentPM';
 import { ShipmentPMService } from '../../Services/StandardPMs/ShipmentPMService';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { AddressList } from '../../../Common/EntityLists/AddressList';
+import { PortList } from '../../../Common/EntityLists/PortList';
 import { CardList } from '../../../Common/EntityLists/CardList';      
 import { CardListService } from '../../../Common/Services/StandardLists/CardListService';
 import { AddressListService } from '../../../Common/Services/StandardLists/AddressListService';
+import { PortListService } from '../../../Common/Services/StandardLists/PortListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { AddEditPartnerArgs } from '../../Args';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
@@ -15,7 +17,7 @@ import { NewEntityArgs } from '../../../Infrastructure/Args';
 import { AddressPM } from '../../../Common/EntityPMs/AddressPM';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ShipmentTool } from '../../Tools';
+import { ShipmentTool, RoutingHelper } from '../../Tools';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 
@@ -39,21 +41,19 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     public DirectionsList: DirectionFilterItem[] = [];
     private myCardListService: CardListService;
     private myAddressListService: AddressListService;
+    private myPortListService: PortListService;
     public SessionIndex: number;
+    public IsPortsVisible: boolean = false;
     constructor() {
         super();
 
         this.SessionIndex = SessionLocator.Index;
-
-        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
-            this.CardDependencyProperty1 = "CS,AG";
-            this.CardDependencyProperty1IsList = true;
-        }
-
+        
         this.myCardListService = new CardListService();
         this.myAddressListService = new AddressListService();
+        this.myPortListService = new PortListService();
     }
-
+    
     private oldShipmentDirection: string;
     SetWindowArgs(args: ConvertDirectionArgs) {
         this.EntityPM = args.EntityPM;
@@ -66,14 +66,33 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
         this.IsOldInlandDomestic = this.EntityPM.TransportModeId == "I" && this.EntityPM.DirectionId == "D" ? true : false;
         this.IsCurrentInlandDomestic = this.EntityPM.TransportModeId == "I" && this.EntityPM.DirectionId == "D" ? true : false;
 
+        if (this.EntityPM.ShipmentLevelCode == "C") {
+            this.CardDependencyProperty1 = "AG";
+            this.CardDependencyProperty1IsList = false;
+        }
+
+        else {
+            if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
+                this.CardDependencyProperty1 = "CS,AG";
+                this.CardDependencyProperty1IsList = true;
+            }
+        }
+
         this.SetLabels();
-        this.SetUIProperties();
         this.SetScreenEnabled();
         this.BuildDirectionsFilterList();
         this.Clone();
 
-        this.LoadAddress("S");
-        this.LoadAddress("C");
+        var fromAddressId: string = this.EntityPM.ShipperAddressId;
+        var toAddressId: string = this.EntityPM.ConsigneeAddressId;
+
+        if (this.IsCurrentInlandDomestic) {
+            fromAddressId = this.EntityPM.MainCarriageFromAddressId;
+            toAddressId = this.EntityPM.MainCarriageToAddressId;
+        }
+
+        this.LoadAddress("S", fromAddressId);
+        this.LoadAddress("C", toAddressId);
     }
 
     public FromTextCode: string;
@@ -139,6 +158,8 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
         // Ports        
         this.UIProperties.SetEnabled("MainCarriageFromPortId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MainCarriageToPortId", this.ObjectTableName, isScreenEnabled);
+
+        this.SetUIProperties();
     }
 
     SetUIProperties() {
@@ -170,8 +191,9 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     SetUIProperties_Ports() {
         var isFromRequired: boolean = false;
         var isToRequired: boolean = false;
+        var isPortsVisible: boolean = false;
 
-        if (!this.IsOldInlandDomestic) {
+        if (this.IsOldInlandDomestic) {
             if (AppTool.IsNullOrEmpty(this.MainCarriageFromPortId)) {
                 isFromRequired = true;
             }
@@ -181,10 +203,16 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
             }
         }
 
+        if (this.IsOldInlandDomestic || (this.DirectionId == "D" && this.DirectionId != this.oldShipmentDirection && this.EntityPM.TransportModeId != "I")) {
+            isPortsVisible = true;
+        }
+
+        this.IsPortsVisible = isPortsVisible;
+
         this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, isFromRequired);
         this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, isToRequired);
     }
-
+    
     // Direction
     BuildDirectionsFilterList() {
         this.DirectionsList = [];
@@ -194,21 +222,61 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
         this.DirectionsList.push(new DirectionFilterItem("D", "Domestic"));
         this.DirectionsList.push(new DirectionFilterItem("R", "Drop"));
     }
-
+    
     get DirectionId() { return this.EntityPM.DirectionId; }
     set DirectionId(newValue: string) {
         if (this.EntityPM.DirectionId != newValue) {
             this.EntityPM.DirectionId = newValue;
-
-            this.IsCurrentInlandDomestic = this.EntityPM.TransportModeId == "I" && this.EntityPM.DirectionId == "D" ? true : false;
 
             this.OnDirectionChanged();
         }
     }
 
     private OnDirectionChanged() {
+        this.IsCurrentInlandDomestic = this.EntityPM.TransportModeId == "I" && this.EntityPM.DirectionId == "D" ? true : false;
+
         this.SetScreenEnabled();
         this.SetUIProperties();
+        this.SetPartners();
+
+        this.LoadAddress("S", this.EntityPM.ShipperAddressId);
+        this.LoadAddress("C", this.EntityPM.ConsigneeAddressId);
+    }
+
+    SetPartners() {
+        this.IsShipperMyCustomer = false;
+        this.IsConsigneeMyCustomer = false;
+        var myCRMCustomerId = null;
+
+        switch (this.DirectionId) {
+            case "I": {
+                this.ShipmentCustomerTypeCode = "CON";
+                this.IsConsigneeMyCustomer = true;
+
+                if (!AppTool.IsNullOrEmpty(myCRMCustomerId)) {
+                    this.ConsigneeId = myCRMCustomerId;
+                    if (this.ShipperId == myCRMCustomerId) {
+                        this.ShipperId = null;
+                    }
+                }
+
+                break;
+            }
+
+            default: {
+                this.ShipmentCustomerTypeCode = "SHI";
+                this.IsShipperMyCustomer = true;
+
+                if (!AppTool.IsNullOrEmpty(myCRMCustomerId)) {
+                    this.ShipperId = myCRMCustomerId;
+                    if (this.ConsigneeId == myCRMCustomerId) {
+                        this.ConsigneeId = null;
+                    }
+                }
+
+                break;
+            }
+        }
     }
 
     // Shipper
@@ -218,6 +286,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     set ShipperId(newValue: string) {
         if (this.EntityPM.ShipperId != newValue) {
             this.EntityPM.ShipperId = newValue;
+            this.EntityPM.MainCarriageFromPartnerId = newValue;
 
             if (this.ShipmentCustomerTypeCode == "SHI") {
                 this.CustomerId = newValue;
@@ -265,13 +334,14 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     set ShipperAddressId(newValue: string) {
         if (this.EntityPM.ShipperAddressId != newValue) {
             this.EntityPM.ShipperAddressId = newValue;
+            this.EntityPM.MainCarriageFromAddressId = newValue;
 
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.ShipperAddressList = null;
             }
 
             else {
-                this.LoadAddress("S");
+                this.LoadAddress("S", newValue);
             }
         }
     }
@@ -280,6 +350,13 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     get ShipperAddressList() { return this.myShipperAddressList; }
     set ShipperAddressList(newValue: AddressList) {
         this.myShipperAddressList = newValue;
+
+        if (this.IsCurrentInlandDomestic) {
+            if (newValue != null) {
+                this.EntityPM.FromCountryId = newValue.CountryId;
+                this.EntityPM.FromCountryIsEC = newValue.CountryEC;
+            }
+        }
     }
 
     get ShipperContactId() { return this.EntityPM.ShipperContactId; }
@@ -317,6 +394,7 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     set ConsigneeId(newValue: string) {
         if (this.EntityPM.ConsigneeId != newValue) {
             this.EntityPM.ConsigneeId = newValue;
+            this.EntityPM.MainCarriageToPartnerId = newValue;
 
             if (this.ShipmentCustomerTypeCode == "CON") {
                 this.CustomerId = newValue;
@@ -360,13 +438,14 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     set ConsigneeAddressId(newValue: string) {
         if (this.EntityPM.ConsigneeAddressId != newValue) {
             this.EntityPM.ConsigneeAddressId = newValue;
+            this.EntityPM.MainCarriageToAddressId = newValue;
 
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.ConsigneeAddressList = null;
             }
 
             else {
-                this.LoadAddress("C");
+                this.LoadAddress("C", newValue);
             }
         }
     }
@@ -375,6 +454,13 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     get ConsigneeAddressList() { return this.myConsigneeAddressList; }
     set ConsigneeAddressList(newValue: AddressList) {
         this.myConsigneeAddressList = newValue;
+
+        if (this.IsCurrentInlandDomestic) {
+            if (newValue != null) {
+                this.EntityPM.ToCountryId = newValue.CountryId;
+                this.EntityPM.ToCountryIsEC = newValue.CountryEC;
+            }            
+        }
     }
 
     get ConsigneeContactId() { return this.EntityPM.ConsigneeContactId; }
@@ -711,30 +797,88 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
     }
 
     //Ports
+    public FromPortList: PortList = null;
     get MainCarriageFromPortId() { return this.EntityPM.MainCarriageFromPortId; }
     set MainCarriageFromPortId(value: string) {
         if (this.EntityPM.MainCarriageFromPortId != value) {
             this.EntityPM.MainCarriageFromPortId = value;
-            this.EntityPM.FromPortId = value;
-            this.SetUIProperties_Ports();            
+
+            this.SetUIProperties_Ports();
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.FromPortList = null
+                RoutingHelper.MainCarriageFromPortChanged(this.EntityPM, null);
+            }
+
+            else {
+                this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: PortList = myResponse.Result;
+                        this.FromPortList = myResponse.Result
+
+                        if (list) {
+                            RoutingHelper.MainCarriageFromPortChanged(this.EntityPM, list);
+                        }
+
+                        else {
+                            this.myPortListService.getSingle(value).subscribe((myResponse2: ServiceResponse) => {
+                                if (!myResponse2.HasError) {
+                                    var list: PortList = myResponse2.Result;
+                                    this.FromPortList = myResponse2.Result
+                                    RoutingHelper.MainCarriageFromPortChanged(this.EntityPM, list);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
         }
     }
-    
+
+    public ToPortList: PortList = null;
     get MainCarriageToPortId() { return this.EntityPM.MainCarriageToPortId; }
     set MainCarriageToPortId(value: string) {
         if (this.EntityPM.MainCarriageToPortId != value) {
             this.EntityPM.MainCarriageToPortId = value;
             this.EntityPM.ToPortId = value;
             this.SetUIProperties_Ports();
+
+            if (AppTool.IsNullOrEmpty(value)) {
+                this.ToPortList = null;
+                RoutingHelper.FinalDestinationPortChanged(this.EntityPM, null);
+            }
+
+            else {
+                this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        var list: PortList = myResponse.Result;
+                        this.ToPortList = myResponse.Result;
+
+                        if (list) {
+                            RoutingHelper.FinalDestinationPortChanged(this.EntityPM, list);
+                        }
+
+                        else {
+                            this.myPortListService.getSingle(value).subscribe((myResponse2: ServiceResponse) => {
+                                if (!myResponse2.HasError) {
+                                    var list: PortList = myResponse2.Result;
+                                    this.ToPortList = myResponse2.Result;
+                                    RoutingHelper.FinalDestinationPortChanged(this.EntityPM, list);
+                                }
+                            });
+                        }
+                    }
+                });
+            }
         }
     }
-
+    
     //LoadAddress
-    private LoadAddress(myAddressCode: string) {
+    private LoadAddress(myAddressCode: string, myAddressId: string) {
         switch (myAddressCode) {
             case "S": {
-                if (!AppTool.IsNullOrEmpty(this.ShipperAddressId)) {
-                    this.myAddressListService.getSingle(this.ShipperAddressId).subscribe((myResponse: ServiceResponse) => {
+                if (!AppTool.IsNullOrEmpty(myAddressId)) {
+                    this.myAddressListService.getSingle(myAddressId).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             this.ShipperAddressList = myResponse.Result;
                         }
@@ -744,8 +888,8 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
             }
 
             case "C": {
-                if (!AppTool.IsNullOrEmpty(this.ConsigneeAddressId)) {
-                    this.myAddressListService.getSingle(this.ConsigneeAddressId).subscribe((myResponse: ServiceResponse) => {
+                if (!AppTool.IsNullOrEmpty(myAddressId)) {
+                    this.myAddressListService.getSingle(myAddressId).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             this.ConsigneeAddressList = myResponse.Result;
                         }
@@ -1169,8 +1313,10 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
             }
         }
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.CustomerId) || AppTool.IsNullOrEmpty(this.EntityPM.ShipmentCustomerTypeCode)) {
-            errors.push(message.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.CustomerId")));
+        if (this.EntityPM.ShipmentLevelCode != "C") {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.CustomerId) || AppTool.IsNullOrEmpty(this.EntityPM.ShipmentCustomerTypeCode)) {
+                errors.push(message.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.CustomerId")));
+            }
         }
 
         this.ValidationErrorsList = errors;
@@ -1189,18 +1335,16 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
                     this.EntityPM.ToCountryIsEC = this.ConsigneeAddressList.CountryEC;
                 }
 
+                this.EntityPM.MainCarriageFromPartnerId = this.ShipperId;
+                this.EntityPM.MainCarriageFromAddressId = this.ShipperAddressId;
+                this.EntityPM.MainCarriageToPartnerId = this.ConsigneeId;
+                this.EntityPM.MainCarriageToAddressId = this.ConsigneeAddressId;
                 this.EntityPM.IncludePickUp = false;
                 this.EntityPM.IncludeDelivery = false;
                 this.MainCarriageFromPortId = null;
                 this.MainCarriageToPortId = null;
                 this.EntityPM.MainCarriageFinalDestinationPortId = null;
-                this.EntityPM.MainCarriageFromPartnerId = this.ShipperId;
-                this.EntityPM.MainCarriageFromAddressId = this.ShipperAddressId;
-                this.EntityPM.MainCarriageToPartnerId = this.ConsigneeId;
-                this.EntityPM.MainCarriageToAddressId = this.ConsigneeAddressId;
-            }
 
-            if (this.IsCurrentInlandDomestic) {
                 var confirmWindow: ConfirmWindow = new ConfirmWindow();
                 confirmWindow.Title = "Convert Shipment Direction";
                 confirmWindow.Width = 400;
@@ -1215,12 +1359,24 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
             }
 
             else {
+                if (this.FromPortList != null) {
+                    this.EntityPM.FromCountryId = this.FromPortList.CountryId;
+                    this.EntityPM.FromCountryIsEC = this.FromPortList.CountryEC;
+                }
+
+                if (this.ToPortList != null) {
+                    this.EntityPM.ToCountryId = this.ToPortList.CountryId;
+                    this.EntityPM.ToCountryIsEC = this.ToPortList.CountryEC;
+                }
+
                 this.CompleteConversion();
             }
         }
     }
 
     private CompleteConversion() {
+        this.CurrentSession.StartBusyIndicatorSaving();
+
         var oldDirectionName: string = this.DirectionsList.filter(d => d.Code == this.oldShipmentDirection)[0].Name;
         var currentDirectionName: string = this.DirectionsList.filter(d => d.Code == this.DirectionId)[0].Name;
 
@@ -1238,6 +1394,8 @@ export class ShipmenDirectionConvertComponent extends BaseComponent {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
+
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

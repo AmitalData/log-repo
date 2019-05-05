@@ -315,6 +315,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+                                              SecurityId = a.SecurityId,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)

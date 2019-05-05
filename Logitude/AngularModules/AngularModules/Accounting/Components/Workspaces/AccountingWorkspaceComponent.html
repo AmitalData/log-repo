@@ -5,12 +5,12 @@
         <td>
             <ul class="PagesMenu">
                 <!--<li [class.SelectedPageMenu]="SelectedItem == 'JORN'" (click)="SelectedItem = 'JORN'">Journals</li>-->
-                <li *ngIf="IsMainTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'Main'" (click)="SelectedItem = 'Main'">{{ 'Accounting.General.O.Main' | TextCodeTranslationPipe }}</li>
-                <li *ngIf="IsReceivablesTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'RCV'" (click)="SelectedItem = 'RCV'">{{ 'Accounting.General.O.Receivables' | TextCodeTranslationPipe }}</li>
-                <li *ngIf="IsPayablesTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'PAY'" (click)="SelectedItem = 'PAY'">{{ 'Accounting.General.O.Payables' | TextCodeTranslationPipe }}</li>
-                <li *ngIf="IsBanksTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'BNKS'" (click)="SelectedItem = 'BNKS'">{{ 'Accounting.General.O.Banks' | TextCodeTranslationPipe }}</li>
-                <li *ngIf="IsGLAccountsTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'GLAccounts'" (click)="SelectedItem = 'GLAccounts'">{{ 'Accounting.O.GLAccounts' | TextCodeTranslationPipe }}</li>
-                <li *ngIf="IsMiscTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'MISC'" (click)="SelectedItem = 'MISC'">{{ 'Accounting.General.O.Misc' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FAMain' | IdGeneratorPipe}}" *ngIf="IsMainTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'Main'" (click)="SelectedItem = 'Main'">{{ 'Accounting.General.O.Main' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FARCV' | IdGeneratorPipe}}" *ngIf="IsReceivablesTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'RCV'" (click)="SelectedItem = 'RCV'">{{ 'Accounting.General.O.Receivables' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FAPAY' | IdGeneratorPipe}}" *ngIf="IsPayablesTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'PAY'" (click)="SelectedItem = 'PAY'">{{ 'Accounting.General.O.Payables' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FABNKS' | IdGeneratorPipe}}" *ngIf="IsBanksTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'BNKS'" (click)="SelectedItem = 'BNKS'">{{ 'Accounting.General.O.Banks' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FAGLAccouts' | IdGeneratorPipe}}" *ngIf="IsGLAccountsTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'GLAccounts'" (click)="SelectedItem = 'GLAccounts'">{{ 'Accounting.O.GLAccounts' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FAMISC' | IdGeneratorPipe}}" *ngIf="IsMiscTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'MISC'" (click)="SelectedItem = 'MISC'">{{ 'Accounting.General.O.Misc' | TextCodeTranslationPipe }}</li>
             </ul>
         </td>
     </tr>

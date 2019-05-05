@@ -215,6 +215,8 @@ export class QuoteUtilities {
         entityPM.ValueOfGoods = copiedEntityPM.ValueOfGoods;
         entityPM.ValueOfGoodsCurrencyId = copiedEntityPM.ValueOfGoodsCurrencyId;
         entityPM.IsChargesByVAT = copiedEntityPM.IsChargesByVAT;
+        entityPM.GrossWeightEdited = copiedEntityPM.GrossWeightEdited;
+        entityPM.ChargeableWeightEdited = copiedEntityPM.ChargeableWeightEdited;
 
         //entityPM.ShipperId = copiedEntityPM.ShipperId;
         //entityPM.ShipperContactId = copiedEntityPM.ShipperContactId;
@@ -556,6 +558,8 @@ export class QuoteUtilities {
         shipmentPM.OrderVolumetricWeight = entityPM.VolumetricWeight;
         shipmentPM.OrderGrossWeight = entityPM.GrossWeight;
         shipmentPM.OrderChargeableWeight = entityPM.ChargeableWeight;
+        shipmentPM.OrderGrossWeightEdited = entityPM.GrossWeightEdited;
+        shipmentPM.OrderChargeableWeightEdited = entityPM.ChargeableWeightEdited;
         shipmentPM.Ratio = entityPM.Ratio;
         shipmentPM.DimFactor = entityPM.DimFactor;
         shipmentPM.BookingNumberOfPackages = entityPM.NumberOfPackages;

@@ -27,7 +27,7 @@ export class ARInvoiceValidator {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
         }
 
-        if (this.EntityPM.IsInvoiceNumberFromStock && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber)) {
+        if (this.EntityPM.IsInvoiceNumberFromStock && AppTool.IsNullOrEmpty(this.EntityPM.ARInvoiceStockId)) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
         }
 

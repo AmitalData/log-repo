@@ -42,8 +42,8 @@ namespace CommunicationWorkerRole.Tasks
 				SchedulerDetails schedulerDetails = LogitudeXmlSerializer.DeserializeObject<SchedulerDetails>(ftpTask.SchedulerDetailsXML);
 				schedulerDetails.Tenant = ftpTask.Tenant;
 				//GetFTPFilesBySchedulerDetails(schedulerDetails);
-				FTPSchedulerTaskService fTPSchedulerTaskService = new FTPSchedulerTaskService(schedulerDetails);
-				fTPSchedulerTaskService.ReadFTPFilesBySchedulerDetailsToAnalyzeQueue();
+				FTPSchedulerTaskService fTPSchedulerTaskService = new FTPSchedulerTaskService();
+				fTPSchedulerTaskService.ReadFTPFilesBySchedulerDetailsToAnalyzeQueue(schedulerDetails);
 			}
 
 		}

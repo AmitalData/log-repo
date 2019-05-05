@@ -764,12 +764,18 @@ export class ShipmentPM {
     public get GrossWeightEdited() { return this.grossWeightEdited; }
     public set GrossWeightEdited(newValue: boolean) { if (this.grossWeightEdited != newValue) { this.grossWeightEdited = newValue; this.MarkAsDirty("GrossWeightEdited"); } }
        
-	 
+    private orderGrossWeightEdited: boolean;
+    public get OrderGrossWeightEdited() { return this.orderGrossWeightEdited; }
+    public set OrderGrossWeightEdited(newValue: boolean) { if (this.orderGrossWeightEdited != newValue) { this.orderGrossWeightEdited = newValue; this.MarkAsDirty("OrderGrossWeightEdited"); } }
+
     private chargeableWeightEdited: boolean;
     public get ChargeableWeightEdited() { return this.chargeableWeightEdited; }
     public set ChargeableWeightEdited(newValue: boolean) { if (this.chargeableWeightEdited != newValue) { this.chargeableWeightEdited = newValue; this.MarkAsDirty("ChargeableWeightEdited"); } }
        
-	 
+    private orderChargeableWeightEdited: boolean;
+    public get OrderChargeableWeightEdited() { return this.orderChargeableWeightEdited; }
+    public set OrderChargeableWeightEdited(newValue: boolean) { if (this.orderChargeableWeightEdited != newValue) { this.orderChargeableWeightEdited = newValue; this.MarkAsDirty("OrderChargeableWeightEdited"); } }
+
     private volumeUnitCode: string;
     public get VolumeUnitCode() { return this.volumeUnitCode; }
     public set VolumeUnitCode(newValue: string) { if (this.volumeUnitCode != newValue) { this.volumeUnitCode = newValue; this.MarkAsDirty("VolumeUnitCode"); } }
