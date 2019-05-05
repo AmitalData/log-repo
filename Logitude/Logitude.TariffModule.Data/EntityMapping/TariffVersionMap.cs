@@ -38,6 +38,12 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
             this.Property(t => t.Version).HasColumnName("Version").HasDatabaseGeneratedOption(null);
+
+            this.Property(t => t.IsDraft).HasColumnName("IsDraft");
+
+            this.Property(t => t.ApproveDate).HasColumnName("ApproveDate");
+
+            this.Property(t => t.ApprovedByUserId).HasColumnName("ApprovedByUserId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

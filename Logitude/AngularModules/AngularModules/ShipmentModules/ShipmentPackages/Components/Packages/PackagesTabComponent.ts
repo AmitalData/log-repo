@@ -24,8 +24,6 @@ import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/Sh
 import {WarehouseReleasePackageListExtendedService} from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleasePackageListExtendedService';
 import {PickUpDeliveryPackageHarmonizePM} from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 import { CountryListService } from '../../../../Common/Services/StandardLists/CountryListService';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-
 
 @Component({
     moduleId: module.id,
@@ -95,6 +93,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
                     this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                    this.DirectionId = this.EntityPM.DirectionId;
 
                     this.OnResourcesReady();
                     //this.SetUIProperties();
@@ -541,7 +540,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set GrossWeight(newValue: number) {
         if (this.EntityPM.GrossWeight != newValue) {
             this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);
-
             this.ComputeGrossWeigh_Kg_Ton();
         }
     }
@@ -687,20 +685,20 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                         }
                     }
                 }
-            })
-        }
+            });
 
-        this.TEU = myTEU;
-        this.NumberOfPackages = myQuantity;
-        this.Volume = AppTool.Round(myVolume, 3);
-        this.VolumetricWeight = AppTool.Round(myVolumetricWeight, 3);
+            this.TEU = myTEU;
+            this.NumberOfPackages = myQuantity;
+            this.Volume = AppTool.Round(myVolume, 3);
+            this.VolumetricWeight = AppTool.Round(myVolumetricWeight, 3);
 
-        if (!this.GrossWeightEdited) {
-            this.GrossWeight = AppTool.Round(myGrossWeight, 3);
-        }
+            if (!this.GrossWeightEdited) {
+                this.GrossWeight = AppTool.Round(myGrossWeight, 3);
+            }
 
-        if (!this.ChargeableWeightEdited) {
-            this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            if (!this.ChargeableWeightEdited) {
+                this.ChargeableWeight = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            }
         }
 
         this.SetUIProperties();
@@ -1926,8 +1924,10 @@ export class ShipmentPackageItem extends BaseComponent {
 
             }
 
-            this.fatherComponent.ResetTotalEditedValues();
-            this.fatherComponent.ComputeTotals();
+            if (this.fatherComponent.ItemsSource.Collection.indexOf(this) > -1) {
+                this.fatherComponent.ResetTotalEditedValues();
+                this.fatherComponent.ComputeTotals();
+            }
         }
     }
 
@@ -1939,8 +1939,11 @@ export class ShipmentPackageItem extends BaseComponent {
                     this.EntityPM.Volume = AppTool.GetVolumeFromWeight(this.ShipmentPM.ChargeableWeightUnitCode, this.ShipmentPM.VolumeUnitCode, this.EntityPM.VolumetricWeight, this.ShipmentPM.Ratio);
 
                     this.SetUIProperties();
-                    this.fatherComponent.ResetTotalEditedValues();
-                    this.fatherComponent.ComputeTotals();
+
+                    if (this.fatherComponent.ItemsSource.Collection.indexOf(this) > -1) {
+                        this.fatherComponent.ResetTotalEditedValues();
+                        this.fatherComponent.ComputeTotals();
+                    }
                 }
             }
         }

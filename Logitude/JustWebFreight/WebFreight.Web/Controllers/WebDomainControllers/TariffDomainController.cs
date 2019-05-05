@@ -34,6 +34,8 @@ using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Counters;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -242,19 +244,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         rowData[i] = row.Cells[i].Value2.ToString();
                     }
-
-                    tariffLine.FromPortText = this.TrimTo_20(rowData[0]);
-                    tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
-                    tariffLine.MinPriceText = this.TrimTo_20(rowData[2]);
-                    tariffLine.Step1PriceText = this.TrimTo_20(rowData[3]);
-
+                    
                     Port fromPort = this.GetPortDetails(rowData[0], authToken.Tenant);
                     if (fromPort != null)
                     {
                         tariffLine.FromPortId = fromPort.Id;
                         tariffLine.FromPortCode = fromPort.Code;
                         tariffLine.FromPortName = fromPort.EnglishName;
-                    }                   
+                    }   
+                    else
+                    {
+                        tariffLine.FromPortText = this.TrimTo_20(rowData[0]);
+                    }
 
                     Port toPort = this.GetPortDetails(rowData[1], authToken.Tenant);
                     if (toPort != null)
@@ -263,84 +264,116 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         tariffLine.ToPortCode = toPort.Code;
                         tariffLine.ToPortName = toPort.EnglishName;
                     }
-
-                    if (this.IsNumeric(rowData[2]))
+                    else
                     {
-                        tariffLine.MinPrice = Convert.ToInt32(rowData[2]);
+                        tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
                     }
 
-                    if (this.IsNumeric(rowData[3]))
+                    if (rowData.Length > 2)
                     {
-                        tariffLine.Step1Price = Convert.ToInt32(rowData[3]);
+                        if (this.IsNumber(rowData[2]))
+                        {
+                            tariffLine.MinPrice = Convert.ToDecimal(rowData[2]);
+                        }
+                        else
+                        {
+                            tariffLine.MinPriceText = this.TrimTo_20(rowData[2]);
+                        }
+                    }
+
+                    if (rowData.Length > 3)
+                    {
+                        if (this.IsNumber(rowData[3]))
+                        {
+                            tariffLine.Step1Price = Convert.ToDecimal(rowData[3]);
+                        }
+                        else
+                        {
+                            tariffLine.Step1PriceText = this.TrimTo_20(rowData[3]);
+                        }
                     }
 
                     if (rowData.Length > 4)
                     {
-                        tariffLine.Step2PriceText = this.TrimTo_20(rowData[4]);
-
-                        if (this.IsNumeric(rowData[4]))
+                        if (this.IsNumber(rowData[4]))
                         {
-                            tariffLine.Step2Price = Convert.ToInt32(rowData[4]);
+                            tariffLine.Step2Price = Convert.ToDecimal(rowData[4]);
+                        }
+                        else
+                        {
+                            tariffLine.Step2PriceText = this.TrimTo_20(rowData[4]);
                         }
                     }
 
                     if (rowData.Length > 5)
                     {
-                        tariffLine.Step3PriceText = this.TrimTo_20(rowData[5]);
-
-                        if (this.IsNumeric(rowData[5]))
+                        if (this.IsNumber(rowData[5]))
                         {
-                            tariffLine.Step3Price = Convert.ToInt32(rowData[5]);
+                            tariffLine.Step3Price = Convert.ToDecimal(rowData[5]);
+                        }
+                        else
+                        {
+                            tariffLine.Step3PriceText = this.TrimTo_20(rowData[5]);
                         }
                     }
 
                     if (rowData.Length > 6)
                     {
-                        tariffLine.Step4PriceText = this.TrimTo_20(rowData[6]);
-
-                        if (this.IsNumeric(rowData[6]))
+                        if (this.IsNumber(rowData[6]))
                         {
-                            tariffLine.Step4Price = Convert.ToInt32(rowData[6]);
+                            tariffLine.Step4Price = Convert.ToDecimal(rowData[6]);
+                        }
+                        else
+                        {
+                            tariffLine.Step4PriceText = this.TrimTo_20(rowData[6]);
                         }
                     }
 
                     if (rowData.Length > 7)
                     {
-                        tariffLine.Step5PriceText = this.TrimTo_20(rowData[7]);
-
-                        if (this.IsNumeric(rowData[7]))
+                        if (this.IsNumber(rowData[7]))
                         {
-                            tariffLine.Step5Price = Convert.ToInt32(rowData[7]);
+                            tariffLine.Step5Price = Convert.ToDecimal(rowData[7]);
+                        }
+                        else
+                        {
+                            tariffLine.Step5PriceText = this.TrimTo_20(rowData[7]);
                         }
                     }
 
                     if (rowData.Length > 8)
                     {
-                        tariffLine.Step6PriceText = this.TrimTo_20(rowData[8]);
-
-                        if (this.IsNumeric(rowData[8]))
+                        if (this.IsNumber(rowData[8]))
                         {
-                            tariffLine.Step6Price = Convert.ToInt32(rowData[8]);
+                            tariffLine.Step6Price = Convert.ToDecimal(rowData[8]);
+                        }
+                        else
+                        {
+                            tariffLine.Step6PriceText = this.TrimTo_20(rowData[8]);
                         }
                     }
 
                     if (rowData.Length > 9)
                     {
-                        tariffLine.Step7PriceText = this.TrimTo_20(rowData[9]);
-
-                        if (this.IsNumeric(rowData[9]))
+                        if (this.IsNumber(rowData[9]))
                         {
-                            tariffLine.Step7Price = Convert.ToInt32(rowData[9]);
+                            tariffLine.Step7Price = Convert.ToDecimal(rowData[9]);
+                        }
+                        else
+                        {
+                            tariffLine.Step7PriceText = this.TrimTo_20(rowData[9]);
                         }
                     }
 
                     if (rowData.Length >= 10)
                     {
-                        tariffLine.Step8PriceText = this.TrimTo_20(rowData[10]);
-
-                        if (this.IsNumeric(rowData[10]))
+                        if (this.IsNumber(rowData[10]))
                         {
-                            tariffLine.Step8Price = Convert.ToInt32(rowData[10]);
+                            tariffLine.Step8Price = Convert.ToDecimal(rowData[10]);
+                        }
+                        else
+                        {
+                            tariffLine.Step8PriceText = this.TrimTo_20(rowData[10]);
                         }
                     }
 
@@ -348,6 +381,65 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetApproveVersion(string tariffId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
+
+                string loggedContactId = null;
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                if (loggedContact != null)
+                {
+                    loggedContactId = loggedContact.Id;
+                }
+                
+                ITariffModuleContext context = TariffModuleContext.GetContext(tenant);
+                TariffRepository tariffRepository = new TariffRepository(context);
+                TariffVersionRepository tariffVersionRepository = new TariffVersionRepository(context);
+
+                Tariff tariff = tariffRepository.GetSingle(tariffId, tenant);
+
+                if (tariff != null)
+                {
+                    TariffVersion tariffVersion = tariffVersionRepository.GetSingle(tariffId, tariff.LastVersion, tenant);
+                    if(tariffVersion != null)
+                    {
+                        tariffVersion.IsDraft = false;
+                        tariffVersion.ApprovedByUserId = loggedContactId;
+                        tariffVersion.ApproveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                        tariffVersionRepository.Update(tariffVersion);
+                        tariffVersionRepository.SubmitChanges();
+
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            Tenant = tenant,
+                            EventTypeCode = "VNAP",
+                            UserId = loggedContactId,
+                            EntityId = tariffId,
+                            ObjectTableName = "Tariff",
+                            Notes = "Version " + tariffVersion.Version + " approved",
+                        });
+                    }
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
             catch (Exception ex)
@@ -472,21 +564,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             return trimmedText;
         }
-        private bool IsNumeric(string text)
+        private bool IsNumber(string text)
         {
-            bool isNumeric = false;
+            bool isNumber = false;
 
             if (!string.IsNullOrEmpty(text))
             {
-                Regex isMatch = new Regex("^[0-9]+$");
-
-                if (isMatch.IsMatch(text))
+                decimal value;
+                if (Decimal.TryParse(text, out value))
                 {
-                    isNumeric = true;
+                    isNumber = true;
                 }
             }
 
-            return isNumeric;
+            return isNumber;
         }
     }
 
@@ -504,15 +595,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string ToPortId { get; set; }
         public string ToPortCode { get; set; }
         public string ToPortName { get; set; }
-        public int? MinPrice { get; set; }
-        public int? Step1Price { get; set; }
-        public int? Step2Price { get; set; }
-        public int? Step3Price { get; set; }
-        public int? Step4Price { get; set; }
-        public int? Step5Price { get; set; }
-        public int? Step6Price { get; set; }
-        public int? Step7Price { get; set; }
-        public int? Step8Price { get; set; }
+        public decimal? MinPrice { get; set; }
+        public decimal? Step1Price { get; set; }
+        public decimal? Step2Price { get; set; }
+        public decimal? Step3Price { get; set; }
+        public decimal? Step4Price { get; set; }
+        public decimal? Step5Price { get; set; }
+        public decimal? Step6Price { get; set; }
+        public decimal? Step7Price { get; set; }
+        public decimal? Step8Price { get; set; }
 
         public string FromPortText { get; set; }
         public string ToPortText { get; set; }

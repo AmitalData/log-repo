@@ -675,20 +675,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
                                 if (partnerCode != null)
                                 {
-                                    if (partnerCode.PartnerCode.Length > 15) { partnerCode.PartnerCode = partnerCode.PartnerCode.Substring(0, 15); }
-                                    myStringBuilder.Append(a + partnerCode.PartnerCode.PadLeft(15, ' '));
+                                    if (partnerCode.PartnerCode.Length > 2) { partnerCode.PartnerCode = partnerCode.PartnerCode.Substring(0, 2); }
+                                    myStringBuilder.Append(a + partnerCode.PartnerCode.PadLeft(2, ' '));
                                 }
 
                                 else
                                 {
                                     myStringBuilder.Append(a);
-                                    myStringBuilder.Append(' ', 15);
+                                    myStringBuilder.Append(' ', 2);
                                 }
                             }
                             else
                             {
                                 myStringBuilder.Append(a);
-                                myStringBuilder.Append(' ', 15);
+                                myStringBuilder.Append(' ', 2);
                             }
                         }
                         if (address == null)
@@ -770,25 +770,25 @@ namespace Logitude.Accounting.BL.CoreBL
 
                                         if (partnerCode != null)
                                         {
-                                            if (partnerCode.PartnerCode.Length > 15) { partnerCode.PartnerCode = partnerCode.PartnerCode.Substring(0, 15); }
-                                            myStringBuilder.Append(a + partnerCode.PartnerCode.PadLeft(15, ' '));
+                                            if (partnerCode.PartnerCode.Length > 2) { partnerCode.PartnerCode = partnerCode.PartnerCode.Substring(0, 2); }
+                                            myStringBuilder.Append(a + partnerCode.PartnerCode.PadLeft(2, ' '));
                                         }
                                         else
                                         {
                                             myStringBuilder.Append(a);
-                                            myStringBuilder.Append(' ', 15);
+                                            myStringBuilder.Append(' ', 2);
                                         }
                                     }
                                     else
                                     {
                                         myStringBuilder.Append(a);
-                                        myStringBuilder.Append(' ', 15);
+                                        myStringBuilder.Append(' ', 2);
                                     }
                                 }
                                 else
                                 {
                                     myStringBuilder.Append(a);
-                                    myStringBuilder.Append(' ', 15);
+                                    myStringBuilder.Append(' ', 2);
                                 }
                             }
                         }
@@ -798,13 +798,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append(' ', 143);
+                        myStringBuilder.Append(' ', 130);
                     }
                 }
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append(' ', 143);
+                    myStringBuilder.Append(' ', 130);
                 }
                 myStringBuilder.Append(a);
                 myStringBuilder.Append(' ', 15);
@@ -2173,7 +2173,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
                     }
 
-                    if (item.DocumentAmountAndVATAmount < 0)
+                    else if (item.DocumentAmountAndVATAmount < 0)
                     {
                         myStringBuilder.Append(a);
                         myStringBuilder.Append("-");
@@ -2798,7 +2798,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
                     }
 
-                    if (item.DocumentAmountAndVATAmount < 0)
+                    else if (item.DocumentAmountAndVATAmount < 0)
                     {
                         myStringBuilder.Append(a);
                         myStringBuilder.Append("-");
@@ -3073,7 +3073,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 myStringBuilder.Append(a + Localamount.PadLeft(14, '0'));
                             }
 
-                            if (line.LocalAmount < 0)
+                           else if (line.LocalAmount < 0)
                             {
                                 myStringBuilder.Append(a);
                                 myStringBuilder.Append("-");
@@ -3262,7 +3262,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a + DocumentAmountAndVATAmount.PadLeft(14, '0'));
                     }
 
-                    if (item.DocumentAmountAndVATAmount < 0)
+                   else if (item.DocumentAmountAndVATAmount < 0)
                     {
                         myStringBuilder.Append(a);
                         myStringBuilder.Append("-");
@@ -3623,7 +3623,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                     myStringBuilder.Append(a + Localamount.PadLeft(14, '0'));
                                 }
 
-                                if (line.LocalAmount < 0)
+                                else if (line.LocalAmount < 0)
                                 {
                                     myStringBuilder.Append(a);
                                     myStringBuilder.Append("-");
@@ -3686,7 +3686,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                     myStringBuilder.Append(a + Localamount.PadLeft(14, '0'));
                                 }
 
-                                if (item.DocumentAmountAndVATAmount < 0)
+                               else if (item.DocumentAmountAndVATAmount < 0)
                                 {
                                     myStringBuilder.Append(a);
                                     myStringBuilder.Append("-");

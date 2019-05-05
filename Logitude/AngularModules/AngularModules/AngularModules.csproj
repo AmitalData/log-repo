@@ -101,6 +101,7 @@
     <Content Include="Accounting\Components\ShortTitles\ReconciliationShortTitleComponent.html" />
     <Content Include="Accounting\Components\ShortTitles\PaymentChequeShortTitleComponent.html" />
     <Content Include="Accounting\Components\Templates\FieldTemplateComponent.html" />
+    <Content Include="Accounting\Components\Maintenance\Generate1000Component.html" />
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
@@ -377,6 +378,7 @@
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewIntegrityCheckComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\NewOpenFormatReportComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\AccountingNoteComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Maintenance\Generate1000Component.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
@@ -389,6 +391,7 @@
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\AccountingEntegrityCheckExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\Others\AccountingOpService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\AccountingIntegrityCheckListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\IntegrityCheckStatusListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\JournalAdditionalDataListService.ts" />
@@ -1990,6 +1993,7 @@
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.html" />
@@ -2012,6 +2016,7 @@
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\DailyTimeSheetComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\MonthlyTimeSheetComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\TimeSheetWorkspaceComponent.html" />
+    <Content Include="TimeManagement\Components\Workspaces\TimeSheet\VacationsComponent.html" />
     <Content Include="TimeManagement\Components\Workspaces\TimeSheet\WeeklyTimeSheetComponent.html" />
     <Content Include="Warehouse\Components\CopyFromReleasesPackagesComponent.html" />
     <Content Include="Warehouse\Components\EditTabs\ConnectionsTab\WarehouseConnectionsTabComponent.html" />
@@ -6349,6 +6354,7 @@
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\MenuButtons\TariffMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />
@@ -6393,6 +6399,7 @@
     <TypeScriptCompile Include="TimeManagement\Components\Workspaces\SettingsWorkspaceComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Workspaces\TimeManagementWorkspaceComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Workspaces\TimeSheet\TimeSheetWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="TimeManagement\Components\Workspaces\TimeSheet\VacationsComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Workspaces\TimeSheet\WeeklyTimeSheetComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityLists\SprintList.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityLists\TMBudgetList.ts" />
@@ -6401,6 +6408,7 @@
     <TypeScriptCompile Include="TimeManagement\EntityLists\TMOfficeHourList.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityLists\TMProjectCategoryList.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityLists\TMProjectList.ts" />
+    <TypeScriptCompile Include="TimeManagement\EntityPMInitServices\TMBudgetPMInitService.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityPMs\SprintPM.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityPMs\TMBudgetPM.ts" />
     <TypeScriptCompile Include="TimeManagement\EntityPMs\TMEmployeeTimePM.ts" />

@@ -330,10 +330,17 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
                 this.ItemsSource.forEach(item => {
                     this.Stock.AddARInvoiceStockLinePM(item);
                 });
+                
+                var startNumber: string = this.StartNumber;
+                var endNumber: string = this.EndNumber;
+
+                var length: number = this.ItemsSource.length;
+                startNumber = this.ItemsSource[0].Number;
+                endNumber = this.ItemsSource[length - 1].Number;
 
                 this.Stock.NumbersAdded = true;
                 this.Stock.Amount = this.Stock.ARInvoiceStockLines.length;
-                this.Stock.EventNotes = "Invoice numbers from [" + this.StartNumber + "] to [" + this.EndNumber + "] added";
+                this.Stock.EventNotes = "Invoice numbers from [" + startNumber + "] to [" + endNumber + "] added";
 
                 var stockPMService: ARInvoiceStockPMService = new ARInvoiceStockPMService();
                 if (AppTool.IsNullOrEmpty(this.Stock.Id)) {
@@ -357,8 +364,11 @@ export class NewARInvoiceStockLinesComponent extends BaseComponent {
                         this.CurrentSession.StopBusyIndicator();
 
                         if (!myResponse.HasError) {
-                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                            this.CurrentSession.CloseCurrentWindow();
+                            if (this.CurrentSession.CurrentEditComponent != null) {
+                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            }
+
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
 
                         else {

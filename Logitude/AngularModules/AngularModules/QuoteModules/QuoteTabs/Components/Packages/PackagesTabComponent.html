@@ -552,50 +552,76 @@
                     </tr>
 
                     <tr>
-                        <td style="width: 300px;">
+                        <td style="width: 270px;">
                             <table>
-                                <tr class="FormFieldRow" style="height: 31px;">
-                                    <td style="width: 150px;">
+                                <tr class="FormFieldRow">
+                                    <td>
                                         <LogLabel [ObjectFieldName]="'GrossWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="GrossWeightLabel"></LogLabel>
                                     </td>
 
-                                    <td style="width: 140px;">
-                                        <LogTextBox [ObjectFieldName]="'GrossWeight'" [Text]="GrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <td style="width: 100px;">
+                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'GrossWeight'" [Text]="GrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="GrossWeightLostFocus($event)"></LogTextBox>
+                                    </td>
+
+                                    <td style="width: 20px;">
+                                        <div style="float: right;">
+
+                                            <Hyperlink *ngIf="EntityPM.GrossWeightEdited" [IsEnabled]="IsEditingEnabled" (click)="ResetGrossWeightEdited()" title="{{'Quote.M.ValueEditedByUser' | TextCodeTranslationPipe}}">
+                                                <img src="./Images/Buttons/Edit.png" />
+                                            </Hyperlink>
+                                        </div>
                                     </td>
                                 </tr>
 
-                                <tr class="FormFieldRow" style="height: 31px;">
+                                <tr class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'Volume'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="VolumeLabel"></LogLabel>
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'Volume'" [Text]="Volume" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'Volume'" [Text]="Volume" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
 
-                                <tr class="FormFieldRow" style="height: 31px;">
+                                <tr class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'ChargeableWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightLabel"></LogLabel>
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'ChargeableWeight'" [Text]="ChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'ChargeableWeight'" [Text]="ChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="ChargeableWeightLostFocus($event)" [DontUseTimer]="'true'"></LogTextBox>
+                                    </td>
+
+                                    <td style="width: 20px;">
+                                        <div style="float: right;">
+
+                                            <Hyperlink *ngIf="EntityPM.ChargeableWeightEdited" [IsEnabled]="IsEditingEnabled" (click)="ResetChargeableWeightEdited()" title="{{'Quote.M.ValueEditedByUser' | TextCodeTranslationPipe}}">
+                                                <img src="./Images/Buttons/Edit.png" />
+                                            </Hyperlink>
+                                        </div>
                                     </td>
                                 </tr>
 
-                                <tr class="FormFieldRow" style="height: 31px;">
+                                <tr class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'NumberOfPackages'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'NumberOfPackages'" [Text]="NumberOfPackages" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'NumberOfPackages'" [Text]="NumberOfPackages" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td colspan="2">
+                                    <td colspan="3">
                                         <div></div>
                                     </td>
                                 </tr>

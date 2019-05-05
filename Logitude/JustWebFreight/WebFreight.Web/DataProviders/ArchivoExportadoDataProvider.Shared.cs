@@ -32,7 +32,6 @@ namespace WebFreight.Web.DataProviders
         public string Consignee { get; set; }
         public string ConsigneeNotImporter { get; set; }
 
-
         public string InvoiceNumber { get; set; }
         public DateTime? InvoiceDate { get; set; }
         public string InvoiceCurrencyCode { get; set; }
@@ -60,5 +59,7 @@ namespace WebFreight.Web.DataProviders
         public double? AccountedReceivables { get; set; }
         public string AccountedReceivablesCurrencyCode { get; set; }
         public double? AccountedReceivablesCurrencyRate { get; set; }
+
+        public string Direction { get; set; }
     }
 }

@@ -31,8 +31,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("GeneralData")]
 	    public string GeneralData { get; set; }
-        [Column("IsLedgerCreated")]
-	    public bool IsLedgerCreated { get; set; }
     }
 }
 	 

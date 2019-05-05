@@ -13,6 +13,7 @@ import { LocationDirective } from '../../../../Infrastructure/Utilities/Location
 export class TariffDetailsTabComponent implements OnInit, OnDestroy {
     public EntityPM: TariffPM;
     public Tabs: TariffDetailsTab[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -27,12 +28,14 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CurrentSession.FireEvent("LoadEventTabData");
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CurrentSession.FireEvent("LoadEventTabData");
                 }
             });
         }
@@ -48,9 +51,10 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
 
     BuildTabs() {
         this.Tabs = [];
-        this.Tabs.push(new TariffDetailsTab(0, "GN"));
-        this.Tabs.push(new TariffDetailsTab(1, "VH"));
-        this.Tabs.push(new TariffDetailsTab(2, "EV"));
+        this.Tabs.push(new TariffDetailsTab(0, "VR"));
+        this.Tabs.push(new TariffDetailsTab(1, "GN"));
+        this.Tabs.push(new TariffDetailsTab(2, "VH"));
+        this.Tabs.push(new TariffDetailsTab(3, "EV"));
     }
 
     private Retries: number = 0;
@@ -134,6 +138,12 @@ class TariffDetailsTab {
         this.Code = code;
 
         switch (this.Code) {
+            case "VR": {
+                this.Header = "Version";
+                this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/VersionTabComponent";
+                break;
+            }
+
             case "GN": {
                 this.Header = "General";
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent";
