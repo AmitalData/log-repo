@@ -53,7 +53,7 @@ namespace CommunicationWorkerRole.Tasks
                         List<TMEmployeeTime> itemsProrated =
                             (from EmployeeTimes in iQueryable
                              join Projects in iContext.TMProjects on EmployeeTimes.ProjectId equals Projects.Id
-                             where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != null && Projects.IsProrated == true && !Projects.ExcludeFromProrating
+                             where EmployeeTimes.ProjectId != null  && Projects.IsProrated == true && !Projects.ExcludeFromProrating
                              select EmployeeTimes).ToList();
 
                         if (itemsProrated.Count > 0)
@@ -66,14 +66,14 @@ namespace CommunicationWorkerRole.Tasks
                                     = (
                                     (from EmployeeTimes in iQueryable
                                      join Projects in iContext.TMProjects on EmployeeTimes.ProjectId equals Projects.Id
-                                     where EmployeeTimes.ProjectId != null && EmployeeTimes.ProjectId != null
+                                     where EmployeeTimes.ProjectId != null
                                      && Projects.IsProrated == false && !Projects.ExcludeFromProrating
                                      select EmployeeTimes)
 
                                      .Union
 
                                      (from EmployeeTimes in iQueryable
-                                      where EmployeeTimes.ProjectId == null || EmployeeTimes.ProjectId == null
+                                      where EmployeeTimes.ProjectId == null
                                       select EmployeeTimes)
                                       ).ToList();
 
