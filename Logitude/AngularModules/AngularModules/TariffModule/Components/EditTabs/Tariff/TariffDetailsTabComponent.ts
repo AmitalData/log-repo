@@ -13,6 +13,7 @@ import { LocationDirective } from '../../../../Infrastructure/Utilities/Location
 export class TariffDetailsTabComponent implements OnInit, OnDestroy {
     public EntityPM: TariffPM;
     public Tabs: TariffDetailsTab[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -27,12 +28,14 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CurrentSession.FireEvent("LoadEventTabData");
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CurrentSession.FireEvent("LoadEventTabData");
                 }
             });
         }
