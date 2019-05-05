@@ -47,11 +47,6 @@ export class JournalMoreDataPM {
     public set GeneralData(newValue: string) { if (this.generalData != newValue) { this.generalData = newValue; this.MarkAsDirty("GeneralData"); } }
        
 	 
-    private isLedgerCreated: boolean;
-    public get IsLedgerCreated() { return this.isLedgerCreated; }
-    public set IsLedgerCreated(newValue: boolean) { if (this.isLedgerCreated != newValue) { this.isLedgerCreated = newValue; this.MarkAsDirty("IsLedgerCreated"); } }
-       
-	 
 
     public OldEntityPM: JournalMoreDataPM;
 	

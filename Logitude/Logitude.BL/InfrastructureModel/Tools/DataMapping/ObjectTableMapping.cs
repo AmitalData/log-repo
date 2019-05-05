@@ -59,6 +59,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.NameField = objectTablePM.NameField;
             objectTable.DisableSearchBox = objectTablePM.DisableSearchBox;
             objectTable.AllowedInQueues = objectTablePM.AllowedInQueues;
+            objectTable.IsTabsHidden = objectTablePM.IsTabsHidden;
         }
     }
 }

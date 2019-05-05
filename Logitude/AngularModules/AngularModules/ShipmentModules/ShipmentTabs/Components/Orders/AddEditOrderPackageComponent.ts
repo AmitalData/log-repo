@@ -91,7 +91,9 @@ export class AddEditOrderPackageComponent {
                 }
             }
 
-            this.CurrentSession.CloseCurrentWindow();
+            this.DataContext.fatherComponent.ResetTotalEditedValues();
+            this.DataContext.fatherComponent.ComputeTotals();
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

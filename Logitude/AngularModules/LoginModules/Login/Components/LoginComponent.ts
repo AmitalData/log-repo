@@ -421,22 +421,22 @@ export class LoginComponent {
                          if (this.IsShowAreaCaptcha) {
                              this.CaptchaTextValue = "";
                          }
-
                          this.IsShowAreaCaptcha = true;
                          this.CaptchaImageUrl = userData.CaptchaImage;
                      }
 
-       
-                         this.errorMessage = "";
 
-                          if (userData.InValidCaptcha) this.errorMessage = "Please re-enter the characters you see in the image above";
-                          if (userData.IpRestricted) this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";//
-                         if (userData.InActive) this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                         if (userData.Unlicensed) this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
-                       
-                     if (userData.InValidMailOrPassword) this.errorMessage = "Login failed! invalid user name or password.";
-            
-                     
+
+
+                         this.errorMessage = "";
+                         if (userData.IpRestricted) this.errorMessage = "Trying to log in from unauthorised station!" + " (The IP address you are trying to " + " log in from is restricted for this user)";
+                         else if (userData.InActive) this.errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                         else if (userData.Unlicensed) this.errorMessage = "Your account is unlicensed!" + " please contact your administrator.";
+                         else this.errorMessage = "Login failed! invalid user name or password." + "<br/>";
+          
+                         if (userData.InValidCaptcha && userData.CaptchaImage) this.errorMessage = "Please re-enter the characters you see in the image above";
+
+
 
 
              

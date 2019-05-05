@@ -2771,7 +2771,7 @@
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.Toggle.cs" />
     <Content Include="Integration Test\Shipment\PrepareShipmentVars.postman_collection.json" />
     <Content Include="Integration Test\Shipment\CreateShipment.postman_collection.json" />
-    <Content Include="Integration Test\Shipment\Test environment - Shipments API.postman_environment.json" />
+    <Content Include="Integration Test\Reports\Reports.postman_collection.json" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />

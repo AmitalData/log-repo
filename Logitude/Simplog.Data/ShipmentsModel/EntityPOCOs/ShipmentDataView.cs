@@ -723,6 +723,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string To { get; set; }
         public string Origin { get; set; }
         public string ARInvoices { get; set; }
-
+        public string ReleasingAgentId { get; set; }
+        public string ReleasingAgentName { get; set; }
     }
 }

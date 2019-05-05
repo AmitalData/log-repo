@@ -114,9 +114,6 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         {
           SecurityUtility.CheckContactFeature("Automation", "NEW", entityPM.Tenant);
           AutomationLastUpdateRepository automationLastUpdateRepository = new AutomationLastUpdateRepository(entityPM.Tenant);
-          EntityChangeAutomationHelper entityChangeAutomationHelper = new EntityChangeAutomationHelper();
-
-          entityChangeAutomationHelper.AutomationLastUpdate(entityPM.ObjectTableId, entityPM.Tenant);
 
             if (objectContext == null)
             {
@@ -132,9 +129,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         {
             SecurityUtility.CheckContactFeature("Automation", "UPDATE", entityPM.Tenant);
 
-            EntityChangeAutomationHelper entityChangeAutomationHelper = new EntityChangeAutomationHelper();
-            entityChangeAutomationHelper.AutomationLastUpdate(entityPM.ObjectTableId, entityPM.Tenant);
-
+  
             if (objectContext == null)
             {
                 objectContext = CommonDataContext.GetContext(entityPM.Tenant);

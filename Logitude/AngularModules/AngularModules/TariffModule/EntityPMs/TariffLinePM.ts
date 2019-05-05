@@ -137,6 +137,61 @@ export class TariffLinePM {
     public set DestinationPortCode(newValue: string) { if (this.destinationPortCode != newValue) { this.destinationPortCode = newValue; this.MarkAsDirty("DestinationPortCode"); } }
        
 	 
+    private originPortText: string;
+    public get OriginPortText() { return this.originPortText; }
+    public set OriginPortText(newValue: string) { if (this.originPortText != newValue) { this.originPortText = newValue; this.MarkAsDirty("OriginPortText"); } }
+       
+	 
+    private destinationPortText: string;
+    public get DestinationPortText() { return this.destinationPortText; }
+    public set DestinationPortText(newValue: string) { if (this.destinationPortText != newValue) { this.destinationPortText = newValue; this.MarkAsDirty("DestinationPortText"); } }
+       
+	 
+    private minPriceText: string;
+    public get MinPriceText() { return this.minPriceText; }
+    public set MinPriceText(newValue: string) { if (this.minPriceText != newValue) { this.minPriceText = newValue; this.MarkAsDirty("MinPriceText"); } }
+       
+	 
+    private step1PriceText: string;
+    public get Step1PriceText() { return this.step1PriceText; }
+    public set Step1PriceText(newValue: string) { if (this.step1PriceText != newValue) { this.step1PriceText = newValue; this.MarkAsDirty("Step1PriceText"); } }
+       
+	 
+    private step2PriceText: string;
+    public get Step2PriceText() { return this.step2PriceText; }
+    public set Step2PriceText(newValue: string) { if (this.step2PriceText != newValue) { this.step2PriceText = newValue; this.MarkAsDirty("Step2PriceText"); } }
+       
+	 
+    private step3PriceText: string;
+    public get Step3PriceText() { return this.step3PriceText; }
+    public set Step3PriceText(newValue: string) { if (this.step3PriceText != newValue) { this.step3PriceText = newValue; this.MarkAsDirty("Step3PriceText"); } }
+       
+	 
+    private step4PriceText: string;
+    public get Step4PriceText() { return this.step4PriceText; }
+    public set Step4PriceText(newValue: string) { if (this.step4PriceText != newValue) { this.step4PriceText = newValue; this.MarkAsDirty("Step4PriceText"); } }
+       
+	 
+    private step5PriceText: string;
+    public get Step5PriceText() { return this.step5PriceText; }
+    public set Step5PriceText(newValue: string) { if (this.step5PriceText != newValue) { this.step5PriceText = newValue; this.MarkAsDirty("Step5PriceText"); } }
+       
+	 
+    private step6PriceText: string;
+    public get Step6PriceText() { return this.step6PriceText; }
+    public set Step6PriceText(newValue: string) { if (this.step6PriceText != newValue) { this.step6PriceText = newValue; this.MarkAsDirty("Step6PriceText"); } }
+       
+	 
+    private step7PriceText: string;
+    public get Step7PriceText() { return this.step7PriceText; }
+    public set Step7PriceText(newValue: string) { if (this.step7PriceText != newValue) { this.step7PriceText = newValue; this.MarkAsDirty("Step7PriceText"); } }
+       
+	 
+    private step8PriceText: string;
+    public get Step8PriceText() { return this.step8PriceText; }
+    public set Step8PriceText(newValue: string) { if (this.step8PriceText != newValue) { this.step8PriceText = newValue; this.MarkAsDirty("Step8PriceText"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	

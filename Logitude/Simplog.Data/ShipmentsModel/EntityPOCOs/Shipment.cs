@@ -358,6 +358,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool OrderIsDangerouseGoods { get; set; }
         public double? OrderVolumetricWeight { get; set; }
         public double? OrderChargeableWeight { get; set; }
+        public bool OrderGrossWeightEdited { get; set; }
+        public bool OrderChargeableWeightEdited { get; set; }
         #endregion
 
         #region AWB

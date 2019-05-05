@@ -1537,8 +1537,8 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         this.SetInlandDomesticOnFinish();
     }
     SetPartnersOnFinish() {
-        if (this.IsCopyFromShipment == false) {
-            if (!AppTool.IsNullOrEmpty(this.AgentId)) {
+        if (!AppTool.IsNullOrEmpty(this.AgentId)) {
+            if (this.IsCopyFromShipment == false) {
                 if (this.DirectionId == "E") {
                     this.EntityPM.ConsigneeId = this.AgentId;
                     this.EntityPM.ConsigneeName = this.AgentName;
@@ -1559,6 +1559,34 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                     this.EntityPM.ShipperReference2 = this.AgentReference2;
                     this.EntityPM.ConsigneeId = SessionLocator.TenantPM.AgentId;
                     this.EntityPM.ConsigneeAddressId = SessionLocator.TenantPM.AddressId;
+                }
+            }
+
+            else {
+                if (this.DirectionId == "E") {
+                    if (this.EntityPM.ConsigneeId == null) {
+                        this.EntityPM.ConsigneeId = this.AgentId;
+                        this.EntityPM.ConsigneeName = this.AgentName;
+                        this.EntityPM.ConsigneeAddressId = this.AgentAddressId;
+                        this.EntityPM.ConsigneeContactId = this.AgentContactId;
+                        this.EntityPM.ConsigneeReference1 = this.AgentReference1;
+                        this.EntityPM.ConsigneeReference2 = this.AgentReference2;
+                        this.EntityPM.ShipperId = SessionLocator.TenantPM.AgentId;
+                        this.EntityPM.ShipperAddressId = SessionLocator.TenantPM.AddressId;
+                    }
+                }
+
+                else {
+                    if (this.EntityPM.ShipperId == null) {
+                        this.EntityPM.ShipperId = this.AgentId;
+                        this.EntityPM.ShipperName = this.AgentName;
+                        this.EntityPM.ShipperAddressId = this.AgentAddressId;
+                        this.EntityPM.ShipperContactId = this.AgentContactId;
+                        this.EntityPM.ShipperReference1 = this.AgentReference1;
+                        this.EntityPM.ShipperReference2 = this.AgentReference2;
+                        this.EntityPM.ConsigneeId = SessionLocator.TenantPM.AgentId;
+                        this.EntityPM.ConsigneeAddressId = SessionLocator.TenantPM.AddressId;
+                    }
                 }
             }
         }

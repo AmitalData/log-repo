@@ -46,6 +46,8 @@ namespace WebFreight.Web.Monitoring
         private bool AnyWaitingStatus()
         {
             bool IsWaiting = false;
+            bool IsFailed = false;
+
             List<GlobalDB> GlobalDatabases = new List<GlobalDB>();
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -70,7 +72,7 @@ namespace WebFreight.Web.Monitoring
                 GlobalContext Context = GlobalContext.GetContextByDBId(db.Id);
 
                 DateTime fiveMinutesBefore = DateTime.Now.AddMinutes(-5);
-
+                DateTime TwoDaysAgo = DateTime.Now.AddDays(-2);
                 try
                 {
                     IsWaiting = (from a in Context.AnalyzeQueues.Include("AnalyzeQueueStatus")
@@ -80,6 +82,16 @@ namespace WebFreight.Web.Monitoring
                                  && a.CreateDate < fiveMinutesBefore
                                  && (System.Data.Entity.DbFunctions.DiffMinutes(a.CreateDate, DateTime.Now) > 5)
                                  select a).Any();
+                    if (!IsWaiting)
+                    {
+                        IsFailed = (from a in Context.AnalyzeQueues.Include("AnalyzeQueueStatus")
+                                    where
+                                    a.Status == "F"
+                                    && a.From == "TFSAggregator"
+                                    && a.CreateDate > TwoDaysAgo
+                                    select a).Any();
+                    }
+
                 }
 
                 catch (Exception errorInfo)
@@ -87,13 +99,13 @@ namespace WebFreight.Web.Monitoring
                     ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "AzureDevOpsQueue", "Bug in AnyWaitingStatus Method : IsFaild = (from a in Context.AnalyzeQueues ...", null);
                 }
 
-                if (IsWaiting)
+                if (IsWaiting || IsFailed)
                 {
                     break;
                 }
             }
 
-            return IsWaiting;
+            return (IsWaiting | IsFailed);
         }
 
     }

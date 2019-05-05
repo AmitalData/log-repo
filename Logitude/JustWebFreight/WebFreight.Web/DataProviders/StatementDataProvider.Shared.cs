@@ -107,6 +107,10 @@ namespace WebFreight.Web.DataProviders
 
             public string BillToVendorId { get; set; }
             public string BillToVendor { get; set; }
+
+            public string InvoiceStatus { get; set; }
+            public double? InvoiceAmount { get; set; }
+            public double? AmountPaid { get; set; }
         }
 
         public string Name { get; set; }

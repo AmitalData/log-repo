@@ -110,6 +110,17 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                             string message = entity.ShipmentType.Code.Contains("LCL") ? "Package Type is required" : "Container Type is required";
                                             throw new ApplicationException(message);
                                         }
+
+                                        else
+                                        {
+                                            if (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL"))
+                                            {
+                                                if (item.Pieces == null || item.Pieces == 0)
+                                                {
+                                                    item.Pieces = 1;
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }

@@ -188,7 +188,7 @@ namespace CommunicationWorkerRole
                                         var customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetOldestCustomerTenantAccessCardsBatch(Shipment.CustomerId, tenant, importerTenant);
                                         if (Shipment != null && (customerTenantAccessCardsBatch != null ? (Shipment.CreateDateTime >= customerTenantAccessCardsBatch.FromDatetime):true))
                                         {
-                                           
+                                            LogPM.Refrence = Shipment.ShipmentNumber;
                                             if (((Shipment.CustomerId != CustomerId) || CustomerChanged == "true") && !string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
                                             {
                                                 #region Change Customer Logic

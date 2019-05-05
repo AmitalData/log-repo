@@ -58,7 +58,6 @@ namespace WebFreight.Web.Helpers
         InboundEmailLine emailLine;
         IWebFreightContext webContext;
         bool IsFirstTicket = false;
-
         bool IsContactUser { get; set; }
         string AnalyzeQueueId = null;
         string supportEmail = "";
@@ -236,7 +235,7 @@ namespace WebFreight.Web.Helpers
                             User myUser = userRepository.GetSingleUser(contact.Id, Tenant, false);
                             if (myUser != null)
                             {
-                                myTicket.InternalUsers += ";" + contact.Email;
+                                myTicket.InternalUsers = this.AppendEmails(myTicket.InternalUsers, contact.Email);
                             }
                         }
                     }
@@ -290,7 +289,7 @@ namespace WebFreight.Web.Helpers
                     //if the internal user forward a message to the system, add him as the contact and to the notify internal 
                     if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
                     {
-                        emailLine.InternalUsers += ";" + emailDetails.Sender;
+                        emailLine.InternalUsers = this.AppendEmails(emailLine.InternalUsers, emailDetails.Sender);
                     }
 
                     repository.Add(emailLine);
@@ -319,7 +318,7 @@ namespace WebFreight.Web.Helpers
                     if (IsFirstTicket && userRepository.DoesUserExist(emailDetails.Sender, Tenant))
                     {
                         CorrespondenceLine.IsInternal = false;
-                        CorrespondenceLine.InternalUsers += ";" + emailDetails.Sender;
+                        CorrespondenceLine.InternalUsers = this.AppendEmails(CorrespondenceLine.InternalUsers, emailDetails.Sender);
                     }
 
                     correspondenceRep.Add(CorrespondenceLine);
@@ -356,6 +355,7 @@ namespace WebFreight.Web.Helpers
             {
                 string errorMessage = errorInfo.Message;
                 AzureLog.SaveLogsInStorage("Inbound Parse Webhook error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
+                throw errorInfo;
             }
         }
 
@@ -379,45 +379,40 @@ namespace WebFreight.Web.Helpers
                 // To emails process
                 if (!string.IsNullOrEmpty(emailDetails.To))
                 {
-                    //if (helper == null)
-                    //{
-                    //    helper = new InboundEmailGeneralHelperMethods(null);
-                    //}
-
-                    ////List<string> temp = this.helper.GetListOfFilteredEmails(emailDetails.To);
-                    //List<string> toEmails = helper.GetListOfFilteredEmails(emailDetails.To);
-                    //toEmails = helper.GetSupportEmail(toEmails); // filtered data 
-
-                    //toEmails = toEmails.Select(a => a.Split('@')[1].Trim()).ToList();
-                    //List<string> query = toEmails.Where(a => a != null && !toEmails.Contains(supportEmail.Split('@')[1].Trim())).ToList();
-                    ////List<string> query = (from item in toEmails
-                    ////                      where item.Split('@')[1] != supportEmail.Split('@')[1] 
-                    ////                      select item).ToList();
-                    //if (query.Count() > 0)
-                    //{
-                    //    string emails = string.Join(";", query); 
-                    //    emailLine.CCs += emails;
-                    //}
-
                     if (helper == null)
                     {
                         helper = new InboundEmailGeneralHelperMethods(null);
                     }
 
-                    //List<string> temp = this.helper.GetListOfFilteredEmails(emailDetails.To);
                     List<string> toEmails = helper.GetListOfFilteredEmails(emailDetails.To);
                     toEmails = helper.GetSupportEmail(toEmails); // filtered data 
 
-                    //toEmails = toEmails.Select(a => a.Split('@')[1].Trim()).ToList();
-                    string supportEmailDomain = supportEmail.Split('@')[1].Trim();
+                    string supportEmailDomain =  supportEmail.Split('@')[1].Trim();
                     List<string> query = toEmails.Where(a => a != null && !a.Split('@')[1].Trim().Contains(supportEmailDomain)).ToList();
-                    //List<string> query = (from item in toEmails
-                    //                      where item.Split('@')[1] != supportEmail.Split('@')[1] 
-                    //                      select item).ToList();
                     if (query.Count() > 0)
                     {
                         string emails = string.Join(";", query);
-                        emailLine.CCs += emails;
+
+                        foreach (string item in query)
+                        {
+                            if (!string.IsNullOrEmpty(item))
+                            {
+                                string iEmail = helper.GetCorrectEmailFormat(item);
+
+                                if (!string.IsNullOrEmpty(iEmail))
+                                {
+                                    iEmail = iEmail.ToLower();
+
+                                    if (!this.IsSupportEmail(iEmail))
+                                    {
+                                        emailLine.CCs = this.AppendEmails(emailLine.CCs, iEmail);
+                                    }
+                                }
+                            }
+                        }
+
+                        // Ayman: no need to check if is user ? so always add this to the CCS
+                        //emailLine.CCs += emails;
                     }
                 }
 
@@ -462,11 +457,6 @@ namespace WebFreight.Web.Helpers
                 {
                     emailLine.InternalUsers = string.Join(";", queryInternal);
                 }
-
-
-                //line.Bcc = string.Join(";", queryCc);
-                //line.CCs = string.Join(";", queryCc);
-                //line.InternalUsers = string.Join(";", queryInternal);
             }
         }
 
@@ -480,34 +470,50 @@ namespace WebFreight.Web.Helpers
             if (!string.IsNullOrEmpty(emailDetails.CCs))
             {
                 var myList = emailDetails.CCs.Split(';');
-                string userEmails = null, contactEmails = null, myEmail = "";
+                string userEmails = null;
+                string contactEmails = null;
+                
                 foreach (string item in myList)
                 {
-                    myEmail = helper.GetCorrectEmailFormat(item);
-                    if (userRepository.DoesUserExist(myEmail, Tenant))
+                    if (!string.IsNullOrEmpty(item))
                     {
-                        userEmails += myEmail + ";";
-                    }
+                        string iEmail = helper.GetCorrectEmailFormat(item);
 
-                    else
-                    {
-                        contactEmails += myEmail + ";";
-                    }
+                        if (!string.IsNullOrEmpty(iEmail))
+                        {
+                            iEmail = iEmail.ToLower();
+
+                            if (!this.IsSupportEmail(iEmail))
+                            {
+                                if (userRepository.DoesUserExist(iEmail, Tenant))
+                                {
+                                    userEmails = this.AppendEmails(userEmails, iEmail);                                                                       
+                                }
+
+                                else
+                                {
+                                    contactEmails = this.AppendEmails(contactEmails, iEmail);                                   
+                                }
+                            }
+                        }
+                    }                    
                 }
 
                 if (correspondenceLine != null)
                 {
-                    correspondenceLine.CCs = contactEmails;
-                    correspondenceLine.InternalUsers = userEmails;
+                    correspondenceLine.CCs = this.AppendEmails(correspondenceLine.CCs, contactEmails);
+                    correspondenceLine.InternalUsers = this.AppendEmails(correspondenceLine.InternalUsers, userEmails);                                       
                 }
 
                 if (inboundEmailLine != null)
                 {
-                    inboundEmailLine.CCs = contactEmails;
-                    inboundEmailLine.InternalUsers = userEmails;
+                    inboundEmailLine.CCs = this.AppendEmails(inboundEmailLine.CCs, contactEmails);
+                    inboundEmailLine.InternalUsers = this.AppendEmails(inboundEmailLine.InternalUsers, userEmails);                    
                 }
             }
         }
+
+
 
         private bool CheckedIfSenderInternaluser()
         {
@@ -579,28 +585,6 @@ namespace WebFreight.Web.Helpers
             }
 
             return strippedTextFinal;
-
-            // Filters 
-            //var regexes = new List<Regex>() { new Regex("From:\\s*", RegexOptions.IgnoreCase),
-            //                                  new Regex("From:\\s*" + Regex.Escape(address), RegexOptions.IgnoreCase),
-            //            new Regex("<" + Regex.Escape(address) + ">", RegexOptions.IgnoreCase),
-            //            new Regex(Regex.Escape(address) + "\\s+wrote:", RegexOptions.IgnoreCase),
-            //            new Regex("(\\s\\n)*On.*(\\r\\n)?wrote:(\\r\\n)*", RegexOptions.IgnoreCase | RegexOptions.Multiline),
-            //            new Regex("-+original\\s+message-+\\s*$", RegexOptions.IgnoreCase),
-            //            new Regex("from:\\s*$", RegexOptions.IgnoreCase),
-            //            new Regex("^>.*$", RegexOptions.IgnoreCase | RegexOptions.Multiline),
-            //            new Regex("-+ Forwarded\\s+message -+\\s*$", RegexOptions.IgnoreCase | RegexOptions.Multiline)
-            //};
-
-            //var index = strippedText.Length;
-
-            //foreach (var regex in regexes)
-            //{
-            //    var match = regex.Match(strippedText);
-
-            //    if (match.Success && match.Index < index)
-            //        index = match.Index;
-            //}
         }
 
         private void GetCCEmailsList(InboundEmailLine emailLine, TicketPM myTicket)
@@ -612,8 +596,7 @@ namespace WebFreight.Web.Helpers
 
             List<string> filteredInboundEmailLineEmails = new List<string>();
             List<string> filteredTicketEmails = new List<string>();
-
-            string contactEmails = null, userEmails = null;
+          
 
             // Fix Email 
             // convert eq: "email@gmail.com" <email@gmail.com> ==> email@gmail.com
@@ -659,32 +642,37 @@ namespace WebFreight.Web.Helpers
 
                 if (query.Count() > 0)
                 {
-                    string myEmail = "";
+                    string userEmails = null;
+                    string contactEmails = null;
+
                     foreach (string item in query)
                     {
-                        myEmail = helper.GetCorrectEmailFormat(item);
-                        if (!string.IsNullOrEmpty(myEmail))
+                        if (!string.IsNullOrEmpty(item))
                         {
-                            if (userRepository.DoesUserExist(myEmail, Tenant))
+                            string iEmail = helper.GetCorrectEmailFormat(item);
+
+                            if (!string.IsNullOrEmpty(iEmail))
                             {
-                                userEmails += myEmail + ";";
-                            }
-                            else
-                            {
-                                contactEmails += myEmail + ";";
+                                iEmail = iEmail.ToLower();
+
+                                if (!this.IsSupportEmail(iEmail))
+                                {
+                                    if (userRepository.DoesUserExist(iEmail, Tenant))
+                                    {
+                                        userEmails = this.AppendEmails(userEmails, iEmail);
+                                    }
+
+                                    else
+                                    {
+                                        contactEmails = this.AppendEmails(contactEmails, iEmail);                                       
+                                    }
+                                }
                             }
                         }
                     }
 
-                    // Add new ccs & internal users to Ticket 
-                    if (!string.IsNullOrEmpty(contactEmails))
-                    {
-                        myTicket.CCs += ";" + contactEmails;
-                    }
-                    if (!string.IsNullOrEmpty(userEmails))
-                    {
-                        myTicket.InternalUsers += ";" + userEmails;
-                    }
+                    myTicket.CCs = this.AppendEmails(myTicket.CCs, contactEmails);
+                    myTicket.InternalUsers = this.AppendEmails(myTicket.InternalUsers, userEmails);
 
                     crmContext.SaveChanges();
                 }
@@ -892,23 +880,31 @@ namespace WebFreight.Web.Helpers
             }
 
             List<string> myEmails = emailDetails.CCs.Split(';').ToList<string>();
-            string memail = "";
             foreach (var item in myEmails)
             {
-                memail = helper.GetCorrectEmailFormat(item);
-                if (!string.IsNullOrEmpty(memail))
+                if (!string.IsNullOrEmpty(item))
                 {
-                    if (userRepository.DoesUserExist(memail, Tenant))
+                    string iEmail = helper.GetCorrectEmailFormat(item);
+
+                    if (!string.IsNullOrEmpty(iEmail))
                     {
-                        myTicket.InternalUsers += memail + ";";
-                    }
-                    else
-                    {
-                        myTicket.CCs += memail + ";";
+                        iEmail = iEmail.ToLower();
+
+                        if (!this.IsSupportEmail(iEmail))
+                        {
+                            if (userRepository.DoesUserExist(iEmail, Tenant))
+                            {
+                                myTicket.InternalUsers = this.AppendEmails(myTicket.InternalUsers, iEmail);                                
+                            }
+
+                            else
+                            {
+                                myTicket.CCs = this.AppendEmails(myTicket.CCs, iEmail);
+                            }
+                        }
                     }
                 }
             }
-
 
             myHeader = new InboundEmail()
             {
@@ -924,6 +920,53 @@ namespace WebFreight.Web.Helpers
             };
 
             myHeaderRep.Add(myHeader);
+        }
+
+        private string AppendEmails(string toField, string emails)
+        {
+            string myResult = null;
+
+            if (!string.IsNullOrEmpty(toField))
+            {
+                myResult = toField;
+            }
+
+            if (!string.IsNullOrEmpty(emails))
+            {
+                if (string.IsNullOrEmpty(myResult))
+                {
+                    myResult = emails;
+                }
+
+                else
+                {
+                    myResult += ";" + emails;
+                }
+            }
+
+            return myResult;
+        }
+        private bool IsSupportEmail(string email)
+        {
+            bool myResult = false;
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                email = email.ToLower();
+
+                switch (email)
+                {
+                    case "s@test.unifreight.co.il":
+                    case "support@ilcargo.com":
+                    case "support@icl.unifreight.co.il":
+                        {
+                            myResult = true;
+                            break;
+                        }
+                }
+            }
+
+            return myResult;
         }
     }
 }
