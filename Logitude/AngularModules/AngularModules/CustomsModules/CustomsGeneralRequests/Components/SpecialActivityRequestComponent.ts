@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../Customs/Args';
@@ -8,7 +8,7 @@ import { DeclarationExtendedListService } from '../../../Customs/Services/Extend
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { DeclarationList } from '../../../Customs/EntityLists/DeclarationList';
 import { IIGGeneralMessagesService } from '../../../Customs/Services/WebServices/IIGGeneralMessagesService';
-import { SpecialActivityRequestParams, GeneralDetails, CargoIdentifier, GoodsDetails, RepresentativeDetails, RePackingApprovalDetails, CurrentPackingDetails, PackingDetails, DesiredPackingDetails, SampleRequestDetails } from '../../../Customs/DataContract/RequestParams/SpecialActivityRequestParams';
+import { SpecialActivityRequestParams, OtherActivityDetails, GeneralDetails, CargoIdentifier, GoodsDetails, RepresentativeDetails, RePackingApprovalDetails, CurrentPackingDetails, PackingDetails, DesiredPackingDetails, SampleRequestDetails } from '../../../Customs/DataContract/RequestParams/SpecialActivityRequestParams';
 import { INF_MSG_GenericResponseData } from '../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -88,6 +88,7 @@ export class SpecialActivityRequestComponent
             this.RequestParams.GeneralDetailsData.CargoIdentifier = new CargoIdentifier();
             this.RequestParams.GoodsDetailsData = new GoodsDetails();
             this.RequestParams.RePackingApprovalDetailsData = new RePackingApprovalDetails();
+            this.RequestParams.OtherActivityDetailsData = new OtherActivityDetails();
 
             this.SpecialActivityType = "6";
 
@@ -559,6 +560,13 @@ export class SpecialActivityRequestComponent
                 this.SetIsRePackingApproval(false);
                 this.SetIsSampleRequest(false);
             }
+        }
+    }
+
+    get OtherActivityComment() { return this.RequestParams.OtherActivityDetailsData.OtherActivityComment; }
+    set OtherActivityComment(value: string) {
+        if (this.RequestParams.OtherActivityDetailsData.OtherActivityComment != value) {
+            this.RequestParams.OtherActivityDetailsData.OtherActivityComment = value;
         }
     }
     //#endregion OtherActivity Properties
@@ -1182,6 +1190,8 @@ export class SpecialActivityRequestComponent
                     break;
                 }
             case "13": //Other
+                currRequestParams.OtherActivityDetailsData = new OtherActivityDetails();
+                currRequestParams.OtherActivityDetailsData.OtherActivityComment = this.OtherActivityComment;
                 break;
         }
 
