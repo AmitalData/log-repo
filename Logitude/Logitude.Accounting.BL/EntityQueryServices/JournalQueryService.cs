@@ -365,7 +365,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                 journal.JournalLines = GetJournalLines(journal, tenant);
             }
-            return journalPMs.ToList();
+            return journalPMs;
         }
 
         public List<JournalLinePM> GetJournalLines(JournalPM journal, int tenant)
