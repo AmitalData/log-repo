@@ -130,17 +130,24 @@ export class MiscPageComponent implements AfterViewInit {
     }
 
     Generate1000() {
-        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
             logitudeWindow.Height = 300;
-            logitudeWindow.Title = "Year Transfer";
+            logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Generate1000");
             logitudeWindow.Show('./Accounting/Components/Maintenance/Generate1000Component');
         });
 
     }
 
     Receiving1000() {
+        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe(response => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Width = 500;
+            logitudeWindow.Height = 300;
+            logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Receiving1000");
+            logitudeWindow.Show('./Accounting/Components/Maintenance/Receiving1000Component');
+        });
 
     }
 
