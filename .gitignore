@@ -392,3 +392,4 @@ __pycache__/
 /Logitude/JustWebFreight/WebFreight.Web/_JustWebFreightConnectionStrings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustConfig/Customs.appSettings.config
 /Logitude/JustWebFreight/WebFreight.Web/JustConfig/Customs.ConnectionStrings.config
+/Logitude/Logitude.IntegrationTests/FTPFiles
