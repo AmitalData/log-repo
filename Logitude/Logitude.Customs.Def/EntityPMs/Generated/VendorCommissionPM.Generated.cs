@@ -114,6 +114,31 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string modificationsTypeCode ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ModificationsTypeCode  
+	   {
+	    
+	     get
+		{
+		   return modificationsTypeCode;
+		 }
+		 set
+		 {
+		   if(modificationsTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ModificationsTypeCode",OldValue=modificationsTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   modificationsTypeCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

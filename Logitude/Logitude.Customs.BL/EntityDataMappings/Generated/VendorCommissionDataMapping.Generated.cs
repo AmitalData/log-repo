@@ -25,7 +25,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         VendorId, 
 	         CustomerId, 
 	         CommisionPercentage, 
-	         Tenant,
+	         Tenant, 
+	         ModificationsTypeCode,
 	      }
 
 
@@ -35,7 +36,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         VendorId, 
 	         CustomerId, 
 	         CommisionPercentage, 
-	         Tenant,
+	         Tenant, 
+	         ModificationsTypeCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -76,6 +78,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {
 					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ModificationsTypeCode))
+            {
+					entityPM.ModificationsTypeCode = entityPOCO.ModificationsTypeCode;
             }
 
 		}

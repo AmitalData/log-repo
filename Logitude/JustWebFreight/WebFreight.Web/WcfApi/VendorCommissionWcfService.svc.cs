@@ -64,7 +64,7 @@ namespace WebFreight.Web.WcfApi
 
                     if (vendor != null && customer != null)
                     {
-                    VendorCommissionPM vendorCommission = vendorCommissionQueryService.GetSingle(vendor.Id, customer.Id, false, false);
+                    VendorCommissionPM vendorCommission = vendorCommissionQueryService.GetSingle(vendor.Id, customer.Id,entityPM.ModificationsTypeCode, false, false);
 
 
 
@@ -77,6 +77,7 @@ namespace WebFreight.Web.WcfApi
                             CustomerId = customer.Id,
                             Tenant = entityPM.Tenant,
                             CommisionPercentage = entityPM.CommisionPercentage,
+                            ModificationsTypeCode = entityPM.ModificationsTypeCode,
                             ChangeSetOp = ChangeSetOperation.Insert
                         };
 
@@ -191,7 +192,7 @@ namespace WebFreight.Web.WcfApi
 
                     if (vendor != null && customer != null)
                     {
-                        VendorCommissionPM vendorCommission = vendorCommissionQueryService.GetSingle(vendor.Id, customer.Id, false, false);
+                        VendorCommissionPM vendorCommission = vendorCommissionQueryService.GetSingle(vendor.Id, customer.Id,entityPM.ModificationsTypeCode, false, false);
 
 
 
@@ -204,6 +205,7 @@ namespace WebFreight.Web.WcfApi
                                 CustomerId = customer.Id,
                                 Tenant = entityPM.Tenant,
                                 CommisionPercentage = entityPM.CommisionPercentage,
+                                ModificationsTypeCode = entityPM.ModificationsTypeCode,
                                 ChangeSetOp = ChangeSetOperation.Delete
                             };
 
