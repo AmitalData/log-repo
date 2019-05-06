@@ -2,6 +2,7 @@
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
+using Logitude.TimeManagement.Data.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -32,58 +33,79 @@ namespace WebFreight.Web.Helpers.APIHelpers
             string xmlParameters = BatchTaskExecution.PrametersXml;
             System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
             XmlSerializer serializer = new XmlSerializer(typeof(TMProjectDataArgs));
-            TMProjectDataArgs parameterArgs = serializer.Deserialize(stringReader) as TMProjectDataArgs;
+            TMProjectDataArgs args = serializer.Deserialize(stringReader) as TMProjectDataArgs;
 
-            int tenant;
-            string employeeUserId = "";
-            DateTime? fromDate;
-            DateTime? toDate;
-            if (parameterArgs != null)
+            if (args != null)
             {
-                tenant = parameterArgs.Tenant;
-                employeeUserId = parameterArgs.EmployeeUserId;
-                fromDate = parameterArgs.FromDate;
-                toDate = parameterArgs.ToDate;
+                ITimeManagementContext myContext = TimeManagementContext.GetContext(args.Tenant);
+                TMEmployeeTimeRepository iTMEmployeeTimeRepository = new TMEmployeeTimeRepository(myContext);
+                TMProjectRepository iTMProjectRepository = new TMProjectRepository(myContext);
+                IQueryable<TMEmployeeTime> iQueryable = iTMEmployeeTimeRepository.GetAll(args.Tenant);
+                List<TMEmployeeTime> employeeTimes = this.GetFilteredList(iQueryable, args).ToList();
 
-                ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
-                IQueryable<TMEmployeeTime> iQueryable = (from d in myContext.TMEmployeeTimes
-                                                         where d.Tenant == tenant && d.DateOfWork != null && d.WINumber != null
-                                                         select d);
-
-                List<TMProject> allProjects = (from d in myContext.TMProjects where d.Tenant == tenant select d).ToList();
-                if (!string.IsNullOrEmpty(employeeUserId))
+                if (employeeTimes.Count > 0)
                 {
-                    iQueryable = iQueryable.Where(d => d.EmployeeUserId == employeeUserId);
-                }
+                    TFSParseWebhook webhook = new TFSParseWebhook();
 
-                if(fromDate != null)
-                {
-                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
-                }
-                if (toDate != null)
-                {
-                    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(toDate));
-                }
+                    int count = 0;
+                    foreach (TMEmployeeTime item in employeeTimes)
+                    {
+                        int iWorkItemNumber;
 
-                TFSParseWebhook myTFSParseWebhook = new TFSParseWebhook();
-                List<TMEmployeeTime> projectsList = myTFSParseWebhook.GetProjects(iQueryable.ToList(), tenant);
+                        if (Int32.TryParse(item.WINumber, out iWorkItemNumber))
+                        {
+                            string iProjectNumber = webhook.GetWorkItemById(iWorkItemNumber, false);
+                            if (!string.IsNullOrEmpty(iProjectNumber))
+                            {
+                                string iProjectId = iTMProjectRepository.GetTMProjectByNumber(iProjectNumber, args.Tenant);
+
+                                if (!string.IsNullOrEmpty(iProjectId))
+                                {
+                                    if (item.ProjectId != iProjectId)
+                                    {
+                                        item.ProjectId = iProjectId;
+                                        iTMEmployeeTimeRepository.Update(item);
+                                        count++;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (count >= 100)
+                        {
+                            count = 0;
+                            iTMEmployeeTimeRepository.SubmitChanges();
+                        }
+                    }
+
+                    if (count > 0)
+                    {
+                        iTMEmployeeTimeRepository.SubmitChanges();
+                    }
+                }
             }
         }
 
-        public string GetConnection(int tenant)
+        private IQueryable<TMEmployeeTime> GetFilteredList(IQueryable<TMEmployeeTime> iQueryable, TMProjectDataArgs args)
         {
-            GlobalDB currentDb;
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            iQueryable = iQueryable.Where(d => d.DateOfWork != null && d.WINumber != null);
+
+            if (!string.IsNullOrEmpty(args.EmployeeUserId))
             {
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-                scope.Complete();
+                iQueryable = iQueryable.Where(d => d.EmployeeUserId == args.EmployeeUserId);
             }
 
-            string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
-            WebFreightContext context = new WebFreightContext(connection);
+            if (args.FromDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) >= System.Data.Entity.DbFunctions.TruncateTime(args.FromDate));
+            }
 
-            return context.Database.Connection.ConnectionString;
+            if (args.ToDate != null)
+            {
+                iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.DateOfWork) <= System.Data.Entity.DbFunctions.TruncateTime(args.ToDate));
+            }
+
+            return iQueryable;
         }
     }
 }
