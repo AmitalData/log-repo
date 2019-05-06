@@ -1046,14 +1046,13 @@ namespace WebFreight.Web.ReportsWebServices
                 item.Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue);
                 item.Notes = d.InternalNotes;
                 item.BillToVendorId = d.BillToId;
+                item.InvoiceStatus = d.Status == null ? null : d.Status.Name;
+                item.InvoiceAmount = d.AmountInLocalCurrency;
+                item.AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency;
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
 
                 list_ARInvoices.Add(item);
             }
-
-
-
-
 
             List<StatementDataProvider.StatementRecord> list_APInvoices =
                 (from d in iQueryable_APInvoice
@@ -1073,6 +1072,9 @@ namespace WebFreight.Web.ReportsWebServices
                      Notes = d.InternalNotes,
                      YourRefrence = d.InvoiceNumber,
                      BillToVendorId = d.VendorId,
+                     InvoiceStatus = d.Status == null ? null : d.Status.Name,
+                     InvoiceAmount = d.AmountInLocalCurrency,
+                     AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency,
                  }).ToList();
 
             List<StatementDataProvider.StatementRecord> list_ARPayments =
@@ -2170,6 +2172,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_CustomerId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CustomerId").FirstOrDefault();
             QueryFilterItem filterItem_EntityStatus = queryOperations.QueryFilterItems.Where(d => d.FieldName == "EntityStatus").FirstOrDefault();
             QueryFilterItem filterItem_SupplierId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "SupplierId").FirstOrDefault();
+            QueryFilterItem filterItem_IncludeOperationalyClose = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeOperationalClose").FirstOrDefault();
 
             //ToDate
             DateTime? toDate = null;
@@ -2271,44 +2274,86 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+
+            bool IncludeOperationallyClosed = false;
+
+            if (filterItem_IncludeOperationalyClose != null)
+            {
+                if (filterItem_IncludeOperationalyClose.FieldValue != null)
+                {
+                    IncludeOperationallyClosed = (bool)filterItem_IncludeOperationalyClose.FieldValue;
+                }
+            }
+
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
             IQueryable<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant);
 
-
             shipments = shipments.Where(d => (d.ShipmentLevelCode == "D" || d.ShipmentLevelCode == "H") && !d.IsCancelled);
-            GenericFilter genericFilter = new GenericFilter();
-            QueryOperations queryOperations2 = new QueryOperations()
+
+            if (toDate != null || FromDate != null)
             {
-                ObjectTableName = "Shipment",
-                PageIndex = 1,
-                PageSize = 10,
-                QuerySection = "Shipments",
-                SortByColumnName = null,
-                SortDirectin = null,
-                QueryFilterItems = new List<QueryFilterItem>(),
-            };
-            QueryFilterItem item = new QueryFilterItem();
-            item.DisplayInList = true;
-            item.FieldDataType = "Date";
-            item.FieldName = "Field2";
-            item.FieldValue = FromDate;
-            item.FieldValue2 = toDate;
-            item.IsCustomField = true;
-            if (toDate == null)
-            {
-                item.Operator = "GreaterThanOrEqual";
+                #region
+                GenericFilter genericFilter = new GenericFilter();
+                
+                QueryOperations shipmentsQueryOperations = new QueryOperations()
+                {
+                    ObjectTableName = "Shipment",
+                    PageIndex = 1,
+                    PageSize = 10,
+                    QuerySection = "Shipments",
+                    SortByColumnName = null,
+                    SortDirectin = null,
+                    QueryFilterItems = new List<QueryFilterItem>(),
+                };
+
+                QueryFilterItem item = new QueryFilterItem();
+                item.DisplayInList = true;
+                item.FieldDataType = "Date";
+                item.FieldName = "Field2";
+
+                item.FieldValue = FromDate;
+                item.FieldValue2 = toDate;
+                item.IsCustomField = true;
+                if (toDate == null && FromDate != null)
+                {
+                    item.Operator = "GreaterThanOrEqual";
+                }
+
+                else if (FromDate == null && toDate != null)
+                {
+                    item.FieldValue = toDate;
+                    item.FieldValue2 = null;
+                    item.Operator = "LessThanOrEqual";
+                }
+
+                //else if (FromDate == null && toDate == null)
+                //{
+                //    item.Operator = "IsNotNull";
+                //}
+
+                else
+                {
+                    item.Operator = "Between";
+
+                }
+
+                queryOperations.QueryFilterItems.Add(item);
+
+                shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations, shipments);
+                #endregion
             }
-            else
-                item.Operator = "Between";
-            queryOperations2.QueryFilterItems.Add(item);
-
-            shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations2, shipments);
-
 
             if (!string.IsNullOrEmpty(branchId))
             {
                 shipments = shipments.Where(d => d.BranchId == branchId);
             }
+
+
+            if (!IncludeOperationallyClosed)
+            {
+                shipments = shipments.Where(d => d.IsOperationalClosed == false);
+            }
+
 
 
             if (!string.IsNullOrEmpty(CustomerId))
@@ -5769,6 +5814,7 @@ namespace WebFreight.Web.ReportsWebServices
                     record.ShippingLineId = myShipmentDataView.MainCarriageCarrierId;
                     record.VesselName = myShipmentDataView.MainCarriageVesselName;
                     record.ShippingLineName = myShipmentDataView.MainCarriageCarrierName;
+                    record.ReleasingAgentName = myShipmentDataView.ReleasingAgentName;
                 }
 
                 record.ContainerNumber = itemContainer.ContainerNumber;
@@ -7311,6 +7357,7 @@ namespace WebFreight.Web.ReportsWebServices
         {
             FlightBookingDataProvider totalData = new FlightBookingDataProvider();
             totalData.FlightBookingRecordList = new List<FlightBookingRecord>();
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
 
             ContactRepository contactRepository = new ContactRepository(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
@@ -7329,6 +7376,9 @@ namespace WebFreight.Web.ReportsWebServices
 
             DateTime? flightDate = null;
             string flightNumber = null;
+            double totalWeight = 0;
+            double totalPackagesQuantity = 0;
+            double totalContainersQuantity = 0;
 
             if (filterItem_FlightDate != null)
             {
@@ -7396,7 +7446,7 @@ namespace WebFreight.Web.ReportsWebServices
                 totalData.FlightTime = singleShipment.MainCarriageETD != null ? singleShipment.MainCarriageETD.Value.ToShortTimeString() : (singleShipment.MainCarriageATD != null ? singleShipment.MainCarriageATD.Value.ToShortTimeString() : "");
                 totalData.Routing = singleShipment.MainCarriageFromPortCode + "-" + singleShipment.MainCarriageFinalDestinationPortCode;
             }
-
+            string WeightUnit = "";
             if (iQueryable.Count() > 0)
             {
                 FlightBookingRecord flightBookingRecord = null;
@@ -7412,7 +7462,43 @@ namespace WebFreight.Web.ReportsWebServices
                     flightBookingRecord.GrossWeight = a.GrossWeightInKG;
                     flightBookingRecord.Volume = a.VolumeInCBM;
                     flightBookingRecord.DescriptionOfGoods = a.DescriptionOfGoods;
+                    flightBookingRecord.ShipmentNumber = a.ShipmentNumber;
+                    flightBookingRecord.House = a.House;
+                    flightBookingRecord.ConsigneeName = a.ConsigneeName;
 
+                    if (!string.IsNullOrEmpty(a.ShipperAddressId))
+                    {
+                        AddressRepository addressRepository = new AddressRepository(myCommonContext);
+                        Address address = addressRepository.GetSingleAddress(a.ShipperAddressId, tenant);
+                        if (address != null)
+                        {
+                            flightBookingRecord.ShipperAddress = DataProviders.General.GetAddress(address);
+                        }
+                    }
+
+
+                    if (!string.IsNullOrEmpty(a.ConsigneeAddressId))
+                    {
+                        AddressRepository addressRepository = new AddressRepository(myCommonContext);
+                        Address address = addressRepository.GetSingleAddress(a.ConsigneeAddressId, tenant);
+                        if (address != null)
+                        {
+                            flightBookingRecord.ConsigneeAddress = DataProviders.General.GetAddress(address);
+                        }
+                    }
+                    flightBookingRecord.PC  = a.FreightPrepaidCollectId;
+                    flightBookingRecord.DestinationPortCode= a.MainCarriageFinalDestinationPortCode != null ? a.MainCarriageFinalDestinationPortCode : "";
+                    flightBookingRecord.ChargeableWeight = a.ChargeableWeight != null ? a.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", a.ChargeableWeight)) : "" : "";
+                    totalWeight = totalWeight + (a.GrossWeight != null ? a.GrossWeight.Value : 0);
+                    totalPackagesQuantity = totalPackagesQuantity + (a.NumberOfPackages != null ? a.NumberOfPackages.Value : 0);
+                    if(a.TransportModeId != "A")
+                    {
+                        totalContainersQuantity = totalContainersQuantity + (a.NumberOfContainers != null ? a.NumberOfContainers.Value : 0);
+                    }
+                    if (!string.IsNullOrEmpty(WeightUnit))
+                    {
+                        WeightUnit = a.GrossWeightUnitCode != null ? a.GrossWeightUnitCode : ""; // "KG";
+                    }
                     if (packages != null && packages.Count() > 0)
                     {
                         string str = "";
@@ -7438,6 +7524,13 @@ namespace WebFreight.Web.ReportsWebServices
             totalData.TotalGrossWeight = totalData.FlightBookingRecordList.Sum(s => s.GrossWeight);
             totalData.TotalVolume = totalData.FlightBookingRecordList.Sum(s => s.Volume);
             totalData.TotalAWBs = totalData.FlightBookingRecordList.Count;
+
+            totalData.TotalWeight = totalWeight != 0 ? (String.Format("{0:#,0.00}", totalWeight) + " " + (WeightUnit)) : ""; //KGS 
+            if (totalPackagesQuantity != 0)
+                totalData.TotalQuantity = totalPackagesQuantity.ToString();// + " Pcs" + Environment.NewLine;
+
+            if (totalContainersQuantity != 0)
+                totalData.TotalQuantity += totalContainersQuantity.ToString();// +" Con";
 
             #endregion
 

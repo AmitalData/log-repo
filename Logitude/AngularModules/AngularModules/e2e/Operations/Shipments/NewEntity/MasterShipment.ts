@@ -18,7 +18,7 @@ export class MasterShipment {
 
     var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
     this.Helper.WaitByIdAndClick('NEWMASTER');
-    this.ShipmentModes.SelectDicrctionTransportMode(LogitudeShipType, Direction,TransportMode, ShipmentType);
+    this.ShipmentModes.SelectDicrctionTransportMode( Direction,TransportMode, ShipmentType);
 
     this.FillMasterShipmentFields(ReferenceNumber);
     this.Helper.WaitByIdAndClick('MasterCreatebtn');

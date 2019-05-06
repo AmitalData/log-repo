@@ -138,10 +138,10 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     }
     //DownloadButtonClicked() {
     //    this._GLAccountExtendedListService.CalculateFututreCheques().subscribe(myResult => {
-          
-       
 
-          
+
+
+
     //    });
     //}
     //#region Properties
@@ -209,7 +209,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
     }
 
-
+    IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
     set ChartOfAccountsTypeCode(value: string) {
         if (this.EntityPM.ChartOfAccountsTypeCode != value) {
@@ -217,15 +217,29 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.ChartOfAccountsId = null;
 
             if (!AppTool.IsNullOrEmpty(value)) {
-                if (value == "1") { // 1-Revenues
-                    this.RevenueExpenseType = "1";
+
+                if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
+
+                    // disable fields
+                    this.IsMultiCurrency = true;
+                    this.CurrencyId = null;
+                    this.IsMultiCurrencyCheckboxEnabled = false;
+                    this.UIProperties.SetEnabled("IsMultiCurrency", this.ObjectTableName, false);
+                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+
+                    // disable fields
                     this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
-                } else if (value == "2") { // 2-Expenses
-                    this.RevenueExpenseType = "2";
-                    this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
+
+                    // set type
+                    this.RevenueExpenseType = value;
                 } else {
+                    // enable fields
+                    this.IsMultiCurrency = false;
+                    this.IsMultiCurrencyCheckboxEnabled = true;
+                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
                     this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
                 }
+
             } else {
                 this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
             }
@@ -387,6 +401,11 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, true);
         }
 
+        if (this.ChartOfAccountsTypeCode == "1" || this.ChartOfAccountsTypeCode == "2"){ // 1-Revenues, 2-Expenses
+            this.IsMultiCurrencyCheckboxEnabled = false;
+            this.UIProperties.SetEnabled("IsMultiCurrency", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+        }
     }
 
     SetFieldsEditablility(enable) {
@@ -406,6 +425,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Category4Id", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("Category5Id", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, enable);
+
     }
 
 

@@ -12,13 +12,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebFreight.Web.Helpers;
+//using WebFreight.Web.Helpers;
 using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Server.Tools.StorageService;
+using Simplog.Server.Infrastructure.Azure;
+using Microsoft.Practices.Unity;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -32,6 +38,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public System1000Service()
         {
+            
+            
         }
 
 
@@ -85,7 +93,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-                HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                //HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
                 EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
                 //string htmlstring = "<html>Attach flowing ...</html>";
 
@@ -98,37 +106,59 @@ namespace Logitude.Accounting.BL.CoreBL
                 var context = CommonDataContext.GetContext(tenant);
                 var documentRep = new DocumentRepository(context);
                 var attList = new List<string>();
+                var fileNames = new List<string>();
+                int filecount = 1;
                 foreach (var flatFile in flatFiles)
                 {
-
+                    byte[] flatFileData = (new System.Text.UTF8Encoding()).GetBytes(flatFile);
 
                     Simplog.Data.CommonDataModel.EntityPOCOs.Document document = new Simplog.Data.CommonDataModel.EntityPOCOs.Document()
                     {
                         CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                         Extension = "txt",
-                        FileSize = Convert.ToInt32(flatFile.Length),
+                        FileSize = Convert.ToInt32(flatFileData.Length),
                         Tenant = Convert.ToInt32(tenant),
                         Id = IdCounter.GetNumber("Document", tenant).ToString(),
                         Folder = "docsout",
                         HasFile = true,
-                        FileName = "1000system_Part1_1"
+                        FileName = $"1000system_Part_{filecount}"
 
                     };
-
+                    fileNames.Add($"{document.FileName}.txt");
                     documentRep.Add(document);
+
+                    string filename = document.Id + "." + document.Extension;
+                    string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
+                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    BlobFileInfo fileInfo = new BlobFileInfo()
+                    {
+                        FileName = document.Id,
+                        FolderName = document.Folder,
+                        Extension = document.Extension,
+                        Tenant = tenant,
+                        FileSize = flatFileData.Length,
+
+                    };
+                    storageservice.Write(flatFileData, fileInfo);
+
+
                     attList.Add(document.Id);
+                    filecount++;
                 }
                 context.SaveChanges();
 
 
-                string htmlPlainString = "Attach System 1000 List ...";
+                string htmlPlainString = "Attach System 1000 List ..." +
+                    Environment.NewLine +
+                    string.Join(Environment.NewLine, fileNames);
 
                 byte[] bytePlainTextdata = enc.GetBytes(htmlPlainString);
 
 
                 string userId = AuthenticationUtil.ResolveUserId(tenant);
                 string objectTableId = ObjectTableRepository.GetObjectTableByName("GLAccount");
-                //string res = htmlEditorHelper
+                //string res = ///_HtmlEditorHelper
+                //    InjectionUtil.Instance
                 //    .SendEmailOutActivityForEntity(null, bytePlainTextdata, tenant,
                 //   Email, "Subject", "", "",
                 //   userId
@@ -142,11 +172,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 string entityReference = null;
                 string from = "no-reply@LogitudeWorld.com";
                 string replyTo = "";
-                string res = htmlEditorHelper.SendHtmlDocument(
+                string res = /*htmlEditorHelper*/InjectionUtil.Instance.SendHtmlDocument(
                     bytePlainTextdata/*htmlData*/, internalDocumentId, externalDocumentId, tenant, Email, "subject", "", "", userId, entityId, objectTableId, attachments,
-                    entityReference, from, replyTo);
+                    entityReference, from, replyTo); // Islam: circular reference issue with the web project
                 scope.Complete();
-                return res;
+                return null;
             }
         }
         public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)

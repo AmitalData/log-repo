@@ -115,7 +115,7 @@ export class MiscPageComponent implements AfterViewInit {
             listArgs.Filters = filters;
             listArgs.ObjectTableName = tableName;
             listArgs.DisplayTitle = displayTitle;
-            listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Main");
+            listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Misc");
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
@@ -129,6 +129,27 @@ export class MiscPageComponent implements AfterViewInit {
         }
     }
 
+    Generate1000() {
+        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe(response => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Width = 500;
+            logitudeWindow.Height = 300;
+            logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Generate1000");
+            logitudeWindow.Show('./Accounting/Components/Maintenance/Generate1000Component');
+        });
+
+    }
+
+    Receiving1000() {
+        this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe(response => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Width = 500;
+            logitudeWindow.Height = 300;
+            logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Receiving1000");
+            logitudeWindow.Show('./Accounting/Components/Maintenance/Receiving1000Component');
+        });
+
+    }
 
     RunNewOpenFormatReportWizard() {
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewOpenFormatReport");

@@ -181,12 +181,12 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
-	  private int? minPrice ;
+	  private decimal? minPrice ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? MinPrice  
+       public decimal? MinPrice  
 	   {
 	    
 	     get
@@ -197,19 +197,19 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		 {
 		   if(minPrice != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinPrice",OldValue=minPrice,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinPrice",OldValue=minPrice,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   minPrice=value;
 		   }
 			
 		 }
 	   }
-	  private int? step1Price ;
+	  private decimal? step1Price ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? Step1Price  
+       public decimal? Step1Price  
 	   {
 	    
 	     get
@@ -220,19 +220,19 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		 {
 		   if(step1Price != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step1Price",OldValue=step1Price,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step1Price",OldValue=step1Price,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   step1Price=value;
 		   }
 			
 		 }
 	   }
-	  private int? step2Price ;
+	  private decimal? step2Price ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? Step2Price  
+       public decimal? Step2Price  
 	   {
 	    
 	     get
@@ -243,19 +243,19 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		 {
 		   if(step2Price != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step2Price",OldValue=step2Price,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step2Price",OldValue=step2Price,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   step2Price=value;
 		   }
 			
 		 }
 	   }
-	  private int? step3Price ;
+	  private decimal? step3Price ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? Step3Price  
+       public decimal? Step3Price  
 	   {
 	    
 	     get
@@ -266,19 +266,19 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		 {
 		   if(step3Price != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step3Price",OldValue=step3Price,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step3Price",OldValue=step3Price,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   step3Price=value;
 		   }
 			
 		 }
 	   }
-	  private int? step4Price ;
+	  private decimal? step4Price ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? Step4Price  
+       public decimal? Step4Price  
 	   {
 	    
 	     get
@@ -289,19 +289,19 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		 {
 		   if(step4Price != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step4Price",OldValue=step4Price,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step4Price",OldValue=step4Price,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   step4Price=value;
 		   }
 			
 		 }
 	   }
-	  private int? step5Price ;
+	  private decimal? step5Price ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? Step5Price  
+       public decimal? Step5Price  
 	   {
 	    
 	     get
@@ -312,19 +312,19 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		 {
 		   if(step5Price != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step5Price",OldValue=step5Price,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step5Price",OldValue=step5Price,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   step5Price=value;
 		   }
 			
 		 }
 	   }
-	  private int? step6Price ;
+	  private decimal? step6Price ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? Step6Price  
+       public decimal? Step6Price  
 	   {
 	    
 	     get
@@ -335,19 +335,19 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		 {
 		   if(step6Price != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step6Price",OldValue=step6Price,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step6Price",OldValue=step6Price,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   step6Price=value;
 		   }
 			
 		 }
 	   }
-	  private int? step7Price ;
+	  private decimal? step7Price ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? Step7Price  
+       public decimal? Step7Price  
 	   {
 	    
 	     get
@@ -358,19 +358,19 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		 {
 		   if(step7Price != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step7Price",OldValue=step7Price,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step7Price",OldValue=step7Price,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   step7Price=value;
 		   }
 			
 		 }
 	   }
-	  private int? step8Price ;
+	  private decimal? step8Price ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? Step8Price  
+       public decimal? Step8Price  
 	   {
 	    
 	     get
@@ -381,7 +381,7 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		 {
 		   if(step8Price != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step8Price",OldValue=step8Price,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step8Price",OldValue=step8Price,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   step8Price=value;
 		   }
@@ -522,6 +522,259 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortCode",OldValue=destinationPortCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   destinationPortCode=value;
+		   }
+			
+		 }
+	   }
+	  private string originPortText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginPortText  
+	   {
+	    
+	     get
+		{
+		   return originPortText;
+		 }
+		 set
+		 {
+		   if(originPortText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginPortText",OldValue=originPortText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originPortText=value;
+		   }
+			
+		 }
+	   }
+	  private string destinationPortText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DestinationPortText  
+	   {
+	    
+	     get
+		{
+		   return destinationPortText;
+		 }
+		 set
+		 {
+		   if(destinationPortText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationPortText",OldValue=destinationPortText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   destinationPortText=value;
+		   }
+			
+		 }
+	   }
+	  private string minPriceText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MinPriceText  
+	   {
+	    
+	     get
+		{
+		   return minPriceText;
+		 }
+		 set
+		 {
+		   if(minPriceText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MinPriceText",OldValue=minPriceText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   minPriceText=value;
+		   }
+			
+		 }
+	   }
+	  private string step1PriceText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Step1PriceText  
+	   {
+	    
+	     get
+		{
+		   return step1PriceText;
+		 }
+		 set
+		 {
+		   if(step1PriceText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step1PriceText",OldValue=step1PriceText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   step1PriceText=value;
+		   }
+			
+		 }
+	   }
+	  private string step2PriceText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Step2PriceText  
+	   {
+	    
+	     get
+		{
+		   return step2PriceText;
+		 }
+		 set
+		 {
+		   if(step2PriceText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step2PriceText",OldValue=step2PriceText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   step2PriceText=value;
+		   }
+			
+		 }
+	   }
+	  private string step3PriceText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Step3PriceText  
+	   {
+	    
+	     get
+		{
+		   return step3PriceText;
+		 }
+		 set
+		 {
+		   if(step3PriceText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step3PriceText",OldValue=step3PriceText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   step3PriceText=value;
+		   }
+			
+		 }
+	   }
+	  private string step4PriceText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Step4PriceText  
+	   {
+	    
+	     get
+		{
+		   return step4PriceText;
+		 }
+		 set
+		 {
+		   if(step4PriceText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step4PriceText",OldValue=step4PriceText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   step4PriceText=value;
+		   }
+			
+		 }
+	   }
+	  private string step5PriceText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Step5PriceText  
+	   {
+	    
+	     get
+		{
+		   return step5PriceText;
+		 }
+		 set
+		 {
+		   if(step5PriceText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step5PriceText",OldValue=step5PriceText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   step5PriceText=value;
+		   }
+			
+		 }
+	   }
+	  private string step6PriceText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Step6PriceText  
+	   {
+	    
+	     get
+		{
+		   return step6PriceText;
+		 }
+		 set
+		 {
+		   if(step6PriceText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step6PriceText",OldValue=step6PriceText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   step6PriceText=value;
+		   }
+			
+		 }
+	   }
+	  private string step7PriceText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Step7PriceText  
+	   {
+	    
+	     get
+		{
+		   return step7PriceText;
+		 }
+		 set
+		 {
+		   if(step7PriceText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step7PriceText",OldValue=step7PriceText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   step7PriceText=value;
+		   }
+			
+		 }
+	   }
+	  private string step8PriceText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Step8PriceText  
+	   {
+	    
+	     get
+		{
+		   return step8PriceText;
+		 }
+		 set
+		 {
+		   if(step8PriceText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Step8PriceText",OldValue=step8PriceText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   step8PriceText=value;
 		   }
 			
 		 }

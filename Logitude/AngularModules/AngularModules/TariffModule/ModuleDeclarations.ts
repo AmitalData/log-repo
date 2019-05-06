@@ -5,7 +5,11 @@ import { FieldTemplateComponent } from './Components/Templates/FieldTemplateComp
 
 
 // Tabs
+
+import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
+import { VersionTabComponent } from './Components/EditTabs/Tariff/VersionTabComponent';
 import { TariffGeneralTabComponent } from './Components/EditTabs/Tariff/TariffGeneralTabComponent';
+import { VersionHistoryTabComponent } from './Components/EditTabs/Tariff/VersionHistoryTabComponent';
 import { AddEditTariffLineComponent } from './Components/EditTabs/Tariff/AddEditTariffLineComponent';
 
 
@@ -15,6 +19,9 @@ export const Components =
         TariffSettingComponent,
         NewAirFreightCostComponent,
         FieldTemplateComponent,
+        TariffDetailsTabComponent,
+        VersionTabComponent,
+        VersionHistoryTabComponent,
         TariffGeneralTabComponent,
         AddEditTariffLineComponent
     ];
@@ -33,6 +40,9 @@ export class ModuleDeclarations {
             case "TariffSettingComponent": { myResult = TariffSettingComponent; break; }                
             case "NewAirFreightCostComponent": { myResult = NewAirFreightCostComponent; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
+            case "TariffDetailsTabComponent": { myResult = TariffDetailsTabComponent; break; }
+            case "VersionTabComponent": { myResult = VersionTabComponent; break; }                
+            case "VersionHistoryTabComponent": { myResult = VersionHistoryTabComponent; break; }                
             case "TariffGeneralTabComponent": { myResult = TariffGeneralTabComponent; break; }
             case "AddEditTariffLineComponent": { myResult = AddEditTariffLineComponent; break; }
         }

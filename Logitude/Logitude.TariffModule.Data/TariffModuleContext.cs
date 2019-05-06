@@ -78,6 +78,24 @@ namespace Logitude.TariffModule.Data
 	
             modelBuilder.Configurations.Add(new TariffVersionMap());
 				
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.MinPrice).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Step1Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Step2Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Step3Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Step4Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Step5Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Step6Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Step7Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Step8Price).HasPrecision(18, 3);
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());

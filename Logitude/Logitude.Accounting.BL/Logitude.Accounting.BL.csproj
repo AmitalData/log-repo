@@ -62,8 +62,9 @@
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Stimulsoft.Report">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Stimulsoft Reports.Silverlight 2015.1 Trial\Bin\Stimulsoft.Report.dll</HintPath>
+    <Reference Include="Stimulsoft.Report, Version=2015.1.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>StimulsoftDll\Stimulsoft.Report.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -81,9 +82,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebFreight.Web">
-      <HintPath>..\JustWebFreight\WebFreight.Web\bin\WebFreight.Web.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
       <Private>True</Private>
@@ -169,6 +167,7 @@
     <Compile Include="CloseTables\EnumGenerated\JournalStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ReconcileExternalPageStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ReconcileMethodStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VatReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\GLAccountTotalDateTypeEnum.cs" />
     <Compile Include="CoreBL\AccountBalanceByDateCodeService.cs" />
     <Compile Include="CoreBL\AccountBalanceService.cs" />
@@ -742,6 +741,7 @@
   <ItemGroup>
     <Content Include="CoreBL\BuildTenant\LedgerTransactionsType.txt" />
     <Content Include="CoreBL\BuildTenant\usp_AccountingStreaming.txt" />
+    <Content Include="StimulsoftDll\Stimulsoft.Report.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

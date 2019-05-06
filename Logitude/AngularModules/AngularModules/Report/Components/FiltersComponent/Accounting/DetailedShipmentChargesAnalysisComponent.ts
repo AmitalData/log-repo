@@ -4,6 +4,7 @@ import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeCom
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ReportFliter } from '../../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../../Components/Filters/QueryFilterItem';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 
 @Component({
     moduleId: module.id,
@@ -25,10 +26,30 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
 
     ngOnInit() {
         this.SetUIProperties();
+        this.BuildDateFilter();
     }
 
     SetUIProperties() {
         this.UIProperties.SetRequired("FromDate", null, AppTool.IsNullOrEmpty(this.FromDate) ? true : false);
+    }
+
+    public DateFilterList: CodeNameClass[];
+    private BuildDateFilter() {
+        this.DateFilterList = [];
+
+        this.DateFilterList.push(new CodeNameClass("OPE", "Operational Date"));
+        this.DateFilterList.push(new CodeNameClass("CRT", "Create Date"));
+        this.DateFilterList.push(new CodeNameClass("REG", "Registry Date"));
+
+        this.selectedDateFilter = this.DateFilterList.filter(d => d.Code == "OPE")[0];
+    }
+
+    private selectedDateFilter: CodeNameClass;
+    get SelectedDateFilter() { return this.selectedDateFilter; }
+    set SelectedDateFilter(value: CodeNameClass) {
+        if (this.selectedDateFilter != value) {
+            this.selectedDateFilter = value;
+        }
     }
 
     // Filters
@@ -56,15 +77,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
             this.selectedCurrencyCode = value;
         }
     }
-
-    private isByCreateDate: boolean = false;
-    public get IsByCreateDate() { return this.isByCreateDate; }
-    public set IsByCreateDate(value: boolean) {
-        if (this.isByCreateDate != value) {
-            this.isByCreateDate = value;
-        }
-    }
-
+    
     private includeDraftInvoices: boolean = false;
     public get IncludeDraftInvoices() { return this.includeDraftInvoices; }
     public set IncludeDraftInvoices(value: boolean) {
@@ -110,6 +123,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
 
         if (errors.length == 0) {
             var myFilterItems: QueryFilterItem[] = [];
+            myFilterItems.push(new QueryFilterItem("SelectedDateType", this.SelectedDateFilter.Code));
             myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
             myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
             myFilterItems.push(new QueryFilterItem("IsLocalCurrency", this.SelectedCurrencyCode == this.LocalCurrencyCode ? true : false));
@@ -117,7 +131,6 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
             myFilterItems.push(new QueryFilterItem("IncludeDraftInvoices", this.IncludeDraftInvoices));
             myFilterItems.push(new QueryFilterItem("IncludeEstimations", this.IncludeEstimations));
             myFilterItems.push(new QueryFilterItem("SplitByCharges", this.SplitByCharges));
-            myFilterItems.push(new QueryFilterItem("IsByCreateDate", this.IsByCreateDate));
             myFilterItems.push(new QueryFilterItem("IncludeCancelledShipments", this.IncludeCancelledShipments));
 
             var myReportFliter: ReportFliter = new ReportFliter();

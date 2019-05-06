@@ -179,6 +179,9 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.NotifyContactId = entityPM.NotifyContactId;
             entityPoco.NumberOfFollowUps = entityPM.NumberOfFollowUps;
             entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
+            entityPoco.GrossWeightEdited = entityPM.GrossWeightEdited;
+            entityPoco.ChargeableWeightEdited = entityPM.ChargeableWeightEdited;
+
             BuildSearchField(entityPM, entityPoco);
 
             entityPM.ConvertToLCL = false;

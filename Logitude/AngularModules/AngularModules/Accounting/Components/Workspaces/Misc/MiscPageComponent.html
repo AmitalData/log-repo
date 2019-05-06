@@ -63,7 +63,7 @@
                                 <td></td>
                             </tr>
 
-                            <tr style="height:120px">
+                            <tr style="height:150px">
                                 <td>
                                     <div class="ScrollViewer">
                                         <div class="ScrollContent">
@@ -82,19 +82,32 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ALLTAXREPORTS')"> {{'TaxReport' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ALLTAXREPORTS')"> {{'Accounting.General.O.TaxReport' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ALLTaxDeductionReports')"> {{'TaxDeductionReport' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('ALLTaxDeductionReports')"> {{'Accounting.General.O.856Report' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('AllOpenFormats')"> {{'OpenFormatReport' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewAccountingQuery('AllOpenFormats')"> {{'Accounting.General.O.OpenFormat' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
+
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="Generate1000()">Generate1000 {{'Accounting.General.O.Generate1000' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="Receiving1000()">Receiving1000 {{'Accounting.General.O.Receiving1000' | TextCodeTranslationPipe}} </p>
+                                                                        </td>
+                                                                    </tr>
+
+
                                                                     <tr>
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" *ngIf="AllBankDepositsVisibility" (click)="ViewDepositQuery('AllBankDeposits')"> {{'Accounting.General.Q.AllDeposits' | TextCodeTranslationPipe}} </p>

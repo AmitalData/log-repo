@@ -14,17 +14,11 @@ using Stimulsoft.Report.Dictionary;
 
 using Stimulsoft.Report.Web;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Caching;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.IO;
-using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
-using Logitude.Server.Tools.Counters;
 using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Stimulsoft

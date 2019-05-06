@@ -347,6 +347,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public List<JournalPM> GetJournalsByIds(List<string> ids, int tenant)
         {
+            List<JournalPM> journalPMs = new List<JournalPM>();
             IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingIds(ids, tenant);
 
             IQueryable<JournalPM> journals = from a in journalQuery
@@ -356,23 +357,24 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  AccountingDate = a.AccountingDate,
                                                  StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
                                                  Id = a.Id
-                                                 
-                                             };
-            //foreach(JournalPM journal in journals)
-            //{
 
-            //    journal.JournalLines =  GetJournalLines(journal, tenant);
-            //}
-            return journals.ToList();
+                                             };
+            journalPMs = journals.ToList();
+            foreach (JournalPM journal in journalPMs)
+            {
+
+                journal.JournalLines = GetJournalLines(journal, tenant);
+            }
+            return journalPMs;
         }
 
-      //public List<JournalLinePM>  GetJournalLines(JournalPM journal, int tenant)
-      //  {
-      //      List<JournalLinePM> journalLines = new List<JournalLinePM>();
-      //      JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
-      //     journalLines  = journalLineQueryService.GetJournalLinesByJournalId(journal.Id, tenant);
+        public List<JournalLinePM> GetJournalLines(JournalPM journal, int tenant)
+        {
+            List<JournalLinePM> journalLines = new List<JournalLinePM>();
+            JournalLineQueryService journalLineQueryService = new JournalLineQueryService(tenant);
+            journalLines = journalLineQueryService.GetJournalLinesByJournalId(journal.Id, tenant);
 
-      //      return journalLines;
-      //  }
+            return journalLines;
+        }
     }
 }

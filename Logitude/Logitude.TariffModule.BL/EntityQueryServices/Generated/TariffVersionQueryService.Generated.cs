@@ -17,7 +17,7 @@ using Logitude.TariffModule.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.TariffModule.BL.EntityQueryServices
 { 
-   public partial class TariffVersionQueryService: EntityQueryService<TariffVersion,TariffVersionKeys,TariffVersionPM,object,TariffVersionKeys>
+   public partial class TariffVersionQueryService: EntityQueryService<TariffVersion,TariffVersionKeys,TariffVersionPM,TariffPM,TariffKeys>
    {
    
         TariffVersionRepository repository;

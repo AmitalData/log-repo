@@ -47,7 +47,7 @@ export class TariffDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    
+
     GetTenantTariffSetting() {
 
         var authHeader = new Headers();
@@ -103,6 +103,20 @@ export class TariffDomainService {
         );
     }
 
+    ApproveVersion(tariffId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetApproveVersion?tariffId=' + tariffId;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TariffSettingPM = null) {
 
 
@@ -150,6 +164,7 @@ export class TariffDomainService {
         entityPM.IsDirty = false;
         return entityPM;
     }
+
     clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
@@ -167,9 +182,7 @@ export class TariffDomainService {
         }
         return entityPM;
     }
-
 }
-
 
 export class TariffSummery {
     AirFreightCount: number;
@@ -197,4 +210,16 @@ export class ExcelTariffLines {
     Step6Price: number;
     Step7Price: number;
     Step8Price: number;
+
+    FromPortText: string;
+    ToPortText: string;
+    MinPriceText: string;
+    Step1PriceText: string;
+    Step2PriceText: string;
+    Step3PriceText: string;
+    Step4PriceText: string;
+    Step5PriceText: string;
+    Step6PriceText: string;
+    Step7PriceText: string;
+    Step8PriceText: string;
 }

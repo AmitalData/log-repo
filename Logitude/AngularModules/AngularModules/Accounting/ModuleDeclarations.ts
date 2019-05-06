@@ -7,7 +7,9 @@ import {JournalPageComponent} from './Components/Workspaces/Journal/JournalPageC
 import {ReceivablePageComponent} from './Components/Workspaces/Receivable/ReceivablePageComponent';
 import {PayablePageComponent} from './Components/Workspaces/Payable/PayablePageComponent';
 import {BanksPageComponent} from './Components/Workspaces/Banks/BanksPageComponent';
-import {MiscPageComponent} from './Components/Workspaces/Misc/MiscPageComponent';
+import { MiscPageComponent } from './Components/Workspaces/Misc/MiscPageComponent';
+
+
 
 import {NewGLAccountComponent} from './Components/NewEntity/NewGLAccountComponent';
 import {NewChartOfAccountComponent} from './Components/NewEntity/NewChartOfAccountComponent';
@@ -36,6 +38,9 @@ import { NewTaxReportComponent } from './Components/NewEntity/NewTaxReportCompon
 import { NewOpenFormatReportComponent } from './Components/NewEntity/NewOpenFormatReportComponent';
 import { AccountingLoadTestComponent } from './Components/Maintenance/AccountingLoadTestComponent';
 import { LoadRecoExPageComponent } from './Components/NewEntity/LoadRecoExPageComponent';
+import { Generate1000Component } from './Components/Maintenance/Generate1000Component';
+import { Receiving1000Component } from './Components/Maintenance/Receiving1000Component';
+
 
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
@@ -104,7 +109,7 @@ export const Components =
         PayablePageComponent,
         BanksPageComponent,
         MiscPageComponent,
-
+       
         //New Entites
         NewGLAccountComponent,
         NewChartOfAccountComponent,
@@ -132,6 +137,8 @@ export const Components =
         NewTaxWithholdingAssessingOfficeComponent,
         YearTransferComponent,
         AccountingLoadTestComponent,
+        Generate1000Component,
+        Receiving1000Component,
 
         //Edit Tabs
         GLAccountGeneralTabComponent,
@@ -207,7 +214,7 @@ export class ModuleDeclarations {
             case "PayablePageComponent": { myResult = PayablePageComponent; break; }
             case "BanksPageComponent": { myResult = BanksPageComponent; break; }
             case "MiscPageComponent": { myResult = MiscPageComponent; break; }
-
+            
             //New Entites
             case "NewGLAccountComponent": { myResult = NewGLAccountComponent; break; }
             case "NewChartOfAccountComponent": { myResult = NewChartOfAccountComponent; break; }
@@ -238,6 +245,9 @@ export class ModuleDeclarations {
             case "AccountingPeriodEventComponent": { myResult = AccountingPeriodEventComponent; break; }
             case "NewTaxWithholdingAssessingOfficeComponent": { myResult = NewTaxWithholdingAssessingOfficeComponent; break; }
             case "AccountingLoadTestComponent": { myResult = AccountingLoadTestComponent; break; }
+            case "Generate1000Component": { myResult = Generate1000Component; break; }
+            case "Receiving1000Component": { myResult = Receiving1000Component; break; }
+                
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }

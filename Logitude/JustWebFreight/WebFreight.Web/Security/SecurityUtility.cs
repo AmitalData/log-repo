@@ -190,22 +190,21 @@ namespace WebFreight.Web.Security
                     }
 
 
-                    bool isUpgrading;
+                    bool isBlocking;
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalcontext = GlobalContext.GetContext();
-                        isUpgrading = (from a in globalcontext.GlobalDBs
-                                       select a).FirstOrDefault().IsUpgrading;
+                        isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
 
-                        if (isUpgrading)
+                        if (isBlocking)
                         {
                             if (HttpContext.Current.Response.Headers["MobileUpgrading"] != null)
                             {
                                 HttpContext.Current.Response.Headers["MobileUpgrading"] = "Unifreight mobile is being updated, please try again later . Sorry for the inconvenience";
                             }
-                            else HttpContext.Current.Response.Headers.Add("MobileUpgrading", "Unifreight mobile is being updated, please try again later . Sorry for the inconvenience");
 
+                            else HttpContext.Current.Response.Headers.Add("MobileUpgrading", "Unifreight mobile is being updated, please try again later . Sorry for the inconvenience");
                         }
 
                         scope.Complete();

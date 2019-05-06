@@ -64,6 +64,8 @@ export class ChargesTabComponent implements OnInit, OnDestroy {
     }
 
     private SelectTab() {
+        this.viewContainerRef.clear();
+
         if (this.isLCL) {
             SessionLocator.DynamicLoader.Load('./QuoteModules/QuoteCharges/Components/LCLChargesComponent', this.viewContainerRef)
                 .then(cmpRef => {                    

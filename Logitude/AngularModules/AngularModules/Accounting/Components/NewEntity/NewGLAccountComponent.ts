@@ -144,10 +144,11 @@ export class NewGLAccountComponent extends BaseComponent {
         if (this.EntityPM.RevaluationEnabled != value) {
             this.EntityPM.RevaluationEnabled = value;
 
-        }}
+        }
+    }
 
 
-        IsMultiCurrencyCheckboxEnabled: boolean = true;
+    IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
     set ChartOfAccountsTypeCode(value: string) {
         if (this.EntityPM.ChartOfAccountsTypeCode != value) {

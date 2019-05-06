@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TariffLineData } from './TariffGeneralTabComponent';
+import { TariffLineData } from './VersionTabComponent';
 import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
@@ -27,6 +27,18 @@ export class AddEditTariffLineComponent  {
         this.EntityPM = dataContext.EntityPM;
         this.Clone();
     }
+
+    get OriginPortText() { return this.EntityPM.OriginPortText; }
+    get DestinationPortText() { return this.EntityPM.DestinationPortText; }
+    get MinPriceText() { return this.EntityPM.MinPriceText; }
+    get Step1PriceText() { return this.EntityPM.Step1PriceText; }
+    get Step2PriceText() { return this.EntityPM.Step2PriceText; }
+    get Step3PriceText() { return this.EntityPM.Step3PriceText; }
+    get Step4PriceText() { return this.EntityPM.Step4PriceText; }
+    get Step5PriceText() { return this.EntityPM.Step5PriceText; }
+    get Step6PriceText() { return this.EntityPM.Step6PriceText; }
+    get Step7PriceText() { return this.EntityPM.Step7PriceText; }
+    get Step8PriceText() { return this.EntityPM.Step8PriceText; }
 
     CancelButtonClicked() {
         this.RejectChanges();

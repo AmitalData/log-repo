@@ -153,6 +153,15 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         ChargesTypeService service = new ChargesTypeService(MyContext, entityPM.Tenant);
                         service.Update(entityPM, true);
 
+                        //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ChargesType", 0, true);
+                        //string email = HttpContext.Current.User.Identity.Name;
+                        //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                        //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
+                        //if (loggedContact != null)
+                        //{
+                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //}
 
                         TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "ChargesType");
 

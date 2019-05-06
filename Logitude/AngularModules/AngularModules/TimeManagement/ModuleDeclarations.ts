@@ -10,6 +10,8 @@ import {SettingsWorkspaceComponent} from './Components/Workspaces/SettingsWorksp
 import {ReportsWorkspaceComponent} from './Components/Workspaces/ReportsWorkspaceComponent';
 import {ProjectsWorkspaceComponent} from './Components/Workspaces/Projects/ProjectsWorkspaceComponent';
 import {ClockTimeComponent} from './Components/Workspaces/TimeSheet/ClockTimeComponent';
+import { VacationsComponent } from './Components/Workspaces/TimeSheet/VacationsComponent';
+
 
 //Helpers
 import {TMProjectHelperComponent} from './Components/Helpers/TMProjectHelperComponent';
@@ -41,7 +43,7 @@ export const Components =
         ReportsWorkspaceComponent,
         ProjectsWorkspaceComponent,
         ClockTimeComponent,
-
+        VacationsComponent,
 
         //Helpers
         TMProjectHelperComponent,
@@ -76,18 +78,18 @@ export class ModuleDeclarations {
             case "ReportsWorkspaceComponent": { myResult = ReportsWorkspaceComponent; break; }
             case "ProjectsWorkspaceComponent": { myResult = ProjectsWorkspaceComponent; break; }
             case "ClockTimeComponent": { myResult = ClockTimeComponent; break; }
+            case "VacationsComponent": { myResult = VacationsComponent; break; }
+
 
             // Helpers
             case "TMProjectHelperComponent": { myResult = TMProjectHelperComponent; break; }
 
 
-          //Connections
+            //Connections
 
             case "ConnectToParentComponent": { myResult = ConnectToParentComponent; break; }
 
-                
 
-                
             // New Screens 
             case "NewLineComponent": { myResult = NewLineComponent; break; }
             case "NewProjectComponent": { myResult = NewProjectComponent; break; }
@@ -95,7 +97,7 @@ export class ModuleDeclarations {
             case "NewSprintComponent": { myResult = NewSprintComponent; break; }
             case "NewProjectCategoryComponent": { myResult = NewProjectCategoryComponent; break; }
             case "NewGetProjectComponent": { myResult = NewGetProjectComponent; break; }
-                
+
         }
 
         return myResult;

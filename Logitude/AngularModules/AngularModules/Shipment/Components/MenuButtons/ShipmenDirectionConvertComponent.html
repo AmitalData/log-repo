@@ -103,7 +103,7 @@
                         <div style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
                     </div>
 
-                    <div [ngStyle]="{opacity: ScreenOpacity}">
+                    <div>
                         <!-- Shipper -->
                         <div>
                             <div class="SectionTitle">
@@ -386,7 +386,7 @@
                         </div>
 
                         <!-- Customer -->
-                        <div>
+                        <div *ngIf="EntityPM.ShipmentLevelCode != 'C'">
                             <div class="SectionTitle" style="height:40px; line-height:40px;">
                                 <table>
                                     <tr>
@@ -437,11 +437,11 @@
                                 </table>
                             </div>
 
-                            <div *ngIf="IsOldInlandDomestic" style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
+                            <div *ngIf="IsPortsVisible" style="height:1px; width: 100%; background: #999999; opacity:0.3; margin-top: 5px; margin-bottom: 5px;"></div>
                         </div>
 
                         <!-- Ports -->
-                        <div *ngIf="IsOldInlandDomestic">
+                        <div *ngIf="IsPortsVisible">
                             <div class="SectionTitle">
                                 <table>
                                     <tr>

@@ -633,58 +633,8 @@
                                     <td>
                                         <table>
                                             <tr>
-                                                <td style="width: 1px; padding-left: 10px;">
-                                                    <div class="TabSummaryValue" style="font-size: 14px;">{{AccrualsPayables | NumbersPipe:'N2'}}</div>
-                                                    <div class="TabSummaryLabel">{{'Shipment.S.Payables.Accruals' | TextCodeTranslationPipe}}</div>
-                                                </td>
-
-                                                <td style="width: 1px; padding-left: 10px;">
-                                                    <div class="TabSummaryValue" style="font-size: 14px;">-</div>
-                                                    <div class="TabSummaryLabel"></div>
-                                                </td>
-
-                                                <td style="width: 1px; padding-left: 10px;">
-                                                    <div class="TabSummaryValue" style="font-size: 14px;">{{AccountedPayables | NumbersPipe:'N2'}}</div>
-                                                    <div class="TabSummaryLabel">{{'Shipment.S.Payables.AccountedPayables' | TextCodeTranslationPipe}}</div>
-                                                </td>
-
-                                                <td style="width: 1px; padding-left: 10px;">
-                                                    <div class="TabSummaryValue" style="font-size: 14px;">-</div>
-                                                    <div class="TabSummaryLabel"></div>
-                                                </td>
-
-                                                <td style="width: 1px; padding-left: 10px;">
-                                                    <div class="TabSummaryValue" style="font-size: 14px;">{{OpenPayables | NumbersPipe:'N2'}}</div>
-                                                    <div class="TabSummaryLabel">{{'Shipment.S.Payables.OpenPayables' | TextCodeTranslationPipe}}</div>
-                                                </td>
-
-                                                <td style="width: 1px; padding-left: 10px;">
-                                                    <div class="TabSummaryValue" style="font-size: 14px;">=</div>
-                                                    <div class="TabSummaryLabel"></div>
-                                                </td>
-
-                                                <td style="width: 1px; padding-left: 10px;">
-                                                    <div class="TabSummaryValue" style="font-size: 14px;" [ngStyle]="{color: DifferencePayablesColor}">{{DifferencePayablesText}}</div>
-                                                    <div class="TabSummaryLabel">{{'Shipment.S.Payables.Difference' | TextCodeTranslationPipe}} ({{SelectedCurrencyCode}})</div>
-                                                </td>
-
-
-
-
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td style="width:100%"><div></div></td>
-
                                                 <!-- Payables -->
-                                                <td>
+                                                <td style="width:1px">
                                                     <div style="display:block; float: left; margin-left: 25px;">
                                                         <div style="font-size: 26px; line-height: 26px; text-align: center;">{{PayableList.length}}</div>
 
@@ -703,7 +653,7 @@
                                                                     <td *ngIf="PayableList.length > 0">
                                                                         <div tabindex="0" class="ToggleButton IconToggleButton" style="width:16px; height: 16px; border:none; background:none;float:right">
                                                                             <img src="./Images/CellIcons/Info_Gray.png" />
-                                                                            <div class="ToggleButtonMenu" style="position:fixed; top: unset; bottom: 45px; right: 150px; width: 300px; min-height: 100px; max-height: 400px;" [style.height.px]="(PayableList.length * 40) + (PayableList.length * 5) + 28">
+                                                                            <div class="ToggleButtonMenu" style="position:fixed; top: unset; bottom: 45px; left: 200px; width: 300px; min-height: 100px; max-height: 400px;" [style.height.px]="(PayableList.length * 40) + (PayableList.length * 5) + 28">
                                                                                 <div class="MediaFixedPadding5" style="top:3px; bottom:0;">
                                                                                     <table>
                                                                                         <tr style="height: 1px;">
@@ -778,10 +728,55 @@
                                                         </div>
                                                     </div>
                                                 </td>
+
+                                                <td style="width: 25px;padding-left: 10px;">
+                                                    <div style="height: calc(100% - 10px); width: 1px; background: #DADADA; margin: auto;"></div>
+                                                </td>
+
+                                                <td style="width: 1px; padding-left: 10px;">
+                                                    <div class="TabSummaryValue" style="font-size: 14px;">{{AccrualsPayables | NumbersPipe:'N2'}}</div>
+                                                    <div class="TabSummaryLabel">{{'Shipment.S.Payables.Accruals' | TextCodeTranslationPipe}}</div>
+                                                </td>
+
+                                                <td style="width: 1px; padding-left: 10px;">
+                                                    <div class="TabSummaryValue" style="font-size: 14px;">-</div>
+                                                    <div class="TabSummaryLabel"></div>
+                                                </td>
+
+                                                <td style="width: 1px; padding-left: 10px;">
+                                                    <div class="TabSummaryValue" style="font-size: 14px;">{{AccountedPayables | NumbersPipe:'N2'}}</div>
+                                                    <div class="TabSummaryLabel">{{'Shipment.S.Payables.AccountedPayables' | TextCodeTranslationPipe}}</div>
+                                                </td>
+
+                                                <td style="width: 1px; padding-left: 10px;">
+                                                    <div class="TabSummaryValue" style="font-size: 14px;">-</div>
+                                                    <div class="TabSummaryLabel"></div>
+                                                </td>
+
+                                                <td style="width: 1px; padding-left: 10px;">
+                                                    <div class="TabSummaryValue" style="font-size: 14px;">{{OpenPayables | NumbersPipe:'N2'}}</div>
+                                                    <div class="TabSummaryLabel">{{'Shipment.S.Payables.OpenPayables' | TextCodeTranslationPipe}}</div>
+                                                </td>
+
+                                                <td style="width: 1px; padding-left: 10px;">
+                                                    <div class="TabSummaryValue" style="font-size: 14px;">=</div>
+                                                    <div class="TabSummaryLabel"></div>
+                                                </td>
+
+                                                <td style="width: 1px; padding-left: 10px;">
+                                                    <div class="TabSummaryValue" style="font-size: 14px;" [ngStyle]="{color: DifferencePayablesColor}">{{DifferencePayablesText}}</div>
+                                                    <div class="TabSummaryLabel">{{'Shipment.S.Payables.Difference' | TextCodeTranslationPipe}} ({{SelectedCurrencyCode}})</div>
+                                                </td>
+
+
+
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
                                             </tr>
                                         </table>
-                                      
-                                    </td>
+                                    </td>                                    
                                 </tr>
                             </table>
                         </td>

@@ -75,7 +75,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.accountingSettingRepository = new AccountingSettingRepository(myCommonContext);
             this.accountingSystemRepository = new AccountingSystemRepository(myCommonContext);
             this.changedList = new List<ARPaymentInvoicePM>();
-            this.loggedContact = new ContactQuery(tenant).GetContactByNameAndTenant(SecurityUtility.GetAuthenticatedUser(), tenant, true);
+
+            loggedContact = GetLoggedContactPM(tenant);
+
             this.GetAccountingSystem();
         }
 
@@ -199,6 +201,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
          */
         public void Update(ARPaymentPM theEntityPm, bool mapComposition = false)
         {
+            ContactPM loggedUser = GetLoggedContactPM(theEntityPm.Tenant);
+            theEntityPm.UpdatedByUserId = loggedUser?.Id;
+
             ValidateFullAccounting(theEntityPm);
 
             //get glaccount fields
@@ -291,8 +296,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             //update amounts
             if (theEntityPm.IsFullAccounting == true)
                 UpdateFullAccountPaymentAmount(theEntityPm, gla.ReconcileMethodCode == "0");
-            else
-                UpdatePaymentOpenAmount();
 
 
             // PaymentCheque And CashBook
@@ -305,6 +308,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
+
+            if (!theEntityPm.IsFullAccounting)
+                UpdatePaymentOpenAmount();
 
 
             ARPaymentHelper service = new ARPaymentHelper();
@@ -489,6 +495,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     cashBookMethodType = "2";
                 }
                 cashBook = cashBookQuery.GetByPaymentAndCurrencyAndBranch(entityPM.PaymentCurrencyId, cashBookMethodType , entityPM.BranchId, tenant);
+                if(cashBook != null)
+                {
+
+                    entityPM.CashbookId = cashBook.Id;
+                }
             }
         }
 
@@ -1077,7 +1088,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 journalLine.Line = ++counter;
                 journalLine.ActionCode = "2";
                 journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
-                journalLine.DocumentDate = arPaymentcheque.ValueDate;
+                journalLine.DocumentDate = theEntityPm.RegisterDate.Value;
                 journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
                 journalLine.DueDate = arPaymentcheque.ValueDate;
                 journalLine.LocalAmount = arPaymentcheque.LocalAmount;
@@ -1435,6 +1446,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     IARPaymentChequeUpdateServiceExt paymentUpdate = ContainerAccessor.Container.Resolve(typeof(IARPaymentChequeUpdateServiceExt), "ARPaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IARPaymentChequeUpdateServiceExt;
                                     foreach (var item in aRPaymentCheques)
                                     {
+                                        item.ChangeSetOp = ChangeSetOperation.Update;
                                         item.StatusCode = "5";
                                         paymentUpdate.Update(item);
                                         CreateVoidedARPaymentEvent("Returned To Customer - Cheque Number: " + item.ChequeNumber);
@@ -1467,13 +1479,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly( AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
         private void ValidateVoidedARPaymentFullAccounting(ARPaymentPM entityPm)

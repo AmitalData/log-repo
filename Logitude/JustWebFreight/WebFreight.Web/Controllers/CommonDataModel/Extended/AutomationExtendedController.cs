@@ -94,10 +94,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Automation", "NEW", authToken.Tenant);
 
-                        EntityChangeAutomationHelper entityChangeAutomationHelper = new EntityChangeAutomationHelper();
-                        entityChangeAutomationHelper.AutomationLastUpdate(entityPM.ObjectTableId, entityPM.Tenant);
-
-
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         AutomationService service = new AutomationService(MyContext, entityPM.Tenant);
 
@@ -135,10 +131,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     SecurityUtility.CheckContactFeature("Automation", "UPDATE", authToken.Tenant);
-
-
-                    EntityChangeAutomationHelper entityChangeAutomationHelper = new EntityChangeAutomationHelper();
-                    entityChangeAutomationHelper.AutomationLastUpdate(entityPM.ObjectTableId, entityPM.Tenant);
 
                     string entityName = "Automation" + entityPM.Id + entityPM.Tenant;
                     string entityPmName = "AutomationPM" + entityPM.Id + entityPM.Tenant;
