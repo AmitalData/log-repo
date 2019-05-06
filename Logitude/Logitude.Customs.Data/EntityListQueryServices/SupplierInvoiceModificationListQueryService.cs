@@ -24,16 +24,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvoiceModificationList> query = (from a in iQueryable
                                                                  select new SupplierInvoiceModificationList()
                                                     {
-                                                   DeclarationId = a.DeclarationId,
-                                                   Amount = a.Amount,
-                                                   CurrencyTypeCode = a.CurrencyTypeCode,
-                                                   InvoiceCounterKey = a.InvoiceCounterKey,
-                                                   Tenant = a.Tenant,
-                                                   TypeCode = a.TypeCode,
+                                                       DeclarationId = a.DeclarationId,
+                                                       Amount = a.Amount,
+                                                       CurrencyTypeCode = a.CurrencyTypeCode,
+                                                       InvoiceCounterKey = a.InvoiceCounterKey,
+                                                       Tenant = a.Tenant,
+                                                       TypeCode = a.TypeCode,
+                                                       CurrencyTypeName = a.CurrencyType != null ? (a.CurrencyType.LocalName != null ? a.CurrencyType.LocalName : a.CurrencyType.EnglishName) : null,
+                                                       TypeName = a.ModificationAndDiscountType != null ? (a.ModificationAndDiscountType.LocalName != null ? a.ModificationAndDiscountType.LocalName : a.ModificationAndDiscountType.EnglishName) : null,
+                                                       ModificationCounterKey = a.ModificationCounterKey,
 
-
-
-                                                    });
+                                                                 });
             return query;
 		}
 

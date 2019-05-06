@@ -37,7 +37,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CustomerId, 
 	         CommisionPercentage, 
 	         Tenant, 
-	         ModificationsTypeCode,
+	         ModificationsTypeCode, 
+	         ModificationsTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

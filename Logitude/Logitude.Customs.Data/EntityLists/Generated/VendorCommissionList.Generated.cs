@@ -28,6 +28,8 @@ namespace Logitude.Customs.Data.EntityLists
        [Key]
        [DataMember]
        public string ModificationsTypeCode  { get; set; }
+       [DataMember]
+       public string ModificationsTypeName  { get; set; }
    }
 
 }

@@ -29,9 +29,8 @@
                 //OracleConnectionInfo.CreateConnection("User Id=devart;  Password=devart; Server=srv64bit;");
                 OracleConnectionInfo.CreateConnection(
                "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ57;port=1521;sid=amital"
-                //"User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ56;port=1521;sid=amital"
-                //"User Id=aminetpre_MAIN;  Password=aminetpre_MAIN;Direct=True;Data Source=10.10.10.72;port=1521;sid=amital"
-                //"User Id=couriernet_main;  Password=couriernet_main;Direct=True;Data Source=Univ58;port=1521;sid=amital"
+               // "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ56;port=1521;sid=amital"
+                //"User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ58;port=1521;sid=amital"
 
                 );
 

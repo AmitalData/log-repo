@@ -219,10 +219,6 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CasualImporterContact).HasColumnName("CasualImporterContact").HasMaxLength(50).IsUnicode(true);
 
-            this.Property(t => t.MamanStatusCode).HasColumnName("MamanStatusCode").HasMaxLength(2).IsUnicode(false);
-
-            this.Property(t => t.MamanErrorXml).HasColumnName("MamanErrorXml").IsMaxLength().IsUnicode(false);
-
             this.Property(t => t.ItemsProcessTypesList).HasColumnName("ItemsProcessTypesList").IsMaxLength().IsUnicode(false);
 
             this.Property(t => t.IsClose).HasColumnName("IsClose");

@@ -72,7 +72,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.ImporterPassCountryName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.TransferImporterCountryName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ProcedureCurrentName);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.ImporterName);
+            //this.CustomMappedPMProperties.Add(PMPropertyNames.ImporterName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.DepartmentName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.DeclarationDocumentTypeName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CustomerCode);
@@ -91,7 +91,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.ManifestCargoStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionReasonName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.AcceptanceStatusName);
-            this.CustomMappedPMProperties.Add(PMPropertyNames.MamanStatusName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CourierSuspentionName);
 
             //CardRepository rep = new CardRepository(entityPM.Tenant);
@@ -353,8 +352,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (entityPOCO.IsCourierDeclaration == true)
             {
-                CourierDeclarationQueryService courierDeclarationQueryService = new CourierDeclarationQueryService(entityPOCO.Tenant);
-                entityPM.MAWBCourierMaster = courierDeclarationQueryService.GetMAWBCourierMasterByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+                //CourierDeclarationQueryService courierDeclarationQueryService = new CourierDeclarationQueryService(entityPOCO.Tenant);
+                //entityPM.MAWBCourierMaster = courierDeclarationQueryService.GetMAWBCourierMasterByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+
+                CourierMasterQueryService courierMasterQueryService = new CourierMasterQueryService(entityPOCO.Tenant);
+                CourierMasterPM courierMasterPM = courierMasterQueryService.GetByDeclarationId(entityPOCO.Id, entityPOCO.Tenant);
+                if(courierMasterPM != null)
+                {
+                    entityPM.CourierMasterId = courierMasterPM.Id;
+                    entityPM.MAWBCourierMaster = courierMasterPM.MAWB;
+                }
             }
 
             if (entityPOCO.AcceptanceStatusCode != null)
@@ -367,15 +374,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 }
             }
 
-            if (entityPOCO.MamanStatusCode != null)
-            {
-                MamanStatusQueryService mamanStatusQueryService = new MamanStatusQueryService(entityPOCO.Tenant);
-                MamanStatusPM mamanStatus = mamanStatusQueryService.GetSingle(entityPOCO.MamanStatusCode, false, true);
-                if (mamanStatus != null)
-                {
-                    entityPM.MamanStatusName = mamanStatus.LocalName;
-                }
-            }
 
 
         }

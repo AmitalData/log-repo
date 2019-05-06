@@ -128,15 +128,13 @@ export class DeclarationList {
 	CasualImporterEmail: string;
 	CasualImporterTel: string;
 	CasualImporterContact: string;
-	MamanStatusCode: string;
-	MamanErrorXml: string;
 	ItemsProcessTypesList: string;
 	IsClose: boolean;
-	MamanStatusName: string;
 	AcceptanceStatusName: string;
 	CourierSuspentionCode: string;
 	CourierSuspentionName: string;
 	DepositionStatusCode: string;
+	CourierMasterId: string;
 	
 }
  

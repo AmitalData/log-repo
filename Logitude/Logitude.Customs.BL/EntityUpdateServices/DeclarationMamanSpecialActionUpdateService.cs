@@ -2,6 +2,7 @@
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
@@ -35,6 +36,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (specialActionStatus != myDeclarationCourierStatusPM.SpecialActionStatus)
                 {
                     //LogitudeSettings.HandleLogMe("AfterUpdating myDeclarationCourierStatusPM " + myDeclarationCourierStatusPM.DeclarationId + " SpecialActionStatus " + myDeclarationCourierStatusPM.SpecialActionStatus, false, "maman", new DateTime(2019, 2, 1));
+
+
+                    var declarationCourierStatusRepository = new DeclarationCourierStatusRepository(entityPM.Tenant);
+                    declarationCourierStatusRepository.Lock_forUpdateNOWAIT(entityPM.DeclarationId);
+
+
                     myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
                     declarationCourierStatusUpdateService.Update(myDeclarationCourierStatusPM, true);

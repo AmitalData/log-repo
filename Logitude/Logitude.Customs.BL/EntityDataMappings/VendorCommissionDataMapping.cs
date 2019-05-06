@@ -11,6 +11,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -30,13 +31,24 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.CustomerId = entityPM.CustomerId;
                 entityPOCO.Tenant = entityPM.Tenant;
                 entityPOCO.ModificationsTypeCode = entityPM.ModificationsTypeCode;
-
             }
         }
 
         public void CustomPOCOToPM(VendorCommissionPM entityPM, VendorCommission entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPMProperties.Add(PMPropertyNames.ModificationsTypeName);
+
+            if(entityPOCO.ModificationsTypeCode != null)
+            {
+                ModificationAndDiscountTypeQueryService modificationAndDiscountTypeQueryService = new ModificationAndDiscountTypeQueryService(entityPOCO.Tenant);
+                ModificationAndDiscountTypePM modificationAndDiscountTypePM = modificationAndDiscountTypeQueryService.GetSingle(entityPOCO.ModificationsTypeCode, false, true);
+                if (modificationAndDiscountTypePM != null)
+                {
+                    entityPM.ModificationsTypeName = modificationAndDiscountTypePM.Code;
+                }
+
+            }
+
         }
    }
 

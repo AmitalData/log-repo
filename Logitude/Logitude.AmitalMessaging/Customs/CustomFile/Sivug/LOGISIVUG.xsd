@@ -34,6 +34,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="INCOTERM_ID" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="INVOICEITEMS" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="EXPENSES" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ChangeInSupplierInvoice" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -114,6 +115,7 @@
   <xs:element name="TypeCode" type="xs:string" />
   <xs:element name="Amount" type="xs:string" />
   <xs:element name="CurrencyTypeCode" type="xs:string" />
+  <xs:element name="ChangeInSupplierInvoice" type="xs:string" />
   <xs:element name="CustomsDocuments">
     <xs:complexType>
       <xs:sequence>

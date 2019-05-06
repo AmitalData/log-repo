@@ -220,25 +220,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     customResponse.Cargo = customResponse.Cargo ?? new MN_NG_8241_Cargo_MessageCargo();
                     customResponse.Cargo.CargoAdditionalData = customResponse.Cargo.CargoAdditionalData ?? new MN_NG_8241_Cargo_MessageCargoCargoAdditionalData[] { new MN_NG_8241_Cargo_MessageCargoCargoAdditionalData() };
 
-
+                    Boolean _IsRunOver = false;
                     if (_MyDeclarationPM.Consignments != null && _MyDeclarationPM.Consignments.Count() > 0)
                     {
-                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].UnloadPortCode))
+                        string defValue = GetDefault("ISRAEL", "CGG_MAN_RUNOVR", "NON", "NON", _MyDeclarationPM.Tenant);
+                        if (defValue == "Y")
+                        {
+                            _IsRunOver = true;
+                        }
+                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].UnloadPortCode) || _IsRunOver)
                         {
                             _MyDeclarationPM.Consignments[0].UnloadPortCode = customResponse.Cargo.CargoAdditionalData.First().unloadingLocationID;
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update; 
                         }
-                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].StorageSiteCode))
+                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].StorageSiteCode) || _IsRunOver)
                         {
                             _MyDeclarationPM.Consignments[0].StorageSiteCode = customResponse.Cargo.CargoAdditionalData.First().acceptedArrivalSiteID;
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update; 
                         }
-                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].LoadingPortCode) && !String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite))
+                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].LoadingPortCode) || _IsRunOver) && !String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite))
                         {
                             _MyDeclarationPM.Consignments[0].LoadingPortCode = customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0,5);
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
                         }
-                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].OriginCountryCode) && !String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite))
+                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].OriginCountryCode) || _IsRunOver) && !String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite))
                         {
                             _MyDeclarationPM.Consignments[0].OriginCountryCode = customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0, 2);
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
@@ -318,6 +323,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
             GetResponseDetails(customResponse);
             MyResponseData.ApplicationID = requestParams.DeclarationId;
             MyResponseData.UserMessage = "שליחת מסר מצהר בוצעה בהצלחה. " + MyResponseData.UserMessage; //Yuval Chalup 12.09.2016 CA-271500 (Concat)
+        }
+
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
         }
 
         private void GetResponseDetails(MN_NG_8241_Cargo_Message customResponse)

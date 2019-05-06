@@ -13,6 +13,7 @@ export class VendorCommissionList {
 	CommisionPercentage: number;
 	Tenant: number;
 	ModificationsTypeCode: string;
+	ModificationsTypeName: string;
 	
 }
  

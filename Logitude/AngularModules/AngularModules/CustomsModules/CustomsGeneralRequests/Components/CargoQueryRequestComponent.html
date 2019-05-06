@@ -1,4 +1,4 @@
-﻿<!-- CargoQueryRequestComponent view  -->
+<!-- CargoQueryRequestComponent view  -->
 <div>
     <custom-message-wrapper>
 
@@ -431,7 +431,8 @@
                                             </log-column>
 
                                             <!-- ReceiverCustomerActivityTypeName -->
-                                            <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ReceiverCustomerActivityTypeName' | TextCodeTranslationPipe"
+                                            
+                                            <!--<log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.ReceiverCustomerActivityTypeName' | TextCodeTranslationPipe"
                                                         [binding]="'ReceiverCustomerActivityTypeName'"
                                                         [width]="'100'" [Alignment]="'right'">
                                                 <log-cell-template template="let item" #logcelltemplate>
@@ -439,8 +440,8 @@
                                                         <span>{{item.ReceiverCustomerActivityTypeName}}</span>
                                                     </div>
                                                 </log-cell-template>
-                                            </log-column>
-
+                                            </log-column>-->
+                                                
                                             <!-- DeliveryOrderDate -->
                                             <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliveryOrderDate' | TextCodeTranslationPipe"
                                                         [binding]="'DeliveryOrderDate'"
@@ -448,6 +449,17 @@
                                                 <log-cell-template template="let item" #logcelltemplate>
                                                     <div class="RightCenter">
                                                         <span>{{item.DeliveryOrderDate}}</span>
+                                                    </div>
+                                                </log-cell-template>
+                                            </log-column>
+
+                                            <!-- DeliveryOrderStatusName -->
+                                            <log-column [header]="'Customs.CargoQueryDeliveryOrderResults.O.DeliveryOrderStatusName' | TextCodeTranslationPipe"
+                                                        [binding]="'DeliveryOrderStatusName'"
+                                                        [width]="'100'" [Alignment]="'right'">
+                                                <log-cell-template template="let item" #logcelltemplate>
+                                                    <div class="RightCenter">
+                                                        <span>{{item.DeliveryOrderStatusName}}</span>
                                                     </div>
                                                 </log-cell-template>
                                             </log-column>

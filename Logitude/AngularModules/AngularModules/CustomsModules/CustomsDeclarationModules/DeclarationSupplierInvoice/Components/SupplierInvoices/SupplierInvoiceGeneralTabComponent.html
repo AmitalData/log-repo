@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .disabled {
         pointer-events: none;
@@ -179,6 +179,17 @@
     /*end remark tooltip styles*/
 </style>
 <table>
+    <tr style="height:30px" *ngIf="ChangeInSupplierInvoice == '2'">
+        <td>
+            <div style="width:100%;text-align:center">
+                <div class="DisbleBox">
+                    <span style="padding: 0px 16px;">בוצע שינוי בחשבון ספק ע”י מסווג- </span>
+                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">טופל</span>
+                </div>
+            </div>
+        </td>
+    </tr>
+
     <tr style="height:200px">
 
         <td>
@@ -964,8 +975,8 @@
 
                                                         <!-- close button -->
                                                         <!--<div (click)="item.CloseButtonClicked()" style="float: left;" class="CloseButtonWrapper" [title]="'General.B.Close' | TextCodeTranslationPipe">
-                                                            <div class="CloseButton"></div>
-                                                        </div>-->
+                                        <div class="CloseButton"></div>
+                                    </div>-->
 
                                                     </div>
 
@@ -976,19 +987,29 @@
 
                                             </div>
 
+                                            <div *ngIf="item.ShowClassefierRemarkInfo" [id]="item.ClassefierRemarkToolTipWrapper" style="position: relative; float: right;height: 18px;width: 20px;">
 
+                                                <!-- Info Icon -->
+                                                <img (click)="item.ExcButtonClicked()" class="exc-remark-button" tabindex="-1" src="./Images/exclamation-16.png" />
+                                            </div>
 
                                         </div>
+                                        <div class="TextTrimming" *ngIf="item.ShowValidatioIcon" style="position: relative; float: right;height: 20px;width: 20px;">
 
-                                    </log-cell-template>
-                                </log-column>
+                                            <img tabindex="-1" style="width: 14px; height: 14px; position: relative; vertical-align: text-top;" src="./Images/error-16.png" title="{{item.TariffErrorText}}" />
+
+                                        </div>
+                                    
+                        
+                            </log-cell-template>
+                        </log-column>
 
 
 
 
 
 
-                            </logitude-edit-grid>
+                        </logitude-edit-grid>
                         </div>
                     </td>
 

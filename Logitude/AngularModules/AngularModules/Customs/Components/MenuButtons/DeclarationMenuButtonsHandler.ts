@@ -322,6 +322,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsHidden = false;
                         }
                     }
+                    if (button.EventCode == "Declaration Customs Requests") {
+                        if (this.IsDisplayOnly) {
+                            button.IsDisabled = true;
+                        }
+                        else {
+                            button.IsDisabled = false;
+                        }
+                    }
 
                 }
                 this.IsDisplayOnlyCheckDone = true;
@@ -482,6 +490,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     case "Cancel Declaration Closure":
                         {
                             this.CancelDeclarationClosureMethod();
+                            break;
+                        }
+                    case "Declaration Customs Requests":
+                        {
+                            this.DeclarationCustomsRequestsMethod();
                             break;
                         }
                 }
@@ -1219,6 +1232,19 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     });
             }
         });
+    }
+
+    DeclarationCustomsRequestsMethod() {
+
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1500;
+        logWindow.Height = 1000;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = "בקשות מכס";
+        logWindow.Show('./CustomsModules/CustomsRequests/Components/CustomsRequestsComponent');
+        SessionLocator.CurrentSession.StopBusyIndicator();
     }
 }
 

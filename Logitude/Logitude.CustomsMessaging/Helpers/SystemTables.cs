@@ -191,6 +191,7 @@ namespace Logitude.CustomsMessaging.Helpers
 2011 - תחנות מכס
 1354 - מזהה מטען      
 1259 – סוג רשימון
+1422 – תהליכים לסחורה
             */
 
             switch (TableID)
@@ -218,6 +219,7 @@ namespace Logitude.CustomsMessaging.Helpers
                 case "1385":
                 case "1345":
                 case "1416":
+                case "1422":
                     return true;
                     break;
                 default:

@@ -120,8 +120,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterEmail, 
 	         CasualImporterTel, 
 	         CasualImporterContact, 
-	         MamanStatusCode, 
-	         MamanErrorXml, 
 	         ItemsProcessTypesList, 
 	         IsClose, 
 	         CourierSuspentionCode, 
@@ -277,15 +275,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CasualImporterEmail, 
 	         CasualImporterTel, 
 	         CasualImporterContact, 
-	         MamanStatusCode, 
-	         MamanErrorXml, 
 	         ItemsProcessTypesList, 
 	         IsClose, 
-	         MamanStatusName, 
 	         AcceptanceStatusName, 
 	         CourierSuspentionCode, 
 	         CourierSuspentionName, 
-	         DepositionStatusCode,
+	         DepositionStatusCode, 
+	         CourierMasterId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -777,16 +773,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualImporterContact))
             {
 				entityPOCO.CasualImporterContact = entityPM.CasualImporterContact;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanStatusCode))
-            {
-				entityPOCO.MamanStatusCode = entityPM.MamanStatusCode;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanErrorXml))
-            {
-				entityPOCO.MamanErrorXml = entityPM.MamanErrorXml;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemsProcessTypesList))
@@ -1305,16 +1291,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CasualImporterContact = entityPOCO.CasualImporterContact;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanStatusCode))
-            {
-					entityPM.MamanStatusCode = entityPOCO.MamanStatusCode;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MamanErrorXml))
-            {
-					entityPM.MamanErrorXml = entityPOCO.MamanErrorXml;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemsProcessTypesList))
             {
 					entityPM.ItemsProcessTypesList = entityPOCO.ItemsProcessTypesList;
@@ -1824,16 +1800,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CasualImporterContact))
             {
                 oldEntityPM.CasualImporterContact = entityPM.CasualImporterContact;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanStatusCode))
-            {
-                oldEntityPM.MamanStatusCode = entityPM.MamanStatusCode;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MamanErrorXml))
-            {
-                oldEntityPM.MamanErrorXml = entityPM.MamanErrorXml;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemsProcessTypesList))

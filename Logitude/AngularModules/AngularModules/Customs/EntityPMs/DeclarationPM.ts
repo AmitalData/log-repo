@@ -899,16 +899,6 @@ export class DeclarationPM {
     public set CasualImporterContact(newValue: string) { if (this.casualImporterContact != newValue) { this.casualImporterContact = newValue; this.MarkAsDirty("CasualImporterContact"); } }
        
 	 
-    private mamanStatusCode: string;
-    public get MamanStatusCode() { return this.mamanStatusCode; }
-    public set MamanStatusCode(newValue: string) { if (this.mamanStatusCode != newValue) { this.mamanStatusCode = newValue; this.MarkAsDirty("MamanStatusCode"); } }
-       
-	 
-    private mamanErrorXml: string;
-    public get MamanErrorXml() { return this.mamanErrorXml; }
-    public set MamanErrorXml(newValue: string) { if (this.mamanErrorXml != newValue) { this.mamanErrorXml = newValue; this.MarkAsDirty("MamanErrorXml"); } }
-       
-	 
     private itemsProcessTypesList: string;
     public get ItemsProcessTypesList() { return this.itemsProcessTypesList; }
     public set ItemsProcessTypesList(newValue: string) { if (this.itemsProcessTypesList != newValue) { this.itemsProcessTypesList = newValue; this.MarkAsDirty("ItemsProcessTypesList"); } }
@@ -917,11 +907,6 @@ export class DeclarationPM {
     private isClose: boolean;
     public get IsClose() { return this.isClose; }
     public set IsClose(newValue: boolean) { if (this.isClose != newValue) { this.isClose = newValue; this.MarkAsDirty("IsClose"); } }
-       
-	 
-    private mamanStatusName: string;
-    public get MamanStatusName() { return this.mamanStatusName; }
-    public set MamanStatusName(newValue: string) { if (this.mamanStatusName != newValue) { this.mamanStatusName = newValue; this.MarkAsDirty("MamanStatusName"); } }
        
 	 
     private acceptanceStatusName: string;
@@ -942,6 +927,11 @@ export class DeclarationPM {
     private depositionStatusCode: string;
     public get DepositionStatusCode() { return this.depositionStatusCode; }
     public set DepositionStatusCode(newValue: string) { if (this.depositionStatusCode != newValue) { this.depositionStatusCode = newValue; this.MarkAsDirty("DepositionStatusCode"); } }
+       
+	 
+    private courierMasterId: string;
+    public get CourierMasterId() { return this.courierMasterId; }
+    public set CourierMasterId(newValue: string) { if (this.courierMasterId != newValue) { this.courierMasterId = newValue; this.MarkAsDirty("CourierMasterId"); } }
        
 	 
 

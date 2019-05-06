@@ -51,7 +51,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AccumalationStateCode, 
 	         UnfInvoiceCounterKey, 
 	         VendorComissionPercentage, 
-	         InvoiceAmountInUSD,
+	         InvoiceAmountInUSD, 
+	         ChangeInSupplierInvoice,
 	      }
 
 
@@ -99,7 +100,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UnfInvoiceCounterKey, 
 	         VendorComissionPercentage, 
 	         IsValueForCustomsOnly, 
-	         InvoiceAmountInUSD,
+	         InvoiceAmountInUSD, 
+	         ChangeInSupplierInvoice,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -246,6 +248,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceAmountInUSD))
             {
 				entityPOCO.InvoiceAmountInUSD = entityPM.InvoiceAmountInUSD;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangeInSupplierInvoice))
+            {
+				entityPOCO.ChangeInSupplierInvoice = entityPM.ChangeInSupplierInvoice;
 			}
 			}
 
@@ -402,6 +409,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.InvoiceAmountInUSD = entityPOCO.InvoiceAmountInUSD;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChangeInSupplierInvoice))
+            {
+					entityPM.ChangeInSupplierInvoice = entityPOCO.ChangeInSupplierInvoice;
+            }
+
 		}
 
 		public void PMToOldPM(SupplierInvoicePM entityPM, SupplierInvoicePM oldEntityPM)
@@ -546,6 +558,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InvoiceAmountInUSD))
             {
                 oldEntityPM.InvoiceAmountInUSD = entityPM.InvoiceAmountInUSD;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangeInSupplierInvoice))
+            {
+                oldEntityPM.ChangeInSupplierInvoice = entityPM.ChangeInSupplierInvoice;
             }
 			
 		}

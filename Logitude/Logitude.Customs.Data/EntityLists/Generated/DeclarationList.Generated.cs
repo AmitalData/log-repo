@@ -255,15 +255,9 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CasualImporterContact  { get; set; }
        [DataMember]
-       public string MamanStatusCode  { get; set; }
-       [DataMember]
-       public string MamanErrorXml  { get; set; }
-       [DataMember]
        public string ItemsProcessTypesList  { get; set; }
        [DataMember]
        public bool IsClose  { get; set; }
-       [DataMember]
-       public string MamanStatusName  { get; set; }
        [DataMember]
        public string AcceptanceStatusName  { get; set; }
        [DataMember]
@@ -272,6 +266,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierSuspentionName  { get; set; }
        [DataMember]
        public string DepositionStatusCode  { get; set; }
+       [DataMember]
+       public string CourierMasterId  { get; set; }
    }
 
 }

@@ -24,10 +24,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 myQueryOperations.PageIndex = PageIndex;
                 myQueryOperations.PageSize = PageSize;
 
-                if (!string.IsNullOrEmpty(SearchFields))
-                {
-                    myQueryOperations.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
-                }
+                //if (!string.IsNullOrEmpty(SearchFields))
+                //{
+                //    myQueryOperations.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
+                //}
                 FilterSerializer serializer = new FilterSerializer();
                 byte[] arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
 
@@ -41,13 +41,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                             
                             CustomsItemListQueryService query = new CustomsItemListQueryService(ctx);
 
-                            QueryOperations QO = new QueryOperations();
-                            QO.PageIndex = 0;
-                            QO.PageSize = 100;
-                            QO.SetFilter("FullClassification", SearchFields, false, "Contains", null, false);
-                            QO.SetFilter("CustomsItemCategoryID", "2,3", false, "InListInt", null, false);
 
-                            List<CustomsItemList> myResult = query.GetList(QO, tenant);
+                            myQueryOperations.SetFilter("FullClassification", SearchFields, false, "Contains", null, false);
+                            myQueryOperations.SetFilter("CustomsItemCategoryID", "2,3", false, "InListInt", null, false);
+
+                            List<CustomsItemList> myResult = query.GetList(myQueryOperations, tenant);
 
                             return Request.CreateResponse(HttpStatusCode.OK, myResult);
                         }

@@ -211,7 +211,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      //a.CreatedByUser != null ? (a.CreatedByUser.Contact.LocalName != null ? a.CreatedByUser.Contact.LocalName : a.CreatedByUser.Contact.EnglishName) : null,
 
                                                      a.CreatedByUser.Code,
-
+                                                     ImporterAddress = a.ImporterAddress,
                                                      ImporterName = a.Importer != null ? a.Importer.FullName : a.ImporterName,
                                                      EntitleImporterName = a.EntitleImporter.FullName,
                                                      UserNotes = a.UserNotes,
@@ -243,8 +243,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CourierSuspentionReasonName = a.AgentTalkBackType != null ? a.AgentTalkBackType.LocalName : null,
                                                      AcceptanceStatusCode = a.AcceptanceStatusCode,
                                                      AcceptanceStatusName = a.AcceptanceStatus != null ? a.AcceptanceStatus.LocalName : null,
-                                                     MamanStatusCode = a.MamanStatusCode,
-                                                     MamanStatusName = a.MamanStatus != null ? a.MamanStatus.LocalName : null,
                                                      IsClose = a.IsClose,
                                                      CasualImporterAddress1 = a.CasualImporterAddress1,
                                                      CasualImporterAddress2 = a.CasualImporterAddress2,
@@ -256,7 +254,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      CasualImporterContact = a.CasualImporterContact,
                                                      CasualSupplierAddress = a.CasualSupplierAddress,
                                                      CasualSupplierName = a.CasualSupplierName,
-                                                     MamanErrorXml = a.MamanErrorXml,
+                                                     //MamanErrorXml = a.MamanErrorXml,
                                                      ItemsProcessTypesList = a.ItemsProcessTypesList,
                                                      CourierSuspentionCode = a.CourierSuspentionCode,
                                                      CourierSuspentionName = a.CourierSuspention != null ? a.CourierSuspention.LocalName : null,

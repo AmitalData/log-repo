@@ -195,6 +195,16 @@ export class AppTool {
 
         return myResult;
     }
+    public static ToNumber(currencyformat :string) {
+        var myResult: number = null;
+
+        if (!this.IsNullOrEmpty(currencyformat)) {
+            let numberformat= currencyformat.replace(/[^0-9.-]+/g, '')
+            myResult = +numberformat;
+        }
+
+        return myResult;
+    }
 
     public static GetNewGuid() {
 

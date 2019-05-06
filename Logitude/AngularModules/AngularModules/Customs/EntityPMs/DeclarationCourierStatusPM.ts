@@ -219,16 +219,6 @@ export class DeclarationCourierStatusPM {
     public set AcceptanceStatusCode(newValue: string) { if (this.acceptanceStatusCode != newValue) { this.acceptanceStatusCode = newValue; this.MarkAsDirty("AcceptanceStatusCode"); } }
        
 	 
-    private mamanStatusCode: string;
-    public get MamanStatusCode() { return this.mamanStatusCode; }
-    public set MamanStatusCode(newValue: string) { if (this.mamanStatusCode != newValue) { this.mamanStatusCode = newValue; this.MarkAsDirty("MamanStatusCode"); } }
-       
-	 
-    private mamanErrorXml: string;
-    public get MamanErrorXml() { return this.mamanErrorXml; }
-    public set MamanErrorXml(newValue: string) { if (this.mamanErrorXml != newValue) { this.mamanErrorXml = newValue; this.MarkAsDirty("MamanErrorXml"); } }
-       
-	 
     private courierSuspentionCode: string;
     public get CourierSuspentionCode() { return this.courierSuspentionCode; }
     public set CourierSuspentionCode(newValue: string) { if (this.courierSuspentionCode != newValue) { this.courierSuspentionCode = newValue; this.MarkAsDirty("CourierSuspentionCode"); } }
@@ -267,6 +257,36 @@ export class DeclarationCourierStatusPM {
     private terminalSuspentionNumber: string;
     public get TerminalSuspentionNumber() { return this.terminalSuspentionNumber; }
     public set TerminalSuspentionNumber(newValue: string) { if (this.terminalSuspentionNumber != newValue) { this.terminalSuspentionNumber = newValue; this.MarkAsDirty("TerminalSuspentionNumber"); } }
+       
+	 
+    private lastMileStatusCode: string;
+    public get LastMileStatusCode() { return this.lastMileStatusCode; }
+    public set LastMileStatusCode(newValue: string) { if (this.lastMileStatusCode != newValue) { this.lastMileStatusCode = newValue; this.MarkAsDirty("LastMileStatusCode"); } }
+       
+	 
+    private lastMileStatusDate: Date;
+    public get LastMileStatusDate() { return this.lastMileStatusDate; }
+    public set LastMileStatusDate(newValue: Date) { if (this.lastMileStatusDate != newValue) { this.lastMileStatusDate = newValue; this.MarkAsDirty("LastMileStatusDate"); } }
+       
+	 
+    private lastMileStatusRemarks: string;
+    public get LastMileStatusRemarks() { return this.lastMileStatusRemarks; }
+    public set LastMileStatusRemarks(newValue: string) { if (this.lastMileStatusRemarks != newValue) { this.lastMileStatusRemarks = newValue; this.MarkAsDirty("LastMileStatusRemarks"); } }
+       
+	 
+    private storageSiteStatusCode: string;
+    public get StorageSiteStatusCode() { return this.storageSiteStatusCode; }
+    public set StorageSiteStatusCode(newValue: string) { if (this.storageSiteStatusCode != newValue) { this.storageSiteStatusCode = newValue; this.MarkAsDirty("StorageSiteStatusCode"); } }
+       
+	 
+    private storageSiteErrorText: string;
+    public get StorageSiteErrorText() { return this.storageSiteErrorText; }
+    public set StorageSiteErrorText(newValue: string) { if (this.storageSiteErrorText != newValue) { this.storageSiteErrorText = newValue; this.MarkAsDirty("StorageSiteErrorText"); } }
+       
+	 
+    private storageSiteStatusName: string;
+    public get StorageSiteStatusName() { return this.storageSiteStatusName; }
+    public set StorageSiteStatusName(newValue: string) { if (this.storageSiteStatusName != newValue) { this.storageSiteStatusName = newValue; this.MarkAsDirty("StorageSiteStatusName"); } }
        
 	 
 

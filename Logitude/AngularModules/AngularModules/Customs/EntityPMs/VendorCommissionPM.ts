@@ -49,6 +49,11 @@ export class VendorCommissionPM {
     public set ModificationsTypeCode(newValue: string) { if (this.modificationsTypeCode != newValue) { this.modificationsTypeCode = newValue; this.MarkAsDirty("ModificationsTypeCode"); } }
        
 	 
+    private modificationsTypeName: string;
+    public get ModificationsTypeName() { return this.modificationsTypeName; }
+    public set ModificationsTypeName(newValue: string) { if (this.modificationsTypeName != newValue) { this.modificationsTypeName = newValue; this.MarkAsDirty("ModificationsTypeName"); } }
+       
+	 
 
     public OldEntityPM: VendorCommissionPM;
 		

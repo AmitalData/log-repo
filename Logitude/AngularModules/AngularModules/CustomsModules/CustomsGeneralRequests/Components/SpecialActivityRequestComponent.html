@@ -1,4 +1,4 @@
-﻿<!-- SpecialActivityRequestComponent view  -->
+<!-- SpecialActivityRequestComponent view  -->
 <style type="text/css">
     .NotesTextArea {
         padding: 2px;
@@ -93,8 +93,7 @@
                                                 <!--(ValueChanged)="ActivityRequestStartDateLostFocusMethod($event)"-->
                                             </td>
                                             <td style="width: 60px;">
-                                                <LogDatePicker 
-                                                               [ObjectFieldName]="'ActivityRequestStartTime'"
+                                                <LogDatePicker [ObjectFieldName]="'ActivityRequestStartTime'"
                                                                [ObjectTableName]="ObjectTableName"
                                                                [InputType]="'time'" [DataContext]="DataContext"
                                                                [TimeMode]="24" [SelectedDateValue]="ActivityRequestStartTime"
@@ -102,8 +101,8 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    
-                                    
+
+
                                 </td>
 
                                 <td style="width: 3px;"><div></div></td>
@@ -143,7 +142,7 @@
                                     <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width: 130px;">
-                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'"[DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                                                 [HideColumns]="true"
                                                 (LostFocus)="CustomFileNoTextChanged($event)"
                                                 [Text]="CustomFileNo"></LogTextBox>
@@ -320,7 +319,6 @@
                             </tr>
 
                             <!--<tr class="FormFieldRow"><td><div></div></td></tr>-->
-
                             <!-- IsGoodsDetailsData = 6 -->
                             <tr class="FormFieldRow" *ngIf="IsGoodsDetailsData">
                                 <!-- Idemander Type -->
@@ -381,7 +379,7 @@
                                 <td><div></div></td>
                             </tr>
                             <tr class="FormFieldRow" *ngIf="IsGoodsDetailsData"><td><div></div></td></tr>
-                            <!-- RepresentativeList -->                            
+                            <!-- RepresentativeList -->
                             <tr *ngIf="IsGoodsDetailsData">
                                 <td colspan="5" style="width: 400px; height:150px">
                                     <table>
@@ -403,7 +401,7 @@
                                             <td style="width: 400px ; height : 120px">
                                                 <div class="GeneratedGridContainer" style="width: 100% ; height : 100%">
                                                     <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="RepresentativeList">
-                                                        
+
                                                         <!--RepresentativeNumber-->
                                                         <log-column [header]="'Customs.SpecialActivityRequest.F.RepresentativeNumber' | TextCodeTranslationPipe"
                                                                     [width]="'60'" [Alignment]="'right'" [binding]="'RepresentativeNumber'">
@@ -444,7 +442,7 @@
                                                                     <span>{{item.RepresentativeID}}</span>
                                                                 </div>
                                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                                    <LogTextBox [ObjectFieldName]="'RepresentativeID'" [DataContext]="item" 
+                                                                    <LogTextBox [ObjectFieldName]="'RepresentativeID'" [DataContext]="item"
                                                                                 [FocusOnMe]="true" [ObjectTableName]="ObjectTableName"
                                                                                 [Text]="item.RepresentativeID" [HideColumns]="true"></LogTextBox>
 
@@ -469,7 +467,7 @@
                                     </table>
                                 </td>
                             </tr>
-                                
+
 
                             <!-- IsRePackingApproval = 5-->
                             <tr class="FormFieldRow" *ngIf="IsRePackingApproval">
@@ -1005,6 +1003,32 @@
                                                     </logitude-edit-grid>
                                                 </div>
                                             </td>
+                                        </tr>
+
+                                        <tr><td><div></div></td></tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+
+                            <!-- IsOtherActivity = 13 -->
+                            <tr class="FormFieldRow" *ngIf="IsOtherActivity">
+                                <td colspan="12" style="width: 860px; height:200px">
+                                    <table>
+                                        <tr style="width: 860px; height: 30px">
+                                            <td style="width: 127px;">
+                                                <LogLabel [ObjectFieldName]="'OtherActivityComment'" [DataContext]="DataContext" [TextCode]="'Customs.SpecialActivityRequest.F.CurrentPresentPackingStateContent'"> </LogLabel>
+                                            </td>
+                                            <td style="width: 433px;">
+                                                <LogTextBox [ObjectFieldName]="'OtherActivityComment'"
+                                                            [InputType]="text"
+                                                            [DataContext]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [HideColumns]="true"
+                                                            [Text]="OtherActivityComment"
+                                                            [IsMultiline]="true"></LogTextBox>
+                                            </td>
+                                            <td><div></div></td>
                                         </tr>
 
                                         <tr><td><div></div></td></tr>

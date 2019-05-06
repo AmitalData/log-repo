@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomFilters\ClientCustomFilters.cs" />
+    <Compile Include="CustomFilters\FreightPaymentMethodCustomFilters.cs" />
     <Compile Include="DataContracts\CertificateConnectedItems.cs" />
     <Compile Include="CustomContext.cs">
       <SubType>Code</SubType>

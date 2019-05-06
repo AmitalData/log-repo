@@ -15,12 +15,15 @@ using Logitude.Customs.Data;
 using Logitude.Customs.BL.Validators;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
+using Logitude.Customs.BL.EntityUpdateServices;
 
 namespace Logitude.Customs.BL.BL
 {
     public class CalculateDeclarationCourierStatus
     {
         private DeclarationPM declarationPM;
+
+        
 
         public CalculateDeclarationCourierStatus(DeclarationPM declarationPM, string declarationId = null, int tenant = 0)
         {
@@ -36,7 +39,22 @@ namespace Logitude.Customs.BL.BL
                 this.declarationPM = declarationQueryService.GetSingle(declarationId, true, false);
             }
         }
+        public void Update( Action<DeclarationCourierStatusPM> UPDATEDeclarationCourierStatusPM)
+        {
+            var context = CustomContext.GetContext(this.declarationPM.Tenant);
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(this.declarationPM.Id, false, false);
+            if (currentDeclarationCourierStatusPM != null)
+            {
 
+                //currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
+                UPDATEDeclarationCourierStatusPM(currentDeclarationCourierStatusPM);
+                var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), this.declarationPM.Tenant);
+                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+
+            }
+        }
         public DeclarationCourierStatusPM CalcAll()
         {
             if (declarationPM == null) return null;
@@ -219,7 +237,7 @@ namespace Logitude.Customs.BL.BL
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }
-            else if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 100 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
+            else if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > 150 && string.IsNullOrEmpty(declarationPM.ImporterId) && string.IsNullOrEmpty(declarationPM.ImporterCode))
             {
                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "M";
             }

@@ -9,15 +9,23 @@
 <table style="margin:5px">
 
 
+    <tr style="height:32px" class="FormFieldRow">
+        <td class="MyLable">
+        </td>
+        <td class="EditMe">
+        </td>
+        <td></td>
+    </tr>
 
-    <tr style="height:32px" class="FormFieldRow" >
+    <tr style="height:32px" class="FormFieldRow">
         <td class="MyLable">
             <LogLabel [ObjectFieldName]="'CasualSupplierName'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext" [Text]="'שם ספק'"></LogLabel>
         </td>
         <td class="EditMe">
-            <LogTextBox [ObjectFieldName]="'CasualSupplierName'" [ObjectTableName]="ObjectTableName" [Text]="CasualSupplierName"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+            <LogTextBox style="direction: ltr;"
+                        [ObjectFieldName]="'CasualSupplierName'" [ObjectTableName]="ObjectTableName" [Text]="CasualSupplierName"
+                        [HideColumns]="true" [DataContext]="DataContext" ></LogTextBox>
         </td>
         <td></td>
     </tr>
@@ -28,7 +36,9 @@
         </td>
         <td class="EditMe">
             <LogTextBox [ObjectFieldName]="'CasualSupplierAddress'" [ObjectTableName]="ObjectTableName" [Text]="CasualSupplierAddress"
-                        [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
+                        [HideColumns]="true" [DataContext]="DataContext"
+                        style="direction: ltr;"
+                        ></LogTextBox>
         </td>
         <td></td>
     </tr>
@@ -51,7 +61,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+
                     </td>
 
                     <td style="width: 5px;">
@@ -59,7 +69,8 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                        <!--<button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>-->
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
