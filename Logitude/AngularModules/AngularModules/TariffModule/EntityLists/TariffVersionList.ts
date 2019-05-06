@@ -15,6 +15,8 @@ export class TariffVersionList {
 	StartDate: Date;
 	ExpirationDate: Date;
 	Version: number;
+	IsDraft: boolean;
+	ApproveDate: Date;
 	
 }
  

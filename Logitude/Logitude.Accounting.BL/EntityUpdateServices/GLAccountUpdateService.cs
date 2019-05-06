@@ -342,6 +342,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
+            ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
+            bool useLocal = !((bool)loggedUser?.DontShowLocal);
 
             entityPM.IsControlAccount = entityPM.IsControlAccount ?? false;//Task 47485: GLAccount - Update Service - Set Null fields as 0 (False)
             entityPM.IsMultiCurrency = entityPM.IsMultiCurrency ?? false;//Task 47485: GLAccount - Update Service - Set Null fields as 0 (False)
@@ -399,7 +401,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         IQueryable<LedgerTransaction> transactions = transQuery.GetClosedPeriodTransactions(entityPOCO.Id, closedDate, openDate, entityPOCO.Tenant);
                         if (transactions.Count() > 0)
                         {
-                            throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", entityPOCO.Tenant));
+                            throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", entityPOCO.Tenant, useLocal));
                         }
                     }
 

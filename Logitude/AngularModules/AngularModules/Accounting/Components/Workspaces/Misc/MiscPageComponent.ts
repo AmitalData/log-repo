@@ -129,6 +129,20 @@ export class MiscPageComponent implements AfterViewInit {
         }
     }
 
+    Generate1000() {
+        this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
+            var logitudeWindow = new LogitudeWindow();
+            logitudeWindow.Width = 500;
+            logitudeWindow.Height = 300;
+            logitudeWindow.Title = "Year Transfer";
+            logitudeWindow.Show('./Accounting/Components/Maintenance/Generate1000Component');
+        });
+
+    }
+
+    Receiving1000() {
+
+    }
 
     RunNewOpenFormatReportWizard() {
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewOpenFormatReport");

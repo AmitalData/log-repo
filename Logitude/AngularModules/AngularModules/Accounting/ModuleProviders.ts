@@ -100,6 +100,7 @@ import { JournalOpService } from './Services/Others/JournalOpService';
 import { BankAccountExtendedListService } from './Services/ExtendedLists/BankAccountExtendedListService';
 import { ReconcileExternalPageListService } from './Services/StandardLists/ReconcileExternalPageListService';
 import { BankDepositExtendedPMService } from './Services/ExtendedPMs/BankDepositExtendedPMService';
+import { AccountingOpService } from './Services/Others/AccountingOpService';
 
 import { PaymentChequeListService } from './Services/StandardLists/PaymentChequeListService';
 import { TaxWithholdingAssessOfficeListService } from './Services/StandardLists/TaxWithholdingAssessOfficeListService';
@@ -248,7 +249,7 @@ export class ModuleProviders {
             case "AccountingIntegrityCheckPMService": { myResult = new AccountingIntegrityCheckPMService; break; }
             case "AccountingNoteExtendedListService": { myResult = new AccountingNoteExtendedListService; break; }
             case "IntegrityCheckStatusListService": { myResult = new IntegrityCheckStatusListService; break; }
-
+            case "GLAccountOpService": { myResult = new AccountingOpService(); break; }
 
             //Menu Buttons
             case "JournalMenuButtonsHandler": { myResult = new JournalMenuButtonsHandler; break; }

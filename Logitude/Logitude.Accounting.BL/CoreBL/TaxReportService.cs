@@ -548,6 +548,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, taxReport);
 
+                scope.Complete();
 
                 return docOut;
             }

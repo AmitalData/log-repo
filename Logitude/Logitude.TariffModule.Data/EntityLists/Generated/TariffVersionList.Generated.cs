@@ -30,6 +30,10 @@ namespace Logitude.TariffModule.Data.EntityLists
        [Key]
        [DataMember]
        public int Version  { get; set; }
+       [DataMember]
+       public bool IsDraft  { get; set; }
+       [DataMember]
+       public DateTime? ApproveDate  { get; set; }
    }
 
 }
