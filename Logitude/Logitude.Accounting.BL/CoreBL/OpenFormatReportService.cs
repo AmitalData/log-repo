@@ -3779,14 +3779,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
             myStringBuilder.Append("&OF1.31&");
 
-            if (counter.ToString().Length > 9)
+            if (counter.ToString().Length > 15)
             {
-                counter.ToString().Substring(0, 9);
-                myStringBuilder.Append(a + counter.ToString().PadLeft(9, '0'));
+                counter.ToString().Substring(0, 15);
+                myStringBuilder.Append(a + counter.ToString().PadLeft(15, '0'));
             }
             else
             {
-                myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+                myStringBuilder.Append(counter.ToString().PadLeft(15, '0'));
             }
          
             myStringBuilder.Append(' ', 50);
