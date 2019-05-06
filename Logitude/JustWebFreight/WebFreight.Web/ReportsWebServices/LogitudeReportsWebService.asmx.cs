@@ -2339,7 +2339,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 queryOperations.QueryFilterItems.Add(item);
 
-                shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations, shipments);
+                shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(shipmentsQueryOperations, shipments);
                 #endregion
             }
 
