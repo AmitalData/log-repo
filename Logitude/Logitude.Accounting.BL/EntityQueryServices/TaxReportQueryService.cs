@@ -31,7 +31,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             reportCounters.ExcemptTransactions = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount == 0).Count();
             reportCounters.InputEquipments = lines.Where(d => d.OutputOrInput == "I" && d.IsEquipment == true).Count();
             reportCounters.InputOthers = lines.Where(d => d.OutputOrInput == "I" && d.IsEquipment == false).Count();
-
+        
             return reportCounters;
         }
 

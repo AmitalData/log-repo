@@ -607,7 +607,42 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<TariffVersionPM> tariffVersions;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("TariffTariffVersions", "Id","TariffId")]
+	   [DataMember]
+	   public virtual List<TariffVersionPM> TariffVersions  
+	   {
+	        get
+             {
+                 if (tariffVersions == null)
+                 {
+                     tariffVersions = new List<TariffVersionPM>();
+                 }
+                 return tariffVersions;
+              }
+             set { tariffVersions = value; }
+	    }
+		   
+	   private List<TariffVersionPM>  deletedTariffVersions;
+	   public virtual List<TariffVersionPM> DeletedTariffVersions  
+	   {
+	        get
+             {
+                 if ( deletedTariffVersions == null)
+                 {
+                      deletedTariffVersions = new List<TariffVersionPM>();
+                 }
+                 return  deletedTariffVersions;
+              }
+             set {  deletedTariffVersions = value; }
+	    }
+	     }
    
 }
 	 

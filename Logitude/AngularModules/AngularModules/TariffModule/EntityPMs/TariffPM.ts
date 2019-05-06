@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {TariffLinePM} from './TariffLinePM';
+import {TariffVersionPM} from './TariffVersionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -179,7 +180,41 @@ export class TariffPM {
     public set TariffNumber(newValue: string) { if (this.tariffNumber != newValue) { this.tariffNumber = newValue; this.MarkAsDirty("TariffNumber"); } }
        
 	 
+     
+	private tariffVersions: TariffVersionPM[];
+    get  TariffVersions() {
+        if (this.tariffVersions == null) {
+            this.tariffVersions = [];
+        }
 
+        return this.tariffVersions;
+    }
+    set  TariffVersions(newValue: TariffVersionPM[]) {
+        if (this.tariffVersions != newValue) {
+            this.tariffVersions = newValue;
+        }
+    }
+    public AddTariffVersion(item: TariffVersionPM) {
+        if (item != null) {
+            var index = this. TariffVersions.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. TariffVersions.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveTariffVersion(item: TariffVersionPM) {
+        if (item != null) {
+            var index = this. TariffVersions.indexOf(item);
+            if (index > -1) {
+                this. TariffVersions.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public TariffVersions: Array<TariffVersionPM>= [];
+ 
     public OldEntityPM: TariffPM;
 		
     public IsDirty: boolean;

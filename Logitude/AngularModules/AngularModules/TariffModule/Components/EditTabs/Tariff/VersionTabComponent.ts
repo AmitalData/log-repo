@@ -11,6 +11,7 @@ import { TariffDomainService, TariffFilterParameter, ExcelTariffLines } from '..
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
 import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
+import { TariffVersionPM } from '../../../../TariffModule/EntityPMs/TariffVersionPM';
 import { AppTool, FontTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -33,6 +34,8 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
+    public CurrentVersion: TariffVersionPM;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -46,13 +49,20 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
+
+                    if (this.CurrentVersion != null) {
+                        this.IsDraftVersion = this.CurrentVersion.IsDraft;
+                    }
+
+                    this.SetUIProperties();
                 }
             });
         }
@@ -73,6 +83,12 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
             this.EntityPM = this.EntityArgs.EntityPM;
             this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
             this.TariffDomainService = new TariffDomainService();
+
+            this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
+
+            if (this.CurrentVersion != null) {
+                this.IsDraftVersion = this.CurrentVersion.IsDraft;
+            }
 
             this.SetUIProperties();
             this.SetStepsLabelsAndVisibility();
@@ -389,8 +405,7 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
     ApproveVersionClicked() {
         this.TariffDomainService.ApproveVersion(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                this.IsDraftVersion = false;
-                this.SetUIProperties();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
         });
     }
