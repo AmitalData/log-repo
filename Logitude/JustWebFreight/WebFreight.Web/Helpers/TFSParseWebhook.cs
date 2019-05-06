@@ -59,7 +59,7 @@ namespace WebFreight.Web.Helpers
         }
 
         bool isFirst = true;
-        private string GetWorkItemById(int wi, bool isOutSide = true)
+        public string GetWorkItemById(int wi, bool isOutSide = true)
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
@@ -87,13 +87,16 @@ namespace WebFreight.Web.Helpers
                 }
                 if (projectNo == null)
                 {
-
-                    var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
-                    if (relation != null)
+                    if (workitem.Relations != null)
                     {
-                        isFirst = false;
-                        string last = relation.Url.Split('/').Last();
-                        return this.GetWorkItemById(Int32.Parse(last));
+                        var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
+
+                        if (relation != null)
+                        {
+                            isFirst = false;
+                            string last = relation.Url.Split('/').Last();
+                            return this.GetWorkItemById(Int32.Parse(last));
+                        }
                     }
                 }
             }
@@ -239,21 +242,30 @@ namespace WebFreight.Web.Helpers
             ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
             TMEmployeeTimeRepository myTMEmployeeTimeRepository = new TMEmployeeTimeRepository(tenant);
             TMProjectRepository myTMProjectRepository = new TMProjectRepository(tenant);
+            int workItemNumber;
+            bool isAnyWIUpdated = false;
             foreach (var item in list)
             {
                 if (!string.IsNullOrEmpty(item.WINumber))
                 {
-                    projectNo = this.GetWorkItemById(Int32.Parse(item.WINumber), false);
-                    item.ProjectId = myTMProjectRepository.GetTMProjectByNumber(projectNo, tenant);
                     TMEmployeeTime tmEmployee = myTMEmployeeTimeRepository.GetSingle(item.Id, item.Tenant);
-                    tmEmployee.ProjectId = item.ProjectId;
-                    myTMEmployeeTimeRepository.Update(tmEmployee);
+                    if (string.IsNullOrEmpty(tmEmployee.ProjectId))
+                    {
+                        Int32.TryParse(item.WINumber, out workItemNumber);
+                        projectNo = this.GetWorkItemById(workItemNumber, false);
+                        item.ProjectId = myTMProjectRepository.GetTMProjectByNumber(projectNo, tenant);
+                        tmEmployee.ProjectId = item.ProjectId;
+                        myTMEmployeeTimeRepository.Update(tmEmployee);
+                        isAnyWIUpdated = true;
+                    }
                 }
             }
-            myTMEmployeeTimeRepository.SubmitChanges();
+            if (isAnyWIUpdated)
+            {
+                myTMEmployeeTimeRepository.SubmitChanges();
+            }
             return list;
         }
-
 
         public void CalculateCompletedWorkHours(int tenant)
         {

@@ -91,10 +91,15 @@ export class NewGetProjectComponent extends BaseComponent implements OnDestroy {
 
         if (this.ValidationErrorsList.length == 0) {
             this.Retries = 0;
-            this.myService.GetTMProjectsByBatchTask(this.UserId, this.FromDate, this.ToDate).subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var mm: ServiceResponse = response;
-                    this.batchEntity = mm.Result;
+            this.myService.GetTMProjectsByBatchTask(this.UserId, this.FromDate, this.ToDate).subscribe((myResponse: ServiceResponse) => {
+
+                if (myResponse.HasError) {
+                    this.StopTimer();
+                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+
+                else {
+                    this.batchEntity = myResponse.Result;
 
                     if (this.batchEntity != null) {
                         this.IsResponseProgressVisible = true;
@@ -157,20 +162,27 @@ export class NewGetProjectComponent extends BaseComponent implements OnDestroy {
     private bteList: BatchTaskExecutionList;
     GetBTE() {
         var batchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe(myResult => {
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-                this.bteList = mm.Result;
-                var window: MessageWindow = new MessageWindow();
+        batchTaskExecutionListService.getSingle(this.batchEntity.Id).subscribe((myResponse: ServiceResponse) => {
+
+            if (myResponse.HasError) {
+                this.StopTimer();
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+
+            else {
+                this.bteList = myResponse.Result;
+
                 if (this.bteList.StatusCode == "D") // D- Done
                 {
-                    window.Show("Get TM Projects Completed Succesfully");
                     this.StopTimer();
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("Get TM Projects Completed Succesfully");
                 }
 
                 else if (this.bteList.StatusCode == "F") // F- Failed
                 {
                     this.StopTimer();
+                    var window: MessageWindow = new MessageWindow();
                     window.Show("Faild: " + this.bteList.ErrorLog);
                 }
 
