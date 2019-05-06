@@ -59,7 +59,7 @@ namespace WebFreight.Web.Helpers
         }
 
         bool isFirst = true;
-        private string GetWorkItemById(int wi, bool isOutSide = true)
+        public string GetWorkItemById(int wi, bool isOutSide = true)
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
@@ -87,13 +87,16 @@ namespace WebFreight.Web.Helpers
                 }
                 if (projectNo == null)
                 {
-
-                    var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
-                    if (relation != null)
+                    if (workitem.Relations != null)
                     {
-                        isFirst = false;
-                        string last = relation.Url.Split('/').Last();
-                        return this.GetWorkItemById(Int32.Parse(last));
+                        var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
+
+                        if (relation != null)
+                        {
+                            isFirst = false;
+                            string last = relation.Url.Split('/').Last();
+                            return this.GetWorkItemById(Int32.Parse(last));
+                        }
                     }
                 }
             }
