@@ -102,7 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "VendorCommission",
-			      				    Code =  "5d87",
+			      				    Code =  "064d",
 			      				    Name =  "Customs.VendorCommission Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -379,6 +379,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "ModificationsTypeName",
+					  						OldFieldName =  "ModificationsTypeName",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -399,6 +400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ModificationsTypeName",
 					  						ListPropertyPath =  "ModificationsTypeName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

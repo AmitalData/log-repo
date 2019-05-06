@@ -24,7 +24,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             CustomMappedPOCOProperties.Add(POCOPropertyNames.VendorId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.CustomerId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
-
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.ModificationsTypeCode);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 entityPOCO.VendorId = entityPM.VendorId;
