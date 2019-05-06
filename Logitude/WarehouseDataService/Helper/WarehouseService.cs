@@ -144,12 +144,18 @@ namespace WarehouseDataService.Helper
                 dwBuildTime.IsUpdateDWNextRunTime = true;
             }
 
-            if (dwBuildTime.DWNextRunTime != null)
+            if (dwBuildTime.DWNextRunTime != null && dwBuildTime.DWRunTime != dwBuildTime.DWNextRunTime)
             {
-                if (dwBuildTime.DWRunTime != dwBuildTime.DWNextRunTime)
+                if (dwBuildTime.DWNextRunTime.Value.AddHours(ApplicationInfo.RetryBuildWithinHours) > DateTime.Now)
                 {
-                    if (dwBuildTime.DWNextRunTime.Value.AddHours(ApplicationInfo.RetryBuildWithinHours) > DateTime.Now) dwBuildTime.IsBuildNow = true;
+                    dwBuildTime.IsBuildNow = true;
                 }
+                else
+                {
+                    dwBuildTime.DWNextRunTime = dwBuildTime.DWRunTime;
+                    dwBuildTime.IsUpdateDWNextRunTime = true;
+                }
+               
             }
             #endregion
 
