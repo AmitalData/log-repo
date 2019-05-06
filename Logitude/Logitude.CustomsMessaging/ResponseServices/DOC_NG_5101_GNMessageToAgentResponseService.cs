@@ -64,9 +64,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             string notificationDefinitionCode = "";
             string notificationDeclaration = "";
-            string notificationDescription = ""; 
-            string notificationStatusCode = ""; 
-            string assigneToNotificationTypeCode = "I"; 
+            string notificationDescription = "";
+            string notificationStatusCode = "";
+            string assigneToNotificationTypeCode = "I";
 
             switch (customResponse.MessageToAgent.msgCode)
             {
@@ -75,7 +75,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 case 5:
                     notificationDefinitionCode = "5101N";
                     assigneToNotificationTypeCode = "I";
-                    notificationDescription = "הודעה לסוכן"; 
+                    notificationDescription = "הודעה לסוכן";
                     if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
                     {
                         notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
@@ -83,7 +83,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
                     {
-                        notificationDescription = notificationDescription + " בגין בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1; 
+                        notificationDescription = notificationDescription + " בגין בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     }
                     notificationStatusCode = "VAN";
                     break;
@@ -126,31 +126,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     notificationDefinitionCode = "5101D";
                     notificationDescription = "הצהרה נותבה לתור בקרת מסמכים";
                     notificationStatusCode = "VCI"; // moran 1.8.16 - Task 21654 - change CDC to VCI
-                    assigneToNotificationTypeCode = "I"; 
+                    assigneToNotificationTypeCode = "I";
                     break;
                 case 8:
                     notificationDefinitionCode = "5101T";
                     notificationDescription = "הצהרה נותבה לתור בחינה";
                     notificationStatusCode = "VCC";
-                    assigneToNotificationTypeCode = "I"; 
+                    assigneToNotificationTypeCode = "I";
                     break;
                 case 9:
                     notificationDefinitionCode = "5101C";
                     notificationDescription = "הצהרה נותבה לתור רשות";
                     notificationStatusCode = "VCR";
-                    assigneToNotificationTypeCode = "I"; 
+                    assigneToNotificationTypeCode = "I";
                     break;
                 case 12:
                     notificationDefinitionCode = "5101G";
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "ביטול אחסנה להצהרה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     break;
-                case 13: 
+                case 13:
                     notificationDefinitionCode = "5101U";
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "עדכון אחסנה להצהרה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     break;
-                case 14: 
+                case 14:
                     notificationDefinitionCode = "5101S";
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "נוצרה בקשת אחסנה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
@@ -276,7 +276,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 notificationDescription = notificationDescription + "\n" + customResponse.MessageToAgent.msgString.Replace("00:00:00", "");
             }
 
-            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 1015) 
+            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 1015)
             {
                 notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                 LogMessagingUtil.Instance.AppendLine("NotificationDeclaration = " + notificationDeclaration);
@@ -303,7 +303,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
 
-                if(customResponse.MessageToAgent.msgCode == 14 || customResponse.MessageToAgent.msgCode == 13)
+                if (customResponse.MessageToAgent.msgCode == 14 || customResponse.MessageToAgent.msgCode == 13)
                 {
                     var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                     this._MyDeclarationPM.StorageStatusCode = "3";
@@ -412,7 +412,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             MyResponseData.ApplicationID = requestParams.AppicationId;
             MyResponseData.Succeeded = true;
             MyResponseData.UserMessage = notificationDescription;
-            
+
             if (this._MyDeclarationPM != null && !string.IsNullOrWhiteSpace(notificationStatusCode))
             {
                 LogMessagingUtil.Instance.AppendLine("Sent status " + notificationStatusCode + " to UNF");
@@ -437,7 +437,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var newNotificationPM = new NotificationPM();
             newNotificationPM.ChangeSetOp = ChangeSetOperation.Insert;
             newNotificationPM.Tenant = tenant;
-            newNotificationPM.NotificationDefinitionCode = notificationDefinitionCode;          
+            newNotificationPM.NotificationDefinitionCode = notificationDefinitionCode;
             newNotificationPM.CreateDate = DateTime.Now;
             newNotificationPM.Description = description;
             newNotificationPM.Reference2Number = responseToMessage;
@@ -456,7 +456,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customerId = this._MyDeclarationPM.CustomerId;
                 referentUserId = this._MyDeclarationPM.ReferentUserId;
             }
-            if(MyRequestSheetParam.ObjectTableId1 == ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral"))
+            if (MyRequestSheetParam.ObjectTableId1 == ObjectTableRepository.GetObjectTableByName("Customs.CustomsCollateral"))
             {
                 newNotificationPM.EntityId = MyRequestSheetParam.EntityId1;
                 newNotificationPM.ObjectTableId = MyRequestSheetParam.ObjectTableId1;

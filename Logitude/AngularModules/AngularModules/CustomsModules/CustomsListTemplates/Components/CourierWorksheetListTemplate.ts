@@ -73,6 +73,7 @@ export class CourierWorksheetListTemplate {
     DelayCertificateDetails: DeclarationMamanSpecialActionPM = null;
     MamanStickerDetails: DeclarationMamanSpecialActionPM = null;
     PrintDocumentsDetails: DeclarationMamanSpecialActionPM = null;
+    SbanDetails: DeclarationMamanSpecialActionPM = null;
     IsReceivingDelayCertificate: boolean = false;
     IsPrintDocuments: boolean = false;
     IsMamanSticker: boolean = false;
@@ -492,6 +493,7 @@ export class CourierWorksheetListTemplate {
         this.DelayCertificateDetails = null;
         this.MamanStickerDetails = null;
         this.PrintDocumentsDetails = null;
+        this.SbanDetails = null;
         this.IsMamanEnabled = false;       
 
         let myDeclarationPMService: DeclarationPMService = new DeclarationPMService()
@@ -535,7 +537,7 @@ export class CourierWorksheetListTemplate {
                                         break;
                                     }
                                     case "6": {
-                                        this.PrintDocumentsDetails = declarationMamanSpecialActionPMItem;
+                                        this.SbanDetails = declarationMamanSpecialActionPMItem;
                                         if (declarationMamanSpecialActionPMItem.MamanSpecialActionStatusCode == "1") {
                                             this.IsSban = true;
                                         }
@@ -710,8 +712,8 @@ export class CourierWorksheetListTemplate {
                 if (actionCode == "U") {
                     titleText = "סב''ן";
                     questionText = "אשר שליחת מסר פעולה מיוחדת של שליחה לסב''ן";
-                    if (this.PrintDocumentsDetails != null) {
-                        declarationMamanSpecialActionPM = this.PrintDocumentsDetails;
+                    if (this.SbanDetails != null) {
+                        declarationMamanSpecialActionPM = this.SbanDetails;
                     }
                 }
                 else if (actionCode == "C") {

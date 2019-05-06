@@ -8,7 +8,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-
+import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 
 @Component({
     moduleId: module.id,
@@ -24,6 +24,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     CourierMasterService: CourierMasterService = new CourierMasterService();
 
     public CurrentEditComponentId: string;
+    public CarrierDependencyProperty1: string;
 
     public WeightValueFilterItems: ApiQueryFilters;
 
@@ -37,6 +38,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         this.WeightValueFilterItems.addAdditionalFilter("Code", "CC,CA,NC,PO,PP", null, null, "InListExact", false, false, false, "string", false, true);
         this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, false);
         this.DisplayOnlyCheck();
+        this.CarrierDependencyProperty1 = "TR";
         this.Listen();
     }
 
@@ -184,6 +186,13 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get TruckerId() { return this.EntityPM.TruckerId; }
+    set TruckerId(value: string) {
+        if (this.EntityPM.TruckerId != value) {
+            this.EntityPM.TruckerId = value;
+        }
+    }
+
     AirLineIdLostFocus(value: any) {
 
         //this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.EntityPM.AirlineId, this.EntityPM.HAWB, this.EntityPM.MAWB).subscribe(Result => {
@@ -214,8 +223,11 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         this.CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.EntityPM.Tenant, "UCBCMSS", this.EntityPM.Id).subscribe((response: any) => {
             var displayOnlyCheckResult = response.Result;
             if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
-                this.IsDisplayOnly = true;
-                this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                }
             }
             this.SetScreenFieldsEditability();
         });

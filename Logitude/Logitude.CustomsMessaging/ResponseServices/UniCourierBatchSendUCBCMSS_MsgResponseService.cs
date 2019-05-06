@@ -86,9 +86,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 List<string> declarationsList = new List<string>();
                 string message = string.Concat("אתר אחסון בטיסה השתנה ל ", customResponse.StorageSiteCode, ", אך ההצהרה לא ניתנת לעידכון. נא לעדכן ידנית");
+                mess.AppendLine("\n" + "Locked Declarations: " + "\n");
                 foreach (DeclarationPM itemDeclaration in lockedDeclarations)
                 {
                     declarationsList.Add(itemDeclaration.CustomFileNo);
+                    mess.AppendLine($" ( {itemDeclaration.Id} ),");
                 }
                 RaiseEvent(lockedDeclarations.FirstOrDefault(), declarationsList, "U-FSE", message);
             }

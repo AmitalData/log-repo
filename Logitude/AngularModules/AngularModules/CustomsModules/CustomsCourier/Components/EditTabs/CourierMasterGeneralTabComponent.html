@@ -23,7 +23,6 @@
         </td>
         <td><div></div></td>
     </tr>-->
-
     <!--Disble Alert-->
     <tr style="height:30px;">
         <td colspan="4">
@@ -312,6 +311,31 @@
                                 [LookUpTableName]="'Customs.DeliverySiteType'">
                         </LogLov>
                     </td>
+                </tr>
+            </table>
+        </td>
+        <td><div></div></td>
+    </tr>
+
+    <tr style="height:40px; width:700px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'TruckerId'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogLov [ObjectFieldName]="'TruckerId'"
+                                [SelectedValue]="TruckerId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Carrier'"
+                                [DependencyFilter1Value]="CarrierDependencyProperty1">
+                        </LogLov>
+                    </td>
+                    <td style="width:30px"></td>
                 </tr>
             </table>
         </td>
