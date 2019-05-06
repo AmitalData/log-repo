@@ -318,11 +318,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 taxReport.TaxableOutputsWithDiffPercent = 0;
                 taxReport.OutputTaxAmountWithDiffPercent = 0;
 
-                taxReport.AmountForPayRefund = taxReport.OutputTaxAmount - (taxReport.OtherInputsTaxAmount + taxReport.EquipmentInputsTaxAmount);
-                if (taxReport.AmountForPayRefund == null)
-                {
-                    taxReport.AmountForPayRefund = 0;
-                }
+                //taxReport.AmountForPayRefund = taxReport.OutputTaxAmount - (taxReport.OtherInputsTaxAmount + taxReport.EquipmentInputsTaxAmount);
+                //if (taxReport.AmountForPayRefund == null)
+                //{
+                //    taxReport.AmountForPayRefund = 0;
+                //}
                 taxReport.StatusCode = "D";
                 taxReport.ProcessEndDate = DateTime.Now;
 
@@ -564,6 +564,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 taxReportPM.OtherInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
                 taxReportPM.InputLinesCount = lines.Where(d => d.OutputOrInput == "I" && d.TransmitStatusCode == "1").Count();
                 taxReportPM.EquipmentInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
+                taxReportPM.AmountForPayRefund = taxReportPM.OutputTaxAmount - (taxReportPM.OtherInputsTaxAmount + taxReportPM.EquipmentInputsTaxAmount);
+                if (taxReportPM.AmountForPayRefund == null)
+                {
+                    taxReportPM.AmountForPayRefund = 0;
+                }
+
             }
         }
 
