@@ -841,14 +841,14 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             myStringBuilder.Append(a);
-                            myStringBuilder.Append('0', 15);
+                            myStringBuilder.Append(' ', 15);
                         }
                       
                     }
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                        myStringBuilder.Append(' ', 15);
                     }
                     if (item.TotalDebit != null)
                     {
