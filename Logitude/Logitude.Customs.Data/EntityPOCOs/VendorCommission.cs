@@ -36,7 +36,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int Tenant { get; set; }
      [Key]
         [ForeignKey("ModificationAndDiscountType")]
-        [Column("ModificationsTypeCode")]
+        [Column("ModificationsTypeCode" ,Order = 3)]
 	    public string ModificationsTypeCode { get; set; }
 	      
         public virtual ModificationAndDiscountType ModificationAndDiscountType { get; set; }

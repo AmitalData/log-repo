@@ -63,19 +63,12 @@ namespace WebFreight.Web.WcfApi
                     CustomerRepository customerRepository = new CustomerRepository(commonContext);
                     Customer customer = customerRepository.GetSingleCustomerByCode(entityPM.CustomerId, entityPM.Tenant, false);
 
-                    string modificationsTypeCode = null;
-                    if (string.IsNullOrEmpty(entityPM.ModificationsTypeCode))
+                    string modificationsTypeCode = entityPM.ModificationsTypeCode;
+                    if (string.IsNullOrEmpty(modificationsTypeCode))
                     {
                         modificationsTypeCode = "I10";
                     }
-                    else
-                    {
-                        ModificationAndDiscountTypePM modificationAndDiscountTypePM = modificationAndDiscountTypeQueryService.GetSingle(entityPM.ModificationsTypeCode, false, true);
-                        if (modificationAndDiscountTypePM != null)
-                        {
-                            modificationsTypeCode = modificationAndDiscountTypePM.Code;
-                        }
-                    }
+                    
 
                     if (vendor != null && customer != null && modificationsTypeCode != null)
                     {
@@ -233,6 +226,7 @@ namespace WebFreight.Web.WcfApi
                                 ModificationsTypeCode = modificationsTypeCode,
                                 Tenant = entityPM.Tenant,
                                 CommisionPercentage = entityPM.CommisionPercentage,
+                                
                                 ChangeSetOp = ChangeSetOperation.Delete
                             };
 
