@@ -23,6 +23,8 @@ using Simplog.Server.Infrastructure.Azure;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -36,6 +38,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public System1000Service()
         {
+            
+            
         }
 
 
@@ -153,7 +157,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 string userId = AuthenticationUtil.ResolveUserId(tenant);
                 string objectTableId = ObjectTableRepository.GetObjectTableByName("GLAccount");
-                //string res = htmlEditorHelper
+                //string res = ///_HtmlEditorHelper
+                //    InjectionUtil.Instance
                 //    .SendEmailOutActivityForEntity(null, bytePlainTextdata, tenant,
                 //   Email, "Subject", "", "",
                 //   userId
@@ -167,9 +172,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 string entityReference = null;
                 string from = "no-reply@LogitudeWorld.com";
                 string replyTo = "";
-                //string res = htmlEditorHelper.SendHtmlDocument(
-                //    bytePlainTextdata/*htmlData*/, internalDocumentId, externalDocumentId, tenant, Email, "subject", "", "", userId, entityId, objectTableId, attachments,
-                //    entityReference, from, replyTo); // Islam: circular reference issue with the web project
+                string res = /*htmlEditorHelper*/InjectionUtil.Instance.SendHtmlDocument(
+                    bytePlainTextdata/*htmlData*/, internalDocumentId, externalDocumentId, tenant, Email, "subject", "", "", userId, entityId, objectTableId, attachments,
+                    entityReference, from, replyTo); // Islam: circular reference issue with the web project
                 scope.Complete();
                 return null;
             }
