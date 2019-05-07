@@ -59,6 +59,11 @@ export class CustomsCountryPM {
     public set MalamId(newValue: string) { if (this.malamId != newValue) { this.malamId = newValue; this.MarkAsDirty("MalamId"); } }
        
 	 
+    private tarriffName: string;
+    public get TarriffName() { return this.tarriffName; }
+    public set TarriffName(newValue: string) { if (this.tarriffName != newValue) { this.tarriffName = newValue; this.MarkAsDirty("TarriffName"); } }
+       
+	 
 
     public OldEntityPM: CustomsCountryPM;
 		

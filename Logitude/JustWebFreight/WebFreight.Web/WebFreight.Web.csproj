@@ -1142,6 +1142,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\CustomsAirlineController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomBankController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomDocumentTypesController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\CustomsCountriesController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsDocumentsDefinitionExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsDocumentsTicketsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsExchangeRatesExtendedController.cs" />
@@ -1467,6 +1468,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsBookController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsClosedTableController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsCollateralController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsCountryController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsDocumentController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsDocumentsDefinitionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsDocumentsTicketController.Generated.cs" />

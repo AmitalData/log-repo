@@ -28,6 +28,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool Inactive  { get; set; }
        [DataMember]
        public string MalamId  { get; set; }
+       [DataMember]
+       public string TarriffName  { get; set; }
    }
 
 }
