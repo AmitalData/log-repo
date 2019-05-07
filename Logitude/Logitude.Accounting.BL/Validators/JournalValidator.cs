@@ -638,10 +638,15 @@ namespace Logitude.Accounting.BL.Validators
 
             if (pmAcc.Inactive.GetValueOrDefault())
             {
-                errorsList.Add(TranslateMyTextCode(M_BlockedGLAccount,tenant) + 
-                    //glAccId
-                    GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant) + "-  " + glAccId
-                    );
+                string msg = TranslateMyTextCode(M_BlockedGLAccount, tenant);
+                msg = msg.Replace("%name", GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant));
+                errorsList.Add(msg);
+
+                //errorsList.Add(TranslateMyTextCode(M_BlockedGLAccount,tenant) + 
+                //    //glAccId
+                //    GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant) + "-  " + glAccId
+                //    );
+
                 return;
             }
             if (pmAcc.AccountTypeCode == "1")// card    1	כרטיס	Card
