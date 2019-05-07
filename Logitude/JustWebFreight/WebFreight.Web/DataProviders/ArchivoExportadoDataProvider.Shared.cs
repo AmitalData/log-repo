@@ -27,6 +27,7 @@ namespace WebFreight.Web.DataProviders
         public string DirectionPartner { get; set; }
         public string DescriptionOfGoods { get; set; }
         public string CustomerExternalID { get; set; }
+        public string Customer { get; set; }
         public string Shipper { get; set; }
         public string ShipperNotExporter { get; set; }
         public string Consignee { get; set; }
