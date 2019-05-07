@@ -56,6 +56,12 @@ namespace CommunicationWorkerRole.Tasks
                              where EmployeeTimes.ProjectId != null  && Projects.IsProrated == true && !Projects.ExcludeFromProrating
                              select EmployeeTimes).ToList();
 
+                        List<TMEmployeeTime> itemsExcludedFromProrated =
+                            (from EmployeeTimes in iQueryable
+                             join Projects in iContext.TMProjects on EmployeeTimes.ProjectId equals Projects.Id
+                             where EmployeeTimes.ProjectId != null && Projects.ExcludeFromProrating
+                             select EmployeeTimes).ToList();
+
                         if (itemsProrated.Count > 0)
                         {
                             double itemsProratedMinutes = itemsProrated.Sum(s => s.TimeInMinutes);
@@ -99,6 +105,14 @@ namespace CommunicationWorkerRole.Tasks
                                     iRepository.Update(item);
                                 }
 
+                                foreach (TMEmployeeTime item in itemsExcludedFromProrated)
+                                {
+                                    item.ProratedDuration = 0;
+                                    item.FullDuration = item.TimeInMinutes;
+                                    item.NeedsProrating = false;
+                                    iRepository.Update(item);
+                                }
+                                
                                 iRepository.SubmitChanges();
                             }
                         }
