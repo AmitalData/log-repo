@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.CustomsCountry", "READ", authToken.Tenant);
+	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CustomsCountryListQueryService customsCountryQuery = new CustomsCountryListQueryService(MyContext);
                 CustomsCountryList customsCountryList = customsCountryQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -81,7 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Customs.CustomsCountry", "READ", authToken.Tenant);
+	                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CustomsCountryListQueryService customsCountryQuery = new CustomsCountryListQueryService(MyContext);
                 List<CustomsCountryList> result = customsCountryQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -103,7 +105,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("Customs.CustomsCountry", "READ", authToken.Tenant);
+	                
 				int tenant = authToken.Tenant;
 				if(filters.Tenant != null)
 					tenant = filters.Tenant.Value;

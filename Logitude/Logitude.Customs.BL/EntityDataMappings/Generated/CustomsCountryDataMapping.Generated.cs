@@ -41,7 +41,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EnglishName, 
 	         SearchFields, 
 	         Inactive, 
-	         MalamId,
+	         MalamId, 
+	         TarriffName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
