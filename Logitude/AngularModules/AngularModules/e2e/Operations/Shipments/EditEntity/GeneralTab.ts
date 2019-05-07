@@ -21,18 +21,18 @@ export class GeneralTabComponent {
       // var freightPC = this.Helper.WaitByIdAndFill('Shipment_FreightPrepaidCollectId', 'coll');
       // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var moveType = this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'd');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 1);
+      var moveType = this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveType');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var incoterm = this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'co');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 1);
+      var incoterm = this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'TestIncoterm');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       var AMSBL = this.Helper.WaitByIdAndFill('Shipment_AMSBL', 'Shipment AMSBL');
 
       var department = this.Helper.WaitByIdAndFill('Shipment_DepartmentId', 'man');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var department = this.Helper.WaitByIdAndFill('Shipment_BranchId', 'ma');
+      var department = this.Helper.WaitByIdAndFill('Shipment_BranchId', 'main');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     }
     else if (LogitudeShipType == 'M') {
@@ -42,8 +42,8 @@ export class GeneralTabComponent {
       var otherCharges = this.Helper.WaitByIdAndFill('Shipment_OtherPrepaidCollectId', 'coll');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var moveType = this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'd');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 1);
+      var moveType = this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveType');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       var AMSBL = this.Helper.WaitByIdAndFill('Shipment_AMSBL', 'Shipment AMSBL');
 
