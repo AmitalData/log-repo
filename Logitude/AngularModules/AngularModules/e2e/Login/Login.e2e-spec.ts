@@ -11,8 +11,7 @@ describe('Login Module', () => {
 
   it('Login Success', function () {
     browser.ignoreSynchronization = true;
-    page.navigateTo('https://test.logitudeworld.com/TEST/');
-    page.DoLogin('khawla@logitudeworld.com', '0597485181@kh');
-    browser.driver.sleep(5000);
+    page.navigateTo('https://pre.logitudeworld.com');
+    page.DoLogin('razantest@protractor.com', '!R123j456');
   });
 });

@@ -8,16 +8,14 @@ export class RoutingTabComponent {
     this.Helper = new FieldsHelper();
   }
 
-
   public RoutingTab(LogitudeShipType: any, ShipmentType: any) {
-
     this.Helper.WaitByIdAndClick('Shipment.TH.Routings');
-    // this.AddPickup();
-    // this.Helper.WaitBusyIndicator();
-    // if (LogitudeShipType == 'D' || LogitudeShipType == 'H') {
-    //   this.AddPreCarriage(ShipmentType);
-    //   this.AddOnCarriage(ShipmentType);
-    // }
+    this.AddPickup();
+    this.Helper.WaitBusyIndicator();
+    if (LogitudeShipType == 'D' || LogitudeShipType == 'H') {
+      this.AddPreCarriage(ShipmentType);
+      this.AddOnCarriage(ShipmentType);
+    }
     this.EditMainCarriage(LogitudeShipType, ShipmentType);
     // this.AddDelivery();
     // this.Helper.WaitBusyIndicator();
@@ -168,15 +166,14 @@ export class RoutingTabComponent {
   private AddPickup() {
 
     this.Helper.WaitByIdAndClick('Add-PickUp');
+    this.Helper.WaitByIdAndClick('Port_FromRadio');
+    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_FromPortId', 'eze');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    // this.Helper.WaitByIdAndClick('Port_FromRadio');
-    // this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_FromPortId', 's');
-    // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-
-    // this.Helper.WaitByIdAndClick('Port_ToRadio');
-    // this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_ToPortId', 'r');
-    // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    this.Helper.WaitByIdAndClick('Port_ToRadio');
+    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_ToPortId', 'mvd');
+    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 't');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);

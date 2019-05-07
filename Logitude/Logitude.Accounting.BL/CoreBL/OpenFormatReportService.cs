@@ -841,14 +841,14 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             myStringBuilder.Append(a);
-                            myStringBuilder.Append('0', 15);
+                            myStringBuilder.Append(' ', 15);
                         }
                       
                     }
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                        myStringBuilder.Append(' ', 15);
                     }
                     if (item.TotalDebit != null)
                     {
@@ -956,17 +956,17 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             myStringBuilder.Append(a);
-                            myStringBuilder.Append('0', 15);
+                            myStringBuilder.Append(' ', 15);
                         }
                       
                     }
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                        myStringBuilder.Append(' ', 15);
                     }
 
-                    item.TotalDebitInForeignCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignDebit).Sum() : null;
+                   /* item.TotalDebitInForeignCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignDebit).Sum() : null;
                     if (item.TotalDebitInForeignCurrency != null)
                     {
                         string TotalDebitInForeignCurrency = Format(item.TotalDebitInForeignCurrency.Value); // Math.Abs((decimal) item.TotalDebitInForeignCurrency).ToString();
@@ -1027,10 +1027,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         myStringBuilder.Append(a);
                         myStringBuilder.Append('0', 15);
-                    }
+                    }*/
                     if (item.CurrencyCode != null)
                     {
-                        if (item.CurrencyCode.Length > 3) { item.CurrencyCode.Substring(0, 3); }
+                        if (item.CurrencyCode.Length > 3) { item.CurrencyCode= item.CurrencyCode.Substring(0, 3); }
                         myStringBuilder.Append(a + item.CurrencyCode.PadLeft(3, ' '));
                     }
                     else
@@ -1042,7 +1042,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 45);
+                    myStringBuilder.Append(' ', 15);
                     myStringBuilder.Append(a);
                     myStringBuilder.Append(' ', 3);
                 }
@@ -3779,14 +3779,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
             myStringBuilder.Append("&OF1.31&");
 
-            if (counter.ToString().Length > 9)
+            if (counter.ToString().Length > 15)
             {
-                counter.ToString().Substring(0, 9);
-                myStringBuilder.Append(a + counter.ToString().PadLeft(9, '0'));
+                counter.ToString().Substring(0, 15);
+                myStringBuilder.Append(a + counter.ToString().PadLeft(15, '0'));
             }
             else
             {
-                myStringBuilder.Append(counter.ToString().PadLeft(9, '0'));
+                myStringBuilder.Append(counter.ToString().PadLeft(15, '0'));
             }
          
             myStringBuilder.Append(' ', 50);
