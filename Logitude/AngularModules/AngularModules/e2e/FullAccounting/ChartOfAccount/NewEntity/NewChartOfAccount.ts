@@ -18,8 +18,11 @@ export class NewChartOfAccount {
     this.Helper.WaitByIdAndFill('ChartOfAccount_Code',ChartOfAccountNo);
     this.Helper.WaitByIdAndFill('ChartOfAccount_EnglishName','customer chartofaccount');
     this.Helper.WaitByIdAndFill('ChartOfAccount_LocalName','customer chartofaccount local');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 2);
-    this.Helper.WaitByIdAndClick('Ok-CheckBox_3_129_LBL');
+
+    this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode','r');
+    this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
+   // this.Helper.WaitByIdAndClick('CheckBox');
+    this.Helper.WaitByIdAndClick('ok-AddChartOfAccount'); 
     this.Helper.WaitBusyIndicator();
     this.Helper.WaitWindowClosed();
   }

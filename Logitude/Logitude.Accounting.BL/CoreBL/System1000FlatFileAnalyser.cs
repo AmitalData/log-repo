@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
@@ -23,6 +24,10 @@ namespace Logitude.Accounting.BL.CoreBL
         private FullAccountingSettingPM _FullAccountingSettingPM;
         private IAccountingContext accountingContext;
         public ResultLoadFlatFile MyResultLoadFlatFile = new ResultLoadFlatFile();
+        private IQueryable<CardGLAccountDataView> _AllVendorGLAccountCards;
+
+
+
         public void Analyse(int? ptenant, string FileContent)
         {
             try
@@ -42,6 +47,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 accountingContext = AccountingContext.GetContext(ptenant.Value);
                 _FullAccountingSettingPM = GetDeductionFileNumberFromAccSetting(accountingContext, ptenant.Value);
                 ValidateFlatFile();
+
             }
             catch (Exception e)
             {
@@ -52,21 +58,40 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             //TenantBankPagesFilter(tenant, _BankPagesDTO);
-            //using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
-            //{
-            //    foreach (var validBankAccountDTO in _TenantBankPagesDTO)
-            //    {
-            //        foreach (var newPageOfBankAccountDTO in validBankAccountDTO.PagesOfAccount.OrderBy(r => r.MyBankAccountM.PageNo))
-            //        {
-            //            _BankAccountQueryService = new BankAccountQueryService(tenant);
-            //            var accurateBankAccount = _BankAccountQueryService.GetSingle(validBankAccountDTO.DBBankaccountPM.Id, false, false);
+            _AllVendorGLAccountCards = GetQAllVendorGLAccountCards(accountingContext, tenant);
 
-            //            AnalyzeNewPage(tenant, accurateBankAccount, newPageOfBankAccountDTO);
+            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+            {
+                foreach (VendorLineDTO vendorLineDTO in _VendorLinesDTO)
+                {
+                    { 
+                        AnalyseOneVendor(tenant, vendorLineDTO);
 
-            //        }
-            //    }
-            //    scope.Complete();
-            //}
+                    }
+                }
+                scope.Complete();
+            }
+        }
+
+        private IQueryable<CardGLAccountDataView> GetQAllVendorGLAccountCards(IAccountingContext accountingContext, int tenant)
+        {
+            var myGLAccountQueryService = new GLAccountQueryService(accountingContext);
+            var myVendorGLAccountCardList = myGLAccountQueryService.GetQAllVendorGLAccountCardsHavingDeduction(tenant);
+            return myVendorGLAccountCardList;
+        }
+
+
+
+        private void AnalyseOneVendor(int tenant, VendorLineDTO vendorLineDTO)
+        {
+            CardGLAccountDataView oneVendor = _AllVendorGLAccountCards.Where(p => p.DisplayNumber.Replace(" ", "").PadLeft(15, '0').Substring(0, 15) == vendorLineDTO.VendorCode 
+            && (p.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9) == vendorLineDTO.SentVATNum || p.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9) == vendorLineDTO.LocatedVATNum)).FirstOrDefault();
+            if (oneVendor is null)
+            {
+                MyResultLoadFlatFile.ValidateVendorLineAgaintDBErrors.Add($"Vendor Number {vendorLineDTO.VendorCode} not found ");
+                return;
+            }
+      
         }
 
         public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
