@@ -31,14 +31,13 @@ export class CustomsCountryListService {
     }
 
     getSingle(code: string) {
-	    var callTime = new Date();
+	   
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-
+        var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, { headers: authHeader }).map(response => {
+
                 var list = response.json();
                     
                 var entity: CustomsCountryList;
@@ -46,60 +45,54 @@ export class CustomsCountryListService {
 				{
                    entity = this.MapJsonToEntityList(list);
                 }   
+
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
-			    var servertime = response.headers.get('ServerExecutionTime');
+                var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsCountry", "GetSingleList", 'code=' + code); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        }
-
-        );
+        });
     }
 
     getAll() {
-
-	   var callTime = new Date();
+        
 	   var authHeader = new Headers();
        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
        return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getall', {
-                headers: authHeader
-            }).map(response => {
+            return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
 
               var allLists = response.json();
               var _mappedListsArray: Array< CustomsCountryList> = [];
 		      if(allLists)
 			  {
-				for (var key in  allLists) {
-				
+				for (var key in  allLists) {				
 				   var entity: CustomsCountryList;
                    entity = this.MapJsonToEntityList(allLists[key]);
 				   _mappedListsArray.push(entity);
-
 				 }
                }
+
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
-                serviceResponse.Result = _mappedListsArray;  
+                serviceResponse.Result = _mappedListsArray;
 				serviceResponse.CallTime = callTime;
-			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsCountry", "GetAll", ""); 
+                var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsCountry", "GetAllLists", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        }
-
-        );
+        });
     }
-
 	
     getByFilters(filters: ApiQueryFilters) {
 
-	   var callTime = new Date();       
+        var callTime = new Date();
+		                        
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -151,145 +144,16 @@ export class CustomsCountryListService {
 				 }
                 }   
 
-                serviceResponse.Result = _mappedListsArray;      
-		        serviceResponse.CallTime = callTime;
-			    var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsCountry", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 				
-				            
+                serviceResponse.Result = _mappedListsArray;       
+				serviceResponse.CallTime = callTime;
+                var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CustomsCountry", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+				           
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });        
     }
 
-    getSingleFromCache(code: string) {
-
-	   var callTime = new Date(); 	    
-		 if (!SessionLocator.UseCachedData) {
-            return this.getSingle(code);
-        }
-
-        var serviceResponse: ServiceResponse;
-        serviceResponse = new ServiceResponse();
-
-        if (CustomsCountryListService.CachedData.length > 0) {
-
-            return Observable.defer(() => {
-
-                var filteredData = CustomsCountryListService.CachedData.filter(a => a.Code === code)[0];
-				serviceResponse.CallTime = callTime;
-				serviceResponse.Result = filteredData; 
-                return Observable.of(serviceResponse);
-
-            });
-        }
-        else {
-
-            return CachedDataManager.GetClosedTableData("Customs.CustomsCountry").map(cachedJson=> {
-
-                var _mappedListsArray: Array<CustomsCountryList> = [];
-                if (cachedJson) {
-                    for (var key in cachedJson) {
-
-                        var entity: CustomsCountryList;
-                        entity = this.MapJsonToEntityList(cachedJson[key]);
-                        _mappedListsArray.push(entity);
-
-                    }
-                }
-
-                CustomsCountryListService.CachedData = _mappedListsArray;
-
-                var filteredData = CustomsCountryListService.CachedData.filter(a => a.Code === code)[0];
-				serviceResponse.Result = filteredData; 
-				serviceResponse.CallTime = callTime;
-			     
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CustomsCountry", "GetSingleListFromCache", 'code=' + code); 
-
-                return serviceResponse;
-
-            }).catch(ServiceHelper.HandleServiceError);
-
-        }
-
-    }
-
-    getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
-
-	     var callTime = new Date(); 	           
-		 if (!SessionLocator.UseCachedData) {
-            return this.getByFilters(filters);
-        }
-
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
-            if (propName == "AdditionalFilters" && propValue.length > 0)
-                addtionalFiltersValues = JSON.stringify(propValue);
-        }
-
-        var serviceResponse: ServiceResponse;
-        serviceResponse = new ServiceResponse();
-
-        if (CustomsCountryListService.CachedData.length > 0) {
-
-            return Observable.defer(() => {
-                if(filters.GetAll)
-				{
-					serviceResponse.Result = CustomsCountryListService.CachedData; 
-				}
-				else
-				{
-					var filteredData = InfraGenericFilter.GetFilteredArray(CustomsCountryListService.CachedData, filters);
-					serviceResponse.Result = filteredData; 
-					serviceResponse.CallTime = callTime;
-				}
-                return Observable.of(serviceResponse);
-
-            });
-        }
-        else {
-
-            return CachedDataManager.GetClosedTableData("Customs.CustomsCountry").map(cachedJson=> {
-
-                var _mappedListsArray: Array<CustomsCountryList> = [];
-                if (cachedJson) {
-                    for (var key in cachedJson) {
-
-                        var entity: CustomsCountryList;
-                        entity = this.MapJsonToEntityList(cachedJson[key]);
-                        _mappedListsArray.push(entity);
-
-                    }
-                }
-
-
-
-                CustomsCountryListService.CachedData = _mappedListsArray;
-                if(filters.GetAll)
-				{
-					serviceResponse.Result = _mappedListsArray; 
-				}
-				else
-				{
-							
-					_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
-
-							      
-			   
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CustomsCountry", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 	
-					serviceResponse.Result = _mappedListsArray; 
-					serviceResponse.CallTime = callTime;
-				}
-                return serviceResponse;
-
-            }).catch(ServiceHelper.HandleServiceError);
-
-        }		 
-    }
 	
 	    MapJsonToEntityList(jsonList: any) {
        

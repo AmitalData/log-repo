@@ -266,6 +266,7 @@ import { UIMessagePMService } from './Services/StandardPMs/UIMessagePMService';
 import { InternationalSitePMService } from './Services/StandardPMs/InternationalSitePMService';
 import { DeclarationCargoSplitPMService } from './Services/StandardPMs/DeclarationCargoSplitPMService';
 import { CustomsAirlinePMService } from './Services/StandardPMs/CustomsAirlinePMService';
+import { CustomsCountryPMService } from './Services/StandardPMs/CustomsCountryPMService';
 
 //#endregion
 
@@ -606,6 +607,7 @@ export class ModuleProviders {
             case "InternationalSitePMService": { myResult = new InternationalSitePMService(); break; }
             case "DeclarationCargoSplitPMService": { myResult = new DeclarationCargoSplitPMService(); break; }
             case "CustomsAirlinePMService": { myResult = new CustomsAirlinePMService(); break; }
+            case "CustomsCountryPMService": { myResult = new CustomsCountryPMService(); break; }
             //#endregion
 
             //#region ExtendedLists
