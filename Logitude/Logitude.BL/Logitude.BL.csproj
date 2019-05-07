@@ -412,6 +412,7 @@
     <Compile Include="InfrastructureModel\EntityQueries\SchedulerLogsQuery.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerLogsMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\SchedulerLogsService.cs" />
+    <Compile Include="Interfaces\IHtmlEditorHelper.cs" />
     <Compile Include="InvoiceModel\APIDataContract\AccountingPaymentMethod.Generated.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARInvoiceLineAction.cs" />
     <Compile Include="InvoiceModel\APIDataContract\ARPayment.Generated.cs" />
@@ -2235,6 +2236,7 @@
     <Compile Include="QuoteModel\Tools\TraceEvents\QuoteTracing.FollowUps.cs" />
     <Compile Include="QuoteModel\Tools\TraceEvents\QuoteTracing.QuoteStage.cs" />
     <Compile Include="QuoteModel\Tools\Validating\QuotetValidating.cs" />
+    <Compile Include="Resolvers\WebClassResolver.cs" />
     <Compile Include="Security\AutenticationException.cs" />
     <Compile Include="Security\LoggedContactUtil.cs" />
     <Compile Include="Security\SecurityUtility.cs" />

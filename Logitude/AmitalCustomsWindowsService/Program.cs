@@ -126,7 +126,7 @@ namespace AmitalCustomsWindowsService
                 Action<bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 CustomsWorkerRole.CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
 
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null);
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null);
                 ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
                 Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe("StartStatic", false, "", DateTime.MaxValue);
 

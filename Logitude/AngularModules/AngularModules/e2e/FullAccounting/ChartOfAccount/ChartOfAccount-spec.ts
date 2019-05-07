@@ -11,12 +11,12 @@ describe('CRM Module',function (){
 
 
 
-  it('Operations Success', function () {
+  it('Chart Of Account Success', function () {
     browser.ignoreSynchronization = true;
-    browser.sleep(5000);
-     z.GoToMainMenu('General.MH.Maintenance');
+
+    z.GoToMainMenu('General.MH.Maintenance');
      y.WaitByIdAndClick('ACC');
-     y.WaitByCssStringAndClick('BoxItem','Chart Of Accounts')
+     y.WaitByIdAndClick('MaintenanceItemMTCA')
      y.WaitByIdAndClick('NewButton_ChartOfAccount')
      chartofaccount.CreateAndEditChartOfAccount();
 

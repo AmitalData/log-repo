@@ -274,6 +274,15 @@ namespace WebFreight.Web.AccountingWebServices.Testers {
         protected global::System.Web.UI.WebControls.Button ButtonGetSystem1000;
         
         /// <summary>
+        /// ButtonLoadSystem1000 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonLoadSystem1000;
+        
+        /// <summary>
         /// _MyLastAction control.
         /// </summary>
         /// <remarks>

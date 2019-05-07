@@ -39,6 +39,8 @@ import { NewOpenFormatReportComponent } from './Components/NewEntity/NewOpenForm
 import { AccountingLoadTestComponent } from './Components/Maintenance/AccountingLoadTestComponent';
 import { LoadRecoExPageComponent } from './Components/NewEntity/LoadRecoExPageComponent';
 import { Generate1000Component } from './Components/Maintenance/Generate1000Component';
+import { Receiving1000Component } from './Components/Maintenance/Receiving1000Component';
+
 
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
 import {GLAccountTransactionsTabComponent} from './Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent';
@@ -136,6 +138,7 @@ export const Components =
         YearTransferComponent,
         AccountingLoadTestComponent,
         Generate1000Component,
+        Receiving1000Component,
 
         //Edit Tabs
         GLAccountGeneralTabComponent,
@@ -243,6 +246,8 @@ export class ModuleDeclarations {
             case "NewTaxWithholdingAssessingOfficeComponent": { myResult = NewTaxWithholdingAssessingOfficeComponent; break; }
             case "AccountingLoadTestComponent": { myResult = AccountingLoadTestComponent; break; }
             case "Generate1000Component": { myResult = Generate1000Component; break; }
+            case "Receiving1000Component": { myResult = Receiving1000Component; break; }
+                
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }

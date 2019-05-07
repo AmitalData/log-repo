@@ -613,6 +613,25 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         });
     }
 
+    GetOpenBalanceCurrencySign() {
+        var result = "";
+        if (this.EntityPM) {
+            if (this.EntityPM.IsMultiCurrency) {
+                result = this.TenantCurrencySign;
+            }
+            else {
+                if (this.EntityPM.ReconcileMethodCode == "0") { // 0- Local Currency
+                    result = this.TenantCurrencySign;
+
+                } else {
+                    result = this.EntityPM.CurrencySign;
+
+                }
+            }
+        }
+        return result;
+    }
+
     //#endregion
 
     //#region Date Filters Validation
