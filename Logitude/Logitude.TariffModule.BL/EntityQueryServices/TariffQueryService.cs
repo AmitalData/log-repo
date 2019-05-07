@@ -26,8 +26,11 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             ITariffModuleContext context = MainContext as ITariffModuleContext; 
             TariffKeys tariffKeys = entityKeys as TariffKeys;
 
-            TariffLineQueryService queryService = new TariffLineQueryService(context);
-            entityPM.TariffLines = queryService.GetMulti(tariffKeys, true);
+            TariffLineQueryService tariffLineQueryService = new TariffLineQueryService(context);
+            entityPM.TariffLines = tariffLineQueryService.GetMulti(tariffKeys, true);
+
+            TariffVersionQueryService tariffVersionQueryService = new TariffVersionQueryService(context);
+            entityPM.TariffVersions = tariffVersionQueryService.GetMulti(tariffKeys, true);
         }
 
         public TariffsSummary GetCount(int tenant)

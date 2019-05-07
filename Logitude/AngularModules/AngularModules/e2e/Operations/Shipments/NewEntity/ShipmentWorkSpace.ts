@@ -50,10 +50,8 @@ export class ShipmentWorkSpace {
         this.DirectShipment.CreateDirectShipment(shipperRef1, Direction, TransportMode, ShipmentType);
         this.Helper.WaitBusyIndicator();
 
-        // browser.driver.sleep(5000);
         
         this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
-        // this.GeneralFunction.OpenViews('Shipments-O-Q','SearchFieldsId_0_0',shipperRef1);
         this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType);
 
       }

@@ -141,7 +141,11 @@ namespace WebFreight.Web
                     return authToken.Tenant;
                     
                 };
-                InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, new IISManager());
+                InjectionUtil.Init(createAmitalRestrictOwnerModelService, getTenantFromToken, SecurityUtility.CheckContactFeature, 
+                    () => (new ByteCompressorUtil()) as IByteCompressorUtil, 
+                    new IISManager(),
+                    () => (new HtmlEditorHelper()) as IHtmlEditorHelper
+                    );
                 ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
 
 

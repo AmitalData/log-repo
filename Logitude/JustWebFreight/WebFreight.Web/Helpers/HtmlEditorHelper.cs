@@ -60,6 +60,7 @@ using EvoPdf;
 using System.Drawing;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.Interfaces;
 
 namespace WebFreight.Web.Helpers
 {
@@ -114,7 +115,7 @@ namespace WebFreight.Web.Helpers
         }
     }
 
-    public class HtmlEditorHelper
+    public class HtmlEditorHelper : IHtmlEditorHelper
     {
         string DocumentTypeTemplateId = "";
         object entity = null;
