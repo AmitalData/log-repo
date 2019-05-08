@@ -104,7 +104,8 @@
                                             <td style="width: 110px; min-width: 110px; max-width: 110px; text-align: right; padding-right: 5px;">
                                                 <div *ngIf="CouriersVat && CargoTypeCode == 17" style="padding-right: 10px; color: #646464; font-size: 11px;">{{CouriersVat.LocalName}}</div>
                                                 <div *ngIf="CargoTypeCode == 11" style="width: 20px;">
-                                                    <IconButton *ngIf="!IsDisplayOnly" style="float:left;" [IsSmall]="true" [Name]="'search'"
+                                                    <!--*ngIf="!IsDisplayOnly"-->
+                                                    <IconButton style="float:left;" [IsSmall]="true" [Name]="'search'"
                                                                 [IsIconOnly]="true"
                                                                 (click)="CargoQueryRequestMethod()"></IconButton>
                                                 </div>
@@ -131,7 +132,8 @@
                                             </td>
 
                                             <td style="width: 20px;">
-                                                <div *ngIf="!IsDisplayOnly" style="width: 20px;">
+                                                <div style="width: 20px;">
+                                                    <!--*ngIf="!IsDisplayOnly" -->
                                                     <IconButton *ngIf="CargoTypeCode == 1" [IsSmall]="true"
                                                                 [Name]="'search'"
                                                                 [IsIconOnly]="true"
