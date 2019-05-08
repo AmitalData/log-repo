@@ -83,8 +83,11 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             {
                 if (!myAccountingIntegrityResult.HasException)
                 {
-                    myAccountingIntegrityResult.HasException = myAccountingIntegrityResult.MyAccountingIntegrityStep
-                        .Any(r => !String.IsNullOrWhiteSpace(r.ExceptionMessage));
+                    if (myAccountingIntegrityResult.MyAccountingIntegrityStep != null)
+                    {
+                        myAccountingIntegrityResult.HasException = myAccountingIntegrityResult.MyAccountingIntegrityStep
+                            .Any(r => !String.IsNullOrWhiteSpace(r.ExceptionMessage));
+                    }
 
                 }
             }
