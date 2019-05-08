@@ -1,4 +1,6 @@
-﻿using Logitude.Accounting.Data;
+﻿
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using System;
@@ -13,13 +15,24 @@ namespace Logitude.Accounting.BL.CoreBL.Dashboard
     {
         public //List<KeyValuePair<string, decimal>> 
        List<ChartOfAccountBalanceM>
-       GetCardsLocalBalanceGByChartOfAccountsTypeCode(int tenant)
+       GetCardsLocalBalanceGByChartOfAccountsTypeCode(int tenant,bool byAccountingDateBalance1, string CollectorId)
         {
             var context = AccountingContext.GetContext(tenant);
             var myChartOfAccountsTypeRepository = new ChartOfAccountsTypeRepository(context);
             var myGLAccountRepository = new GLAccountRepository(context);
             var allCOATCloseTableWithoutTenant = myChartOfAccountsTypeRepository.GetAll();//CloseTableWithoutTenant
 
+            IQueryable<GLAccountAndMoreDTO> qGLAccountAndMoreDTO = myGLAccountRepository.GetQAllCards(tenant);
+            if (!String.IsNullOrWhiteSpace(CollectorId))
+            {
+                var qs =new GLAccountQueryService(tenant);
+                var qString=qs.GetQGLAccIdByCollectorId(tenant, CollectorId, "1");
+                qGLAccountAndMoreDTO = (from a in qGLAccountAndMoreDTO
+                                        join accId in qString
+                                        on a.Id equals accId
+                                        select a
+                 );
+            }
             var qAllCards_SumBalnceInLocalGroupByCOATCode =
                 (
                 from a in myGLAccountRepository.GetQAllCards(tenant)
@@ -30,7 +43,9 @@ namespace Logitude.Accounting.BL.CoreBL.Dashboard
                 //GLAccountCurrencyBalance
                 {
                     Key = g.Key,
-                    Value = g.Sum(a => a.BalanceInLocalCurrency)
+                    Value = g.Sum(a =>  //a.BalanceInLocalCurrency
+                    byAccountingDateBalance1 ? (decimal)a.BalanceInLocalCurrency : (decimal)a.LocalBalanceInDue
+                    )
                 }
 
                 );
@@ -58,9 +73,10 @@ namespace Logitude.Accounting.BL.CoreBL.Dashboard
 
         }
 
-        public List<ChartOfAccountBalanceM> TreeMapGLAccountBanlanceByCOA(int tenant, string ByBalance, 
-            string MyCollector, string CallBackCOATypeCode, string CallBackParentCOAId, bool twoLevel)
+        public List<ChartOfAccountBalanceM> TreeMapGLAccountBanlanceByCOA(int tenant, string BalanceByDateType, 
+            string CollectorId, string CallBackCOATypeCode, string CallBackParentCOAId/*, bool twoLevel*/)
         {
+            bool byAccountingDateBalance = SelectOptionTotalBy(BalanceByDateType);
             List<ChartOfAccountBalanceM> list = null;
             try
             {
@@ -68,7 +84,7 @@ namespace Logitude.Accounting.BL.CoreBL.Dashboard
 
                 if (string.IsNullOrEmpty(CallBackCOATypeCode))/// 1st Top Call
                 {
-                    list = GetCardsLocalBalanceGByChartOfAccountsTypeCode(tenant);
+                    list = GetCardsLocalBalanceGByChartOfAccountsTypeCode(tenant, byAccountingDateBalance, CollectorId);
                     return list;
                 }
 
@@ -85,12 +101,24 @@ namespace Logitude.Accounting.BL.CoreBL.Dashboard
                 {
                     myCAO_ByTypeParentID = myChartOfAccountRepository.GetByTypeParentID(CallBackCOATypeCode, CallBackParentCOAId);
                 }
+                myCAO_ByTypeParentID = myCAO_ByTypeParentID.Where(r => r.Tenant == tenant);
 
 
 
                 var myGLAccountRepository = new GLAccountRepository(context);
                 var myGLAccount_ByCOAType = myGLAccountRepository.GetByCOATypeCodeCOATypeId(tenant, CallBackCOATypeCode, null);
+                if (!String.IsNullOrWhiteSpace(CollectorId))
+                {
 
+                    myGLAccount_ByCOAType =
+                         (from a in myGLAccount_ByCOAType
+                          join card in (context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
+                  on a.Id equals card.GLAccountId
+                          join cust in (context as AccountingContext).Customers
+                          .Where(r => r.CollectorId == CollectorId && r.Tenant == tenant)
+                          on card.Id equals cust.Id
+                          select a);
+                }
 
                 var qTotalBalanceInLocalCurrencyGChartOfAccountsId =
                     (from glAcc in myGLAccount_ByCOAType
@@ -98,12 +126,13 @@ namespace Logitude.Accounting.BL.CoreBL.Dashboard
                      select new
                      {
                          ChartOfAccountsId = g.Key,
-                         TotalBalanceInLocalCurrency = g.Sum(j => (decimal)j.BalanceInLocalCurrency)
+                         TotalBalanceInLocalCurrency = g.Sum(j =>
+                         byAccountingDateBalance ? (decimal)j.BalanceInLocalCurrency : (decimal)j.LocalBalanceInDue)
 
                      }
                  );
 
-                var showEmptyCOA = false;
+                var showEmptyCOA = true;
                 IQueryable<ChartOfAccountBalanceM> qJoin = null;
                 if (showEmptyCOA)
                 {
@@ -159,6 +188,31 @@ namespace Logitude.Accounting.BL.CoreBL.Dashboard
             }
 
 
+        }
+
+        private static bool SelectOptionTotalBy(string ByBalance)
+        {
+            bool byAccountingDateBalance1;
+            switch (ByBalance)
+            {
+
+                case "AccountingDateBalance1":
+                case ""://Default 
+                    {
+                        byAccountingDateBalance1 = true;
+                    }
+                    break;
+                case "DueDateBalance2":
+                    {
+                        byAccountingDateBalance1 = false;
+                    }
+                    break;
+                default:
+                    throw new Exception("OptionByBalance  AccountingDateBalance1/DueDateBalance2");
+                    break;
+            }
+
+            return byAccountingDateBalance1;
         }
     }
 }
