@@ -22,7 +22,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {ARPaymentPM} from '../../EntityPMs/ARPaymentPM';
 
 import {ARPaymentInvoicePM} from '../../EntityPMs/ARPaymentInvoicePM';
-//import {ElasticPM} from '../../EntityPMs/ElasticPM';
+// import {ElasticPM} from '../../EntityPMs/ElasticPM';
 import {ARPaymentPMInitService} from '../../EntityPMInitServices/ARPaymentPMInitService';
 import {ARPaymentValidator} from '../../Validators/ARPaymentValidator';
 
@@ -33,23 +33,23 @@ export class ARPaymentPMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/arpayments';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/arpayments';
     }
 
  get(id: string) {
-         
-         
+
+
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();		
+        var callTime = new Date();
 		 return Observable.defer(() => {
                 return this._http.get(this._apiUrl+'/getsingle?'+'id=' + id, {
                     headers: authHeader
                 }).map(response => {
                     var pm = response.json();
 
-                   
-					
+
+
                     var entity: ARPaymentPM;
 					if(pm)
 					{
@@ -61,19 +61,19 @@ export class ARPaymentPMService {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 serviceResponse.Result = entity;
-              
+
 			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPayment", "GetSinglePM", 'id=' + id);
-				 
+
                 return serviceResponse;
 
             }).catch(ServiceHelper.HandleServiceError);
-            });                    
+            });
     }
 
 	 insert(entityPM: ARPaymentPM) {
- 
-        var callTime = new Date();        
+
+        var callTime = new Date();
         return Observable.defer(() => {
 
                 var authHeader = new Headers();
@@ -81,9 +81,9 @@ export class ARPaymentPMService {
                 authHeader.append('Content-Type', 'application/json');
 
                 var validator: ClassLevelValidator;
-                 
+
                 validator = new ClassLevelValidator();
-                 
+
                 var errorsArray = validator.Validate("ARPayment", entityPM);
                 var customValidator :ARPaymentValidator = new ARPaymentValidator();
                 var validationErrorsArr = customValidator.Validate(entityPM);
@@ -91,14 +91,14 @@ export class ARPaymentPMService {
 				{
 					errorsArray = errorsArray.concat(validationErrorsArr);
 				}
-                 
+
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
                     var mappedEntity: ARPaymentPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-				
+
 				    return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
                         { headers: authHeader }).map((response) => {
 
@@ -109,12 +109,12 @@ export class ARPaymentPMService {
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							}
-							
+
 
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPayment", "SaveChanges", "");                    
-												 
-                            
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPayment", "SaveChanges", "");
+
+
                             return serviceResponse;
 
                         }).catch(ServiceHelper.HandleServiceError);
@@ -125,7 +125,7 @@ export class ARPaymentPMService {
                     serviceResponse.ErrorsArray = errorsArray;
 
                     return Observable.of(serviceResponse);
-                   
+
                 }
             }
 
@@ -134,7 +134,7 @@ export class ARPaymentPMService {
 
     update(entityPM: ARPaymentPM) {
 
-            var callTime = new Date();         
+            var callTime = new Date();
             return Observable.defer(() => {
 
                 var authHeader = new Headers();
@@ -142,9 +142,9 @@ export class ARPaymentPMService {
                 authHeader.append('Content-Type', 'application/json');
 
                 var validator: ClassLevelValidator;
-                 
+
                 validator = new ClassLevelValidator();
-               
+
                 var errorsArray = validator.Validate("ARPayment", entityPM);
                 var customValidator :ARPaymentValidator = new ARPaymentValidator();
                 var validationErrorsArr = customValidator.Validate(entityPM);
@@ -152,17 +152,17 @@ export class ARPaymentPMService {
 				{
 					errorsArray = errorsArray.concat(validationErrorsArr);
 				}
-                 
+
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
 				 if (errorsArray.length == 0) {
                     var mappedEntity: ARPaymentPM;
                     mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-				
+
 				    return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
                         { headers: authHeader }).map((response) => {
-                 
+
 
                             var pm = response.json();
 							if(pm)
@@ -171,10 +171,10 @@ export class ARPaymentPMService {
                                mappedResult = this.MapJsonToEntityPM(pm,true,entityPM);
 							   serviceResponse.Result = mappedResult;
 							 }
-							 
+
                             var servertime = response.headers.get('ServerExecutionTime');
-                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPayment", "SaveChanges", "");                    
-					                           
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPayment", "SaveChanges", "");
+
                             return serviceResponse;
 
                         }).catch(ServiceHelper.HandleServiceError);
@@ -185,7 +185,7 @@ export class ARPaymentPMService {
                     serviceResponse.ErrorsArray = errorsArray;
 
                     return Observable.of(serviceResponse);
-                   
+
                 }
             }
 
@@ -193,13 +193,13 @@ export class ARPaymentPMService {
 
     }
 
-   
+
 
 	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentPM = null) {
 
-         
+
         if (!entityPM) {
-            
+
             entityPM = new ARPaymentPM();
         }
 
@@ -215,7 +215,7 @@ export class ARPaymentPMService {
                 continue;
             }
                 var property = jsonPMKeys[key];
-				
+
 			  if(customFields.indexOf(property) > -1)
                 {
                 if (jsonPM[property]) {
@@ -226,35 +226,35 @@ export class ARPaymentPMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
-                 
+
             }
-			
+
                this.MapPaymentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapInvoicesLedgerTransactions(entityPM, jsonPM, mapParent); // Call composition tables map methods
-			 
-            
+
+
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-			   			   
+
             entityPM.OldEntityPM.PaymentInvoices = [];
             for (var item in entityPM.PaymentInvoices) {
             var myARPaymentInvoicePM = entityPM.PaymentInvoices[item];
             var newARPaymentInvoicePM: ARPaymentInvoicePM = this.clone(myARPaymentInvoicePM);
-						
-							 
+
+
             entityPM.OldEntityPM.PaymentInvoices.push(newARPaymentInvoicePM);
             }
-			   			   			   
-            //entityPM.OldEntityPM.InvoicesLedgerTransactions = [];
-            //for (var item in entityPM.InvoicesLedgerTransactions) {
-            //var myElasticPM = entityPM.InvoicesLedgerTransactions[item];
-            //var newElasticPM: ElasticPM = this.clone(myElasticPM);
-						
-							 
-            //entityPM.OldEntityPM.InvoicesLedgerTransactions.push(newElasticPM);
-            //}
-			   
+
+            // entityPM.OldEntityPM.InvoicesLedgerTransactions = [];
+            // for (var item in entityPM.InvoicesLedgerTransactions) {
+            // var myElasticPM = entityPM.InvoicesLedgerTransactions[item];
+            // var newElasticPM: ElasticPM = this.clone(myElasticPM);
+
+
+            // entityPM.OldEntityPM.InvoicesLedgerTransactions.push(newElasticPM);
+            // }
+
 		}
         else {
 
@@ -278,7 +278,7 @@ export class ARPaymentPMService {
                 continue;
             }
             var newARPaymentInvoicePM: ARPaymentInvoicePM;
-	  
+
             if (mapParent) {
                 newARPaymentInvoicePM = new ARPaymentInvoicePM(entityPM);
             }
@@ -286,7 +286,7 @@ export class ARPaymentPMService {
             {
                 newARPaymentInvoicePM = new ARPaymentInvoicePM(null);
             }
-                
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
@@ -295,8 +295,8 @@ export class ARPaymentPMService {
                 var pmProperty = pmKeysArray[pmKey];
                 newARPaymentInvoicePM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newARPaymentInvoicePM.UniqueKey = Guid.newGuid();
                 newARPaymentInvoicePM.ChangeSetOp = "None";
@@ -304,7 +304,7 @@ export class ARPaymentPMService {
                 newARPaymentInvoicePM.OldEntityPM = this.clone(newARPaymentInvoicePM);
 //file not found! child composition ARPaymentInvoice
 
-				
+
             }
             else {
                 if (newARPaymentInvoicePM.UniqueKey) {
@@ -316,19 +316,19 @@ export class ARPaymentPMService {
                         newARPaymentInvoicePM.ChangeSetOp = "Insert";
                 }
 //file not found! child composition ARPaymentInvoice
- 
+
                 newARPaymentInvoicePM.OldEntityPM = null;
                 newARPaymentInvoicePM.EntityParentPM = null;
             }
-			
+
 			 newARPaymentInvoicePM.IsDirty = false;
             entityPM.PaymentInvoices.push(newARPaymentInvoicePM);
         }
         if (oldPaymentInvoices) {
-            
+
             for (var itemKey in oldPaymentInvoices) {
                 if (entityPM.PaymentInvoices.filter(p=> p.UniqueKey === oldPaymentInvoices[itemKey].UniqueKey).length === 0) {
-				
+
                     if (oldPaymentInvoices[itemKey]) {
                         //oldPaymentInvoices[itemKey].ChangeSetOp = "Delete";
                         //entityPM.PaymentInvoices.push(oldPaymentInvoices[itemKey]);
@@ -345,10 +345,10 @@ export class ARPaymentPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
+
 //file not found! child composition ARPaymentInvoice
                         deletedPM.OldEntityPM = null;
                         entityPM.PaymentInvoices.push(deletedPM);
@@ -360,28 +360,28 @@ export class ARPaymentPMService {
 //file not found! for child composition ARPaymentInvoice
     MapInvoicesLedgerTransactions(entityPM: ARPaymentPM, jsonPM: any, mapParent: boolean = true) {
 
-       // entityPM.InvoicesLedgerTransactions = new Array<ElasticPM>();
-        for (var item in jsonPM.InvoicesLedgerTransactions) {
+        // entityPM.InvoicesLedgerTransactions = new Array<ElasticPM>();
+        // for (var item in jsonPM.InvoicesLedgerTransactions) {
 
-            var jItem = jsonPM.InvoicesLedgerTransactions[item];
-            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
-                continue;
-            }
-            //var newElasticPM: ElasticPM;
-            //newElasticPM = new ElasticPM();
-				                
-            var pmKeysArray = Object.keys(jItem);
-            for (var pmKey in pmKeysArray) {
-			
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
-                    continue;
-                }
-                var pmProperty = pmKeysArray[pmKey];
-               // newElasticPM[pmProperty] = jItem[pmProperty];
-            }
-         //   newElasticPM.IsDirty = false;
-          //  entityPM.InvoicesLedgerTransactions.push(newElasticPM);
-        }
+        //     var jItem = jsonPM.InvoicesLedgerTransactions[item];
+        //     if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+        //         continue;
+        //     }
+        //     var newElasticPM: ElasticPM;
+        //     newElasticPM = new ElasticPM();
+
+        //     var pmKeysArray = Object.keys(jItem);
+        //     for (var pmKey in pmKeysArray) {
+
+        //         if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+        //             continue;
+        //         }
+        //         var pmProperty = pmKeysArray[pmKey];
+        //         newElasticPM[pmProperty] = jItem[pmProperty];
+        //     }
+        //     newElasticPM.IsDirty = false;
+        //     entityPM.InvoicesLedgerTransactions.push(newElasticPM);
+        // }
     }
 
 	  public clone(jsonPM: any) {
@@ -390,7 +390,7 @@ export class ARPaymentPMService {
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-            
+
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -402,7 +402,7 @@ export class ARPaymentPMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {		 
+	  public GetNewEntityPM() {
 		    var entityPM: ARPaymentPM;
 			entityPM = new ARPaymentPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
@@ -412,6 +412,6 @@ export class ARPaymentPMService {
 
 			return entityPM;
     }
-		 
+
 
 }
