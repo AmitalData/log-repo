@@ -23,8 +23,14 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             {
                 if ((entityPM.QuoteCharges.Count() == 0 && !entityPM.IsHybrid))
                 {
-                    ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(myCommonContext);
-                    IQueryable<ChargesType> iQueryable_ChargeTypes = chargesTypeRepository.GetQuoteDefaultChargesTypes(tenant).Where(d => d.InActive == false);
+                    IQueryable<ChargesType> iQueryable_ChargeTypes = (from d in myCommonContext.ChargesTypes
+                                                                      where d.Tenant == tenant
+                                                                      && d.InActive == false
+                                                                      && d.IsAutoDisplayInQuote == true
+                                                                      select d);
+
+                    //ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(myCommonContext);
+                    //IQueryable<ChargesType> iQueryable_ChargeTypes = chargesTypeRepository.GetQuoteDefaultChargesTypes(tenant).Where(d => d.InActive == false);
 
                     switch (entityPM.TransportModeId.ToUpper())
                     {
@@ -75,6 +81,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     }
 
                     List<ChargesType> list_ChargeTypes = new List<ChargesType>();
+                    //List<ChargesType> list_ChargeTypes2 = new List<ChargesType>();
                     if (this.isLCLQuote)
                     {
                         list_ChargeTypes = iQueryable_ChargeTypes.OrderBy(d => d.ViewOrder).ToList();
@@ -82,7 +89,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                     else
                     {
-                        list_ChargeTypes = iQueryable_ChargeTypes.Where(d => d.ContainerMeasurement.Code == "BCNT").OrderBy(d => d.ViewOrder).ToList();
+                        var byContainerTypeId = (from d in myCommonContext.Measurements where d.Tenant == tenant && d.Code == "BCNT" select d.Id).FirstOrDefault();
+                        list_ChargeTypes = iQueryable_ChargeTypes.Where(d => d.ContainerMeasurementId == byContainerTypeId || d.ContainerMeasurementId == null).OrderBy(d => d.ViewOrder).ToList();
                     }
 
                     if (list_ChargeTypes.Count > 0)
@@ -230,19 +238,17 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                         else
                         {
                             #region
-                            foreach (ChargesType chargesType in list_ChargeTypes)
+                            foreach (ChargesType item in list_ChargeTypes)
                             {
-                                QuoteChargePM quoteChargePM = new QuoteChargePM()
+                                QuoteChargePM itemPM = new QuoteChargePM()
                                 {
                                     Tenant = tenant,
                                     QuoteId = entityPM.Id,
-                                    ChargesTypeId = chargesType.Id,
-                                    ChargesTypeCode = chargesType.Code,
-                                    ChargesTypeName = chargesType.EnglishName,
-                                    ChargesGroupCode = chargesType.ChargesGroupCode,
+                                    ChargesTypeId = item.Id,
+                                    ChargesTypeCode = item.Code,
+                                    ChargesTypeName = item.EnglishName,
                                     UpdatedByUserId = loggedContact.Id,
-                                    CostMeasurementId = chargesType.ContainerMeasurementId,
-                                    SaleMeasurementId = chargesType.ContainerMeasurementId,
+                                    ChargesGroupCode = item.ChargesGroupCode,
                                     MarkUpTypeCode = "F",
                                     ContainerType1MarkUpTypeCode = "F",
                                     ContainerType2MarkUpTypeCode = "F",
@@ -259,54 +265,69 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     SaleCurrencyId = entityPM.SaleCurrencyId,
                                     SaleExchangeRate = entityPM.ExchangeRate,
                                     ChangeSetOp = ChangeSetOperation.Insert,
-                                    IsBackToBack = chargesType.IsBackToBack,
+                                    IsBackToBack = item.IsBackToBack,
                                 };
 
-                                if (chargesType.Measurement != null)
+                                Measurement iMeasurement = null;
+                                if (item.ContainerMeasurementId != null)
                                 {
-                                    quoteChargePM.CostMeasurementCode = chargesType.Measurement.Code;
-                                    quoteChargePM.SaleMeasurementCode = chargesType.Measurement.Code;
-                                    quoteChargePM.CostMeasurementShortName = chargesType.Measurement.ShortName;
-                                    quoteChargePM.SaleMeasurementShortName = chargesType.Measurement.ShortName;
+                                    itemPM.CostMeasurementId = item.ContainerMeasurementId;
+                                    itemPM.SaleMeasurementId = item.ContainerMeasurementId;
+                                    iMeasurement = (from d in myCommonContext.Measurements where d.Id == item.ContainerMeasurementId select d).FirstOrDefault();
                                 }
 
-                                if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
+                                else if (item.MeasurementId != null)
                                 {
-                                    quoteChargePM.CostCurrencyId = loggedTenant.FreightCurrencyId;
+                                    itemPM.CostMeasurementId = item.MeasurementId;
+                                    itemPM.SaleMeasurementId = item.MeasurementId;
+                                    iMeasurement = (from d in myCommonContext.Measurements where d.Id == item.MeasurementId select d).FirstOrDefault();
+                                }
 
-                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
+                                if (iMeasurement != null)
+                                {
+                                    itemPM.CostMeasurementCode = iMeasurement.Code;
+                                    itemPM.SaleMeasurementCode = iMeasurement.Code;
+                                    itemPM.CostMeasurementShortName = iMeasurement.ShortName;
+                                    itemPM.SaleMeasurementShortName = iMeasurement.ShortName;
+                                }
+
+                                if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
+                                {
+                                    itemPM.CostCurrencyId = loggedTenant.FreightCurrencyId;
+
+                                    if (string.IsNullOrEmpty(itemPM.CostCurrencyId))
                                     {
-                                        quoteChargePM.CostExchangeRate = null;
+                                        itemPM.CostExchangeRate = null;
                                     }
 
-                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
+                                    else if (itemPM.CostCurrencyId == loggedTenant.CurrencyId)
                                     {
-                                        quoteChargePM.CostExchangeRate = 1;
+                                        itemPM.CostExchangeRate = 1;
                                     }
 
                                     else if (freightChargeRate != null)
                                     {
-                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
+                                        itemPM.CostExchangeRate = MethodHelper.Round(freightChargeRate.Rate, 5);
                                     }
                                 }
 
                                 else
                                 {
-                                    quoteChargePM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
+                                    itemPM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
 
-                                    if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
+                                    if (string.IsNullOrEmpty(itemPM.CostCurrencyId))
                                     {
-                                        quoteChargePM.CostExchangeRate = null;
+                                        itemPM.CostExchangeRate = null;
                                     }
 
-                                    else if (quoteChargePM.CostCurrencyId == loggedTenant.CurrencyId)
+                                    else if (itemPM.CostCurrencyId == loggedTenant.CurrencyId)
                                     {
-                                        quoteChargePM.CostExchangeRate = 1;
+                                        itemPM.CostExchangeRate = 1;
                                     }
 
                                     else if (othersChargeRate != null)
                                     {
-                                        quoteChargePM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
+                                        itemPM.CostExchangeRate = MethodHelper.Round(othersChargeRate.Rate, 5);
                                     }
                                 }
 
@@ -314,16 +335,16 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                 {
                                     if (entityPM.IsChargesByVAT)
                                     {
-                                        quoteChargePM.VatTypeId = chargesType.VatTypeId;
+                                        itemPM.VatTypeId = item.VatTypeId;
 
-                                        if (quoteChargePM.VatTypeId != null)
+                                        if (itemPM.VatTypeId != null)
                                         {
-                                            VatType myVatType = this.allVatTypes.Where(d => d.Id == quoteChargePM.VatTypeId).FirstOrDefault();
+                                            VatType myVatType = this.allVatTypes.Where(d => d.Id == itemPM.VatTypeId).FirstOrDefault();
                                             if (myVatType != null)
                                             {
-                                                quoteChargePM.VatTypeName = myVatType.EnglishName;
-                                                quoteChargePM.VatIsMultiPercentage = myVatType.IsMultiPercentage;
-
+                                                itemPM.VatTypeName = myVatType.EnglishName;
+                                                itemPM.VatIsMultiPercentage = myVatType.IsMultiPercentage;
+                                                
                                                 if (myVatType.IsMultiPercentage)
                                                 {
 
@@ -331,10 +352,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                                                 else
                                                 {
-                                                    VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == quoteChargePM.VatTypeId).FirstOrDefault();
+                                                    VatTypePercentagePM myPercentagePM = allVatPercentages.Where(d => d.VatTypeId == itemPM.VatTypeId).FirstOrDefault();
                                                     if (myPercentagePM != null)
                                                     {
-                                                        quoteChargePM.VatPercentage = myPercentagePM.Percentage;
+                                                        itemPM.VatPercentage = myPercentagePM.Percentage;
                                                     }
                                                 }
                                             }
@@ -342,7 +363,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     }
                                 }
 
-                                entityPM.QuoteCharges.Add(quoteChargePM);
+                                entityPM.QuoteCharges.Add(itemPM);
                             }
                             #endregion
                         }
