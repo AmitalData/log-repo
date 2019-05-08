@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void AnalyseOneVendor(int tenant, VendorLineDTO vendorLineDTO)
         {
             CardGLAccountDataView oneVendor = _AllVendorGLAccountCards.Where(p => p.DisplayNumber.Replace(" ", "").PadLeft(15, '0').Substring(0, 15) == vendorLineDTO.VendorCode && (p.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9) == vendorLineDTO.SentVATNum || p.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9) == vendorLineDTO.LocatedVATNum)).FirstOrDefault();
-            if (oneVendor is null)
+            if (oneVendor == null)
             {
                 MyResultLoadFlatFile.ValidateVendorLineAgaintDBErrors.Add($"Vendor Number {vendorLineDTO.VendorCode} not found ");
                 return;
