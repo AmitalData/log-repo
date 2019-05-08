@@ -33,13 +33,39 @@
                             {{ExpirationDate | DateTimeToDatePipe}}
                         </td>
 
+                        <td style="width:15px;">
+                            <div></div>
+                        </td>
+
                         <td>
+                            <div class="ToggleButtonMenu">
+                                <div *ngFor="let item of Actions; let Index=index">
+                                    <button>
+                                        <div (click)="ClickAction(item.Code)">{{item.Name}}</div>
+                                    </button>
+                                    <div  class="ToggleButtonSeparator">
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width:100px">
+                            <button class="Button" [disabled]="ExistanceDraft" (click)="NewDraftClicked()">New Draft</button>
+                        </td>
+
+                        <td style="width:15px;">
                             <div></div>
                         </td>
 
                         <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
                             <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
                         </td>
+
+
                     </tr>
                 </table>
             </td>
@@ -51,7 +77,7 @@
             </td>
         </tr>
 
-        <tr class="SectionHeader">
+        <!--<tr class="SectionHeader">
             <td>
                 <table>
                     <tr>
@@ -69,17 +95,17 @@
 
                         <td width="5px;">
                             <div></div>
-                        </td>
+                        </td>-->
 
-                        <td style="width:95px;">
+                        <!--<td style="width:95px;">
                             <input class="upload" style="display: none;width:65px"
                                    type="file" (change)="OnFileChanged($event)"
                                    #fileInput>
                             <a href="#">
                                 <button [disabled]="!IsDraftVersion" (click)="fileInput.click()">Upload Excel</button>
-                            </a>
+                            </a>-->
                             <!--<Hyperlink (click)="UploadExcel()" [Text]="'Upload Excel'"></Hyperlink>-->
-                        </td>
+                        <!--</td>
 
                         <td width="5px;">
                             <div></div>
@@ -87,15 +113,15 @@
 
                         <td style="width: 20px; padding: 3px;">
                             <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Add'" [IsSmall]="true" (click)="AddTariffLine()"></IconButton>
-                        </td>
+                        </td>-->
 
-                        <td style="width:5px;">
+                        <!--<td style="width:5px;">
                             <div></div>
                         </td>
                     </tr>
                 </table>
             </td>
-        </tr>
+        </tr>-->
 
         <!-- Tariff Grid -->
         <tr>
@@ -107,7 +133,7 @@
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TariffsLinesSource">
                                     <!--Error-->
                                     <log-column [width]="'30'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false" >
                                             <div style="height: 100%; width: 100%;">
                                                 <table>
                                                     <tr>
@@ -122,11 +148,11 @@
 
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'50'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsDraftVersion">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.OriginPortColor}">{{item.OriginPortValue}}</span>
                                             </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                            <div *ngIf="logcelltemplate.IsEditMode" >
                                                 <LogLov [ObjectFieldName]="'OriginPortId'"
                                                         [ObjectTableName]="'TarifflLine'"
                                                         [DataContext]="item"
@@ -144,7 +170,7 @@
 
                                     <!-- DestinationPortId -->
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'50'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsDraftVersion">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.DestinationPortColor}">{{item.DestinationPortValue}}</span>
                                             </div>
@@ -166,7 +192,7 @@
 
                                     <!-- MinPrice -->
                                     <log-column [header]="'TariffLine.F.MinPrice' | TextCodeTranslationPipe" [width]="'50'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsDraftVersion">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.MinPriceColor}">{{item.MinPriceValue}}</span>
                                             </div>
@@ -179,7 +205,7 @@
 
                                     <!-- Step1Price -->
                                     <log-column *ngIf="Step1PriceVisibility" [header]="Step1PriceLabel" [width]="'50'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsDraftVersion">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.Step1PriceColor}">{{item.Step1PriceValue}}</span>
                                             </div>
@@ -192,11 +218,11 @@
 
                                     <!-- Step2Price -->
                                     <log-column *ngIf="Step2PriceVisibility" [header]="Step2PriceLabel" [width]="'50'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsDraftVersion">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.Step2PriceColor}">{{item.Step2PriceValue}}</span>
                                             </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                            <div *ngIf="logcelltemplate.IsEditMode && !IsDraftVersion" >
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step2Price'" [InputType]="'double'" [DataContext]="item"
                                                             [Text]="item.Step2Price" [ObjectTableName]="'TariffLine'" [HideColumns]="true"></LogTextBox>
                                             </div>
@@ -205,7 +231,7 @@
 
                                     <!-- Step3Price -->
                                     <log-column *ngIf="Step3PriceVisibility" [header]="Step3PriceLabel" [width]="'50'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsDraftVersion">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.Step3PriceColor}">{{item.Step3PriceValue}}</span>
                                             </div>
@@ -218,7 +244,7 @@
 
                                     <!-- Step4Price -->
                                     <log-column *ngIf="Step4PriceVisibility" [header]="Step4PriceLabel" [width]="'50'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsDraftVersion">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.Step4PriceColor}">{{item.Step4PriceValue}}</span>
                                             </div>
@@ -231,7 +257,7 @@
 
                                     <!-- Step5Price -->
                                     <log-column *ngIf="Step5PriceVisibility" [header]="Step5PriceLabel" [width]="'50'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsDraftVersion">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.Step5PriceColor}">{{item.Step5PriceValue}}</span>
                                             </div>
@@ -244,7 +270,7 @@
 
                                     <!-- Step6Price -->
                                     <log-column *ngIf="Step6PriceVisibility" [header]="Step6PriceLabel" [width]="'50'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsDraftVersion">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.Step6PriceColor}">{{item.Step6PriceValue}}</span>
                                             </div>
@@ -257,7 +283,7 @@
 
                                     <!-- Step7Price -->
                                     <log-column *ngIf="Step7PriceVisibility" [header]="Step7PriceLabel" [width]="'50'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsDraftVersion">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.Step7PriceColor}">{{item.Step7PriceValue}}</span>
                                             </div>
@@ -270,7 +296,7 @@
 
                                     <!-- Step8Price -->
                                     <log-column *ngIf="Step8PriceVisibility" [header]="Step8PriceLabel" [width]="'50'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="IsDraftVersion">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.Step8PriceColor}">{{item.Step8PriceValue}}</span>
                                             </div>
@@ -283,7 +309,7 @@
 
                                     <!-- Tools Button -->
                                     <log-column [width]="'80'" [Editable]="true" [Alignment]="'right'">
-                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate [IsEnabled]="!IsDraftVersion">
                                             <span class="CellSeparator" style="float: left;"></span>
                                             <div style="width: 22px; float: left; height:20px; padding-top: 2px; display:block">
                                                 <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Edit'" [IsSmall]="true" (click)="EditTariffButtonClicked(item)"></IconButton>

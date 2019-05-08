@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -23,7 +23,7 @@ declare var ResultAsArray: any;
     templateUrl: './VersionTabComponent.html',
 })
 
-export class VersionTabComponent extends BaseComponent implements OnInit, OnDestroy {
+export class VersionTabComponent extends BaseComponent implements  OnDestroy {
     public EntityPM: TariffPM;
     public ObjectTableName: string = "Tariff";
     public TariffsLinesSource: ObservableCollection;
@@ -36,9 +36,12 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private CurrentSession = SessionLocator.SelectedSession;
+    public ExistanceDraft: boolean = false;
+    public Actions = [];
+    private Version: string;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
-        this.EntityPM = entityArgs.EntityPM;
+        this.EntityPM = entityArgs.EntityPM;        
         this.EntityArgs = entityArgs;
         this.Listen();        
     }
@@ -72,9 +75,25 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    ngOnInit() {
+
+
+    SetWindowArgs(Version:string) {
+        this.Version = Version;
         this.Intialize();
     }
+
+
+    public ClickAction(Code:string) {
+
+        switch (Code) {
+            case "": {
+
+                break;
+            }
+        }
+
+    }
+
 
     Intialize() {
         this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
@@ -83,7 +102,7 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
             this.EntityPM = this.EntityArgs.EntityPM;
             this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
             this.TariffDomainService = new TariffDomainService();
-
+            this.ExistanceDraft = this.EntityPM.TariffVersions.filter(d => d.IsDraft == true)[0] != null ? true : false;
             this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
 
             if (this.CurrentVersion != null) {
