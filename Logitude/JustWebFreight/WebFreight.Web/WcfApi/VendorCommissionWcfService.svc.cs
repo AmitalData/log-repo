@@ -82,7 +82,7 @@ namespace WebFreight.Web.WcfApi
                                 CustomerId = customer.Id,
                                 Tenant = entityPM.Tenant,
                                 CommisionPercentage = entityPM.CommisionPercentage,
-                                ModificationsTypeCode = entityPM.ModificationsTypeCode,
+                                ModificationsTypeCode = modificationsTypeCode,
                                 ChangeSetOp = ChangeSetOperation.Insert
                             };
 
