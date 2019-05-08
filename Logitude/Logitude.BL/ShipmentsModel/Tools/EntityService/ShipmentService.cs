@@ -1056,7 +1056,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
 
-                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0)
+                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant,entityPM))
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
@@ -1066,11 +1066,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         else if ((customerTenantAccessInfo == null || customerTenantAccessInfo.HasAccess == false) && !string.IsNullOrEmpty(entityPoco.CustomerShipmentNumber) && !string.IsNullOrEmpty(OldCustomerId))
                         {
                             //var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
-                            IQueueService queueservice = new DbQueueService();
-                            queueservice.InitializeQueue("ImportersShipmentQueue", 0);
-                            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", entityPoco.CustomerTenantNumber.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, null, entityPM.CustomerId);
+                            if (IsImporterTenantHasExportFeatureForExportShipments((int)entityPoco.CustomerTenantNumber, entityPM))
+                            {
+                                IQueueService queueservice = new DbQueueService();
+                                queueservice.InitializeQueue("ImportersShipmentQueue", 0);
+                                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, { "ImporterTenant", entityPoco.CustomerTenantNumber.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() }, { "CustomerId", !string.IsNullOrEmpty(OldCustomerId) ? OldCustomerId : entityPM.CustomerId }, { "CustomerChanged", CustomerChanged } }, null, entityPM.CustomerId);
+
+                            }
                         }
-                        else if (!string.IsNullOrEmpty(OldCustomerId) && customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0)
+                        else if (!string.IsNullOrEmpty(OldCustomerId) && customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant, entityPM))
                         {
                             var ImporterTenant = entityPM.CustomerTenantNumber;
                             IQueueService queueservice = new DbQueueService();
@@ -1102,6 +1106,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
         }
 
+        private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
+        {
+            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant))
+            {
+                return false;
+            } 
+            else
+            {
+                return true;
+            }
+        }
         private bool IsShipmentMatchLogBoxConditions(Tenant loggedTenant,ShipmentPM entityPM)
         {
             if (!entityPM.DontAddToImportersQueue && !loggedTenant.IsDocumentsArchive && !entityPM.IsCancelled && loggedTenant.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(loggedTenant,entityPM) || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM)))
@@ -1128,7 +1143,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
 
         private bool IsExportShipmentsAllowedForLogBox(Tenant loggedTenant, ShipmentPM entityPM)
         {
-            if (loggedTenant.CustomerTenantShareExportFile == true && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id))
+            if (loggedTenant.CustomerTenantShareExportFile == true)// && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id)
             {
                 return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
             }
