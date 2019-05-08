@@ -1260,6 +1260,11 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IsSpellCheckedShortLocalDefaultText", f.IsSpellCheckedShortLocalDefaultText.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsSpellCheckedListLocalDefaultText", f.IsSpellCheckedListLocalDefaultText.ToString().ToLower(), fieldElement, null);
                 SetAttribute("EnableFullscreenTextBox", f.EnableFullscreenTextBox.ToString().ToLower(), fieldElement, null);
+
+                if (!string.IsNullOrEmpty(f.ModelName))
+                {
+                    SetAttribute("ModelName", GetStringValue(f.ModelName), fieldElement, null);
+                }
             }
 
             #endregion

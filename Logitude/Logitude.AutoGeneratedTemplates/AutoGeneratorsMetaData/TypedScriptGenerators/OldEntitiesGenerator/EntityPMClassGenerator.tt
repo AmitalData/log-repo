@@ -434,13 +434,24 @@ private void BuildImportForListProperty(CodeElement element,CodeProperty propert
 	string type = GetCodePropertyDataType(property); 
 	if(type == "List" && entityPmName.ToLower() != "stringpm")
      {
-		string pmname =  GetPmListPropertyTableName(property);
+		    string pmname =  GetPmListPropertyTableName(property);
 	   	 string importentitystring = Environment.NewLine + "import {"+pmname+"} from './" + pmname + "';";
+
+         string fullTypeName = property.Type.AsString;
+         string tableNameSpace = fullTypeName.Substring(fullTypeName.IndexOf("<") + 1, (fullTypeName.IndexOf(">") - fullTypeName.IndexOf("<") - 1));
+		 string[] nameArr = tableNameSpace.Split('.');
+		 string  modelName = nameArr[1];
+            if(modelName != "BL"){
+                importentitystring = Environment.NewLine + "import {"+pmname+"} from './../../" +modelName +"/EntityPMs/" + pmname + "';";
+            }
+
 		 if(!stringsList.Contains(importentitystring) && pmname.ToLower() != "string" &&  pmname != entityPmName)
          {
 		   stringsList.Add(importentitystring);
          }
-	 
+	 ////import { LedgerTransactionPM } from './../../Accounting/EntityPMs/LedgerTransactionPM';
+// System.Collections.Generic.List<Logitude.Accounting.Def.EntityPMs.LedgerTransactionPM>     
+ //System.Collections.Generic.List<Logitude.BL.InvoiceModel.EntityPMs.APPaymentInvoicePM>      
 	  }
 
 	  
@@ -574,7 +585,8 @@ private string GetPmListPropertyTableName(CodeProperty property)
 				//string[] propTypeArr = property.Type.AsString.Split('.');
 	            //fullTypeName = propTypeArr[propTypeArr.Length  - 1];
 				//tablename = fullTypeName.Substring(fullTypeName.IndexOf("<"), (fullTypeName.IndexOf(">") - fullTypeName.IndexOf("<")));
-
+     
+ 
 				 
 				string tableNameSpace = fullTypeName.Substring(fullTypeName.IndexOf("<") + 1, (fullTypeName.IndexOf(">") - fullTypeName.IndexOf("<") - 1));
 				string[] nameArr = tableNameSpace.Split('.');

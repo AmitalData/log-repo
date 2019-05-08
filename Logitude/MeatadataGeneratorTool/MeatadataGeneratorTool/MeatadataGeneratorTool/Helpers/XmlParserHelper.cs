@@ -423,6 +423,11 @@ namespace MeatadataGeneratorTool.Helpers
                 field.CopyToDW = false;
             }
 
+            if (fieldNode.Attributes["ModelName"] != null)
+            {
+                field.ModelName = GetAttributeStringValue(fieldNode.Attributes["ModelName"]);
+            }
+
             return field;
 
         }

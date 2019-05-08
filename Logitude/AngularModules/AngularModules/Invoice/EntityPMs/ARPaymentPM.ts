@@ -10,9 +10,7 @@
 
 import {ARPaymentInvoicePM} from './ARPaymentInvoicePM';
 
-import { LedgerTransactionPM } from './../../Accounting/EntityPMs/LedgerTransactionPM';
-//import {LedgerTransactionPM} from './LedgerTransactionPM';
-
+import {LedgerTransactionPM} from './../../Accounting/EntityPMs/LedgerTransactionPM';
 import {ARPaymentPMCustomCode} from '../EntityPMCustomCode/ARPaymentPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -27,312 +25,312 @@ export class ARPaymentPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this);
+          this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
-
-
+ 	 
+    
     private id: string;
     public get Id() { return this.id; }
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
-
-
+       
+	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-
-
+       
+	 
     private isSecured: boolean;
     public get IsSecured() { return this.isSecured; }
     public set IsSecured(newValue: boolean) { if (this.isSecured != newValue) { this.isSecured = newValue; this.MarkAsDirty("IsSecured"); } }
-
-
+       
+	 
     private paymentNo: string;
     public get PaymentNo() { return this.paymentNo; }
     public set PaymentNo(newValue: string) { if (this.paymentNo != newValue) { this.paymentNo = newValue; this.MarkAsDirty("PaymentNo"); } }
-
-
+       
+	 
     private createDate: Date;
     public get CreateDate() { return this.createDate; }
     public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
-
-
+       
+	 
     private createdByUserId: string;
     public get CreatedByUserId() { return this.createdByUserId; }
     public set CreatedByUserId(newValue: string) { if (this.createdByUserId != newValue) { this.createdByUserId = newValue; this.MarkAsDirty("CreatedByUserId"); } }
-
-
+       
+	 
     private printDate: Date;
     public get PrintDate() { return this.printDate; }
     public set PrintDate(newValue: Date) { if (this.printDate != newValue) { this.printDate = newValue; this.MarkAsDirty("PrintDate"); } }
-
-
+       
+	 
     private printByUserId: string;
     public get PrintByUserId() { return this.printByUserId; }
     public set PrintByUserId(newValue: string) { if (this.printByUserId != newValue) { this.printByUserId = newValue; this.MarkAsDirty("PrintByUserId"); } }
-
-
+       
+	 
     private localCurrencyId: string;
     public get LocalCurrencyId() { return this.localCurrencyId; }
     public set LocalCurrencyId(newValue: string) { if (this.localCurrencyId != newValue) { this.localCurrencyId = newValue; this.MarkAsDirty("LocalCurrencyId"); } }
-
-
+       
+	 
     private localCurrencyCode: string;
     public get LocalCurrencyCode() { return this.localCurrencyCode; }
     public set LocalCurrencyCode(newValue: string) { if (this.localCurrencyCode != newValue) { this.localCurrencyCode = newValue; this.MarkAsDirty("LocalCurrencyCode"); } }
-
-
+       
+	 
     private invoiceNumbers: string;
     public get InvoiceNumbers() { return this.invoiceNumbers; }
     public set InvoiceNumbers(newValue: string) { if (this.invoiceNumbers != newValue) { this.invoiceNumbers = newValue; this.MarkAsDirty("InvoiceNumbers"); } }
-
-
+       
+	 
     private amountInPaymentCurrency: number;
     public get AmountInPaymentCurrency() { return this.amountInPaymentCurrency; }
     public set AmountInPaymentCurrency(newValue: number) { if (this.amountInPaymentCurrency != newValue) { this.amountInPaymentCurrency = newValue; this.MarkAsDirty("AmountInPaymentCurrency"); } }
-
-
+       
+	 
     private amountInLocalCurrency: number;
     public get AmountInLocalCurrency() { return this.amountInLocalCurrency; }
     public set AmountInLocalCurrency(newValue: number) { if (this.amountInLocalCurrency != newValue) { this.amountInLocalCurrency = newValue; this.MarkAsDirty("AmountInLocalCurrency"); } }
-
-
+       
+	 
     private profitCurrencyExchangeRate: number;
     public get ProfitCurrencyExchangeRate() { return this.profitCurrencyExchangeRate; }
     public set ProfitCurrencyExchangeRate(newValue: number) { if (this.profitCurrencyExchangeRate != newValue) { this.profitCurrencyExchangeRate = newValue; this.MarkAsDirty("ProfitCurrencyExchangeRate"); } }
-
-
+       
+	 
     private amountInProfitCurrency: number;
     public get AmountInProfitCurrency() { return this.amountInProfitCurrency; }
     public set AmountInProfitCurrency(newValue: number) { if (this.amountInProfitCurrency != newValue) { this.amountInProfitCurrency = newValue; this.MarkAsDirty("AmountInProfitCurrency"); } }
-
-
+       
+	 
     private branchId: string;
     public get BranchId() { return this.branchId; }
     public set BranchId(newValue: string) { if (this.branchId != newValue) { this.branchId = newValue; this.MarkAsDirty("BranchId"); } }
-
-
+       
+	 
     private billToId: string;
     public get BillToId() { return this.billToId; }
     public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
-
-
+       
+	 
     private aRAccountId: string;
     public get ARAccountId() { return this.aRAccountId; }
     public set ARAccountId(newValue: string) { if (this.aRAccountId != newValue) { this.aRAccountId = newValue; this.MarkAsDirty("ARAccountId"); } }
-
-
+       
+	 
     private statusCode: string;
     public get StatusCode() { return this.statusCode; }
     public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
-
-
+       
+	 
     private isClosed: boolean;
     public get IsClosed() { return this.isClosed; }
     public set IsClosed(newValue: boolean) { if (this.isClosed != newValue) { this.isClosed = newValue; this.MarkAsDirty("IsClosed"); } }
-
-
+       
+	 
     private paymentCurrencyId: string;
     public get PaymentCurrencyId() { return this.paymentCurrencyId; }
     public set PaymentCurrencyId(newValue: string) { if (this.paymentCurrencyId != newValue) { this.paymentCurrencyId = newValue; this.MarkAsDirty("PaymentCurrencyId"); } }
-
-
+       
+	 
     private paidBy: string;
     public get PaidBy() { return this.paidBy; }
     public set PaidBy(newValue: string) { if (this.paidBy != newValue) { this.paidBy = newValue; this.MarkAsDirty("PaidBy"); } }
-
-
+       
+	 
     private accountingPaymentMethodId: string;
     public get AccountingPaymentMethodId() { return this.accountingPaymentMethodId; }
     public set AccountingPaymentMethodId(newValue: string) { if (this.accountingPaymentMethodId != newValue) { this.accountingPaymentMethodId = newValue; this.MarkAsDirty("AccountingPaymentMethodId"); } }
-
-
+       
+	 
     private accountingPaymentMethodCode: string;
     public get AccountingPaymentMethodCode() { return this.accountingPaymentMethodCode; }
     public set AccountingPaymentMethodCode(newValue: string) { if (this.accountingPaymentMethodCode != newValue) { this.accountingPaymentMethodCode = newValue; this.MarkAsDirty("AccountingPaymentMethodCode"); } }
-
-
+       
+	 
     private debitAccountId: string;
     public get DebitAccountId() { return this.debitAccountId; }
     public set DebitAccountId(newValue: string) { if (this.debitAccountId != newValue) { this.debitAccountId = newValue; this.MarkAsDirty("DebitAccountId"); } }
-
-
+       
+	 
     private printNotes: string;
     public get PrintNotes() { return this.printNotes; }
     public set PrintNotes(newValue: string) { if (this.printNotes != newValue) { this.printNotes = newValue; this.MarkAsDirty("PrintNotes"); } }
-
-
+       
+	 
     private internalNotes: string;
     public get InternalNotes() { return this.internalNotes; }
     public set InternalNotes(newValue: string) { if (this.internalNotes != newValue) { this.internalNotes = newValue; this.MarkAsDirty("InternalNotes"); } }
-
-
+       
+	 
     private paymentCurrencyExchangeRate: number;
     public get PaymentCurrencyExchangeRate() { return this.paymentCurrencyExchangeRate; }
     public set PaymentCurrencyExchangeRate(newValue: number) { if (this.paymentCurrencyExchangeRate != newValue) { this.paymentCurrencyExchangeRate = newValue; this.MarkAsDirty("PaymentCurrencyExchangeRate"); } }
-
-
+       
+	 
     private exchangeRateDate: Date;
     public get ExchangeRateDate() { return this.exchangeRateDate; }
     public set ExchangeRateDate(newValue: Date) { if (this.exchangeRateDate != newValue) { this.exchangeRateDate = newValue; this.MarkAsDirty("ExchangeRateDate"); } }
-
-
+       
+	 
     private billToAddressId: string;
     public get BillToAddressId() { return this.billToAddressId; }
     public set BillToAddressId(newValue: string) { if (this.billToAddressId != newValue) { this.billToAddressId = newValue; this.MarkAsDirty("BillToAddressId"); } }
-
-
+       
+	 
     private registerDate: Date;
     public get RegisterDate() { return this.registerDate; }
     public set RegisterDate(newValue: Date) { if (this.registerDate != newValue) { this.registerDate = newValue; this.MarkAsDirty("RegisterDate"); } }
-
-
+       
+	 
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
-
-
+       
+	 
     private billToName: string;
     public get BillToName() { return this.billToName; }
     public set BillToName(newValue: string) { if (this.billToName != newValue) { this.billToName = newValue; this.MarkAsDirty("BillToName"); } }
-
-
+       
+	 
     private paymentCurrencyCode: string;
     public get PaymentCurrencyCode() { return this.paymentCurrencyCode; }
     public set PaymentCurrencyCode(newValue: string) { if (this.paymentCurrencyCode != newValue) { this.paymentCurrencyCode = newValue; this.MarkAsDirty("PaymentCurrencyCode"); } }
-
-
+       
+	 
     private createdByUserName: string;
     public get CreatedByUserName() { return this.createdByUserName; }
     public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
-
-
+       
+	 
     private statusName: string;
     public get StatusName() { return this.statusName; }
     public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
-
-
+       
+	 
     private accountingPaymentMethodName: string;
     public get AccountingPaymentMethodName() { return this.accountingPaymentMethodName; }
     public set AccountingPaymentMethodName(newValue: string) { if (this.accountingPaymentMethodName != newValue) { this.accountingPaymentMethodName = newValue; this.MarkAsDirty("AccountingPaymentMethodName"); } }
-
-
+       
+	 
     private aRAccountName: string;
     public get ARAccountName() { return this.aRAccountName; }
     public set ARAccountName(newValue: string) { if (this.aRAccountName != newValue) { this.aRAccountName = newValue; this.MarkAsDirty("ARAccountName"); } }
-
-
+       
+	 
     private debitAccountName: string;
     public get DebitAccountName() { return this.debitAccountName; }
     public set DebitAccountName(newValue: string) { if (this.debitAccountName != newValue) { this.debitAccountName = newValue; this.MarkAsDirty("DebitAccountName"); } }
-
-
+       
+	 
     private openAmount: number;
     public get OpenAmount() { return this.openAmount; }
     public set OpenAmount(newValue: number) { if (this.openAmount != newValue) { this.openAmount = newValue; this.MarkAsDirty("OpenAmount"); } }
-
-
+       
+	 
     private chequeOrPaymentRef: string;
     public get ChequeOrPaymentRef() { return this.chequeOrPaymentRef; }
     public set ChequeOrPaymentRef(newValue: string) { if (this.chequeOrPaymentRef != newValue) { this.chequeOrPaymentRef = newValue; this.MarkAsDirty("ChequeOrPaymentRef"); } }
-
-
+       
+	 
     private bank: string;
     public get Bank() { return this.bank; }
     public set Bank(newValue: string) { if (this.bank != newValue) { this.bank = newValue; this.MarkAsDirty("Bank"); } }
-
-
+       
+	 
     private bankBranch: string;
     public get BankBranch() { return this.bankBranch; }
     public set BankBranch(newValue: string) { if (this.bankBranch != newValue) { this.bankBranch = newValue; this.MarkAsDirty("BankBranch"); } }
-
-
+       
+	 
     private account: string;
     public get Account() { return this.account; }
     public set Account(newValue: string) { if (this.account != newValue) { this.account = newValue; this.MarkAsDirty("Account"); } }
-
-
+       
+	 
     private valueDate: Date;
     public get ValueDate() { return this.valueDate; }
     public set ValueDate(newValue: Date) { if (this.valueDate != newValue) { this.valueDate = newValue; this.MarkAsDirty("ValueDate"); } }
-
-
+       
+	 
     private updateDate: Date;
     public get UpdateDate() { return this.updateDate; }
     public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
-
-
+       
+	 
     private updatedByUserId: string;
     public get UpdatedByUserId() { return this.updatedByUserId; }
     public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
-
-
+       
+	 
     private creditCardTypeId: string;
     public get CreditCardTypeId() { return this.creditCardTypeId; }
     public set CreditCardTypeId(newValue: string) { if (this.creditCardTypeId != newValue) { this.creditCardTypeId = newValue; this.MarkAsDirty("CreditCardTypeId"); } }
-
-
+       
+	 
     private transferTries: number;
     public get TransferTries() { return this.transferTries; }
     public set TransferTries(newValue: number) { if (this.transferTries != newValue) { this.transferTries = newValue; this.MarkAsDirty("TransferTries"); } }
-
-
+       
+	 
     private transferError: string;
     public get TransferError() { return this.transferError; }
     public set TransferError(newValue: string) { if (this.transferError != newValue) { this.transferError = newValue; this.MarkAsDirty("TransferError"); } }
-
-
+       
+	 
     private isTransferStarted: boolean;
     public get IsTransferStarted() { return this.isTransferStarted; }
     public set IsTransferStarted(newValue: boolean) { if (this.isTransferStarted != newValue) { this.isTransferStarted = newValue; this.MarkAsDirty("IsTransferStarted"); } }
-
-
+       
+	 
     private transferStatusCode: string;
     public get TransferStatusCode() { return this.transferStatusCode; }
     public set TransferStatusCode(newValue: string) { if (this.transferStatusCode != newValue) { this.transferStatusCode = newValue; this.MarkAsDirty("TransferStatusCode"); } }
-
-
+       
+	 
     private transferStatusName: string;
     public get TransferStatusName() { return this.transferStatusName; }
     public set TransferStatusName(newValue: string) { if (this.transferStatusName != newValue) { this.transferStatusName = newValue; this.MarkAsDirty("TransferStatusName"); } }
-
-
+       
+	 
     private readyForTransfer: boolean;
     public get ReadyForTransfer() { return this.readyForTransfer; }
     public set ReadyForTransfer(newValue: boolean) { if (this.readyForTransfer != newValue) { this.readyForTransfer = newValue; this.MarkAsDirty("ReadyForTransfer"); } }
-
-
+       
+	 
     private externalAccountingEntityId: string;
     public get ExternalAccountingEntityId() { return this.externalAccountingEntityId; }
     public set ExternalAccountingEntityId(newValue: string) { if (this.externalAccountingEntityId != newValue) { this.externalAccountingEntityId = newValue; this.MarkAsDirty("ExternalAccountingEntityId"); } }
-
-
+       
+	 
     private invoiceNumber: string;
     public get InvoiceNumber() { return this.invoiceNumber; }
     public set InvoiceNumber(newValue: string) { if (this.invoiceNumber != newValue) { this.invoiceNumber = newValue; this.MarkAsDirty("InvoiceNumber"); } }
-
-
+       
+	 
     private shipmentNumber: string;
     public get ShipmentNumber() { return this.shipmentNumber; }
     public set ShipmentNumber(newValue: string) { if (this.shipmentNumber != newValue) { this.shipmentNumber = newValue; this.MarkAsDirty("ShipmentNumber"); } }
-
-
+       
+	 
     private transmissionError: string;
     public get TransmissionError() { return this.transmissionError; }
     public set TransmissionError(newValue: string) { if (this.transmissionError != newValue) { this.transmissionError = newValue; this.MarkAsDirty("TransmissionError"); } }
-
-
+       
+	 
     private sATTransferStatusName: string;
     public get SATTransferStatusName() { return this.sATTransferStatusName; }
     public set SATTransferStatusName(newValue: string) { if (this.sATTransferStatusName != newValue) { this.sATTransferStatusName = newValue; this.MarkAsDirty("SATTransferStatusName"); } }
-
-
+       
+	 
     private sATApprovalDate: Date;
     public get SATApprovalDate() { return this.sATApprovalDate; }
     public set SATApprovalDate(newValue: Date) { if (this.sATApprovalDate != newValue) { this.sATApprovalDate = newValue; this.MarkAsDirty("SATApprovalDate"); } }
-
-
-
+       
+	 
+     
 	private paymentInvoices: ARPaymentInvoicePM[];
     get  PaymentInvoices() {
         if (this.paymentInvoices == null) {
@@ -371,165 +369,165 @@ export class ARPaymentPM {
      private setVoided: boolean;
     public get SetVoided() { return this.setVoided; }
     public set SetVoided(newValue: boolean) { if (this.setVoided != newValue) { this.setVoided = newValue; this.MarkAsDirty("SetVoided"); } }
-
-
+       
+	 
     private setApproved: boolean;
     public get SetApproved() { return this.setApproved; }
     public set SetApproved(newValue: boolean) { if (this.setApproved != newValue) { this.setApproved = newValue; this.MarkAsDirty("SetApproved"); } }
-
-
+       
+	 
     private setCancelApproval: boolean;
     public get SetCancelApproval() { return this.setCancelApproval; }
     public set SetCancelApproval(newValue: boolean) { if (this.setCancelApproval != newValue) { this.setCancelApproval = newValue; this.MarkAsDirty("SetCancelApproval"); } }
-
-
+       
+	 
     private hasInvoicesErrors: boolean;
     public get HasInvoicesErrors() { return this.hasInvoicesErrors; }
     public set HasInvoicesErrors(newValue: boolean) { if (this.hasInvoicesErrors != newValue) { this.hasInvoicesErrors = newValue; this.MarkAsDirty("HasInvoicesErrors"); } }
-
-
+       
+	 
     private setReTransfer: boolean;
     public get SetReTransfer() { return this.setReTransfer; }
     public set SetReTransfer(newValue: boolean) { if (this.setReTransfer != newValue) { this.setReTransfer = newValue; this.MarkAsDirty("SetReTransfer"); } }
-
-
+       
+	 
     private setReSendQBO: boolean;
     public get SetReSendQBO() { return this.setReSendQBO; }
     public set SetReSendQBO(newValue: boolean) { if (this.setReSendQBO != newValue) { this.setReSendQBO = newValue; this.MarkAsDirty("SetReSendQBO"); } }
-
-
+       
+	 
     private bankAccountId: string;
     public get BankAccountId() { return this.bankAccountId; }
     public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
-
-
+       
+	 
     private cashbookId: string;
     public get CashbookId() { return this.cashbookId; }
     public set CashbookId(newValue: string) { if (this.cashbookId != newValue) { this.cashbookId = newValue; this.MarkAsDirty("CashbookId"); } }
-
-
+       
+	 
     private billToPartnerTypeId: string;
     public get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
     public set BillToPartnerTypeId(newValue: string) { if (this.billToPartnerTypeId != newValue) { this.billToPartnerTypeId = newValue; this.MarkAsDirty("BillToPartnerTypeId"); } }
-
-
+       
+	 
     private sATPaymentMethodCode: string;
     public get SATPaymentMethodCode() { return this.sATPaymentMethodCode; }
     public set SATPaymentMethodCode(newValue: string) { if (this.sATPaymentMethodCode != newValue) { this.sATPaymentMethodCode = newValue; this.MarkAsDirty("SATPaymentMethodCode"); } }
-
-
+       
+	 
     private sATXML: string;
     public get SATXML() { return this.sATXML; }
     public set SATXML(newValue: string) { if (this.sATXML != newValue) { this.sATXML = newValue; this.MarkAsDirty("SATXML"); } }
-
-
+       
+	 
     private sATTransferStatusCode: string;
     public get SATTransferStatusCode() { return this.sATTransferStatusCode; }
     public set SATTransferStatusCode(newValue: string) { if (this.sATTransferStatusCode != newValue) { this.sATTransferStatusCode = newValue; this.MarkAsDirty("SATTransferStatusCode"); } }
-
-
+       
+	 
     private bankAccountLiteId: string;
     public get BankAccountLiteId() { return this.bankAccountLiteId; }
     public set BankAccountLiteId(newValue: string) { if (this.bankAccountLiteId != newValue) { this.bankAccountLiteId = newValue; this.MarkAsDirty("BankAccountLiteId"); } }
-
-
+       
+	 
     private bankAccountName: string;
     public get BankAccountName() { return this.bankAccountName; }
     public set BankAccountName(newValue: string) { if (this.bankAccountName != newValue) { this.bankAccountName = newValue; this.MarkAsDirty("BankAccountName"); } }
-
-
+       
+	 
     private metodoPagoCode: string;
     public get MetodoPagoCode() { return this.metodoPagoCode; }
     public set MetodoPagoCode(newValue: string) { if (this.metodoPagoCode != newValue) { this.metodoPagoCode = newValue; this.MarkAsDirty("MetodoPagoCode"); } }
-
-
+       
+	 
     private tipoCadenaPago: string;
     public get TipoCadenaPago() { return this.tipoCadenaPago; }
     public set TipoCadenaPago(newValue: string) { if (this.tipoCadenaPago != newValue) { this.tipoCadenaPago = newValue; this.MarkAsDirty("TipoCadenaPago"); } }
-
-
+       
+	 
     private certPago: string;
     public get CertPago() { return this.certPago; }
     public set CertPago(newValue: string) { if (this.certPago != newValue) { this.certPago = newValue; this.MarkAsDirty("CertPago"); } }
-
-
+       
+	 
     private cadPago: string;
     public get CadPago() { return this.cadPago; }
     public set CadPago(newValue: string) { if (this.cadPago != newValue) { this.cadPago = newValue; this.MarkAsDirty("CadPago"); } }
-
-
+       
+	 
     private selloPago: string;
     public get SelloPago() { return this.selloPago; }
     public set SelloPago(newValue: string) { if (this.selloPago != newValue) { this.selloPago = newValue; this.MarkAsDirty("SelloPago"); } }
-
-
+       
+	 
     private branchName: string;
     public get BranchName() { return this.branchName; }
     public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
-
-
+       
+	 
     private approvedDate: Date;
     public get ApprovedDate() { return this.approvedDate; }
     public set ApprovedDate(newValue: Date) { if (this.approvedDate != newValue) { this.approvedDate = newValue; this.MarkAsDirty("ApprovedDate"); } }
-
-
+       
+	 
     private approvedByUserId: string;
     public get ApprovedByUserId() { return this.approvedByUserId; }
     public set ApprovedByUserId(newValue: string) { if (this.approvedByUserId != newValue) { this.approvedByUserId = newValue; this.MarkAsDirty("ApprovedByUserId"); } }
-
-
+       
+	 
     private firstApproveDate: Date;
     public get FirstApproveDate() { return this.firstApproveDate; }
     public set FirstApproveDate(newValue: Date) { if (this.firstApproveDate != newValue) { this.firstApproveDate = newValue; this.MarkAsDirty("FirstApproveDate"); } }
-
-
+       
+	 
     private isFullAccounting: boolean;
     public get IsFullAccounting() { return this.isFullAccounting; }
     public set IsFullAccounting(newValue: boolean) { if (this.isFullAccounting != newValue) { this.isFullAccounting = newValue; this.MarkAsDirty("IsFullAccounting"); } }
-
-
+       
+	 
     private gLAccountId: string;
     public get GLAccountId() { return this.gLAccountId; }
     public set GLAccountId(newValue: string) { if (this.gLAccountId != newValue) { this.gLAccountId = newValue; this.MarkAsDirty("GLAccountId"); } }
-
-
+       
+	 
     private gLAccountRecoMethodCode: string;
     public get GLAccountRecoMethodCode() { return this.gLAccountRecoMethodCode; }
     public set GLAccountRecoMethodCode(newValue: string) { if (this.gLAccountRecoMethodCode != newValue) { this.gLAccountRecoMethodCode = newValue; this.MarkAsDirty("GLAccountRecoMethodCode"); } }
-
-
+       
+	 
     private isExternalEntity: boolean;
     public get IsExternalEntity() { return this.isExternalEntity; }
     public set IsExternalEntity(newValue: boolean) { if (this.isExternalEntity != newValue) { this.isExternalEntity = newValue; this.MarkAsDirty("IsExternalEntity"); } }
-
-
-
-	private invoicesTransactions: LedgerTransactionPM[];
-    get  InvoicesTransactions() {
-        if (this.invoicesTransactions == null) {
-            this.invoicesTransactions = [];
+       
+	 
+     
+	private invoicesLedgerTransactions: LedgerTransactionPM[];
+    get  InvoicesLedgerTransactions() {
+        if (this.invoicesLedgerTransactions == null) {
+            this.invoicesLedgerTransactions = [];
         }
 
-        return this.invoicesTransactions;
+        return this.invoicesLedgerTransactions;
     }
-    set  InvoicesTransactions(newValue: LedgerTransactionPM[]) {
-        if (this.invoicesTransactions != newValue) {
-            this.invoicesTransactions = newValue;
+    set  InvoicesLedgerTransactions(newValue: LedgerTransactionPM[]) {
+        if (this.invoicesLedgerTransactions != newValue) {
+            this.invoicesLedgerTransactions = newValue;
         }
     }
-    //public InvoicesTransactions: Array<LedgerTransactionPMPM>= [];
-
+    //public InvoicesLedgerTransactions: Array<LedgerTransactionPMPM>= [];
+ 
     public OldEntityPM: ARPaymentPM;
-
+		
     public IsDirty: boolean;
     MarkAsDirty(propertyName:string = null) {
         this.IsDirty = true;
-
+		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ARPaymentPMCustomCode.ApplyEntityChanged(propertyName, this);
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ARPayment");
-
+           
         }
     }
     private MyClone: ARPaymentPM;
@@ -542,4 +540,4 @@ export class ARPaymentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

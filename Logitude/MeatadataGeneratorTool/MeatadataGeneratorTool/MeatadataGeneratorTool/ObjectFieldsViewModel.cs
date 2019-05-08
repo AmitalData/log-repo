@@ -1463,6 +1463,13 @@ namespace MeatadataGeneratorTool
         public bool IsSpellCheckedHelpLocalDefaultText { get;  set; }
         public bool IsSpellCheckedShortLocalDefaultText { get;  set; }
         public bool IsSpellCheckedListLocalDefaultText { get; internal set; }
+ 
+        string modelName;
+        public string ModelName
+        {
+            get { return modelName; }
+            set { modelName = value; FirePropertyChanged("ModelName"); }
+        }
 
         //public Window AdvanceSettingsWindow = new Window();
         ObjectFieldsAdvanceSettings AdvanceSettingsControl;
