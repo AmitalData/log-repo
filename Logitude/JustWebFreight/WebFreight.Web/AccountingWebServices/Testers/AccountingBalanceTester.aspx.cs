@@ -79,6 +79,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonBalanceByCollector_Click,
             _ButtonLoadBankPages_Click,
             _ButtonGetSystem1000_Click,
+            _ButtonLoadSystem1000_Click,
         }
 
         //DateTime _MyDate;
@@ -1484,6 +1485,51 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
         }
 
+
+
+        protected void _ButtonLoadSystem1000_Click(object sender, EventArgs e)
+        {
+
+            string param = "";
+            string paramDefault = "Please insert page, you can add a header  //Tenant=1071";
+
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonLoadSystem1000_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                string fileSystem1000 = _TextBoxParam.Text;
+
+                var mySystem1000FlatFileAnalyser = new System1000FlatFileAnalyser();
+                mySystem1000FlatFileAnalyser.Analyse(null, fileSystem1000);
+
+                _LabelResult.Text = JsonConvert.SerializeObject(mySystem1000FlatFileAnalyser.MyResultLoadFlatFile); ;
+
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonLoadSystem1000_Click.ToString();
+                if (string.IsNullOrWhiteSpace(param))
+                {
+                    param = paramDefault;
+                }
+
+                _TextBoxParam.Text = param;
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+        }
 
 
         protected void _ButtonSysCheckTotalSumIsZero_Click(object sender, EventArgs e)

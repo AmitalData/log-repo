@@ -240,6 +240,7 @@
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckGLAccount.cs" />
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckService.cs" />
     <Compile Include="CoreBL\ReverseEngineer\SystemCheckTotals.cs" />
+    <Compile Include="CoreBL\System1000FlatFileAnalyser.cs" />
     <Compile Include="CoreBL\System1000Service.cs" />
     <Compile Include="CoreBL\TaxDeductionReportService.cs" />
     <Compile Include="CoreBL\ARPaymentReconciliationService.cs" />

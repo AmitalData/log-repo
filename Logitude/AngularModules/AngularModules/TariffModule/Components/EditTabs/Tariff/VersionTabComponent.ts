@@ -267,6 +267,7 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
         itemPM.StartDate = this.StartDate;
         itemPM.ExpirationDate = this.ExpirationDate;
         itemPM.Tenant = SessionLocator.Tenant;
+        itemPM.Version = this.EntityPM.LastVersion;
         var itemComponent = new TariffLineData(itemPM, this, true);
         logWindow.DataContext = itemComponent;
         logWindow.Title = "New Tariff Line";
@@ -355,6 +356,7 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
             tariff.StartDate = this.StartDate;
             tariff.ExpirationDate = this.ExpirationDate;
             tariff.Tenant = SessionLocator.Tenant;
+            tariff.Version = this.EntityPM.LastVersion;
             tariff.OriginPortId = item.FromPortId;
             tariff.OriginPortCode = item.FromPortCode;
             tariff.OriginPortName = item.FromPortName;

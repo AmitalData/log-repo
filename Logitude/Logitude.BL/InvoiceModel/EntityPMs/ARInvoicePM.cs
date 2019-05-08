@@ -334,7 +334,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string CreditARInvoice { get; set; }
         public Decimal? TotalAmountForTaxReport { get; set; }
         public Decimal? TotaVatableAmountForTaxReport { get; set; }
-        public Decimal? TotalVAT { get; set; }
+        public Decimal TotalVAT { get; set; }
 
         public bool IsFullAccounting { get; set; }
 
