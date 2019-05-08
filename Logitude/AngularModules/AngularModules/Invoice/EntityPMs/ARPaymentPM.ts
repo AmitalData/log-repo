@@ -10,7 +10,7 @@
 
 import {ARPaymentInvoicePM} from './ARPaymentInvoicePM';
 
-import {LedgerTransactionPM} from './LedgerTransactionPM';
+//import {LedgerTransactionPM} from './LedgerTransactionPM';
 import {ARPaymentPMCustomCode} from '../EntityPMCustomCode/ARPaymentPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -502,19 +502,19 @@ export class ARPaymentPM {
        
 	 
      
-	private invoicesTransactions: LedgerTransactionPM[];
-    get  InvoicesTransactions() {
-        if (this.invoicesTransactions == null) {
-            this.invoicesTransactions = [];
-        }
+	//private invoicesTransactions: LedgerTransactionPM[];
+ //   get  InvoicesTransactions() {
+ //       if (this.invoicesTransactions == null) {
+ //           this.invoicesTransactions = [];
+ //       }
 
-        return this.invoicesTransactions;
-    }
-    set  InvoicesTransactions(newValue: LedgerTransactionPM[]) {
-        if (this.invoicesTransactions != newValue) {
-            this.invoicesTransactions = newValue;
-        }
-    }
+ //       return this.invoicesTransactions;
+ //   }
+ //   set  InvoicesTransactions(newValue: LedgerTransactionPM[]) {
+ //       if (this.invoicesTransactions != newValue) {
+ //           this.invoicesTransactions = newValue;
+ //       }
+ //   }
     //public InvoicesTransactions: Array<LedgerTransactionPMPM>= [];
  
     public OldEntityPM: ARPaymentPM;
