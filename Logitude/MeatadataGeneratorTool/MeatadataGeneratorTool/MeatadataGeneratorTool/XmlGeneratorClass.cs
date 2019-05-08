@@ -1054,6 +1054,8 @@ namespace MeatadataGeneratorTool
             SetAttribute("DisableSearchBox", table.DisableSearchBox.ToString().ToLower(), entityElement);
             SetAttribute("HasDocuments", table.HasDocuments.ToString().ToLower(), entityElement);
             SetAttribute("IsLookUp", table.IsLookUp.ToString().ToLower(), entityElement);
+            SetAttribute("IsTabsHidden", table.IsTabsHidden.ToString().ToLower(), entityElement);
+
             if (!string.IsNullOrEmpty(table.SearchFields))
             {
                 SetAttribute("SearchFields", GetStringValue(table.SearchFields), entityElement, null);

@@ -1091,6 +1091,16 @@ namespace MeatadataGeneratorTool.Helpers
 
                 }
 
+                if (entity.Attributes["IsTabsHidden"] != null)
+                {
+                    objectTable.IsTabsHidden = GetAttributeBoolValue(entity.Attributes["IsTabsHidden"]);
+                }
+                else
+                {
+                    objectTable.IsTabsHidden = false;
+                }
+
+
             }
             return objectTable;
 

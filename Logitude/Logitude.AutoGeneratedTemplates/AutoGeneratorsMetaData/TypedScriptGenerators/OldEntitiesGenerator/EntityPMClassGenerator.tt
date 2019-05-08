@@ -440,8 +440,8 @@ private void BuildImportForListProperty(CodeElement element,CodeProperty propert
          string fullTypeName = property.Type.AsString;
          string tableNameSpace = fullTypeName.Substring(fullTypeName.IndexOf("<") + 1, (fullTypeName.IndexOf(">") - fullTypeName.IndexOf("<") - 1));
 		 string[] nameArr = tableNameSpace.Split('.');
-		 string  modelName = nameArr[1];
-            if(modelName != "BL"){
+         string  modelName = nameArr.Length > 1 ? nameArr[1]:null;
+            if(!string.IsNullOrEmpty(modelName) && modelName != "BL"){
                 importentitystring = Environment.NewLine + "import {"+pmname+"} from './../../" +modelName +"/EntityPMs/" + pmname + "';";
             }
 
