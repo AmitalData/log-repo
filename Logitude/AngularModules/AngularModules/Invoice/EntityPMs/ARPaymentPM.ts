@@ -10,9 +10,7 @@
 
 import {ARPaymentInvoicePM} from './ARPaymentInvoicePM';
 
-import { LedgerTransactionPM } from './../../Accounting/EntityPMs/LedgerTransactionPM';
-//import {LedgerTransactionPM} from './LedgerTransactionPM';
-
+import {LedgerTransactionPM} from './LedgerTransactionPM';
 import {ARPaymentPMCustomCode} from '../EntityPMCustomCode/ARPaymentPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';

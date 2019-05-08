@@ -585,6 +585,10 @@ namespace Logitude.Accounting.BL.Validators
             bool? SuppressCheckGLAccountIsMultiCurrencyWI40640
             )
         {
+
+            ContactPM loggedUser = GetLoggedContact(myJournalPM.Tenant);
+            bool showLocal = !((bool)loggedUser?.DontShowLocal);
+
             var tenant=myJournalPM.Tenant;
             if (String.IsNullOrWhiteSpace(glAccId))
             {
@@ -639,7 +643,7 @@ namespace Logitude.Accounting.BL.Validators
             if (pmAcc.Inactive.GetValueOrDefault())
             {
                 string msg = TranslateMyTextCode(M_BlockedGLAccount, tenant);
-                msg = msg.Replace("%name", GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant));
+                msg = msg.Replace("%name", GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant, showLocal));
                 errorsList.Add(msg);
 
                 //errorsList.Add(TranslateMyTextCode(M_BlockedGLAccount,tenant) + 
@@ -725,7 +729,7 @@ namespace Logitude.Accounting.BL.Validators
                     {
                         //on streaming its must 
                         errorsList.Add("Using cards that do not match their currency is not allowed =Current MultiCurrencyAccount is  " +
-                            GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant) +
+                            GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant, showLocal) +
                             " ,for Currency " +
 
                             GetCurrencyCode(myGLAccountDataProvider, jlCurrencyId, myJournalPM.Tenant)
@@ -739,7 +743,7 @@ namespace Logitude.Accounting.BL.Validators
 
         }
 
-        private static string GetAccountName(IJournalValidatorContextDataProvider myGLAccountDataProvider, string accId, int tenant)
+        private static string GetAccountName(IJournalValidatorContextDataProvider myGLAccountDataProvider, string accId, int tenant, bool showLocal = true)
         {
             if (myGLAccountDataProvider == null) return accId;
             var pm = myGLAccountDataProvider.GetGLAccount(accId, tenant);
@@ -747,7 +751,8 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return accId;
             }
-            return pm.DisplayNumber + "-" + pm.LocalName;
+
+            return pm.DisplayNumber + "-" + (showLocal ? pm.LocalName : pm.EnglishName);
         }
 
         private static string GetCurrencyCode(IJournalValidatorContextDataProvider myGLAccountDataProvider,
