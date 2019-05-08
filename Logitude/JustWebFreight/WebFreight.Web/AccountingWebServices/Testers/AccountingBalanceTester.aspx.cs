@@ -236,7 +236,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 param = LogitudeXmlSerializer.DeserializeObject<ParamBasic>(_TextBoxParam.Text);
                 var myAllCardServiceDS = new GLAccountDashboard();
-                var dic = myAllCardServiceDS.GetCardsLocalBalanceGByChartOfAccountsTypeCode(param.MyTenant);
+                var dic = myAllCardServiceDS.GetCardsLocalBalanceGByChartOfAccountsTypeCode(param.MyTenant,true,null);
 
                 var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<ChartOfAccountBalanceM>>(dic);
                 ReloadGrid(SerializeObjectByte);
