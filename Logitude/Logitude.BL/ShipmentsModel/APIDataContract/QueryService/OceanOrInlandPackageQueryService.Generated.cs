@@ -75,7 +75,8 @@ using Simplog.Data.ShipmentsModel;
 				   temp.FlashPoint = item.FlashPoint;
 				   temp.MaterialDescription = item.MaterialDescription;
 				   temp.CommodityNumber = item.CommodityNumber;
-				   temp.Reference4 = item.Reference4;					
+				   temp.Reference4 = item.Reference4;
+				   temp.Notes = item.Notes;					
 					MyList.Add(temp);
 				}
 					
@@ -143,7 +144,8 @@ using Simplog.Data.ShipmentsModel;
 					temp.FlashPoint = item.FlashPoint;
 					temp.MaterialDescription = item.MaterialDescription;
 					temp.CommodityNumber = item.CommodityNumber;
-					temp.Reference4 = item.Reference4;					   
+					temp.Reference4 = item.Reference4;
+					temp.Notes = item.Notes;					   
 						MyList.Add(temp);
 					}
 						
