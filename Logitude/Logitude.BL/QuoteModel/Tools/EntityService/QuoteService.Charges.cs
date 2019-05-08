@@ -29,9 +29,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                                                       && d.IsAutoDisplayInQuote == true
                                                                       select d);
 
-                    //ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(myCommonContext);
-                    //IQueryable<ChargesType> iQueryable_ChargeTypes = chargesTypeRepository.GetQuoteDefaultChargesTypes(tenant).Where(d => d.InActive == false);
-
                     switch (entityPM.TransportModeId.ToUpper())
                     {
                         case "A":
@@ -81,7 +78,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     }
 
                     List<ChargesType> list_ChargeTypes = new List<ChargesType>();
-                    //List<ChargesType> list_ChargeTypes2 = new List<ChargesType>();
                     if (this.isLCLQuote)
                     {
                         list_ChargeTypes = iQueryable_ChargeTypes.OrderBy(d => d.ViewOrder).ToList();

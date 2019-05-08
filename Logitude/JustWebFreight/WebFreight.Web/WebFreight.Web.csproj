@@ -2221,7 +2221,6 @@
     <Compile Include="Helpers\APIHelpers\PartnerServicePM.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Global\QueriesController.cs" />
     <Compile Include="DataContracts\GeneralEntitiesArgs.cs" />
-    <Compile Include="Helpers\APIHelpers\QuoteSubjectArgs.cs" />
     <Compile Include="Helpers\APIHelpers\FeaturesUpdateHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TraceEventsServiceArgs.cs" />
     <Compile Include="Helpers\APIHelpers\UserLicenseUpdateHelper.cs" />

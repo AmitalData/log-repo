@@ -2054,7 +2054,7 @@ export class ShipmentGenerator {
                         }
 
                         allChargesTypes.filter(f => AppTool.IsNullOrEmpty(f.ContainerMeasurementId)).sort((a, b) => { return a.ViewOrder - b.ViewOrder }).forEach(myChargeType => {
-                            this.EntityPM.AddPayable(this.CreateNewPayableFromLCLChargesType(item));
+                            this.EntityPM.AddPayable(this.CreateNewPayableFromLCLChargesType(myChargeType));
                         });
                     }
                 }

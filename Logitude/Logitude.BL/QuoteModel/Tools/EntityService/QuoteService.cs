@@ -868,11 +868,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             if (isAutomaticUpdate)
             {
-                QuoteQuery entityQuery = new QuoteQuery(entityRepository);
-
-                string mySubject = entityQuery.GetQuoteAutomaticSubject(entityPM);
-
-                entityPM.Subject = mySubject;
+                QuoteSubjectService iSubjectService = new QuoteSubjectService(entityPM);
+                entityPM.Subject = iSubjectService.GetSubject(); ;                
             }
         }
         private void InitializeExpirationValues()
