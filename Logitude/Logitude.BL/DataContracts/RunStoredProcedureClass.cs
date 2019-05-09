@@ -117,13 +117,24 @@ namespace Logitude.BL.DataContracts
 
         private static bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
         {
-            if (loggedTenant.CustomerTenantShareExportFile == true && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id))
+            if (loggedTenant.CustomerTenantShareExportFile == true) //&& FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id)
             {
                 return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
             }
             else
             {
                 return false;
+            }
+        }
+        private static bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
+        {
+            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
         public static void CreateShipmentQueue(string shipmentId, int tenant)
@@ -142,7 +153,7 @@ namespace Logitude.BL.DataContracts
                             CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                             CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
 
-                            if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess)
+                            if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant, entityPM))
                             {
                                 var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                                 IQueueService queueservice = new DbQueueService();
