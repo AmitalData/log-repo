@@ -187,7 +187,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.DocOutChangedEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
-        //AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
         
     }
     private TabSelectedEvent: any = null;
@@ -254,8 +254,34 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
                     this.isPrintRequested = false;
                     this.isSendRequested = false;
                 });
-            }            
+            } 
+
+            if (this.LoadCompletedEvent == null) {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                    if (isLoadSuccess) {
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    
+                    }
+                });
+            }
+
+
+
+
+
+
+
+
         }
+
+
+
+
+
+
+
+
+
 
         if (!this.DocOutChangedEvent) {
             this.DocOutChangedEvent = this.CurrentSession.SessionEvent.subscribe(s => {
