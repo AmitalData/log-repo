@@ -5,7 +5,7 @@ declare @DocumentTypeCopyId varchar(15)
 	DECLARE DocsCursor CURSOR READ_ONLY
 	FOR	
 	SELECT Id
-	FROM Tenants where id = 0
+	FROM Tenants where id = 0 or id = 1586
 	OPEN DocsCursor FETCH NEXT FROM DocsCursor INTO @Tenant 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN	
@@ -15,7 +15,7 @@ declare @DocumentTypeCopyId varchar(15)
 		begin
 			EXECUTE usp_GetNextTableIdValue @DocumentTypeCopyId OUTPUT,'DocumentTypeCopy'    
 			insert into DocumentTypeCopies (Id, Tenant, Code, Name, DocumentTypeId, IndexOrder, IsSelectedByDefault, InActive) 
-			values(@DocumentTypeCopyId, 1586, 'SCMR', 'CMR' ,@DocumentTypeId, 0, 0, 0)
+			values(@DocumentTypeCopyId, @Tenant , 'SCMR', 'CMR' ,@DocumentTypeId, 0, 0, 0)
 		end
 
 		FETCH NEXT FROM DocsCursor INTO @Tenant
