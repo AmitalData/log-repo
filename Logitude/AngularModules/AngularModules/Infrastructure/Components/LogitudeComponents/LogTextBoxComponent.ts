@@ -151,18 +151,20 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                 default: {
                     if (this.firstDigit == "'") {
                         if ((newValue && newValue.indexOf("'") > -1)) {
-                            newValue = newValue.replace("'", '');
+                            newValue = newValue.replace(/'/g, "");
                         }
                     }
 
                     else if (this.firstDigit == ".") {
                         if ((newValue && newValue.indexOf(".") > -1) && (newValue && newValue.indexOf(",") > -1)) {
-                            newValue = newValue.replace(/\./g, '')
+                            newValue = newValue.replace(/\./g, '');
+                            newValue = newValue.replace(/,/g, '.');
                         }
+
                     }
                     else {
                         if ((newValue && newValue.indexOf(',') > -1)) {
-                            newValue = newValue.replace(',', '');
+                            newValue = newValue.replace(/,/g,"");
                         }
                     }
 
@@ -1161,6 +1163,10 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                     case 'unsdecimal':
                     case 'ntext':
                         {
+                            //if (this.DisableZeroPadding && this.firstDigit == ".") {
+                            //    this.TextValue = this.TextValue.replace(/\./g, '');
+                            //}
+
                             var ReadedText = false;
                             if (this.firstDigit == ".") {
                                 if ((this.TextValue.includes(',') && this.TextValue.includes('.')) || (this.TextValue.includes('.') && this.DisableZeroPadding)) {
@@ -1282,6 +1288,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 if (isDot && !this.DisableZeroPadding) {
                                     this.TextValue = this.TextValue.replace(this.firstDigit, ",")
                                 }
+                   
                                 var textWithCommas: string = this.numberWithCommas(this.TextValue, this.firstDigit);
                                 if ((textWithCommas.indexOf(this.firstDigit) > -1) && !isDot) {
                                     var textWithCommasArr: string[] = textWithCommas.split(this.firstDigit);
@@ -1321,15 +1328,27 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                     }
                                     else {
                                         if (textWithCommas.toString().toLowerCase().includes(",") && this.firstDigit == ".") {
-                                            beforeDot = textWithCommas.split(',')[0];
-                                            //  beforeDot = beforeDot.replace(this.firstDigit, "");
-                                            afterDot = textWithCommas.split(',')[1];
+
+                                            var arr = textWithCommas.split(',');
+                                            var AfterComma: string = arr[1];
+                                            AfterComma = AfterComma.replace(/\./g, '');
+                                            beforeDot = arr[0];
+                                            afterDot = AfterComma;
+                                        }
+                                        else if (textWithCommas.toString().toLowerCase().includes(".") && this.firstDigit == "'") {
+
+                                            var arr = textWithCommas.split('.');
+                                            var AfterComma: string = arr[1];
+                                            AfterComma = AfterComma.replace(/'/g, '');
+                                            beforeDot = arr[0];
+                                            afterDot = AfterComma;
                                         }
                                         else {
                                             beforeDot = textWithCommas.split('.')[0];
                                             // beforeDot = beforeDot.replace(this.firstDigit, "");
                                             afterDot = textWithCommas.split('.')[1];
                                         }
+                                     
                                     }
 
                                     //   beforeDot: string = textWithCommasArr[0];
@@ -1339,6 +1358,22 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                             afterDot = afterDot.replace(',', "");
                                         }
                                     !AppTool.IsNullOrEmpty(afterDot) ? textWithCommas = beforeDot + this.secondDigit + afterDot : textWithCommas = beforeDot;
+                                }
+                                else {
+                                    if (textWithCommas.toString().toLowerCase().includes(",") && this.firstDigit == ".") {
+
+                                        var arr = textWithCommas.split(',');
+                                        var AfterComma: string = arr[1];
+                                        AfterComma = AfterComma.replace(/\./g, '');
+                                        textWithCommas = arr[0].concat(',').concat(AfterComma);
+                                    }
+                                    else  if (textWithCommas.toString().toLowerCase().includes(".") && this.firstDigit == "'") {
+
+                                        var arr = textWithCommas.split('.');
+                                        var AfterComma: string = arr[1];
+                                        AfterComma = AfterComma.replace(/'/g, '');
+                                        textWithCommas = arr[0].concat('.').concat(AfterComma);
+                                    }         
                                 }
 
 
@@ -1739,7 +1774,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                         //}
                     }
 
-                    if ((isNaN(Number(val)) && this.textValue != null) && (this.firstDigit == "." && this.textValue != null && !this.DisableZeroPadding)) {
+                    if ((isNaN(Number(val)) && this.textValue != null) && (this.textValue != null && !this.DisableZeroPadding)) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         suppressValidation = true;
                     }
