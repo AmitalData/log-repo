@@ -2842,14 +2842,18 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowFixedPriceContainers)
                     {
-                        if (ViewFixedPrice && chargePM.SaleMeasurementCode != "BCNT")
+                        if (ViewFixedPrice)
                         {
                             string AA = " ";
-                            if (chargePM.SaleAmountInSaleCurrency != null)
+                            if (chargePM.SaleMeasurementCode != "BCNT")
                             {
-                                double value = (double)chargePM.SaleAmountInSaleCurrency;
-                                AA = value.ToString("N"); // 1,234.512
+                                if (chargePM.SaleAmountInSaleCurrency != null)
+                                {
+                                    double value = (double)chargePM.SaleAmountInSaleCurrency;
+                                    AA = value.ToString("N"); // 1,234.512
+                                }
                             }
+
                             HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
                             row += 1;
                         }
