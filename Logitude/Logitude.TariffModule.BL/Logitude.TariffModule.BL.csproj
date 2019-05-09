@@ -108,6 +108,7 @@
     <Compile Include="EntityUpdateServices\Generated\TariffVersionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\TariffLineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TariffVersionUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\TariffModuleClassLevelValidator.cs" />
     <Compile Include="Validators\TariffModuleValidationClass.cs" />

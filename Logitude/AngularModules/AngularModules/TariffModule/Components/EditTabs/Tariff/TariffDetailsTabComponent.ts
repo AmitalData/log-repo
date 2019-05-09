@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
+import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
 
 @Component({
     moduleId: module.id,
@@ -51,10 +53,25 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
 
     BuildTabs() {
         this.Tabs = [];
-        this.Tabs.push(new TariffDetailsTab(0, "VR"));
-        this.Tabs.push(new TariffDetailsTab(1, "GN"));
-        this.Tabs.push(new TariffDetailsTab(2, "VH"));
-        this.Tabs.push(new TariffDetailsTab(3, "EV"));
+
+        var datePipe: DatePipe = new DatePipe("en-US");
+        var from: string = "";
+        var to: string = "";
+        var header: string = "Version";
+        var index: number = 0;
+        
+        this.EntityPM.TariffVersions.sort((a, b) => { return (a.Version === b.Version) ? 0 : (a.Version > b.Version) ? -1 : 1 }).forEach(item => {
+            from = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
+            to = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+
+            header = "Version " + item.Version + " (" + from + " - " + to + ")";
+            this.Tabs.push(new TariffDetailsTab(index, "VR", header, item));
+            index++;
+        });
+        
+        this.Tabs.push(new TariffDetailsTab(index + 1, "GN", "General"));
+        this.Tabs.push(new TariffDetailsTab(index + 2, "VH", "Version History"));
+        this.Tabs.push(new TariffDetailsTab(index + 3, "EV", "Events"));
     }
 
     private Retries: number = 0;
@@ -86,9 +103,7 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
             this.timerToken = setTimeout(() => this.RunComponent(), 1);
         }
     }
-
-
-
+    
     public SelectedTabItem: TariffDetailsTab;
     SelectionChanged(clickdTab: TariffDetailsTab) {
         if (clickdTab != null) {
@@ -118,6 +133,10 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
                     else if (this.SelectedTabItem.ComponentPath) {
                         SessionLocator.DynamicLoader.Load(this.SelectedTabItem.ComponentPath, location.viewContainerRef).then(cmpRef => {
                             this.SelectedTabItem.IsTabLoaded = true;
+
+                            if (this.SelectedTabItem.Code == "VR") {
+                                cmpRef.instance.Run({ CurrentVersion: this.SelectedTabItem.SelectedVersion, });
+                            }
                         });
                     }
                 }
@@ -133,31 +152,32 @@ class TariffDetailsTab {
     public ComponentPath: string;
     public IsSelected: boolean = false;
     public IsTabLoaded: boolean = false;
-    constructor(index: number, code: string) {
+    public IsDraft: boolean = false;
+    public SelectedVersion: TariffVersionPM;
+    constructor(index: number, code: string, header: string, version: TariffVersionPM = null) {
         this.Index = index;
         this.Code = code;
+        this.Header = header;
 
         switch (this.Code) {
             case "VR": {
-                this.Header = "Version";
+                this.IsDraft = version.IsDraft;
+                this.SelectedVersion = version;
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/VersionTabComponent";
                 break;
             }
 
             case "GN": {
-                this.Header = "General";
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent";
                 break;
             }
 
             case "VH": {
-                this.Header = "Version History";
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/VersionHistoryTabComponent";
                 break;
             }
 
             case "EV": {
-                this.Header = "Events";
                 this.ComponentPath = "./Common/Components/Events/EventsTabComponent";
                 break;                    
             }

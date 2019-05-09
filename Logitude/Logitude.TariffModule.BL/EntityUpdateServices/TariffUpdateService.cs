@@ -86,6 +86,9 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         {
             TariffLineUpdateService tariffLineUpdateService = new TariffLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             tariffLineUpdateService.UpdateMulti(entityPM.TariffLines, entityPM.DeletedTariffLines, entityPM, false);
+
+            TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            tariffVersionUpdateService.UpdateMulti(entityPM.TariffVersions, entityPM.DeletedTariffVersions, entityPM, false);
         }
 
         protected override void Trace(TariffPM entityPM, Tariff entityPOCO, string changesXml)

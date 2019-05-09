@@ -9,12 +9,14 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { PortPM } from '../../../../Common/EntityPMs/PortPM';
 import { TariffDomainService, TariffFilterParameter, ExcelTariffLines } from '../../../../TariffModule/Services/TariffDomainService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
 import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
 import { TariffVersionPM } from '../../../../TariffModule/EntityPMs/TariffVersionPM';
-import { AppTool, FontTool } from '../../../../Infrastructure/Tools';
+import { AppTool, FontTool, DateTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 declare var ResultAsArray: any;
 
@@ -49,14 +51,14 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
+                    //this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
 
                     if (this.CurrentVersion != null) {
                         this.IsDraftVersion = this.CurrentVersion.IsDraft;
@@ -67,6 +69,11 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
             });
         }
     }
+
+    public Run(args: any) {
+        this.CurrentVersion = args['CurrentVersion'];       
+    }
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
@@ -84,7 +91,7 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
             this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
             this.TariffDomainService = new TariffDomainService();
 
-            this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
+            //this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
 
             if (this.CurrentVersion != null) {
                 this.IsDraftVersion = this.CurrentVersion.IsDraft;
@@ -390,8 +397,8 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
     }
 
     // Download Excel 
-    DownloadExcel() {
-        this.TariffDomainService.DownloadTariffLines(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+    DownloadExcelClicked(type: string) {
+        this.TariffDomainService.DownloadTariff(this.EntityPM.Id, type).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var fileName = myResponse.Result;
                 var tempDate = new Date();
@@ -401,7 +408,7 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
                     window.open(url);
                 }
             }
-        });
+        });        
     }
 
     ApproveVersionClicked() {
@@ -410,6 +417,32 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
         });
+    }
+    
+    CopyVersionClicked() {
+        if (this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0]) {
+            var messageWindow: MessageWindow = new MessageWindow();
+            messageWindow.Show("You can't copy this version since you already have draft one");
+        }
+
+        else {
+            this.DoCopy();
+        }
+    }
+
+    private DoCopy() {
+        var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
+        copiedVersion.TariffId = this.CurrentVersion.TariffId;
+        copiedVersion.Version = this.EntityPM.LastVersion + 1;
+        copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
+        copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
+        copiedVersion.ExpirationDate = this.CurrentVersion.ExpirationDate;
+        copiedVersion.IsDraft = true;
+        copiedVersion.StartDate = this.CurrentVersion.StartDate;
+        copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
+
+        this.EntityPM.AddTariffVersion(copiedVersion);
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
 }
 

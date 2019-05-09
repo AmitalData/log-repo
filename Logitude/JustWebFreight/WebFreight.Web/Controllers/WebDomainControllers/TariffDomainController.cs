@@ -101,7 +101,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
         }
-        public HttpResponseMessage GetDownloadTariffLines(string tariffId)
+        public HttpResponseMessage GetDownloadTariff(string tariffId, string type)
         {
             try
             {
@@ -112,9 +112,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 TariffQueryService tariffQuery = new TariffQueryService(tenant);
                 TariffPM tariffPM = tariffQuery.GetSingle(tariffId, true, false);
-                List<TariffLinePM> tariffLines = tariffPM.TariffLines;
-
-                byte[] data = this.ExportTariffLinesToExcel(tariffPM, tariffLines, tenant);
+                
+                byte[] data;
+                if (type == "Data")
+                {
+                    List<TariffLinePM> tariffLines = tariffPM.TariffLines;
+                    data = this.ExportTariffLinesToExcel(tariffPM, tariffLines, tenant);
+                }
+                else
+                {
+                    data = this.ExportTariffLinesToExcel(tariffPM, null, tenant);
+                }
 
                 string fileName = "Tariffs" + DateTime.Now.ToShortDateString();
                 BlobFileInfo fileInfo = new BlobFileInfo()
@@ -137,6 +145,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
         private byte[] ExportTariffLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant)
         {
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
@@ -144,7 +153,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
-
 
             // Build excel headers 
             DataTable table = new DataTable();
@@ -208,6 +216,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     table.Rows.Add(row);
                 }
             }
+
+            sheet1.Range["A1:H1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range["A1:H1"].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range["A1:H1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
             sheet1.ImportDataTable(table, true, 1, 1);
             workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory);
