@@ -1931,7 +1931,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 			pagoItem.FormaDePagoP = entityPM.SATPaymentMethodCode;
 			pagoItem.FechaPago = entityPM.RegisterDate.Value;
 
-			List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado> doctos = new List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado>();
+            TimeSpan time = new TimeSpan(12, 00, 00);
+            DateTime resultdate = pagoItem.FechaPago.Date + time;
+            pagoItem.FechaPago = resultdate;
+             
+            List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado> doctos = new List<Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado>();
 			int number = 1;
 			paymentARInvoices.ForEach(invoice =>
 			{
