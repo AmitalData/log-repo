@@ -125,6 +125,7 @@ namespace MeatadataGeneratorTool
             //}
         }
 
+
         private ObservableCollection<TextCodesViewModel> additionalTextCodesList;
         public ObservableCollection<TextCodesViewModel> AdditionalTextCodesList
         {
@@ -1696,6 +1697,14 @@ namespace MeatadataGeneratorTool
         {
             get { return lovDisplayMemberPathLocal; }
             set { lovDisplayMemberPathLocal = value; FirePropertyChanged("LovDisplayMemberPathLocal"); }
+        }
+
+        bool isTabsHidden;
+
+        public bool IsTabsHidden
+        {
+            get { return isTabsHidden; }
+            set { isTabsHidden = value; FirePropertyChanged("IsTabsHidden"); }
         }
 
         ObjectFieldsViewModel selectedObjectField;

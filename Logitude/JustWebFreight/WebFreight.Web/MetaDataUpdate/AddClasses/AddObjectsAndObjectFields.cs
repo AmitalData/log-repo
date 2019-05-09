@@ -72,6 +72,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.NameField = objectTablesDetails.NameField;
                 objectTable.LovDisplayMemberPathLocal = objectTablesDetails.LovDisplayMemberPathLocal;
                 objectTable.LovDisplayMemberPath = objectTablesDetails.LovDisplayMemberPath;
+                objectTable.IsTabsHidden = objectTablesDetails.IsTabsHidden;
                 objectTableRepository.Add(objectTable);
 
                 TextCode objectSingular = null;
@@ -307,6 +308,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 }
 
                 updatedObjectTable.IsLookUp = (!string.IsNullOrEmpty(objectTablesDetails.LookUp1) && !objectTablesDetails.IsComposition);
+                updatedObjectTable.IsTabsHidden = objectTablesDetails.IsTabsHidden;
                 objectTableRepository.Update(updatedObjectTable);
                 return updatedObjectTable;
                 #endregion

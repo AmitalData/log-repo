@@ -10,7 +10,7 @@
 
 import {ARPaymentInvoicePM} from './ARPaymentInvoicePM';
 
-//import {LedgerTransactionPM} from './LedgerTransactionPM';
+import {LedgerTransactionPM} from './../../Accounting/EntityPMs/LedgerTransactionPM';
 import {ARPaymentPMCustomCode} from '../EntityPMCustomCode/ARPaymentPMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -502,20 +502,20 @@ export class ARPaymentPM {
        
 	 
      
-	//private invoicesTransactions: LedgerTransactionPM[];
- //   get  InvoicesTransactions() {
- //       if (this.invoicesTransactions == null) {
- //           this.invoicesTransactions = [];
- //       }
+	private invoicesLedgerTransactions: LedgerTransactionPM[];
+    get  InvoicesLedgerTransactions() {
+        if (this.invoicesLedgerTransactions == null) {
+            this.invoicesLedgerTransactions = [];
+        }
 
- //       return this.invoicesTransactions;
- //   }
- //   set  InvoicesTransactions(newValue: LedgerTransactionPM[]) {
- //       if (this.invoicesTransactions != newValue) {
- //           this.invoicesTransactions = newValue;
- //       }
- //   }
-    //public InvoicesTransactions: Array<LedgerTransactionPMPM>= [];
+        return this.invoicesLedgerTransactions;
+    }
+    set  InvoicesLedgerTransactions(newValue: LedgerTransactionPM[]) {
+        if (this.invoicesLedgerTransactions != newValue) {
+            this.invoicesLedgerTransactions = newValue;
+        }
+    }
+    //public InvoicesLedgerTransactions: Array<LedgerTransactionPMPM>= [];
  
     public OldEntityPM: ARPaymentPM;
 		
