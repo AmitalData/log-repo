@@ -840,15 +840,19 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else
                         {
+
                             myStringBuilder.Append(a);
-                            myStringBuilder.Append(' ', 15);
+                            myStringBuilder.Append("+");
+
+                            myStringBuilder.Append(' ', 14);
                         }
                       
                     }
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append(' ', 15);
+                        myStringBuilder.Append("+");
+                        myStringBuilder.Append(' ', 14);
                     }
                     if (item.TotalDebit != null)
                     {
@@ -871,14 +875,16 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             myStringBuilder.Append(a);
-                            myStringBuilder.Append('0', 15);
+                            myStringBuilder.Append("+");
+                            myStringBuilder.Append('0', 14);
                         }
                        
                     }
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                        myStringBuilder.Append("+");
+                        myStringBuilder.Append('0', 14);
                     }
                     if (item.TotalCredit != null)
                     {
@@ -901,13 +907,15 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             myStringBuilder.Append(a);
-                            myStringBuilder.Append('0', 15);
+                            myStringBuilder.Append("+");
+                            myStringBuilder.Append('0', 14);
                         }
                     }
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                        myStringBuilder.Append("+");
+                        myStringBuilder.Append('0', 14);
                     }
                 }
                 else
@@ -956,6 +964,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             myStringBuilder.Append(a);
+                            myStringBuilder.Append("+");
                             myStringBuilder.Append(' ', 15);
                         }
                       
@@ -963,7 +972,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append(' ', 15);
+                        myStringBuilder.Append("+");
+                        myStringBuilder.Append(' ', 14);
                     }
 
                    /* item.TotalDebitInForeignCurrency = trailReportM != null ? trailReportM.Select(d => d.ForeignDebit).Sum() : null;
@@ -1663,7 +1673,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 15);
+                    myStringBuilder.Append(' ', 15);
 
                     if (line.LocalCurrencyAmount != null)
                     {
@@ -2390,7 +2400,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 15);
+                    myStringBuilder.Append(' ', 15);
 
                     if (line.LocalCurrencyAmount != null) {
 
@@ -4708,9 +4718,12 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 formated = "0"+ formated  ;
             }
-          
-            
-           
+            else if ((sub.Count() > 1) && !isVat && sub[1] != "00")
+            {
+                formated =  formated + "0";
+            }
+
+
             return formated;
         }
     }

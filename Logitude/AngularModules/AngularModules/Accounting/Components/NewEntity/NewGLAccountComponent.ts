@@ -408,4 +408,9 @@ export class NewGLAccountComponent extends BaseComponent {
 
     }
 
+    GetDisplayMemberPath(){
+        var showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        return showLocal ? "LocalName" : "EnglishName";
+    }
+
 }
