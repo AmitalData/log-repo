@@ -46,7 +46,7 @@ namespace Logitude.BL.Helpers
                             shipmentPM.ImporterDepositionRequestDetails = shipmentComputedFields.ImporterDepositionRequestDetails;
                             shipmentPM.LastDocumentDateTime = shipmentComputedFields.LastDocumentDateTime;
                             shipmentPM.ShipperReference1 = shipmentPM.CustomerReference1;
-                            shipmentPM.ConsigneeReference1 = shipmentPM.ConsigneeReference1; 
+                            shipmentPM.ConsigneeReference1 = shipmentPM.CustomerReference1; 
                             shipmentPM.IsShipmentComputedFieldChange = true;
                             IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
                             ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
