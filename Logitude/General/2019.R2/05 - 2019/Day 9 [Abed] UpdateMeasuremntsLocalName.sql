@@ -1,0 +1,1 @@
+update Measurements set LocalName  = Name WHERE LocalName is null
