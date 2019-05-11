@@ -365,6 +365,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string StockTypeCode { get; set; }
 
         public bool AutoArchiveOnInvoice { get; set; }
+        public string EcommerceSupportEmail { get; set; }
 
 
     }
