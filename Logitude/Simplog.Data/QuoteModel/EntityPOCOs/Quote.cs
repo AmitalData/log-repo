@@ -63,6 +63,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string Notes { get; set; }
         public string DescriptionOfGoods { get; set; }
         public double? ChargeableWeight { get; set; }
+        public double? ChargeableWeightInKG { get; set; }
         public double? GrossWeight { get; set; }        
         public byte[] LastModified { get; set; }
         public bool IsClosed { get; set; }
@@ -333,5 +334,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         public bool GrossWeightEdited { get; set; }
         public bool ChargeableWeightEdited { get; set; }
+
+
     }
 }

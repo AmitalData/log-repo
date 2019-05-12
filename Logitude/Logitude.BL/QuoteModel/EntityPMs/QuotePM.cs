@@ -115,6 +115,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string DescriptionOfGoods { get; set; }
 
         public double? ChargeableWeight { get; set; }
+        public double? ChargeableWeightInKG { get; set; }
         public double? GrossWeight { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }
