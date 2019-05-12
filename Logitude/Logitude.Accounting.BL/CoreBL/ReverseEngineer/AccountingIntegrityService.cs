@@ -57,6 +57,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         }
         public AccountingIntegrityResult CheckIntegrity(AccountingIntegrityInParam accountingIntegrityInParam)
         {
+            
             string errorMessage = CheckParams(accountingIntegrityInParam);
             if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -64,12 +65,32 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             }
 
             var myAccountingIntegrityResult = new AccountingIntegrityResult();
-            JournalLineToLedgerCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
-            LedgerToMonthTotalCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+            try
+            {
+                JournalLineToLedgerCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+                LedgerToMonthTotalCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
 
-            GLAccountBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+                GLAccountBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
 
-            DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+                DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+
+            }
+            catch
+            {
+                myAccountingIntegrityResult.HasException = true;
+            }
+            finally
+            {
+                if (!myAccountingIntegrityResult.HasException)
+                {
+                    if (myAccountingIntegrityResult.MyAccountingIntegrityStep != null)
+                    {
+                        myAccountingIntegrityResult.HasException = myAccountingIntegrityResult.MyAccountingIntegrityStep
+                            .Any(r => !String.IsNullOrWhiteSpace(r.ExceptionMessage));
+                    }
+
+                }
+            }
             return myAccountingIntegrityResult;
         }
 
@@ -439,6 +460,8 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
     }
     public class AccountingIntegrityResult
     {
+        public bool HasException { get; set; }
+    
         public List<AccountingIntegrityStep> MyAccountingIntegrityStep { get; set; }
 
         public List<JournalLineLedgerDTO> JournalLineToLedgerResult { get; set; }

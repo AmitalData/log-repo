@@ -22,7 +22,7 @@ using Logitude.TariffModule.Data;
 
 namespace Logitude.TariffModule.BL.EntityUpdateServices
 { 
-   public partial class TariffLineUpdateService:EntityUpdateService<TariffLine,TariffLinePM,TariffPM>
+   public partial class TariffLineUpdateService:EntityUpdateService<TariffLine,TariffLinePM,TariffVersionPM>
    {
    
         TariffLineRepository entityRepository;

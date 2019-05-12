@@ -141,23 +141,23 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string GLAccountId { get; set; }
         public string GLAccountRecoMethodCode { get; set; }
         public bool IsExternalEntity { get; set; }
-        private List<LedgerTransactionPM> invoicesTransactions;
-        public virtual List<LedgerTransactionPM> InvoicesTransactions
+        private List<LedgerTransactionPM> invoicesLedgerTransactions;
+        public virtual List<LedgerTransactionPM> InvoicesLedgerTransactions
         {
             get
             {
-                if (invoicesTransactions == null)
+                if (invoicesLedgerTransactions == null)
                 {
-                    invoicesTransactions = new List<LedgerTransactionPM>();
+                    invoicesLedgerTransactions = new List<LedgerTransactionPM>();
                 }
 
-                return invoicesTransactions;
+                return invoicesLedgerTransactions;
             }
             set
             {
                 if (value != null)
                 {
-                    invoicesTransactions = value;
+                    invoicesLedgerTransactions = value;
                 }
             }
         }

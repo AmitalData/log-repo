@@ -1054,6 +1054,8 @@ namespace MeatadataGeneratorTool
             SetAttribute("DisableSearchBox", table.DisableSearchBox.ToString().ToLower(), entityElement);
             SetAttribute("HasDocuments", table.HasDocuments.ToString().ToLower(), entityElement);
             SetAttribute("IsLookUp", table.IsLookUp.ToString().ToLower(), entityElement);
+            SetAttribute("IsTabsHidden", table.IsTabsHidden.ToString().ToLower(), entityElement);
+
             if (!string.IsNullOrEmpty(table.SearchFields))
             {
                 SetAttribute("SearchFields", GetStringValue(table.SearchFields), entityElement, null);
@@ -1260,6 +1262,11 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IsSpellCheckedShortLocalDefaultText", f.IsSpellCheckedShortLocalDefaultText.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsSpellCheckedListLocalDefaultText", f.IsSpellCheckedListLocalDefaultText.ToString().ToLower(), fieldElement, null);
                 SetAttribute("EnableFullscreenTextBox", f.EnableFullscreenTextBox.ToString().ToLower(), fieldElement, null);
+
+                if (!string.IsNullOrEmpty(f.ModelName))
+                {
+                    SetAttribute("ModelName", GetStringValue(f.ModelName), fieldElement, null);
+                }
             }
 
             #endregion

@@ -8,6 +8,7 @@
                         <ul>
                             <li *ngFor="let item of Tabs" [class.Selected]="item.IsSelected" (click)="SelectionChanged(item)">
                                 <div class="InnerChild">
+                                    <span *ngIf="item.Code == 'VR' && item.IsDraft" style="color:orange;">[Draft]</span>
                                     {{item.Header}}
                                 </div>
                             </li>

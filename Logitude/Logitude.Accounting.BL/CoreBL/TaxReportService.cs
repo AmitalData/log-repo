@@ -541,6 +541,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                     taxReport.ChangeSetOp = ChangeSetOperation.Update;
                     taxReport.NeedsRebulid = true;
+                    taxReport.StatusCode = "T"; // T- Transmitted
                     updateService.Update(taxReport, true);
 
                     throw ex;

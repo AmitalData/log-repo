@@ -1,6 +1,6 @@
 
 <div class="TabHolder">
-    <table *ngIf="IsResourcesReady">
+    <table>
         <tr style="height: 1px;">
             <td>
                 <table>
@@ -37,8 +37,36 @@
                             <div></div>
                         </td>
 
-                        <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
-                            <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
+                        <td style="width: 20px; padding: 3px;">
+                            <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Add'" [IsSmall]="true" (click)="AddTariffLine()"></IconButton>
+                        </td>
+
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:70px;">
+                            <div tabindex="0" class="ToggleButton">
+                                <label>Actions</label>
+                                <img src="./Images/ToggleIcon.png" />
+
+                                <div class="ToggleButtonMenu">
+                                    <button (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
+                                    <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
+
+                                    <div *ngIf="IsDraftVersion">
+                                        <input class="upload" style="display: none;width:65px"
+                                               type="file" (change)="OnFileChanged($event)"
+                                               #fileInput>
+                                        <a href="#" style="text-decoration:none">
+                                            <button (click)="fileInput.click()">Upload Excel</button>
+                                        </a>
+                                    </div>
+
+                                    <button (click)="ApproveVersionClicked()" *ngIf="IsApproveVersionButtonVisible">Approve Version</button>
+                                    <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -48,52 +76,6 @@
         <tr style="height: 10px;">
             <td>
                 <div></div>
-            </td>
-        </tr>
-
-        <tr class="SectionHeader">
-            <td>
-                <table>
-                    <tr>
-                        <td>
-                            <label>Tariffs</label>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-
-                        <td style="width:95px;">
-                            <Hyperlink [IsEnabled]="IsDraftVersion" (click)="DownloadExcel()" [Text]="'Download Excel'"></Hyperlink>
-                        </td>
-
-                        <td width="5px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width:95px;">
-                            <input class="upload" style="display: none;width:65px"
-                                   type="file" (change)="OnFileChanged($event)"
-                                   #fileInput>
-                            <a href="#">
-                                <button [disabled]="!IsDraftVersion" (click)="fileInput.click()">Upload Excel</button>
-                            </a>
-                            <!--<Hyperlink (click)="UploadExcel()" [Text]="'Upload Excel'"></Hyperlink>-->
-                        </td>
-
-                        <td width="5px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width: 20px; padding: 3px;">
-                            <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Add'" [IsSmall]="true" (click)="AddTariffLine()"></IconButton>
-                        </td>
-
-                        <td style="width:5px;">
-                            <div></div>
-                        </td>
-                    </tr>
-                </table>
             </td>
         </tr>
 

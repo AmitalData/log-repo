@@ -16,8 +16,8 @@ namespace Logitude.TariffModule.Data.Repositories
    {
 		public List<TariffLine> GetMulti(EntityKeyFields entityKeys)
         {
-            TariffKeys myEntityKeys = entityKeys as TariffKeys;
-            return (from a in context.TariffLines where a.TariffId == myEntityKeys.Id select a).ToList();
+            TariffVersionKeys myEntityKeys = entityKeys as TariffVersionKeys;
+            return (from a in context.TariffLines where a.TariffId == myEntityKeys.TariffId && a.Version == myEntityKeys.Version select a).ToList();
         }
 
         public List<TariffLine> GetTariffLinesByTariff(string tariffId, int tenant)

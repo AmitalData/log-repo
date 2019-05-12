@@ -188,9 +188,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myStringBuilder.Append('0', 10);
                 }
-
-                if (item.JournalLineNumber.ToString().Length > 9) { item.JournalLineNumber.ToString().Substring(0, 5); }
-                myStringBuilder.Append( item.JournalLineNumber.ToString().PadLeft(5, '0'));
+                string JournalLineNumber = item.JournalLineNumber.ToString();
+                if (item.JournalLineNumber.ToString().Length > 9) { JournalLineNumber= JournalLineNumber.Substring(0, 5); }
+                myStringBuilder.Append(JournalLineNumber.PadLeft(5, '0'));
 
                 if (item.JournalNumber != null)
                 {
@@ -205,7 +205,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (item.AccountingEntityReference != null)
                 {
-                    if (item.AccountingEntityReference.Length > 20) { item.AccountingEntityReference.Substring(0, 20); }
+                    if (item.AccountingEntityReference.Length > 20) { item.AccountingEntityReference= item.AccountingEntityReference.Substring(0, 20); }
                     myStringBuilder.Append( item.AccountingEntityReference.PadLeft(20, ' '));
                 }
                 else
@@ -242,7 +242,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (item.Reference2 != null)
                 {
-                    if (item.Reference2.Length > 20) { item.Reference2.Substring(0, 20); }
+                    if (item.Reference2.Length > 20) { item.Reference2= item.Reference2.Substring(0, 20); }
                     myStringBuilder.Append(item.Reference2.PadLeft(20, ' '));
                 }
                 else
@@ -273,7 +273,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (item.GLAccountDisplayNumber != null)
                 {
-                    if (item.GLAccountDisplayNumber.Length > 15) { item.GLAccountDisplayNumber.Substring(0, 15); }
+                    if (item.GLAccountDisplayNumber.Length > 15) { item.GLAccountDisplayNumber= item.GLAccountDisplayNumber.Substring(0, 15); }
                     myStringBuilder.Append( item.GLAccountDisplayNumber.PadLeft(15, ' '));
                 }
                 else
@@ -283,7 +283,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (item.OppositGLAccount != null)
                 {
-                    if (item.OppositGLAccount.Length > 15) { item.OppositGLAccount.Substring(0, 15); }
+                    if (item.OppositGLAccount.Length > 15) { item.OppositGLAccount= item.OppositGLAccount.Substring(0, 15); }
                     myStringBuilder.Append( item.OppositGLAccount.PadLeft(15, ' '));
                 }
                 else
@@ -364,7 +364,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         var LocalAmountCredit = Format(item.LocalAmountCredit); // Math.Abs(item.LocalAmountCredit).ToString().Replace(".", string.Empty);
 
                         myStringBuilder.Append("+");
-                        if (LocalAmountCredit.Length > 14) { LocalAmountCredit.Substring(0, 14); }
+                        if (LocalAmountCredit.Length > 14) { LocalAmountCredit= LocalAmountCredit.Substring(0, 14); }
                         myStringBuilder.Append(LocalAmountCredit.PadLeft(14, '0'));
                     }
 
@@ -373,7 +373,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         var LocalAmountCredit = Format(item.LocalAmountCredit);// Math.Abs(item.LocalAmountCredit).ToString().Replace(".", string.Empty);
 
                         myStringBuilder.Append("-");
-                        if (LocalAmountCredit.Length > 14) { LocalAmountCredit.Substring(0, 14); }
+                        if (LocalAmountCredit.Length > 14) { LocalAmountCredit= LocalAmountCredit.Substring(0, 14); }
                         myStringBuilder.Append(LocalAmountCredit.PadLeft(14, '0'));
                     }
                  
@@ -569,13 +569,13 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     if (item.EnglishName != null)
                     {
-                        if (item.EnglishName.Length > 50) { item.EnglishName.Substring(0, 50); }
+                        if (item.EnglishName.Length > 50) { item.EnglishName= item.EnglishName.Substring(0, 50); }
                         myStringBuilder.Append(a + item.EnglishName.PadLeft(50, ' '));
                     }
                 }
                 if (item.ChartOfAccountsCode != null)
                 {
-                    if (item.ChartOfAccountsCode.Length > 15) { item.ChartOfAccountsCode.Substring(0, 15); }
+                    if (item.ChartOfAccountsCode.Length > 15) { item.ChartOfAccountsCode= item.ChartOfAccountsCode.Substring(0, 15); }
                     myStringBuilder.Append(a + item.ChartOfAccountsCode.PadLeft(15, ' '));
                 }
                 else
@@ -585,7 +585,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 if (item.ChartOfAccountsName != null)
                 {
-                    if (item.ChartOfAccountsName.Length > 30) { item.ChartOfAccountsName.Substring(0, 30); }
+                    if (item.ChartOfAccountsName.Length > 30) { item.ChartOfAccountsName= item.ChartOfAccountsName.Substring(0, 30); }
                     myStringBuilder.Append(a+ item.ChartOfAccountsName.PadLeft(30, ' '));
                 }
                 else
@@ -650,7 +650,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                             if (billingaddress.ZipCode != null)
                             {
-                                if (billingaddress.ZipCode.Length > 8) { billingaddress.ZipCode.Substring(0, 8); }
+                                if (billingaddress.ZipCode.Length > 8) { billingaddress.ZipCode= billingaddress.ZipCode.Substring(0, 8); }
                                 myStringBuilder.Append(a + billingaddress.ZipCode.PadLeft(8, ' '));
                             }
                             else
@@ -660,7 +660,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                             if (billingaddress.CountryName != null)
                             {
-                                if (billingaddress.CountryName.Length > 30) { billingaddress.CountryName.Substring(0, 30); }
+                                if (billingaddress.CountryName.Length > 30) { billingaddress.CountryName= billingaddress.CountryName.Substring(0, 30); }
                                 myStringBuilder.Append(a + billingaddress.CountryName.PadLeft(30, ' '));
                             }
                             else
@@ -840,14 +840,18 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else
                         {
+
                             myStringBuilder.Append(a);
-                            myStringBuilder.Append(' ', 15);
+                            myStringBuilder.Append("+");
+
+                            myStringBuilder.Append('0', 14);
                         }
                       
                     }
                     else
                     {
                         myStringBuilder.Append(a);
+                      //  myStringBuilder.Append("+");
                         myStringBuilder.Append(' ', 15);
                     }
                     if (item.TotalDebit != null)
@@ -871,14 +875,16 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             myStringBuilder.Append(a);
-                            myStringBuilder.Append('0', 15);
+                            myStringBuilder.Append("+");
+                            myStringBuilder.Append('0', 14);
                         }
                        
                     }
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                      //  myStringBuilder.Append("+");
+                        myStringBuilder.Append(' ', 15);
                     }
                     if (item.TotalCredit != null)
                     {
@@ -901,19 +907,21 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             myStringBuilder.Append(a);
-                            myStringBuilder.Append('0', 15);
+                            myStringBuilder.Append("+");
+                            myStringBuilder.Append('0', 14);
                         }
                     }
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                       // myStringBuilder.Append("+");
+                        myStringBuilder.Append(' ', 15);
                     }
                 }
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 45);
+                    myStringBuilder.Append(' ', 45);
 
                 }
                 myStringBuilder.Append(a);
@@ -956,7 +964,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             myStringBuilder.Append(a);
-                            myStringBuilder.Append(' ', 15);
+                            myStringBuilder.Append("+");
+                            myStringBuilder.Append('0', 14);
                         }
                       
                     }
@@ -1663,7 +1672,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 15);
+                    myStringBuilder.Append(' ', 15);
 
                     if (line.LocalCurrencyAmount != null)
                     {
@@ -2390,7 +2399,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 15);
+                    myStringBuilder.Append(' ', 15);
 
                     if (line.LocalCurrencyAmount != null) {
 
@@ -3405,7 +3414,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     myStringBuilder.Append('0', 8);
 
                     string localAmount = Format((decimal)item.DocumentAmountAndVATAmount);
-                    if (localAmount != null)
+                    /*if (localAmount != null)
                     {
                         if (localAmount.Length > 15)
                         {
@@ -3418,7 +3427,38 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         myStringBuilder.Append(a);
                         myStringBuilder.Append('0', 15);
+                    }*/
+
+
+                    if (localAmount != null)
+                    {
+                        if (item.DocumentAmountAndVATAmount> 0)
+                        {
+                            myStringBuilder.Append(a);
+                            myStringBuilder.Append("+");
+                            if (localAmount.Length > 14) { localAmount = localAmount.Substring(0, 14); }
+                            myStringBuilder.Append(a + localAmount.PadLeft(14, '0'));
+                        }
+
+                        else if (item.DocumentAmountAndVATAmount < 0)
+                        {
+                            myStringBuilder.Append(a);
+                            myStringBuilder.Append("-");
+                            if (localAmount.Length > 14) { localAmount = localAmount.Substring(0, 14); }
+                            myStringBuilder.Append(a + localAmount.PadLeft(14, '0'));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append(a);
+                            myStringBuilder.Append('0', 15);
+                        }
                     }
+                    else
+                    {
+                        myStringBuilder.Append(a);
+                        myStringBuilder.Append('0', 15);
+                    }
+
 
 
 
@@ -4708,9 +4748,12 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 formated = "0"+ formated  ;
             }
-          
-            
-           
+            else if ((sub.Count() > 1) && !isVat && sub[1] != "00")
+            {
+                formated =  formated + "0";
+            }
+
+
             return formated;
         }
     }
