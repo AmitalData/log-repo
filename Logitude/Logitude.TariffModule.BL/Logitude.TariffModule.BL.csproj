@@ -101,6 +101,7 @@
     <Compile Include="EntityQueryServices\Generated\TariffTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffVersionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\TariffQueryService.cs" />
+    <Compile Include="EntityQueryServices\TariffVersionQueryService.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffLineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffSettingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffTypeUpdateService.Generated.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="EntityUpdateServices\Generated\TariffVersionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\TariffLineUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\TariffVersionUpdateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\TariffModuleClassLevelValidator.cs" />
     <Compile Include="Validators\TariffModuleValidationClass.cs" />

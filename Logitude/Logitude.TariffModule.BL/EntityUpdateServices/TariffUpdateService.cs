@@ -84,8 +84,8 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
         protected override void UpdateComposition(TariffPM entityPM)
         {
-            TariffLineUpdateService tariffLineUpdateService = new TariffLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            tariffLineUpdateService.UpdateMulti(entityPM.TariffLines, entityPM.DeletedTariffLines, entityPM, false);
+            TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            tariffVersionUpdateService.UpdateMulti(entityPM.TariffVersions, entityPM.DeletedTariffVersions, entityPM, false);
         }
 
         protected override void Trace(TariffPM entityPM, Tariff entityPOCO, string changesXml)
@@ -93,7 +93,8 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
             Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
-            if(entityPM.TariffLines.Where(p=>p.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert).Count() > 0)
+            
+            if (entityPM.TariffLinesAdded)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
@@ -105,6 +106,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = changesXml
                 });
             }
+
             if (entityPM.SetAsInActive)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -117,9 +119,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = changesXml
                 });
             }
-
-
-
+            
             if (entityPM.SetAsReActive)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -132,8 +132,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = changesXml
                 });
             }
-
-
+            
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -145,7 +144,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     ObjectTableName = "Tariff",
                     Notes = changesXml
                 });
-
             }
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
@@ -160,7 +158,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = changesXml
                 });
             }
-
         }
 
         private void CreateTariffVersion(TariffPM entityPM)

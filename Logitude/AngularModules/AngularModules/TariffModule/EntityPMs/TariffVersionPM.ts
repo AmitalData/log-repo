@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {TariffPM} from './TariffPM';
+import {TariffLinePM} from './TariffLinePM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -82,7 +83,41 @@ export class TariffVersionPM {
     public set ApprovedByUserId(newValue: string) { if (this.approvedByUserId != newValue) { this.approvedByUserId = newValue; this.MarkAsDirty("ApprovedByUserId"); } }
        
 	 
+     
+	private tariffLines: TariffLinePM[];
+    get  TariffLines() {
+        if (this.tariffLines == null) {
+            this.tariffLines = [];
+        }
 
+        return this.tariffLines;
+    }
+    set  TariffLines(newValue: TariffLinePM[]) {
+        if (this.tariffLines != newValue) {
+            this.tariffLines = newValue;
+        }
+    }
+    public AddTariffLine(item: TariffLinePM) {
+        if (item != null) {
+            var index = this. TariffLines.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. TariffLines.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveTariffLine(item: TariffLinePM) {
+        if (item != null) {
+            var index = this. TariffLines.indexOf(item);
+            if (index > -1) {
+                this. TariffLines.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public TariffLines: Array<TariffLinePM>= [];
+ 
     public OldEntityPM: TariffVersionPM;
 	
     private entityParentPM: any;
