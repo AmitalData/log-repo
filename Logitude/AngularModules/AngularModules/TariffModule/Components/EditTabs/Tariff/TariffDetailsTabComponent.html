@@ -4,25 +4,15 @@
         <td>
             <div class="MediaFill">
                 <div class="TabControl">
-                    <table>
-                        <tr>
-                            <td>
-                                <div class="TabControlHead">
-                                    <ul>
-                                        <li *ngFor="let item of Tabs" [class.Selected]="item.IsSelected" (click)="SelectionChanged(item)">
-                                            <div class="InnerChild" *ngIf="item.Code!='VR'">
-                                                {{item.Header}}
-                                            </div>
-                                            <div class="InnerChild" style="color:orange" *ngIf="item.Code=='VR'">
-                                                {{item.Header}}
-                                            </div>
-                                        </li>
-
-                                    </ul>
+                    <div class="TabControlHead">
+                        <ul>
+                            <li *ngFor="let item of Tabs" [class.Selected]="item.IsSelected" (click)="SelectionChanged(item)">
+                                <div class="InnerChild">
+                                    {{item.Header}}
                                 </div>
-                            </td>                           
-                        </tr>
-                    </table>                  
+                            </li>
+                        </ul>
+                    </div>
 
                     <div class="TabControlBody">
                         <div class="MediaFillAbsolute" *ngFor="let item of Tabs;" [hidden]="!item.IsSelected">

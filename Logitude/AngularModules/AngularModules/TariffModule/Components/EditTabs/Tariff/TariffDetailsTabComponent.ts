@@ -4,7 +4,7 @@ import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
-import { DateTimePipe } from '../../../../Controls/Pipes/DateTimePipe';
+
 @Component({
     moduleId: module.id,
     templateUrl: './TariffDetailsTabComponent.html',
@@ -13,7 +13,7 @@ import { DateTimePipe } from '../../../../Controls/Pipes/DateTimePipe';
 export class TariffDetailsTabComponent implements OnInit, OnDestroy {
     public EntityPM: TariffPM;
     public Tabs: TariffDetailsTab[] = [];
-    private CurrentSession = SessionLocator.SelectedSession;    
+    private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
@@ -23,8 +23,6 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
-    public ExistanceDraft: boolean = false;
-
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -51,31 +49,12 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
         this.RunComponent();        
     }
 
-    NewDraftClicked() {
-
-
-
-    }
-
     BuildTabs() {
         this.Tabs = [];
-        var DatePipe = new DateTimePipe();
-        var Draft = this.EntityPM.TariffVersions.filter(p => p.IsDraft == true)[0];
-        if (Draft != null) {
-            this.Tabs.push(new TariffDetailsTab(0, "VR", Draft.Version+""));
-            this.ExistanceDraft = true;
-        }
-        else {
-            this.ExistanceDraft = false;
-        }
-        var Index = 1;
-        this.EntityPM.TariffVersions.filter(p => p.IsDraft == false).forEach(item => {
-            this.Tabs.push(new TariffDetailsTab(Index, "Version " + item.Version + " (" + DatePipe.transform(item.StartDate, "D") + "-" + DatePipe.transform(item.ExpirationDate, "D") + ")", item.Version+""));
-            Index++;
-        });
-        this.Tabs.push(new TariffDetailsTab(++Index, "GN"));
-        this.Tabs.push(new TariffDetailsTab(++Index, "VH"));
-        this.Tabs.push(new TariffDetailsTab(++Index, "EV"));
+        this.Tabs.push(new TariffDetailsTab(0, "VR"));
+        this.Tabs.push(new TariffDetailsTab(1, "GN"));
+        this.Tabs.push(new TariffDetailsTab(2, "VH"));
+        this.Tabs.push(new TariffDetailsTab(3, "EV"));
     }
 
     private Retries: number = 0;
@@ -139,8 +118,7 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
                     else if (this.SelectedTabItem.ComponentPath) {
                         SessionLocator.DynamicLoader.Load(this.SelectedTabItem.ComponentPath, location.viewContainerRef).then(cmpRef => {
                             this.SelectedTabItem.IsTabLoaded = true;
-                            cmpRef.instance.SetWindowArgs(clickdTab.Version);
-                            });
+                        });
                     }
                 }
             }
@@ -155,14 +133,13 @@ class TariffDetailsTab {
     public ComponentPath: string;
     public IsSelected: boolean = false;
     public IsTabLoaded: boolean = false;
-    public Version: string = null;
-    constructor(index: number, code: string, version: string = null) {
+    constructor(index: number, code: string) {
         this.Index = index;
         this.Code = code;
-        this.Version = version;
+
         switch (this.Code) {
             case "VR": {
-                this.Header = "Draft";
+                this.Header = "Version";
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/VersionTabComponent";
                 break;
             }
@@ -183,12 +160,6 @@ class TariffDetailsTab {
                 this.Header = "Events";
                 this.ComponentPath = "./Common/Components/Events/EventsTabComponent";
                 break;                    
-            }
-
-            default: {
-                this.Header = this.Code;
-                this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/VersionTabComponent";
-                break;
             }
         }
     }
