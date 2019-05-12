@@ -1111,10 +1111,14 @@ public string BuildPMImportEntitesString( dynamic entity,string entityPmname)
                {
 				     multitableName = GetObjectTableName(multitableName);
 					string pmname = multitableName + "PM";
-					 string newImport = Environment.NewLine + "import {"+pmname+"} from '../../EntityPMs/" + pmname + "';";
+				    string newImport = Environment.NewLine + "import {"+pmname+"} from '../../EntityPMs/" + pmname + "';";
+		            if(field.ModelName.GetType() == typeof(string) && field.ModelName != null)
+                    {
+                         newImport = Environment.NewLine + "import {"+pmname+"} from '../../../" + field.ModelName.ToString().Trim('"') + "/EntityPMs/" + pmname + "';";
+                    }
 					if(!importentitystring.Contains(newImport) && pmname != entityPmname)
 					 {
-						 importentitystring += Environment.NewLine + "import {"+pmname+"} from '../../EntityPMs/" + pmname + "';";
+                        importentitystring += newImport;//Environment.NewLine + "import {"+pmname+"} from '../../EntityPMs/" + pmname + "';";
 
 						 string importInsideEntitiesString = this.GenerateInsideCompisitionCode(multitableName,"import {{ChildEntityPMName}} from '../../EntityPMs/{ChildEntityPMName}';",false);
 						  //importInsideEntitiesString = this.GenerateInsideCompositionImportStrings(field,importentitystring);

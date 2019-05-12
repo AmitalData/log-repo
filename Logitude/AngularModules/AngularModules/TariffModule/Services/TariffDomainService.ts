@@ -71,10 +71,10 @@ export class TariffDomainService {
         });
     }
 
-    DownloadTariffLines(tariffId: string) {
+    DownloadTariff(tariffId: string, version: number, type: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetDownloadTariffLines?tariffId=' + tariffId
+        var url = this._apiUrl + '/GetDownloadTariff?tariffId=' + tariffId + "&version=" + version + "&type=" + type;
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
                 var myResult = response.json();
@@ -84,7 +84,7 @@ export class TariffDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
+    
     PostUploadExcelFile(filter: TariffFilterParameter) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -192,6 +192,8 @@ export class TariffFilterParameter {
     Tenant: number;
     FileData: string;
     PriceSteps: string;
+    TariffId: string;
+    Version: number;
 }
 
 export class ExcelTariffLines {

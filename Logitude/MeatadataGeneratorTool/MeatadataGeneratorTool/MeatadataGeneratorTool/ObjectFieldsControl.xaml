@@ -1032,6 +1032,21 @@
                                   IsChecked="{Binding HasTemplate,
                                                       Mode=TwoWay}" />
 
+                        <TextBlock Grid.Row="24"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   FontWeight="{Binding CanFilterFontWeight}"
+                                   Text="Model Name:" />
+
+                        <TextBox  Grid.Row="24"
+                                  Grid.Column="1"
+                                  Height="22"
+                                  Margin="2"
+                                  VerticalAlignment="Center"
+                                 Text="{Binding ModelName,
+                                                Mode=TwoWay}" />
+                        
+
                     </Grid>
 
                     <Grid Grid.Column="4">

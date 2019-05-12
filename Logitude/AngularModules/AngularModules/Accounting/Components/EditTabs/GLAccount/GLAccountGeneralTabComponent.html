@@ -34,6 +34,7 @@
                                                             [LookUpTableName]="'ChartOfAccountsType'"
                                                             (SelectedItemChanged)="OnLovItemChanged($event)"
                                                             [QueryFilterItems]="ChartOfAccountTypeFilterItems"
+                                                            [DisplayMemberPath]="GetDisplayMemberPath()"
                                                             [HideColumns]="true">
                                                     </LogLov>
                                                 </td>

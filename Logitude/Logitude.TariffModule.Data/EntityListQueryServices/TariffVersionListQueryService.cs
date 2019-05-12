@@ -39,6 +39,10 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 					
 					                          Version = a.Version,
 					
+					                          IsDraft = a.IsDraft,
+					
+					                          ApproveDate = a.ApproveDate,
+					
 		                    	            });
             return query;
 		}

@@ -14,7 +14,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 {
   public partial  class GLAccountWithholdingTaxUpdateService
     {
-
+        public bool RaiseEventWBLK { get; internal set; }
+        public bool RaiseEventWLDA { get; internal set; }
 
         protected override void OnCreating(GLAccountWithholdingTaxPM entityPM, GLAccountPM entityParentPM)
         {
@@ -36,6 +37,48 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             Contact contact = contactRep.GetSingleContactByEmail(email, entityPM.Tenant);
             entityPM.CreatedByUserId = contact.Id;
+        }
+
+        protected override void OnUpdating(GLAccountWithholdingTaxPM entityPM)
+        {
+
+            if (RaiseEventWBLK)
+            {
+                ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingBlocked", entityPM.Tenant);
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = contact.Id,
+                    ObjectTableName = "GLAccountWithholdingTax",
+                    IsAddedManually = false,
+                    EventTypeCode = "WBLK",
+                    Notes = notes,
+                });
+                RaiseEventWBLK = false;
+            }
+            if (RaiseEventWLDA)
+            {
+                ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingLineDisabled", entityPM.Tenant);
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = contact.Id,
+                    ObjectTableName = "GLAccountWithholdingTax",
+                    IsAddedManually = false,
+                    EventTypeCode = "WLDA",
+                    Notes = notes,
+                });
+                RaiseEventWLDA = false;
+            }
+            base.OnUpdating(entityPM);
         }
     }
 }

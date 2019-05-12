@@ -62,12 +62,13 @@ export class AddEditTariffLineComponent  {
 
                 this.DataContext.IsNewEntity = false;
 
-                if (this.DataContext.FatherComponent.EntityPM.TariffLines.indexOf(this.EntityPM) == -1) {
-                    this.DataContext.FatherComponent.EntityPM.AddTariffLine(this.EntityPM);
+                if (this.DataContext.FatherComponent.CurrentVersion.TariffLines.indexOf(this.EntityPM) == -1) {
+                    this.DataContext.FatherComponent.CurrentVersion.AddTariffLine(this.EntityPM);
+                    this.DataContext.FatherComponent.EntityPM.TariffLinesAdded = true;
                 }
             }
 
-            this.DataContext.FatherComponent.LoadTariffLines();
+            this.DataContext.FatherComponent.FillTariffLines();
             this.CurrentSession.CloseCurrentWindow();
         }
     }
