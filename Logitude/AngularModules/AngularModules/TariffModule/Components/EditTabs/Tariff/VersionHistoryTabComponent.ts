@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
+import { TariffVersionPM } from '../../../../TariffModule/EntityPMs/TariffVersionPM';
 import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
@@ -14,6 +15,7 @@ import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeName
 
 export class VersionHistoryTabComponent {
     public EntityPM: TariffPM;
+    public VersionPM: TariffVersionPM;
     public VersionLinesSource: ObservableCollection;
 
     constructor(public entityArgs: EntityArgs) {
@@ -169,6 +171,7 @@ export class VersionHistoryTabComponent {
         if (this.selectedVersion != value) {
             this.selectedVersion = value;
 
+            this.VersionPM = this.EntityPM.TariffVersions.filter(d => d.Version == this.SelectedVersion.Code_Int)[0];
             this.FillLines();
         }
     }
@@ -177,7 +180,7 @@ export class VersionHistoryTabComponent {
         this.VersionLinesSource.Clear();
         var itemsCollection: TariffLinePM[] = [];
 
-        this.EntityPM.TariffLines.filter(d => d.Version = this.SelectedVersion.Code_Int).forEach(item => {
+        this.VersionPM.TariffLines.forEach(item => {
             itemsCollection.push(item);
         });
 
