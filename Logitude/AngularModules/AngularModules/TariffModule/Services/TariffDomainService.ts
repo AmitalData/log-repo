@@ -71,10 +71,10 @@ export class TariffDomainService {
         });
     }
 
-    DownloadTariff(tariffId: string, type: string) {
+    DownloadTariff(tariffId: string, version: number, type: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetDownloadTariff?tariffId=' + tariffId + "&type=" + type;
+        var url = this._apiUrl + '/GetDownloadTariff?tariffId=' + tariffId + "&version=" + version + "&type=" + type;
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
                 var myResult = response.json();

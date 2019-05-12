@@ -6,6 +6,7 @@ import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 @Component({
     moduleId: module.id,
@@ -17,7 +18,7 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
     public Tabs: TariffDetailsTab[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
         this.Tabs = [];
         this.Listen();
@@ -25,6 +26,7 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
+    private SessionEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -38,6 +40,17 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.CurrentSession.FireEvent("LoadEventTabData");
+
+                    this.BuildTabs();
+                    this.RunComponent();
+                }
+            });
+
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "NewVersionAdded" || s == "VersionApproved") {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.BuildTabs();
+                    this.RunComponent();
                 }
             });
         }
@@ -45,10 +58,13 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.SessionEvent);
     }
     ngOnInit() {
-        this.BuildTabs();
-        this.RunComponent();        
+        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            this.BuildTabs();
+            this.RunComponent();
+        });
     }
 
     BuildTabs() {
@@ -126,6 +142,8 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
                 let location: LocationDirective = locs.filter(f => f.Index == this.SelectedTabItem.Index)[0];
 
                 if (location) {
+                    location.viewContainerRef.clear();
+
                     if (this.SelectedTabItem.IsTabLoaded) {
 
                     }
@@ -135,7 +153,7 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
                             this.SelectedTabItem.IsTabLoaded = true;
 
                             if (this.SelectedTabItem.Code == "VR") {
-                                cmpRef.instance.Run({ CurrentVersion: this.SelectedTabItem.SelectedVersion, });
+                                cmpRef.instance.Intialize({ CurrentVersion: this.SelectedTabItem.SelectedVersion, });
                             }
                         });
                     }

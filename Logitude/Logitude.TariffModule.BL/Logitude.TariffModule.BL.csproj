@@ -101,6 +101,7 @@
     <Compile Include="EntityQueryServices\Generated\TariffTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TariffVersionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\TariffQueryService.cs" />
+    <Compile Include="EntityQueryServices\TariffVersionQueryService.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffLineUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffSettingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffTypeUpdateService.Generated.cs" />

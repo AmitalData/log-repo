@@ -101,7 +101,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
         }
-        public HttpResponseMessage GetDownloadTariff(string tariffId, string type)
+        public HttpResponseMessage GetDownloadTariff(string tariffId, int version, string type)
         {
             try
             {
@@ -110,33 +110,44 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                TariffQueryService tariffQuery = new TariffQueryService(tenant);
-                TariffPM tariffPM = tariffQuery.GetSingle(tariffId, true, false);
-                
-                byte[] data;
-                if (type == "Data")
+                ITariffModuleContext context = TariffModuleContext.GetContext(tenant);
+                TariffQueryService tariffQuery = new TariffQueryService(context);
+                TariffPM tariff = tariffQuery.GetSingle(tariffId, false, false);
+
+                string fileName = "";
+                if (tariff != null)
                 {
-                    List<TariffLinePM> tariffLines = tariffPM.TariffLines;
-                    data = this.ExportTariffLinesToExcel(tariffPM, tariffLines, tenant);
+                    TariffVersionQueryService tariffVersionQuery = new TariffVersionQueryService(context);
+                    TariffVersionPM tariffVersion = tariffVersionQuery.GetSingle(tariffId, version, true, false);
+                    
+                    if (tariffVersion != null)
+                    {
+                        byte[] data;
+                        if (type == "Data")
+                        {
+                            List<TariffLinePM> tariffLines = tariffVersion.TariffLines;
+                            data = this.ExportTariffLinesToExcel(tariff, tariffLines, tenant);
+                        }
+                        else
+                        {
+                            data = this.ExportTariffLinesToExcel(tariff, null, tenant);
+                        }
+
+                        fileName = "Tariffs" + DateTime.Now.ToShortDateString();
+                        BlobFileInfo fileInfo = new BlobFileInfo()
+                        {
+                            FileName = fileName,
+                            FolderName = "others",
+                            Extension = "xls",
+                            Tenant = tenant,
+                            FileSize = data.Length,
+                        };
+
+                        IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                        storageservice.Write(data, fileInfo);
+                    }
                 }
-                else
-                {
-                    data = this.ExportTariffLinesToExcel(tariffPM, null, tenant);
-                }
-
-                string fileName = "Tariffs" + DateTime.Now.ToShortDateString();
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = fileName,
-                    FolderName = "others",
-                    Extension = "xls",
-                    Tenant = tenant,
-                    FileSize = data.Length,
-                };
-
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                storageservice.Write(data, fileInfo);
-
+               
                 return Request.CreateResponse(HttpStatusCode.OK, fileName);
             }
 

@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
-import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { PortPM } from '../../../../Common/EntityPMs/PortPM';
@@ -25,7 +24,7 @@ declare var ResultAsArray: any;
     templateUrl: './VersionTabComponent.html',
 })
 
-export class VersionTabComponent extends BaseComponent implements OnInit, OnDestroy {
+export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public EntityPM: TariffPM;
     public ObjectTableName: string = "Tariff";
     public TariffsLinesSource: ObservableCollection;
@@ -38,7 +37,7 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
+    constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityArgs = entityArgs;
@@ -52,16 +51,29 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.FillTariffLines();
+
+                    if (this.isApproveButtonClicked) {                        
+                        this.DoApprove();
+                    }
+
+                    if (this.isCopyButtonClicked) {
+                        this.isCopyButtonClicked = false;
+                        this.CurrentSession.FireEvent("NewVersionAdded");
+                    }
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    //this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
-
                     if (this.CurrentVersion != null) {
                         this.IsDraftVersion = this.CurrentVersion.IsDraft;
+                    }
+
+                    if (this.isApproveButtonClicked) {
+                        this.isApproveButtonClicked = false;
+                        this.CurrentSession.FireEvent("VersionApproved");
                     }
 
                     this.SetUIProperties();
@@ -69,38 +81,27 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
             });
         }
     }
-
-    public Run(args: any) {
-        this.CurrentVersion = args['CurrentVersion'];       
-    }
-
+    
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
+    
+    Intialize(args: any) {
+        this.TariffsLinesSource = new ObservableCollection([]);
+        this.EntityPM = this.EntityArgs.EntityPM;
+        this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
+        this.TariffDomainService = new TariffDomainService();
 
-    ngOnInit() {
-        this.Intialize();
-    }
+        this.CurrentVersion = args['CurrentVersion'];
 
-    Intialize() {
-        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
-            this.IsResourcesReady = true;
-            this.TariffsLinesSource = new ObservableCollection([]);
-            this.EntityPM = this.EntityArgs.EntityPM;
-            this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
-            this.TariffDomainService = new TariffDomainService();
+        if (this.CurrentVersion != null) {
+            this.IsDraftVersion = this.CurrentVersion.IsDraft;
+        }
 
-            //this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
-
-            if (this.CurrentVersion != null) {
-                this.IsDraftVersion = this.CurrentVersion.IsDraft;
-            }
-
-            this.SetUIProperties();
-            this.SetStepsLabelsAndVisibility();
-            this.LoadTariffLines();
-        });
+        this.SetUIProperties();
+        this.SetStepsLabelsAndVisibility();
+        this.FillTariffLines();
     }
 
     SetUIProperties() {
@@ -114,20 +115,20 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
     }
 
     get StartDate() {
-        return this.EntityPM.StartDate;
+        return this.CurrentVersion.StartDate;
     }
     set StartDate(value: Date) {
-        if (this.EntityPM.StartDate != value) {
-            this.EntityPM.StartDate = value;
+        if (this.CurrentVersion.StartDate != value) {
+            this.CurrentVersion.StartDate = value;
         }
     }
 
     get ExpirationDate() {
-        return this.EntityPM.ExpirationDate;
+        return this.CurrentVersion.ExpirationDate;
     }
     set ExpirationDate(value: Date) {
-        if (this.EntityPM.ExpirationDate != value) {
-            this.EntityPM.ExpirationDate = value;
+        if (this.CurrentVersion.ExpirationDate != value) {
+            this.CurrentVersion.ExpirationDate = value;
         }
     }
 
@@ -140,12 +141,14 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
         }
     }
 
-    LoadTariffLines() {
+    FillTariffLines() { 
         this.TariffsLinesSource.Clear();
         var itemsCollection: TariffLineData[] = [];
-        this.EntityPM.TariffLines.forEach(item => {
+        
+        this.CurrentVersion.TariffLines.forEach(item => {
             itemsCollection.push(new TariffLineData(item, this));
         });
+
         this.TariffsLinesSource.InsertCollection(itemsCollection);
     }
 
@@ -274,7 +277,7 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
         itemPM.StartDate = this.StartDate;
         itemPM.ExpirationDate = this.ExpirationDate;
         itemPM.Tenant = SessionLocator.Tenant;
-        itemPM.Version = this.EntityPM.LastVersion;
+        itemPM.Version = this.CurrentVersion.Version;
         var itemComponent = new TariffLineData(itemPM, this, true);
         logWindow.DataContext = itemComponent;
         logWindow.Title = "New Tariff Line";
@@ -293,9 +296,9 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
         confirmWindow.Show("Delete this Tariff Line?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.EntityPM.RemoveTariffLine(item.EntityPM);
+                this.CurrentVersion.RemoveTariffLine(item.EntityPM);
                 this.TariffsLinesSource.Remove(item);
-                this.LoadTariffLines();
+                this.FillTariffLines();
             }
         });
     }
@@ -349,9 +352,9 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
             if (!response.HasError) {
                 var tariffLines: ExcelTariffLines[] = response.Result;
                 if (tariffLines) {
-                    this.EntityPM.TariffLines = [];
+                    this.CurrentVersion.TariffLines = [];
                     this.InsertNewRowsFromExcel(tariffLines);
-                    this.LoadTariffLines();
+                    this.FillTariffLines();
                 }
             }
         });
@@ -359,46 +362,48 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
 
     private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
         tariffLines.forEach(item => {
-            var tariff = new TariffLinePM(null);
-            tariff.StartDate = this.StartDate;
-            tariff.ExpirationDate = this.ExpirationDate;
-            tariff.Tenant = SessionLocator.Tenant;
-            tariff.Version = this.EntityPM.LastVersion;
-            tariff.OriginPortId = item.FromPortId;
-            tariff.OriginPortCode = item.FromPortCode;
-            tariff.OriginPortName = item.FromPortName;
-            tariff.DestinationPortId = item.ToPortId;
-            tariff.DestinationPortCode = item.ToPortCode;
-            tariff.DestinationPortName = item.ToPortName;
-            tariff.MinPrice = item.MinPrice;
-            tariff.Step1Price = item.Step1Price;
-            tariff.Step2Price = item.Step2Price;
-            tariff.Step3Price = item.Step3Price;
-            tariff.Step4Price = item.Step4Price;
-            tariff.Step5Price = item.Step5Price;
-            tariff.Step6Price = item.Step6Price;
-            tariff.Step7Price = item.Step7Price;
-            tariff.Step8Price = item.Step8Price;
+            var tariffLine = new TariffLinePM(null);
+            tariffLine.StartDate = this.StartDate;
+            tariffLine.ExpirationDate = this.ExpirationDate;
+            tariffLine.Tenant = SessionLocator.Tenant;
+            tariffLine.Version = this.CurrentVersion.Version;
+            tariffLine.OriginPortId = item.FromPortId;
+            tariffLine.OriginPortCode = item.FromPortCode;
+            tariffLine.OriginPortName = item.FromPortName;
+            tariffLine.DestinationPortId = item.ToPortId;
+            tariffLine.DestinationPortCode = item.ToPortCode;
+            tariffLine.DestinationPortName = item.ToPortName;
+            tariffLine.MinPrice = item.MinPrice;
+            tariffLine.Step1Price = item.Step1Price;
+            tariffLine.Step2Price = item.Step2Price;
+            tariffLine.Step3Price = item.Step3Price;
+            tariffLine.Step4Price = item.Step4Price;
+            tariffLine.Step5Price = item.Step5Price;
+            tariffLine.Step6Price = item.Step6Price;
+            tariffLine.Step7Price = item.Step7Price;
+            tariffLine.Step8Price = item.Step8Price;
 
-            tariff.OriginPortText = item.FromPortText;
-            tariff.DestinationPortText = item.ToPortText;
-            tariff.MinPriceText = item.MinPriceText;
-            tariff.Step1PriceText = item.Step1PriceText;
-            tariff.Step2PriceText = item.Step2PriceText;
-            tariff.Step3PriceText = item.Step3PriceText;
-            tariff.Step4PriceText = item.Step4PriceText;
-            tariff.Step5PriceText = item.Step5PriceText;
-            tariff.Step6PriceText = item.Step6PriceText;
-            tariff.Step7PriceText = item.Step7PriceText;
-            tariff.Step8PriceText = item.Step8PriceText;
+            tariffLine.OriginPortText = item.FromPortText;
+            tariffLine.DestinationPortText = item.ToPortText;
+            tariffLine.MinPriceText = item.MinPriceText;
+            tariffLine.Step1PriceText = item.Step1PriceText;
+            tariffLine.Step2PriceText = item.Step2PriceText;
+            tariffLine.Step3PriceText = item.Step3PriceText;
+            tariffLine.Step4PriceText = item.Step4PriceText;
+            tariffLine.Step5PriceText = item.Step5PriceText;
+            tariffLine.Step6PriceText = item.Step6PriceText;
+            tariffLine.Step7PriceText = item.Step7PriceText;
+            tariffLine.Step8PriceText = item.Step8PriceText;
 
-            this.EntityPM.AddTariffLine(tariff);
+            this.CurrentVersion.AddTariffLine(tariffLine);
         });
+
+        this.EntityPM.TariffLinesAdded = true;
     }
 
     // Download Excel 
     DownloadExcelClicked(type: string) {
-        this.TariffDomainService.DownloadTariff(this.EntityPM.Id, type).subscribe((myResponse: ServiceResponse) => {
+        this.TariffDomainService.DownloadTariff(this.EntityPM.Id, this.CurrentVersion.Version, type).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var fileName = myResponse.Result;
                 var tempDate = new Date();
@@ -411,14 +416,26 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
         });        
     }
 
+    private isApproveButtonClicked: boolean = false;
     ApproveVersionClicked() {
+        this.isApproveButtonClicked = true;
+
+        if (this.EntityPM.IsDirty) {
+            this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
+        }
+
+        else {
+            this.DoApprove();
+        }
+    }
+    private DoApprove() {
         this.TariffDomainService.ApproveVersion(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
         });
     }
-    
+
     CopyVersionClicked() {
         if (this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0]) {
             var messageWindow: MessageWindow = new MessageWindow();
@@ -430,10 +447,15 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
         }
     }
 
+    private isCopyButtonClicked: boolean = false;
     private DoCopy() {
+        this.isCopyButtonClicked = true;
+
+        this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
+
         var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
         copiedVersion.TariffId = this.CurrentVersion.TariffId;
-        copiedVersion.Version = this.EntityPM.LastVersion + 1;
+        copiedVersion.Version = this.EntityPM.LastVersion;
         copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
         copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
         copiedVersion.ExpirationDate = this.CurrentVersion.ExpirationDate;
@@ -442,7 +464,33 @@ export class VersionTabComponent extends BaseComponent implements OnInit, OnDest
         copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
 
         this.EntityPM.AddTariffVersion(copiedVersion);
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
+
+        this.CurrentVersion.TariffLines.forEach(item => {
+            var tariffLine = new TariffLinePM(copiedVersion);
+            tariffLine.StartDate = this.StartDate;
+            tariffLine.ExpirationDate = this.ExpirationDate;
+            tariffLine.Tenant = SessionLocator.Tenant;
+            tariffLine.Version = copiedVersion.Version;
+            tariffLine.OriginPortId = item.OriginPortId;
+            tariffLine.OriginPortCode = item.OriginPortCode;
+            tariffLine.OriginPortName = item.OriginPortName;
+            tariffLine.DestinationPortId = item.DestinationPortId;
+            tariffLine.DestinationPortCode = item.DestinationPortCode;
+            tariffLine.DestinationPortName = item.DestinationPortName;
+            tariffLine.MinPrice = item.MinPrice;
+            tariffLine.Step1Price = item.Step1Price;
+            tariffLine.Step2Price = item.Step2Price;
+            tariffLine.Step3Price = item.Step3Price;
+            tariffLine.Step4Price = item.Step4Price;
+            tariffLine.Step5Price = item.Step5Price;
+            tariffLine.Step6Price = item.Step6Price;
+            tariffLine.Step7Price = item.Step7Price;
+            tariffLine.Step8Price = item.Step8Price;
+            
+            this.CurrentVersion.AddTariffLine(tariffLine);
+        });
+
+        this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
     }
 }
 
