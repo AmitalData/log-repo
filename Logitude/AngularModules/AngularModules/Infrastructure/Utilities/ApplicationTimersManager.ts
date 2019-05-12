@@ -68,7 +68,7 @@ export class ApplicationTimersManager {
         }
 
 
-        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(60000).subscribe(res => {
             this.CheckIsupgradingSystem();
         }));
 
@@ -81,7 +81,7 @@ export class ApplicationTimersManager {
         }));
 
 
-        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe(res => {
+        SessionLocator.TimersSubscribtions.push(this.getTimer(120000).subscribe(res => {
             this.CheckUserValidity();
         }));
 
