@@ -192,6 +192,8 @@ export class TariffFilterParameter {
     Tenant: number;
     FileData: string;
     PriceSteps: string;
+    TariffId: string;
+    Version: number;
 }
 
 export class ExcelTariffLines {
