@@ -62,5 +62,6 @@ namespace WebFreight.Web.DataProviders
         public double? AccountedReceivablesCurrencyRate { get; set; }
 
         public string Direction { get; set; }
+        public string ShipperConsigneeExternalID { get; set; }
     }
 }
