@@ -117,6 +117,7 @@
     <None Include="EntityFiles\DecCargoSplitCargoIdentifier.lxml" />
     <None Include="EntityFiles\DecCargoSplitConsPackDet.lxml" />
     <None Include="EntityFiles\DecCargoSplitConsItem.lxml" />
+    <None Include="EntityFiles\PendingByKeyword.lxml" />
     <None Include="EntityFiles\PendingErrorPlace.lxml" />
     <None Include="EntityFiles\RefundCustomerActivityType.lxml" />
     <None Include="EntityFiles\SeizureFactorType.lxml" />

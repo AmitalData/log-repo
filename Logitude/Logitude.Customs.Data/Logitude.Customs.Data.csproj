@@ -133,6 +133,7 @@
     <Compile Include="EntityKeys\MamanStatusKeys.cs" />
     <Compile Include="EntityKeys\ManifestCargoStatusKeys.cs" />
     <Compile Include="EntityKeys\MAWBTypeKeys.cs" />
+    <Compile Include="EntityKeys\PendingByKeywordKeys.cs" />
     <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
     <Compile Include="EntityKeys\PointerLevelKeys.cs" />
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="EntityListQueryServices\Generated\MamanStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ManifestCargoStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\MAWBTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\PendingByKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PointerLevelListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
@@ -233,6 +235,7 @@
     <Compile Include="EntityListQueryServices\MamanStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ManifestCargoStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\MAWBTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\PendingByKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PointerLevelListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
@@ -283,6 +286,7 @@
     <Compile Include="EntityLists\Generated\MamanStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ManifestCargoStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\MAWBTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PendingByKeywordList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PendingErrorPlaceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PointerLevelList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RefundCustomerActivityTypeList.Generated.cs" />
@@ -333,6 +337,7 @@
     <Compile Include="EntityMapping\MamanStatusMap.cs" />
     <Compile Include="EntityMapping\ManifestCargoStatusMap.cs" />
     <Compile Include="EntityMapping\MAWBTypeMap.cs" />
+    <Compile Include="EntityMapping\PendingByKeywordMap.cs" />
     <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
     <Compile Include="EntityMapping\PointerLevelMap.cs" />
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
@@ -383,6 +388,7 @@
     <Compile Include="EntityPOCOs\MamanStatus.cs" />
     <Compile Include="EntityPOCOs\ManifestCargoStatus.cs" />
     <Compile Include="EntityPOCOs\MAWBType.cs" />
+    <Compile Include="EntityPOCOs\PendingByKeyword.cs" />
     <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
     <Compile Include="EntityPOCOs\PointerLevel.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
@@ -466,6 +472,7 @@
     <Compile Include="Repsitories\Generated\MamanStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ManifestCargoStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\MAWBTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\PendingByKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PointerLevelRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
@@ -483,6 +490,7 @@
     <Compile Include="Repsitories\MamanStatusRepository.cs" />
     <Compile Include="Repsitories\ManifestCargoStatusRepository.cs" />
     <Compile Include="Repsitories\MAWBTypeRepository.cs" />
+    <Compile Include="Repsitories\PendingByKeywordRepository.cs" />
     <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />
     <Compile Include="Repsitories\PointerLevelRepository.cs" />
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
