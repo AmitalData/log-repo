@@ -2156,5 +2156,41 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return objectField;
         }
+
+
+        public List<ObjectFieldPM> GetCustomObjectFieldsByTenantAndObjectTable(int tenant, string objecttableName)
+        {
+            ObjectTablePM table = ObjectTableQuery.GetObjectTableByCode(objecttableName, tenant);
+            List<ObjectFieldPM> objectFields = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode")
+                                                where a.Tenant == tenant  && a.InActive == false && a.ObjectTableId == table.Id && a.IsCustom == true
+                                                select new ObjectFieldPM()
+                                                {
+                                                   
+                                                    DataTypeCode = a.DataTypeCode,
+                                                    FullNameTextCodeId = a.FullNameTextCodeId,
+                                                    FieldName = a.FieldName,
+                                                    ShortNameTextCodeId = a.ShortNameTextCodeId,
+                                                    HelpTextCodeId = a.HelpTextCodeId,
+                                                    Id = a.Id,
+                                                    IsCustom = a.IsCustom,
+                                                    LookUpControlName = a.LookUpControlName,
+                                                    LookUpTableId = a.LookUpTableId,
+                                                    ObjectTableId = a.ObjectTableId,
+                                                    ObjectTableName = a.ObjectTable.Name,
+                                                    Tenant = a.Tenant,
+                                                    ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
+                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
+                                                    ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
+                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                                                    DisplayLongName = a.DisplayLongName,
+                                                    FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
+                                                    Code = a.Code,
+                                            
+                                                }).ToList();
+
+            return objectFields;
+        }
+
     }
 }
