@@ -1,4 +1,4 @@
-﻿import {GenericRequestParams} from './GenericRequestParams';
+import {GenericRequestParams} from './GenericRequestParams';
 
 export class SpecialActivityRequestParams extends GenericRequestParams {
 
@@ -8,6 +8,7 @@ export class SpecialActivityRequestParams extends GenericRequestParams {
     public SampleRequestDetailsDataList: Array<SampleRequestDetails>;
     public CurrentPackingDetailsDataList: Array<CurrentPackingDetails>;
     public DesiredPackingDetailsDataList: Array<DesiredPackingDetails>;
+    public OtherActivityDetailsData: OtherActivityDetails;
 }
 
 export class GeneralDetails {
@@ -115,4 +116,9 @@ export class PackingDetails {
     public Quantity: string;
     public Weight: number;
     public WeightSpecified: boolean;
+}
+
+export class OtherActivityDetails {
+
+    public OtherActivityComment: string;
 }
