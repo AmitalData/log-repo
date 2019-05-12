@@ -61,6 +61,11 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                         this.isCopyButtonClicked = false;
                         this.CurrentSession.FireEvent("NewVersionAdded");
                     }
+
+                    if (this.isUploadExcelFinished) {
+                        this.isUploadExcelFinished = false;
+                        this.FillTariffLines();
+                    }
                 }
             });
 
@@ -336,9 +341,13 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             for (var i = 0; i < len; i++) {
                 binary += String.fromCharCode(bytes[i]);
             }
+
             var filter = new TariffFilterParameter();
             filter.FileData = window.btoa(binary);
             filter.PriceSteps = context.PriceSteps;
+            filter.TariffId = context.EntityPM.Id;
+            filter.Version = context.CurrentVersion.Version;
+
             context.SendExcelToServer(filter);
         };
 
@@ -354,12 +363,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 if (tariffLines) {
                     this.CurrentVersion.TariffLines = [];
                     this.InsertNewRowsFromExcel(tariffLines);
-                    this.FillTariffLines();
                 }
             }
         });
     }
 
+    private isUploadExcelFinished: boolean = false;
     private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
         tariffLines.forEach(item => {
             var tariffLine = new TariffLinePM(null);
@@ -399,6 +408,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         });
 
         this.EntityPM.TariffLinesAdded = true;
+        this.isUploadExcelFinished = true;
+        this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
     }
 
     // Download Excel 
