@@ -5,6 +5,8 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -25,7 +27,9 @@ namespace Logitude.Accounting.BL.CoreBL
         private IAccountingContext accountingContext;
         public ResultLoadFlatFile MyResultLoadFlatFile = new ResultLoadFlatFile();
         private IQueryable<CardGLAccountDataView> _AllVendorGLAccountCards;
-
+        private ContactRepository _contactRep; 
+        private string _resolveLoggingUserId; 
+        private Contact _contact; 
 
 
         public void Analyse(int? ptenant, string FileContent)
@@ -44,33 +48,38 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     throw new Exception("unable to find tenantFromPage4Tester ");
                 }
-                accountingContext = AccountingContext.GetContext(ptenant.Value);
-                _FullAccountingSettingPM = GetDeductionFileNumberFromAccSetting(accountingContext, ptenant.Value);
+                int tenant = ptenant.Value;
+                _contactRep = new ContactRepository(tenant);
+                _resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                _contact = _contactRep.GetSingleContactByEmail(_resolveLoggingUserId, tenant);
+                accountingContext = AccountingContext.GetContext(tenant);
+                _FullAccountingSettingPM = GetDeductionFileNumberFromAccSetting(accountingContext, tenant);
                 ValidateFlatFile();
 
+                //TenantBankPagesFilter(tenant, _BankPagesDTO);
+                _AllVendorGLAccountCards = GetQAllVendorGLAccountCards(accountingContext, tenant);
+
+                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                {
+                    foreach (VendorLineDTO vendorLineDTO in _VendorLinesDTO)
+                    {
+                        {
+                            AnalyseOneVendor(tenant, vendorLineDTO);
+
+                        }
+                    }
+                    scope.Complete();
+
+
+                }
             }
             catch (Exception e)
             {
 
                 throw new Exception("LoadSystem1000FromFile(FileContent) failed while performing CreateVendorLinesDTOFromFile ", e);
             }
-            int tenant = ptenant.Value;
 
 
-            //TenantBankPagesFilter(tenant, _BankPagesDTO);
-            _AllVendorGLAccountCards = GetQAllVendorGLAccountCards(accountingContext, tenant);
-
-            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
-            {
-                foreach (VendorLineDTO vendorLineDTO in _VendorLinesDTO)
-                {
-                    { 
-                        AnalyseOneVendor(tenant, vendorLineDTO);
-
-                    }
-                }
-                scope.Complete();
-            }
         }
 
         private IQueryable<CardGLAccountDataView> GetQAllVendorGLAccountCards(IAccountingContext accountingContext, int tenant)
@@ -84,13 +93,103 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void AnalyseOneVendor(int tenant, VendorLineDTO vendorLineDTO)
         {
-            CardGLAccountDataView oneVendor = _AllVendorGLAccountCards.Where(p => p.DisplayNumber.Replace(" ", "").PadLeft(15, '0').Substring(0, 15) == vendorLineDTO.VendorCode && (p.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9) == vendorLineDTO.SentVATNum || p.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9) == vendorLineDTO.LocatedVATNum)).FirstOrDefault();
-            if (oneVendor == null)
+            GLAccountWithholdingTaxQueryService gLAccountWithholdingTaxQueryService = new GLAccountWithholdingTaxQueryService(tenant);
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            GLAccountWithholdingTaxUpdateService gLAccountWithholdingTaxUpdateService = new GLAccountWithholdingTaxUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
+            CardGLAccountDataView oneVendor = _AllVendorGLAccountCards.Where(p => p.DisplayNumber.Replace(" ", "").PadLeft(15, '0').Substring(0, 15) == vendorLineDTO.VendorCode 
+            && (p.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9) == vendorLineDTO.SentVATNum || p.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9) == vendorLineDTO.LocatedVATNum)).FirstOrDefault();
+            if (oneVendor is null)
             {
                 MyResultLoadFlatFile.ValidateVendorLineAgaintDBErrors.Add($"Vendor Number {vendorLineDTO.VendorCode} not found ");
                 return;
             }
       
+            if (vendorLineDTO.DeductionPercentage == 0m)
+            {
+                // Cancel all current and future lines 
+                List<GLAccountWithholdingTaxPM> allLinesToInvalidate = gLAccountWithholdingTaxQueryService.GetAccountWithholdingTaxPMListByGLAccountFromDate(oneVendor.Id, DateTime.Today);
+                foreach (GLAccountWithholdingTaxPM pmToInvalidate in allLinesToInvalidate)
+                {
+                    pmToInvalidate.Inactive = true;
+                    pmToInvalidate.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    gLAccountWithholdingTaxUpdateService.RaiseEventWBLK = true;
+                    gLAccountWithholdingTaxUpdateService.Update(pmToInvalidate, true);
+                    //scope.Complete();
+                    this.AddSuccessUpdateVendorLine(pmToInvalidate, vendorLineDTO);
+                }
+            }
+            else
+            {
+                // If there is a row with the same data in with the same values, do not create a new line.
+                GLAccountWithholdingTaxPM existingLine = gLAccountWithholdingTaxQueryService.GetAccountWithholdingTaxPMByGLAccountFromTo(oneVendor.Id, vendorLineDTO.StartDate, vendorLineDTO.EndDate);
+                if (existingLine != null && existingLine.Percentage == vendorLineDTO.DeductionPercentage)
+                {
+                    // do nothing;
+                }
+                else
+                {
+                    if (existingLine != null)
+                    {
+                        // If there is a row with different data on the same period as in the new line, the existing row should be marked inactive, and create a new line (C)
+                        //existingLine.Inactive = true;
+                        //existingLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        //gLAccountWithholdingTaxUpdateService.RaiseEventWLDA = true;
+                        //gLAccountWithholdingTaxUpdateService.Update(existingLine, true);
+                        //this.AddSuccessUpdateVendorLine(existingLine, vendorLineDTO);
+                        InvalidateLine(existingLine, vendorLineDTO, gLAccountWithholdingTaxUpdateService);
+                    }
+
+                    List<GLAccountWithholdingTaxPM> overlappingLines = gLAccountWithholdingTaxQueryService.GetOverlappingAccountWithholdingTaxPMsByGLAccountFromTo(oneVendor.Id, vendorLineDTO.StartDate, vendorLineDTO.EndDate);
+                    foreach (GLAccountWithholdingTaxPM line in overlappingLines)
+                    {
+                        if (line.Id != existingLine.Id)
+                        {
+                            InvalidateLine(line, vendorLineDTO, gLAccountWithholdingTaxUpdateService);
+                        }
+                    }
+
+                    int nextLine = gLAccountWithholdingTaxQueryService.GetNextLineNumberByGLAccount(oneVendor.Id);
+                    GLAccountWithholdingTaxPM newLine = CreateNewLineFromDTO(vendorLineDTO, oneVendor, nextLine);
+                    newLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                    gLAccountWithholdingTaxUpdateService.Update(newLine, true);
+                    this.AddSuccessInsertVendorLine(newLine, vendorLineDTO);
+                }
+            }
+        }
+
+        private void InvalidateLine(GLAccountWithholdingTaxPM line, VendorLineDTO vendorLineDTO, GLAccountWithholdingTaxUpdateService gLAccountWithholdingTaxUpdateService)
+        {
+            line.Inactive = true;
+            line.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            gLAccountWithholdingTaxUpdateService.RaiseEventWLDA = true;
+            gLAccountWithholdingTaxUpdateService.Update(line, true);
+            this.AddSuccessUpdateVendorLine(line, vendorLineDTO);
+        }
+
+        private GLAccountWithholdingTaxPM CreateNewLineFromDTO(VendorLineDTO vendorLineDTO, CardGLAccountDataView oneVendor, int nextLine)
+        {
+            GLAccountWithholdingTaxPM newLine = new GLAccountWithholdingTaxPM();
+
+            newLine.GLAccountId = oneVendor.Id;
+            newLine.Tenant = oneVendor.Tenant;
+            newLine.CreateDate = DateTime.Now;
+            newLine.CreatedByUserId = _contact.Id;
+            newLine.Inactive = false;
+            newLine.FromDate = vendorLineDTO.StartDate;
+            newLine.Percentage = Convert.ToInt32(vendorLineDTO.DeductionPercentage);
+            if (newLine.Percentage < 0)
+            {
+                newLine.Percentage = 0;
+            }
+            if (newLine.Percentage > 100)
+            {
+                newLine.Percentage = 100;
+            }
+            newLine.LineNumber = nextLine;
+
+
+            return newLine;
         }
 
         public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
@@ -248,9 +347,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-        private void AddSuccessInsertVendorLine(ReconcileExternalPagePM entityPM, VendorLineDTO newVendorLine)
+        private void AddSuccessInsertVendorLine(GLAccountWithholdingTaxPM entityPM, VendorLineDTO newVendorLine)
         {
-            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBPageNo:{entityPM.PageNo}  ");
+            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
+        }
+
+        private void AddSuccessUpdateVendorLine(GLAccountWithholdingTaxPM entityPM, VendorLineDTO newVendorLine)
+        {
+            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
         }
 
         private List<VendorLineDTO> CreateVendorLinesDTOFromFile(string FileContent, out int? tenant)
