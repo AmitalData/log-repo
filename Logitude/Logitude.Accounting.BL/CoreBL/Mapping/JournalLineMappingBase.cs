@@ -227,6 +227,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             AddIfNotNull(refs, _JournalLine.Reference1);
             AddIfNotNull(refs, _JournalLine.Reference2);
             AddIfNotNull(refs, _JournalLine.Reference3);
+            AddIfNotNull(refs, _JournalLine.Notes);
             MyLedgerTransaction.SearchFields= string.Join(",", refs.ToArray());
 
             MyLedgerTransaction.IsExternalReconcile = _JournalLine.IsExternalReconcile/*.GetValueOrDefault()*/;

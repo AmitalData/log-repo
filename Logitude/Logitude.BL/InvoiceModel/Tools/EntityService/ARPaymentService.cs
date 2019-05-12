@@ -201,6 +201,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
          */
         public void Update(ARPaymentPM theEntityPm, bool mapComposition = false)
         {
+            ContactPM loggedUser = GetLoggedContactPM(theEntityPm.Tenant);
+            theEntityPm.UpdatedByUserId = loggedUser?.Id;
+
             ValidateFullAccounting(theEntityPm);
 
             //get glaccount fields
@@ -1476,13 +1479,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly( AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
         private void ValidateVoidedARPaymentFullAccounting(ARPaymentPM entityPm)
@@ -1580,7 +1580,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             LedgerTransactionList paymentTransaction = accountingTransactionList.Where(d => d.SourceNumber == paymentPM.PaymentNo).FirstOrDefault(); // 3- ARPayment
             if (paymentTransaction == null) throw new ApplicationException("Cannot find ledger transaction for this payment!");
 
-            if (paymentPM.InvoicesTransactions.Count == 0)
+            if (paymentPM.InvoicesLedgerTransactions.Count == 0)
                 return;
 
             // reco payment line
@@ -1590,7 +1590,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // invoices lines
             int line = 2;
-            foreach (LedgerTransactionPM invoiceLT in paymentPM.InvoicesTransactions)
+            foreach (LedgerTransactionPM invoiceLT in paymentPM.InvoicesLedgerTransactions)
             {
                 var _recoInLine = CreateInvoiceRecoLine(paymentPM, invoiceLT, line++);
                 _reco.ReconciliationLines.Add(_recoInLine);
@@ -1604,7 +1604,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         public void UpdateTransactions(ARPaymentPM paymentPM)
         {
-            foreach (LedgerTransactionPM invoiceLT in paymentPM.InvoicesTransactions)
+            foreach (LedgerTransactionPM invoiceLT in paymentPM.InvoicesLedgerTransactions)
             {
                 //update ledger transaction
                 ///....
@@ -1626,7 +1626,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
             //amount
-            decimal invoiceAmountToReconcileSum = paymentPM.InvoicesTransactions.Sum(d => d.AmountToReconcile);
+            decimal invoiceAmountToReconcileSum = paymentPM.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);
             _paymentLine.ReconciliationAmount = invoiceAmountToReconcileSum * -1;
 
             //currency
@@ -1716,7 +1716,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             bool useLocalRecoMethod = paymentPM.GLAccountRecoMethodCode == "0";
 
-            foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesTransactions)
+            foreach (LedgerTransactionPM invTrans in paymentPM.InvoicesLedgerTransactions)
             {
                 ARPaymentInvoicePM payInvPM;
                 if (useLocalRecoMethod || isMultiCurrency)
@@ -1753,7 +1753,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             bool showLocal = loggedContact != null ? (!loggedContact.DontShowLocal) : false;
 
             // Validate lines amount to reconcile
-            if (_payment.InvoicesTransactions
+            if (_payment.InvoicesLedgerTransactions
                 .Any(d =>
                     d.AmountToReconcile > CalculateInvoiceAmount(d, _payment.GLAccountRecoMethodCode == "0")
                 ))
@@ -1761,7 +1761,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
             // Validate sum of line's amount to reconcile
-            decimal amount2reconcile = _payment.InvoicesTransactions.Sum(d => d.AmountToReconcile);
+            decimal amount2reconcile = _payment.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);
             if (_payment.OpenAmount == null)
             {
                 _payment.OpenAmount = 0;
@@ -1778,7 +1778,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             //
             // update payment amount:
-            decimal amount2reconcile = paymentPM.InvoicesTransactions.Sum(d => d.AmountToReconcile);
+            decimal amount2reconcile = paymentPM.InvoicesLedgerTransactions.Sum(d => d.AmountToReconcile);
             //paymentPM.OpenAmount
             //    = (useLocalRecoMethod ? paymentPM.AmountInLocalCurrency : paymentPM.AmountInPaymentCurrency)
             //       - (double) amount2reconcile;

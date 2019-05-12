@@ -19,9 +19,8 @@ export class ShipmentsTabComponent {
         this.Helper.WaitByIdAndClick('NewHouseBtn')
         this.Helper.WaitBusyIndicator();
 
-        this.CreateHouseShipment.FillHouseShipmentFields('111');
+        this.CreateHouseShipment.FillHouseShipmentFields('CreatedFromMaster');
         this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
-
-
+        this.Helper.WaitBusyIndicator();
     }
 }  

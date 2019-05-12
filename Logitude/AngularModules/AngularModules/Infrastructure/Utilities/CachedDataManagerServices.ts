@@ -1,4 +1,3 @@
-/// <reference path="../../tariffmodule/services/standardlists/tarifflistservice.ts" />
 import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
 import {BluesnapContractListService} from '../Services/StandardLists/BluesnapContractListService';
 import {ChargesGroupListService} from '../Services/StandardLists/ChargesGroupListService';
@@ -83,9 +82,7 @@ import { FeatureToggleListService } from '../Services/StandardLists/FeatureToggl
 
 
 // Tariff Module
-
 import { TariffListService } from '../../TariffModule/Services/StandardLists/TariffListService';
-import { TariffVersionListService } from '../../TariffModule/Services/StandardLists/TariffVersionListService';
 import { TariffTypeListService } from '../../TariffModule/Services/StandardLists/TariffTypeListService';
 
 
@@ -186,8 +183,7 @@ export class CachedDataManagerServices {
             case "BIReportsTypeListService": { myResult = new BIReportsTypeListService(); break; }
             case "FeatureToggleListService": { myResult = new FeatureToggleListService(); break; }
             case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }
-            case "TariffListService": { myResult = new TariffListService(); break; }
-            case "TariffVersionListService": { myResult = new TariffVersionListService(); break; }                
+            case "TariffListService": { myResult = new TariffListService(); break; }               
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
                 
             default: {

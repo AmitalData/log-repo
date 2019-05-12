@@ -9,9 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
+using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
@@ -57,6 +59,45 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
 
 
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PutSystem1000File(ImageParameter fileUploadParamerter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string documentId = "";
+                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
+                {
+                    byte[] dosBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
+                    string decodedString = Encoding.UTF8.GetString(dosBytes);
+                    if (false)
+                    {
+                        var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
+                        var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
+                        string dosS = dosEnc.GetString(dosBytes);
+
+                        var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dosBytes);
+                        string winHebrewString = winHebrewEncoding.GetString(hebBytes);
+                    }
+                    var response = new ServiceResponse();
+                    //response.Result = bankAccountPageAnalyzer.MyResultLoadBankPage;
+
+                    return Request.CreateResponse(HttpStatusCode.OK, response);
+                }
+                else
+                {
+                    throw new Exception("fileUploadParamerter is empty");
+                }
+
+
+
+            }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
