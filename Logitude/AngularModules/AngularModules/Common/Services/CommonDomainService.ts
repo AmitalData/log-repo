@@ -1142,6 +1142,33 @@ export class CommonDomainService {
         });
     }
 
+    GetTenantEcommerceSupportEmail(id: number) {
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetTenantEcommerceSupportEmail?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
+
+
+                //var entity: TenantPM;
+                //if (pm) {
+                //    entity = this.MapJsonToEntityPM(pm);
+                //}
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = pm;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     MapJsonToAccountingSettingPM(jsonPM: any, mapParent: boolean = true, entityPM: AccountingSettingPM = null) {
         if (!entityPM) {
 
