@@ -102,11 +102,11 @@ namespace CommunicationWorkerRole
 
                 foreach (string fileName in directoryFiles)
                 {
-					string extention = Path.GetExtension(fileName);
-					if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
+                    string extention = Path.GetExtension(fileName);
+                    if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
                     {
-						string p_message = "";
-						byte[] fileData = ftpService.Download(fileName, out p_message);
+                        string p_message = "";
+                        byte[] fileData = ftpService.Download(fileName, out p_message);
 
                         switch (myService)
                         {
@@ -127,7 +127,10 @@ namespace CommunicationWorkerRole
                     }
                 }
             }
-
+            catch (FTPServiceException exc)
+            {
+                // will add log in the future
+            }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "FTP To AnalyzeQueue WorkerRole", ex.Message, null);

@@ -144,29 +144,31 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             ServiceResponse serviceResponse = new ServiceResponse();
             try
             {
-                IGlobalContext globalcontext = GlobalContext.GetContext();
-                bool isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
+                bool isBlocking = false;
+                string entityName = "SystemIsBlocked";
 
-                bool isIpAuthenticated = true;
+                if (CacheManager.CacheWrapper != null)
+                {
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
+                        isBlocking = GetIsBlockingFromDB();
 
-                string ipstring = LogitudeSettings.CustomerCareIP;
-                string[] authenticatedIPs = ipstring.Split(',');
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            CacheManager.CacheWrapper.Insert(entityName, isBlocking, null, DateTime.UtcNow.AddMinutes(1), TimeSpan.Zero);
+                        }
 
-                string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                if (string.IsNullOrEmpty(currentIP))
-                {
-                    currentIP = HttpContext.Current.Request.UserHostAddress;
+                    }
+                    else
+                    {
+                        isBlocking = (bool)CacheManager.CacheWrapper.Get(entityName);
+                    }
                 }
-                if (!authenticatedIPs.Contains(currentIP))
+                else
                 {
-                    isIpAuthenticated = false;
+                    isBlocking = GetIsBlockingFromDB();
                 }
-                
-                if (isIpAuthenticated)
-                {
-                    isBlocking = false;
-                }
-              
+
                 return Request.CreateResponse(HttpStatusCode.OK, isBlocking);
             }
             catch (Exception ex)
@@ -174,6 +176,34 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        private bool GetIsBlockingFromDB()
+        {
+            IGlobalContext globalcontext = GlobalContext.GetContext();
+            bool isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
+
+            bool isIpAuthenticated = true;
+
+            string ipstring = LogitudeSettings.CustomerCareIP;
+            string[] authenticatedIPs = ipstring.Split(',');
+
+            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+            if (string.IsNullOrEmpty(currentIP))
+            {
+                currentIP = HttpContext.Current.Request.UserHostAddress;
+            }
+            if (!authenticatedIPs.Contains(currentIP))
+            {
+                isIpAuthenticated = false;
+            }
+
+            if (isIpAuthenticated)
+            {
+                isBlocking = false;
+            }
+
+            return isBlocking;
         }
     }
 
