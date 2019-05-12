@@ -101,7 +101,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
         }
-        public HttpResponseMessage GetDownloadTariffLines(string tariffId)
+        public HttpResponseMessage GetDownloadTariff(string tariffId, int version, string type)
         {
             try
             {
@@ -110,25 +110,44 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                TariffQueryService tariffQuery = new TariffQueryService(tenant);
-                TariffPM tariffPM = tariffQuery.GetSingle(tariffId, true, false);
-                List<TariffLinePM> tariffLines = tariffPM.TariffLines;
+                ITariffModuleContext context = TariffModuleContext.GetContext(tenant);
+                TariffQueryService tariffQuery = new TariffQueryService(context);
+                TariffPM tariff = tariffQuery.GetSingle(tariffId, false, false);
 
-                byte[] data = this.ExportTariffLinesToExcel(tariffPM, tariffLines, tenant);
-
-                string fileName = "Tariffs" + DateTime.Now.ToShortDateString();
-                BlobFileInfo fileInfo = new BlobFileInfo()
+                string fileName = "";
+                if (tariff != null)
                 {
-                    FileName = fileName,
-                    FolderName = "others",
-                    Extension = "xls",
-                    Tenant = tenant,
-                    FileSize = data.Length,
-                };
+                    TariffVersionQueryService tariffVersionQuery = new TariffVersionQueryService(context);
+                    TariffVersionPM tariffVersion = tariffVersionQuery.GetSingle(tariffId, version, true, false);
+                    
+                    if (tariffVersion != null)
+                    {
+                        byte[] data;
+                        if (type == "Data")
+                        {
+                            List<TariffLinePM> tariffLines = tariffVersion.TariffLines;
+                            data = this.ExportTariffLinesToExcel(tariff, tariffLines, tenant);
+                        }
+                        else
+                        {
+                            data = this.ExportTariffLinesToExcel(tariff, null, tenant);
+                        }
 
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                storageservice.Write(data, fileInfo);
+                        fileName = "Tariffs" + DateTime.Now.ToShortDateString();
+                        BlobFileInfo fileInfo = new BlobFileInfo()
+                        {
+                            FileName = fileName,
+                            FolderName = "others",
+                            Extension = "xls",
+                            Tenant = tenant,
+                            FileSize = data.Length,
+                        };
 
+                        IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                        storageservice.Write(data, fileInfo);
+                    }
+                }
+               
                 return Request.CreateResponse(HttpStatusCode.OK, fileName);
             }
 
@@ -137,6 +156,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
         private byte[] ExportTariffLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant)
         {
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
@@ -144,7 +164,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet1 = workbook.Worksheets[0];
-
 
             // Build excel headers 
             DataTable table = new DataTable();
@@ -208,6 +227,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     table.Rows.Add(row);
                 }
             }
+
+            sheet1.Range["A1:H1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range["A1:H1"].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range["A1:H1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
             sheet1.ImportDataTable(table, true, 1, 1);
             workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory);

@@ -503,42 +503,7 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
-
-	   private List<TariffLinePM> tariffLines;
-	    
-       [Composition]
- 
-		     
-	   [Include]
-	   [Association("TariffLineTariff", "Id","TariffId")]
-	   [DataMember]
-	   public virtual List<TariffLinePM> TariffLines  
-	   {
-	        get
-             {
-                 if (tariffLines == null)
-                 {
-                     tariffLines = new List<TariffLinePM>();
-                 }
-                 return tariffLines;
-              }
-             set { tariffLines = value; }
-	    }
-		   
-	   private List<TariffLinePM>  deletedTariffLines;
-	   public virtual List<TariffLinePM> DeletedTariffLines  
-	   {
-	        get
-             {
-                 if ( deletedTariffLines == null)
-                 {
-                      deletedTariffLines = new List<TariffLinePM>();
-                 }
-                 return  deletedTariffLines;
-              }
-             set {  deletedTariffLines = value; }
-	    }
-	  	  private bool setAsInActive ;
+	  private bool setAsInActive ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
@@ -642,7 +607,30 @@ namespace Logitude.TariffModule.BL.EntityPMs
               }
              set {  deletedTariffVersions = value; }
 	    }
-	     }
+	  	  private bool tariffLinesAdded ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool TariffLinesAdded  
+	   {
+	    
+	     get
+		{
+		   return tariffLinesAdded;
+		 }
+		 set
+		 {
+		   if(tariffLinesAdded != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffLinesAdded",OldValue=tariffLinesAdded,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   tariffLinesAdded=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

@@ -7,7 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {TariffLinePM} from './TariffLinePM';
 import {TariffVersionPM} from './TariffVersionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -131,41 +130,7 @@ export class TariffPM {
     public set ContractNumber(newValue: number) { if (this.contractNumber != newValue) { this.contractNumber = newValue; this.MarkAsDirty("ContractNumber"); } }
        
 	 
-     
-	private tariffLines: TariffLinePM[];
-    get  TariffLines() {
-        if (this.tariffLines == null) {
-            this.tariffLines = [];
-        }
-
-        return this.tariffLines;
-    }
-    set  TariffLines(newValue: TariffLinePM[]) {
-        if (this.tariffLines != newValue) {
-            this.tariffLines = newValue;
-        }
-    }
-    public AddTariffLine(item: TariffLinePM) {
-        if (item != null) {
-            var index = this. TariffLines.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. TariffLines.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveTariffLine(item: TariffLinePM) {
-        if (item != null) {
-            var index = this. TariffLines.indexOf(item);
-            if (index > -1) {
-                this. TariffLines.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    //public TariffLines: Array<TariffLinePM>= [];
-     private setAsInActive: boolean;
+    private setAsInActive: boolean;
     public get SetAsInActive() { return this.setAsInActive; }
     public set SetAsInActive(newValue: boolean) { if (this.setAsInActive != newValue) { this.setAsInActive = newValue; this.MarkAsDirty("SetAsInActive"); } }
        
@@ -214,7 +179,12 @@ export class TariffPM {
         }
     }
     //public TariffVersions: Array<TariffVersionPM>= [];
- 
+     private tariffLinesAdded: boolean;
+    public get TariffLinesAdded() { return this.tariffLinesAdded; }
+    public set TariffLinesAdded(newValue: boolean) { if (this.tariffLinesAdded != newValue) { this.tariffLinesAdded = newValue; this.MarkAsDirty("TariffLinesAdded"); } }
+       
+	 
+
     public OldEntityPM: TariffPM;
 		
     public IsDirty: boolean;

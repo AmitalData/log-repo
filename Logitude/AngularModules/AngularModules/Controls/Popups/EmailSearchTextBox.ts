@@ -57,6 +57,7 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
         this.userService = new UserListService();
     }
 
+    IsShowRedUserInActiveNote: boolean = false;
     ngOnInit() {
 
         this.Placeholder = this.Watermark;
@@ -68,6 +69,13 @@ export class EmailSearchTextBox implements OnInit, AfterViewInit {
                 myDomainService.GetUserListsByidsString(this.EmailsText).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
                         this.SelectedItems = myResponse.Result;
+                        this.SelectedItems.forEach(item => {
+                            if (item.InActive) {
+                                this.IsShowRedUserInActiveNote = true;
+                            }
+                        });
+                        
+
                     }
 
                     setTimeout(() => this.SetInputPosition(), 5);

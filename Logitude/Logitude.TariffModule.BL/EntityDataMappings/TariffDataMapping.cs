@@ -17,40 +17,25 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.TariffModule.BL.EntityDataMappings
 {
-   
    public partial class TariffDataMapping: IMapping<TariffPM, Tariff>
    {
-
-
         public void CustomPMToPOCO(TariffPM entityPM, Tariff entityPOCO)
         {
             AddPOCOPropertyName(POCOPropertyNames.Id);
-
             AddPOCOPropertyName(POCOPropertyNames.Tenant);
+
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
-            //entityPOCO.ContractNumber = entityPM.ContractNumber;
-            //entityPOCO.StartDate = entityPM.StartDate;
-            //entityPOCO.ExpirationDate = entityPM.ExpirationDate;
-            //entityPOCO.LastExpirationDate = entityPM.LastExpirationDate;
-            //entityPOCO.InActive = entityPM.InActive;
-            //entityPOCO.LastVersion = entityPM.LastVersion;
-            //entityPOCO.Name = entityPM.Name;
-            //entityPOCO.SellerId = entityPM.SellerId;
-            //entityPOCO.TypeCode = entityPM.TypeCode;
-            //entityPOCO.CreateDate = entityPM.CreateDate;
-            //entityPOCO.UpdateDate = entityPM.UpdateDate;
+            
             entityPM.SetAsInActive = false;
             entityPM.SetAsReActive = false;
+            entityPM.TariffLinesAdded = false;
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
-
-
-
         }
 
         public void CustomPOCOToPM(TariffPM entityPM, Tariff entityPOCO)
@@ -83,7 +68,5 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             entityPOCO.SearchFields = mySearchFields;
         }
     }
-
-
 }
    
