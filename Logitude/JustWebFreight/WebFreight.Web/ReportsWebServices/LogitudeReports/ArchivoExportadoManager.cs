@@ -253,7 +253,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.BranchExternalId = myBranch.ExternalId;
                                 }
                             }
-                            
+
+                            if (myShipment.DirectionId == "I")
+                            {
+                                if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
+                                {
+                                    Card consignee = myCommonContext.Cards.Where(d => d.Id == myShipment.ConsigneeId).FirstOrDefault();
+                                    if (consignee != null)
+                                    {
+                                        myRecord.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(myShipment.ShipperId))
+                                {
+                                    Card shipper = myCommonContext.Cards.Where(d => d.Id == myShipment.ShipperId).FirstOrDefault();
+                                    if (shipper != null)
+                                    {
+                                        myRecord.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
+                                    }
+                                }
+                            }
                             myDataProvider.Shipments.Add(myRecord);
                         }
                     }
@@ -310,8 +332,30 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             myRecord.BranchLocalName = myBranch.LocalName;
                             myRecord.BranchExternalId = myBranch.ExternalId;
                         }
-                        
-                
+
+
+                        if (myShipment.DirectionId == "I")
+                        {
+                            if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
+                            {
+                                Card consignee = myCommonContext.Cards.Where(d => d.Id == myShipment.ConsigneeId).FirstOrDefault();
+                                if (consignee != null)
+                                {
+                                    myRecord.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(myShipment.ShipperId))
+                            {
+                                Card shipper = myCommonContext.Cards.Where(d => d.Id == myShipment.ShipperId).FirstOrDefault();
+                                if (shipper != null)
+                                {
+                                    myRecord.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
+                                }
+                            }
+                        }
                         myDataProvider.Shipments.Add(myRecord);
                         #endregion
                     }
@@ -366,7 +410,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.BranchExternalId = myBranch.ExternalId;
                             }
                         }
-
+                        if (myShipment.DirectionId == "I")
+                        {
+                            if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
+                            {
+                                Card consignee = myCommonContext.Cards.Where(d => d.Id == myShipment.ConsigneeId).FirstOrDefault();
+                                if (consignee != null)
+                                {
+                                    myRecord.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(myShipment.ShipperId))
+                            {
+                                Card shipper = myCommonContext.Cards.Where(d => d.Id == myShipment.ShipperId).FirstOrDefault();
+                                if (shipper != null)
+                                {
+                                    myRecord.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
+                                }
+                            }
+                        }
                         myDataProvider.Shipments.Add(myRecord);
                         #endregion
                     }
@@ -535,6 +600,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                 foreach (ShipmentDataView myShipment in allShipments)
                 {
+
+                    
+
                     Branch myBranch = null;
                     if (!string.IsNullOrEmpty(myShipment.BranchId))
                     {
@@ -600,6 +668,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                         }
                                     }
 
+                                    if (myShipment.DirectionId == "I")
+                                    {
+                                        if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
+                                        {
+                                            Card consignee = myCommonContext.Cards.Where(d => d.Id == myShipment.ConsigneeId).FirstOrDefault();
+                                            if (consignee != null)
+                                            {
+                                                myRecord.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!string.IsNullOrEmpty(myShipment.ShipperId))
+                                        {
+                                            Card shipper = myCommonContext.Cards.Where(d => d.Id == myShipment.ShipperId).FirstOrDefault();
+                                            if (shipper != null)
+                                            {
+                                                myRecord.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
+                                            }
+                                        }
+                                    }
+
                                     myDataProvider.Shipments.Add(myRecord);
                                 }
                             }
@@ -646,6 +737,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                         }
                                     }
 
+                                    if (myShipment.DirectionId == "I")
+                                    {
+                                        if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
+                                        {
+                                            Card consignee = myCommonContext.Cards.Where(d => d.Id == myShipment.ConsigneeId).FirstOrDefault();
+                                            if (consignee != null)
+                                            {
+                                                myRecord.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!string.IsNullOrEmpty(myShipment.ShipperId))
+                                        {
+                                            Card shipper = myCommonContext.Cards.Where(d => d.Id == myShipment.ShipperId).FirstOrDefault();
+                                            if (shipper != null)
+                                            {
+                                                myRecord.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
+                                            }
+                                        }
+                                    } 
                                     myDataProvider.Shipments.Add(myRecord);
                                 }
                             }
@@ -743,6 +856,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ChargeTypeLocalName = myChargesType.LocalName;
                                 }
 
+                                if (myShipment.DirectionId == "I")
+                                {
+                                    if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
+                                    {
+                                        Card consignee = myCommonContext.Cards.Where(d => d.Id == myShipment.ConsigneeId).FirstOrDefault();
+                                        if (consignee != null)
+                                        {
+                                            myRecord.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrEmpty(myShipment.ShipperId))
+                                    {
+                                        Card shipper = myCommonContext.Cards.Where(d => d.Id == myShipment.ShipperId).FirstOrDefault();
+                                        if (shipper != null)
+                                        {
+                                            myRecord.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
+                                        }
+                                    }
+                                }
                                 myDataProvider.Shipments.Add(myRecord);
                             }
                             #endregion
@@ -834,6 +969,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ChargeTypeLocalName = myChargesType.LocalName;
                                 }
 
+                                if (myShipment.DirectionId == "I")
+                                {
+                                    if (!string.IsNullOrEmpty(myShipment.ConsigneeId))
+                                    {
+                                        Card consignee = myCommonContext.Cards.Where(d => d.Id == myShipment.ConsigneeId).FirstOrDefault();
+                                        if (consignee != null)
+                                        {
+                                            myRecord.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrEmpty(myShipment.ShipperId))
+                                    {
+                                        Card shipper = myCommonContext.Cards.Where(d => d.Id == myShipment.ShipperId).FirstOrDefault();
+                                        if (shipper != null)
+                                        {
+                                            myRecord.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
+                                        }
+                                    }
+                                }
                                 myDataProvider.Shipments.Add(myRecord);
                             }
                             #endregion
