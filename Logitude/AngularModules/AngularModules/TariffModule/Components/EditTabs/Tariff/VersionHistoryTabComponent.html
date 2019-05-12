@@ -53,8 +53,8 @@
                                     <!-- MinPrice -->
                                     <log-column [header]="'TariffLine.F.MinPrice' | TextCodeTranslationPipe" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.MinPrice}}</span>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <span>{{item.MinPrice | NumbersPipe:'N3'}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -62,8 +62,8 @@
                                     <!-- Step1Price -->
                                     <log-column *ngIf="Step1PriceVisibility" [header]="Step1PriceLabel" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.Step1Price}}</span>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <span>{{item.Step1Price | NumbersPipe:'N3'}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -71,8 +71,8 @@
                                     <!-- Step2Price -->
                                     <log-column *ngIf="Step2PriceVisibility" [header]="Step2PriceLabel" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.Step2Price}}</span>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <span>{{item.Step2Price | NumbersPipe:'N3'}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -80,8 +80,8 @@
                                     <!-- Step3Price -->
                                     <log-column *ngIf="Step3PriceVisibility" [header]="Step3PriceLabel" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.Step3Price}}</span>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <span>{{item.Step3Price | NumbersPipe:'N3'}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -89,8 +89,8 @@
                                     <!-- Step4Price -->
                                     <log-column *ngIf="Step4PriceVisibility" [header]="Step4PriceLabel" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.Step4Price}}</span>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <span>{{item.Step4Price | NumbersPipe:'N3'}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -98,8 +98,8 @@
                                     <!-- Step5Price -->
                                     <log-column *ngIf="Step5PriceVisibility" [header]="Step5PriceLabel" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.Step5Price}}</span>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <span>{{item.Step5Price | NumbersPipe:'N3'}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -107,8 +107,8 @@
                                     <!-- Step6Price -->
                                     <log-column *ngIf="Step6PriceVisibility" [header]="Step6PriceLabel" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.Step6Price}}</span>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <span>{{item.Step6Price | NumbersPipe:'N3'}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -116,8 +116,8 @@
                                     <!-- Step7Price -->
                                     <log-column *ngIf="Step7PriceVisibility" [header]="Step7PriceLabel" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.Step7Price}}</span>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <span>{{item.Step7Price | NumbersPipe:'N3'}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -125,8 +125,8 @@
                                     <!-- Step8Price -->
                                     <log-column *ngIf="Step8PriceVisibility" [header]="Step8PriceLabel" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span>{{item.Step8Price}}</span>
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <span>{{item.Step8Price | NumbersPipe:'N3'}}</span>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
