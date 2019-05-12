@@ -1678,6 +1678,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MustBeLess", DefaultText = "From date must be less than to date", LocalDefaultText = "מ-תאריך חייב להיות קטן מ-עד תאריך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MustBeLarger", DefaultText = "To date must be larger than from date", LocalDefaultText = "עד תאריך חייב להיות גדול מ-תאריך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxDeduction", DefaultText = "Tax deduction details", LocalDefaultText = "פירוט ניכויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.WithholdingBlocked", DefaultText = "The Vendor does not have a certificate according to the 1000 System", LocalDefaultText = "לספק לא קיים אישור על פי מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.WithholdingLineDisabled", DefaultText = "A new line was entered with the same date by the 1000 System", LocalDefaultText = "נקלטה שורה חדשה עם תאריך זהה על ידי מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ReferenceDateIsRequired", DefaultText = "Reference date is required", LocalDefaultText = "שדה תאריך הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.AmountIsRequired", DefaultText = "Amount is required", LocalDefaultText = "שדה סכום הוא חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.EditTaxPeriod", DefaultText = "Edit tax deduction period", LocalDefaultText = "עריכת תקופת ניכוי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -3890,6 +3894,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
                 EventTypeCategoryCode = "LOG",
             }, eventTypesRepository, tenantEventTypes);
             #endregion
+
+            #region GLAccountWithholdingTax events
+            ObjectTablePM gLAccountWithholdingTax = ObjectTableQuery.GetObjectTableByCode("GLAccountWithholdingTax", 0);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "WBLK",
+                EnglishName = "The Vendor does not have a certificate according to the 1000 System",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "לספק לא קיים אישור על פי מערכת 1000",
+                ObjectTableId = gLAccountWithholdingTax.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+            }, eventTypesRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "WLDA",
+                EnglishName = "A new line was entered with the same date by the 1000 System",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "נקלטה שורה חדשה עם תאריך זהה על ידי מערכת 1000",
+                ObjectTableId = gLAccountWithholdingTax.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+            }, eventTypesRepository, tenantEventTypes);
+
+
+            #endregion
+
 
             eventTypesRepository.SubmitChanges();
         }
