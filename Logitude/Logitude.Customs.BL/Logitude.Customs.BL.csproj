@@ -1321,6 +1321,7 @@
     <Compile Include="EntityUpdateServices\Generated\UpdateCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LogChangesService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\PendingByKeywordUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleAddUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBanksCardUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBankUpdateService.cs" />

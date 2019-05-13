@@ -15,29 +15,32 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
-{ 
+{
 
     public partial class PendingByKeywordListQueryService
     {
-	    private IQueryable<PendingByKeywordList> GetIqueryableList(IQueryable<PendingByKeyword> iQueryable)
+        private IQueryable<PendingByKeywordList> GetIqueryableList(IQueryable<PendingByKeyword> iQueryable)
         {
-		IQueryable<PendingByKeywordList> query = (from a in iQueryable
-                                            select new PendingByKeywordList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<PendingByKeywordList> query = (from a in iQueryable.Include("CourierPendingReason")
+                                                      select new PendingByKeywordList()
+                                                      {
 
-		private IQueryable<PendingByKeyword> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<PendingByKeyword> iQueryable, int tenant)
+                                                          Id = a.Id,
+
+                                                          Tenant = a.Tenant,
+                                                          CourierPendingReasonCode = a.CourierPendingReasonCode,
+                                                          CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
+                                                          KeywordsList = a.KeywordsList,
+
+                                                      });
+            return query;
+        }
+
+        private IQueryable<PendingByKeyword> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<PendingByKeyword> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+        }
+    }
 
 
 }

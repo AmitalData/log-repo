@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -19,12 +20,25 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(PendingByKeywordPM entityPM, PendingByKeyword entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.Id = entityPM.Id;
+                entityPOCO.Tenant = entityPM.Tenant;
+            }
         }
 
         public void CustomPOCOToPM(PendingByKeywordPM entityPM, PendingByKeyword entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPMProperties.Add(PMPropertyNames.CourierPendingReasonName);
+            if (entityPOCO.CourierPendingReasonCode != null)
+            {
+                CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPOCO.Tenant);
+                CourierPendingReasonPM courierPendingReason = courierPendingReasonQueryService.GetSingle(entityPOCO.CourierPendingReasonCode, false, true);
+                entityPM.CourierPendingReasonName = courierPendingReason.LocalName;
+            }
         }
    }
 

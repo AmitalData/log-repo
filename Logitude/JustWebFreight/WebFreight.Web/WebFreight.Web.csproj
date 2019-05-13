@@ -1836,6 +1836,7 @@
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitConsItem.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitConsPackDet.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitCon.cs" />
+    <Compile Include="CustomModel\DomainServices\CustomDomainService.PendingByKeyword.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.TreatmentWay.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.ActionCode.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.SplitOrMergeReason.cs" />
