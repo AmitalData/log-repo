@@ -68,11 +68,7 @@ namespace CommunicationWorkerRole
 
                                     if (Task != null)
                                     {
-                                        if (Version < Task.Version)
-                                        {
-                                            queueservice.Complete();
-                                        }
-                                        else
+                                        if (Version >= Task.Version)
                                         {
                                             List<object> args = new List<object>();
                                             if (!string.IsNullOrEmpty(Task.Id))
@@ -88,8 +84,9 @@ namespace CommunicationWorkerRole
                                             Thread thread = new Thread(WRItem.Run);
                                             //queueservice.Complete();
                                             thread.Start();
-                                            AddSchedulerQueue(Task);
-                                        } 
+                                            //AddSchedulerQueue(Task);// need to be Moved
+                                        }
+
                                     }
 
                                    
