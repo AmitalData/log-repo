@@ -480,6 +480,36 @@ export class QuoteChargePM {
     public set IsBackToBack(newValue: boolean) { if (this.isBackToBack != newValue) { this.isBackToBack = newValue; this.MarkAsDirty("IsBackToBack"); } }
        
 	 
+    private markUpText: string;
+    public get MarkUpText() { return this.markUpText; }
+    public set MarkUpText(newValue: string) { if (this.markUpText != newValue) { this.markUpText = newValue; this.MarkAsDirty("MarkUpText"); } }
+       
+	 
+    private containerType1MarkUpText: string;
+    public get ContainerType1MarkUpText() { return this.containerType1MarkUpText; }
+    public set ContainerType1MarkUpText(newValue: string) { if (this.containerType1MarkUpText != newValue) { this.containerType1MarkUpText = newValue; this.MarkAsDirty("ContainerType1MarkUpText"); } }
+       
+	 
+    private containerType2MarkUpText: string;
+    public get ContainerType2MarkUpText() { return this.containerType2MarkUpText; }
+    public set ContainerType2MarkUpText(newValue: string) { if (this.containerType2MarkUpText != newValue) { this.containerType2MarkUpText = newValue; this.MarkAsDirty("ContainerType2MarkUpText"); } }
+       
+	 
+    private containerType3MarkUpText: string;
+    public get ContainerType3MarkUpText() { return this.containerType3MarkUpText; }
+    public set ContainerType3MarkUpText(newValue: string) { if (this.containerType3MarkUpText != newValue) { this.containerType3MarkUpText = newValue; this.MarkAsDirty("ContainerType3MarkUpText"); } }
+       
+	 
+    private containerType4MarkUpText: string;
+    public get ContainerType4MarkUpText() { return this.containerType4MarkUpText; }
+    public set ContainerType4MarkUpText(newValue: string) { if (this.containerType4MarkUpText != newValue) { this.containerType4MarkUpText = newValue; this.MarkAsDirty("ContainerType4MarkUpText"); } }
+       
+	 
+    private containerType5MarkUpText: string;
+    public get ContainerType5MarkUpText() { return this.containerType5MarkUpText; }
+    public set ContainerType5MarkUpText(newValue: string) { if (this.containerType5MarkUpText != newValue) { this.containerType5MarkUpText = newValue; this.MarkAsDirty("ContainerType5MarkUpText"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }

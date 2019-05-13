@@ -2683,10 +2683,12 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\MarkUpTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteClosingReasonUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteCostChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteCustomerTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuotePackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuotePriceStepsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteRatingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteSaleChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteStageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateUpdateClass.cs" />

@@ -53,5 +53,12 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? CostMinAmount { get; set; }
         public double? SaleMinAmount { get; set; }
         public double? SaleMaxAmount { get; set; }
+
+        public string MarkUpText { get; set; }
+        public string ContainerType1MarkUpText { get; set; }
+        public string ContainerType2MarkUpText { get; set; }
+        public string ContainerType3MarkUpText { get; set; }
+        public string ContainerType4MarkUpText { get; set; }
+        public string ContainerType5MarkUpText { get; set; }
     }
 }
