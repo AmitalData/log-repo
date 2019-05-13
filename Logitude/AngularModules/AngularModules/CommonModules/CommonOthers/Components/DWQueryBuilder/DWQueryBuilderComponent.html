@@ -715,12 +715,15 @@
                                                                                     <tr class="SimpleGridViewRow" *ngFor="let item of SampleData;">
 
                                                                                         <td *ngFor="let Column of SelectedFieldsDataSource; let i=index;" class="CellStretched  TextTrimming" style="width: 100px; max-width: 100px;min-width:100px;padding-left: 4px;">
-                                                                                            <div *ngIf="Column.IsMeasurement == false">
+                                                                                            <div  [style.padding-right] ="Column.DataTypeCode == 'Integer' ? '4px':'0px'"    [style.text-align]="Column.DataTypeCode == 'Integer' ? 'right':'left'" *ngIf="Column.IsMeasurement == false && Column.DataTypeCode != 'Decimal' && Column.DataTypeCode != 'Double'">
                                                                                                 {{item[Column.DisplayName.replace('[', '').replace(']','')]}}
                                                                                             </div>
-                                                                                            <div *ngIf="Column.IsMeasurement == true" style="text-align:right;padding-right:4px;">
+
+                                                                                            <div *ngIf="Column.IsMeasurement == true || Column.DataTypeCode == 'Decimal' || Column.DataTypeCode == 'Double'" style="text-align:right;padding-right:4px;">
                                                                                                 {{item[Column.DisplayName.replace('[', '').replace(']','')] | NumbersPipe:'N2'}}
                                                                                             </div>
+
+
                                                                                         </td>
                                                                                         <td style="width:100%;"></td>
 
