@@ -20,11 +20,17 @@ export class AccountingWorkspaceComponent {
     public IsReceivablesTabVisibile: boolean = false;
     public IsPayablesTabVisibile: boolean = false;
     public IsBanksTabVisibile: boolean = false;
+    public IsJournalTabVisibile: boolean = false;
     public IsGLAccountsTabVisibile: boolean = false;
     public IsMiscTabVisibile: boolean = false;
 
     constructor(private _entityResourceService: EntityResourceService) {
         this.RunComponent();
+        this.GetResources();
+        this.CheckFeatures();
+    }
+
+    private GetResources() {
         this._entityResourceService.getEntityResourceByTableName("BankDeposit").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("BankDepositLine").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ARPaymentCheque").subscribe((response: any) => { });
@@ -37,7 +43,9 @@ export class AccountingWorkspaceComponent {
         this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("BankAccount").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe((response: any) => { });
+    }
 
+    CheckFeatures() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         var table = window.ObjectTables.filter(d => d.Name === 'General')[0];
         var mainTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCMAIN") && f.ObjectTableId == table.Id)[0];
@@ -55,6 +63,10 @@ export class AccountingWorkspaceComponent {
         var BanksTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCBanks") && f.ObjectTableId == table.Id)[0];
         if (BanksTabFeature) {
             this.IsBanksTabVisibile = true;
+        }
+        var journalTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCJORN") && f.ObjectTableId == table.Id)[0];
+        if (journalTabFeature) {
+            this.IsJournalTabVisibile = true;
         }
         var GLAccountsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCGLAccounts") && f.ObjectTableId == table.Id)[0];
         if (GLAccountsTabFeature) {
@@ -76,34 +88,46 @@ export class AccountingWorkspaceComponent {
 
             else {
                 this.isLoaderReady = true;
-                if (this.IsMainTabVisibile) {
-                    this.SelectedItem = "Main";
-                }
-                else if (this.IsReceivablesTabVisibile) {
-                    this.SelectedItem = "RCV";
 
-                }
-                else if (this.IsPayablesTabVisibile) {
-                    this.SelectedItem = "PAY";
+                this.InitSelectedTab();
 
-                }
-                else if (this.IsBanksTabVisibile) {
-                    this.SelectedItem = "BNKS";
-
-                }
-                else if (this.IsGLAccountsTabVisibile) {
-                    this.SelectedItem = "GLAccounts";
-
-                }
-                else if (this.IsMiscTabVisibile) {
-                    this.SelectedItem = "MISC";
-
-                }
             }
         }
 
         else {
             this.RunComponentTimer();
+        }
+    }
+
+    InitSelectedTab(){
+
+        // if (this.IsMainTabVisibile) {
+        //     this.SelectedItem = "Main";
+        // }
+        // else
+        if (this.IsReceivablesTabVisibile) {
+            this.SelectedItem = "RCV";
+
+        }
+        else if (this.IsPayablesTabVisibile) {
+            this.SelectedItem = "PAY";
+
+        }
+        else if (this.IsBanksTabVisibile) {
+            this.SelectedItem = "BNKS";
+
+        }
+        else if (this.IsJournalTabVisibile) {
+            this.SelectedItem = "JORN";
+
+        }
+        else if (this.IsGLAccountsTabVisibile) {
+            this.SelectedItem = "GLAccounts";
+
+        }
+        else if (this.IsMiscTabVisibile) {
+            this.SelectedItem = "MISC";
+
         }
     }
 

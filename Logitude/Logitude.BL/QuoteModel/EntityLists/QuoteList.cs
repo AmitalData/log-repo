@@ -41,6 +41,7 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string QuoteTypeName { get; set; }
         public string CarrierName { get; set; }
         public double? ChargeableWeight { get; set; }
+        public double? ChargeableWeightInKG { get; set; }
         public double? GrossWeight { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }

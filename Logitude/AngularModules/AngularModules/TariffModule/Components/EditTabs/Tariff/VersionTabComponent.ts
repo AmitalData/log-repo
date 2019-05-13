@@ -12,7 +12,7 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
 import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
 import { TariffVersionPM } from '../../../../TariffModule/EntityPMs/TariffVersionPM';
-import { AppTool, FontTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool, FontTool, DateTool, FormatTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
@@ -60,6 +60,11 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                     if (this.isCopyButtonClicked) {
                         this.isCopyButtonClicked = false;
                         this.CurrentSession.FireEvent("NewVersionAdded");
+                    }
+
+                    if (this.isUploadExcelFinished) {
+                        this.isUploadExcelFinished = false;
+                        this.FillTariffLines();
                     }
                 }
             });
@@ -336,9 +341,13 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             for (var i = 0; i < len; i++) {
                 binary += String.fromCharCode(bytes[i]);
             }
+
             var filter = new TariffFilterParameter();
             filter.FileData = window.btoa(binary);
             filter.PriceSteps = context.PriceSteps;
+            filter.TariffId = context.EntityPM.Id;
+            filter.Version = context.CurrentVersion.Version;
+
             context.SendExcelToServer(filter);
         };
 
@@ -354,12 +363,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 if (tariffLines) {
                     this.CurrentVersion.TariffLines = [];
                     this.InsertNewRowsFromExcel(tariffLines);
-                    this.FillTariffLines();
                 }
             }
         });
     }
 
+    private isUploadExcelFinished: boolean = false;
     private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
         tariffLines.forEach(item => {
             var tariffLine = new TariffLinePM(null);
@@ -399,6 +408,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         });
 
         this.EntityPM.TariffLinesAdded = true;
+        this.isUploadExcelFinished = true;
+        this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
     }
 
     // Download Excel 
@@ -706,7 +717,7 @@ export class TariffLineData extends BaseComponent {
 
     get MinPriceValue() {
         if (!AppTool.IsNullOrZero(this.EntityPM.MinPrice)) {
-            return this.EntityPM.MinPrice;
+            return FormatTool.FormatNumber(this.EntityPM.MinPrice, "N3");
         }
 
         else {
@@ -737,7 +748,7 @@ export class TariffLineData extends BaseComponent {
 
     get Step1PriceValue() {
         if (!AppTool.IsNullOrZero(this.EntityPM.Step1Price)) {
-            return this.EntityPM.Step1Price;
+            return FormatTool.FormatNumber(this.EntityPM.Step1Price, "N3");
         }
 
         else {
@@ -768,7 +779,7 @@ export class TariffLineData extends BaseComponent {
 
     get Step2PriceValue() {
         if (!AppTool.IsNullOrZero(this.EntityPM.Step2Price)) {
-            return this.EntityPM.Step2Price;
+            return FormatTool.FormatNumber(this.EntityPM.Step2Price, "N3");
         }
 
         else {
@@ -799,7 +810,7 @@ export class TariffLineData extends BaseComponent {
 
     get Step3PriceValue() {
         if (!AppTool.IsNullOrZero(this.EntityPM.Step3Price)) {
-            return this.EntityPM.Step3Price;
+            return FormatTool.FormatNumber(this.EntityPM.Step3Price, "N3");
         }
 
         else {
@@ -830,7 +841,7 @@ export class TariffLineData extends BaseComponent {
 
     get Step4PriceValue() {
         if (!AppTool.IsNullOrZero(this.EntityPM.Step4Price)) {
-            return this.EntityPM.Step4Price;
+            return FormatTool.FormatNumber(this.EntityPM.Step4Price, "N3");
         }
 
         else {
@@ -861,7 +872,7 @@ export class TariffLineData extends BaseComponent {
 
     get Step5PriceValue() {
         if (!AppTool.IsNullOrZero(this.EntityPM.Step5Price)) {
-            return this.EntityPM.Step5Price;
+            return FormatTool.FormatNumber(this.EntityPM.Step5Price, "N3");
         }
 
         else {
@@ -892,7 +903,7 @@ export class TariffLineData extends BaseComponent {
 
     get Step6PriceValue() {
         if (!AppTool.IsNullOrZero(this.EntityPM.Step6Price)) {
-            return this.EntityPM.Step6Price;
+            return FormatTool.FormatNumber(this.EntityPM.Step6Price, "N3");
         }
 
         else {
@@ -923,7 +934,7 @@ export class TariffLineData extends BaseComponent {
 
     get Step7PriceValue() {
         if (!AppTool.IsNullOrZero(this.EntityPM.Step7Price)) {
-            return this.EntityPM.Step7Price;
+            return FormatTool.FormatNumber(this.EntityPM.Step7Price, "N3");
         }
 
         else {
@@ -954,7 +965,7 @@ export class TariffLineData extends BaseComponent {
 
     get Step8PriceValue() {
         if (!AppTool.IsNullOrZero(this.EntityPM.Step8Price)) {
-            return this.EntityPM.Step8Price;
+            return FormatTool.FormatNumber(this.EntityPM.Step8Price, "N3");
         }
 
         else {

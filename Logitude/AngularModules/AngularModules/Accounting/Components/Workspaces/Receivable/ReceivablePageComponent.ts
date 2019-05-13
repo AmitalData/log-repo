@@ -23,10 +23,10 @@ import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSe
 import { GLAccountTotalByMonthList } from '../../../EntityLists/GLAccountTotalByMonthList';
 
 import { GLAccountSummary } from '../../../DataContracts/AccountingSummery';
-import { AgingReportParameters  } from '../../../DataContracts/AgingReportParameters';
-import { PeriodM  } from '../../../DataContracts/PeriodM';
-import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import {ModulesService} from '../../../Services/ModulesService';
+import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
+import { PeriodM } from '../../../DataContracts/PeriodM';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ModulesService } from '../../../Services/ModulesService';
 
 @Component({
     moduleId: module.id,
@@ -60,23 +60,32 @@ export class ReceivablePageComponent {
     RecentGLAccountsCount: number = 0;
 
     public isRTL: boolean = false;
-
+    isReady: boolean = false;
 
     chartId: string = "";
     private CurrentSession = SessionLocator.SelectedSession;
-  constructor() {
-    this.chartId = "Receivable_" + this.CurrentSession.GetChartId();
+    constructor() {
+        this.chartId = "Receivable_" + this.CurrentSession.GetChartId();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { });
-        this._entityResourceService.getEntityResourceByTableName("ARPayment").subscribe((response: any) => { });
-        this._entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => { });
+        this.LoadResources();
+
+
         //this.LoadAllScreenData();
 
 
         //this.SelectedFilter = "Last 6 Months";
         this.SelectedFilter = this.FiltersList[1];
         this.PopulateDeptorsFilterData();
+    }
+    LoadResources() {
+        this._entityResourceService.getEntityResourceByTableName("ARPayment").subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => {
+                this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
+                    this.isReady = true;
+                });
+            });
+        });
     }
     InitComponent() {
         this.LoadAllScreenData();
@@ -523,8 +532,8 @@ export class ReceivablePageComponent {
     //#region Filters Code
 
     monthNames = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
+        "July", "August", "September", "October", "November", "December"
+    ];
 
     // aging chart
     //public FiltersList: string[] = [ 'Last 3 Month',
@@ -533,11 +542,11 @@ export class ReceivablePageComponent {
 
 
     public FiltersList: any[] =
-    [
-        { EnglishName: 'Last 3 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "שלושה")},
-        { EnglishName: 'Last 6 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "שישה") },
-        { EnglishName: 'Last 9 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "תשעה") }
-    ];
+        [
+            { EnglishName: 'Last 3 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "שלושה") },
+            { EnglishName: 'Last 6 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "שישה") },
+            { EnglishName: 'Last 9 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "תשעה") }
+        ];
 
 
     private selectedFilter: any;

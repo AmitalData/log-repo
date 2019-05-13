@@ -249,6 +249,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 this.portRepository = new PortRepository(authToken.Tenant);
 
+                filter.Tenant = authToken.Tenant;
                 byte[] fileData = Convert.FromBase64String(filter.FileData);
 
                 System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
@@ -403,6 +404,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     tariffLinesResult.Add(tariffLine);
                 }
 
+                //List<TariffLine> tariffLines = new List<TariffLine>();
+                //if(tariffLinesResult != null && tariffLinesResult.Count > 0)
+                //{
+                //    tariffLines = this.MapExcelLinesToTariffLines(filter, tariffLinesResult);
+                //}
+
                 return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
             }
 
@@ -410,6 +417,57 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private List<TariffLine> MapExcelLinesToTariffLines(TariffFilterParameter tariffFilter, List<ExcelTariffLines> tariffLinesResult)
+        {
+            List<TariffLine> tariffLines = new List<TariffLine>();
+
+            ITariffModuleContext context = TariffModuleContext.GetContext(tariffFilter.Tenant);
+            TariffRepository tariffRepository = new TariffRepository(context);
+            TariffLineRepository tariffLineRepository = new TariffLineRepository(context);
+            Tariff tariff = tariffRepository.GetSingle(tariffFilter.TariffId, tariffFilter.Tenant);
+
+            foreach (ExcelTariffLines item in tariffLinesResult)
+            {
+                TariffLine newTariffLine = new TariffLine()
+                {
+                    Id = IdCounter.GetNumber("TariffLine", tariffFilter.Tenant),
+                    TariffId = tariffFilter.TariffId,
+                    Version = tariffFilter.Version,
+                    StartDate = tariff.StartDate,
+                    ExpirationDate = tariff.ExpirationDate,
+                    Tenant = tariffFilter.Tenant,
+                    OriginPortId = item.FromPortId,
+                    DestinationPortId = item.ToPortId,
+                    MinPrice = item.MinPrice,
+                    Step1Price = item.Step1Price,
+                    Step2Price = item.Step2Price,
+                    Step3Price = item.Step3Price,
+                    Step4Price = item.Step4Price,
+                    Step5Price = item.Step5Price,
+                    Step6Price = item.Step6Price,
+                    Step7Price = item.Step7Price,
+                    Step8Price = item.Step8Price,
+                    OriginPortText = item.FromPortText,
+                    DestinationPortText = item.ToPortText,
+                    MinPriceText = item.MinPriceText,
+                    Step1PriceText = item.Step1PriceText,
+                    Step2PriceText = item.Step2PriceText,
+                    Step3PriceText = item.Step3PriceText,
+                    Step4PriceText = item.Step4PriceText,
+                    Step5PriceText = item.Step5PriceText,
+                    Step6PriceText = item.Step6PriceText,
+                    Step7PriceText = item.Step7PriceText,
+                    Step8PriceText = item.Step8PriceText,
+                };
+
+                tariffLineRepository.Add(newTariffLine);
+                tariffLines.Add(newTariffLine);
+            }
+
+            tariffLineRepository.SubmitChanges();
+            return tariffLines;
         }
 
         public HttpResponseMessage GetApproveVersion(string tariffId)
@@ -609,6 +667,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public int Tenant { get; set; }
         public string FileData { get; set; }
         public string PriceSteps { get; set; }
+        public string TariffId { get; set; }
+        public int Version { get; set; }
     }
     public class ExcelTariffLines
     {

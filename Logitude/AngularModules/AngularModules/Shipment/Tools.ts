@@ -1818,6 +1818,8 @@ export class ShipmentTool {
                                     case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
                                     case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
                                     case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
+                                    case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
+                                    case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
                                     case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
                                     default: { break; }
                                 }
@@ -1850,6 +1852,8 @@ export class ShipmentTool {
                                     case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
                                     case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
                                     case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
+                                    case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
+                                    case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
                                     default: { break; }
                                 }
 
@@ -2011,6 +2015,8 @@ export class ShipmentGenerator {
                                 case "PRVL": { newRecord.Quantity = this.EntityPM.ValueOfGoods; break; }
                                 case "GWTN": { newRecord.Quantity = this.EntityPM.GrossWeightPerTon; break; }
                                 case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; break; }
+                                case "CWKG": { newRecord.Quantity = this.EntityPM.ChargeableWeightInKG; break; }
+                                case "GWKG": { newRecord.Quantity = this.EntityPM.GrossWeightInKG; break; }
                                 default: { break; }
                             }
 
@@ -2155,6 +2161,8 @@ export class ShipmentGenerator {
                         case "PRVL":
                         case "PRFR":
                         case "GWTN":
+                        case "CWKG": 
+                        case "GWKG":
                         case "QTY":
                             {
                                 this.CreateNewPayableFromOriginShipment(item);
@@ -2219,6 +2227,8 @@ export class ShipmentGenerator {
                     case "PRVL":
                     case "PRFR":
                     case "GWTN":
+                    case "CWKG": 
+                    case "GWKG":
                     case "QTY":
                         {
                             break;
@@ -2313,6 +2323,8 @@ export class ShipmentGenerator {
                 case "FIXD":
                 case "PRVL":
                 case "GWTN":
+                case "CWKG": 
+                case "GWKG": 
                 case "QTY":
                     {
                         var itemCharge: QuoteChargePM = this.BaseQuote.QuoteCharges.filter(f => f.Id == item.QuoteChargeId)[0];
@@ -2346,6 +2358,8 @@ export class ShipmentGenerator {
             case "PRVL": { myQuantity = this.EntityPM.ValueOfGoods; break; }
             case "PRFR": { myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
             case "GWTN": { myQuantity = this.EntityPM.GrossWeightPerTon; break; }
+            case "CWKG": { myQuantity = this.EntityPM.ChargeableWeightInKG; break; }
+            case "GWKG": { myQuantity = this.EntityPM.GrossWeightInKG; break; }
             case "QTY": { myQuantity = this.EntityPM.NumberOfPackages; break; }
             default: { break; }
         }
@@ -2682,6 +2696,8 @@ export class ShipmentGenerator {
                                     case "FIXD": { newRecord.Quantity = 1; break; }
                                     case "PRVL": { newRecord.Quantity = this.EntityPM.ValueOfGoods; break; }
                                     case "GWTN": { newRecord.Quantity = this.EntityPM.GrossWeightPerTon; }
+                                    case "CWKG": { newRecord.Quantity = this.EntityPM.ChargeableWeightInKG; break; }
+                                    case "GWKG": { newRecord.Quantity = this.EntityPM.GrossWeightInKG; break; }
                                     case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; }
                                     default: { break; }
                                 }
@@ -2832,6 +2848,8 @@ export class ShipmentGenerator {
                         case "PRVL":
                         case "PRFR":
                         case "GWTN":
+                        case "CWKG": 
+                        case "GWKG": 
                         case "QTY":
                             {
                                 this.CreateNewReceivableFromOriginShipment(item);
@@ -2897,6 +2915,8 @@ export class ShipmentGenerator {
                     case "PRVL":
                     case "PRFR":
                     case "GWTN":
+                    case "CWKG": 
+                    case "GWKG": 
                     case "QTY":
                         {
                             break;
@@ -2985,6 +3005,8 @@ export class ShipmentGenerator {
                 case "FIXD":
                 case "PRVL":
                 case "GWTN":
+                case "CWKG": 
+                case "GWKG": 
                 case "QTY":
                     {
                         var itemCharge: QuoteChargePM = this.BaseQuote.QuoteCharges.filter(f => f.Id == item.QuoteChargeId)[0];
@@ -3018,6 +3040,8 @@ export class ShipmentGenerator {
             case "PRVL": { myQuantity = this.EntityPM.ValueOfGoods; break; }
             case "PRFR": { myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
             case "GWTN": { myQuantity = this.EntityPM.GrossWeightPerTon; break; }
+            case "CWKG": { myQuantity = this.EntityPM.ChargeableWeightInKG; break; }
+            case "GWKG": { myQuantity = this.EntityPM.GrossWeightInKG; break; }
             case "QTY": { myQuantity = this.EntityPM.NumberOfPackages; break; }
             default: { break; }
         }
