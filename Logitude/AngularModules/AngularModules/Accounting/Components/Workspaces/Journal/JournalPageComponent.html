@@ -201,11 +201,11 @@
                                                                         </td>-->
 
                                                                         <td style="width: 50px;">
-                                                                            <div style="color: #262626;">Type: </div>
+                                                                            <div style="color: #262626;">{{'Journal.F.TypeName' | TextCodeTranslationPipe}}: </div>
                                                                         </td>
 
                                                                         <td>
-                                                                            <div>{{item.TypeName}}</div>
+                                                                            <div>{{showLocal ? item.TypeLocalName : item.TypeName}}</div>
                                                                         </td>
                                                                         <td>
                                                                             <div></div>
@@ -218,11 +218,11 @@
                                                                         </td>
 
                                                                         <td style="width: 50px;">
-                                                                            <div style="color: #262626;">Status: </div>
+                                                                            <div style="color: #262626;">{{'Journal.F.StatusName' | TextCodeTranslationPipe}}: </div>
                                                                         </td>
 
                                                                         <td>
-                                                                            <div>{{item.StatusName}}</div>
+                                                                            <div>{{showLocal ? item.StatusLocalName : item.StatusName}}</div>
                                                                         </td>
                                                                         <td>
                                                                             <div></div>
