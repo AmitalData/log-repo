@@ -993,6 +993,14 @@
     <Compile Include="Migrations\201905121459016_AddParentVersionIdToTariffVersion_Maheera.Designer.cs">
       <DependentUpon>201905121459016_AddParentVersionIdToTariffVersion_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.cs" />
+    <Compile Include="Migrations\201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.Designer.cs">
+      <DependentUpon>201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905121058310_AddVesrionToTaskScheduler_Rabaia.cs" />
+    <Compile Include="Migrations\201905121058310_AddVesrionToTaskScheduler_Rabaia.Designer.cs">
+      <DependentUpon>201905121058310_AddVesrionToTaskScheduler_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201905130635577_ChangeParentVersionTypeInTariffVersionTable_Maheera.cs" />
     <Compile Include="Migrations\201905130635577_ChangeParentVersionTypeInTariffVersionTable_Maheera.Designer.cs">
       <DependentUpon>201905130635577_ChangeParentVersionTypeInTariffVersionTable_Maheera.cs</DependentUpon>
@@ -1666,6 +1674,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905020921486_AddIsExternalEntityFix.resx">
       <DependentUpon>201905020921486_AddIsExternalEntityFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.resx">
+      <DependentUpon>201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905121058310_AddVesrionToTaskScheduler_Rabaia.resx">
+      <DependentUpon>201905121058310_AddVesrionToTaskScheduler_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905050709246_MoveField_IsLedgerCreated.resx">
       <DependentUpon>201905050709246_MoveField_IsLedgerCreated.cs</DependentUpon>

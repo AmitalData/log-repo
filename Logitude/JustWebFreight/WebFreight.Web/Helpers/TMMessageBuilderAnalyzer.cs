@@ -36,15 +36,18 @@ namespace WebFreight.Web.Helpers
             {
                 // Get the specified work item
                 WorkItem workitem = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations).Result;
-                //completedWork = workitem.Fields.Where(a => a.Key == "Microsoft.VSTS.Scheduling.CompletedWork").Select(a => a).FirstOrDefault();
-                JsonPatchDocument patchDocument = new JsonPatchDocument();
-                patchDocument.Add(new JsonPatchOperation()
+                if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Task" || workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Bug")
                 {
-                    Operation = Operation.Replace,
-                    Path = "/fields/Microsoft.VSTS.Scheduling.CompletedWork",
-                    Value = completedWork,
-                });
-                witClient.UpdateWorkItemAsync(patchDocument, wi);
+                    //completedWork = workitem.Fields.Where(a => a.Key == "Microsoft.VSTS.Scheduling.CompletedWork").Select(a => a).FirstOrDefault();
+                    JsonPatchDocument patchDocument = new JsonPatchDocument();
+                    patchDocument.Add(new JsonPatchOperation()
+                    {
+                        Operation = Operation.Replace,
+                        Path = "/fields/Microsoft.VSTS.Scheduling.CompletedWork",
+                        Value = completedWork,
+                    });
+                    witClient.UpdateWorkItemAsync(patchDocument, wi);
+                }
                 queue.Complete();
             }
             catch (AggregateException aex)

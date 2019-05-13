@@ -20,7 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Web;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.Helpers
 {
@@ -59,7 +60,7 @@ namespace WebFreight.Web.Helpers
         }
 
         bool isFirst = true;
-        private string GetWorkItemById(int wi, bool isOutSide = true)
+        public string GetWorkItemById(int wi, bool isOutSide = true)
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
@@ -87,13 +88,16 @@ namespace WebFreight.Web.Helpers
                 }
                 if (projectNo == null)
                 {
-
-                    var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
-                    if (relation != null)
+                    if (workitem.Relations != null)
                     {
-                        isFirst = false;
-                        string last = relation.Url.Split('/').Last();
-                        return this.GetWorkItemById(Int32.Parse(last));
+                        var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
+
+                        if (relation != null)
+                        {
+                            isFirst = false;
+                            string last = relation.Url.Split('/').Last();
+                            return this.GetWorkItemById(Int32.Parse(last));
+                        }
                     }
                 }
             }
@@ -237,29 +241,52 @@ namespace WebFreight.Web.Helpers
         public List<TMEmployeeTime> GetProjects(List<TMEmployeeTime> list, int tenant)
         {
             ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
-            TMEmployeeTimeRepository myTMEmployeeTimeRepository = new TMEmployeeTimeRepository(tenant);
-            TMProjectRepository myTMProjectRepository = new TMProjectRepository(tenant);
+            TMEmployeeTimeRepository iTMEmployeeTimeRepository = new TMEmployeeTimeRepository(myContext);
+            TMProjectRepository iTMProjectRepository = new TMProjectRepository(myContext);
+            int count = 0;
+
             foreach (var item in list)
             {
-                if (!string.IsNullOrEmpty(item.WINumber))
+                int iWorkItemNumber;
+
+                if (Int32.TryParse(item.WINumber, out iWorkItemNumber))
                 {
-                    projectNo = this.GetWorkItemById(Int32.Parse(item.WINumber), false);
-                    item.ProjectId = myTMProjectRepository.GetTMProjectByNumber(projectNo, tenant);
-                    TMEmployeeTime tmEmployee = myTMEmployeeTimeRepository.GetSingle(item.Id, item.Tenant);
-                    tmEmployee.ProjectId = item.ProjectId;
-                    myTMEmployeeTimeRepository.Update(tmEmployee);
+                    string iProjectNumber = GetWorkItemById(iWorkItemNumber, false);
+                    if (!string.IsNullOrEmpty(iProjectNumber))
+                    {
+                        string iProjectId = iTMProjectRepository.GetTMProjectByNumber(iProjectNumber, tenant);
+
+                        if (!string.IsNullOrEmpty(iProjectId))
+                        {
+                            if (item.ProjectId != iProjectId)
+                            {
+                                item.ProjectId = iProjectId;
+                                iTMEmployeeTimeRepository.Update(item);
+                                count++;
+                            }
+                        }
+                    }
+                }
+
+                if (count >= 100)
+                {
+                    count = 0;
+                    iTMEmployeeTimeRepository.SubmitChanges();
                 }
             }
-            myTMEmployeeTimeRepository.SubmitChanges();
+
+            if (count > 0)
+            {
+                iTMEmployeeTimeRepository.SubmitChanges();
+            }
             return list;
         }
-
 
         public void CalculateCompletedWorkHours(int tenant)
         {
             ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
             List<TMEmployeeTime> tmEmployeelist = (from d in myContext.TMEmployeeTimes
-                                                   where d.Tenant == tenant && d.DateOfWork != null &&d.WINumber != null
+                                                   where d.Tenant == tenant && d.DateOfWork != null && d.WINumber != null
                                                    select d).ToList();
 
             var groupedItems = (from d in tmEmployeelist
@@ -268,7 +295,7 @@ namespace WebFreight.Web.Helpers
                                 {
                                     Tenant = g.Key.Tenant,
                                     WINumber = g.Key.WINumber,
-                                    CompletedWork = (g.Sum(s => s.TimeInMinutes))/60.00,
+                                    CompletedWork = (g.Sum(s => s.TimeInMinutes)) / 60.00,
                                 });
             int counter = 0;
             int currentIndex = 0;
@@ -277,44 +304,46 @@ namespace WebFreight.Web.Helpers
             {
                 counter += 1;
                 currentIndex += 1;
-               
-                // Create a connection to the account
-                string accountUri = "https://logitudeteam.visualstudio.com";
-                var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
-                int workItemId = Int32.Parse(item.WINumber);
-                // new VssOAuthAccessTokenCredential(personalAccessToken)
-                VssConnection connection = new VssConnection(new Uri(String.Format(accountUri)), new VssBasicCredential("logitudo@live.com", personalAccessToken));
-                // Get an instance of the work item tracking client
-                WorkItemTrackingHttpClient witClient = connection.GetClient<WorkItemTrackingHttpClient>();
-                //object completedWork = null;
+                SendQueueMessage(item.WINumber, item.CompletedWork, item.Tenant);
+
+                if (counter == 10)
+                {
+                    counter = 0;
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+        }
+        private void SendQueueMessage(string wINumber, double completedWork, int tenant)
+        {
+            string queueName = "timemanagementqueue";
+            if (!string.IsNullOrEmpty(wINumber))
+            {
                 try
                 {
-                    // Get the specified work item
-                    WorkItem workitem = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations).Result;
-                    JsonPatchDocument patchDocument = new JsonPatchDocument();
-                    patchDocument.Add(new JsonPatchOperation()
+                    DbQueueService queueservice = new DbQueueService(queueName, tenant);
+                    Dictionary<string, string> message = new Dictionary<string, string>()
                     {
-                        Operation = Operation.Replace,
-                        Path = "/fields/Microsoft.VSTS.Scheduling.CompletedWork",
-                        Value = item.CompletedWork.ToString("0.##"),
-                    });
+                        { "Tenant", tenant.ToString() },
+                        { "WorkItemNumber",  wINumber },
+                        { "CompletedWork", completedWork.ToString("0.##")},
+                    };
 
-                    witClient.UpdateWorkItemAsync(patchDocument, Int32.Parse(item.WINumber));
-                    if(counter == 10)
-                    {
-                        counter = 0;
-                        System.Threading.Thread.Sleep(1000);
-                    }
+                    queueservice.Send(message);
                 }
-                catch (AggregateException aex)
+                catch (Exception ex)
                 {
-                    VssServiceException vssex = aex.InnerException as VssServiceException;
-                    if (vssex != null)
+                    string ip = "";
+                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
                     {
-                        Console.WriteLine(vssex.Message);
+                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                        if (string.IsNullOrEmpty(currentIP))
+                        {
+                            currentIP = HttpContext.Current.Request.UserHostAddress;
+                        }
+                        ip = currentIP;
                     }
+                    throw new Exception(ex + "\t" + ip);
                 }
-
             }
         }
     }
