@@ -105,9 +105,20 @@ namespace WebFreight.Web.MetaDataUpdate
             //this.ObjectContext.SaveChanges();
         }
 
-        #region LoadObjectsTenantZero()
-        bool isUpdate = false;
-        public void LoadObjectsTenantZero(IWebFreightContext context, bool updateMetadatafields = true)
+        public void LoadObjectTablesToTenantZero(IWebFreightContext context)
+        {
+            InitializeService(context);
+            Dictionary<string, ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
+            textCodes = new Dictionary<string, TextCode>();
+            TextCodeRepository.GetTextCodesByTenant(0).ToList().ForEach(d =>
+            {
+                textCodes.Add(d.Code + d.Tenant.ToString() + d.ObjectTableId, d);
+            });
+
+            CreateAllObjectsTables(objectTables, textCodes);
+        }
+
+        private void InitializeService(IWebFreightContext context)
         {
             CommonDataDomainService commonDomain = new CommonDataDomainService();
             ObjectContext = context;//WebFreightContext.GetContext(0);
@@ -119,25 +130,38 @@ namespace WebFreight.Web.MetaDataUpdate
             MenuButtonRepository = new MenuButtonRepository(ObjectContext);
             MenuButtonGroupRepository = new MenuButtonGroupRepository(ObjectContext);
             TenantSettingRepository = new TenantSettingRepository(ObjectContext);
-            Dictionary<string, TextCode> textCodes = null;
-            if (true)
-            {
-                textCodes = new Dictionary<string, TextCode>();
-                TextCodeRepository.GetTextCodesByTenant(0).ToList().ForEach(d =>
-                {
-                    textCodes.Add(d.Code + d.Tenant.ToString() + d.ObjectTableId, d);
-                });
-            }
-            else
-            {
-                textCodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a);
-            }
+           
+        }
+        #region LoadObjectsTenantZero()
+        bool isUpdate = false;
+        Dictionary<string, TextCode> textCodes = null;
+        public void LoadObjectsTenantZero(IWebFreightContext context, bool updateMetadatafields = true)
+        {
+            InitializeService(context);
 
             Dictionary<string, ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
             Dictionary<string, ObjectField> objectFields = ObjectFieldsRepository.GetObjectFieldsByTenant(0).ToDictionary(d => d.FieldName + d.ObjectTableId, a => a);
             Dictionary<string, Tip> tips = TipRepository.GetTips(0).ToDictionary(d => d.Code, a => a);
+            if (textCodes == null)
+            {
+                if (true)
+                {
+                    textCodes = new Dictionary<string, TextCode>();
+                    TextCodeRepository.GetTextCodesByTenant(0).ToList().ForEach(d =>
+                    {
+                        textCodes.Add(d.Code + d.Tenant.ToString() + d.ObjectTableId, d);
+                    });
+                }
+                else
+                {
+                    textCodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a);
+                }
+            }
 
-            CreateAllObjectsTables(objectTables, textCodes);
+            if (updateMetadatafields)
+            {
+                CreateAllObjectsTables(objectTables, textCodes);
+            }
 
             if (!isUpdate)
             {
