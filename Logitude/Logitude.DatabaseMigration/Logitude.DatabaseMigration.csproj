@@ -953,6 +953,10 @@
     <Compile Include="Migrations\201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.Designer.cs">
       <DependentUpon>201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.cs" />
+    <Compile Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.Designer.cs">
+      <DependentUpon>201905130634391_AbedAddFieldIsCustomToDWObjectField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201905121058310_AddVesrionToTaskScheduler_Rabaia.cs" />
     <Compile Include="Migrations\201905121058310_AddVesrionToTaskScheduler_Rabaia.Designer.cs">
       <DependentUpon>201905121058310_AddVesrionToTaskScheduler_Rabaia.cs</DependentUpon>
@@ -1613,6 +1617,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.resx">
       <DependentUpon>201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.resx">
+      <DependentUpon>201905130634391_AbedAddFieldIsCustomToDWObjectField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905121058310_AddVesrionToTaskScheduler_Rabaia.resx">
       <DependentUpon>201905121058310_AddVesrionToTaskScheduler_Rabaia.cs</DependentUpon>
