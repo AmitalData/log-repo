@@ -1219,6 +1219,19 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
 
             activeLines.forEach(item => {
                 switch (item.MeasurementCode) {
+                    case "CWKG": {
+                        if (item.Quantity != this.EntityPM.ChargeableWeightInKG) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+                    case "GWKG": {
+                        if (item.Quantity != this.EntityPM.GrossWeightInKG) {
+                            isDifferentOrders = true;
+                        }
+                        break;
+                    }
+
                     case "GRWT": {
 
                         if (item.Quantity != this.EntityPM.GrossWeight) {
@@ -1707,7 +1720,8 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 case "FIXD": { this.Quantity = 1; break; }
                                 case "GWTN": { this.Quantity = this.ShipmentPM.GrossWeightPerTon; break; }
                                 case "QTY": { this.Quantity = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
-
+                                case "CWKG": { this.Quantity = this.ShipmentPM.ChargeableWeightInKG; break; }
+                                case "GWKG": { this.Quantity = this.ShipmentPM.GrossWeightInKG; break; }
                                 case "PRVL": {
                                     this.Quantity = this.ShipmentPM.ValueOfGoods;
                                     this.CurrencyId = this.ShipmentPM.ValueOfGoodsCurrencyId;
@@ -2259,6 +2273,21 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 break;
                             }
 
+                            case "CWKG": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "ChargeableWeightInKG");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.ChargeableWeightInKG;
+                                break;
+                            }
+                            case "GWKG": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "GrossWeightInKG");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.GrossWeightInKG;
+                                break;
+                            }
+
                             case "GWTN": {
                                 _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "GrossWeightPerTon");
                                 _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
@@ -2427,6 +2456,8 @@ export class ShipmentReceivableItem extends BaseComponent {
             case "PRFR": { result = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
             case "GWTN": { result = this.ShipmentPM.GrossWeightPerTon; break; }
             case "QTY": { result = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
+            case "CWKG": { this.Quantity = this.ShipmentPM.ChargeableWeightInKG; break; }
+            case "GWKG": { this.Quantity = this.ShipmentPM.GrossWeightInKG; break; }
             case "BCNT": {
                 break;
             }
@@ -2490,6 +2521,8 @@ export class InsideReceivableViewModel {
     get FreightReceivablesAmount() { return this.ShipmentPM.FreightReceivablesAmount; }
     get NumberOfPackages() { return this.ShipmentPM.NumberOfPackages; }
     get NumberOfContainers() { return this.ShipmentPM.NumberOfContainers; }
+    get ChargeableWeightInKG() { return this.ShipmentPM.ChargeableWeightInKG; }
+    get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
 
     // Receivable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -2549,6 +2582,22 @@ export class InsideReceivableViewModel {
         var myQuantity = null;
 
         switch (this.MeasurementCode) {
+            case "CWKG": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.ChargeableWeightInKG;
+                }
+
+                break;
+            }
+
+            case "GWKG": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.GrossWeightInKG;
+                }
+
+                break;
+            }
+
             case "GRWT": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.GrossWeight;

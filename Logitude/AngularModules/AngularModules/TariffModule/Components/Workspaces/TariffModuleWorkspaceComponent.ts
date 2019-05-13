@@ -22,6 +22,7 @@ export class TariffModuleWorkspaceComponent implements OnInit {
         this.RunComponent();
     }
     public AirFreightCount: string;
+    public AirSurchargeCount: string;
 
     private isLoaderReady: boolean = false;
     RunComponent() {
@@ -60,6 +61,8 @@ export class TariffModuleWorkspaceComponent implements OnInit {
 
                         if (myResult != null) {
                             this.AirFreightCount = myResult.AirFreightCount > 1000 ? "1000+" : myResult.AirFreightCount.toString();
+                            this.AirSurchargeCount = myResult.AirSurchargeCount > 1000 ? "1000+" : myResult.AirSurchargeCount.toString();
+
                              }
                     }
                 }
@@ -68,39 +71,97 @@ export class TariffModuleWorkspaceComponent implements OnInit {
     }
 
     public NewTariff(code: string) {
-        if (code == "A") {
-            this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
+        switch (code) {
+            case "A": {
+                this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
 
-                var windowTitle = "New Air Freight Cost";
+                    var windowTitle = "New Air Freight Cost";
 
-                var logWindow = new LogitudeWindow();
-                logWindow.Width = 850;
-                logWindow.Height = 500;
-                logWindow.Title = windowTitle;
-                logWindow.WindowClosed.subscribe(($event: any) => {
-                    this.LoadQueriesCounts();
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = 850;
+                    logWindow.Height = 500;
+                    logWindow.Title = windowTitle;
+                    logWindow.WindowClosed.subscribe(($event: any) => {
+                        this.LoadQueriesCounts();
+                    });
+                    logWindow.ComponentLoaded.subscribe(comp => {
+                        comp.SetWindowArgs({ TypeCode: "AFC"});
+                    });
+                        logWindow.Show('./TariffModule/Components/NewEntity/NewAirFreightCostComponent');
                 });
-                logWindow.Show('./TariffModule/Components/NewEntity/NewAirFreightCostComponent');
-            });
-        }
+                break;
+            }
+
+            case "AS": {
+                this._entityResourceService.getEntityResourceByTableName("Tariff", 0).subscribe(response => {
+
+                    var windowTitle = "New Air Surcharges Cost";
+
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = 850;
+                    logWindow.Height = 500;
+                    logWindow.Title = windowTitle;
+                    logWindow.WindowClosed.subscribe(($event: any) => {
+                        this.LoadQueriesCounts();
+                    });
+
+                    logWindow.ComponentLoaded.subscribe(comp => {
+                        comp.SetWindowArgs({ TypeCode: "ASC" });
+                    });
+
+                    logWindow.Show('./TariffModule/Components/NewEntity/NewAirFreightCostComponent');
+                });
+                break;
+            }
+
+            default: {
+                break;
+            }
+        }       
     }
 
     public ViewTariffs(code: string) {
-        if (code = "A") {
-            var listArgs = new ListComponentArgs();
-            listArgs.QueryCode = "Air Freight Cost Tariffs";
-            listArgs.ObjectTableName = "Tariff";
-            listArgs.DisplayTitle = "Air Freight Cost Tariffs";
-            listArgs.BackButtonTitle = "Tariff";
-            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run(listArgs);
-                        cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        this.CurrentSession.AddMenuReference(cmpRef);
-                    });
-            });
+
+        switch (code) {
+            case "A": {
+                var listArgs = new ListComponentArgs();
+                listArgs.QueryCode = "Air Freight Cost Tariffs";
+                listArgs.ObjectTableName = "Tariff";
+                listArgs.DisplayTitle = "Air Freight Cost Tariffs";
+                listArgs.BackButtonTitle = "Tariff";
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run(listArgs);
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                            this.CurrentSession.AddMenuReference(cmpRef);
+                        });
+                });
+                break;
+            }
+
+            case  "AS":{
+                var listArgs = new ListComponentArgs();
+                listArgs.QueryCode = "Air Surcharges Cost Tariffs";
+                listArgs.ObjectTableName = "Tariff";
+                listArgs.DisplayTitle = "Air Surcharges Cost";
+                listArgs.BackButtonTitle = "Tariff";
+                this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run(listArgs);
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                            this.CurrentSession.AddMenuReference(cmpRef);
+                        });
+                });
+                break;
+            }
+            default: {
+                break;
+            }
+
         }
     }
 

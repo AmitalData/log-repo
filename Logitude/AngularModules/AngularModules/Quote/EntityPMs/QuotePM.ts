@@ -353,6 +353,11 @@ export class QuotePM {
     public set ChargeableWeight(newValue: number) { if (this.chargeableWeight != newValue) { this.chargeableWeight = newValue; this.MarkAsDirty("ChargeableWeight"); } }
        
 	 
+    private chargeableWeightInKG: number;
+    public get ChargeableWeightInKG() { return this.chargeableWeightInKG; }
+    public set ChargeableWeightInKG(newValue: number) { if (this.chargeableWeightInKG != newValue) { this.chargeableWeightInKG = newValue; this.MarkAsDirty("ChargeableWeightInKG"); } }
+       
+	 
     private grossWeight: number;
     public get GrossWeight() { return this.grossWeight; }
     public set GrossWeight(newValue: number) { if (this.grossWeight != newValue) { this.grossWeight = newValue; this.MarkAsDirty("GrossWeight"); } }

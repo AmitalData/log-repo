@@ -40,6 +40,7 @@ export class QuoteList {
 		QuoteTypeName: string;
 		CarrierName: string;
 		ChargeableWeight: number;
+		ChargeableWeightInKG: number;
 		GrossWeight: number;
 		GrossWeightInKG: number;
 		GrossWeightPerTon: number;
