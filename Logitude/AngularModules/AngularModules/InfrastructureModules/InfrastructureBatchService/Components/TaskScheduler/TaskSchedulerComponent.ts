@@ -608,6 +608,9 @@ export class TaskSchedulerItemClass extends BaseComponent {
     }
     set Extension(newValue: string) {
         if (this.FTPDetails && this.FTPDetails.Extension != newValue) {
+            //if (!AppTool.IsNullOrEmpty(newValue) && newValue.startsWith("."))
+            //    newValue = newValue.substring(1, newValue.length);
+
             this.FTPDetails.Extension = newValue;
             this.EntityPM.IsDirty = true;
         }
