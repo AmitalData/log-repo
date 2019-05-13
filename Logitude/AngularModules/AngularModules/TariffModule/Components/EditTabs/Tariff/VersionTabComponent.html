@@ -93,8 +93,8 @@
                                             <div style="height: 100%; width: 100%;">
                                                 <table>
                                                     <tr>
-                                                        <td *ngIf="item.HasError">
-                                                            <img class="CenterCenter" src="./Images/ValidationError.png" />
+                                                        <td *ngIf="item.HasErrors">
+                                                            <img class="CenterCenter" src="./Images/ValidationError.png" [title]="item.ErrorText"/>
                                                         </td>
                                                     </tr>
                                                 </table>

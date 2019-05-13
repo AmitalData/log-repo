@@ -70,7 +70,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge7PriceText, 
 	         Surcharge8PriceText, 
 	         Surcharge9PriceText, 
-	         Surcharge10PriceText,
+	         Surcharge10PriceText, 
+	         HasErrors, 
+	         ErrorText,
 	      }
 
 
@@ -129,7 +131,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge7PriceText, 
 	         Surcharge8PriceText, 
 	         Surcharge9PriceText, 
-	         Surcharge10PriceText,
+	         Surcharge10PriceText, 
+	         HasErrors, 
+	         ErrorText,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -376,6 +380,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10PriceText))
             {
 				entityPOCO.Surcharge10PriceText = entityPM.Surcharge10PriceText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HasErrors))
+            {
+				entityPOCO.HasErrors = entityPM.HasErrors;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorText))
+            {
+				entityPOCO.ErrorText = entityPM.ErrorText;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -629,6 +643,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.Surcharge10PriceText = entityPOCO.Surcharge10PriceText;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HasErrors))
+            {
+					entityPM.HasErrors = entityPOCO.HasErrors;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ErrorText))
+            {
+					entityPM.ErrorText = entityPOCO.ErrorText;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -873,6 +897,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10PriceText))
             {
                 oldEntityPM.Surcharge10PriceText = entityPM.Surcharge10PriceText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HasErrors))
+            {
+                oldEntityPM.HasErrors = entityPM.HasErrors;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorText))
+            {
+                oldEntityPM.ErrorText = entityPM.ErrorText;
             }
 			
 		}
