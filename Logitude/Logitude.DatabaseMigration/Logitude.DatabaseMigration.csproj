@@ -985,6 +985,10 @@
     <Compile Include="Migrations\201905121412093_AddChargeableWeightInKGToQuote_Maheera.Designer.cs">
       <DependentUpon>201905121412093_AddChargeableWeightInKGToQuote_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905121459016_AddParentVersionIdToTariffVersion_Maheera.cs" />
+    <Compile Include="Migrations\201905121459016_AddParentVersionIdToTariffVersion_Maheera.Designer.cs">
+      <DependentUpon>201905121459016_AddParentVersionIdToTariffVersion_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1665,6 +1669,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905121412093_AddChargeableWeightInKGToQuote_Maheera.resx">
       <DependentUpon>201905121412093_AddChargeableWeightInKGToQuote_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905121459016_AddParentVersionIdToTariffVersion_Maheera.resx">
+      <DependentUpon>201905121459016_AddParentVersionIdToTariffVersion_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
