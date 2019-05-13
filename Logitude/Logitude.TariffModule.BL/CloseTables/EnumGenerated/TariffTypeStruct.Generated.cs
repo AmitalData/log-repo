@@ -11,6 +11,7 @@ namespace Logitude.TariffModule.BLs
     public struct TariffTypeValues
     {   
        public const string AirFreightCost = "AFC";  
+       public const string AirSurchargesCost = "ASC";  
     }
 }
 

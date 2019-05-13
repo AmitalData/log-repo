@@ -22,6 +22,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
         {
             TariffsSummary tariffsSummary = new TariffsSummary() { Id = tenant };
             tariffsSummary.AirFreightCount=this.repository.GetAll(tenant).Where(p => p.TypeCode == "AFC").Count();
+            tariffsSummary.AirSurchargeCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "ASC").Count();
             return tariffsSummary;
         }
    }   

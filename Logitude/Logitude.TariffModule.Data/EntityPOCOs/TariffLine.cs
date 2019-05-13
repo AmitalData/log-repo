@@ -51,6 +51,26 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public decimal? Step7Price { get; set; }
         [Column("Step8Price")]
 	    public decimal? Step8Price { get; set; }
+        [Column("Surcharge1Price")]
+	    public decimal? Surcharge1Price { get; set; }
+        [Column("Surcharge2Price")]
+	    public decimal? Surcharge2Price { get; set; }
+        [Column("Surcharge3Price")]
+	    public decimal? Surcharge3Price { get; set; }
+        [Column("Surcharge4Price")]
+	    public decimal? Surcharge4Price { get; set; }
+        [Column("Surcharge5Price")]
+	    public decimal? Surcharge5Price { get; set; }
+        [Column("Surcharge6Price")]
+	    public decimal? Surcharge6Price { get; set; }
+        [Column("Surcharge7Price")]
+	    public decimal? Surcharge7Price { get; set; }
+        [Column("Surcharge8Price")]
+	    public decimal? Surcharge8Price { get; set; }
+        [Column("Surcharge9Price")]
+	    public decimal? Surcharge9Price { get; set; }
+        [Column("Surcharge10Price")]
+	    public decimal? Surcharge10Price { get; set; }
         [ForeignKey("OriginPort")]
         [Column("OriginPortId")]
 	    public string OriginPortId { get; set; }
@@ -83,6 +103,26 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string Step7PriceText { get; set; }
         [Column("Step8PriceText")]
 	    public string Step8PriceText { get; set; }
+        [Column("Surcharge1PriceText")]
+	    public string Surcharge1PriceText { get; set; }
+        [Column("Surcharge2PriceText")]
+	    public string Surcharge2PriceText { get; set; }
+        [Column("Surcharge3PriceText")]
+	    public string Surcharge3PriceText { get; set; }
+        [Column("Surcharge4PriceText")]
+	    public string Surcharge4PriceText { get; set; }
+        [Column("Surcharge5PriceText")]
+	    public string Surcharge5PriceText { get; set; }
+        [Column("Surcharge6PriceText")]
+	    public string Surcharge6PriceText { get; set; }
+        [Column("Surcharge7PriceText")]
+	    public string Surcharge7PriceText { get; set; }
+        [Column("Surcharge8PriceText")]
+	    public string Surcharge8PriceText { get; set; }
+        [Column("Surcharge9PriceText")]
+	    public string Surcharge9PriceText { get; set; }
+        [Column("Surcharge10PriceText")]
+	    public string Surcharge10PriceText { get; set; }
     }
 }
 	 

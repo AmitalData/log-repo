@@ -985,6 +985,10 @@
     <Compile Include="Migrations\201905121412093_AddChargeableWeightInKGToQuote_Maheera.Designer.cs">
       <DependentUpon>201905121412093_AddChargeableWeightInKGToQuote_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905130057180_NewFields_TariffLines_Khalid.cs" />
+    <Compile Include="Migrations\201905130057180_NewFields_TariffLines_Khalid.Designer.cs">
+      <DependentUpon>201905130057180_NewFields_TariffLines_Khalid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201905121459016_AddParentVersionIdToTariffVersion_Maheera.cs" />
     <Compile Include="Migrations\201905121459016_AddParentVersionIdToTariffVersion_Maheera.Designer.cs">
       <DependentUpon>201905121459016_AddParentVersionIdToTariffVersion_Maheera.cs</DependentUpon>
@@ -1669,6 +1673,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905121412093_AddChargeableWeightInKGToQuote_Maheera.resx">
       <DependentUpon>201905121412093_AddChargeableWeightInKGToQuote_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905130057180_NewFields_TariffLines_Khalid.resx">
+      <DependentUpon>201905130057180_NewFields_TariffLines_Khalid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905121459016_AddParentVersionIdToTariffVersion_Maheera.resx">
       <DependentUpon>201905121459016_AddParentVersionIdToTariffVersion_Maheera.cs</DependentUpon>

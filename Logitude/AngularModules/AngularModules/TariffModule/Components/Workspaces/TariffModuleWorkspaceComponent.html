@@ -27,10 +27,11 @@
 
     <tr style="height:10px;">
         <td>
+
             <table>
                 <tr>
-                    <td style="width:150px">
-                        <div>
+                    <td style="width:180px">
+                        <div style="width:180px">
                             <HyperlinkQuery (click)="TariffSettingsClicked()">Tariff Settings</HyperlinkQuery>
                         </div>
                     </td>
@@ -47,9 +48,19 @@
                         <div></div>
                     </td>
                 </tr>
-
+            </table>
+        </td>
+    </tr>
+    <tr style="height:10px">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
                 <tr>
-                    <td style="width:150px">
+                    <td style="width:180px">
                         <div>
                             <HyperlinkQuery (click)="ViewTariffs('A')">Air Freight Costs ({{AirFreightCount}})</HyperlinkQuery>
                         </div>
@@ -69,7 +80,38 @@
                 </tr>
             </table>
         </td>
+
     </tr>
+    <tr style="height:10px">
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td style="width:180px">
+                        <div>
+                            <HyperlinkQuery (click)="ViewTariffs('AS')">Air Surcharges Costs ({{AirSurchargeCount}})</HyperlinkQuery>
+                        </div>
+                    </td>
+
+                    <td style="width:20px">
+                        <div></div>
+                    </td>
+
+                    <td style="width:20px">
+                        <button class="Button" (click)="NewTariff('AS')">New</button>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+
 
     <tr>
         <td class="CellStretch">
