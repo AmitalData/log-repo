@@ -91,11 +91,12 @@ export class NewEntityComponent {
     }
 
     OkButtonClicked() {
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+      
         this.SaveEntityChanges();
     }
     private SaveEntityChanges() {
-        if (this.EntityPM.IsDirty) {
+        //if (this.EntityPM.IsDirty) {
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
                 res.subscribe(response => {
 
@@ -140,7 +141,7 @@ export class NewEntityComponent {
                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 });
             });
-        }
+       // }
     }
 
     private InitEntityPM() {
