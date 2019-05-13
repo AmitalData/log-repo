@@ -132,7 +132,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             if (!myResponse.HasError) {
                 this.AllChargesTypes = myResponse.Result;
                 if (this.AllChargesTypes != null) {
-                    this.AllChargesTypes = this.AllChargesTypes.filter(d.InActive == false);
+                    this.AllChargesTypes = this.AllChargesTypes.filter(d=> d.InActive == false);
                 }
             }
         });
