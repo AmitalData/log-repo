@@ -4,9 +4,8 @@
         position: relative;
         text-align: center;
         display: block;
-
-        overflow-y:auto;
-        overflow-x :hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
 
@@ -20,46 +19,39 @@
 
 
 
-   input[type="number"]:hover  {
-     -moz-appearance:none;
-     -webkit-appearance:none;
-   
+    input[type="number"]:hover {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
 
-}
+    input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+        display: block;
+        width: 8px;
+        color: #333;
+        text-align: center;
+        position: relative;
+    }
 
-     input[type=number]::-webkit-inner-spin-button { 
-    -webkit-appearance: none;
-    -moz-appearance:none;
-    -webkit-appearance:none;
-    cursor:pointer;
-    display:block;
-    width:8px;
-    color: #333;
-    text-align:center;
-    position:relative;
-}
+        input[type=number]::-webkit-inner-spin-button:before,
+        input[type=number]::-webkit-inner-spin-button:after {
+            content: "^";
+            position: absolute;
+            right: 0;
+            font-family: monospace;
+        }
 
-input[type=number]::-webkit-inner-spin-button:before,
-input[type=number]::-webkit-inner-spin-button:after {
-    content: "^";
-    position:absolute;
-    right: 0;
-    font-family:monospace;
-}
+        input[type=number]::-webkit-inner-spin-button:before {
+            top: 0px;
+        }
 
-input[type=number]::-webkit-inner-spin-button:before {
-    top:0px;
-}
-
-input[type=number]::-webkit-inner-spin-button:after {
-    bottom:0px;
-    -webkit-transform: rotate(180deg);
-}
-
-
-
-
-
+        input[type=number]::-webkit-inner-spin-button:after {
+            bottom: 0px;
+            -webkit-transform: rotate(180deg);
+        }
 </style>
 <div style="border :1px solid gray">
 
@@ -91,20 +83,20 @@ input[type=number]::-webkit-inner-spin-button:after {
                                     <div></div>
                                 </td>
 
-                               
-                                
+
+
                             </tr>
                         </table>
 
                     </button>
-                  
+
                 </td>
 
                 <td style="width:7px"><div style="width:7px"></div></td>
 
 
                 <td *ngIf="IsShowExportMicrosoftExcel" style="width:80px;vertical-align:middle;">
-                    <div style="width:80px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
+                    <div id="{{'SaveExcelToggleButton' | IdGeneratorPipe}}" style="width:80px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
                         <div sstyle="background-color:#D1D6D8">
 
                             <table class="LeftCenter">
@@ -126,18 +118,18 @@ input[type=number]::-webkit-inner-spin-button:after {
                                         <div></div>
                                     </td>
 
-                                    <td  style="width:10px">
+                                    <td style="width:10px">
 
 
                                         <img style="margin-left:10px" src="./Images/ToggleIcon.png" />
                                         <div style="float:right;left:-65px;width:140px" class="ToggleButtonMenu">
 
-                                            <button [disabled]="!IsEditingEnabled" (click)="SaveToExcelFile()">
+                                            <button id="{{'SaveExcelFileButton' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" (click)="SaveToExcelFile()">
                                                 <div>Excel File</div>
                                             </button>
 
 
-                                            <button [disabled]="!IsEditingEnabled" (click)="SaveToExcelFileAdvancedButtonClick()">
+                                            <button id="{{'SaveAdvancedExcelFileButton' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" (click)="SaveToExcelFileAdvancedButtonClick()">
                                                 <div>Excel File (Advanced)</div>
                                             </button>
 
@@ -167,7 +159,7 @@ input[type=number]::-webkit-inner-spin-button:after {
 
                 <td *ngIf="IsShowSendButton" style="width:7px"><div style="width:7px"></div></td>
 
-     
+
 
                 <td *ngIf="IsShowSendButton" style="width:80px;vertical-align:middle;">
                     <div style="width:80px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
@@ -181,7 +173,7 @@ input[type=number]::-webkit-inner-spin-button:after {
 
                                     <td style="width:22px">
                                         <img style="width:22px;height:22px;margin-right:-3px" src="./Images/BlueSend.png" />
-                            
+
                                     </td>
 
                                     <td style="width:2px">
@@ -238,13 +230,13 @@ input[type=number]::-webkit-inner-spin-button:after {
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:60px"><div style="width:60px">Template:</div></td>
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:7px"><div style="width:7px"></div></td>
 
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsRefreshReportsTemplateList" style="width:190px"><ComboBox style="width:190px;height:22px;display:inline" (SelectedItemChanged)="ReportTemplatesChange($event)" [ItemsSource]="ReportsTemplatesLists" [SelectedItem]="SelectedReportsTemplateList" [Binding]="'Description'"></ComboBox></td>
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && IsRefreshReportsTemplateList" style="width:190px"><ComboBox style="width:190px;height:22px;display:inline" (SelectedItemChanged)="ReportTemplatesChange($event)" [ItemsSource]="ReportsTemplatesLists" [SelectedItem]="SelectedReportsTemplateList" [Binding]="'Description'"></ComboBox></td>
-                
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsRefreshReportsTemplateList" style="width:190px"><ComboBox id="{{'ReportsTemplatesComboBox' | IdGeneratorPipe}}" style="width:190px;height:22px;display:inline" (SelectedItemChanged)="ReportTemplatesChange($event)" [ItemsSource]="ReportsTemplatesLists" [SelectedItem]="SelectedReportsTemplateList" [Binding]="'Description'"></ComboBox></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && IsRefreshReportsTemplateList" style="width:190px"><ComboBox id="{{'ReportsTemplatesComboBox' | IdGeneratorPipe}}" style="width:190px;height:22px;display:inline" (SelectedItemChanged)="ReportTemplatesChange($event)" [ItemsSource]="ReportsTemplatesLists" [SelectedItem]="SelectedReportsTemplateList" [Binding]="'Description'"></ComboBox></td>
+
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:7px"><div style="width:7px"></div></td>
 
 
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:100px"><div style="width:100px"><span style="font-size:11px"  class="hyperlink" (click)="ManagementReport()">Manage Templates</span></div></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:100px"><div style="width:100px"><span style="font-size:11px" class="hyperlink" (click)="ManagementReport()">Manage Templates</span></div></td>
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:7px"><div style="width:7px"></div></td>
 
                 <td *ngIf="IsShowShiftToolbar">
@@ -306,8 +298,8 @@ input[type=number]::-webkit-inner-spin-button:after {
     </div>
 
     <div [attr.id]="PreviewStimualDivId" style="text-align:center;background-color:#CBCFD4;" [style.width]="ScreenWidth" [style.height]="ScreenHeight" class="container">
-        <img src={{ImageUrl}} alt="Norway" [style.margin-left]="ImageMargeLeft"  style="position:relative;float: left;margin-top:15px;margin-bottom:15px;border:1px solid #FFD700;border-radius:5px" [style.display]="Imagevisibility" [style.min-width]="ImageWidth" [style.min-height]="ImageHeight" [style.width]="ImageWidth" [style.height]="ImageHeight">
-        <div [style.margin-left]="ImageMargeLeft"  [style.display]="Imagevisibility" style="margin-top:15px;margin-bottom:15px;" class="topleft" [attr.id]="ViewerContentDivId"></div>
+        <img src={{ImageUrl}} alt="Norway" [style.margin-left]="ImageMargeLeft" style="position:relative;float: left;margin-top:15px;margin-bottom:15px;border:1px solid #FFD700;border-radius:5px" [style.display]="Imagevisibility" [style.min-width]="ImageWidth" [style.min-height]="ImageHeight" [style.width]="ImageWidth" [style.height]="ImageHeight">
+        <div [style.margin-left]="ImageMargeLeft" [style.display]="Imagevisibility" style="margin-top:15px;margin-bottom:15px;" class="topleft" [attr.id]="ViewerContentDivId"></div>
 
         <div [style.display]="Imagevisibility" style="display:block;height:15px"></div>
 
