@@ -31,7 +31,7 @@ export class JournalPageComponent implements AfterViewInit {
     private _JournalExtendedListService: JournalExtendedListService = new JournalExtendedListService();
     public isScreenLoaded: boolean = false;
     public isRTL: boolean = false;
-
+    public showLocal: boolean = false;
     constructor() {
 
         // this.LoadAllScreenData();
@@ -39,6 +39,8 @@ export class JournalPageComponent implements AfterViewInit {
 
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+
 
     }
 
