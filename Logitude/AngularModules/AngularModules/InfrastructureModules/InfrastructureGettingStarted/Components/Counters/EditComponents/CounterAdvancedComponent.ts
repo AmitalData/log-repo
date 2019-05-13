@@ -71,6 +71,7 @@ export class CounterAdvancedComponent extends BaseComponent {
     SetUIProperties() {
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, !this.IsCounterUsed);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, !this.IsCounterUsed);
+        this.UIProperties.SetEnabled("CounterSize", this.ObjectTableName, !this.IsCounterUsed);
     }
     InitializeDefinitions() {
 

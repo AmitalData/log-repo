@@ -175,6 +175,11 @@ export class TasksSchedulerPM {
     public set StartDateTimeUTC(newValue: Date) { if (this.startDateTimeUTC != newValue) { this.startDateTimeUTC = newValue; this.MarkAsDirty("StartDateTimeUTC"); } }
        
 	 
+    private version: number;
+    public get Version() { return this.version; }
+    public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
+       
+	 
     private schedulerDetailsData: any;
     public get SchedulerDetailsData() { return this.schedulerDetailsData; }
     public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }

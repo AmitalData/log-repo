@@ -1,8 +1,9 @@
-﻿import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef} from '@angular/core';
 import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
 
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool } from '../../../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -22,6 +23,15 @@ export class FTBSchedulerTemplateComponent {
     LoadComponent(dataContext: any) {
         this.DataContext = dataContext;
 
+    }
+
+     
+
+    ExtensionLostFocus(input: any) {
+
+        if (this.DataContext.Extension && this.DataContext.Extension.startsWith("."))
+            this.DataContext.Extension = this.DataContext.Extension.substring(1, this.DataContext.Extension.length);
+        
     }
 
 }

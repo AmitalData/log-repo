@@ -36,5 +36,6 @@ export class TasksSchedulerList {
 		NextRunTimeUTC: Date;
 		LastRunTimeUTC: Date;
 		StartDateTimeUTC: Date;
+		Version: number;
 	
 }

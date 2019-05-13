@@ -176,8 +176,6 @@ export class QuoteUtilities {
         entityPM.BranchId = copiedEntityPM.BranchId;
         entityPM.DepartmentId = copiedEntityPM.DepartmentId;
         entityPM.QuoteTypeCode = copiedEntityPM.QuoteTypeCode;
-        entityPM.SaleCurrencyId = copiedEntityPM.SaleCurrencyId;
-        entityPM.ExchangeRate = copiedEntityPM.ExchangeRate;
         entityPM.IncotermId = copiedEntityPM.IncotermId;
         entityPM.MoveTypeId = copiedEntityPM.MoveTypeId;
         entityPM.IsByKG = copiedEntityPM.IsByKG;
@@ -217,6 +215,11 @@ export class QuoteUtilities {
         entityPM.IsChargesByVAT = copiedEntityPM.IsChargesByVAT;
         entityPM.GrossWeightEdited = copiedEntityPM.GrossWeightEdited;
         entityPM.ChargeableWeightEdited = copiedEntityPM.ChargeableWeightEdited;
+
+        entityPM.IsSaleCurrencySameAsCost = copiedEntityPM.IsSaleCurrencySameAsCost;
+        entityPM.SaleCurrencyId = copiedEntityPM.SaleCurrencyId;
+        entityPM.ExchangeRate = copiedEntityPM.ExchangeRate;
+        entityPM.IsFixedPrice = copiedEntityPM.IsFixedPrice;
 
         //entityPM.ShipperId = copiedEntityPM.ShipperId;
         //entityPM.ShipperContactId = copiedEntityPM.ShipperContactId;

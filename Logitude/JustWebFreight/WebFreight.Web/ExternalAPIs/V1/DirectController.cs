@@ -196,7 +196,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 {
                                     if (entityPM.DimensionsUnitCode == "Cm")
                                     {
-                                        throw new ApplicationException("When volume unit is CBF, dimensions unit should be Inch or Cm");
+                                        throw new ApplicationException("When volume unit is CBF, dimensions unit should be Inch or Ft");
                                     }
                                     break;
                                 }

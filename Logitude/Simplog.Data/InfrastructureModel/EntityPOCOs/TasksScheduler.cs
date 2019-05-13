@@ -46,6 +46,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public DateTime? LastRunTimeUTC { get; set; }
         public DateTime? StartDateTimeUTC { get; set; }
 
+        public int Version { get; set; }
+
 
     }
 }
