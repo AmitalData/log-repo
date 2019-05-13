@@ -143,7 +143,7 @@ export class NewEntityComponent {
             });
        // }
     }
-
+     
     private InitEntityPM() {
 
         switch (this.ObjectTableName) {
