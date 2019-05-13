@@ -23,7 +23,7 @@ export const Components =
         VersionHistoryTabComponent,
         TariffGeneralTabComponent,
         AddEditTariffLineComponent,
-        TariffTabsContentComponent
+        TariffTabsContentComponent,
         SurchargeVersionTabComponent,
     ];
 
