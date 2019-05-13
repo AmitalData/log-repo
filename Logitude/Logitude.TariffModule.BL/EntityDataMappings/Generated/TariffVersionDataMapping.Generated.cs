@@ -32,7 +32,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Version, 
 	         IsDraft, 
 	         ApproveDate, 
-	         ApprovedByUserId,
+	         ApprovedByUserId, 
+	         ParentVersionId,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Version, 
 	         IsDraft, 
 	         ApproveDate, 
-	         ApprovedByUserId,
+	         ApprovedByUserId, 
+	         ParentVersionId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -101,6 +103,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovedByUserId))
             {
 				entityPOCO.ApprovedByUserId = entityPM.ApprovedByUserId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentVersionId))
+            {
+				entityPOCO.ParentVersionId = entityPM.ParentVersionId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -164,6 +171,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.ApprovedByUserId = entityPOCO.ApprovedByUserId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ParentVersionId))
+            {
+					entityPM.ParentVersionId = entityPOCO.ParentVersionId;
+            }
+
 		}
 
 		public void PMToOldPM(TariffVersionPM entityPM, TariffVersionPM oldEntityPM)
@@ -213,6 +225,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ApprovedByUserId))
             {
                 oldEntityPM.ApprovedByUserId = entityPM.ApprovedByUserId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentVersionId))
+            {
+                oldEntityPM.ParentVersionId = entityPM.ParentVersionId;
             }
 			
 		}

@@ -12,5 +12,6 @@ namespace Logitude.TariffModule.BL.DataContracts
         [Key]
         public int Id { get; set; }
         public int AirFreightCount { get; set; }
+        public int AirSurchargeCount { get; set; }
     }
 }

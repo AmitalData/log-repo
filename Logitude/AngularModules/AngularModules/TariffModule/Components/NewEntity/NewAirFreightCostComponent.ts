@@ -5,7 +5,7 @@ import { TariffPMService } from '../../Services/StandardPMs/TariffPMService';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {DateTool} from '../../../Infrastructure/Tools';
-
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 @Component({
     selector: 'NewAirFreightCostComponent',
     moduleId: module.id,
@@ -13,11 +13,15 @@ import {DateTool} from '../../../Infrastructure/Tools';
 })
 
 export class NewAirFreightCostComponent extends BaseComponent {
+    private CurrentSession = SessionLocator.SelectedSession;
+
     public DataContext = this;
     public ObjectTableName = "Tariff";
     public EntityPM: TariffPM;
     public SelectedLocationFilter: any;
-    private CurrentSession = SessionLocator.SelectedSession;
+    public VisibileSurchargesArea: boolean = false;
+    public ChargeTypesQueryFilters: ApiQueryFilters;
+
     constructor() {
         super();
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
@@ -25,7 +29,30 @@ export class NewAirFreightCostComponent extends BaseComponent {
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.TypeCode = "AFC";
+
+    }
+
+    BuildQueryFilters() {
+        this.ChargeTypesQueryFilters = new ApiQueryFilters();
+        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("IsAir", true, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("FilterChargesGroup", false, null, null, "Equals", true, false, false, "Boolean");
+
+
+    }
+
+    public MeasurementId: string;
+    public ChargesTypeId: string;
+
+    SetWindowArgs(args) {
+        this.EntityPM.TypeCode = args.TypeCode;
+        if (this.EntityPM.TypeCode == "ASC") {
+            this.VisibileSurchargesArea = true;
+            this.BuildQueryFilters();
+        }
+        else {
+            this.VisibileSurchargesArea = false;
+        }
     }
 
     get Name() {

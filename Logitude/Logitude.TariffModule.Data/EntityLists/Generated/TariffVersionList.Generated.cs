@@ -34,6 +34,8 @@ namespace Logitude.TariffModule.Data.EntityLists
        public bool IsDraft  { get; set; }
        [DataMember]
        public DateTime? ApproveDate  { get; set; }
+       [DataMember]
+       public string ParentVersionId  { get; set; }
    }
 
 }

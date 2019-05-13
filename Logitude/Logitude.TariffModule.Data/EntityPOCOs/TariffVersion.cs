@@ -48,6 +48,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string ApprovedByUserId { get; set; }
 	      
         public virtual User ApprovedByUser { get; set; }
+        [Column("ParentVersionId")]
+	    public string ParentVersionId { get; set; }
     }
 }
 	 

@@ -117,7 +117,12 @@ export class TariffVersionPM {
         }
     }
     //public TariffLines: Array<TariffLinePM>= [];
- 
+     private parentVersionId: string;
+    public get ParentVersionId() { return this.parentVersionId; }
+    public set ParentVersionId(newValue: string) { if (this.parentVersionId != newValue) { this.parentVersionId = newValue; this.MarkAsDirty("ParentVersionId"); } }
+       
+	 
+
     public OldEntityPM: TariffVersionPM;
 	
     private entityParentPM: any;

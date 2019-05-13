@@ -148,7 +148,43 @@
                     </td>
 
                     <td style="width: 350px;">
-
+                        <table *ngIf="VisibileSurchargesArea">
+                            <tr class="TabTitleRow">
+                                <td>
+                                    Surcharges
+                                </td>
+                            </tr>
+                            <tr>
+            <td>
+                <table>
+                    <tr style="height:1px">
+                        <td>
+                            <LogLov [ObjectFieldName]="'MeasurementId'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Measurement'"
+                                    [DependencyFilter2Value]="false"
+                                    [HideLastColumn]="true">
+                            </LogLov>
+                        </td>
+                        <td style="width:5px"><div></div></td>
+                        <td>
+                            <LogLov [ObjectFieldName]="'ChargesTypeId'"
+                                    [SelectedValue]="DataContext"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'ChargesType'"
+                                    [QueryFilterItems]="ChargeTypesQueryFilters">
+                            </LogLov>
+                        </td>
+                    </tr>
+                    <tr>
+<td colspan="3"></td>
+                    </tr>
+                </table>
+            </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </table>
