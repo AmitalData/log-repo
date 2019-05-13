@@ -170,7 +170,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetBlueSnapToken(string VaultedShopperId,string countryname)
+        public HttpResponseMessage GetBlueSnapToken(string VaultedShopperId, string countryname)
         {
             try
             {
@@ -184,10 +184,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
-                    string myResult=null;
+                    string myResult = null;
                     SecurityUtility.AuthenticationOnTenant(tenant);
-                    if(!String.IsNullOrEmpty(VaultedShopperId))
-                    {                 
+                    if (!String.IsNullOrEmpty(VaultedShopperId))
+                    {
                         HttpClient client = new HttpClient();
                         client.BaseAddress = new Uri("https://ws.bluesnap.com/services/2/tools/auth-token");
                         ServicePointManager.Expect100Continue = true;
@@ -210,7 +210,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         string authInfo = apicreditionals + ":" + "BlueSand123";
                         authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
-                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(apicreditionals+":BlueSand123"));
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(apicreditionals + ":BlueSand123"));
                         try
                         {
                             var response2 = request.GetResponse();
@@ -233,11 +233,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         catch (Exception EX1)
                         {
 
-                             authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
+                            authInfo = "API_15416735830591484092606" + ":" + "BlueSand123";
                             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
                             //like this:
-                             request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
+                            request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/auth-token?shopperId=" + VaultedShopperId + "&expirationInMinutes=120");
                             request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:BlueSand123"));
                             try
                             {
@@ -254,7 +254,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 doc.LoadXml(strResponse);
 
 
-                               myResult = doc.InnerText;
+                                myResult = doc.InnerText;
                                 bluesnapParameters.Token = myResult;
 
                             }
@@ -284,10 +284,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
 
-        
 
 
-        public HttpResponseMessage GetBlueSnapSecretToken(string VaultedShopperId,string countryname)
+
+        public HttpResponseMessage GetBlueSnapSecretToken(string VaultedShopperId, string countryname)
         {
             try
             {
@@ -325,9 +325,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
 
-                        string xml = @"<param-encryption xmlns='http://ws.plimus.com'><parameters><parameter><param-key>shopperId</param-key><param-value>"+VaultedShopperId+"</param-value></parameter><parameter><param-key>expirationInMinutes</param-key><param-value>300</param-value></parameter><parameter><param-key>pageName</param-key><param-value>AUTO_LOGIN_PAGE</param-value></parameter></parameters></param-encryption>";
+                        string xml = @"<param-encryption xmlns='http://ws.plimus.com'><parameters><parameter><param-key>shopperId</param-key><param-value>" + VaultedShopperId + "</param-value></parameter><parameter><param-key>expirationInMinutes</param-key><param-value>300</param-value></parameter><parameter><param-key>pageName</param-key><param-value>AUTO_LOGIN_PAGE</param-value></parameter></parameters></param-encryption>";
                         //like this:
-                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(apicreditionals+":BlueSand123"));
+                        request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(apicreditionals + ":BlueSand123"));
 
                         byte[] bytes;
                         bytes = System.Text.Encoding.ASCII.GetBytes(xml);
@@ -363,16 +363,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
                             //like this:
-                             request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
+                            request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
                             request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:BlueSand123"));
 
-                            bytes =null;
+                            bytes = null;
                             bytes = System.Text.Encoding.ASCII.GetBytes(xml);
                             request.ContentType = "application/xml";
                             request.ContentLength = bytes.Length;
 
                             request.Method = "POST";
-                             requestStream = request.GetRequestStream();
+                            requestStream = request.GetRequestStream();
                             requestStream.Write(bytes, 0, bytes.Length);
                             requestStream.Close();
 
@@ -1188,7 +1188,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         Email = d.Email,
                                         EnglishName = d.EnglishName,
                                         SearchFields = d.SearchFields,
-                                       InActive = d.InActive,
+                                        InActive = d.InActive,
                                     }).ToList();
                     }
                 }
@@ -1424,11 +1424,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("CustomerTenantAccess", "READ", tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
-                List<CustomerTenantAccessCardsBatchPM> myResult = service.GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId(CustomerId, CustomerTenantAccessId, tenant).OrderByDescending(d=>d.CreateDateTime).Skip(0).Take(100).ToList();
+                List<CustomerTenantAccessCardsBatchPM> myResult = service.GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId(CustomerId, CustomerTenantAccessId, tenant).OrderByDescending(d => d.CreateDateTime).Skip(0).Take(100).ToList();
                 foreach (var item in myResult)
                 {
                     var queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(tenant);
-                    var AllQueues = queueMessageMoreDetailsQuery.GetIQueryableQueueMessageMoreDetailsPMByField1Field2(item.CustomerId,item.BatchNumber).Where(a => a.QueueDefinitionCode == "ImportersShipmentsBatchQueue");
+                    var AllQueues = queueMessageMoreDetailsQuery.GetIQueryableQueueMessageMoreDetailsPMByField1Field2(item.CustomerId, item.BatchNumber).Where(a => a.QueueDefinitionCode == "ImportersShipmentsBatchQueue");
                     item.TotalFailed = AllQueues.Where(a => a.Status == -1).Count();
                     item.Totalsucceeded = AllQueues.Where(a => a.Status == 1).Count();
                     item.TotalShipment = AllQueues.Count();
@@ -1436,7 +1436,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         item.Status = "Failed";
                     }
-                    else if(item.TotalShipment == (item.TotalFailed + item.Totalsucceeded))
+                    else if (item.TotalShipment == (item.TotalFailed + item.Totalsucceeded))
                     {
                         item.Status = "Done";
                     }
@@ -1453,7 +1453,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-       
+
         public HttpResponseMessage GetSingleVatTypeByCode(string Code)
         {
             try
@@ -1646,7 +1646,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     myCustomsInterfaceSettingRepository.Update(myCustomsInterfaceSetting);
                     myCustomsInterfaceSettingRepository.SubmitChanges();
                 }
-                                
+
                 bool myResult = true;
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1846,7 +1846,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetFilingInboxes([FromUri] ApiQueryFilters filters,string userId, bool isShowDeleted)
+        public HttpResponseMessage GetFilingInboxes([FromUri] ApiQueryFilters filters, string userId, bool isShowDeleted)
         {
             try
             {
@@ -2136,7 +2136,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 documentInPM.DocumentsFilingMetaDataValues.Add(value2);
                             }
                         }
-                       
+
                         DocumentsFilingService service = new DocumentsFilingService(commonContext, tenant);
                         service.Create(documentInPM, mybytearray, updatedByUserId, false, myDocument.Id);
                         myDocument.FileName = documentInPM.FileName;
@@ -2245,7 +2245,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
                 }
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
@@ -2279,7 +2279,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     datainByte = ResizeImage(datainByte, 290, height, "jpg");
                     string base64String = System.Convert.ToBase64String(datainByte, 0, datainByte.Length);
                     result = "data:image/jpg;base64," + base64String;
-                    return Request.CreateResponse(HttpStatusCode.OK, result); 
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
 
                 else return null;
@@ -2294,6 +2294,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
 
+        }
+
+        public HttpResponseMessage GetTenantEcommerceSupportEmail(int id)
+        {
+            try
+            {
+
+                TenantQuery tenantQuery = new TenantQuery(id);
+                TenantPM tenantPM = tenantQuery.GetTenantFromDB(id);
+                return Request.CreateResponse(HttpStatusCode.OK, tenantPM.EcommerceSupportEmail);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
 
         #region ResizeTenantImage

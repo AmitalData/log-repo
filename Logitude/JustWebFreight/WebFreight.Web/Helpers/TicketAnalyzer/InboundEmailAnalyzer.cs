@@ -210,7 +210,7 @@ namespace WebFreight.Web.Helpers.TicketAnalyzer
 
         public DateTime TimeStamp { get; set; }
 
-       //public List<HttpPostedFile> AttachmentsFiles { get; set; }
+        //public List<HttpPostedFile> AttachmentsFiles { get; set; }
         public List<FileAttachment> AttachmentsFiles { get; set; }
     }
 

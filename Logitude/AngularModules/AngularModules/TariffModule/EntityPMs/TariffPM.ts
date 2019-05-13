@@ -184,6 +184,106 @@ export class TariffPM {
     public set TariffLinesAdded(newValue: boolean) { if (this.tariffLinesAdded != newValue) { this.tariffLinesAdded = newValue; this.MarkAsDirty("TariffLinesAdded"); } }
        
 	 
+    private surcharge1Id: string;
+    public get Surcharge1Id() { return this.surcharge1Id; }
+    public set Surcharge1Id(newValue: string) { if (this.surcharge1Id != newValue) { this.surcharge1Id = newValue; this.MarkAsDirty("Surcharge1Id"); } }
+       
+	 
+    private surcharge2Id: string;
+    public get Surcharge2Id() { return this.surcharge2Id; }
+    public set Surcharge2Id(newValue: string) { if (this.surcharge2Id != newValue) { this.surcharge2Id = newValue; this.MarkAsDirty("Surcharge2Id"); } }
+       
+	 
+    private surcharge3Id: string;
+    public get Surcharge3Id() { return this.surcharge3Id; }
+    public set Surcharge3Id(newValue: string) { if (this.surcharge3Id != newValue) { this.surcharge3Id = newValue; this.MarkAsDirty("Surcharge3Id"); } }
+       
+	 
+    private surcharge4Id: string;
+    public get Surcharge4Id() { return this.surcharge4Id; }
+    public set Surcharge4Id(newValue: string) { if (this.surcharge4Id != newValue) { this.surcharge4Id = newValue; this.MarkAsDirty("Surcharge4Id"); } }
+       
+	 
+    private surcharge5Id: string;
+    public get Surcharge5Id() { return this.surcharge5Id; }
+    public set Surcharge5Id(newValue: string) { if (this.surcharge5Id != newValue) { this.surcharge5Id = newValue; this.MarkAsDirty("Surcharge5Id"); } }
+       
+	 
+    private surcharge6Id: string;
+    public get Surcharge6Id() { return this.surcharge6Id; }
+    public set Surcharge6Id(newValue: string) { if (this.surcharge6Id != newValue) { this.surcharge6Id = newValue; this.MarkAsDirty("Surcharge6Id"); } }
+       
+	 
+    private surcharge7Id: string;
+    public get Surcharge7Id() { return this.surcharge7Id; }
+    public set Surcharge7Id(newValue: string) { if (this.surcharge7Id != newValue) { this.surcharge7Id = newValue; this.MarkAsDirty("Surcharge7Id"); } }
+       
+	 
+    private surcharge8Id: string;
+    public get Surcharge8Id() { return this.surcharge8Id; }
+    public set Surcharge8Id(newValue: string) { if (this.surcharge8Id != newValue) { this.surcharge8Id = newValue; this.MarkAsDirty("Surcharge8Id"); } }
+       
+	 
+    private surcharge9Id: string;
+    public get Surcharge9Id() { return this.surcharge9Id; }
+    public set Surcharge9Id(newValue: string) { if (this.surcharge9Id != newValue) { this.surcharge9Id = newValue; this.MarkAsDirty("Surcharge9Id"); } }
+       
+	 
+    private surcharge10Id: string;
+    public get Surcharge10Id() { return this.surcharge10Id; }
+    public set Surcharge10Id(newValue: string) { if (this.surcharge10Id != newValue) { this.surcharge10Id = newValue; this.MarkAsDirty("Surcharge10Id"); } }
+       
+	 
+    private surcharge1UOM: string;
+    public get Surcharge1UOM() { return this.surcharge1UOM; }
+    public set Surcharge1UOM(newValue: string) { if (this.surcharge1UOM != newValue) { this.surcharge1UOM = newValue; this.MarkAsDirty("Surcharge1UOM"); } }
+       
+	 
+    private surcharge2UOM: string;
+    public get Surcharge2UOM() { return this.surcharge2UOM; }
+    public set Surcharge2UOM(newValue: string) { if (this.surcharge2UOM != newValue) { this.surcharge2UOM = newValue; this.MarkAsDirty("Surcharge2UOM"); } }
+       
+	 
+    private surcharge3UOM: string;
+    public get Surcharge3UOM() { return this.surcharge3UOM; }
+    public set Surcharge3UOM(newValue: string) { if (this.surcharge3UOM != newValue) { this.surcharge3UOM = newValue; this.MarkAsDirty("Surcharge3UOM"); } }
+       
+	 
+    private surcharge4UOM: string;
+    public get Surcharge4UOM() { return this.surcharge4UOM; }
+    public set Surcharge4UOM(newValue: string) { if (this.surcharge4UOM != newValue) { this.surcharge4UOM = newValue; this.MarkAsDirty("Surcharge4UOM"); } }
+       
+	 
+    private surcharge5UOM: string;
+    public get Surcharge5UOM() { return this.surcharge5UOM; }
+    public set Surcharge5UOM(newValue: string) { if (this.surcharge5UOM != newValue) { this.surcharge5UOM = newValue; this.MarkAsDirty("Surcharge5UOM"); } }
+       
+	 
+    private surcharge6UOM: string;
+    public get Surcharge6UOM() { return this.surcharge6UOM; }
+    public set Surcharge6UOM(newValue: string) { if (this.surcharge6UOM != newValue) { this.surcharge6UOM = newValue; this.MarkAsDirty("Surcharge6UOM"); } }
+       
+	 
+    private surcharge7UOM: string;
+    public get Surcharge7UOM() { return this.surcharge7UOM; }
+    public set Surcharge7UOM(newValue: string) { if (this.surcharge7UOM != newValue) { this.surcharge7UOM = newValue; this.MarkAsDirty("Surcharge7UOM"); } }
+       
+	 
+    private surcharge8UOM: string;
+    public get Surcharge8UOM() { return this.surcharge8UOM; }
+    public set Surcharge8UOM(newValue: string) { if (this.surcharge8UOM != newValue) { this.surcharge8UOM = newValue; this.MarkAsDirty("Surcharge8UOM"); } }
+       
+	 
+    private surcharge9UOM: string;
+    public get Surcharge9UOM() { return this.surcharge9UOM; }
+    public set Surcharge9UOM(newValue: string) { if (this.surcharge9UOM != newValue) { this.surcharge9UOM = newValue; this.MarkAsDirty("Surcharge9UOM"); } }
+       
+	 
+    private surcharge10UOM: string;
+    public get Surcharge10UOM() { return this.surcharge10UOM; }
+    public set Surcharge10UOM(newValue: string) { if (this.surcharge10UOM != newValue) { this.surcharge10UOM = newValue; this.MarkAsDirty("Surcharge10UOM"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

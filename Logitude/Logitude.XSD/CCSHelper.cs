@@ -707,7 +707,7 @@ namespace Logitude.XSD
 					//    scope.Complete();
 					//}
 
-					DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
+					DbQueueService queueservice = new DbQueueService(queueName, Tenant);
 					queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
 				}
 

@@ -10,6 +10,7 @@ import { TariffGeneralTabComponent } from './Components/EditTabs/Tariff/TariffGe
 import { VersionHistoryTabComponent } from './Components/EditTabs/Tariff/VersionHistoryTabComponent';
 import { AddEditTariffLineComponent } from './Components/EditTabs/Tariff/AddEditTariffLineComponent';
 import { TariffTabsContentComponent } from './Components/EditTabs/Tariff/TariffTabsContentComponent';
+import { SurchargeVersionTabComponent } from './Components/EditTabs/Tariff/SurchargeVersionTabComponent';
 
 export const Components =
     [
@@ -23,6 +24,7 @@ export const Components =
         TariffGeneralTabComponent,
         AddEditTariffLineComponent,
         TariffTabsContentComponent
+        SurchargeVersionTabComponent,
     ];
 
 export const ControlsComponents =
@@ -45,6 +47,7 @@ export class ModuleDeclarations {
             case "TariffGeneralTabComponent": { myResult = TariffGeneralTabComponent; break; }
             case "AddEditTariffLineComponent": { myResult = AddEditTariffLineComponent; break; }
             case "TariffTabsContentComponent": { myResult = TariffTabsContentComponent; break; }
+            case "SurchargeVersionTabComponent": { myResult = SurchargeVersionTabComponent; break; }
         }
 
         return myResult;

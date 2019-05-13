@@ -1401,18 +1401,13 @@ namespace WebFreight.Web.QuoteModel.DomainServices
         [Invoke]
         public string GetQuoteAutomaticSubject(QuotePM entityPM)
         {
-            string myResult = null;
-
             int tenant = entityPM.Tenant;
-
             SecurityUtility.AuthenticationOnTenant(tenant);
             SecurityUtility.CheckContactFeature("Quote", "READ", tenant);
 
-            quoteQuery = new QuoteQuery(tenant);
-
-            myResult = quoteQuery.GetQuoteAutomaticSubject(entityPM);
-
-            return myResult;
+            QuoteSubjectService iSubjectService = new QuoteSubjectService(entityPM);
+            string mySubject = iSubjectService.GetSubject();
+            return mySubject;
         }
 
     }
