@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
@@ -13,7 +13,7 @@ import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeName
     templateUrl: './VersionHistoryTabComponent.html',
 })
 
-export class VersionHistoryTabComponent {
+export class VersionHistoryTabComponent implements OnDestroy {
     public EntityPM: TariffPM;
     public VersionPM: TariffVersionPM;
     public VersionLinesSource: ObservableCollection;
@@ -24,6 +24,22 @@ export class VersionHistoryTabComponent {
 
         this.SetStepsLabelsAndVisibility();
         this.BuildVersionsList();
+        this.Listen();
+    }
+
+    private SaveCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent != null) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                }
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
 
     public Step1PriceLabel: string;

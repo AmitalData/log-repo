@@ -225,4 +225,7 @@ export class ExcelTariffLines {
     Step6PriceText: string;
     Step7PriceText: string;
     Step8PriceText: string;
+
+    HasErrors: boolean;
+    ErrorText: string;
 }

@@ -3,13 +3,13 @@ import { TariffSettingComponent } from './Components/Workspaces/TariffSettingCom
 import { NewAirFreightCostComponent } from './Components/NewEntity/NewAirFreightCostComponent';
 import { FieldTemplateComponent } from './Components/Templates/FieldTemplateComponent';
 
-
 // Tabs
 import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
 import { VersionTabComponent } from './Components/EditTabs/Tariff/VersionTabComponent';
 import { TariffGeneralTabComponent } from './Components/EditTabs/Tariff/TariffGeneralTabComponent';
 import { VersionHistoryTabComponent } from './Components/EditTabs/Tariff/VersionHistoryTabComponent';
 import { AddEditTariffLineComponent } from './Components/EditTabs/Tariff/AddEditTariffLineComponent';
+import { TariffTabsContentComponent } from './Components/EditTabs/Tariff/TariffTabsContentComponent';
 import { SurchargeVersionTabComponent } from './Components/EditTabs/Tariff/SurchargeVersionTabComponent';
 
 export const Components =
@@ -23,6 +23,7 @@ export const Components =
         VersionHistoryTabComponent,
         TariffGeneralTabComponent,
         AddEditTariffLineComponent,
+        TariffTabsContentComponent,
         SurchargeVersionTabComponent,
     ];
 
@@ -45,6 +46,7 @@ export class ModuleDeclarations {
             case "VersionHistoryTabComponent": { myResult = VersionHistoryTabComponent; break; }                
             case "TariffGeneralTabComponent": { myResult = TariffGeneralTabComponent; break; }
             case "AddEditTariffLineComponent": { myResult = AddEditTariffLineComponent; break; }
+            case "TariffTabsContentComponent": { myResult = TariffTabsContentComponent; break; }
             case "SurchargeVersionTabComponent": { myResult = SurchargeVersionTabComponent; break; }
         }
 

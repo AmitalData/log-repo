@@ -1239,6 +1239,52 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool hasErrors ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool HasErrors  
+	   {
+	    
+	     get
+		{
+		   return hasErrors;
+		 }
+		 set
+		 {
+		   if(hasErrors != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HasErrors",OldValue=hasErrors,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   hasErrors=value;
+		   }
+			
+		 }
+	   }
+	  private string errorText ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ErrorText  
+	   {
+	    
+	     get
+		{
+		   return errorText;
+		 }
+		 set
+		 {
+		   if(errorText != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ErrorText",OldValue=errorText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   errorText=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
