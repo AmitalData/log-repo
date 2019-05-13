@@ -404,6 +404,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     tariffLinesResult.Add(tariffLine);
                 }
 
+                foreach(ExcelTariffLines item in tariffLinesResult)
+                {
+                    this.SetErrors(item);
+                }
+
                 //List<TariffLine> tariffLines = new List<TariffLine>();
                 //if(tariffLinesResult != null && tariffLinesResult.Count > 0)
                 //{
@@ -417,6 +422,180 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private void SetErrors(ExcelTariffLines item)
+        {
+            bool error = false;
+            string errorText = "";
+
+            if (!string.IsNullOrEmpty(item.FromPortText) && string.IsNullOrEmpty(item.FromPortId))
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Port with code " + item.FromPortText + " not found";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Port with code " + item.FromPortText + " not found";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.ToPortText) && string.IsNullOrEmpty(item.ToPortId))
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Port with code " + item.ToPortText + " not found";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Port with code " + item.ToPortText + " not found";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.MinPriceText) && item.MinPrice == null)
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Min price format is invalid";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Min price format is invalid";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Step1PriceText) && item.Step1Price == null)
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Step 1 price format is invalid";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Step 1 price format is invalid";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Step2PriceText) && item.Step2Price == null)
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Step 2 price format is invalid";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Step 2 price format is invalid";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Step3PriceText) && item.Step3Price == null)
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Step 3 price format is invalid";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Step 3 price format is invalid";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Step4PriceText) && item.Step4Price == null)
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Step 4 price format is invalid";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Step 4 price format is invalid";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Step5PriceText) && item.Step5Price == null)
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Step 5 price format is invalid";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Step 5 price format is invalid";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Step6PriceText) && item.Step6Price == null)
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Step 6 price format is invalid";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Step 6 price format is invalid";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Step7PriceText) && item.Step7Price == null)
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Step 7 price format is invalid";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Step 7 price format is invalid";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(item.Step8PriceText) && item.Step8Price == null)
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Step 8 price format is invalid";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Step 8 price format is invalid";
+                }
+            }
+
+            item.HasErrors = error;
+            item.ErrorText = errorText;
         }
 
         private List<TariffLine> MapExcelLinesToTariffLines(TariffFilterParameter tariffFilter, List<ExcelTariffLines> tariffLinesResult)
@@ -699,6 +878,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string Step6PriceText { get; set; }
         public string Step7PriceText { get; set; }
         public string Step8PriceText { get; set; }
+
+        public bool HasErrors { get; set; }
+        public string ErrorText { get; set; }
     }
 }
 

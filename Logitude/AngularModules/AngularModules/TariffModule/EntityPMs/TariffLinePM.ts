@@ -292,6 +292,16 @@ export class TariffLinePM {
     public set Surcharge10PriceText(newValue: string) { if (this.surcharge10PriceText != newValue) { this.surcharge10PriceText = newValue; this.MarkAsDirty("Surcharge10PriceText"); } }
        
 	 
+    private hasErrors: boolean;
+    public get HasErrors() { return this.hasErrors; }
+    public set HasErrors(newValue: boolean) { if (this.hasErrors != newValue) { this.hasErrors = newValue; this.MarkAsDirty("HasErrors"); } }
+       
+	 
+    private errorText: string;
+    public get ErrorText() { return this.errorText; }
+    public set ErrorText(newValue: string) { if (this.errorText != newValue) { this.errorText = newValue; this.MarkAsDirty("ErrorText"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	
