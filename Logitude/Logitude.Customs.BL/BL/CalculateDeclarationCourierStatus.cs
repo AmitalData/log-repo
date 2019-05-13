@@ -262,7 +262,14 @@ namespace Logitude.Customs.BL.BL
                                 break;
                             case "11":
                             case "13":
-                                myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "V";
+                                if(declarationPM.IsChanged == true)
+                                {
+                                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
+                                }
+                                else
+                                {
+                                    myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "V";
+                                }
                                 break;
                             default:
                                 myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "";
