@@ -27,6 +27,13 @@ namespace Logitude.TariffModule.BL.CLoseTable
                 Name = "Air Freight Cost", 
                 SearchFields = "AFC,Air Freight Cost", 
 			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                Name = "Air Surcharges Cost", 
+                Code = "ASC", 
+                SearchFields = "ASC,Air Surcharges Cost", 
+			});
 			
             return all;
        }

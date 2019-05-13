@@ -1369,6 +1369,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
             switch (this.CostMeasurementCode) {
                 //case "GRWT":
                 case "CHWT":
+                case "CWKG":
+                case "GWKG":
                 //case "VOLU":
                 case "BTEU":
                 case "FIXD":
@@ -1471,6 +1473,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
             switch (this.SaleMeasurementCode) {
                 //case "GRWT":
                 case "CHWT":
+                case "CWKG":
+                case "GWKG":
                 //case "VOLU":
                 case "BTEU":
                 case "FIXD":
@@ -2427,6 +2431,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfContainers; break; }
+                case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
+                case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
 
                 default:
                     {
@@ -2838,7 +2844,8 @@ export class FCLQuoteChargeItem extends BaseComponent {
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfContainers; break; }
-
+                case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
+                case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
                 default:
                     {
                         if (!AppTool.IsNullOrEmpty(this.SaleMeasurementId)) {

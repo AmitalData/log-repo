@@ -750,7 +750,25 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "CHWT" && f.SaleQuantity != entityQuantity).length > 0) {
                     isDifferentOrders = true;
                 }
-                
+
+                //CWKG
+                entityQuantity = this.EntityPM.ChargeableWeightInKG;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "CWKG" && f.CostQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "CWKG" && f.SaleQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+
+                 //GWKG
+                entityQuantity = this.EntityPM.GrossWeightInKG;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GWKG" && f.CostQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "GWKG" && f.SaleQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+
                 //"VOLU"
                 entityQuantity = this.EntityPM.Volume;
                 if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "VOLU" && f.CostQuantity != entityQuantity).length > 0) {
@@ -1082,6 +1100,8 @@ export class QuoteChargeItem extends BaseComponent {
             switch (this.CostMeasurementCode) {
                 case "GRWT":
                 case "CHWT":
+                case "CWKG":
+                case "GWKG":
                 //case "VOLU":
                 case "BTEU":
                 case "FIXD":
@@ -1165,6 +1185,8 @@ export class QuoteChargeItem extends BaseComponent {
             switch (this.SaleMeasurementCode) {
                 case "GRWT":
                 case "CHWT":
+                case "CWKG":
+                case "GWKG":
                 //case "VOLU":
                 case "BTEU":
                 case "FIXD":
@@ -1835,6 +1857,9 @@ export class QuoteChargeItem extends BaseComponent {
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
+                case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
+                case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
+
                 default: { break; }
             }
         }
@@ -2141,6 +2166,9 @@ export class QuoteChargeItem extends BaseComponent {
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
+                case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
+                case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
+
                 default: { break; }
             }
         }

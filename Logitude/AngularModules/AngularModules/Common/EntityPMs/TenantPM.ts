@@ -630,6 +630,11 @@ export class TenantPM {
     public set AutoArchiveOnInvoice(newValue: boolean) { if (this.autoArchiveOnInvoice != newValue) { this.autoArchiveOnInvoice = newValue; this.MarkAsDirty("AutoArchiveOnInvoice"); } }
        
 	 
+    private ecommerceSupportEmail: string;
+    public get EcommerceSupportEmail() { return this.ecommerceSupportEmail; }
+    public set EcommerceSupportEmail(newValue: string) { if (this.ecommerceSupportEmail != newValue) { this.ecommerceSupportEmail = newValue; this.MarkAsDirty("EcommerceSupportEmail"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

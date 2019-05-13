@@ -48,7 +48,7 @@ export class MainPageComponent implements AfterViewInit {
     public isScreenLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        this.LoadAllScreenData();
+        // this.LoadAllScreenData();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) => {
@@ -57,6 +57,8 @@ export class MainPageComponent implements AfterViewInit {
                     {
                         this.isScreenLoaded = true;
                         this.CurrentSession.StopBusyIndicator();
+                        this.InitComponent();
+
                     });
                 });
             });
@@ -65,7 +67,7 @@ export class MainPageComponent implements AfterViewInit {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
     ngAfterViewInit() {
-        this.LoadAllScreenData();
+        // this.LoadAllScreenData();
     }
     public IsQueryVisible_MyViewsGroup: boolean = false;
 

@@ -46,6 +46,22 @@
       <QueryFilter QueryCode="&quot;Air Freight Cost Tariffs&quot;" PredefinedValue="&quot;AFC&quot;" ObjectFieldName="&quot;TypeCode&quot;" IsPredefined="true" Operator="&quot;Equal&quot;" IndexOrder="0" />
     </QueryFilters>
   </Query>
+  <Query Code="&quot;Air Surcharges Cost Tariffs&quot;" TextCode="&quot;Air Surcharges Cost Tariffs&quot;" LocalTextCode="&quot;Air Surcharges Cost Tariffs&quot;" QueryGroupCode="&quot;d341&quot;" IndexOrder="1" ObjectTableName="&quot;Tariff&quot;" QuerySection="&quot;Tariff&quot;" SystemLevel="true" IsAddNewEntity="true" IsPackagable="true" DefaultSortName="&quot;CreateDate&quot;" DefaultSortDirection="&quot;Desending&quot;" IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn QueryCode="&quot;Air Surcharges Cost Tariffs&quot;" IndexOrder="0" ObjectFieldName="&quot;Name&quot;" ColumnWidth="150" />
+      <QueryColumn QueryCode="&quot;Air Surcharges Cost Tariffs&quot;" IndexOrder="1" ObjectFieldName="&quot;SellerName&quot;" ColumnWidth="150" />
+      <QueryColumn QueryCode="&quot;Air Surcharges Cost Tariffs&quot;" IndexOrder="2" ObjectFieldName="&quot;StartDate&quot;" ColumnWidth="150" />
+      <QueryColumn QueryCode="&quot;Air Surcharges Cost Tariffs&quot;" IndexOrder="3" ObjectFieldName="&quot;ExpirationDate&quot;" ColumnWidth="150" />
+      <QueryColumn QueryCode="&quot;Air Surcharges Cost Tariffs&quot;" IndexOrder="4" ObjectFieldName="&quot;Description&quot;" ColumnWidth="150" />
+      <QueryColumn QueryCode="&quot;Air Surcharges Cost Tariffs&quot;" IndexOrder="5" ObjectFieldName="&quot;CreatedByUserName&quot;" ColumnWidth="150" />
+      <QueryColumn QueryCode="&quot;Air Surcharges Cost Tariffs&quot;" IndexOrder="6" ObjectFieldName="&quot;CreateDate&quot;" ColumnWidth="150" />
+      <QueryColumn QueryCode="&quot;Air Surcharges Cost Tariffs&quot;" IndexOrder="7" ObjectFieldName="&quot;UpdatedByUserName&quot;" ColumnWidth="150" />
+      <QueryColumn QueryCode="&quot;Air Surcharges Cost Tariffs&quot;" IndexOrder="8" ObjectFieldName="&quot;UpdateDate&quot;" ColumnWidth="150" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter QueryCode="&quot;Air Surcharges Cost Tariffs&quot;" PredefinedValue="&quot;ASC&quot;" ObjectFieldName="&quot;TypeCode&quot;" IsPredefined="true" Operator="&quot;Equal&quot;" IndexOrder="0" />
+    </QueryFilters>
+  </Query>
   <Screen Name="&quot;TariffHeaderScreen&quot;" ObjectTableName="&quot;Tariff&quot;" NumberOfColumns="4" NumberOfRows="2" IsReadOnly="true" IsHeaderScreen="true">
     <ScreenFields>
       <ScreenField Column="0" Row="0" ObjectFieldName="&quot;Name&quot;" ScreenName="TariffHeaderScreen" />

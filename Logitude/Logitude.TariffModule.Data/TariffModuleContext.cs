@@ -96,6 +96,26 @@ namespace Logitude.TariffModule.Data
 			modelBuilder.Entity<TariffLine>().Property(x => x.Step7Price).HasPrecision(18, 3);
 				
 			modelBuilder.Entity<TariffLine>().Property(x => x.Step8Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge1Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge2Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge3Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge4Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge5Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge6Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge7Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge8Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge9Price).HasPrecision(18, 3);
+				
+			modelBuilder.Entity<TariffLine>().Property(x => x.Surcharge10Price).HasPrecision(18, 3);
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());

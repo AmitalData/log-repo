@@ -151,12 +151,17 @@ export class TimeSheetWorkspaceComponent {
                         }
 
                         case "Vacations": {
+
                             if (this.PageChild_Vacations == null) {
                                 SessionLocator.DynamicLoader.Load('./TimeManagement/Components/Workspaces/TimeSheet/VacationsComponent', myLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         this.PageChild_Vacations = cmpRef.instance;
                                         this.PageChild_Vacations.InitTab();
                                     });
+                            }
+
+                            else {
+                                this.PageChild_Vacations.LoadAllScreenData();
                             }
 
                             break;
