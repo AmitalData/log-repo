@@ -87,6 +87,16 @@ namespace DW_Editor_Tool.ViewModels
             set { isMeasurement = value; FirePropertyChanged("IsMeasurement"); }
         }
 
+        bool isCustom;
+        public bool IsCustom
+        {
+            get { return isCustom; }
+            set { isCustom = value; FirePropertyChanged("IsCustom"); }
+        }
+
+        
+
+
         string aggregationTypeCode;
         public string AggregationTypeCode
         {

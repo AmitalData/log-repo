@@ -36,6 +36,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.HideTree = entityPM.HideTree;
             entityPOCO.CannotFilter = entityPM.CannotFilter;
             entityPOCO.HelpText = entityPM.HelpText;
+            entityPOCO.IsCustom = entityPM.IsCustom;
 
         }
     }
