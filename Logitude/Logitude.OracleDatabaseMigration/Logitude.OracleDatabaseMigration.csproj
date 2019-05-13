@@ -288,6 +288,10 @@
     <Compile Include="Migrations\201905070848314_VendorCommissionMigration.Designer.cs">
       <DependentUpon>201905070848314_VendorCommissionMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905131153039_AddPendingByKeywordsTable.cs" />
+    <Compile Include="Migrations\201905131153039_AddPendingByKeywordsTable.Designer.cs">
+      <DependentUpon>201905131153039_AddPendingByKeywordsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -490,6 +494,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905070848314_VendorCommissionMigration.resx">
       <DependentUpon>201905070848314_VendorCommissionMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905131153039_AddPendingByKeywordsTable.resx">
+      <DependentUpon>201905131153039_AddPendingByKeywordsTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

@@ -7,14 +7,14 @@ namespace Logitude.OracleDatabaseMigration.Migrations
     {
         public override void Up()
         {
-            DropPrimaryKey("Customs.VendorCommissions");
+            //DropPrimaryKey("Customs.VendorCommissions");
          
             //AddColumn("VendorCommissions", "ModificationsTypeCode", c => c.String(nullable: false, maxLength: 3, unicode: false, defaultValue: "I10"));
-            AddPrimaryKey("Customs.VendorCommissions", new[] { "VendorId", "CustomerId", "ModificationsTypeCode" });
+            //AddPrimaryKey("Customs.VendorCommissions", new[] { "VendorId", "CustomerId", "ModificationsTypeCode" });
             //CreateIndex("Customs.CourierMasters", "StorageSiteCode");
-            CreateIndex("VendorCommissions", "ModificationsTypeCode");
+            //CreateIndex("VendorCommissions", "ModificationsTypeCode");
             //AddForeignKey("Customs.CourierMasters", "StorageSiteCode", "Customs.DeliverySiteTypes", "Code");
-            AddForeignKey("Customs.VendorCommissions", "ModificationsTypeCode", "ModificationAndDiscountTypes", "Code");
+            //AddForeignKey("Customs.VendorCommissions", "ModificationsTypeCode", "ModificationAndDiscountTypes", "Code");
         }
         
         public override void Down()
