@@ -173,6 +173,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("NumberFormatCode")]
         public virtual NumberFormat NumberFormat { get; set; }
 
+        public string EcommerceSupportEmail { get; set; }
+
+
 
     }
 }

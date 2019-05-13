@@ -32,7 +32,7 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DocumentTypeMetaDataExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeMetaDataExtendedService'
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
-
+import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 @Component({
     moduleId: module.id,
@@ -134,6 +134,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     this.CompanyLogo = myLogoResult.Result;
 
                 });
+                //GetTenantEcommerceSupportEmail
+                service.GetTenantEcommerceSupportEmail(this.Tenant).subscribe((myTenant: any) => {
+                    if (myTenant.Result) {
+                        this.EcommerceSupportEmail = myTenant.Result;
+                    }
+                });
                 if (this.RefreshTimer) {
                     clearTimeout(this.RefreshTimer);
                 }
@@ -194,6 +200,9 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public ValidationWarningsList: string = null;
     public FinalMessage: string = "גרסה זו אושרה";
 
+    private ecommerceSupportEmail: string = "";
+    public get EcommerceSupportEmail() { return this.ecommerceSupportEmail }
+    public set EcommerceSupportEmail(newValue: string) { this.ecommerceSupportEmail = newValue; }
 
     public get CustomerName() { return this.AdditionalData.RequestPaymentData.CustomerName }
     public set CustomerName(newValue: string) { this.AdditionalData.RequestPaymentData.CustomerName = newValue; }

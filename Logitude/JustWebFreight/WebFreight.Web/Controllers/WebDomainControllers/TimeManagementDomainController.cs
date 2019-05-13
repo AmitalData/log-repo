@@ -943,7 +943,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ProjectsNumbers.Add("1014-1");
                 ProjectsNumbers.Add("1014-2");
                 ProjectsNumbers.Add("1014-3");
-                ProjectsNumbers.Add("1125");
+                //ProjectsNumbers.Add("1125");
                 ProjectsNumbers.Add("1015");
                 ProjectsNumbers.Add("1015-1");
                 ProjectsNumbers.Add("1015-2");
@@ -954,7 +954,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                   where
                                   tMEmployeeTime.EmployeeUserId == loggedUserId
                                   && tMEmployeeTime.DateOfWork.Year == Year
-                                  && ProjectsNumbers.Contains(tMProject.ProjectNumber)
+                                  &&
+                                  (ProjectsNumbers.Contains(tMProject.ProjectNumber) || (tMProject.ProjectNumber == "1125" && tMEmployeeTime.TimeInMinutes == 540))
                                   group tMEmployeeTime by new { tMProject.ProjectNumber, tMEmployeeTime.ProjectId } into g
                                   select new
                                   {
@@ -1037,9 +1038,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                         TimeInMinutes = tMEmployeeTime.TimeInMinutes
                                     }).OrderByDescending(o => o.DateOfWork).ToList();
 
-                        if(Type == "Sick Leaves")
+                        if(Type == "Holidays")
                         {
-                            foreach(TMVacationsDetails item in myResult)
+                            myResult = myResult.Where(d => d.TimeInMinutes == 540).ToList();
+                        }
+
+                        if (Type == "Sick Leaves")
+                        {
+                            foreach (TMVacationsDetails item in myResult)
                             {
                                 item.SickLeaves = GetTimeFormatFromMinutes(item.TimeInMinutes);
 

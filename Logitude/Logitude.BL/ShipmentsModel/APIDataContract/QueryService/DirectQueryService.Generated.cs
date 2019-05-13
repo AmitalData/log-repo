@@ -282,7 +282,14 @@ using Simplog.Data.ShipmentsModel;
 					 temp.Payables = PayableService19.PayableDataMapping(MyEntityPM.ShipmentPayables,Tenant);
 				}
 
-							 					
+							 			  
+				   if(MyEntityPM.DimensionsUnitCode != null)
+				   {
+					   DimensionsUnitQueryService DimensionsUnitService19 = new DimensionsUnitQueryService(Tenant);
+					   					   temp.DimensionsUnit = DimensionsUnitService19.GetDimensionsUnitByCode(MyEntityPM.DimensionsUnitCode,Tenant); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -453,22 +460,22 @@ using Simplog.Data.ShipmentsModel;
 					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService19 = new AirPackageQueryService(Tenant);
-						temp.ShipmentPackages = AirPackageService19.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+						AirPackageQueryService AirPackageService20 = new AirPackageQueryService(Tenant);
+						temp.ShipmentPackages = AirPackageService20.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService19 = new OceanOrInlandPackageQueryService(Tenant);
-						temp.ShipmentPackages = OceanOrInlandPackageService19.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService20 = new OceanOrInlandPackageQueryService(Tenant);
+						temp.ShipmentPackages = OceanOrInlandPackageService20.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService19 = new ContainerQueryService(Tenant);
-						temp.ShipmentPackages = ContainerService19.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+						ContainerQueryService ContainerService20 = new ContainerQueryService(Tenant);
+						temp.ShipmentPackages = ContainerService20.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -516,15 +523,15 @@ using Simplog.Data.ShipmentsModel;
 					
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService19 = new DeliveryQueryService(Tenant);
-						temp.ShipmentDeliveries = DeliveryService19.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
+						DeliveryQueryService DeliveryService20 = new DeliveryQueryService(Tenant);
+						temp.ShipmentDeliveries = DeliveryService20.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService19 = new PickUpQueryService(Tenant);
-						temp.ShipmentPickUps = PickUpService19.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
+						PickUpQueryService PickUpService20 = new PickUpQueryService(Tenant);
+						temp.ShipmentPickUps = PickUpService20.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -576,18 +583,29 @@ using Simplog.Data.ShipmentsModel;
 					
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService19 = new ReceivableQueryService(Tenant);
-						temp.ShipmentReceivables = ReceivableService19.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
+						ReceivableQueryService ReceivableService20 = new ReceivableQueryService(Tenant);
+						temp.ShipmentReceivables = ReceivableService20.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService19 = new PayableQueryService(Tenant);
-						temp.ShipmentPayables = PayableService19.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName);
+						PayableQueryService PayableService20 = new PayableQueryService(Tenant);
+						temp.ShipmentPayables = PayableService20.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName);
 					}
 
-								 					   
+								 					DimensionsUnitQueryService DimensionsUnitDimensionsUnitService = new DimensionsUnitQueryService(Tenant);
+					if(MyEntity.DimensionsUnit != null)
+					{
+						var myDimensionsUnitPM = DimensionsUnitDimensionsUnitService.DimensionsUnitDataMappingAndValidatin(MyEntity.DimensionsUnit,Tenant,ComputingPartnerName);
+												if(myDimensionsUnitPM != null)
+						{
+							temp.DimensionsUnitCode = myDimensionsUnitPM.Code;
+						}
+						 
+					}
+			
+										   
 					   return temp;
 		    }
             catch (Exception ex)
