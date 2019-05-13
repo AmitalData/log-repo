@@ -32,36 +32,29 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
         public HttpResponseMessage Put(CustomsCountryPM entityPM)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
-                        string logKey = PerformanceLogger.LogCurrentTime();
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
-                        var us = new CustomsCountryUpdateService(MyContext, new System.Collections.Generic.Dictionary<string, IContext>(), authToken.Tenant);
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                    var us = new CustomsCountryUpdateService(MyContext, new System.Collections.Generic.Dictionary<string, IContext>(), authToken.Tenant);
 
-                        entityPM.ChangeSetOp = ChangeSetOperation.Update;
-                        us.Update(entityPM, true);
+                    entityPM.ChangeSetOp = ChangeSetOperation.Update;
+                    us.Update(entityPM, true);
 
-                        scope.Complete();
-                        PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-                        return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                    scope.Complete();
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                    return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                 }
             }
-            else
+
+            catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
     }
