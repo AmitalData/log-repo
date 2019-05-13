@@ -1,0 +1,100 @@
+
+<div class="TabHolder">
+    <table>
+        <tr style="height: 1px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width:120px;">
+                            <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td *ngIf="IsDraftVersion" style="width:230px;">
+                            <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
+
+                        <td *ngIf="!IsDraftVersion" style="width:230px;">
+                            {{StartDate | DateTimeToDatePipe}}
+                        </td>
+
+                        <td style="width:15px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:120px;">
+                            <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td *ngIf="IsDraftVersion" style="width:230px;">
+                            <LogDatePicker [ObjectFieldName]="'ExpirationDate'" [SelectedDateValue]="ExpirationDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
+
+                        <td *ngIf="!IsDraftVersion" style="width:230px;">
+                            {{ExpirationDate | DateTimeToDatePipe}}
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 20px; padding: 3px;">
+                            <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Add'" [IsSmall]="true" (click)="AddTariffLine()"></IconButton>
+                        </td>
+
+                        <td style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:70px;">
+                            <div tabindex="0" class="ToggleButton">
+                                <label>Actions</label>
+                                <img src="./Images/ToggleIcon.png" />
+
+                                <div class="ToggleButtonMenu">
+                                    <button (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
+                                    <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
+
+                                    <div *ngIf="IsDraftVersion">
+                                        <input class="upload" style="display: none;width:65px"
+                                               type="file" (change)="OnFileChanged($event)"
+                                               #fileInput>
+                                        <a href="#" style="text-decoration:none">
+                                            <button (click)="fileInput.click()">Upload Excel</button>
+                                        </a>
+                                    </div>
+
+                                    <button (click)="ApproveVersionClicked()" *ngIf="IsApproveVersionButtonVisible">Approve Version</button>
+                                    <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr style="height: 10px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <!-- Surcharge Tariff Grid -->
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TariffsLinesSource">
+                                   
+
+                                </logitude-edit-grid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

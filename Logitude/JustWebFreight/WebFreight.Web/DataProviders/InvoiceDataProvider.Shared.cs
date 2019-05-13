@@ -620,6 +620,7 @@ namespace WebFreight.Web.DataProviders
         public double? LocalAmount_Double { get; set; }
         public double? InvoiceAmount_Double { get; set; }
         public double? CalculatedUnitPrice { get; set; }
+        public double? ForeignAmount_Double { get; set; }
 
         public string ClaveUnidad { get; set; }
         public string ClaveProdServ { get; set; }

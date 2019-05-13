@@ -18,10 +18,16 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
     public Tabs: TariffDetailsTab[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private EditTabTariffType = "VR";
+
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
         this.Tabs = [];
         this.Listen();
+      
+        if (this.EntityPM.TypeCode == "ASC") {
+            this.EditTabTariffType = "SVR";
+        }
     }
 
     private SaveCompletedEvent: any = null;
@@ -81,7 +87,8 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
             to = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
 
             header = "Version " + item.Version + " (" + from + " - " + to + ")";
-            this.Tabs.push(new TariffDetailsTab(index, "VR", header, item));
+           
+            this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, item));
             index++;
         });
         
@@ -151,8 +158,8 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
                     else if (this.SelectedTabItem.ComponentPath) {
                         SessionLocator.DynamicLoader.Load(this.SelectedTabItem.ComponentPath, location.viewContainerRef).then(cmpRef => {
                             this.SelectedTabItem.IsTabLoaded = true;
-
-                            if (this.SelectedTabItem.Code == "VR") {
+       
+                            if (this.SelectedTabItem.Code == this.EditTabTariffType) {
                                 cmpRef.instance.Intialize({ CurrentVersion: this.SelectedTabItem.SelectedVersion, });
                             }
                         });
@@ -184,7 +191,12 @@ class TariffDetailsTab {
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/VersionTabComponent";
                 break;
             }
-
+            case "SVR": {
+                this.IsDraft = version.IsDraft;
+                this.SelectedVersion = version;
+                this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/SurchargeVersionTabComponent";
+                break;
+            }
             case "GN": {
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent";
                 break;

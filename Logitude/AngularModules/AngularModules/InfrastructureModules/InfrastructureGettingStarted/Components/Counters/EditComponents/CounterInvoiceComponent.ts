@@ -368,6 +368,7 @@ export class CounterInvoiceDefinitionItem extends BaseComponent {
 
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("Suffix", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("CounterSize", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, isEnabled_StartNumber);
     }
 

@@ -229,7 +229,14 @@ using Simplog.Data.ShipmentsModel;
 					 temp.Payables = PayableService17.PayableDataMapping(MyEntityPM.ShipmentPayables,Tenant);
 				}
 
-							 					
+							 			  
+				   if(MyEntityPM.DimensionsUnitCode != null)
+				   {
+					   DimensionsUnitQueryService DimensionsUnitService17 = new DimensionsUnitQueryService(Tenant);
+					   					   temp.DimensionsUnit = DimensionsUnitService17.GetDimensionsUnitByCode(MyEntityPM.DimensionsUnitCode,Tenant); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -434,15 +441,15 @@ using Simplog.Data.ShipmentsModel;
 					
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService17 = new DeliveryQueryService(Tenant);
-						temp.ShipmentDeliveries = DeliveryService17.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
+						DeliveryQueryService DeliveryService18 = new DeliveryQueryService(Tenant);
+						temp.ShipmentDeliveries = DeliveryService18.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService17 = new PickUpQueryService(Tenant);
-						temp.ShipmentPickUps = PickUpService17.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
+						PickUpQueryService PickUpService18 = new PickUpQueryService(Tenant);
+						temp.ShipmentPickUps = PickUpService18.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -455,8 +462,8 @@ using Simplog.Data.ShipmentsModel;
 					
 					if(MyEntity.Houses != null && MyEntity.Houses.Count > 0)
 					{
-						HouseQueryService HouseService17 = new HouseQueryService(Tenant);
-						temp.ShipmentConsoleShipments = HouseService17.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
+						HouseQueryService HouseService18 = new HouseQueryService(Tenant);
+						temp.ShipmentConsoleShipments = HouseService18.HouseCustomDataMappingAndValidatin(MyEntity,MyEntity.Houses,Tenant,ComputingPartnerName);
 					}
 
 								 
@@ -477,18 +484,29 @@ using Simplog.Data.ShipmentsModel;
 					temp.IsAccountingClosed = MyEntity.IsAccountingClosed;
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService17 = new ReceivableQueryService(Tenant);
-						temp.ShipmentReceivables = ReceivableService17.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
+						ReceivableQueryService ReceivableService18 = new ReceivableQueryService(Tenant);
+						temp.ShipmentReceivables = ReceivableService18.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
 					}
 
 								 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService17 = new PayableQueryService(Tenant);
-						temp.ShipmentPayables = PayableService17.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName);
+						PayableQueryService PayableService18 = new PayableQueryService(Tenant);
+						temp.ShipmentPayables = PayableService18.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName);
 					}
 
-								 					   
+								 					DimensionsUnitQueryService DimensionsUnitDimensionsUnitService = new DimensionsUnitQueryService(Tenant);
+					if(MyEntity.DimensionsUnit != null)
+					{
+						var myDimensionsUnitPM = DimensionsUnitDimensionsUnitService.DimensionsUnitDataMappingAndValidatin(MyEntity.DimensionsUnit,Tenant,ComputingPartnerName);
+												if(myDimensionsUnitPM != null)
+						{
+							temp.DimensionsUnitCode = myDimensionsUnitPM.Code;
+						}
+						 
+					}
+			
+										   
 					   return temp;
 		    }
             catch (Exception ex)

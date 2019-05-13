@@ -5,13 +5,12 @@ import { FieldTemplateComponent } from './Components/Templates/FieldTemplateComp
 
 
 // Tabs
-
 import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
 import { VersionTabComponent } from './Components/EditTabs/Tariff/VersionTabComponent';
 import { TariffGeneralTabComponent } from './Components/EditTabs/Tariff/TariffGeneralTabComponent';
 import { VersionHistoryTabComponent } from './Components/EditTabs/Tariff/VersionHistoryTabComponent';
 import { AddEditTariffLineComponent } from './Components/EditTabs/Tariff/AddEditTariffLineComponent';
-
+import { SurchargeVersionTabComponent } from './Components/EditTabs/Tariff/SurchargeVersionTabComponent';
 
 export const Components =
     [
@@ -23,7 +22,8 @@ export const Components =
         VersionTabComponent,
         VersionHistoryTabComponent,
         TariffGeneralTabComponent,
-        AddEditTariffLineComponent
+        AddEditTariffLineComponent,
+        SurchargeVersionTabComponent,
     ];
 
 export const ControlsComponents =
@@ -45,6 +45,7 @@ export class ModuleDeclarations {
             case "VersionHistoryTabComponent": { myResult = VersionHistoryTabComponent; break; }                
             case "TariffGeneralTabComponent": { myResult = TariffGeneralTabComponent; break; }
             case "AddEditTariffLineComponent": { myResult = AddEditTariffLineComponent; break; }
+            case "SurchargeVersionTabComponent": { myResult = SurchargeVersionTabComponent; break; }
         }
 
         return myResult;

@@ -976,6 +976,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 //    });
                 //}
                 //this.Filters = res.Filters;
+                this.queryId = res.QueryId;
                 this.init(true);
             });
         }

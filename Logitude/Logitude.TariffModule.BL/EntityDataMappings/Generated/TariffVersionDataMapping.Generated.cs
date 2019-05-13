@@ -33,7 +33,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         IsDraft, 
 	         ApproveDate, 
 	         ApprovedByUserId, 
-	         ParentVersionId,
+	         ParentVersionNumber,
 	      }
 
 
@@ -51,7 +51,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         IsDraft, 
 	         ApproveDate, 
 	         ApprovedByUserId, 
-	         ParentVersionId,
+	         ParentVersionNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -105,9 +105,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 				entityPOCO.ApprovedByUserId = entityPM.ApprovedByUserId;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentVersionId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentVersionNumber))
             {
-				entityPOCO.ParentVersionId = entityPM.ParentVersionId;
+				entityPOCO.ParentVersionNumber = entityPM.ParentVersionNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -171,9 +171,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.ApprovedByUserId = entityPOCO.ApprovedByUserId;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ParentVersionId))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ParentVersionNumber))
             {
-					entityPM.ParentVersionId = entityPOCO.ParentVersionId;
+					entityPM.ParentVersionNumber = entityPOCO.ParentVersionNumber;
             }
 
 		}
@@ -227,9 +227,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
                 oldEntityPM.ApprovedByUserId = entityPM.ApprovedByUserId;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentVersionId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ParentVersionNumber))
             {
-                oldEntityPM.ParentVersionId = entityPM.ParentVersionId;
+                oldEntityPM.ParentVersionNumber = entityPM.ParentVersionNumber;
             }
 			
 		}

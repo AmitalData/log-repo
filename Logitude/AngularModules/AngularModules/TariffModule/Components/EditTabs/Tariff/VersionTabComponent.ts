@@ -473,6 +473,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         copiedVersion.IsDraft = true;
         copiedVersion.StartDate = this.CurrentVersion.StartDate;
         copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
+        copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
 
         this.EntityPM.AddTariffVersion(copiedVersion);
 
