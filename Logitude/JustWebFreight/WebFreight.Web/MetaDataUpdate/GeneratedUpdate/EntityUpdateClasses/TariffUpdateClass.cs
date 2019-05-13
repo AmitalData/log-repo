@@ -1746,6 +1746,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			   TextCode TariffTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.AirFreightCostTariffs", DefaultText = @"Air Freight Cost Tariffs",LocalDefaultText = "Air Freight Cost Tariffs", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
 			   Feature TariffFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.AirFreightCostTariffs", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.AirFreightCostTariffs", NameTextCodeDefaultText = "Air Freight Cost Tariffs", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+
+			   TextCode TariffTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Tariff.Q.AirSurchargesCostTariffs", DefaultText = @"Air Surcharges Cost Tariffs",LocalDefaultText = "Air Surcharges Cost Tariffs", ObjectTableId = TariffObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature TariffFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Tariff.Q.AirSurchargesCostTariffs", ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffFeatures.AirSurchargesCostTariffs", NameTextCodeDefaultText = "Air Surcharges Cost Tariffs", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 
 	        TextCodeRepository.SubmitChanges();
 	        FeaturesRepository.SubmitChanges();    
@@ -1774,6 +1778,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn AirFreightCostTariffsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirFreightCostTariffsQuery.Id, IndexOrder = 9, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
              AdvancedQueryFilter AirFreightCostTariffsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "AFC",PredefinedValue2 = null, QueryId = AirFreightCostTariffsQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+
+  
+	      
+
+			  Query AirSurchargesCostTariffsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TariffTextCode_1.Id, Code = "Air Surcharges Cost Tariffs",  QueryGroupCode = "d341", IndexOrder = 1, Tenant = 0, ObjectTableId = TariffObjectTable.Id, QuerySection = "Tariff", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TariffFeature_1.Id, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
+	
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 0, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Name" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 1, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "SellerName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 2, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "StartDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 3, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "ExpirationDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 4, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "Description" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 5, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 6, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 7, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdatedByUserName" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AirSurchargesCostTariffsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AirSurchargesCostTariffsQuery.Id, IndexOrder = 8, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "UpdateDate" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+
+             AdvancedQueryFilter AirSurchargesCostTariffsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = TariffObjectFields.Where(d => d.FieldName == "TypeCode" && d.ObjectTableId == TariffObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "ASC",PredefinedValue2 = null, QueryId = AirSurchargesCostTariffsQuery.Id, Tenant = 0,Operator = "Equal"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
