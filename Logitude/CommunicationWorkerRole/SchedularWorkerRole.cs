@@ -39,7 +39,8 @@ namespace CommunicationWorkerRole
         }
         public override void Run()
         {
-
+            
+           
             while (IsRunning)
             {
 
@@ -62,7 +63,9 @@ namespace CommunicationWorkerRole
                                 int Version = int.Parse(message.MessageValues.ContainsKey("Version") ? message.MessageValues["Version"].ToString() : "0");
                                 if (!string.IsNullOrEmpty(Id))
                                 {
-                                    TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(Tenant);
+                                    var objectContext = WebFreightContext.GetContext(Tenant);
+                                    TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
+                                    TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
                                     TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
                                     TasksSchedulerPM Task = TasksSchedulerQuery.GetSingleTasksSchedulerPM(Id);
 
@@ -84,11 +87,14 @@ namespace CommunicationWorkerRole
 
                                             object[] ArrArgs = args.ToArray();
                                             var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ServiceClassName), ArrArgs) as TaskManagerBase;
+                                            Task.Status = "In progress";
                                             WRItem.Task = Task;
                                             Thread thread = new Thread(WRItem.Run);
                                             //queueservice.Complete();
+                                            //Task.Status = "In progress";
+                                            service.Update(Task);
                                             thread.Start();
-                                            AddSchedulerQueue(Task);
+                                            //AddSchedulerQueue(Task);// need to be Moved
                                         } 
                                     }
 

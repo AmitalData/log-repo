@@ -180,6 +180,11 @@ export class TasksSchedulerPM {
     public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
        
 	 
+    private status: string;
+    public get Status() { return this.status; }
+    public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
+       
+	 
     private schedulerDetailsData: any;
     public get SchedulerDetailsData() { return this.schedulerDetailsData; }
     public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }

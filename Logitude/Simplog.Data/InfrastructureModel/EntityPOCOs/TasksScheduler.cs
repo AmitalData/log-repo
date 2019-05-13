@@ -48,6 +48,9 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public int Version { get; set; }
 
+        public string Status { get; set; }
+
+
 
     }
 }
