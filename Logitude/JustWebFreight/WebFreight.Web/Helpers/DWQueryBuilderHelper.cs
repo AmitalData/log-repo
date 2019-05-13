@@ -120,6 +120,11 @@ namespace WebFreight.Web.Helpers
                                 {
                                     OperationSimpol = " = @@ ";
                                 }
+                                else if (filter.DataTypeCode == "Boolean")
+                                {
+                                    OperationSimpol = " IN (" + (filter.TextValue.ToString().ToLower() == "true" ? 1 : 0).ToString()  +")";
+                                    isHaveMultiSelect = true;
+                                }
                                 else
                                 {
 
@@ -136,14 +141,16 @@ namespace WebFreight.Web.Helpers
                                 {
                                     OperationSimpol = " <> @@ ";
                                 }
+                                else if (filter.DataTypeCode == "Boolean")
+                                {
+                                    OperationSimpol = " not IN (" + (filter.TextValue.ToString().ToLower() == "true" ? 1 : 0).ToString() + ")";
+                                    isHaveMultiSelect = true;
+                                }
                                 else
                                 {
-
                                     OperationSimpol = " not IN ( '";
                                     OperationSimpol = BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
                                     isHaveMultiSelect = true;
-
-                                    //abed
                                 }
                             }
                             else if (filter.Operation.Code == "StartsWith")

@@ -145,6 +145,11 @@ export class DWObjectFieldPM {
     public set HelpText(newValue: string) { if (this.helpText != newValue) { this.helpText = newValue; this.MarkAsDirty("HelpText"); } }
        
 	 
+    private isCustom: boolean;
+    public get IsCustom() { return this.isCustom; }
+    public set IsCustom(newValue: boolean) { if (this.isCustom != newValue) { this.isCustom = newValue; this.MarkAsDirty("IsCustom"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		
