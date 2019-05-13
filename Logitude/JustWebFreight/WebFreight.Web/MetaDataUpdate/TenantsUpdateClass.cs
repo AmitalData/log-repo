@@ -148,6 +148,7 @@ namespace WebFreight.Web.MetaDataUpdate
                       case "updatetenantzeronew":
                         {
                             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                            updateClass.LoadObjectTablesToTenantZero(context);
                             updateClass.UpgradeClosedTablesForTenantZero();
 
 							InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
