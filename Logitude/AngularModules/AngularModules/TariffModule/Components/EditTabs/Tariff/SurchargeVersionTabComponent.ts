@@ -97,14 +97,14 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
     ngOnInit() {
-        this.GetAllChargesTypes();
+       
     }
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.EntityPM = this.EntityArgs.EntityPM;
         this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.TariffDomainService = new TariffDomainService();
-        this.ChargesTypeListService = new ChargesTypeListService();
+       
         this.CurrentVersion = args['CurrentVersion'];
 
         if (this.CurrentVersion != null) {
@@ -128,6 +128,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     public AllChargesTypes: ChargesTypeList[]; 
     public GetAllChargesTypes() {
+        this.ChargesTypeListService = new ChargesTypeListService();
         this.ChargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.AllChargesTypes = myResponse.Result;
@@ -180,52 +181,52 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     SetSurchargesLabelsAndVisibility() {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
-            var chargeType = this.AllChargesTypes.filter(a => a.Id = this.EntityPM.Surcharge1Id)[0];
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge1Id)[0];
             this.Surcharge1PriceLabel = chargeType.Code;
             this.Surcharge1PriceVisibility = true;
         }
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2Id)) {
-            var chargeType = this.AllChargesTypes.filter(a => a.Id = this.EntityPM.Surcharge2Id)[0];
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge2Id)[0];
             this.Surcharge2PriceLabel = chargeType.Code;
             this.Surcharge2PriceVisibility = true;
         }
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3Id)) {
-            var chargeType = this.AllChargesTypes.filter(a => a.Id = this.EntityPM.Surcharge3Id)[0];
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge3Id)[0];
             this.Surcharge3PriceLabel = chargeType.Code;
             this.Surcharge3PriceVisibility = true;
         }
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4Id)) {
-            var chargeType = this.AllChargesTypes.filter(a => a.Id = this.EntityPM.Surcharge4Id)[0];
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge4Id)[0];
             this.Surcharge4PriceLabel = chargeType.Code;
             this.Surcharge4PriceVisibility = true;
         }
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5Id)) {
-            var chargeType = this.AllChargesTypes.filter(a => a.Id = this.EntityPM.Surcharge5Id)[0];
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge5Id)[0];
             this.Surcharge5PriceLabel = chargeType.Code;
             this.Surcharge5PriceVisibility = true;
         }
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge6Id)) {
-            var chargeType = this.AllChargesTypes.filter(a => a.Id = this.EntityPM.Surcharge6Id)[0];
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge6Id)[0];
             this.Surcharge6PriceLabel = chargeType.Code;
             this.Surcharge6PriceVisibility = true;
         }
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge7Id)) {
-            var chargeType = this.AllChargesTypes.filter(a => a.Id = this.EntityPM.Surcharge7Id)[0];
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge7Id)[0];
             this.Surcharge7PriceLabel = chargeType.Code;
             this.Surcharge7PriceVisibility = true;
         }
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge8Id)) {
-            var chargeType = this.AllChargesTypes.filter(a => a.Id = this.EntityPM.Surcharge8Id)[0];
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge8Id)[0];
             this.Surcharge8PriceLabel = chargeType.Code;
             this.Surcharge8PriceVisibility = true;
         }
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge9Id)) {
-            var chargeType = this.AllChargesTypes.filter(a => a.Id = this.EntityPM.Surcharge9Id)[0];
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge9Id)[0];
             this.Surcharge9PriceLabel = chargeType.Code;
             this.Surcharge9PriceVisibility = true;
         }
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge10Id)) {
-            var chargeType = this.AllChargesTypes.filter(a => a.Id = this.EntityPM.Surcharge10Id)[0];
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge10Id)[0];
             this.Surcharge10PriceLabel = chargeType.Code;
             this.Surcharge10PriceVisibility = true;
         }
