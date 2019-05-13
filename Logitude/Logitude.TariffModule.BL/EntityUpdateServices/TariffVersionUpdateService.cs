@@ -17,10 +17,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 if (entityParentPM != null)
                 {
                     entityParentPM.LastVersion = entityPM.Version;
-                    if(entityParentPM.TariffVersions != null && entityParentPM.TariffVersions.Count() > 0)
-                    {
-                        entityPM.ParentVersionId =  entityParentPM.TariffVersions.OrderByDescending(a => a.CreateDate).FirstOrDefault().TariffId;
-                    }
                 }
             }
         }
