@@ -165,33 +165,40 @@ namespace Logitude.Customs.BL.BL
         {
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
             //Set IsCourierMissingClassification
-            if (declarationPM.SupplierInvoices != null && declarationPM.SupplierInvoices.Count() > 0)
+            if (declarationPM.PaymentDate.HasValue)
             {
-
-                List<SupplierInvoicePM> emptyClassificationCodeList = declarationPM.SupplierInvoices.
-                    Where(SI => SI.SupplierInvoiceItems != null && SI.SupplierInvoiceItems.Any(u => string.IsNullOrWhiteSpace(u.ClassificationCode))).ToList();
-
-                if (emptyClassificationCodeList != null && emptyClassificationCodeList.Count() > 0)
+                myDeclarationCourierStatusPM.IsCourierMissingClassification = false;
+            }
+            else
+            {
+                if (declarationPM.SupplierInvoices != null && declarationPM.SupplierInvoices.Count() > 0)
                 {
-                    myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
-                }
-                else
-                {
-                    List<SupplierInvoicePM> emptyItemsList = declarationPM.SupplierInvoices.
-                    Where(SI => SI.SupplierInvoiceItems == null || SI.SupplierInvoiceItems.Count() == 0).ToList();
-                    if (emptyItemsList != null && emptyItemsList.Count() > 0)
+
+                    List<SupplierInvoicePM> emptyClassificationCodeList = declarationPM.SupplierInvoices.
+                        Where(SI => SI.SupplierInvoiceItems != null && SI.SupplierInvoiceItems.Any(u => string.IsNullOrWhiteSpace(u.ClassificationCode))).ToList();
+
+                    if (emptyClassificationCodeList != null && emptyClassificationCodeList.Count() > 0)
                     {
                         myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
                     }
                     else
                     {
-                        myDeclarationCourierStatusPM.IsCourierMissingClassification = false;
+                        List<SupplierInvoicePM> emptyItemsList = declarationPM.SupplierInvoices.
+                        Where(SI => SI.SupplierInvoiceItems == null || SI.SupplierInvoiceItems.Count() == 0).ToList();
+                        if (emptyItemsList != null && emptyItemsList.Count() > 0)
+                        {
+                            myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
+                        }
+                        else
+                        {
+                            myDeclarationCourierStatusPM.IsCourierMissingClassification = false;
+                        }
                     }
                 }
-            }
-            else
-            {
-                myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
+                else
+                {
+                    myDeclarationCourierStatusPM.IsCourierMissingClassification = true;
+                }
             }
         }
 
