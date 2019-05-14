@@ -28,6 +28,6 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool HideTree { get; set; }
         public bool CannotFilter { get; set; }
         public string HelpText { get; set; }
-
+        public bool IsCustom { get; set; }
     }
 }
