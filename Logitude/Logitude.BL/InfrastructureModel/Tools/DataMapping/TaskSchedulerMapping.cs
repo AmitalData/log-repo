@@ -45,6 +45,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.NextRunTimeUTC = TaskSchedulerPM.NextRunTimeUTC;
 
             TaskScheduler.Version = TaskSchedulerPM.Version;
+            TaskScheduler.Status = TaskSchedulerPM.Status;
+
 
 
         }

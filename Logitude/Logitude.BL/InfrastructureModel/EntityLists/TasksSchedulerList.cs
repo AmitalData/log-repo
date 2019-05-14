@@ -44,6 +44,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public DateTime? LastRunTimeUTC { get; set; }
         public DateTime? StartDateTimeUTC { get; set; }
         public int Version { get; set; }
+        public string Status { get; set; }
 
     }
 }

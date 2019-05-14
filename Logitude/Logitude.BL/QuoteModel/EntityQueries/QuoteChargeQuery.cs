@@ -19,7 +19,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         QuoteChargeRepository repository;
         public QuoteChargeQuery()
         {
-            repository = new QuoteChargeRepository(); 
+            repository = new QuoteChargeRepository();
         }
         public QuoteChargeQuery(int tenant)
         {
@@ -29,11 +29,102 @@ namespace Logitude.BL.QuoteModel.EntityQueries
         {
             repository = quoteChargeRepository;
         }
-        
+
         public QuoteChargePM GetSinglePM(string id, int tenant)
         {
             QuoteChargePM myResult = (from a in repository.context.QuoteCharges.Include("ChargesType").Include("VendorCard").Include("CostMeasurement").Include("SaleMeasurement").Include("CostCurrency").Include("Currency").Include("Quote").Include("VatType")
-                                            where a.Tenant == tenant && a.Id == id
+                                      where a.Tenant == tenant && a.Id == id
+                                      select new QuoteChargePM()
+                                      {
+                                          Id = a.Id,
+                                          ChargesTypeId = a.ChargesTypeId,
+                                          ChargesTypeCode = a.ChargesType == null ? "" : a.ChargesType.Code,
+                                          ChargesTypeName = a.ChargesType == null ? "" : a.ChargesType.EnglishName,
+                                          ChargesTypeDescription = a.ChargesType == null ? "" : a.ChargesType.Description,
+                                          ChargesTypeLocalName = a.ChargesType == null ? "" : a.ChargesType.LocalName,
+                                          ChargesGroupCode = a.ChargesType == null ? "" : a.ChargesType.ChargesGroupCode,
+                                          ViewOrder = a.ChargesType == null ? 0 : a.ChargesType.ViewOrder,
+                                          VendorId = a.VendorId,
+                                          VendorName = a.VendorCard == null ? String.Empty : a.VendorCard.EnglishName,
+                                          CostMeasurementId = a.CostMeasurementId,
+                                          CostMeasurementCode = a.CostMeasurement == null ? "" : a.CostMeasurement.Code,
+                                          CostMeasurementShortName = a.CostMeasurement == null ? "" : a.CostMeasurement.ShortName,
+                                          SaleMeasurementId = a.SaleMeasurementId,
+                                          SaleMeasurementCode = a.SaleMeasurement == null ? "" : a.SaleMeasurement.Code,
+                                          SaleMeasurementShortName = a.SaleMeasurement == null ? "" : a.SaleMeasurement.ShortName,
+                                          SaleMeasurementLocalName = a.SaleMeasurement == null ? "" : a.SaleMeasurement.LocalName,
+
+                                          CostCurrencyId = a.CostCurrencyId,
+                                          CostCurrencyCode = a.CostCurrency == null ? "" : a.CostCurrency.Code,
+                                          CostExchangeRate = a.CostExchangeRate,
+                                          CostIsFixedRate = a.CostIsFixedRate,
+                                          SaleCurrencyId = a.SaleCurrencyId,
+                                          SaleCurrencyCode = a.Currency == null ? "" : a.Currency.Code,
+                                          SaleExchangeRate = a.SaleExchangeRate,
+                                          SaleIsFixedRate = a.SaleIsFixedRate,
+                                          Notes = a.Notes,
+                                          QuoteId = a.QuoteId,
+                                          Tenant = a.Tenant,
+                                          UpdatedByUserId = a.UpdatedByUserId,
+                                          UpdateDate = a.UpdateDate,
+                                          ValueDate = a.ValueDate,
+                                          SaleContainerType1UnitPrice = a.SaleContainerType1UnitPrice,
+                                          SaleContainerType2UnitPrice = a.SaleContainerType2UnitPrice,
+                                          SaleContainerType3UnitPrice = a.SaleContainerType3UnitPrice,
+                                          SaleContainerType4UnitPrice = a.SaleContainerType4UnitPrice,
+                                          SaleContainerType5UnitPrice = a.SaleContainerType5UnitPrice,
+                                          ContainerType1MarkUpTypeCode = a.ContainerType1MarkUpTypeCode,
+                                          ContainerType2MarkUpTypeCode = a.ContainerType2MarkUpTypeCode,
+                                          ContainerType3MarkUpTypeCode = a.ContainerType3MarkUpTypeCode,
+                                          ContainerType4MarkUpTypeCode = a.ContainerType4MarkUpTypeCode,
+                                          ContainerType5MarkUpTypeCode = a.ContainerType5MarkUpTypeCode,
+                                          ContainerType1MarkUpValue = a.ContainerType1MarkUpValue,
+                                          ContainerType2MarkUpValue = a.ContainerType2MarkUpValue,
+                                          ContainerType3MarkUpValue = a.ContainerType3MarkUpValue,
+                                          ContainerType4MarkUpValue = a.ContainerType4MarkUpValue,
+                                          ContainerType5MarkUpValue = a.ContainerType5MarkUpValue,
+                                          CostContainerType1UnitPrice = a.CostContainerType1UnitPrice,
+                                          CostContainerType2UnitPrice = a.CostContainerType2UnitPrice,
+                                          CostContainerType3UnitPrice = a.CostContainerType3UnitPrice,
+                                          CostContainerType4UnitPrice = a.CostContainerType4UnitPrice,
+                                          CostContainerType5UnitPrice = a.CostContainerType5UnitPrice,
+                                          IsAllIN = a.IsAllIN,
+                                          MarkUpTypeCode = a.MarkUpTypeCode,
+                                          MarkUpValue = a.MarkUpValue,
+                                          QuoteTypeCode = a.Quote.QuoteTypeCode,
+                                          CostUnitPrice = a.CostUnitPrice,
+                                          CostQuantity = a.CostQuantity,
+                                          SaleQuantity = a.SaleQuantity,
+                                          SaleTotalAmount = a.SaleTotalAmount,
+                                          SaleTotalAmountLocal = a.SaleTotalAmountLocal,
+                                          SaleUnitPrice = a.SaleUnitPrice,
+                                          CostTotalAmount = a.CostTotalAmount,
+                                          CostTotalAmountLocal = a.CostTotalAmountLocal,
+                                          CostMaxAmount = a.CostMaxAmount,
+                                          CostMinAmount = a.CostMinAmount,
+                                          SaleMinAmount = a.SaleMinAmount,
+                                          IsChargeBySteps = a.IsChargeBySteps,
+                                          VatTypeId = a.VatTypeId,
+                                          VatPercentage = a.VatPercentage,
+                                          VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
+                                          VatIsMultiPercentage = a.VatType == null ? false : a.VatType.IsMultiPercentage,
+                                          SaleUnitPriceInSaleCurrency = a.SaleUnitPriceInSaleCurrency,
+                                          SaleUnitPrice1InSaleCurrency = a.SaleUnitPrice1InSaleCurrency,
+                                          SaleUnitPrice2InSaleCurrency = a.SaleUnitPrice2InSaleCurrency,
+                                          SaleUnitPrice3InSaleCurrency = a.SaleUnitPrice3InSaleCurrency,
+                                          SaleUnitPrice4InSaleCurrency = a.SaleUnitPrice4InSaleCurrency,
+                                          SaleUnitPrice5InSaleCurrency = a.SaleUnitPrice5InSaleCurrency,
+                                          SaleAmountInSaleCurrency = a.SaleAmountInSaleCurrency,
+                                          SaleMaxAmount = a.SaleMaxAmount,
+                                      }).FirstOrDefault();
+
+            return myResult;
+        }
+
+        public List<QuoteChargePM> GetQuoteChargesPMsByQuoteId(string id, int tenant)
+        {
+            List<QuoteChargePM> myResult = (from a in repository.context.QuoteCharges.Include("ChargesType").Include("VendorCard").Include("CostMeasurement").Include("SaleMeasurement").Include("CostCurrency").Include("Currency").Include("Quote").Include("VatType")
+                                            where a.Tenant == tenant && a.QuoteId == id
                                             select new QuoteChargePM()
                                             {
                                                 Id = a.Id,
@@ -53,7 +144,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 SaleMeasurementCode = a.SaleMeasurement == null ? "" : a.SaleMeasurement.Code,
                                                 SaleMeasurementShortName = a.SaleMeasurement == null ? "" : a.SaleMeasurement.ShortName,
                                                 SaleMeasurementLocalName = a.SaleMeasurement == null ? "" : a.SaleMeasurement.LocalName,
-
                                                 CostCurrencyId = a.CostCurrencyId,
                                                 CostCurrencyCode = a.CostCurrency == null ? "" : a.CostCurrency.Code,
                                                 CostExchangeRate = a.CostExchangeRate,
@@ -116,97 +206,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 SaleUnitPrice5InSaleCurrency = a.SaleUnitPrice5InSaleCurrency,
                                                 SaleAmountInSaleCurrency = a.SaleAmountInSaleCurrency,
                                                 SaleMaxAmount = a.SaleMaxAmount,
-                                            }).FirstOrDefault();
 
-            return myResult;
-        }
 
-        public List<QuoteChargePM> GetQuoteChargesPMsByQuoteId(string id, int tenant)
-        {
-            List<QuoteChargePM> myResult = (from a in repository.context.QuoteCharges.Include("ChargesType").Include("VendorCard").Include("CostMeasurement").Include("SaleMeasurement").Include("CostCurrency").Include("Currency").Include("Quote").Include("VatType")
-                                          where a.Tenant == tenant && a.QuoteId == id
-                                          select new QuoteChargePM()
-                                          {
-                                              Id = a.Id,
-                                              ChargesTypeId = a.ChargesTypeId,
-                                              ChargesTypeCode = a.ChargesType == null ? "" : a.ChargesType.Code,
-                                              ChargesTypeName = a.ChargesType == null ? "" : a.ChargesType.EnglishName,
-                                              ChargesTypeDescription = a.ChargesType == null ? "" : a.ChargesType.Description,
-                                              ChargesTypeLocalName = a.ChargesType == null ? "" : a.ChargesType.LocalName,
-                                              ChargesGroupCode = a.ChargesType == null ? "" : a.ChargesType.ChargesGroupCode,
-                                              ViewOrder = a.ChargesType == null ? 0 : a.ChargesType.ViewOrder,
-                                              VendorId = a.VendorId,
-                                              VendorName = a.VendorCard == null ? String.Empty : a.VendorCard.EnglishName,
-                                              CostMeasurementId = a.CostMeasurementId,
-                                              CostMeasurementCode = a.CostMeasurement == null ? "" : a.CostMeasurement.Code,
-                                              CostMeasurementShortName = a.CostMeasurement == null ? "" : a.CostMeasurement.ShortName,
-                                              SaleMeasurementId = a.SaleMeasurementId,
-                                              SaleMeasurementCode = a.SaleMeasurement == null ? "" : a.SaleMeasurement.Code,
-                                              SaleMeasurementShortName = a.SaleMeasurement == null ? "" : a.SaleMeasurement.ShortName,
-                                              SaleMeasurementLocalName = a.SaleMeasurement == null ? "" : a.SaleMeasurement.LocalName,
-                                              CostCurrencyId = a.CostCurrencyId,
-                                              CostCurrencyCode = a.CostCurrency == null ? "" : a.CostCurrency.Code,
-                                              CostExchangeRate = a.CostExchangeRate,
-                                              CostIsFixedRate = a.CostIsFixedRate,
-                                              SaleCurrencyId = a.SaleCurrencyId,
-                                              SaleCurrencyCode = a.Currency == null ? "" : a.Currency.Code,
-                                              SaleExchangeRate = a.SaleExchangeRate,
-                                              SaleIsFixedRate = a.SaleIsFixedRate,
-                                              Notes = a.Notes,
-                                              QuoteId = a.QuoteId,
-                                              Tenant = a.Tenant,
-                                              UpdatedByUserId = a.UpdatedByUserId,
-                                              UpdateDate = a.UpdateDate,
-                                              ValueDate = a.ValueDate,
-                                              SaleContainerType1UnitPrice = a.SaleContainerType1UnitPrice,
-                                              SaleContainerType2UnitPrice = a.SaleContainerType2UnitPrice,
-                                              SaleContainerType3UnitPrice = a.SaleContainerType3UnitPrice,
-                                              SaleContainerType4UnitPrice = a.SaleContainerType4UnitPrice,
-                                              SaleContainerType5UnitPrice = a.SaleContainerType5UnitPrice,
-                                              ContainerType1MarkUpTypeCode = a.ContainerType1MarkUpTypeCode,
-                                              ContainerType2MarkUpTypeCode = a.ContainerType2MarkUpTypeCode,
-                                              ContainerType3MarkUpTypeCode = a.ContainerType3MarkUpTypeCode,
-                                              ContainerType4MarkUpTypeCode = a.ContainerType4MarkUpTypeCode,
-                                              ContainerType5MarkUpTypeCode = a.ContainerType5MarkUpTypeCode,
-                                              ContainerType1MarkUpValue = a.ContainerType1MarkUpValue,
-                                              ContainerType2MarkUpValue = a.ContainerType2MarkUpValue,
-                                              ContainerType3MarkUpValue = a.ContainerType3MarkUpValue,
-                                              ContainerType4MarkUpValue = a.ContainerType4MarkUpValue,
-                                              ContainerType5MarkUpValue = a.ContainerType5MarkUpValue,
-                                              CostContainerType1UnitPrice = a.CostContainerType1UnitPrice,
-                                              CostContainerType2UnitPrice = a.CostContainerType2UnitPrice,
-                                              CostContainerType3UnitPrice = a.CostContainerType3UnitPrice,
-                                              CostContainerType4UnitPrice = a.CostContainerType4UnitPrice,
-                                              CostContainerType5UnitPrice = a.CostContainerType5UnitPrice,
-                                              IsAllIN = a.IsAllIN,
-                                              MarkUpTypeCode = a.MarkUpTypeCode,
-                                              MarkUpValue = a.MarkUpValue,
-                                              QuoteTypeCode = a.Quote.QuoteTypeCode,
-                                              CostUnitPrice = a.CostUnitPrice,
-                                              CostQuantity = a.CostQuantity,
-                                              SaleQuantity = a.SaleQuantity,
-                                              SaleTotalAmount = a.SaleTotalAmount,
-                                              SaleTotalAmountLocal = a.SaleTotalAmountLocal,
-                                              SaleUnitPrice = a.SaleUnitPrice,
-                                              CostTotalAmount = a.CostTotalAmount,
-                                              CostTotalAmountLocal = a.CostTotalAmountLocal,
-                                              CostMaxAmount = a.CostMaxAmount,
-                                              CostMinAmount = a.CostMinAmount,
-                                              SaleMinAmount = a.SaleMinAmount,
-                                              IsChargeBySteps = a.IsChargeBySteps,
-                                              VatTypeId = a.VatTypeId,
-                                              VatPercentage = a.VatPercentage,
-                                              VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
-                                              VatIsMultiPercentage = a.VatType == null ? false : a.VatType.IsMultiPercentage,
-                                              SaleUnitPriceInSaleCurrency = a.SaleUnitPriceInSaleCurrency,
-                                              SaleUnitPrice1InSaleCurrency = a.SaleUnitPrice1InSaleCurrency,
-                                              SaleUnitPrice2InSaleCurrency = a.SaleUnitPrice2InSaleCurrency,
-                                              SaleUnitPrice3InSaleCurrency = a.SaleUnitPrice3InSaleCurrency,
-                                              SaleUnitPrice4InSaleCurrency = a.SaleUnitPrice4InSaleCurrency,
-                                              SaleUnitPrice5InSaleCurrency = a.SaleUnitPrice5InSaleCurrency,
-                                              SaleAmountInSaleCurrency = a.SaleAmountInSaleCurrency,
-                                              SaleMaxAmount = a.SaleMaxAmount,
-                                          }).ToList();
+                                            }).ToList();
 
             QuotePriceStepsRepository quotePriceStepsRepository = new QuotePriceStepsRepository(this.repository.context);
             QuotePriceStepsQuery quotePriceStepsQuery = new QuotePriceStepsQuery(quotePriceStepsRepository);
@@ -272,9 +274,36 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                     quoteChargePM.CostAmountInSaleCurrency = MethodHelper.Round(costAmountInSaleCurrency, 3);
                 }
                 #endregion
+
+                quoteChargePM.MarkUpText = this.GetMarkUpText(quoteChargePM.MarkUpValue, quoteChargePM.MarkUpTypeCode);
+                quoteChargePM.ContainerType1MarkUpText = this.GetMarkUpText(quoteChargePM.ContainerType1MarkUpValue, quoteChargePM.ContainerType1MarkUpTypeCode);
+                quoteChargePM.ContainerType2MarkUpText = this.GetMarkUpText(quoteChargePM.ContainerType2MarkUpValue, quoteChargePM.ContainerType2MarkUpTypeCode);
+                quoteChargePM.ContainerType3MarkUpText = this.GetMarkUpText(quoteChargePM.ContainerType3MarkUpValue, quoteChargePM.ContainerType3MarkUpTypeCode);
+                quoteChargePM.ContainerType4MarkUpText = this.GetMarkUpText(quoteChargePM.ContainerType4MarkUpValue, quoteChargePM.ContainerType4MarkUpTypeCode);
+                quoteChargePM.ContainerType5MarkUpText = this.GetMarkUpText(quoteChargePM.ContainerType5MarkUpValue, quoteChargePM.ContainerType5MarkUpTypeCode);
             }
-         
+
             return myResult.OrderBy(d => d.ViewOrder).ThenBy(d => d.ChargesTypeCode).ToList();
+        }
+
+        private string GetMarkUpText(double? value, string typeCode)
+        {
+            string myResult = null;
+
+            if (value != null)
+            {
+                if (value != 0)
+                {
+                    myResult = value.ToString();
+
+                    if (typeCode == "P")
+                    {
+                        myResult += " %";
+                    }
+                }
+            }
+
+            return myResult;
         }
 
     }

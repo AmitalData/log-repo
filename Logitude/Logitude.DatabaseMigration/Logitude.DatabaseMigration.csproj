@@ -993,6 +993,10 @@
     <Compile Include="Migrations\201905121459016_AddParentVersionIdToTariffVersion_Maheera.Designer.cs">
       <DependentUpon>201905121459016_AddParentVersionIdToTariffVersion_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.cs" />
+    <Compile Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.Designer.cs">
+      <DependentUpon>201905130634391_AbedAddFieldIsCustomToDWObjectField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201905130719046_AddErrorFieldsToTariffLine_Samar.cs" />
     <Compile Include="Migrations\201905130719046_AddErrorFieldsToTariffLine_Samar.Designer.cs">
       <DependentUpon>201905130719046_AddErrorFieldsToTariffLine_Samar.cs</DependentUpon>
@@ -1012,6 +1016,14 @@
     <Compile Include="Migrations\201905130635577_ChangeParentVersionTypeInTariffVersionTable_Maheera.cs" />
     <Compile Include="Migrations\201905130635577_ChangeParentVersionTypeInTariffVersionTable_Maheera.Designer.cs">
       <DependentUpon>201905130635577_ChangeParentVersionTypeInTariffVersionTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905130825314_AddStatusToSchedulerTable_Rabaia.cs" />
+    <Compile Include="Migrations\201905130825314_AddStatusToSchedulerTable_Rabaia.Designer.cs">
+      <DependentUpon>201905130825314_AddStatusToSchedulerTable_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905130832117_FixSchedulerNewFields_Rabaia.cs" />
+    <Compile Include="Migrations\201905130832117_FixSchedulerNewFields_Rabaia.Designer.cs">
+      <DependentUpon>201905130832117_FixSchedulerNewFields_Rabaia.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -1706,6 +1718,9 @@
     <EmbeddedResource Include="Migrations\201905121459016_AddParentVersionIdToTariffVersion_Maheera.resx">
       <DependentUpon>201905121459016_AddParentVersionIdToTariffVersion_Maheera.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.resx">
+      <DependentUpon>201905130634391_AbedAddFieldIsCustomToDWObjectField.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905130635577_ChangeParentVersionTypeInTariffVersionTable_Maheera.resx">
       <DependentUpon>201905130635577_ChangeParentVersionTypeInTariffVersionTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
@@ -1714,6 +1729,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905130719046_AddErrorFieldsToTariffLine_Samar.resx">
       <DependentUpon>201905130719046_AddErrorFieldsToTariffLine_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905130825314_AddStatusToSchedulerTable_Rabaia.resx">
+      <DependentUpon>201905130825314_AddStatusToSchedulerTable_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905130832117_FixSchedulerNewFields_Rabaia.resx">
+      <DependentUpon>201905130832117_FixSchedulerNewFields_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

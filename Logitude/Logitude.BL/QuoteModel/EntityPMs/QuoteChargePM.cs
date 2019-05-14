@@ -154,6 +154,13 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public bool IsBackToBack { get; set; }
 
+        public string MarkUpText { get; set; }
+        public string ContainerType1MarkUpText { get; set; }
+        public string ContainerType2MarkUpText { get; set; }
+        public string ContainerType3MarkUpText { get; set; }
+        public string ContainerType4MarkUpText { get; set; }
+        public string ContainerType5MarkUpText { get; set; }
+
         public ChangeSetOperation ChangeSetOp { get; set; }
 
         private List<QuotePriceStepsPM> quoteChargePriceSteps;
