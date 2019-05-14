@@ -1,13 +1,4 @@
-﻿using Logitude.BL.DataContracts;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.Repositories;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +6,10 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
 using WebFreight.Web.Helpers;
-using WebFreight.Web.Helpers.APIHelpers;
-using WebFreight.Web.InfrastructureModel.DomainServices;
 using WebFreight.Web.Security;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code
+namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class CurrencyRatesController : ApiController
     {
@@ -142,6 +130,32 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage Post(AccountingCurrencyHelper args)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+
+                    this.GetTranslationsByParam(tenant, args);
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, args);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetInsertListOfRatesTable(List<LastRate> ratesTables)
         {
             try
@@ -165,6 +179,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         entityPM.Rate = item.Rate;
                         domain.InsertRatesTable(entityPM);
                     }
+
+                    //domain.Submit();
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, "OK");
@@ -175,5 +191,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+    }
+    public class AccountingCurrencyHelper
+    {
+        public TenantPM TenantPM { get; set; }
+        public List<LastRate> ExchangeRates { get; set; }
     }
 }

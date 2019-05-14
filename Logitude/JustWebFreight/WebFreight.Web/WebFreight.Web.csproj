@@ -3392,7 +3392,7 @@
     <Content Include="App_Code\AngularJS_App_Code\MyValuesController.cs" />
     <Content Include="App_Code\ImporterShipmentsCancleController.cs" />
     <Content Include="App_Code\ImporterShipmentDocumentsCancleController.cs" />
-    <Content Include="App_Code\AngularJS_App_Code\CurrencyRatesController.cs" />
+    <Content Include="Controllers\WebDomainControllers\CurrencyRatesController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Shipment\ShipmentViewsController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentExtendedController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCustomFieldController.cs" />

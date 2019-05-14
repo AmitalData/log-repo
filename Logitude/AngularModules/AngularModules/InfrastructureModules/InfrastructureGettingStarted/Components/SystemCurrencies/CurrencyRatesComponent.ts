@@ -16,74 +16,67 @@ import {RatesTablePMService} from '../../../../Infrastructure/Services/StandardP
 })
 
 export class CurrencyRatesComponent extends BaseComponent{
-
-    public DataContext: CurrencyRatesComponent = this;
-    public ObjectTableName: string = "Tenant";
+    public DataContext = this;
     public TenantPM: TenantPM;
+    public ObjectTableName: string = "Tenant";
     public ItemsSource: CurrencyRatesModelData[] = [];
+    public CurrencyFieldIsEnabled: boolean = true;
+    public RatesListVisibility: boolean = false;
+    public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        this.TenantPM = SessionLocator.TenantPM;
-        //this.BuildRatesList();
+
     }
 
     SetWindowArgs(args: any) {
-        this.CurrencyFieldIsEnabled = args["CurrencyFieldIsEnabled"];
-        this.currencyId = args["CurrencyId"];
-        this.UIProperties.SetEnabled("CurrencyId", "Tenant", this.CurrencyFieldIsEnabled);
+
+        this.TenantPM = args["EntityPM"];
+
+        var entitiesCount: number = args["ShipmentsQuotesCount"];
+        if (entitiesCount > 0) {
+            this.CurrencyFieldIsEnabled = false;
+            this.UIProperties.SetEnabled("CurrencyId", "Tenant", this.CurrencyFieldIsEnabled);
+        }
     }
 
-    public CurrencyFieldIsEnabled: boolean = false;
-
-    BuildRatesList() {
-        var list: LastRate[] = new Array<LastRate>();
-        var myService: CurrencyRatesService = new CurrencyRatesService();
-        this.ItemsSource = [];
-        var date: Date = DateTool.GetCurrentDateAsUtc();
-        myService.GetRatesByValueDate(this.TenantPM.CurrencyId, date).subscribe(resp => {
-            var result: ServiceResponse = resp;
-            if (!result.HasError) {
-                result.Result.forEach(item => {
-                    var itemData: CurrencyRatesModelData = new CurrencyRatesModelData(item, this.CurrencyFieldIsEnabled);
-                    this.ItemsSource.push(itemData);
-                });
-            }
-            else {
-                var errors = result.ErrorsArray;
-            }
-        });
-    }
-
-    // Props
-    private currencyId: string = null;
-    get CurrencyId() {
-        return this.currencyId;
-    }
+    get CurrencyId() { return this.TenantPM.CurrencyId; }
     set CurrencyId(value: string) {
-        if (this.currencyId != value) {
-            this.currencyId = value;
+        if (this.TenantPM.CurrencyId != value) {
+            this.TenantPM.CurrencyId = value;
             this.RatesListVisibility = true;
             this.BuildRatesList();
         }
     }
 
-    private ratesListVisibility: boolean = false;
-    get RatesListVisibility() {
-        return this.ratesListVisibility;
-    }
-    set RatesListVisibility(value: boolean) {
-        if (this.ratesListVisibility != value) {
-            this.ratesListVisibility = value;
-        }
+    BuildRatesList() {
+
+        var myService: CurrencyRatesService = new CurrencyRatesService();
+
+        myService.GetRatesByValueDate(this.TenantPM.CurrencyId, DateTool.GetCurrentDateAsUtc()).subscribe((myResponse: ServiceResponse) => {
+
+            this.ItemsSource = [];
+
+            if (myResponse.HasError) {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+            }
+
+            else {
+                myResponse.Result.forEach(item => {
+                    this.ItemsSource.push(new CurrencyRatesModelData(item, this.CurrencyFieldIsEnabled));
+                });
+            }            
+        });
     }
 
-    //Commands
+
+
+
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    public ValidationErrorsList: string[];
     public list: RatesTablePM[] = [];
 
     OkButtonClicked() {
@@ -161,32 +154,21 @@ export class CurrencyRatesComponent extends BaseComponent{
 }
 
 export class CurrencyRatesModelData extends BaseComponent {
-
-    public RatesTablePM: RatesTablePM = new RatesTablePM();
-
-
+    public RatesTablePM: RatesTablePM;
     constructor(entityPM: RatesTablePM, RateIsEnabled: boolean) {
         super();
         this.RatesTablePM = entityPM;
         this.UIProperties.SetEnabled("Rate", "RatesTable", RateIsEnabled);
     }
 
-    // Props
-    get ForeignCurrencyId() {
-        return this.RatesTablePM.ForeignCurrencyId;
-    }
+    get ForeignCurrencyId() { return this.RatesTablePM.ForeignCurrencyId; }
+    get Code() { return this.RatesTablePM.ForeignCurrencyCode; }
+    get ValueDate() { return this.RatesTablePM.ValueDate; }
 
-    get Code() {
-        return this.RatesTablePM.ForeignCurrencyCode;
-    }
-    get ValueDate() {
-        return this.RatesTablePM.ValueDate;
-    }
-
-    get Rate() {
-        return this.RatesTablePM.Rate;
-    }
+    get Rate() { return this.RatesTablePM.Rate; }
     set Rate(value: number) {
-        this.RatesTablePM.Rate = value;
+        if (this.RatesTablePM.Rate != value) {
+            this.RatesTablePM.Rate = value;
+        }
     }
 }
