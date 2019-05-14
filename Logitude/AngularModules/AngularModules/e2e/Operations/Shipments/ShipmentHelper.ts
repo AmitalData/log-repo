@@ -10,7 +10,7 @@ export class ShipmentHelper {
 
   }
 
-  SelectDicrctionTransportMode(LogitudeShipType: string, Direction: string, TransportMode: string, ShipmentType: string) {
+  SelectDicrctionTransportMode( Direction: string, TransportMode: string, ShipmentType: string) {
     var directionBtn: any;
     var transportModeBtn: any;
     var shipmentTypeBtn: any;

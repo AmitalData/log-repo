@@ -1,4 +1,4 @@
-﻿import {AccountingSettingListService} from './Services/StandardLists/AccountingSettingListService';
+import {AccountingSettingListService} from './Services/StandardLists/AccountingSettingListService';
 import {AccountingSystemListService} from './Services/StandardLists/AccountingSystemListService';
 import {CustomsInterfaceSettingListService} from './Services/StandardLists/CustomsInterfaceSettingListService';
 import {CustomsInterfaceListService} from './Services/StandardLists/CustomsInterfaceListService';
@@ -151,7 +151,7 @@ import {HybridPartnerPMService} from './Services/StandardPMs/HybridPartnerPMServ
 import {IncotermPMService} from './Services/StandardPMs/IncotermPMService';
 import {IndustryPMService} from './Services/StandardPMs/IndustryPMService';
 import {LeadSourcePMService} from './Services/StandardPMs/LeadSourcePMService';
-//import {LogitudeMessagesTransmissionLogPMService} from './Services/StandardPMs/LogitudeMessagesTransmissionLogPMService';
+import {LogitudeMessagesTransmissionLogPMService} from './Services/StandardPMs/LogitudeMessagesTransmissionLogPMService';
 import {MAWBStackPMService} from './Services/StandardPMs/MAWBStackPMService';
 import {MeasurementPMService} from './Services/StandardPMs/MeasurementPMService';
 //import {PackageConnectedPackagePMService} from './Services/StandardPMs/PackageConnectedPackagePMService';
@@ -203,6 +203,8 @@ import {ContactMenuButtonsHandler} from './Components/MenuButtons/ContactMenuBut
 import {DocumentsFilingExtendedPMService} from './Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 
 import {PaymentTermDateTypeListService} from './Services/StandardLists/PaymentTermDateTypeListService';
+import { NumberFormatListService } from './Services/StandardLists/NumberFormatListService';
+
 
 
 // Extended Lists
@@ -383,7 +385,7 @@ export class ModuleProviders {
             case "IncotermPMService": { myResult = new IncotermPMService(); break; }
             case "IndustryPMService": { myResult = new IndustryPMService(); break; }
             case "LeadSourcePMService": { myResult = new LeadSourcePMService(); break; }
-            //case "LogitudeMessagesTransmissionLogPMService": { myResult = new LogitudeMessagesTransmissionLogPMService(); break; }
+            case "LogitudeMessagesTransmissionLogPMService": { myResult = new LogitudeMessagesTransmissionLogPMService(); break; }
             case "MAWBStackPMService": { myResult = new MAWBStackPMService(); break; }
             case "MeasurementPMService": { myResult = new MeasurementPMService(); break; }
             //case "PackageConnectedPackagePMService": { myResult = new PackageConnectedPackagePMService(); break; }
@@ -471,7 +473,10 @@ export class ModuleProviders {
 
     
             case "ReportsTemplatesVersionPMService": { myResult = new ReportsTemplatesVersionPMService(); break; }//                
-            case "TemperatureUnitListService": { myResult = new TemperatureUnitListService(); break; }//                                
+            case "TemperatureUnitListService": { myResult = new TemperatureUnitListService(); break; }//
+            case "NumberFormatListService": { myResult = new NumberFormatListService(); break; }
+
+                
         }
 
         return myResult;

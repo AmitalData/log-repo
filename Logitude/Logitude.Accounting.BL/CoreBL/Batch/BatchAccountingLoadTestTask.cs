@@ -49,7 +49,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                         break;
                     case "CreateCustomers":///, Name: "Create Suppliers " });
                         {
-                            dummyTenantProviderArg.CreateVendors = parameterArgs.Amount;
+                            dummyTenantProviderArg.CreateCustomers = parameterArgs.Amount;
                             g.Amount2addMore = true;
                             g.GenrateGLAccount(dummyTenantProviderArg, accountingContext, chartOfAccountProvider, displayNumberProvider, null, parameterArgs.Tenant);
                         }
@@ -66,6 +66,10 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                         {
                             while (true)
                             {
+                                //string logStatus = "";
+                                //this.ChangeStatus("I", null, logStatus);
+                                //Action<string> action = new Action<string>(log=>)
+                                    
                                 Thread.Sleep(TimeSpan.FromMinutes(parameterArgs.SleepEveryMinute));
                                 g = new DummyTenantProvider();
                                 g.GenrateJournals(parameterArgs.Amount, accountingContext, parameterArgs.JournalYYYY, parameterArgs.Tenant);
@@ -82,7 +86,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             catch (Exception ex)
             {
 
-
+                LogitudeSettings.HandleLogMe(ex.ToString(), true, "AccLoadTest", new DateTime(2019, 5, 1));
                 throw;
 
             }

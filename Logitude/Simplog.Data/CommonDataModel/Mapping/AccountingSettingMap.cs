@@ -33,7 +33,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AllowManualInvoiceNumber).HasColumnName("AllowManualInvoiceNumber");
             this.Property(t => t.IsVatNumberMandatoryInAR).HasColumnName("IsVatNumberMandatoryInAR");
             this.Property(t => t.IsVatNumberMandatoryInAP).HasColumnName("IsVatNumberMandatoryInAP");
-            this.Property(t => t.IsChronologicalDates).HasColumnName("IsChronologicalDates");
+            this.Property(t => t.IsARInvoiceChronologicalDates).HasColumnName("IsARInvoiceChronologicalDates");
+            this.Property(t => t.IsARPaymentChronologicalDates).HasColumnName("IsARPaymentChronologicalDates");
             this.Property(t => t.ReceivableVATableTempCard).HasColumnName("ReceivableVATableTempCard");
             this.Property(t => t.ReceivableVATExemptTempCard).HasColumnName("ReceivableVATExemptTempCard");
             this.Property(t => t.PayableVATableTempCard).HasColumnName("PayableVATableTempCard");
@@ -64,7 +65,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsAPPaymentsTransferEnabled).HasColumnName("IsAPPaymentsTransferEnabled");
             this.Property(t => t.EnableNegativeOffsetARPayments).HasColumnName("EnableNegativeOffsetARPayments");
             this.Property(t => t.EnableNegativeOffsetAPPayments).HasColumnName("EnableNegativeOffsetAPPayments");
-
+            this.Property(t => t.EnableInvoiceStocksManagement).HasColumnName("EnableInvoiceStocksManagement");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

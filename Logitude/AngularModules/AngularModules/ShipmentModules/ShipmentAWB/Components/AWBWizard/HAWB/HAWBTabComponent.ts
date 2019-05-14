@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool, ArrayTool} from '../../../../../Infrastructure/Tools';
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -28,6 +28,7 @@ export class HAWBTabComponent implements OnDestroy {
     public ItemsSource1Hidden: boolean = false;
     public ItemsSource2Hidden: boolean = false;
     public IsEditingEnabled: boolean = true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
                
     }
@@ -64,7 +65,7 @@ export class HAWBTabComponent implements OnDestroy {
     private myService: ShipmentListService;
     private LoadAllHouses() {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             if (this.myService == null) {
                 this.myService = new ShipmentListService();
@@ -205,7 +206,7 @@ export class HAWBTabComponent implements OnDestroy {
                 }
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -244,7 +245,7 @@ export class HAWBTabComponent implements OnDestroy {
     }
 
     RunNewShipment() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
 
         var windowTitle = "House AWB Wizard";
 
@@ -278,8 +279,10 @@ export class HAWBTabComponent implements OnDestroy {
         if (this.Wizard != null) {
             this.Wizard.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
+                    this.EntityPM = this.Wizard.EntityPM;
 
                     if (this.isNewEntityRequested) {
+                        this.isNewEntityRequested = false;
                         this.RunNewShipment();
                     }
 
@@ -288,22 +291,33 @@ export class HAWBTabComponent implements OnDestroy {
                     }
                 }
 
-                this.isNewEntityRequested = false;
+                this.StopListenFlags();
             });
 
             this.Wizard.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.Wizard.EntityPM;
 
+                    if (this.isNewEntityRequested) {
+                        this.isNewEntityRequested = false;
+                        this.RunNewShipment();
+                    }
+
                     if (this.isReloadRequested) {
-                        this.LoadAllHouses();
                         this.isReloadRequested = false;
+                        this.LoadAllHouses();
                     }
                 }
+
+                this.StopListenFlags();
             });
         }
     }
 
+    private StopListenFlags() {
+        this.isReloadRequested = false;
+        this.isNewEntityRequested = false;
+    }
     private ReloadEntity() {
         this.isReloadRequested = true;
         this.Wizard.ReloadEntity();

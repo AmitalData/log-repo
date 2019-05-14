@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class InboundEmailUpdateClass
@@ -172,7 +176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "EntityId",
-					  						DefaultText =  @"Entity",
+					  						DefaultText =  "Entity",
 					  						HelpTextCode =  "EntityId",
 					  						Code =  "EntityId",
 					  						DependencyFilter3IsList =  false,
@@ -230,7 +234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "Uniquekey",
-					  						DefaultText =  @"Unique key",
+					  						DefaultText =  "Unique key",
 					  						HelpTextCode =  "Uniquekey",
 					  						Code =  "Uniquekey",
 					  						DependencyFilter3IsList =  false,
@@ -289,9 +293,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "CreateDate",
-					  						DefaultText =  @"Create Date",
+					  						DefaultText =  "Create Date",
 					  						ListFieldLable =  "CreateDateLabel",
-					  						ListLableDefaultText =  @"Create Date",
+					  						ListLableDefaultText =  "Create Date",
 					  						HelpTextCode =  "CreateDate",
 					  						Code =  "CreateDate",
 					  						DependencyFilter3IsList =  false,
@@ -350,9 +354,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "UpdateDate",
-					  						DefaultText =  @"Update Date",
+					  						DefaultText =  "Update Date",
 					  						ListFieldLable =  "UpdateDateLabel",
-					  						ListLableDefaultText =  @"Update Date",
+					  						ListLableDefaultText =  "Update Date",
 					  						HelpTextCode =  "UpdateDate",
 					  						Code =  "UpdateDate",
 					  						DependencyFilter3IsList =  false,
@@ -411,7 +415,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ObjectTableId",
-					  						DefaultText =  @"Object Table",
+					  						DefaultText =  "Object Table",
 					  						HelpTextCode =  "ObjectTableId",
 					  						Code =  "ObjectTableId",
 					  						DependencyFilter3IsList =  false,
@@ -470,7 +474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "CreatedByContactId",
-					  						DefaultText =  @"Created by",
+					  						DefaultText =  "Created by",
 					  						HelpTextCode =  "CreatedByContactId",
 					  						Code =  "CreatedByContactId",
 					  						DependencyFilter3IsList =  false,
@@ -528,9 +532,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ObjectTableName",
-					  						DefaultText =  @"Object Table Name",
+					  						DefaultText =  "Object Table Name",
 					  						ListFieldLable =  "ObjectTableNameListLabel",
-					  						ListLableDefaultText =  @"ObjectTableName",
+					  						ListLableDefaultText =  "ObjectTableName",
 					  						HelpTextCode =  "ObjectTableName",
 					  						Code =  "ObjectTableName",
 					  						DependencyFilter3IsList =  false,
@@ -596,6 +600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable InboundEmailObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InboundEmail" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature InboundEmailFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = InboundEmailObjectTable.Id, Tenant = 0, NameTextCodeCode = "InboundEmail.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature InboundEmailFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = InboundEmailObjectTable.Id, Tenant = 0, NameTextCodeCode = "InboundEmail.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature InboundEmailFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = InboundEmailObjectTable.Id, Tenant = 0, NameTextCodeCode = "InboundEmail.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

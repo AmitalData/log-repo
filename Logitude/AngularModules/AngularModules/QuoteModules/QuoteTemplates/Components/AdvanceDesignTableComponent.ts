@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -18,7 +18,7 @@ export class AdvanceDesignTableComponent extends BaseComponent implements OnInit
     quoteTemplateSettingPMService: QuoteTemplateSettingPMService; 
     QuoteTemplateSettingPM: QuoteTemplateSettingPM;  
     public ValidationErrorsList: string[];    
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();     
@@ -94,21 +94,21 @@ export class AdvanceDesignTableComponent extends BaseComponent implements OnInit
         }
 
         if (this.QuoteTemplateSettingPM.IsDirty) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
             this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.QuoteTemplateSettingPM.IsDirty = false;
-                SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+                this.CurrentSession.CurrentWindow.Close("Refresh");
             });
         }
 
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }      
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 

@@ -164,11 +164,6 @@ namespace WebFreight.Web.DataProviders
                 {
                     resultAddress = resultAddress + Environment.NewLine + (address.PhoneNumber != null ? "Tel: " + address.PhoneNumber + " " : "") + (address.FaxNumber != null ? "Fax: " + address.FaxNumber + " " : "");
                 }
-                
-                if (address.State != null)
-                {
-                    resultAddress = resultAddress + ", " + address.State.Code;                    
-                }
             }
 
             return resultAddress;

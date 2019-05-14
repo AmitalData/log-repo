@@ -710,9 +710,16 @@ private void WriteAddQueryFilterMethod(XElement entity,XElement Column,int index
 	   var Code = Column.Attributes().Where(a => a.Name == "QueryCode").FirstOrDefault().Value;
 	   var PredefinedValue = Column.Attributes().Where(a => a.Name == "PredefinedValue").FirstOrDefault().Value;
 	   var ObjectFieldName = Column.Attributes().Where(a => a.Name == "ObjectFieldName").FirstOrDefault().Value; 
+       var OperatorAttr = Column.Attributes().Where(a => a.Name == "Operator").FirstOrDefault();
+       string Operator = "";
+	    
+       if(OperatorAttr != null)
+	   {
+			Operator = OperatorAttr.Value;
+	   }
 #>
 
-             AdvancedQueryFilter <#= Code.Trim(new char[]{' ','"'}).Replace(" ","") #>QueryFilter_<#= index #> = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = <#= TblName.Trim('"') #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #> && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id, PredefinedValue = <#= PredefinedValue #>, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","") #>Query.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter <#= Code.Trim(new char[]{' ','"'}).Replace(" ","") #>QueryFilter_<#= index #> = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = <#= TblName.Trim('"') #>ObjectFields.Where(d => d.FieldName == <#= ObjectFieldName #> && d.ObjectTableId == <#= TblName.Trim('"') #>ObjectTable.Id).FirstOrDefault().Id, PredefinedValue = <#= PredefinedValue #>, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","") #>Query.Id, Tenant = 0<#= !string.IsNullOrEmpty(Operator) ?",Operator = " + Operator : ""  #>}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 <#+
 }

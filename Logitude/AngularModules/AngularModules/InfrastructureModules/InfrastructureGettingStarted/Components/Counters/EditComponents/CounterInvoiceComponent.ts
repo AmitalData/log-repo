@@ -30,6 +30,7 @@ export class CounterInvoiceComponent extends BaseComponent {
     public SameRadioButtonLabel: string;
     public DiffRadioButtonLabel: string;
     public ItemsSource: CounterInvoiceDefinitionItem[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -50,7 +51,7 @@ export class CounterInvoiceComponent extends BaseComponent {
         this.CounterId = args["CounterId"];
 
         if (this.CounterId) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             var myService = new CountersDomainService();
             myService.GetCounterAPIHelper(this.CounterId).subscribe((myResponse: ServiceResponse) => {
@@ -70,10 +71,12 @@ export class CounterInvoiceComponent extends BaseComponent {
                         this.InitializeDefinitions();
                         this.SetUIProperties();                        
                     }
+
+                    this.CalculateSampleValue();
                 }
 
                 this.IsResourcesReady = true;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
@@ -201,6 +204,8 @@ export class CounterInvoiceComponent extends BaseComponent {
             this.ItemsSource.forEach(item => {
                 item.Prefix = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
@@ -212,6 +217,8 @@ export class CounterInvoiceComponent extends BaseComponent {
             this.ItemsSource.forEach(item => {
                 item.Suffix = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
@@ -223,6 +230,7 @@ export class CounterInvoiceComponent extends BaseComponent {
             this.ItemsSource.forEach(item => {
                 item.CounterSize = value;
             });
+            this.CalculateSampleValue();
         }
     }
 
@@ -234,11 +242,13 @@ export class CounterInvoiceComponent extends BaseComponent {
             this.ItemsSource.forEach(item => {
                 item.StartNumber = value;
             });
+
+            this.CalculateSampleValue();
         }
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
 
@@ -283,16 +293,16 @@ export class CounterInvoiceComponent extends BaseComponent {
                         Validator.TryValidateObject(item, this.ObjectTableName, errors);
 
                         if (item.UniquePerPrefix && !AppTool.IsNullOrEmpty(item.Prefix) && !AppTool.IsNullOrEmpty(item.StartNumber)) {
-                            if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix) > 20) {
-                                errors.push("Maximum length allowed for [Prefix + StartNumber] is 20");
+                            if ((item.StartNumber).toString().length + AppTool.GetCounterPrefixLength(item.Prefix) + AppTool.GetCounterPrefixLength(item.Suffix) > 20) {
+                                errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
                             }
                         }
                     });
                 }
                 else {
 
-                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) > 20) {
-                        errors.push("Maximum length allowed for [Prefix + StartNumber] is 20");
+                    if ((this.StartNumber).toString().length + AppTool.GetCounterPrefixLength(this.Prefix) + AppTool.GetCounterPrefixLength(this.Suffix)> 20) {
+                        errors.push("Maximum length allowed for [Prefix + StartNumber + Suffix] is 20");
                     }
 
                     this.APIHelper.CounterDefinitions.forEach(item => {
@@ -304,24 +314,31 @@ export class CounterInvoiceComponent extends BaseComponent {
 
                 if (errors.length == 0) {
 
-                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    this.CurrentSession.StartBusyIndicatorSaving();
 
                     var myService = new CountersDomainService();
                     myService.Post(this.APIHelper).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (myResponse.HasError) {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
                         }
 
                         else {
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                            this.CurrentSession.CloseCurrentWindowEmit("Ok");
                         }
                     });
                 }
             }
         }
+    }
+
+    public SampleValue: string;
+    CalculateSampleValue() {
+
+        this.SampleValue = AppTool.GetCounterResolvedNumber(this.Prefix, this.StartNumber, this.Suffix, this.CounterSize);
+
     }
 }
 export class CounterInvoiceDefinitionItem extends BaseComponent {
@@ -351,6 +368,7 @@ export class CounterInvoiceDefinitionItem extends BaseComponent {
 
         this.UIProperties.SetEnabled("Prefix", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("Suffix", this.ObjectTableName, isEnabled);
+        this.UIProperties.SetEnabled("CounterSize", this.ObjectTableName, isEnabled);
         this.UIProperties.SetEnabled("StartNumber", this.ObjectTableName, isEnabled_StartNumber);
     }
 

@@ -23,14 +23,14 @@ export class LicensesManagementComponent implements OnDestroy {
     @Output() SearchFieldChangeEvent = new EventEmitter();
     public Columns: any[] = [];
     private dirtyItem: UserLicensePM;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.Listen();
     }
 
     private ListenEvent: any = null;
     Listen() {
-        this.ListenEvent = SessionLocator.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
+        this.ListenEvent = this.CurrentSession.PseventRowSelectEvent.subscribe((res) => {
             if (res.Name == "Add") {
                 this.Add(res.User, res.PackageCode);
             }
@@ -266,12 +266,12 @@ export class LicensesManagementComponent implements OnDestroy {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     
     private RunSave() {
         if (this.dirtyItem != null) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var myServiceHelper = new UserLicenseUpdateHelper();
             myServiceHelper.Tenant = SessionLocator.Tenant;
@@ -280,7 +280,7 @@ export class LicensesManagementComponent implements OnDestroy {
             var generalService: CommonDomainService = new CommonDomainService();
             generalService.UpdateUserLicense(myServiceHelper).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.ValidationErrorsList = myResponse.ErrorsArray;
                 }
 
@@ -298,7 +298,7 @@ export class LicensesManagementComponent implements OnDestroy {
                     this.dirtyItem = null;
                     //this.LoadUserLicenses();
                     this.BuildHeaders();
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             });
         }

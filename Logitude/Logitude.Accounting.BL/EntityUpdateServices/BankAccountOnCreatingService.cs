@@ -3,8 +3,14 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Resolvers;
+using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
@@ -51,29 +57,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public virtual Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
+
         public virtual ContactPM GetLoggedContact(int tenant)
         {
-
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
-        public virtual string IdCounterWrapperGetNumber(int Tenant)
+
+        public virtual string IdCounterWrapperGetNumber(int tenant)
         {
-            return (new IdCounterWrapper()).GetNumber(
-                    "BankAccount", Tenant);
+            //return (new IdCounterWrapper()).GetNumber(
+            //        "BankAccount", Tenant);
+            return IdCounterUtilResolver.GetNewIdCounter("BankAccount", tenant);
         }
     }
 

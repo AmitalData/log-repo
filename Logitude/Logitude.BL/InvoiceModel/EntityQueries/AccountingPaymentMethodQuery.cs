@@ -50,6 +50,27 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }).FirstOrDefault();
         }
 
+        public AccountingPaymentMethodPM GetSinglePaymentMethodPMByCode(string code, int tenant)
+        {
+            return (from a in repository.context.AccountingPaymentMethods
+                    where a.Code == code && a.Tenant == tenant
+                    select new AccountingPaymentMethodPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        Code = a.Code,
+                        Name = a.Name,
+                        SearchFields = a.SearchFields,
+                        AddedManually = a.AddedManually,
+                        Inactive = a.Inactive,
+                        APExternalId = a.APExternalId,
+                        ARExternalId = a.ARExternalId,
+                        IsAR = a.IsAR,
+                        IsAP = a.IsAP,
+                    }).FirstOrDefault();
+        }
+
+
         public AccountingPaymentMethodPM GetSinglePM(string id, int tenant)
         {
             return (from a in repository.context.AccountingPaymentMethods

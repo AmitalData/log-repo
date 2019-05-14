@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuoteTotalVATUpdateClass
@@ -170,7 +174,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "QuoteCurrencyVATAmount",
-					  						DefaultText =  @"Quote Currency VAT Amount",
+					  						DefaultText =  "Quote Currency VAT Amount",
 					  						HelpTextCode =  "QuoteCurrencyVATAmount",
 					  						Code =  "QuoteCurrencyVATAmount",
 					  						DependencyFilter3IsList =  false,
@@ -228,7 +232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "QuoteCurrencyVatableAmount",
-					  						DefaultText =  @"Quote Currency Vatable Amount",
+					  						DefaultText =  "Quote Currency Vatable Amount",
 					  						HelpTextCode =  "QuoteCurrencyVatableAmount",
 					  						Code =  "QuoteCurrencyVatableAmount",
 					  						DependencyFilter3IsList =  false,
@@ -286,7 +290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "LocalCurrencyVATAmount",
-					  						DefaultText =  @"Local Currency VAT Amount",
+					  						DefaultText =  "Local Currency VAT Amount",
 					  						HelpTextCode =  "LocalCurrencyVATAmount",
 					  						Code =  "LocalCurrencyVATAmount",
 					  						DependencyFilter3IsList =  false,
@@ -344,7 +348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "LocalCurrencyVatableAmount",
-					  						DefaultText =  @"Local Currency Vatable Amount",
+					  						DefaultText =  "Local Currency Vatable Amount",
 					  						HelpTextCode =  "LocalCurrencyVatableAmount",
 					  						Code =  "LocalCurrencyVatableAmount",
 					  						DependencyFilter3IsList =  false,
@@ -402,7 +406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ProfitCurrencyVATAmount",
-					  						DefaultText =  @"Profit Currency VAT Amount",
+					  						DefaultText =  "Profit Currency VAT Amount",
 					  						HelpTextCode =  "ProfitCurrencyVATAmount",
 					  						Code =  "ProfitCurrencyVATAmount",
 					  						DependencyFilter3IsList =  false,
@@ -460,7 +464,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ProfitCurrencyVatableAmount",
-					  						DefaultText =  @"Profit Currency Vatable Amount",
+					  						DefaultText =  "Profit Currency Vatable Amount",
 					  						HelpTextCode =  "ProfitCurrencyVatableAmount",
 					  						Code =  "ProfitCurrencyVatableAmount",
 					  						DependencyFilter3IsList =  false,
@@ -518,7 +522,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "VatPercent",
-					  						DefaultText =  @"VAT Percent",
+					  						DefaultText =  "VAT Percent",
 					  						HelpTextCode =  "VatPercent",
 					  						Code =  "VatPercent",
 					  						DependencyFilter3IsList =  false,
@@ -576,7 +580,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ExternalVATCard",
-					  						DefaultText =  @"External VAT Card",
+					  						DefaultText =  "External VAT Card",
 					  						HelpTextCode =  "ExternalVATCard",
 					  						Code =  "ExternalVATCard",
 					  						DependencyFilter3IsList =  false,
@@ -634,7 +638,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ExternalTAXItemId",
-					  						DefaultText =  @"External TAX Item Id",
+					  						DefaultText =  "External TAX Item Id",
 					  						HelpTextCode =  "ExternalTAXItemId",
 					  						Code =  "ExternalTAXItemId",
 					  						DependencyFilter3IsList =  false,
@@ -693,7 +697,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "VatTypeId",
-					  						DefaultText =  @"VAT Type",
+					  						DefaultText =  "VAT Type",
 					  						HelpTextCode =  "VatTypeId",
 					  						Code =  "VatTypeId",
 					  						DependencyFilter3IsList =  false,

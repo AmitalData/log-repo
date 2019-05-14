@@ -985,6 +985,8 @@ namespace MeatadataGeneratorTool
             SetAttribute("IsNewWizard", table.IsNewWizard.ToString().ToLower(), entityElement);
             SetAttribute("LookUp1", GetStringValue(table.LookUp1), entityElement);
             SetAttribute("LookUp2", GetStringValue(table.LookUp2), entityElement);
+            SetAttribute("LovDisplayMemberPath", GetStringValue(table.LovDisplayMemberPath), entityElement);
+            SetAttribute("LovDisplayMemberPathLocal", GetStringValue(table.LovDisplayMemberPathLocal), entityElement);
             SetAttribute("DependencyFilter1", GetStringValue(table.DependencyFilter1), entityElement);
             SetAttribute("DependencyFilter2", GetStringValue(table.DependencyFilter2), entityElement);
             SetAttribute("DependencyFilter3", GetStringValue(table.DependencyFilter3), entityElement);
@@ -1036,7 +1038,8 @@ namespace MeatadataGeneratorTool
             SetAttribute("NoViewController", table.NoViewController.ToString().ToLower(), entityElement);
             SetAttribute("NoPMController", table.NoPMController.ToString().ToLower(), entityElement);
             SetAttribute("NoTS", table.NoTS.ToString().ToLower(), entityElement);
-            SetAttribute("HasCompactSearch", table.HasCompactSearch.ToString().ToLower(), entityElement);
+			SetAttribute("NoDefaultFeatures", table.NoDefaultFeatures.ToString().ToLower(), entityElement);
+			SetAttribute("HasCompactSearch", table.HasCompactSearch.ToString().ToLower(), entityElement);
             SetAttribute("ApplyDefaultValues", table.ApplyDefaultValues.ToString().ToLower(), entityElement);
             SetAttribute("HasMenuButtons", table.HasMenuButtons.ToString().ToLower(), entityElement);
             SetAttribute("ApplyOnPropertyChangedCode", table.ApplyOnPropertyChangedCode.ToString().ToLower(), entityElement);
@@ -1051,6 +1054,8 @@ namespace MeatadataGeneratorTool
             SetAttribute("DisableSearchBox", table.DisableSearchBox.ToString().ToLower(), entityElement);
             SetAttribute("HasDocuments", table.HasDocuments.ToString().ToLower(), entityElement);
             SetAttribute("IsLookUp", table.IsLookUp.ToString().ToLower(), entityElement);
+            SetAttribute("IsTabsHidden", table.IsTabsHidden.ToString().ToLower(), entityElement);
+
             if (!string.IsNullOrEmpty(table.SearchFields))
             {
                 SetAttribute("SearchFields", GetStringValue(table.SearchFields), entityElement, null);
@@ -1073,7 +1078,9 @@ namespace MeatadataGeneratorTool
                     SetAttribute("Id", GetStringValue(f.Id), fieldElement, null);
                 }
                 SetAttribute("FieldName", GetStringValue(f.FieldName), fieldElement, null);
-                SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
+				SetAttribute("GeneratedComponentPath", GetStringValue(f.GeneratedComponentPath), fieldElement, null);
+
+				SetAttribute("OldFieldName", GetStringValue(f.OldFieldName), fieldElement, null);
                 SetAttribute("IsNew", f.IsNew.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsChecked", f.IsChecked.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsDeleted", f.IsDeleted.ToString().ToLower(), fieldElement, null);
@@ -1254,6 +1261,12 @@ namespace MeatadataGeneratorTool
                 SetAttribute("IsSpellCheckedHelpLocalDefaultText", f.IsSpellCheckedHelpLocalDefaultText.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsSpellCheckedShortLocalDefaultText", f.IsSpellCheckedShortLocalDefaultText.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsSpellCheckedListLocalDefaultText", f.IsSpellCheckedListLocalDefaultText.ToString().ToLower(), fieldElement, null);
+                SetAttribute("EnableFullscreenTextBox", f.EnableFullscreenTextBox.ToString().ToLower(), fieldElement, null);
+
+                if (!string.IsNullOrEmpty(f.ModelName))
+                {
+                    SetAttribute("ModelName", GetStringValue(f.ModelName), fieldElement, null);
+                }
             }
 
             #endregion
@@ -1513,7 +1526,14 @@ namespace MeatadataGeneratorTool
                 SetAttribute("ControlPath", GetStringValue(f.ControlPath), TabElement, null);
                 SetAttribute("TextCode", GetStringValue(f.TextCode), TabElement, null);
                 SetAttribute("IsPackagable", f.IsPackagable.ToString().ToLower(), TabElement, null);
-                SetAttribute("IndexOrder", f.IndexOrder.ToString(), TabElement, null);
+                if (table.TabsObsList.Count > 1 && table.TabsObsList.GroupBy(t => t.IndexOrder).Count() == 1)
+                {
+                    SetAttribute("IndexOrder", table.TabsObsList.IndexOf(f).ToString(), TabElement, null);
+                }
+                else
+                {
+                    SetAttribute("IndexOrder", f.IndexOrder.ToString(), TabElement, null);
+                }
                 SetAttribute("HtmlComponentURL", GetStringValue(f.HtmlComponentURL), TabElement, null);
                 SetAttribute("HtmlComponentName", GetStringValue(f.HtmlComponentName), TabElement, null);
                 if (!string.IsNullOrEmpty(f.FeatureCode))
@@ -1722,6 +1742,7 @@ namespace MeatadataGeneratorTool
                             SetAttribute("IgnoreCustomTypeCheck", item.IgnoreCustomTypeCheck.ToString().ToLower(), DCFieldElement, null);
                             SetAttribute("IsCloseField", item.IsCloseField.ToString().ToLower(), DCFieldElement, null);
                             SetAttribute("IsCompositKey", item.IsCompositKey.ToString().ToLower(), DCFieldElement, null);
+                            SetAttribute("CloseTableCode", GetStringValue(item.CloseTableCode), DCFieldElement, null);
 
                         }
                     }

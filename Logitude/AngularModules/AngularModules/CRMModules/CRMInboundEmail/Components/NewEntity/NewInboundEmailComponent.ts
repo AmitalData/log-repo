@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 import {InboundEmailPM} from '../../../../Infrastructure/EntityPMs/InboundEmailPM';
 import {InboundEmailLinePM} from '../../../../Infrastructure/EntityPMs/InboundEmailLinePM';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -25,7 +25,7 @@ export class NewInboundEmailComponent extends BaseComponent implements OnInit {
     public DataContext = this;
     public ValidationErrorsList = [];
     private myInboundEmailWebService: InboundEmailWebService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -66,7 +66,7 @@ export class NewInboundEmailComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -89,7 +89,7 @@ export class NewInboundEmailComponent extends BaseComponent implements OnInit {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
             //this.Send();
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
     }
 
@@ -105,7 +105,7 @@ export class NewInboundEmailComponent extends BaseComponent implements OnInit {
     }
 
     Send() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Sending...");
+        this.CurrentSession.StartBusyIndicator("Sending...");
         if (this.myInboundEmailWebService == null) {
             this.myInboundEmailWebService = new InboundEmailWebService();
         }
@@ -119,7 +119,7 @@ export class NewInboundEmailComponent extends BaseComponent implements OnInit {
                     messageWindow.Show("Email has been sent successfully");
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
@@ -37,7 +38,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public IQueryable<ShipmentPackage> GetShipmentPackagesForShipmentTenant(string shipmentId, int tenant)
         {
-            IQueryable<ShipmentPackage> shipmentPackages = from a in context.ShipmentPackages where a.Tenant == tenant && a.ShipmentId == shipmentId select a;
+            IQueryable<ShipmentPackage> shipmentPackages = from a in context.ShipmentPackages.Include("PackageType") where a.Tenant == tenant && a.ShipmentId == shipmentId select a;
             return shipmentPackages;
         }
 

@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CustomsInterfaceSettingPM} from '../../../EntityPMs/CustomsInterfaceSettingPM';
 import {FTPDetailPM} from '../../../EntityPMs/FTPDetailPM';
 import {CustomsInterfaceSettingPMService} from '../../../Services/StandardPMs/CustomsInterfaceSettingPMService';
@@ -23,6 +23,7 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
     public ValidationErrorsList: string[] = [];
     public IsResourcesReady: boolean = false;
     private myService: CustomsInterfaceSettingPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityResourceService: EntityResourceService) {
         super();
 
@@ -194,7 +195,7 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -202,16 +203,16 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
 
         if (this.ValidationErrorsList.length == 0) {
             if (this.EntityPM.IsDirty) {
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
 
                 if (this.EntityPM.Tenant == null) {
                     this.EntityPM.Tenant = SessionLocator.Tenant;
                     this.myService.insert(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myRespone.HasError) {
                             ObjectsLocator.CustomsInterfaceSettingPM = this.EntityPM;
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
 
                         else {
@@ -222,11 +223,11 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
 
                 else {
                     this.myService.update(this.EntityPM).subscribe((myRespone: ServiceResponse) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (!myRespone.HasError) {
                             ObjectsLocator.CustomsInterfaceSettingPM = this.EntityPM;
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
 
                         else {
@@ -237,7 +238,7 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
             }
 
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
         }        
     }

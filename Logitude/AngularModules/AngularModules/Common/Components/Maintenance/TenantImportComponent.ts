@@ -2,19 +2,15 @@ declare var window: any;
 import {Component, OnInit, Output, EventEmitter, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {LogGridComponent} from '../../../Infrastructure/Components/LogitudeComponents/LogGridComponent/LogGridComponent'
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
-import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {PortList} from '../../EntityLists/PortList';
 import {CardList} from '../../EntityLists/CardList';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
-import {PartnersDomainService} from '../../../Common/Services/PartnersDomainService';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {AppTool} from '../../../Infrastructure/Tools';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { CachedDataManager } from '../../../Infrastructure/Utilities/CachedDataManager';
 
 @Component({
     moduleId: module.id,
@@ -40,7 +36,9 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
     public searchText: string;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     @Output() SearchFieldchangeevent = new EventEmitter();
-
+    public IsNewEntityButtonVisible: boolean = false;
+    public NewEntityButtonLabel: string = "New";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -56,6 +54,12 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
         else {
             this.AddButtonVisibility = false;
         }
+
+        if (this.ObjectTableName == "ShippingLine" || this.ObjectTableName == "Airline") {
+            this.IsNewEntityButtonVisible = true;
+        }
+
+        this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable(this.ObjectTableName));
     }
 
     ngOnInit() {
@@ -96,7 +100,9 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
         }
 
         this.ObjectFields = window.ObjectFields.filter(f => f.DisplayInSearchWindowList == true && f.ObjectTableId == objectTableId);
+
         this.columns = [];
+
         this.columns.push({
             FieldName: this.ObjectTableName,
             DataTypeCode: 'String',
@@ -107,7 +113,6 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
             HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/btnComponent',
         });
         
-
         for (var i = 0; i < this.ObjectFields.length; i++) {
             this.columns.push({
                 FieldName: this.ObjectFields[i].FieldName,
@@ -121,10 +126,6 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
             });
         }
         
-
-
-
-
         if (this.ObjectTableName == "Port") {
             if (this.columns.length > 0){
                 this.columns[0].Styles = { width: '65px' };
@@ -157,8 +158,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
                 }
             }
         }
-
-
+        
         if ((this.ObjectTableName == "Airline" || this.ObjectTableName == "ShippingLine") && this.TenantPM.Id != 0) {
 
             this.columns.push({
@@ -170,7 +170,6 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
                 HtmlListComponentName: 'btnComponent',
                 HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/btnUpdateComponent',
             });
-
         }
     }
 
@@ -309,7 +308,7 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
 
     //Commands 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow(); 
+        this.CurrentSession.CloseCurrentWindow(); 
     }
 
     TextChanged(searchtext) {
@@ -328,7 +327,30 @@ export class TenantImportComponent extends BaseComponent implements OnInit, Afte
             logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewShippingLineComponent');
         });
     }
-    private argfilters = new ApiQueryFilters();
+
+    AddNewEntityClicked() {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe(response => {
+            this.CurrentSession.CloseCurrentWindow(); 
+
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 960;
+            logWindow.Height = 570;            
+            logWindow.Title = this.NewEntityButtonLabel;
+
+            logWindow.WindowClosed.subscribe((event: any) => {
+                this.CurrentSession.FireEvent("NewAirlineShippingLineClosed");
+                CachedDataManager.RefreshTableData(this.ObjectTableName, true);
+            });
+
+            if (this.ObjectTableName == "ShippingLine") {
+                logWindow.Show('./CommonModules/CommonPartners/Components/NewEntity/NewShippingLineComponent');
+            }
+
+            else {
+                logWindow.Show('./CommonModules/CommonAirline/Components/NewEntity/NewAirlineComponent');
+            }            
+        });
+    }    
 }
 
 export class ImportEntityArgs {

@@ -127,5 +127,8 @@ export class ARInvoiceList {
 		TotaVatableAmountForTaxReport: number;
 		TotalVAT: number;
 		SATApprovalDate: Date;
+		IsFullAccounting: boolean;
+		ARInvoiceStockId: string;
+		IsInvoiceNumberFromStock: boolean;
 	
 }

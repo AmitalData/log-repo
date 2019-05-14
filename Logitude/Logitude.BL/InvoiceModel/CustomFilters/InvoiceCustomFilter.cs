@@ -125,12 +125,12 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
                     
                     else if (item.FieldName == "DraftGeneralInvoices")
                     {
-                        queryableData = queryableData.Where(d => d.IsClosed == false && d.IsCancelled == false && d.IsGeneralInvoice == true && d.StatusCode == "DR");
+                        queryableData = queryableData.Where(d => d.IsClosed == false && d.IsCancelled == false  && d.StatusCode == "DR");
                     }
 
                     else if (item.FieldName == "ApprovalGeneralInvoices")
                     {
-                        queryableData = queryableData.Where(d => d.IsClosed == false && d.IsCancelled == false && d.IsGeneralInvoice == true && d.ApprovedDate != null);
+                        queryableData = queryableData.Where(d => d.IsClosed == false && d.IsCancelled == false  && (d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsAutoCredit == false));
                     }
 
                     else if (item.FieldName == "IsCustomsInvoice")

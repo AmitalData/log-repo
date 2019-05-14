@@ -16,7 +16,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
-using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure.Helpers; 
 using WebFreight.Web.Azure;
 using WebFreight.Web.CommonDataModel;
 using WebFreight.Web.CommonDataModel.DomainServices;
@@ -60,6 +60,7 @@ using EvoPdf;
 using System.Drawing;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.Interfaces;
 
 namespace WebFreight.Web.Helpers
 {
@@ -114,7 +115,7 @@ namespace WebFreight.Web.Helpers
         }
     }
 
-    public class HtmlEditorHelper
+    public class HtmlEditorHelper : IHtmlEditorHelper
     {
         string DocumentTypeTemplateId = "";
         object entity = null;
@@ -1035,7 +1036,7 @@ namespace WebFreight.Web.Helpers
             List<HtmlNode> ticketHeaderNode = new List<HtmlNode>();
             List<HtmlNode> ticketFooterNode = new List<HtmlNode>();
 
-
+             
 
             Dictionary<HtmlNode, HtmlNode> tablesDic = new Dictionary<HtmlNode, HtmlNode>();
             HtmlDocument document = null;
@@ -1045,6 +1046,10 @@ namespace WebFreight.Web.Helpers
             {
                 htmlString = htmlString.Replace("<tbody>", "");
                 htmlString = htmlString.Replace("</tbody>", "");
+                htmlString = htmlString.Replace("]</P>", "]</span></P>");
+                htmlString = htmlString.Replace("<P>[", "<P><span>[");
+                htmlString = htmlString.Replace("[PageBreak]", "<p style='page-break-after:always;'> <span style=visibility:collapse>Page Break</span></p>");
+
 
 
                 if (htmlString.Contains("[") && htmlString.Contains("]"))
@@ -1052,6 +1057,7 @@ namespace WebFreight.Web.Helpers
                     ReplaceHtmlStringWithTageHtml = true;
                     document = new HtmlDocument();
                     document.LoadHtml(htmlString);
+                    CorrectingBuildingHtml(document , htmlString);
                     HtmlNodeCollection spansList = document.DocumentNode.SelectNodes("//span");
                     if (spansList != null)
                     {
@@ -1374,6 +1380,20 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
+        private  void CorrectingBuildingHtml(HtmlDocument document, string htmlString)
+        {
+            if (!string.IsNullOrEmpty(htmlString) &&  htmlString.Contains("]</p>"))
+            {
+                List<HtmlNode> pTagList = document.DocumentNode.SelectNodes("//p").Where(d => !string.IsNullOrEmpty(d.InnerHtml) && d.InnerHtml.Contains("[") && d.InnerHtml.Contains("]") && !d.InnerHtml.Contains("</span>")).ToList();
+                if (pTagList.Count>0)
+                {
+                    foreach (HtmlNode node in pTagList)
+                    {
+                        node.InnerHtml = node.InnerHtml.Replace("[", "<span>[").Replace("]", "]</span>");
+                    }
+                }
+            }
+        }
 
         bool ReplaceHtmlStringWithTageHtml = false;
         public string ResolveHtmlString(string entityId, string objectTableId, string htmlString, string userId, int tenant)
@@ -2305,8 +2325,9 @@ namespace WebFreight.Web.Helpers
                 {
 
 
-                    IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
-                    queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
+					//IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
+					DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+					queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
                 }
                 catch (Exception ex)
                 {
@@ -2688,8 +2709,9 @@ namespace WebFreight.Web.Helpers
             try
             {
 
-                IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
+				//IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
+				DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } });
             }
             catch (Exception ex)
             {
@@ -3704,7 +3726,7 @@ namespace WebFreight.Web.Helpers
 + "</t:RadDocument>";
             }
 
-
+             
 
 
 
@@ -4187,22 +4209,12 @@ namespace WebFreight.Web.Helpers
                             resultValue = (newValue != null ? newValue.ToString() : " ");
                         }
 
-                        if (!string.IsNullOrWhiteSpace(resultValue))
-                        {
-                            if ((field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal"))
-                            {
-                                resultValue = FormatNumber(resultValue, field);
-                            }
-
-                        }
+                        resultValue = ResolveFieldValue(resultValue, field);
                     }
 
                 }
-                else
-                {
-                    resultValue = (value != null ? value.ToString() : " ");
-                }
-
+                else resultValue = " ";
+      
 
                 if (!string.IsNullOrEmpty(resultValue) && !CheckIfFieldHaveValueHtml(propertyName) && ReplaceHtmlStringWithTageHtml)
                 {
@@ -4300,7 +4312,7 @@ namespace WebFreight.Web.Helpers
 
         private bool CheckIfFieldHaveValueHtml(string fieldName)
         {
-            bool result = false;
+            bool result = false; 
             if (!string.IsNullOrEmpty(fieldName))
             {
                 fieldName = fieldName.ToLower();
@@ -4520,10 +4532,11 @@ namespace WebFreight.Web.Helpers
                                                 }
 
                                                 else resultValue = insideValue.ToString();
-
-
                                             }
+                                            else resultValue = string.Empty;
 
+
+                                            resultValue = ResolveFieldValue(resultValue, insideObjectField);
                                         }
                                         else
                                         {
@@ -4609,17 +4622,45 @@ namespace WebFreight.Web.Helpers
                 {
                     break;
                 }
-            }
-
+            } 
+             
             if (!string.IsNullOrEmpty(resultValue) && !resultValue.Contains("Telerik.Windows.Documents") && ReplaceHtmlStringWithTageHtml)
             {
                 resultValue = resultValue.Replace('\n', '\r');
                 resultValue = resultValue.Replace("\r", "<br/>");
                 // resultValue = resultValue.Replace(" ", "&nbsp;");
             }
-
+             
             if (resultValue == "") resultValue = " ";
             return resultValue;
+        }
+
+        private string ResolveFieldValue(string fieldValue, ObjectField field)
+        {
+            string result = string.Empty;
+
+            if (!string.IsNullOrEmpty(fieldValue))
+            {
+                result = fieldValue.Replace(" ","");
+                if (!string.IsNullOrEmpty(result)) result = fieldValue;
+                else if (field != null && field.DataTypeCode.ToLower() == "boolean") result = "false";
+            }
+             
+            if (field != null)
+            {
+                if (!string.IsNullOrEmpty(result))
+                {
+                    if ((field.DataTypeCode.ToLower() == "double" || field.DataTypeCode.ToLower() == "decimal"))
+                    {
+                        result = FormatNumber(result, field);
+                    }
+                    else if (field.DataTypeCode.ToLower() == "boolean") result = result.ToLower() == "false" ? "No" : "Yes";
+                }
+            }
+           
+
+
+            return result;
         }
 
 

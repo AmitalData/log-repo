@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SystemDefaultsBox {
         width: 100%;
@@ -640,20 +640,20 @@
 
                                                                                 <!-- CustomerId -->
                                                                                 <!--<tr class="FormFieldRow" *ngIf="CustomerIdVisibility">
-                                                                                    <td style="width: 200px;">
-                                                                                        <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                                    </td>
+        <td style="width: 200px;">
+            <LogLabel [ObjectFieldName]="'CustomerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
 
-                                                                                    <td>
-                                                                                        <LogLov [ObjectFieldName]="'CustomerId'"
-                                                                                                [ObjectTableName]="'Tenant'"
-                                                                                                [DataContext]="DataContext"
-                                                                                                [LookUpTableName]="'Card'"
-                                                                                                [DependencyFilter1Value]="'CS'"
-                                                                                                [SelectedValue]="CustomerId">
-                                                                                        </LogLov>
-                                                                                    </td>
-                                                                                </tr>-->
+        <td>
+            <LogLov [ObjectFieldName]="'CustomerId'"
+                    [ObjectTableName]="'Tenant'"
+                    [DataContext]="DataContext"
+                    [LookUpTableName]="'Card'"
+                    [DependencyFilter1Value]="'CS'"
+                    [SelectedValue]="CustomerId">
+            </LogLov>
+        </td>
+    </tr>-->
                                                                                 <!-- IsCustomerTenantShare -->
                                                                                 <tr class="FormFieldRow" *ngIf="IsCustomerTenantShareVisible">
                                                                                     <td colspan="2">
@@ -683,6 +683,22 @@
 
                                                                                                 <td>
                                                                                                     <LogCheckBox [ObjectFieldName]="'CustomerTenantShareImportFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <!-- CustomerTenantShareExportFile -->
+                                                                                <tr class="FormFieldRow" *ngIf="CustomerTenantShareExportFileVisible">
+                                                                                    <td colspan="2">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="width: 280px;">
+                                                                                                    <LogLabel [ObjectFieldName]="'CustomerTenantShareExportFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                                </td>
+
+                                                                                                <td>
+                                                                                                    <LogCheckBox [ObjectFieldName]="'CustomerTenantShareExportFile'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>

@@ -268,7 +268,8 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
 
                     var fileWithFolder = ftpDetail.Folder + "/" + fileName;
                     Debug.WriteLine($"ftpService.Download({fileWithFolder})");
-                    byte[] fileData = ftpService.Download(fileWithFolder);
+					string p_message = "";
+					byte[] fileData = ftpService.Download(fileWithFolder,out p_message);
 
 
 
@@ -283,6 +284,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 }
 
             }
+
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "FTP To AnalyzeQueue WorkerRole", ex.Message, null);

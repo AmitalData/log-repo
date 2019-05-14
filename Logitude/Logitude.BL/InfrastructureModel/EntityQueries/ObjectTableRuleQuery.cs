@@ -9,6 +9,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -103,108 +104,121 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public List<ObjectTableRulePM> GetObjectTableRulePMsByTenant(int tenant)
         {
-            List<ObjectTableRulePM> objectTableRulePMs1 = new List<ObjectTableRulePM>();
-            List<ObjectTableRulePM> objectTableRulePMs2 = new List<ObjectTableRulePM>();
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
-            {
-              WebFreightContext  webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
-              objectTableRulePMs1 = (from a in repository.context.ObjectTableRules.Include("RuleType")
-                                       where a.Tenant == tenant
-                                       select new ObjectTableRulePM()
-                                       {
-                                           Id = a.Id,
-                                           Tenant = a.Tenant,
-                                           Condition = a.Condition,
-                                           InActive = a.InActive,
-                                           Name = a.Name,
-                                           ObjectTableId = a.ObjectTableId,
-                                           OutputMessage = a.OutputMessage,
-                                           RuleCode = a.RuleCode,
-                                           RuleTypeCode = a.RuleTypeCode,
-                                           SystemLevel = a.SystemLevel,
-                                           RuleTypeName = a.RuleType.Name,
-                                           ActiveForNew = a.ActiveForNew,
-                                           ActiveForUpdate = a.ActiveForUpdate,
-                                           TriggerFieldId = a.TriggerFieldId,
-                                           TriggerTypeCode = a.TriggerTypeCode,
-                                           RuleNotificationTypeCode = a.RuleNotificationTypeCode,
-                                           Internal = a.Internal,
-                                           AdvancedCondition = a.AdvancedCondition,
-                                          
-                                       }).ToList();
+			string pmslistName = "objecttablerulepmstenant" + tenant;
+			List<ObjectTableRulePM> selectedRules = new List<ObjectTableRulePM>();
 
-                RuleConditionFieldRepository ruleConditionFieldRepository = new RuleConditionFieldRepository(webFreightContext);
-                RuleConditionFieldQuery ruleConditionFieldQuery = new RuleConditionFieldQuery(ruleConditionFieldRepository);
+			if (CacheManager.CacheWrapper.Get(pmslistName) == null)
+			{
+				List<ObjectTableRulePM> objectTableRulePMs1 = new List<ObjectTableRulePM>();
+				List<ObjectTableRulePM> objectTableRulePMs2 = new List<ObjectTableRulePM>();
+				using (TransactionScope scope = TransactionFactory.GetTransaction())
+				{
+					//List<ObjectTableRule> allRules = ObjectTableRuleRepository.GetObjectTableRulesByTenant(tenant);
+					WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
+					objectTableRulePMs1 = (from a in repository.context.ObjectTableRules.Include("RuleType")
+										   where a.Tenant == tenant
+										   select new ObjectTableRulePM()
+										   {
+											   Id = a.Id,
+											   Tenant = a.Tenant,
+											   Condition = a.Condition,
+											   InActive = a.InActive,
+											   Name = a.Name,
+											   ObjectTableId = a.ObjectTableId,
+											   OutputMessage = a.OutputMessage,
+											   RuleCode = a.RuleCode,
+											   RuleTypeCode = a.RuleTypeCode,
+											   SystemLevel = a.SystemLevel,
+											   RuleTypeName = a.RuleType.Name,
+											   ActiveForNew = a.ActiveForNew,
+											   ActiveForUpdate = a.ActiveForUpdate,
+											   TriggerFieldId = a.TriggerFieldId,
+											   TriggerTypeCode = a.TriggerTypeCode,
+											   RuleNotificationTypeCode = a.RuleNotificationTypeCode,
+											   Internal = a.Internal,
+											   AdvancedCondition = a.AdvancedCondition,
 
-                foreach (ObjectTableRulePM rule in objectTableRulePMs1)
-                {  
-                    rule.RuleConditionFields = ruleConditionFieldQuery.GetRuleConditionFieldsByRuleId(rule.Tenant, rule.Id).ToList();
-                }
+										   }).ToList();
 
-                scope.Complete();
-            }
+					RuleConditionFieldRepository ruleConditionFieldRepository = new RuleConditionFieldRepository(webFreightContext);
+					RuleConditionFieldQuery ruleConditionFieldQuery = new RuleConditionFieldQuery(ruleConditionFieldRepository);
 
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
-            {
-                WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
-                objectTableRulePMs2 = (from a in repository.context.ObjectTableRules.Include("RuleType")
-                                       where a.Tenant == 0
-                                       select new ObjectTableRulePM()
-                                       {
-                                           Id = a.Id,
-                                           Tenant = a.Tenant,
-                                           Condition = a.Condition,
-                                           InActive = a.InActive,
-                                           Name = a.Name,
-                                           ObjectTableId = a.ObjectTableId,
-                                           OutputMessage = a.OutputMessage,
-                                           RuleCode = a.RuleCode,
-                                           RuleTypeCode = a.RuleTypeCode,
-                                           SystemLevel = a.SystemLevel,
-                                           RuleTypeName = a.RuleType.Name,
-                                           ActiveForNew = a.ActiveForNew,
-                                           ActiveForUpdate = a.ActiveForUpdate,
-                                           TriggerFieldId = a.TriggerFieldId,
-                                           TriggerTypeCode = a.TriggerTypeCode,
-                                           RuleNotificationTypeCode = a.RuleNotificationTypeCode,
-                                           Internal = a.Internal,
-                                           AdvancedCondition = a.AdvancedCondition,
-                                       }).ToList();
+					foreach (ObjectTableRulePM rule in objectTableRulePMs1)
+					{
+						rule.RuleConditionFields = ruleConditionFieldQuery.GetRuleConditionFieldsByRuleId(rule.Tenant, rule.Id).ToList();
+					}
 
-                RuleConditionFieldRepository ruleConditionFieldRepository = new RuleConditionFieldRepository(webFreightContext);
-                RuleConditionFieldQuery ruleConditionFieldQuery = new RuleConditionFieldQuery(ruleConditionFieldRepository);
+					scope.Complete();
+				}
 
-                foreach (ObjectTableRulePM rule in objectTableRulePMs2)
-                {
-                    rule.RuleConditionFields = ruleConditionFieldQuery.GetRuleConditionFieldsByRuleId(rule.Tenant, rule.Id).ToList();
-                }
+				using (TransactionScope scope = TransactionFactory.GetTransaction())
+				{
+					WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+					objectTableRulePMs2 = (from a in repository.context.ObjectTableRules.Include("RuleType")
+										   where a.Tenant == 0
+										   select new ObjectTableRulePM()
+										   {
+											   Id = a.Id,
+											   Tenant = a.Tenant,
+											   Condition = a.Condition,
+											   InActive = a.InActive,
+											   Name = a.Name,
+											   ObjectTableId = a.ObjectTableId,
+											   OutputMessage = a.OutputMessage,
+											   RuleCode = a.RuleCode,
+											   RuleTypeCode = a.RuleTypeCode,
+											   SystemLevel = a.SystemLevel,
+											   RuleTypeName = a.RuleType.Name,
+											   ActiveForNew = a.ActiveForNew,
+											   ActiveForUpdate = a.ActiveForUpdate,
+											   TriggerFieldId = a.TriggerFieldId,
+											   TriggerTypeCode = a.TriggerTypeCode,
+											   RuleNotificationTypeCode = a.RuleNotificationTypeCode,
+											   Internal = a.Internal,
+											   AdvancedCondition = a.AdvancedCondition,
+										   }).ToList();
 
-                scope.Complete();
+					RuleConditionFieldRepository ruleConditionFieldRepository = new RuleConditionFieldRepository(webFreightContext);
+					RuleConditionFieldQuery ruleConditionFieldQuery = new RuleConditionFieldQuery(ruleConditionFieldRepository);
 
-            }
+					foreach (ObjectTableRulePM rule in objectTableRulePMs2)
+					{
+						rule.RuleConditionFields = ruleConditionFieldQuery.GetRuleConditionFieldsByRuleId(rule.Tenant, rule.Id).ToList();
+					}
 
-            List<ObjectTableRulePM> objectTableRulePMs = objectTableRulePMs1.Concat(objectTableRulePMs2).ToList();
-            List<ObjectTableRulePM> selectedRules = new List<ObjectTableRulePM>();
-            foreach (ObjectTableRulePM rule in objectTableRulePMs)
-            {
-                ObjectTableRulePM existedRule = (from a in selectedRules
-                                                 where a.RuleCode == rule.RuleCode
-                                                 select a).FirstOrDefault();
-                  
-                if (existedRule != null)
-                {
-                    if (existedRule.Tenant == 0 && rule.Tenant == tenant)
-                    {
-                        selectedRules.Remove(existedRule);
-                        selectedRules.Add(rule);
-                    }
-                }
-                else
-                {
+					scope.Complete();
 
-                    selectedRules.Add(rule);
-                }
-            }
+				}
+
+				List<ObjectTableRulePM> objectTableRulePMs = objectTableRulePMs1.Concat(objectTableRulePMs2).ToList();
+				foreach (ObjectTableRulePM rule in objectTableRulePMs)
+				{
+					ObjectTableRulePM existedRule = (from a in selectedRules
+													 where a.RuleCode == rule.RuleCode
+													 select a).FirstOrDefault();
+
+					if (existedRule != null)
+					{
+						if (existedRule.Tenant == 0 && rule.Tenant == tenant)
+						{
+							selectedRules.Remove(existedRule);
+							selectedRules.Add(rule);
+						}
+					}
+					else
+					{
+
+						selectedRules.Add(rule);
+					}
+				}
+
+				CacheManager.CacheWrapper.Insert(pmslistName, selectedRules, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+
+			}
+			else
+			{
+				selectedRules = (List<ObjectTableRulePM>)CacheManager.CacheWrapper.Get(pmslistName);
+			}
 
             return selectedRules;
         }

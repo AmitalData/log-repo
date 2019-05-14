@@ -51,7 +51,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         private string myHouse;        
         private bool isTechnicalFNA;
         private string myTechnicalIdentifier;
-        
+        private bool isUsingNewCode = true;
         public CHAMPAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)
@@ -74,7 +74,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 }
             }
         }
-
         private void Deserialize()
         {
             XmlDocument xmlDocument = null;
@@ -123,7 +122,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 this.myRecipientID = myEnvelope.Recipient;
             }
         }
-
         private void GetMessageIdentifier(XmlDocument xmlDocument)
         {
             XmlNodeList xnList = xmlDocument.GetElementsByTagName("StandardMessageIdentification");
@@ -137,7 +135,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 }
             }
         }
-
         private void AppendingCDATACheck(XmlDocument xmlDocument)
         {
             if (myMessageIdentifier == "FNA")
@@ -184,7 +181,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 }
             }
         }
-
         private void AnalyzeData()
         {
             switch (myMessageIdentifier)
@@ -292,37 +288,29 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             }
         }
 
-        private IBookingContext myBookingContext;
+        private IBookingContext iBookingContext;
+        private IShipmentsContext iShipmentsContext;
         private ICommonDataContext myCommonContext;
         private IWebFreightContext myWebFreightContext;
         private ObjectTableRepository myObjectTabelRepository;
         private CommunicationLogRepository myCommunicationLogRepository;
         private AirlineRepository myAirlineRepository;
-
         private BookingRepository myBookingRepository;
         private FlightsSchedulesRequestRepository myFlightsSchedulesRequestRepository;
         private FlightsSchedulesRequest myFlightsSchedulesRequest;
-        
+        private PortRepository iPortRepository;
         private void InitializeComponent()
         {
-            if (myCommonContext == null)
-            {
-                myCommonContext = CommonDataContext.GetContext(myTenant);
-            }
+            iBookingContext = BookingContext.GetContext(myTenant);
+            iShipmentsContext = ShipmentsContext.GetContext(myTenant);
+            myCommonContext = CommonDataContext.GetContext(myTenant);
+            myWebFreightContext = WebFreightContext.GetContext(myTenant);
+            myCommunicationLogRepository = new CommunicationLogRepository(myCommonContext);
+            myObjectTabelRepository = new ObjectTableRepository(myWebFreightContext);
 
-            if (myCommunicationLogRepository == null)
+            if (myBookingRepository == null)
             {
-                myCommunicationLogRepository = new CommunicationLogRepository(myCommonContext);
-            }
-
-            if (myWebFreightContext == null)
-            {
-                myWebFreightContext = WebFreightContext.GetContext(myTenant);
-            }
-
-            if (myObjectTabelRepository == null)
-            {
-                myObjectTabelRepository = new ObjectTableRepository(myWebFreightContext);
+                myBookingRepository = new BookingRepository(iBookingContext);
             }
         }
 
@@ -400,68 +388,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 this.OnCatchAnalyzingError(ex);
             }
         }
-
-        private void OnCatchAnalyzingError(Exception ex)
-        {
-            myAnalyzeQueue.ErrorMessage = ex.Message + (ex.InnerException != null ? Environment.NewLine + "InnerException: " + ex.InnerException.Message : "");
-            myAnalyzeQueue.StackTrace = (ex.StackTrace != null ? Environment.NewLine + "Stack Trace: " + ex.StackTrace : "");
-            myAnalyzeQueue.ErrorMessage = myAnalyzeQueue.ErrorMessage.Length > 7950 ? myAnalyzeQueue.ErrorMessage.Substring(0, 7950) : myAnalyzeQueue.ErrorMessage;
-            myAnalyzeQueue.StackTrace = myAnalyzeQueue.StackTrace.Length > 7950 ? myAnalyzeQueue.StackTrace.Substring(0, 7950) : myAnalyzeQueue.StackTrace;
-
-            if (ex.Message.StartsWith("--"))
-            {
-                myAnalyzeQueue.Status = "F";
-            }
-
-            else if (ex.Message.StartsWith("There is no airline with prefix"))
-            {
-                myAnalyzeQueue.Status = "F";
-            }
-
-            else if (ex.Message.StartsWith("There is no shipment"))
-            {
-                myAnalyzeQueue.Status = "F";
-            }
-
-            else if (ex.Message.StartsWith("There is no tenant for this TTY") || ex.Message.StartsWith("There is no TTY for this tenant"))
-            {
-                myAnalyzeQueue.Status = "F";
-            }
-
-            else
-            {
-                myAnalyzeQueue.Retries++;
-
-                if (myAnalyzeQueue.Retries >= 5)
-                {
-                    myAnalyzeQueue.Status = "F";
-
-                    if (myAnalyzeQueue.ConnectedToTenant)
-                    {
-                        CommunicationLog commLog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
-                        if (commLog != null)
-                        {
-                            commLog.CommunicationStatusTypeCode = "F";
-                            commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(myTenant);
-                            commLog.LastStatusDateUTC = DateTime.UtcNow;
-                            commLog.ExceptionMessage = myAnalyzeQueue.ErrorMessage;
-
-                            if (myAnalyzeQueue.StackTrace != null)
-                            {
-                                commLog.ExceptionMessage = commLog.ExceptionMessage + Environment.NewLine + "Stack Trace: " + myAnalyzeQueue.StackTrace;
-                            }
-
-                            myCommunicationLogRepository.Update(commLog);
-                            myCommunicationLogRepository.SubmitChanges();
-                        }
-                    }
-                }
-            }
-            myAnalyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(myAnalyzeQueue.Tenant);
-            analyzeQueueRepository.Update(myAnalyzeQueue);
-            analyzeQueueRepository.SubmitChanges();
-        }
-
         private string ConnectQueueToTenant()
         {
             string myTTY = myRecipientID;
@@ -473,6 +399,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 {
                     TenantManagementRepository tenantManagementRepository = new TenantManagementRepository();
                     tenantManagement = tenantManagementRepository.GetTenantByTTY(myTTY);
+                    scope.Complete();
                 }
 
                 if (tenantManagement != null)
@@ -500,7 +427,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 throw new Exception("There is no TTY for this tenant");
             }
         }
-
         private string CreateCommunicationLogForTenant(string from, int fileSize)
         {
             #region Document
@@ -557,6 +483,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                 Tenant = document.Tenant,
                 FileSize = myMemoryStream.Length,
             };
+
             Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
             storageservice.Write(myMemoryStream.ToArray(), fileInfo);
 
@@ -572,7 +499,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
             return commLog.Id;
         }
-
         private void ConnectQueueToEntity()
         {
             switch (myMessageIdentifier)
@@ -597,16 +523,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         else
                         {
                             bool analyzeBookingFirst = false;
-
-                            if (myBookingContext == null)
-                            {
-                                myBookingContext = BookingContext.GetContext(myTenant);
-                            }
-
-                            if (myBookingRepository == null)
-                            {
-                                myBookingRepository = new BookingRepository(myBookingContext);
-                            }
 
                             Booking myBooking = myBookingRepository.GetBookingByMasterAndAirline(myMaster, myAirline.Id, myTenant);
 
@@ -782,16 +698,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
                             else
                             {
-                                if (myBookingContext == null)
-                                {
-                                    myBookingContext = BookingContext.GetContext(myTenant);
-                                }
-
-                                if (myBookingRepository == null)
-                                {
-                                    myBookingRepository = new BookingRepository(myBookingContext);
-                                }
-
                                 Booking myBooking = myBookingRepository.GetBookingByMasterAndAirline(myMaster, myAirline.Id, myTenant);
 
                                 if (myBooking != null)
@@ -913,16 +819,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
                                 else
                                 {
-                                    if (myBookingContext == null)
-                                    {
-                                        myBookingContext = BookingContext.GetContext(myTenant);
-                                    }
-
-                                    if (myBookingRepository == null)
-                                    {
-                                        myBookingRepository = new BookingRepository(myBookingContext);
-                                    }
-
                                     Booking myBooking = myBookingRepository.GetBookingByMasterAndAirline(myMaster, myAirline.Id, myTenant);
 
                                     if (myBooking != null)
@@ -974,16 +870,6 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
                         else
                         {
-                            if (myBookingContext == null)
-                            {
-                                myBookingContext = BookingContext.GetContext(myTenant);
-                            }
-
-                            if (myBookingRepository == null)
-                            {
-                                myBookingRepository = new BookingRepository(myBookingContext);
-                            }
-
                             Booking myBooking = myBookingRepository.GetBookingByMasterAndAirline(myMaster, myAirline.Id, myTenant);
 
                             if (myBooking != null)
@@ -1023,17 +909,16 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     }
             }
         }
-
         private void ConnectFVREntity()
         {
-            if (myBookingContext == null)
+            if (this.iBookingContext == null)
             {
-                myBookingContext = BookingContext.GetContext(myTenant);
+                this.iBookingContext = BookingContext.GetContext(myTenant);
             }
 
             if (myFlightsSchedulesRequestRepository == null)
             {
-                myFlightsSchedulesRequestRepository = new FlightsSchedulesRequestRepository(myBookingContext);
+                myFlightsSchedulesRequestRepository = new FlightsSchedulesRequestRepository(this.iBookingContext);
             }
 
             if (myFlightsSchedulesRequest == null)
@@ -1133,14 +1018,14 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                     {
                                         if (myMessageIdentifier == "FNA")
                                         {
-                                            if (myBookingContext == null)
+                                            if (this.iBookingContext == null)
                                             {
-                                                myBookingContext = BookingContext.GetContext(myTenant);
+                                                this.iBookingContext = BookingContext.GetContext(myTenant);
                                             }
 
                                             if (myFlightsSchedulesRequestRepository == null)
                                             {
-                                                myFlightsSchedulesRequestRepository = new FlightsSchedulesRequestRepository(myBookingContext);
+                                                myFlightsSchedulesRequestRepository = new FlightsSchedulesRequestRepository(this.iBookingContext);
                                             }
 
                                             if (myFlightsSchedulesRequest == null)
@@ -1157,10 +1042,10 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
                                     else if (table.Name == "Shipment")
                                     {
-                                        IShipmentsContext myShipmentContext = ShipmentsContext.GetContext(myTenant);
-                                        ShipmentRepository shipmentRepository = new ShipmentRepository(myShipmentContext);
+                                        ShipmentRepository shipmentRepository = new ShipmentRepository(this.iShipmentsContext);
                                         ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
                                         ShipmentPM myShipmentPM = shipmentQuery.GetSinglePM(myEntityId, myTenant);
+
                                         if (myShipmentPM != null)
                                         {
                                             switch (myMessageIdentifier)
@@ -1168,19 +1053,28 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                                 case "FSA":
                                                 case "FSU":
                                                     {
-                                                        AnalyzeMessageQueue_FSA(myShipmentPM, myShipmentContext);
+                                                        if (this.isUsingNewCode)
+                                                        {
+                                                            AnalyzeMessageQueue_FSA_Shipment(myShipmentPM);
+                                                        }
+
+                                                        else
+                                                        {
+                                                            AnalyzeMessageQueue_FSA(myShipmentPM, this.iShipmentsContext);
+                                                        }
+
                                                         break;
                                                     }
 
                                                 case "FNA":
                                                     {
-                                                        AnalyzeMessageQueue_FNA(myShipmentPM, myShipmentContext);
+                                                        AnalyzeMessageQueue_FNA(myShipmentPM, this.iShipmentsContext);
                                                         break;
                                                     }
 
                                                 case "FMA":
                                                     {
-                                                        AnalyzeMessageQueue_FMA(myShipmentPM, myShipmentContext);
+                                                        AnalyzeMessageQueue_FMA(myShipmentPM, this.iShipmentsContext);
                                                         break;
                                                     }
                                             }
@@ -1189,12 +1083,12 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
                                     else if (table.Name == "Booking")
                                     {
-                                        if (myBookingContext == null)
+                                        if (this.iBookingContext == null)
                                         {
-                                            myBookingContext = BookingContext.GetContext(myTenant);
+                                            this.iBookingContext = BookingContext.GetContext(myTenant);
                                         }
 
-                                        BookingQueryService bookingQueryService = new BookingQueryService(myBookingContext);
+                                        BookingQueryService bookingQueryService = new BookingQueryService(this.iBookingContext);
                                         BookingPM myBookingPM = bookingQueryService.GetSingle(myEntityId, true, false);
                                         if (myBookingPM != null)
                                         {
@@ -1203,19 +1097,19 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                                 case "FSA":
                                                 case "FSU":
                                                     {
-                                                        AnalyzeMessageQueue_FSA(myBookingPM, myBookingContext, myAnalyzeQueue);
+                                                        AnalyzeMessageQueue_FSA(myBookingPM, this.iBookingContext, myAnalyzeQueue);
                                                         break;
                                                     }
 
                                                 case "FNA":
                                                     {
-                                                        AnalyzeMessageQueue_FNA(myBookingPM, myBookingContext);
+                                                        AnalyzeMessageQueue_FNA(myBookingPM, this.iBookingContext);
                                                         break;
                                                     }
 
                                                 case "FMA":
                                                     {
-                                                        AnalyzeMessageQueue_FMA(myBookingPM, myBookingContext);
+                                                        AnalyzeMessageQueue_FMA(myBookingPM, this.iBookingContext);
                                                         break;
                                                     }
                                             }
@@ -1237,16 +1131,16 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                             {
                                 isUpdatingAnalyzeQueue = false;
 
-                                if (myBookingContext == null)
+                                if (this.iBookingContext == null)
                                 {
-                                    myBookingContext = BookingContext.GetContext(myTenant);
+                                    this.iBookingContext = BookingContext.GetContext(myTenant);
                                 }
 
-                                BookingQueryService bookingQueryService = new BookingQueryService(myBookingContext);
+                                BookingQueryService bookingQueryService = new BookingQueryService(this.iBookingContext);
                                 BookingPM myBookingPM = bookingQueryService.GetSingle(myEntityId, true, false);
                                 if (myBookingPM != null)
                                 {
-                                    AnalyzeMessageQueue_FFA(myBookingPM, myBookingContext, myAnalyzeQueue);
+                                    AnalyzeMessageQueue_FFA(myBookingPM, this.iBookingContext, myAnalyzeQueue);
                                 }
 
                                 else
@@ -1260,14 +1154,14 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
                         case "FVA":
                             {
-                                if (myBookingContext == null)
+                                if (this.iBookingContext == null)
                                 {
-                                    myBookingContext = BookingContext.GetContext(myTenant);
+                                    this.iBookingContext = BookingContext.GetContext(myTenant);
                                 }
 
                                 if (myFlightsSchedulesRequestRepository == null)
                                 {
-                                    myFlightsSchedulesRequestRepository = new FlightsSchedulesRequestRepository(myBookingContext);
+                                    myFlightsSchedulesRequestRepository = new FlightsSchedulesRequestRepository(this.iBookingContext);
                                 }
 
                                 if (myFlightsSchedulesRequest == null)
@@ -1302,18 +1196,84 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                         myCommunicationLogRepository.SubmitChanges();
                     }
 
-                    if (isUpdatingAnalyzeQueue)
-                    {
-                        using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                        {
-                            analyzeQueueRepository.Update(myAnalyzeQueue);
-                            analyzeQueueRepository.SubmitChanges();
+                    //if (isUpdatingAnalyzeQueue)
+                    //{
+                    //    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    //    {
+                    //        analyzeQueueRepository.Update(myAnalyzeQueue);
+                    //        analyzeQueueRepository.SubmitChanges();
 
-                            scope.Complete();
-                        }
-                    }
+                    //        scope.Complete();
+                    //    }
+                    //}
                 }
             }
         }
+
+        private void OnCatchAnalyzingError(Exception ex)
+        {
+            myAnalyzeQueue.ErrorMessage = ex.Message + (ex.InnerException != null ? Environment.NewLine + "InnerException: " + ex.InnerException.Message : "");
+            myAnalyzeQueue.StackTrace = (ex.StackTrace != null ? Environment.NewLine + "Stack Trace: " + ex.StackTrace : "");
+            myAnalyzeQueue.ErrorMessage = myAnalyzeQueue.ErrorMessage.Length > 7950 ? myAnalyzeQueue.ErrorMessage.Substring(0, 7950) : myAnalyzeQueue.ErrorMessage;
+            myAnalyzeQueue.StackTrace = myAnalyzeQueue.StackTrace.Length > 7950 ? myAnalyzeQueue.StackTrace.Substring(0, 7950) : myAnalyzeQueue.StackTrace;
+
+            if (ex.Message.StartsWith("--"))
+            {
+                myAnalyzeQueue.Status = "F";
+            }
+
+            else if (ex.Message.StartsWith("There is no airline with prefix"))
+            {
+                myAnalyzeQueue.Status = "F";
+            }
+
+            else if (ex.Message.StartsWith("There is no shipment"))
+            {
+                myAnalyzeQueue.Status = "F";
+            }
+
+            else if (ex.Message.StartsWith("There is no tenant for this TTY") || ex.Message.StartsWith("There is no TTY for this tenant"))
+            {
+                myAnalyzeQueue.Status = "F";
+            }
+
+            else
+            {
+                myAnalyzeQueue.Retries++;
+
+                if (myAnalyzeQueue.Retries >= 5)
+                {
+                    myAnalyzeQueue.Status = "F";
+                }
+            }
+
+            if (myAnalyzeQueue.Status == "F")
+            {
+                if (myAnalyzeQueue.ConnectedToTenant && myAnalyzeQueue.CommunicationLogId != null)
+                {
+                    CommunicationLog commLog = myCommunicationLogRepository.GetSingleCommunicationLog(myAnalyzeQueue.CommunicationLogId, myTenant);
+                    if (commLog != null)
+                    {
+                        commLog.CommunicationStatusTypeCode = "F";
+                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(myTenant);
+                        commLog.LastStatusDateUTC = DateTime.UtcNow;
+                        commLog.ExceptionMessage = myAnalyzeQueue.ErrorMessage;
+
+                        if (myAnalyzeQueue.StackTrace != null)
+                        {
+                            commLog.ExceptionMessage = commLog.ExceptionMessage + Environment.NewLine + "Stack Trace: " + myAnalyzeQueue.StackTrace;
+                        }
+
+                        myCommunicationLogRepository.Update(commLog);
+                        myCommunicationLogRepository.SubmitChanges();
+                    }
+                }
+            }
+
+            myAnalyzeQueue.DoneDate = TenantServerConfigration.GetCurrentDateTime(myAnalyzeQueue.Tenant);
+            analyzeQueueRepository.Update(myAnalyzeQueue);
+            analyzeQueueRepository.SubmitChanges();
+        }
+
     }
 }

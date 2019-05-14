@@ -160,10 +160,14 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnCompareData = new System.Windows.Forms.Button();
+            this.button40 = new System.Windows.Forms.Button();
+            this.HarmonizeCodesLabel = new System.Windows.Forms.Label();
             this.HarmonizeCodesButton = new System.Windows.Forms.Button();
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
-            this.HarmonizeCodesLabel = new System.Windows.Forms.Label();
+            this.button41 = new System.Windows.Forms.Button();
+            this.lblUTariffModule = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -689,7 +693,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(522, 27);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(84, 17);
+            this.checkBox1.Size = new System.Drawing.Size(85, 17);
             this.checkBox1.TabIndex = 18;
             this.checkBox1.Text = "Save to disk";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -1268,7 +1272,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 80;
             this.label2.Text = "tenant:";
             // 
@@ -1291,7 +1295,7 @@
             this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.linkLabel1.Location = new System.Drawing.Point(162, 42);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(20, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(19, 13);
             this.linkLabel1.TabIndex = 81;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "(?)";
@@ -1333,6 +1337,8 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.lblUTariffModule);
+            this.tabPage1.Controls.Add(this.button41);
             this.tabPage1.Controls.Add(this.btnUpdateTenantZeroNew);
             this.tabPage1.Controls.Add(this.lblTenantNew);
             this.tabPage1.Controls.Add(this.lblUGlobal);
@@ -1462,6 +1468,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.btnCompareData);
+            this.tabPage2.Controls.Add(this.button40);
             this.tabPage2.Controls.Add(this.HarmonizeCodesLabel);
             this.tabPage2.Controls.Add(this.HarmonizeCodesButton);
             this.tabPage2.Controls.Add(this.btnDownloadMrt);
@@ -1516,6 +1524,34 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
             // 
+            // btnCompareData
+            // 
+            this.btnCompareData.Location = new System.Drawing.Point(522, 400);
+            this.btnCompareData.Name = "btnCompareData";
+            this.btnCompareData.Size = new System.Drawing.Size(165, 23);
+            this.btnCompareData.TabIndex = 93;
+            this.btnCompareData.Text = "Compare Onlie Data";
+            this.btnCompareData.UseVisualStyleBackColor = true;
+            this.btnCompareData.Click += new System.EventHandler(this.btnCompareData_Click);
+            // 
+            // button40
+            // 
+            this.button40.Location = new System.Drawing.Point(8, 529);
+            this.button40.Name = "button40";
+            this.button40.Size = new System.Drawing.Size(182, 23);
+            this.button40.TabIndex = 92;
+            this.button40.Text = "Add States";
+            this.button40.UseVisualStyleBackColor = true;
+            this.button40.Click += new System.EventHandler(this.button40_Click);
+            // 
+            // HarmonizeCodesLabel
+            // 
+            this.HarmonizeCodesLabel.AutoSize = true;
+            this.HarmonizeCodesLabel.Location = new System.Drawing.Point(199, 500);
+            this.HarmonizeCodesLabel.Name = "HarmonizeCodesLabel";
+            this.HarmonizeCodesLabel.Size = new System.Drawing.Size(0, 13);
+            this.HarmonizeCodesLabel.TabIndex = 91;
+            // 
             // HarmonizeCodesButton
             // 
             this.HarmonizeCodesButton.Location = new System.Drawing.Point(10, 491);
@@ -1546,13 +1582,26 @@
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
             // 
-            // HarmonizeCodesLabel
+            // button41
             // 
-            this.HarmonizeCodesLabel.AutoSize = true;
-            this.HarmonizeCodesLabel.Location = new System.Drawing.Point(199, 500);
-            this.HarmonizeCodesLabel.Name = "HarmonizeCodesLabel";
-            this.HarmonizeCodesLabel.Size = new System.Drawing.Size(0, 13);
-            this.HarmonizeCodesLabel.TabIndex = 91;
+            this.button41.Location = new System.Drawing.Point(16, 517);
+            this.button41.Name = "button41";
+            this.button41.Size = new System.Drawing.Size(184, 22);
+            this.button41.TabIndex = 93;
+            this.button41.Text = "Update Tariff Module";
+            this.button41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button41.UseVisualStyleBackColor = true;
+            this.button41.Click += new System.EventHandler(this.button41_Click);
+            // 
+            // lblUTariffModule
+            // 
+            this.lblUTariffModule.AutoSize = true;
+            this.lblUTariffModule.Location = new System.Drawing.Point(206, 522);
+            this.lblUTariffModule.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblUTariffModule.Name = "lblUTariffModule";
+            this.lblUTariffModule.Size = new System.Drawing.Size(100, 13);
+            this.lblUTariffModule.TabIndex = 94;
+            this.lblUTariffModule.Text = "...";
             // 
             // Form1
             // 
@@ -1734,6 +1783,10 @@
         private System.Windows.Forms.Button btnDownloadMrt;
         private System.Windows.Forms.Button HarmonizeCodesButton;
         private System.Windows.Forms.Label HarmonizeCodesLabel;
+        private System.Windows.Forms.Button button40;
+		private System.Windows.Forms.Button btnCompareData;
+        private System.Windows.Forms.Label lblUTariffModule;
+        private System.Windows.Forms.Button button41;
     }
 }
 

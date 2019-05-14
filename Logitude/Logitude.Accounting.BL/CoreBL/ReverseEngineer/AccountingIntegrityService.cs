@@ -1,12 +1,19 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Infrastructure.Data;
+using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.Utils;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 {
@@ -50,6 +57,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
         }
         public AccountingIntegrityResult CheckIntegrity(AccountingIntegrityInParam accountingIntegrityInParam)
         {
+            
             string errorMessage = CheckParams(accountingIntegrityInParam);
             if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -57,12 +65,32 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             }
 
             var myAccountingIntegrityResult = new AccountingIntegrityResult();
-            JournalLineToLedgerCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
-            LedgerToMonthTotalCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+            try
+            {
+                JournalLineToLedgerCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+                LedgerToMonthTotalCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
 
-            GLAccountBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+                GLAccountBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
 
-            DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+                DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+
+            }
+            catch
+            {
+                myAccountingIntegrityResult.HasException = true;
+            }
+            finally
+            {
+                if (!myAccountingIntegrityResult.HasException)
+                {
+                    if (myAccountingIntegrityResult.MyAccountingIntegrityStep != null)
+                    {
+                        myAccountingIntegrityResult.HasException = myAccountingIntegrityResult.MyAccountingIntegrityStep
+                            .Any(r => !String.IsNullOrWhiteSpace(r.ExceptionMessage));
+                    }
+
+                }
+            }
             return myAccountingIntegrityResult;
         }
 
@@ -70,7 +98,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
         public void FixDBIntegrity(int tenant, List<AccountingIntegrityStep> MyAccountingIntegrityStep)
         {
-
+            MyAccountingIntegrityStep.ForEach(s => s.ExceptionMessage = null);
             var sb = new StringBuilder();
             try
             {
@@ -79,7 +107,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
 
                 var JournalLineToLedgerStepList = MyAccountingIntegrityStep.Where(r => r.Name == "JournalLineToLedgerCheck");
-                var JournalLineToLedgerStep = JournalLineToLedgerStepList.First(r => r.BadRows > 0);
+                var JournalLineToLedgerStep = JournalLineToLedgerStepList.Where(r => r.BadRows > 0).FirstOrDefault();
                 if (JournalLineToLedgerStepList != null)
                 {
                     throw new Exception("no abilty to fix JournalLineToLedger !!!");
@@ -100,6 +128,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     }
                     catch (Exception ee)
                     {
+                        r.ExceptionMessage = ee.ToString();
                         sb.AppendLine(ee.ToString());
 
                     }
@@ -119,7 +148,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     }
                     catch (Exception ee)
                     {
-
+                        myGLAccountBalanceCheck.ExceptionMessage = ee.ToString();
                         sb.AppendLine(ee.ToString());
                     }
                 }
@@ -137,7 +166,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     }
                     catch (Exception ee)
                     {
-
+                        myDueLocalBalanceCheck.ExceptionMessage = ee.ToString();
                         sb.AppendLine(ee.ToString());
                     }
                 }
@@ -194,8 +223,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 {
                     Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
                     //Month = currentMonth,
-                    ExcetionMessage = ExceptionMessage,
+                    ExceptionMessage = ExceptionMessage,
                     BadRows = badRows,
+                    ShouldFix = (badRows>0 && String.IsNullOrWhiteSpace( ExceptionMessage)),
                     ElapsedMilliseconds = sw.ElapsedMilliseconds,
                 });
             }
@@ -238,8 +268,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     {
                         Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
                         //Month = currentMonth,
-                        ExcetionMessage = ExceptionMessage,
+                        ExceptionMessage = ExceptionMessage,
                         BadRows = badRows,
+                        ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
                         ElapsedMilliseconds = sw.ElapsedMilliseconds,
                     });
                 }
@@ -290,8 +321,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                         {
                             Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
                             Month = currentMonth,
-                            ExcetionMessage = ExceptionMessage,
+                            ExceptionMessage = ExceptionMessage,
                             BadRows = badRows,
+                            ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
                             ElapsedMilliseconds = sw.ElapsedMilliseconds,
                         });
                     }
@@ -299,7 +331,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                     icurrentMonth++;
 
-                } while (icurrentMonth < accountingIntegrityInParam.ToMonthInclusive.Month);
+                } while (icurrentMonth <= accountingIntegrityInParam.ToMonthInclusive.Month);
             }
 
 
@@ -344,8 +376,9 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                         {
                             Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
                             Month = currentMonth,
-                            ExcetionMessage = ExceptionMessage,
+                            ExceptionMessage = ExceptionMessage,
                             BadRows = badRows,
+                            ShouldFix = false /*JournalLineToLedgerCheck can not fix */,   //(badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
                             ElapsedMilliseconds = sw.ElapsedMilliseconds,
                         });
                     }
@@ -353,7 +386,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                     icurrentMonth++;
 
-                } while (icurrentMonth < accountingIntegrityInParam.ToMonthInclusive.Month);
+                } while (icurrentMonth <= accountingIntegrityInParam.ToMonthInclusive.Month);
             }
 
 
@@ -363,6 +396,61 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 //throw;
             }
         }
+
+
+        public  BatchTaskExecutionPM FixEntegrityCheckErrorInBatch(string id, int tenant)
+        {
+            string xmlParameters=  SerializeXMLParameters(id, tenant);
+
+            CreateBatchTaskExecution(xmlParameters, tenant);
+            BatchTaskExecutionPM taskExecution = CreateBatchTaskExecution(xmlParameters, tenant);
+            SendBatchTaskToQueue(taskExecution);
+            return taskExecution;
+        }
+
+        public  string SerializeXMLParameters(string id, int tenant)
+        {
+            IntegrityCheckArgs args = new IntegrityCheckArgs() { EntityId = id, Tenant = tenant };
+            var stringwriter = new System.IO.StringWriter();
+            var serializer = new XmlSerializer(typeof(IntegrityCheckArgs));
+            serializer.Serialize(stringwriter, args);
+            string xmlParameters = stringwriter.ToString();
+            return xmlParameters;
+        }
+
+        public  BatchTaskExecutionPM CreateBatchTaskExecution(string xmlParameter, int tenant)
+        {
+            BatchTaskExecutionPM taskExe = null;
+            taskExe = new BatchTaskExecutionPM()
+            {
+                Subject = "Fix Integrity Check Errors",
+                Tenant = tenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchFixIntegrityCheckErrorsService,Logitude.Accounting.BL",
+                CreateDate = DateTime.Now,
+                PrametersXml = xmlParameter,
+                StatusCode = "C",
+
+            };
+
+            IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
+            BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+            bteUpdateService.Update(taskExe, true);
+            return taskExe;
+        }
+
+        public  void SendBatchTaskToQueue(BatchTaskExecutionPM taskExecution )
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+            queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExecution.Id },
+                    { "Tenant", taskExecution.Tenant.ToString() }
+                });
+
+        }
+
     }
     public class AccountingIntegrityInParam
     {
@@ -372,6 +460,8 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
     }
     public class AccountingIntegrityResult
     {
+        public bool HasException { get; set; }
+    
         public List<AccountingIntegrityStep> MyAccountingIntegrityStep { get; set; }
 
         public List<JournalLineLedgerDTO> JournalLineToLedgerResult { get; set; }
@@ -385,7 +475,8 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
     {
         public string Name { get; set; }
         public DateTime? Month { get; set; }
-        public string ExcetionMessage { get; set; }
+        public string ExceptionMessage { get; set; }
+        public bool ShouldFix { get; set; }
         public int BadRows { get; set; }
         public long ElapsedMilliseconds { get;  set; }
     }

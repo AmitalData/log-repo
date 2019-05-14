@@ -1,4 +1,4 @@
-﻿import { DateTool } from './../../../../Infrastructure/Tools';
+import { DateTool } from './../../../../Infrastructure/Tools';
 import {Component, OnInit, Output, EventEmitter,AfterViewInit,ChangeDetectorRef}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -64,7 +64,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     isControlAccount: boolean = false;
 
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -94,12 +94,12 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
 
         //event listening
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
 
-            var _CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
-            SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-                SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    if (_CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
+            var _CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
+            this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+                this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                    if (_CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "GATR") {
                             this.LoadAllScreenData();
                         }
@@ -268,7 +268,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'AccountingDate',
             DataTypeCode: 'DateTime',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate"),//'Acc. Date',
-            Styles: { width: '110px' },
+            Styles: { width: '85px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -277,7 +277,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'DocumentDate',
             DataTypeCode: 'DateTime',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate"), //'Ref. Date',
-            Styles: { width: '90px' },
+            Styles: { width: '85px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -286,7 +286,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'DueDate',
             DataTypeCode: 'DateTime',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.DueDate"), // 'Due Date',
-            Styles: { width: '90px' },
+            Styles: { width: '75px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -295,7 +295,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'Source',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Source"), // 'Source',
-            Styles: { width: '150px' },
+            Styles: { width: '100px' }, // TASK 47563
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -311,7 +311,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'LocalAmountCredit',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.LocalAmountCredit"), // 'Local Amount',
-            Styles: { width: '100px' },
+            Styles: { width: '120px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -320,7 +320,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'CumulativeLocalAmount',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeLocalAmount"), // 'Cu. Amount',
-            Styles: { width: '150px' },
+            Styles: { width: '120px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -337,7 +337,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 FieldName: 'ForeignAmountCredit',
                 DataTypeCode: 'String',
                 Display: TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmountCredit"), // 'Foreign Amount',
-                Styles: { width: '110px' },
+                Styles: { width: '120px' },
                 HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                 HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                 IsCustomTemplate: true
@@ -347,7 +347,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     FieldName: 'CumulativeForeignAmount',
                     DataTypeCode: 'String',
                     Display: TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeForeignAmount"), // 'Cu. F. Amount',
-                    Styles: { width: '150px' },
+                    Styles: { width: '120px' },
                     HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
                     HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                     IsCustomTemplate: true
@@ -390,7 +390,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             FieldName: 'JournalNumber',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.JournalNumber"), // 'Journal No.',
-            Styles: { width: '80px' },
+            Styles: { width: '100px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -613,6 +613,25 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         });
     }
 
+    GetOpenBalanceCurrencySign() {
+        var result = "";
+        if (this.EntityPM) {
+            if (this.EntityPM.IsMultiCurrency) {
+                result = this.TenantCurrencySign;
+            }
+            else {
+                if (this.EntityPM.ReconcileMethodCode == "0") { // 0- Local Currency
+                    result = this.TenantCurrencySign;
+
+                } else {
+                    result = this.EntityPM.CurrencySign;
+
+                }
+            }
+        }
+        return result;
+    }
+
     //#endregion
 
     //#region Date Filters Validation
@@ -670,7 +689,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     //#region Buttons + CheckBox Handlers
     ReconcileButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
         this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
@@ -703,7 +722,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     }
                     this.RefreshButtonClicked();
                 });
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
 
             }
@@ -713,7 +732,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     RefreshButtonClicked() {
         this.LoadAllScreenData();
 
-        //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     LoadAllScreenData() {

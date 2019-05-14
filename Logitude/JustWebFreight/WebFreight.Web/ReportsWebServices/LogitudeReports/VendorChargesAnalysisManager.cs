@@ -267,23 +267,26 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                 iQueryable_shipments = iQueryable_shipments.Where(d => (d.AccountedPayablesInLocalCurrency != null && d.AccountedPayablesInLocalCurrency != 0) || (d.OpenPayablesInLocalCurrency != null && d.OpenPayablesInLocalCurrency != 0));
 
-                List<string> shipmentIds = iQueryable_shipments.Select(s => s.Id).ToList();
-                IQueryable<ShipmentPayable> iQueryable_payables = shipmentPayableRepository.GetShipmentPayablesByShipmentIds(shipmentIds, tenant);
-
-                iQueryable_payables = iQueryable_payables.Where(d => (d.ExpectedAmountLocal != null && d.ExpectedAmountLocal != 0) || (d.AccountedAmountInLocalCurrency != null && d.AccountedAmountInLocalCurrency != 0 ));
-
-                if (!string.IsNullOrEmpty(VendorId))
-                {
-                    iQueryable_payables = iQueryable_payables.Where(d => d.VendorId == VendorId);
-                }
-
-                if (!string.IsNullOrEmpty(ChargesTypeId))
-                {
-                    iQueryable_payables = iQueryable_payables.Where(d => d.ChargesTypeId == ChargesTypeId);
-                }
+                List<string> allShipmentIds = iQueryable_shipments.Select(s => s.Id).ToList();
+                IQueryable<ShipmentPayable> iQueryable_payables = shipmentPayableRepository.GetShipmentPayablesByShipmentIds(allShipmentIds, tenant);
 
                 if (iQueryable_payables != null && iQueryable_payables.Count() > 0)
                 {
+                    if (!string.IsNullOrEmpty(VendorId))
+                    {
+                        iQueryable_payables = iQueryable_payables.Where(d => d.VendorId == VendorId);
+                    }
+
+                    if (!string.IsNullOrEmpty(ChargesTypeId))
+                    {
+                        iQueryable_payables = iQueryable_payables.Where(d => d.ChargesTypeId == ChargesTypeId);
+                    }
+
+                    iQueryable_payables = iQueryable_payables.Where(d => (d.ExpectedAmountLocal != null && d.ExpectedAmountLocal != 0) || (d.AccountedAmountInLocalCurrency != null && d.AccountedAmountInLocalCurrency != 0));
+
+                    List<string> myShipmentIds = iQueryable_payables.Select(s => s.ShipmentId).ToList();
+                    iQueryable_shipments = iQueryable_shipments.Where(d => myShipmentIds.Contains(d.Id));
+
                     List<ShipmentsJoinPayablesList> myResult = (from myShipment in iQueryable_shipments
                                                                 join myPayable in iQueryable_payables on myShipment.Id equals myPayable.ShipmentId into myShipmentPayable
                                                                 from myItem in myShipmentPayable.DefaultIfEmpty()
@@ -563,7 +566,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             return myDataProvider;
         }
     }
-
+    
     public class ShipmentsJoinPayablesList
     {
         public string ShipmentId { get; set; }

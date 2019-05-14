@@ -34,7 +34,7 @@
 	BEGIN
 
 	set @Key = (select Id from Dim_Ports where Id = @Id)
-	if(@Key is  null) begin  insert into Dim_Ports values(@Id,@Name,@Code,@LocalName ,@CombinedCode, @Country, @State , @SourceTenant , @ParentTenant); end
+	if(@Key is  null) begin  insert into Dim_Ports (Id,Name,Code,[Local Name],[UN Loc Code] ,Country,[State Name],  [Source Tenant],[Parent Tenant])  values(@Id,@Name,@Code,@LocalName ,@CombinedCode, @Country, @State , @SourceTenant , @ParentTenant); end
 	else begin update   Dim_Ports set Name =@Name,  [Local Name] =@LocalName ,  [UN Loc Code] = @CombinedCode ,Country = @Country, [State Name] = @State,   [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant  Where Id = @Id; end
 	
 

@@ -22,7 +22,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.CreatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ProfitCurrencyId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.MainEntityReference).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.MainEntityReference).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.MainEntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
             this.Property(t => t.BranchId).IsRequired().HasMaxLength(15).IsUnicode(false);

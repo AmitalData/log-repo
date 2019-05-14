@@ -24,9 +24,10 @@ export class TimeInput extends BaseComponent {
     @Output() Changed: EventEmitter<string> = new EventEmitter<string>();
     @Output() DisplayChanged: EventEmitter<any> = new EventEmitter<any>();
     @Output() TotalMinutesChanged: EventEmitter<any> = new EventEmitter<any>();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
-        var idIndex = SessionLocator.CurrentSession.GetNewId("TimeInput");
+        var idIndex = this.CurrentSession.GetNewId("TimeInput");
         this.ControlId = "TimeInputControl_" + idIndex;
     }
 
@@ -47,6 +48,14 @@ export class TimeInput extends BaseComponent {
         if (value) {
             if (value.indexOf(':') != -1) {
                 var list = value.split(':');
+                if (list != null && list.length > 0) {
+                    var h = list[0];
+                    var m = list[1];
+                    minutes = +m + (+h * 60);
+                }
+            }
+            else if (value.indexOf('.') != -1) {
+                var list = value.split('.');
                 if (list != null && list.length > 0) {
                     var h = list[0];
                     var m = list[1];
@@ -437,7 +446,7 @@ export class TimeInput extends BaseComponent {
             if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == 190 || key == 110
                 || key == 8 || key == 58 || key == 45 || key == 47 || key == 46 || key == 43 || key == 112
                 || key == 109 || key == 97 || key == 9 || key == 189 || key == 35 || key == 36 || key == 16 || key == 187 || key == 37 ||
-                key == 38 || key == 39 || key == 40 || key == 190 || key == 191 || key == 111 || key == 17 || keyChar == ":") {
+                key == 38 || key == 39 || key == 40 || key == 190 || key == 191 || key == 111 || key == 17 || keyChar == ":" || keyChar == ".:") {
                 success = true;
             }
             else {

@@ -20,11 +20,10 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     {
 
 	    
+	[XmlAttribute]
     public string Id { get; set; }
     
     public int Tenant { get; set; }
-    
-    public string JournalNumber { get; set; }
     
     public DateTime CreateDate { get; set; }
     
@@ -38,32 +37,27 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
     
     public string AccountingEntityReference { get; set; }
     
-    public DateTime? VoidDate { get; set; }
-    
     public User UpdatedByUser { get; set; }
     
     public string ExternalSystem { get; set; }
     
-    public string QueueId { get; set; }
-    
-    public bool? IsVoided { get; set; }
-    
-    public User VoidedByUser { get; set; }
-    
-    public Journal OriginalJournal { get; set; }
+    public string OriginalJournalNumber { get; set; }
     
     public User ApprovedByUser { get; set; }
     
-    public Journal VoidedByJournal { get; set; }
-    
     public User CreatedByUser { get; set; }
     
-    public JournalType JournalType { get; set; }
+    public string JournalType { get; set; }
     
-    public JournalStatusType JournalStatusType { get; set; }
+    public string JournalStatusType { get; set; }
     
     public AccountingEntity AccountingEntity { get; set; }
     
     public string AccountingEntityId { get; set; }
+    
+    public List<JournalLine> JournalLines { get; set; }
+    
+    public string JournalNumber { get; set; }
+        public bool IsLedgerCreated { get; set; }
     }
 } 

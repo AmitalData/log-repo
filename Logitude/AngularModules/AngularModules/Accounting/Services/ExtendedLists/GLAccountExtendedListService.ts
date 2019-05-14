@@ -160,6 +160,21 @@ export class GLAccountExtendedListService {
         });
     }
 
+    CalculateFututreCheques() {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetCalculateFututreCheques?', {
+                headers: authHeader
+            }).map(response => {
+
+              
+                return response.json();
+            });
+        });
+    }
+
     GetAccountCurrencies(accountId: string) {
 
         var authHeader = new Headers();

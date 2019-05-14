@@ -1525,6 +1525,11 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
+        public IDbSet<NumberFormat> NumberFormats
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public IDbSet<Vessel> Vessels
         {
             get { throw new NotImplementedException(); }
@@ -2042,6 +2047,21 @@ namespace Simplog.Data.InfrastructureModel
         public IDbSet<SharedUserQuery> SharedUserQueries
         {
             get { throw new NotImplementedException(); }
-        } 
+        }
+
+        public IDbSet<DWCategories> DWCategories
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IDbSet<DWObjectFieldCategories> DWObjectFieldCategories
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IDbSet<SchedulerLogs> SchedulerLogs
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

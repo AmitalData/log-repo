@@ -69,7 +69,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage Put(GeneralEntitiesArgs args)
+        public HttpResponseMessage PutGeneralEntities(GeneralEntitiesArgs args)
         {
             try
             {
@@ -295,7 +295,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
 
-        public HttpResponseMessage GetExportBIReportToExcel(string queryId, string reportId)
+        public HttpResponseMessage PutExportBIReportToExcel(BIReportXMLData bIReportXMLData)
         {
             try
             {
@@ -304,12 +304,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 string ObjectTableName = "Shipment";
-                var data = new ExportToExcelHelper().ExportBIQueryToExcel(queryId, reportId, tenant);
+                var data = new ExportToExcelHelper().ExportBIQueryToExcel(bIReportXMLData, tenant);
+
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
                     FileName = ObjectTableName + DateTime.Now.ToShortDateString(),
                     FolderName = "others",
-                    Extension = "xls",
+                    Extension = "xlsx",
                     Tenant = tenant,
                     FileSize = data.Length,
 

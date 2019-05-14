@@ -18,6 +18,7 @@ export class AirlineSettingsComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     public ValidationErrorsList: string[] = [];
     private iService: TenantManagementPMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -52,23 +53,23 @@ export class AirlineSettingsComponent extends BaseComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
         this.ValidationErrorsList = [];
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.iService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindow();
             }
         });
     }

@@ -5,28 +5,16 @@ export class LoginComp {
   constructor() {
     this.Helper = new FieldsHelper();
   }
-  navigateTo() {
-    // return browser.get('http://test.logitudeworld.com/staging?Menu=protractor');
-    return browser.get('http://test.logitudeworld.com/test?Menu=protractor');
-    // return browser.get('http://localhost:4200?Menu=protractor');
-    
+  navigateTo(url: string) {
+    return browser.get(url + '?Menu=protractor');
   }
-  DoLogin() {
+
+  DoLogin(userName: string, password: string) {
     browser.ignoreSynchronization = true;
-    //this.Helper.WaitByIdAndFill('Email','angular@fnarsoft.com' );
-    //this.Helper.WaitByIdAndFill('Password','1' );
 
-    this.Helper.WaitByIdAndFill('Email','razan@razancompany.com' );
-    this.Helper.WaitByIdAndFill('Password','!R123j456' );
+    this.Helper.WaitByIdAndFill('Email', userName);
+    this.Helper.WaitByIdAndFill('Password', password);
     this.Helper.ButtonClick('cmdLogin');
-
-
-
-    // // LOCALLLY
-    // this.Helper.WaitByIdAndFill('Email','angular@fnarsoft.com' );
-
-    // this.Helper.WaitByIdAndFill('Password','1' );
-    // this.Helper.ButtonClick('cmdLogin');
 
   }
 }

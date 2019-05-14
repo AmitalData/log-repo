@@ -29,6 +29,10 @@ using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.Security;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -247,7 +251,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
 
-            if (entityPM.InternalNumber == null || entityPM.InternalNumber == "") entityPM.InternalNumber = CodeCounter.GetNumber("GLAccount", entityPM.Tenant).ToString();
+            if (entityPM.InternalNumber == null || entityPM.InternalNumber == "") entityPM.InternalNumber = /*CodeCounter*/(new CodeCounterWrapper(true)).GetNumber("GLAccount", entityPM.Tenant).ToString();
             if (entityPM.Id == null || entityPM.Id == "") entityPM.Id = IdCounter.GetNumber("GLAccount", entityPM.Tenant);
             if (entityPM.ReconcileMethodCode == null || entityPM.ReconcileMethodCode == "") entityPM.ReconcileMethodCode = "0";
             GLAccountCurrencyPM gLAccountCurrency = null;
@@ -338,6 +342,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
+            ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
+            bool useLocal = !((bool)loggedUser?.DontShowLocal);
+
+            entityPM.IsControlAccount = entityPM.IsControlAccount ?? false;//Task 47485: GLAccount - Update Service - Set Null fields as 0 (False)
+            entityPM.IsMultiCurrency = entityPM.IsMultiCurrency ?? false;//Task 47485: GLAccount - Update Service - Set Null fields as 0 (False)
+
             if (entityPM.AccountTypeCode == "5") // File
             {
                 string application = "";
@@ -364,20 +374,37 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 // get transactions in closed period
                 LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPOCO.Tenant);
                 AccountingPeriodQueryService periodQuery = new AccountingPeriodQueryService(entityPOCO.Tenant);
-                List<AccountingPeriodList> openPeriods = periodQuery.GetAccountingPeriodListByYearAndType(DateTime.Now.Year, "1", entityPOCO.Tenant); // 1- Accounting, Regular
-                if (openPeriods.Count() > 0)
+                List<AccountingPeriodPM> tenantPeriods = periodQuery.GetAccountingPeriodsByTenantAndType("1", entityPOCO.Tenant); // 1- Accounting, Regular
+                if (tenantPeriods.Count() > 0)
                 {
-                    AccountingPeriodList openPeriod = openPeriods.FirstOrDefault();
+                    //
+                    // note: the opened periods may be found in a different years, 
+                    //       so I fetch the opened periods over years and check its closed transactions
+                    //
 
-                    int closedMonth = openPeriod.ClosedMonth == null ? 0 : openPeriod.ClosedMonth.Value;
-                    int openMonth = openPeriod.OpenMonth;
-                    int year = openPeriod.Year;
+                    DateTime closedDate;
+                    DateTime openDate;
 
-                    IQueryable<LedgerTransaction> transactions = transQuery.GetClosedPeriodTransactions(entityPOCO.Id, year, openMonth, closedMonth, entityPOCO.Tenant);
-                    if (transactions.Count() > 0)
+                    //List<AccountingPeriodPM> periodsWithOpenedMonths = tenantPeriods.Where(d => d.ClosedMonth != d.OpenMonth).ToList();
+                    foreach (AccountingPeriodPM period in tenantPeriods)
                     {
-                        throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", entityPOCO.Tenant));
+                        // prepare closed month date
+                        if (period.ClosedMonth == null)
+                            closedDate = new DateTime(period.Year, 1, 1, 0, 0, 0);
+                        else
+                            closedDate = new DateTime(period.Year, period.ClosedMonth.Value, DateTime.DaysInMonth(period.Year, period.ClosedMonth.Value), 23, 59, 59);
+
+                        // prepare open month date
+                        openDate = new DateTime(period.Year, period.OpenMonth, 1, 0, 0, 0);
+
+                        // get transactions in closed period
+                        IQueryable<LedgerTransaction> transactions = transQuery.GetClosedPeriodTransactions(entityPOCO.Id, closedDate, openDate, entityPOCO.Tenant);
+                        if (transactions.Count() > 0)
+                        {
+                            throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", entityPOCO.Tenant, useLocal));
+                        }
                     }
+
                 }
 
             }
@@ -1070,24 +1097,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-        private static ContactPM GetLoggedContact(int tenant)
-        {
 
+        public static ContactPM GetLoggedContact(int tenant)
+        {
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
+
 
         protected override void Validate(GLAccountPM entityPM)
         {

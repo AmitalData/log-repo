@@ -30,10 +30,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.IsMeasurement = entityPM.IsMeasurement;
             entityPOCO.AggregationTypeCode = entityPM.AggregationTypeCode;
             entityPOCO.DisplayInQueryBuilder = entityPM.DisplayInQueryBuilder;
-            entityPOCO.Category1 = entityPM.Category1;
-            entityPOCO.Category2 = entityPM.Category2;
+            //entityPOCO.Category1 = entityPM.Category1;
+            //entityPOCO.Category2 = entityPM.Category2;
             entityPOCO.LOVAdditionalColumns = entityPM.LOVAdditionalColumns;
-
+            entityPOCO.HideTree = entityPM.HideTree;
+            entityPOCO.CannotFilter = entityPM.CannotFilter;
+            entityPOCO.HelpText = entityPM.HelpText;
+            entityPOCO.IsCustom = entityPM.IsCustom;
 
         }
     }

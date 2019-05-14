@@ -421,11 +421,11 @@ export class GlobalDomainService {
         });
     }
 
-    GetTenantManagementJS() {
+    GetTenantManagementJS(LoggedUserId:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetTenantManagementJS?';
+        var url = this._apiUrl + '/GetTenantManagementJS?loggeduserid=' + LoggedUserId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {

@@ -4,6 +4,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
@@ -44,17 +45,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     throw new Exception("Total ReconciliationAmount is zero");
                 }
+                if (ReconciliationLines.Select(r => r.CurrencyId).Distinct().Count()>1)
+                {
+                    throw new Exception("לא אופיין התאמת תנועות  ליוצר ממטבע אחד");
+                }
                 DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
                 var qs = new GLAccountQueryService(_AccountingContext);
                 var glPM = qs.GetSingle(TheAccountId, false, false);
-                if (glPM.ReconcileMethodCode == ((int)Logitude.Accounting.Def.EntityPMs.ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString())
-                {
-
-                }
-                else
-                {
-
-                }
+                
                 TenantQuery tenantQuery = new TenantQuery(tenant);
                 TenantPM tPM = tenantQuery.GetSinglePM(tenant);
                 string accountingCurrencyId = tPM.CurrencyId;
@@ -64,14 +62,44 @@ namespace Logitude.Accounting.BL.CoreBL
                 var ratesTableQuery = new RatesTableQuery(ratesTablesRepository);
 
                 var myAccountingEntityDetails = new AccountingEntityDetails();
-                var myAccEntityReconciliation10=  myAccountingEntityDetails.GetAll().First(r => r.EnglishName == "Reconciliation");
+                var myAccEntityReconciliation10=  myAccountingEntityDetails.GetAll().FirstOrDefault(r => r.EnglishName ==
+                //"Reconciliation"
+                "Adjustment"
+                );
+                if (myAccEntityReconciliation10== null)
+                {
+                    throw new Exception("was Reconciliation then change to Adjustment (and now to what ?? - yaron said it will not change ever !!)");
+                }
 
+                String theJournalLineCurrencyId = "";
+
+                if (!String.IsNullOrWhiteSpace(glPM.CurrencyId))
+                {
+                    theJournalLineCurrencyId = glPM.CurrencyId;//ohad : ACCOUNT -CURRENCY = NISS + RECONCILE = 0 (LOCAL )  ==>> JOURNAL CURRENCY == NIS
+
+                }
+                else
+                {
+                    theJournalLineCurrencyId = accountingCurrencyId;
+                }
+
+                theCurrencyId = theJournalLineCurrencyId;
+                RatesTablePM rate = null;
+                rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,
+                   //@now  
+                   AccountDate //Ohad :By aAccounting date
+                   );
+                if (rate == null && theCurrencyId == accountingCurrencyId)
+                {
+                    rate = new RatesTablePM() { Rate = 1 };/// ON THE HOUSE !?!?!?
+                }
                 
-                var rate = ratesTableQuery.GetLastRateByValueDate(tenant, theCurrencyId, accountingCurrencyId,
-                    //@now  
-                    AccountDate //Ohad :By aAccounting date
-                    );
-                var totForeign = totReconciliationAmount * (decimal)rate.Rate.GetValueOrDefault();
+                
+                if (rate == null)
+                {
+                    throw new Exception("שער המטבע לא קיים בטבלת שערי המטבעות");
+                }
+                var totForeign = totReconciliationAmount / (decimal)rate.Rate.GetValueOrDefault();
                 JournalPM journal = new JournalPM()
                 {
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,

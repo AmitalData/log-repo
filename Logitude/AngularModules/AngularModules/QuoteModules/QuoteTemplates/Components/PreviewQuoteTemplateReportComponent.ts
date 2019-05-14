@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {AppTool} from '../../../Infrastructure/Tools';
@@ -24,6 +24,7 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
     isFromLibrary: boolean = false;
     AreaName: string;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
     }
@@ -40,10 +41,10 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
 
 
     GetQuoteTemplatePdfReport() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.quoteTemplateSectionExtendedPMService.GetQuoteTemplatePdfReport(this.QuoteId, this.QuoteTemplateId, SessionLocator.LoggedUserId, this.isFromLibrary).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
 
                 var buffer = EntityResourceService.base64ToBufferConvertor(pmResponse.Result);
@@ -63,14 +64,14 @@ export class PreviewQuoteTemplateReportComponent implements OnInit, AfterViewIni
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
     SetWindowArgs(args: any) {
         this.QuoteTemplateId = args.QuoteTemplateId;
         this.QuoteId = args.QuoteId;
-        this.HeightPdf = (SessionLocator.CurrentSession.CurrentWindow.Height - 100);
+        this.HeightPdf = (this.CurrentSession.CurrentWindow.Height - 100);
   
         if (args.AreaName == "FromLibrary") this.isFromLibrary = true;
 

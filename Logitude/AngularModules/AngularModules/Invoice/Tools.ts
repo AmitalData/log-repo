@@ -1,4 +1,4 @@
-﻿import {AppTool, DateTool, FormatTool} from '../Infrastructure/Tools';
+import {AppTool, DateTool, FormatTool} from '../Infrastructure/Tools';
 import {ShipmentPM} from '../Shipment/EntityPMs/ShipmentPM';
 import {ARInvoicePM} from './EntityPMs/ARInvoicePM';
 import {APInvoicePM} from './EntityPMs/APInvoicePM';
@@ -208,6 +208,33 @@ export class InvoiceTool {
                                 entityPM.DueDate = null;
                             }
 
+                            else if (AppTool.IsNullOrZero(list.Days)) {
+
+                                var myComparativeDate: Date = null;
+
+                                if (entityPM.IsConsolidationInvoice) {
+                                    myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                }
+
+                                else {
+                                    if (list.FromDateTypeCode == "SHI") {
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.OperationalDate).DateObject;
+
+                                        if (myComparativeDate == null) {
+                                            myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                        }
+                                    }
+
+                                    else {
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                    }
+                                }
+
+                                if (entityPM.DueDate != myComparativeDate) {
+                                    entityPM.DueDate = myComparativeDate;
+                                }
+                            }
+
                             else {
                                 var myComparativeDate: Date = null;
 
@@ -241,7 +268,7 @@ export class InvoiceTool {
 
                                     var myDate = new Date();
                                     myDate.setUTCFullYear(dateYear);
-                                    myDate.setUTCMonth(dateMonth-1);
+                                    myDate.setUTCMonth(dateMonth - 1);
                                     myDate.setUTCDate(dateDay);
                                     myDate.setUTCHours(0);
                                     myDate.setUTCMinutes(0);
@@ -258,7 +285,7 @@ export class InvoiceTool {
                             }
                         }
                     }
-                });                
+                });
             }
         }
     }
@@ -276,6 +303,33 @@ export class InvoiceTool {
                         if (list != null) {
                             if (list.IsManuallySet) {
                                 entityPM.DueDate = null;
+                            }
+
+                            else if (AppTool.IsNullOrZero(list.Days)) {
+
+                                var myComparativeDate: Date = null;
+
+                                if (entityPM.IsMultipleEntities) {
+                                    myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                }
+
+                                else {
+                                    if (list.FromDateTypeCode == "SHI") {
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.OperationalDate).DateObject;
+
+                                        if (myComparativeDate == null) {
+                                            myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                        }
+                                    }
+
+                                    else {
+                                        myComparativeDate = DateTool.GetDateParts(entityPM.InvoiceDate).DateObject;
+                                    }
+                                }
+
+                                if (entityPM.DueDate != myComparativeDate) {
+                                    entityPM.DueDate = myComparativeDate;
+                                }
                             }
 
                             else {

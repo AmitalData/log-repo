@@ -46,7 +46,7 @@ export class AccountReceivablesComponent implements OnInit {
     public ARPaymentErrorInTransferVisibility: boolean = false;
 
     @Output() ReloadUserQueries = new EventEmitter();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -54,8 +54,8 @@ export class AccountReceivablesComponent implements OnInit {
         this.TenantPM = SessionLocator.TenantPM;
         this.myViewsQueryVisibility = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
         this.consolidationButtonVisibility = FeatureLocator.HasFeaturePermession("ARInvoice", "Consolidation.Constituent") ? true : false;
-        this.ReceivablesChartId += SessionLocator.CurrentSession.GetChartId();
-        this.ReceivablesChartMoneyInOutId += SessionLocator.CurrentSession.GetChartId();
+        this.ReceivablesChartId += this.CurrentSession.GetChartId();
+        this.ReceivablesChartMoneyInOutId += this.CurrentSession.GetChartId();
         this.ItemsSource = new ObservableCollection([]);
         this.myChartsService = new ChartsService();
     }
@@ -66,7 +66,7 @@ export class AccountReceivablesComponent implements OnInit {
       this.ARInvoicesSATFailedVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "SATFAILEDINVOICES") && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") ? true : false;
       this.ARPaymentsSATFailedVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "SATFAILEDPAYMENTS") && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") ? true : false;
       this.ARInvoiceErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ErrorInTransfer")) ? true : false;
-      this.ARPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARInvoice", "ErrorInTransfer")) ? true : false;
+      this.ARPaymentErrorInTransferVisibility = (FeatureLocator.HasFeaturePermession("ARPayment", "ErrorInTransfer")) ? true : false;
 
     }
 
@@ -339,12 +339,12 @@ export class AccountReceivablesComponent implements OnInit {
             listArgs.ObjectTableName = objectTableName;
             listArgs.BackButtonTitle = backButtonTitle;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef); 
+                    this.CurrentSession.AddMenuReference(cmpRef); 
                 });
             });
         }
@@ -419,7 +419,7 @@ export class AccountReceivablesComponent implements OnInit {
 
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: editedPartnerId, ObjectTableName: objectTableName });
@@ -466,7 +466,7 @@ export class AccountReceivablesComponent implements OnInit {
         logWindow.Height = 570;
         logWindow.Show("./InvoiceModules/ARPayment/Components/NewEntity/NewARPaymentComponent");
 
-        //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
         //    .then(cmpRef => {
         //        cmpRef.instance.ComponentRef = cmpRef;
         //        cmpRef.instance.Run({ EntityId: "", EntityPM: new ARPaymentPM(), ObjectTableName: 'ARPayment' });
@@ -483,7 +483,7 @@ export class AccountReceivablesComponent implements OnInit {
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityPM: comp.EntityPM, ObjectTableName: 'ARInvoice', BackButtonLabel: TextCodeTranslator.Translate("General.MH.Accounting") });

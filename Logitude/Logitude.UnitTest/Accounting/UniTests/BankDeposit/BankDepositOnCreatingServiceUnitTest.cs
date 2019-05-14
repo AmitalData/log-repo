@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using FakeItEasy;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.UnitTest.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 
 namespace Logitude.UnitTest.Accounting.UniTests
 {
@@ -108,97 +112,68 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
         }
 
+        [DataTestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public void OnCreating_CashJournalInitiated_Success(bool isCashDeposit)
+        {
+            // Arrang
+            ContactPM loggedcontact = GetLoggedContactInstance();
+            string expectedLoggedUserId = loggedcontact.Id;
+            DateTime currentDateTime = DateTime.Now;
+            string expectedParentIdCounter = "myNewIdCounter";
+            int expectedCodeCounter = 1000;
 
-        //[TestMethod]
-        //public void OnCreating_UpdatedByUserIdMatchesExpected_Success()
-        //{
-        //    ContactPM loggedcontact = GetLoggedContactInstance();
-        //    string expectedLoggedUserId = loggedcontact.Id;
-        //    DateTime expectedDateTime = DateTime.Now;
-        //    string expectedIdCounter = "myNewIdCounter";
-        //    BankDepositPM entityPM = new BankDepositPM()
-        //    {
-        //        AccountNumber = "123456",
-        //        BranchNumber = "12",
-        //        BankCode = "10",
-        //        BankId = "b1",
-        //        GLAccountId = "GLA1",
-        //        DeferredGLAccountId = "GLA2",
-        //        Tenant = 1,
-        //        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-        //    };
+            BankDepositPM entityPM = new BankDepositPM()
+            {
+                Tenant = 1,
+                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                CreatedByUserId = expectedLoggedUserId,
+                CreateDate = currentDateTime,
+                UpdatedByUserId = expectedLoggedUserId,
+                UpdateDate = currentDateTime,
+                AccountingDate = currentDateTime,
+                Id = "myDepositId",
+                DepositNumber = 1000,
+                IsCashDeposit = isCashDeposit,
+            };
 
+            JournalPM newJournal = new JournalPM() { };
 
-        //    var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.CallsBaseMethods());
-        //    A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
-        //    A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
-        //    A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedIdCounter);
-        //    bankAccountOnCreatingService.OnCreating(entityPM);
-        //    Assert.AreEqual(entityPM.UpdatedByUserId, expectedLoggedUserId);
+            JournalPM expectedJournal = new JournalPM()
+            {
+                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                Tenant = entityPM.Tenant,
+                CreateDate = currentDateTime,
+                CreatedByUserId = entityPM.CreatedByUserId,
+                UpdateDate = currentDateTime,
+                UpdatedByUserId = entityPM.UpdatedByUserId,
+                AccountingDate = entityPM.AccountingDate,
+                TypeCode = "0",
+                StatusCode = "2",
+                AccountingEntityId = entityPM.Id,
+                AccountingEntityReference = entityPM.DepositNumber.ToString(),
+                ExternalNo = null,
+                ApproveDate = entityPM.CreateDate,
+                ApprovedByUserId = entityPM.CreatedByUserId,
+                AccountingEntityCode = isCashDeposit == true ? "7" : "6",
+            };
 
-        //}
+            var bankDepositOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.CallsBaseMethods());
+            A.CallTo(() => bankDepositOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
+            A.CallTo(() => bankDepositOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(currentDateTime);
+            A.CallTo(() => bankDepositOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedParentIdCounter);
+            A.CallTo(() => bankDepositOnCreatingService.CodeCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedCodeCounter);
+            A.CallTo(() => bankDepositOnCreatingService.LogActivity(entityPM)).DoesNothing();
 
-        //[TestMethod]
-        //public void OnCreating_CreatedByUserIdMatchesExpectedIfNull_Success()
-        //{
-        //    ContactPM loggedcontact = GetLoggedContactInstance();
-        //    string expectedIdCounter = loggedcontact.Id;
-        //    DateTime expectedDateTime = DateTime.Now;
+            // Act
+            bankDepositOnCreatingService.InitJournal(entityPM, newJournal);
 
-        //    BankDepositPM entityPM = new BankDepositPM()
-        //    {
-        //        Id = "1",
-        //        AccountNumber = "123456",
-        //        BranchNumber = "12",
-        //        BankCode = "10",
-        //        BankId = "b1",
-        //        GLAccountId = "GLA1",
-        //        DeferredGLAccountId = "GLA2",
-        //        Tenant = 1,
-        //        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-        //    };
+            // Assert
+            AssertHelper.HasEqualFieldValues(expectedJournal, newJournal, Environment.NewLine + "[TEST ERROR] Initiated Jounal does not match expected #DP04");
 
-        //    var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.CallsBaseMethods());
-        //    A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
-        //    A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
-        //    A.CallTo(() => bankAccountOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedIdCounter);
-        //    bankAccountOnCreatingService.OnCreating(entityPM);
-        //    Assert.AreEqual(entityPM.CreatedByUserId, expectedIdCounter);
+        }
 
-        //}
-
-        //[TestMethod]
-
-        //public void OnCreating_SearchFieldsMatchesExpected_Success()
-        //{
-        //    ContactPM loggedcontact = GetLoggedContactInstance();
-        //    string expectedLoggedUserId = loggedcontact.Id;
-        //    DateTime expectedDateTime = DateTime.Now;
-
-        //    BankDepositPM entityPM = new BankDepositPM()
-        //    {
-        //        Id = "1",
-        //        AccountNumber = "123456",
-        //        BranchNumber = "12",
-        //        BankCode = "10",
-        //        BankId = "b1",
-        //        GLAccountId = "GLA1",
-        //        DeferredGLAccountId = "GLA2",
-        //        Tenant = 1,
-        //        CreatedByUserId = expectedLoggedUserId,
-        //        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update,
-        //    };
-
-        //    var expectedSearchFields = entityPM.AccountNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.BranchNumber;
-
-        //    var bankAccountOnCreatingService = A.Fake<BankDepositOnCreatingService>(option => option.CallsBaseMethods());
-        //    A.CallTo(() => bankAccountOnCreatingService.GetLoggedContact(entityPM.Tenant)).Returns(loggedcontact);
-        //    A.CallTo(() => bankAccountOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
-        //    bankAccountOnCreatingService.OnCreating(entityPM);
-
-        //    Assert.AreEqual(entityPM.SearchFields, expectedSearchFields);
-
-        //}
 
         private ContactPM GetLoggedContactInstance()
         {
@@ -213,3 +188,5 @@ namespace Logitude.UnitTest.Accounting.UniTests
         }
     }
 }
+
+    

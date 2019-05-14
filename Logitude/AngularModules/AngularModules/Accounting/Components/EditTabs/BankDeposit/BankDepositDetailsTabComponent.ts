@@ -52,7 +52,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     txt_NewDeposit: string = TextCodeTranslator.Translate("Accounting.General.O.NewDeposit");
     txt_DepositDetails: string = TextCodeTranslator.Translate("Accounting.General.O.DepositDetails");
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -65,7 +65,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
 
         } else { // view mode
-            SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
+            this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
             this.GetCashBook();
             this.BankDepositLines = this.EntityPM.BankDepositLines;
             this.SetUIProperty();
@@ -74,23 +74,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         }
 
+        this.Listen();
 
-        // Subscribe save event
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-            if (isSaveSuccess) {
-                console.log("Deposited Success", this.EntityPM);
-                this.RedrawScreen();
-                this.ShowAlert();
-            }
-        });
-        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-            if (isLoadSuccess) {
-                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                console.log("Entity Reloaded");
-                console.log("Deposited Success", this.EntityPM);
-                this.RedrawScreen();
-            }
-        });
 
         // Dim fields
         //this.SetUIProperty(); // do it after getting cashbook (isCashDeposit)
@@ -100,30 +85,50 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.GetDefaultValues();
     }
 
-    RedrawScreen() {
-        SessionLocator.CurrentSession.CurrentEditComponent.EntityId = this.EntityPM.Id; // Set entity id in edit component to reload
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM(); // reloading
-
-        SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => { // after loading complete
-            if (isLoadSuccess) {
-                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                console.log("Deposit Reloaded: ", this.EntityPM);
-
-                // Redraw UI
-                this.IsLinesSelection = false;
-                this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                this.CashBookLines = [];
-                this.BankDepositLines = this.EntityPM.BankDepositLines;
-                this.CalculateTotals();
-
-                this.GetCashBook();
-                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
-                this.SetUIProperty();
+    Listen(){
+        // Save
+        this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+            if (isSaveSuccess) {
+                console.log("Deposited Success", this.EntityPM);
+                this.RedrawScreen();
+                this.ShowAlert();
             }
         });
 
+        // Reload
+        this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            if (isLoadSuccess) {
+                this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                console.log("Entity Reloaded");
+                console.log("Deposited Success", this.EntityPM);
+                this.RedrawScreen();
+            }
+        });
+    }
+
+    RefreshEntity(){
+        this.CurrentSession.CurrentEditComponent.EntityId = this.EntityPM.Id; // Set entity id in edit component to reload
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM(); // reloading
+    }
+
+    RedrawScreen() {
+
+        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+        console.log("Deposit Reloaded: ", this.EntityPM);
+
+        this.IsLinesSelection = !this.EntityPM.Id;
 
 
+        // Redraw UI
+        this.IsLinesSelection = false;
+        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+        this.CashBookLines = [];
+        this.BankDepositLines = this.EntityPM.BankDepositLines;
+        this.CalculateTotals();
+
+        this.GetCashBook();
+        this.CurrentSession.CurrentEditComponent.EntityPM.IsDirty = false;
+        this.SetUIProperty();
     }
 
     //#region Alert
@@ -141,7 +146,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     this.showAlert = false;
                     cmpRef.instance.ComponentRef = cmpRef;
@@ -155,7 +160,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     OpenARPayment(id) {
         // open ARPayment screen
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'ARPayment' });
@@ -197,13 +202,13 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             //if (this.EntityPM.IsCashDeposit && value != null) {
             //    if (value > this.CashBookPM.TotalAmount) {
             //        this.UIProperties.SetValidity("LocalDepositAmount", this.ObjectTableName, false, "Amount must be less than Cashbook total");
-            //        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            //        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push("Deposit Amount must be less than Cashbook total");
-            //        SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = false;
+            //        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            //        this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push("Deposit Amount must be less than Cashbook total");
+            //        this.CurrentSession.CurrentEditComponent.IsEditValid = false;
             //    } else {
-            //        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            //        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             //        this.UIProperties.SetValidity("LocalDepositAmount", this.ObjectTableName, true, "");
-            //        SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = true;
+            //        this.CurrentSession.CurrentEditComponent.IsEditValid = true;
             //        this.CalculateForeign(value);
             //    }
             //}
@@ -222,13 +227,13 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
             if (this.EntityPM.IsCashDeposit && value != null) {
                 if (value > this.CashBookPM.TotalAmount) {
                     this.UIProperties.SetValidity("ForeignAmount", this.ObjectTableName, false, "Amount must be less than Cashbook total");
-                    //SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-                    //SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push("Deposit Amount must be less than Cashbook total");
-                    //SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = false;
+                    //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                    //this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push("Deposit Amount must be less than Cashbook total");
+                    //this.CurrentSession.CurrentEditComponent.IsEditValid = false;
                 } else {
-                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
                     this.UIProperties.SetValidity("ForeignAmount", this.ObjectTableName, true, "");
-                    //SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = true;
+                    //this.CurrentSession.CurrentEditComponent.IsEditValid = true;
                     this.CalculateLocal(value);
                 }
             }
@@ -387,9 +392,9 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
     //#region Get Methods
     GetCashBook() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._CashBookPMService.get(this.EntityPM.CashBookId).subscribe(myResult => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             var myResponse: ServiceResponse = myResult;
 
@@ -494,9 +499,9 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
                             } else {
 
-                                SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = false;
-                                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-                                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.NoExchangeRateForLocalCurrency"));
+                                this.CurrentSession.CurrentEditComponent.IsEditValid = false;
+                                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+                                this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.NoExchangeRateForLocalCurrency"));
                                 //console.warn("The selected currency does not have Exchange Rate!");
                             }
                         }
@@ -667,8 +672,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         if (line.ChequeStatusCode == "6") { // 6- Redeemed
             // var msg = new MessageWindow();
             // msg.Show(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.O.RedeemedChequeMSG"));
 
             return;
         } else {
@@ -706,7 +711,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         //
         // returnType: Customer / Cashbook
         //
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._BankDepositExtendedPMService.returnCheque(this.EntityPM.Id, chequeId, returnType, notes).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
@@ -714,8 +719,8 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
                 this.RedrawScreen();
             }
             else {
-                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = mm.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
@@ -35,7 +35,7 @@ export class GuaranteeFileFilterQueryComponent
     public CreditTransactionsList: ObservableCollection;
     public RequireDocumentsList: ObservableCollection;
     public GuranteeTypeFilterList: CodeNameClass[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.GuaranteeLettersList = new ObservableCollection([]);
@@ -279,7 +279,7 @@ export class GuaranteeFileFilterQueryComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OnCustomSendOptionsButtonClick(customSendOptionsArgs: CustomSendOptionsArgs) {

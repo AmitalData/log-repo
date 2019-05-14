@@ -14,7 +14,8 @@ export class AgGridColumnsOperations extends BaseComponent {
     public ItemsSource: any[];
     private father: BIReportPreviewComponent;
     public IsAll = false;
-
+    itemSource_Unsaved: Array<Column> = []; 
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     }
@@ -27,7 +28,7 @@ export class AgGridColumnsOperations extends BaseComponent {
     }
     SetWindowArgs(args: any) {
         this.father = args.father;
-
+        this.itemSource_Unsaved = JSON.parse(JSON.stringify(this.father.BIReportXMLData.BITabularViewSettings.Columns));
         this.BuildList();
     }
 
@@ -37,7 +38,8 @@ export class AgGridColumnsOperations extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit('cancel');
+        this.father.BIReportXMLData.BITabularViewSettings.Columns = this.itemSource_Unsaved;
+        this.CurrentSession.CloseCurrentWindowEmit('cancel');
     }
 
     OkButtonClicked() {
@@ -49,7 +51,7 @@ export class AgGridColumnsOperations extends BaseComponent {
         _InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.father.BIReportXMLData = myResult.Result;
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('ok');
+                this.CurrentSession.CloseCurrentWindowEmit('ok');
             }
         });
     }
@@ -88,8 +90,9 @@ export class AgGridColumnsOperations extends BaseComponent {
         }
     }
 
-    onValueChanged(item, event) {
+    onValueChanged(item, index, event) {
         item.IsChecked = event;
+        item.Index = index;
         this.IsAll = this.father.BIReportXMLData.BITabularViewSettings.Columns.filter(a => !a.IsChecked)[0] != null ? false : true;
     }
     IsAllClicked(event) {

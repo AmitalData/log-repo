@@ -1,0 +1,137 @@
+
+<style>
+    .FormFieldRow {
+        height: 30px;
+    }
+</style>
+
+
+<div *ngIf="DataContext">
+    <table>
+
+        <tr class="FormFieldRow">
+            <td></td>
+            <td style="width:90px;vertical-align:central">
+                <LogLabel [Text]="'Host'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:250px;">
+                <div style="height: 100%; width: 100%;">
+                    <LogTextBox [ObjectFieldName]="'Host'" [Text]="DataContext.Host" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                </div>
+            </td>
+
+        </tr>
+
+        <tr class="FormFieldRow">
+            <td></td>
+            <td style="width:90px;vertical-align:central">
+                <LogLabel [Text]="'Folder'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:250px;">
+                <div style="height: 100%; width: 100%;">
+                    <LogTextBox [ObjectFieldName]="'Folder'" [Text]="DataContext.Folder" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                </div>
+            </td>
+
+        </tr>
+
+
+        <tr class="FormFieldRow">
+            <td></td>
+            <td style="width:90px;vertical-align:central">
+                <LogLabel [Text]="'UserName'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:250px;">
+                <div style="height: 100%; width: 100%;">
+                    <LogTextBox [ObjectFieldName]="'UserName'" [Text]="DataContext.UserName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                </div>
+            </td>
+
+        </tr>
+
+        <tr class="FormFieldRow">
+            <td></td>
+            <td style="width:90px;vertical-align:central">
+                <LogLabel [Text]="'Password'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:250px;">
+                <div style="height: 100%; width: 100%;">
+                    <LogTextBox [ObjectFieldName]="'Password'" [Text]="DataContext.Password" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                </div>
+            </td>
+
+        </tr>
+
+        <tr class="FormFieldRow">
+            <td></td>
+            <td style="width:90px;vertical-align:central">
+                <LogLabel [Text]="'From'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:250px;">
+                <div style="height: 100%; width: 100%;">
+                    <LogTextBox [ObjectFieldName]="'From'" [Text]="DataContext.From" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                </div>
+            </td>
+
+        </tr>
+
+        <tr class="FormFieldRow">
+            <td></td>
+            <td style="width:90px;vertical-align:central">
+                <LogLabel [Text]="'Subject'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:250px;">
+                <div style="height: 100%; width: 100%;">
+                    <LogTextBox [ObjectFieldName]="'Subject'" [Text]="DataContext.Subject" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                </div>
+            </td>
+
+        </tr>
+
+
+        <tr class="FormFieldRow">
+            <td></td>
+            <td style="width:90px;vertical-align:central">
+                <LogLabel [Text]="'Prefix'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:250px;">
+                <div style="height: 100%; width: 100%;">
+                    <LogTextBox [ObjectFieldName]="'Prefix'" [Text]="DataContext.Prefix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                </div>
+            </td>
+
+        </tr>
+
+        <tr class="FormFieldRow">
+            <td></td>
+            <td style="width:90px;vertical-align:central">
+                <LogLabel [Text]="'Suffix'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:250px;">
+                <div style="height: 100%; width: 100%;">
+                    <LogTextBox [ObjectFieldName]="'Suffix'" [Text]="DataContext.Suffix" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                </div>
+            </td>
+
+        </tr>
+
+
+        <tr class="FormFieldRow">
+            <td></td>
+            <td style="width:90px;vertical-align:central">
+                <LogLabel [Text]="'Extension'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td style="width:250px;">
+                <div style="height: 100%; width: 100%;">
+                    <LogTextBox [ObjectFieldName]="'Extension'" [Text]="DataContext.Extension" (LostFocus)="ExtensionLostFocus($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                </div>
+            </td>
+
+        </tr>
+
+
+        <tr>
+            <td colspan="3"></td>
+        </tr>
+    </table>
+</div>

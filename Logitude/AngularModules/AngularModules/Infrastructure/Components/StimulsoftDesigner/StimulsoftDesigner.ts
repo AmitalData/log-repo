@@ -4,7 +4,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
-import { SignalRChannelService } from '../../Services/SignalRServices/SignalRChannelService';
+//import { SignalRChannelService } from '../../Services/SignalRServices/SignalRChannelService';
 declare var window: any;
 declare var startLinking;
 @Component({
@@ -21,12 +21,13 @@ declare var startLinking;
 
 export class StimulsoftDesigner {
 
-   signalRChannelService: SignalRChannelService;
+   //signalRChannelService: SignalRChannelService;
     public URI: string = "";
     private windowArgs: any;
     public TemplateId: string;
     public ReportTemplateId: string = "";
     ProcessType: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _ngZone: NgZone) {
         window.stimulsoftDesignerComponentRef = {
             zone: this._ngZone,
@@ -35,14 +36,14 @@ export class StimulsoftDesigner {
         };
         //this.URI = AppTool.GetLogitudeURL() + "/Stimulsoft/Designer.aspx";
        
-      this.signalRChannelService = new SignalRChannelService();
+      //this.signalRChannelService = new SignalRChannelService();
 
          
     }
 
     stimuldesignerFinished(value) {
         // this.zone.run(() => {
-        SessionLocator.CurrentSession.CurrentWindow.Close(this.TemplateId);
+        this.CurrentSession.CurrentWindow.Close(this.TemplateId);
         // });
     }
 
@@ -60,23 +61,23 @@ export class StimulsoftDesigner {
         this.URI = AppTool.GetLogitudeURL() + "/Stimulsoft/Designer.aspx?token=" + SessionInfo.Token + "&tenant=" + SessionInfo.LoggedUserTenant + "&templateId=" + this.TemplateId + "&sessionId=" + sessionId + "&reportTemplateId=" + this.ReportTemplateId + "&processType=" + this.ProcessType;
 
 
-      var observable = this.signalRChannelService.subscribeChannel("User" + SessionInfo.LoggedUserId + SessionInfo.LoggedUserTenant + sessionId).subscribe(
-            (ev: any) => {
+      //var observable = this.signalRChannelService.subscribeChannel("User" + SessionInfo.LoggedUserId + SessionInfo.LoggedUserTenant + sessionId).subscribe(
+      //      (ev: any) => {
 
-                if (ev.EventName === "StimulSaved") {
-                    observable.unsubscribe();
-                    SessionLocator.CurrentSession.CurrentWindow.Close(this.TemplateId);
-                } else if (ev.EventName === "StimulReportSaved") {
-                    observable.unsubscribe();
-                  SessionLocator.CurrentSession.CurrentWindow.Close(this.ReportTemplateId);
-                  //this.signalRChannelService.unSubscribeChannel
-                }
+      //          if (ev.EventName === "StimulSaved") {
+      //              observable.unsubscribe();
+      //              this.CurrentSession.CurrentWindow.Close(this.TemplateId);
+      //          } else if (ev.EventName === "StimulReportSaved") {
+      //              observable.unsubscribe();
+      //            this.CurrentSession.CurrentWindow.Close(this.ReportTemplateId);
+      //            //this.signalRChannelService.unSubscribeChannel
+      //          }
 
-            },
-            (error: any) => {
-                console.warn("Attempt to join channel failed!", error);
-            }
-        )
+      //      },
+      //      (error: any) => {
+      //          console.warn("Attempt to join channel failed!", error);
+      //      }
+        //)
        // this.URI = AppTool.GetLogitudeURL() + "/Stimulsoft/Designer.aspx?token=" + SessionInfo.Token;
 
         //var WindowHeight = window.innerHeight - 100;
@@ -98,10 +99,10 @@ export class StimulsoftDesigner {
                 if (confirmWindow.Yes) {
 
                     if (this.TemplateId) {
-                        SessionLocator.CurrentSession.CurrentWindow.Close(this.TemplateId);
+                        this.CurrentSession.CurrentWindow.Close(this.TemplateId);
                     }
                     else {
-                        SessionLocator.CurrentSession.CurrentWindow.Close(this.ReportTemplateId);
+                        this.CurrentSession.CurrentWindow.Close(this.ReportTemplateId);
                     }
 
                 }

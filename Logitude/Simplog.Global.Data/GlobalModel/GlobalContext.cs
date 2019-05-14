@@ -13,6 +13,7 @@ using System.Data;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Helpers;
 
 namespace Simplog.Global.Data.GlobalModel
 {
@@ -68,6 +69,34 @@ namespace Simplog.Global.Data.GlobalModel
 
             return context;
         }
+
+        public static GlobalContext GetContextByDBId(string dbId)
+        {
+            GlobalDB currentDb;
+
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{                
+            currentDb = GlobalDbHelper.GetGlobalDBById(dbId);
+            //}
+            string dbConnectionInfo = "";
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Oracle_Globalstr"].ConnectionString;
+            }
+            else
+            {
+                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
+            }
+            if (dbConnectionInfo.Contains("Main"))
+            { }
+
+             dbConnectionInfo = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            GlobalContext context = new GlobalContext(connection);
+
+            return context;
+        }
+
         public override LogitudeDBSchema LogitudeDBSchema
         {
             get { return Simplog.Server.Infrastructure.LogitudeDBSchema.LOGITUDE_GLOBAL; }
@@ -109,6 +138,7 @@ namespace Simplog.Global.Data.GlobalModel
             modelBuilder.Configurations.Add(new PaymentCurrencyMap());
             modelBuilder.Configurations.Add(new AutoSignupEmailMap());
             modelBuilder.Configurations.Add(new BluesnapContractMap());
+            modelBuilder.Configurations.Add(new BluesnapContractTypeMap());
             modelBuilder.Configurations.Add(new AWBMessagesCCSTypeMap());
             modelBuilder.Configurations.Add(new MobileNotificationLogMap());
             modelBuilder.Configurations.Add(new ContactMobileDeviceMap());
@@ -173,6 +203,7 @@ namespace Simplog.Global.Data.GlobalModel
         public IDbSet<PasswordResetRequest> PasswordResetRequests { get; set; }
         public IDbSet<PaymentCurrency> PaymentCurrencies { get; set; }
         public IDbSet<BluesnapContract> BluesnapContracts { get; set; }
+        public IDbSet<BluesnapContractType> BluesnapContractTypes { get; set; }
         public IDbSet<AutoSignupEmail> AutoSignupEmails { get; set; }
         public IDbSet<AWBMessagesCCSType> AWBMessagesCCSTypes { get; set; }
         public IDbSet<SystemMetadataLastUpdate> SystemMetadataLastUpdates { get; set; }

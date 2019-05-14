@@ -603,6 +603,212 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Assert.IsTrue(messageExist, state.Item2 + " Expected Have Line But Get Error Of " + lineCode);
             }
         }
+
+
+
+
+        [Ignore]
+        [TestMethod]
+        public void IsJournalValid07x01_regJornal2rowsSameOppositeAccountSameReference1_ErrorContainsM()
+        {
+
+            var lineCode = "if (myJournalPM.JournalLines.Any(l => l.AccountingDate == DateTime.MinValue))";
+            var listOfState2Check = new List<Tuple<JournalPM, string>>();
+
+
+            listOfState2Check.Add(new Tuple<JournalPM, string>(
+                new JournalPM()
+                {
+                    TypeCode= "0" ,//REGULAR JOURNAL
+                    AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
+                    StatusCode = "0",
+                    JournalLines = new List<JournalLinePM>() {
+                new JournalLinePM(){
+                    Line=1,
+                    ActionTypeCode="1",
+                    LocalAmount=1 ,
+                     ExchangeRate=1,
+                     ForeignAmount=1,
+                     //AccountingDate = new DateTime(2016, 3, 1,1,1,1), 
+                     DebitAccountId="1-1",
+                    CreditAccountId ="1-1",
+                    Reference1="Reference1",
+                 DueDate=    new DateTime(2016, 3, 1),
+                 DocumentDate=    new DateTime(2016, 3, 1),
+                },
+                new JournalLinePM(){
+                    Line=1,
+                    ActionTypeCode="1",
+                    LocalAmount=1 ,
+                     ExchangeRate=1,
+                     ForeignAmount=1,
+                     //AccountingDate = new DateTime(2016, 3, 1,1,1,1), 
+                     DebitAccountId="1-1",
+                    CreditAccountId ="1-1",
+                    Reference1="Reference1",
+                 DueDate=    new DateTime(2016, 3, 1),
+                 DocumentDate=    new DateTime(2016, 3, 1),
+                }
+            }
+                }, "REGULAR JOURNAL SAME CREDIT SAME REFERENCE"));
+
+
+
+
+            listOfState2Check.Add(new Tuple<JournalPM, string>(
+                new JournalPM()
+                {
+                    TypeCode = "0",//REGULAR JOURNAL
+                    AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
+                    StatusCode = "0",
+                    JournalLines = new List<JournalLinePM>() {
+                new JournalLinePM(){
+                    Line=1,
+                    ActionTypeCode="2",
+                    LocalAmount=1 ,
+                     ExchangeRate=1,
+                     ForeignAmount=1,
+                     //AccountingDate = new DateTime(2016, 3, 1,1,1,1), 
+                     DebitAccountId="1-1",
+                    CreditAccountId ="1-1",
+                    Reference1="Reference1",
+                 DueDate=    new DateTime(2016, 3, 1),
+                 DocumentDate=    new DateTime(2016, 3, 1),
+                },
+                new JournalLinePM(){
+                    Line=1,
+                    ActionTypeCode="2",
+                    LocalAmount=1 ,
+                     ExchangeRate=1,
+                     ForeignAmount=1,
+                     //AccountingDate = new DateTime(2016, 3, 1,1,1,1), 
+                     DebitAccountId="1-1",
+                    CreditAccountId ="1-1",
+                    Reference1="Reference1",
+                 DueDate=    new DateTime(2016, 3, 1),
+                 DocumentDate=    new DateTime(2016, 3, 1),
+                }
+            }
+                }, "REGULAR JOURNAL SAME DEBIT SAME REFERENCE"));
+
+
+            foreach (var state in listOfState2Check)
+            {
+                var myJournalPM = state.Item1;
+
+                var myNewJournalValidatorContext = GetValidationContext(myJournalPM);
+                ValidationResult validationresult = JournalValidator.IsJournalValid(myJournalPM, myNewJournalValidatorContext);
+
+                Assert.IsNotNull(validationresult);
+                var errList = new List<String>(validationresult.MemberNames);
+                var messageExist = errList.Exists(m => m.Contains(JournalValidator.M_AccountingSameOppositeReference));
+
+                Assert.IsTrue(messageExist, state.Item2 + " SameOppositeReference Of " + lineCode);
+            }
+        }
+
+
+        [Ignore]
+        [TestMethod]
+        public void IsJournalValid07x02_NotRegJornal2rowsSameOppositeAccountSameReference1_NotContainsErrorContainsM()
+        {
+
+            var lineCode = "if (myJournalPM.JournalLines.Any(l => l.AccountingDate == DateTime.MinValue))";
+            var listOfState2Check = new List<Tuple<JournalPM, string>>();
+
+
+            listOfState2Check.Add(new Tuple<JournalPM, string>(
+                new JournalPM()
+                {
+                    TypeCode = "1",//template JOURNAL
+                    AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
+                    StatusCode = "0",
+                    JournalLines = new List<JournalLinePM>() {
+                new JournalLinePM(){
+                    Line=1,
+                    ActionTypeCode="1",
+                    LocalAmount=1 ,
+                     ExchangeRate=1,
+                     ForeignAmount=1,
+                     //AccountingDate = new DateTime(2016, 3, 1,1,1,1), 
+                     DebitAccountId="1-1",
+                    CreditAccountId ="1-1",
+                    Reference1="Reference1",
+                 DueDate=    new DateTime(2016, 3, 1),
+                 DocumentDate=    new DateTime(2016, 3, 1),
+                },
+                new JournalLinePM(){
+                    Line=1,
+                    ActionTypeCode="1",
+                    LocalAmount=1 ,
+                     ExchangeRate=1,
+                     ForeignAmount=1,
+                     //AccountingDate = new DateTime(2016, 3, 1,1,1,1), 
+                     DebitAccountId="1-1",
+                    CreditAccountId ="1-1",
+                    Reference1="Reference1",
+                 DueDate=    new DateTime(2016, 3, 1),
+                 DocumentDate=    new DateTime(2016, 3, 1),
+                }
+            }
+                }, "REGULAR JOURNAL SAME CREDIT SAME REFERENCE"));
+
+
+
+
+            listOfState2Check.Add(new Tuple<JournalPM, string>(
+                new JournalPM()
+                {
+                    TypeCode = "1",//template JOURNAL
+                    AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
+                    StatusCode = "0",
+                    JournalLines = new List<JournalLinePM>() {
+                new JournalLinePM(){
+                    Line=1,
+                    ActionTypeCode="2",
+                    LocalAmount=1 ,
+                     ExchangeRate=1,
+                     ForeignAmount=1,
+                     //AccountingDate = new DateTime(2016, 3, 1,1,1,1), 
+                     DebitAccountId="1-1",
+                    CreditAccountId ="1-1",
+                    Reference1="Reference1",
+                 DueDate=    new DateTime(2016, 3, 1),
+                 DocumentDate=    new DateTime(2016, 3, 1),
+                },
+                new JournalLinePM(){
+                    Line=1,
+                    ActionTypeCode="2",
+                    LocalAmount=1 ,
+                     ExchangeRate=1,
+                     ForeignAmount=1,
+                     //AccountingDate = new DateTime(2016, 3, 1,1,1,1), 
+                     DebitAccountId="1-1",
+                    CreditAccountId ="1-1",
+                    Reference1="Reference1",
+                 DueDate=    new DateTime(2016, 3, 1),
+                 DocumentDate=    new DateTime(2016, 3, 1),
+                }
+            }
+                }, "REGULAR JOURNAL SAME DEBIT SAME REFERENCE"));
+
+
+            foreach (var state in listOfState2Check)
+            {
+                var myJournalPM = state.Item1;
+
+                var myNewJournalValidatorContext = GetValidationContext(myJournalPM);
+                ValidationResult validationresult = JournalValidator.IsJournalValid(myJournalPM, myNewJournalValidatorContext);
+
+                Assert.IsNotNull(validationresult);
+                var errList = new List<String>(validationresult.MemberNames);
+                var messageExist = errList.Exists(m => m.Contains(JournalValidator.M_AccountingSameOppositeReference));
+
+                Assert.IsFalse(messageExist, state.Item2 + " SameOppositeReference Of " + lineCode);
+            }
+        }
+
+
     }
 
 }

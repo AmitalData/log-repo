@@ -25,6 +25,7 @@ export class ApiCredintialsComponent extends BaseComponent {
     private myService: ApiCredintialsPMService;
     private isPrimaryGenerated: boolean = false;
     private isSecondaryGenerated: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.myService = new ApiCredintialsPMService();
@@ -56,7 +57,7 @@ export class ApiCredintialsComponent extends BaseComponent {
 
             else {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                this.CurrentSession.StartBusyIndicatorLoading();
 
                 this.myService.get(this.EntityId).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
@@ -71,7 +72,7 @@ export class ApiCredintialsComponent extends BaseComponent {
                         }
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
         });
@@ -216,7 +217,7 @@ export class ApiCredintialsComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {        
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -235,36 +236,36 @@ export class ApiCredintialsComponent extends BaseComponent {
 
             if (this.IsNewEntity) {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+                this.CurrentSession.StartBusyIndicatorCreating();
 
                 this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
 
                     else {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                        this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                     }
                 });
             }
 
             else {
 
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
 
                 this.myService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
                     }
 
                     else {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                        this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                     }
                 });
             }            

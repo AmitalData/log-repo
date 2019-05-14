@@ -154,5 +154,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsBackToBack { get; set; }
+
+        public bool IsImport { get; set; }
+        public bool IsDomestic { get; set; }
+        public bool IsExport { get; set; }
+        public bool IsDrop { get; set; }
     }
 }

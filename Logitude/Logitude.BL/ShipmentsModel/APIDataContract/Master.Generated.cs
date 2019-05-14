@@ -20,7 +20,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     {
 
 	    
-	[XmlAttribute]
     public string Id { get; set; }
     
     public Direction Direction { get; set; }
@@ -94,6 +93,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public List<Receivable> Receivables { get; set; }
     
     public List<Payable> Payables { get; set; }
+    
+    public DimensionsUnit DimensionsUnit { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

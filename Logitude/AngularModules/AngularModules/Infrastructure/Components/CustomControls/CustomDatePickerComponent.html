@@ -1,4 +1,4 @@
-﻿<style type="text/css">
+<style type="text/css">
     .ComboBox:focus ul {
         /*transition: height 0.35s ease;*/
     }
@@ -77,7 +77,26 @@
         -webkit-border-radius: 3px;
         position: relative;
     }
-     .NewView {
+
+    .ComboBoxDisabled {
+        display: block;
+        height: 22px;
+        max-height: 22px;
+        line-height: 22px;
+        outline: none;
+        width: 100%;
+        background: white;
+        border: 1px solid #AAAAAA;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        position: relative;
+        cursor: pointer;
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .NewView {
         text-decoration: underline;
         float: left;
         color: #0000EE;
@@ -93,7 +112,7 @@
         }
 </style>
 
-<div class="ComboBox" [attr.id]="ControlId" style="width:250px;" (focus)="OnFocus()" (blur)="OnLostFocus()" (mouseover)="onMouseOver()" (mouseout)="onMouseOut()" tabindex="0">
+<div class="ComboBox" [class.ComboBoxDisabled]="IsDisabled" [attr.id]="ControlId" style="width:250px;" (focus)="OnFocus()" (blur)="OnLostFocus()" (mouseover)="onMouseOver()" (mouseout)="onMouseOut()" tabindex="0">
     <table (mousedown)="mousedown()">
         <tr>
             <td style="width: 2px;">
@@ -223,4 +242,3 @@
     </div>
 </div>
 
-     

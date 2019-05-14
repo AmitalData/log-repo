@@ -6,6 +6,9 @@ import {ServiceResponse} from '../DataContracts/ServiceResponse';
 import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
 import {TraceEventPM} from '../EntityPMs/TraceEventPM';
 import {ExportToExcelArgs} from '../DataContracts/ExportToExcelArgs';
+import { BIReportPM } from '../EntityPMs/BIReportPM';
+import { BIReportXMLData } from '../Services/InfrastructureDomainService';
+
 
 @Injectable()
 
@@ -83,7 +86,7 @@ export class WebFreightDomainService {
         var url = ServiceHelper.GetLogitudeURL() + 'api/TraceEventsDomain';
 
         return Observable.defer(() => {
-            return this._http.put(url, JSON.stringify(mappedArgs), { headers: authHeader }).map((response) => {
+            return this._http.put(url + "/PutDeleteTraceEvent", JSON.stringify(mappedArgs), { headers: authHeader }).map((response) => {
                 var myResult = response.json();
 
                 var myResponse = new ServiceResponse();
@@ -207,19 +210,99 @@ export class WebFreightDomainService {
         );
     }
 
-    GetExportBIReportToExcel(queryId: string, reportId:string) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetExportBIReportToExcel?queryId=' + queryId + '&reportId=' + reportId ; 
+    GetExportBIReportToExcel(QueryData: BIReportXMLData) {
         return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-                var allLists = response.json();
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = allLists;
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
+            var authHeader = new Headers();
+            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+            authHeader.append('Content-Type', 'application/json');
+            var errorsArray = [];//validator.Validate("AdvancedQueryFilter", entityPM);
+            var response: ServiceResponse;
+            response = new ServiceResponse();
+
+            if (errorsArray.length == 0) {
+                var mappedEntity: BIReportPM;
+                mappedEntity = this.MapJsonToEntityPM(QueryData.BIReportPM, false);
+                var temp = this.deepClone(QueryData.DWQueryData);
+                QueryData.BIReportPM = mappedEntity;
+                QueryData.DWQueryData = temp;
+                var temp2 = this.deepClone(QueryData);
+                /////////////////////////////////////////////////////
+                return this._http.put(this._apiUrl + "/PutExportBIReportToExcel", JSON.stringify(temp2),
+                    { headers: authHeader }).map((res) => {
+                        var entity = res.json();
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
+                        var servertime = res.headers.get('ServerExecutionTime');
+                        return serviceResponse;
+                    });
+            }
+            else {
+                return null;
+            }
+        }
+        );
+    }
+
+    MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: BIReportPM = null) {
+
+        if (!entityPM) {
+
+            entityPM = new BIReportPM();
+        }
+
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties") {
+
+                continue;
+            }
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+        }
+        return entityPM;
+    }
+
+
+    public deepClone(obj, hash = new WeakMap()) {
+        // Do not try to clone primitives or functions
+        if (Object(obj) !== obj || obj instanceof Function) {
+            return obj;
+        }
+
+        if (hash.has(obj)) {
+            //return hash.get(obj); // Cyclic reference
+            return;
+        }
+
+        try { // Try to run constructor (without arguments, as we don't know them)
+            var result = new obj.constructor();
+        }
+        catch (e) { // Constructor failed, create object without running the constructor
+            result = Object.create(Object.getPrototypeOf(obj));
+        }
+
+        // Optional: support for some standard constructors (extend as desired)
+        if (obj instanceof Map) {
+            Array.from(obj, ([key, val]) => result.set(this.deepClone(key, hash),
+                this.deepClone(val, hash)));
+        }
+        else if (obj instanceof Set) {
+            Array.from(obj, (key) => result.add(this.deepClone(key, hash)));
+        }
+
+        // Register in hash    
+        hash.set(obj, result);
+
+        // Clone and assign enumerable own properties recursively
+        return Object.assign(result, ...Object.keys(obj).map(
+            key => ({
+                [key]:
+
+                    key != "UIProperties" && key != "MyParentClass" ? this.deepClone(obj[key], hash) : true
+
+            })));
     }
 
     getHypridPartnerLogo(logoId: string) {

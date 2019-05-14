@@ -1422,15 +1422,15 @@
                                     var errorMessage = "";
 
                                         if (userdata.IpRestricted) errorMessage = "Unauthorized IP Address. Your IP is not authorized to access this account!";
-                                        if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
-                                        if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
-                                        if (userdata.InValidMailOrPassword)  errorMessage = "Login failed! invalid user name or password." + "<br/>";
+                                        else if (userdata.InActive) errorMessage = "Your account has been deactivated!" + "<br/>" + "please contact your administrator.";
+                                        else if (userdata.Unlicensed)  errorMessage = "Your account is unlicensed!" + "<br/>" + "please contact your administrator.";
+                                        else errorMessage = "Login failed! invalid user name or password." + "<br/>";
 
-                                    if (!errorMessage) errorMessage = "Please re-enter the characters you see in the image above";
-                              
-                                
+                                        if (userdata.InValidCaptcha && userdata.CaptchaImage) errorMessage = "Please re-enter the characters you see in the image above";
 
-                                   
+
+
+
                                     document.getElementById("errorsList").innerHTML = errorMessage;
                                     // $("#errorsList").text(errorMessage);
                                     $("#errorsList").show();
@@ -1573,6 +1573,12 @@
 
 
         LoginToAngular = function (userdata) {
+            var isTenantAllowed = false;
+            var Tenant = userdata.CurrentTenant;
+            if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638) {
+                isTenantAllowed = true;
+            }
+
             if (navigator.sayswho && navigator.sayswho.toString().indexOf("IE") > -1) {
                 alert("Internet explorer is not supported in HTML5 version, please use Chrome, Firefox or Opera.");
                 return;
@@ -1582,24 +1588,29 @@
                 alert("Edge is currently not supported in HTML5 version, please use Chrome, Firefox or Opera.");
                 return;
             }
-
  
-                if (navigator.userAgent != null) {
-                    if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {
-                        alert("IOS is currently not supported in HTML5 version");
-                        return;
-                    }
-
-                    else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {
-                        alert("IOS is currently not supported in HTML5 version");
-                        return;
-                    }
-
-                    else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {
+            if (navigator.userAgent != null) {
+                if (navigator.userAgent.toString().toLowerCase().indexOf("iphone") > -1) {                    
+                    if (!isTenantAllowed) {
                         alert("IOS is currently not supported in HTML5 version");
                         return;
                     }
                 }
+
+                else if (navigator.userAgent.toString().toLowerCase().indexOf("ipad") > -1) {                    
+                    if (!isTenantAllowed) {
+                        alert("IOS is currently not supported in HTML5 version");
+                        return;
+                    }
+                }
+
+                else if (navigator.userAgent.toString().toLowerCase().indexOf("ipod") > -1) {                    
+                    if (!isTenantAllowed) {
+                        alert("IOS is currently not supported in HTML5 version");
+                        return;
+                    }
+                }
+            }
             
 
             //if (navigator.sayswho && navigator.sayswho.toString().indexOf("Safari") > -1) {

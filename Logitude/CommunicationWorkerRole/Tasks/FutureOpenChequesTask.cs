@@ -34,16 +34,17 @@ namespace CommunicationWorkerRole.Tasks
                 {
                     var tenantRepo = new TenantRepository(0);
                     tenantsAccountingActivated = tenantRepo.All().Where(r => r.AccountingActivated).Select(r => r.Id).ToList();
+                    scope.Complete();
                 }
                 _SB.Append(DateTime.Now.ToString()).Append("tenantsAccountingActivated:").Append(String.Join(",", tenantsAccountingActivated)).AppendLine();
 
-                foreach (var tenant in tenantsAccountingActivated)
-                {
-                    _SB.Append(DateTime.Now.ToString()).Append("tenant:").Append(tenant).AppendLine();
+                //foreach (var tenant in tenantsAccountingActivated)
+                //{
+                   // _SB.Append(DateTime.Now.ToString()).Append("tenant:").Append(tenant).AppendLine();
                     try
                     {
                         var FutureOpenChequesBatch = new FutureOpenChequesBatch();
-                        FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency(tenant);
+                        FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency();
                         string responseText = FutureOpenChequesBatch.ResponseText();
                         _SB.Append(DateTime.Now.ToString()).Append("responseText:").Append(responseText).AppendLine();
                     }
@@ -51,10 +52,10 @@ namespace CommunicationWorkerRole.Tasks
                     {
                         failed = true;
                         _SB.Append(DateTime.Now.ToString()).Append("Exception:").Append(ex.Message).AppendLine();
-                        ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "WorkerRole", $"FutureOpenChequesTask({tenant})", null);
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", $"FutureOpenChequesTask()", null);
                     }
 
-                }
+                //}
             }
             finally
             {

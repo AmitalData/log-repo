@@ -40,7 +40,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MainCarriageFinalDestinationPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StatusId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StatusLocation).HasMaxLength(40).IsUnicode(true);
-            this.Property(t => t.MasterShipmentNumber).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.MasterShipmentNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.FWBStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.MainCarriageFromPartnerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.MainCarriageToPartnerId).HasMaxLength(15).IsUnicode(false);

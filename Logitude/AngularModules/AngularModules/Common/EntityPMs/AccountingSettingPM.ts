@@ -65,9 +65,14 @@ export class AccountingSettingPM {
     public set IsVatNumberMandatoryInAP(newValue: boolean) { if (this.isVatNumberMandatoryInAP != newValue) { this.isVatNumberMandatoryInAP = newValue; this.MarkAsDirty("IsVatNumberMandatoryInAP"); } }
        
 	 
-    private isChronologicalDates: boolean;
-    public get IsChronologicalDates() { return this.isChronologicalDates; }
-    public set IsChronologicalDates(newValue: boolean) { if (this.isChronologicalDates != newValue) { this.isChronologicalDates = newValue; this.MarkAsDirty("IsChronologicalDates"); } }
+    private isARInvoiceChronologicalDates: boolean;
+    public get IsARInvoiceChronologicalDates() { return this.isARInvoiceChronologicalDates; }
+    public set IsARInvoiceChronologicalDates(newValue: boolean) { if (this.isARInvoiceChronologicalDates != newValue) { this.isARInvoiceChronologicalDates = newValue; this.MarkAsDirty("IsARInvoiceChronologicalDates"); } }
+       
+	 
+    private isARPaymentChronologicalDates: boolean;
+    public get IsARPaymentChronologicalDates() { return this.isARPaymentChronologicalDates; }
+    public set IsARPaymentChronologicalDates(newValue: boolean) { if (this.isARPaymentChronologicalDates != newValue) { this.isARPaymentChronologicalDates = newValue; this.MarkAsDirty("IsARPaymentChronologicalDates"); } }
        
 	 
     private accountingSystemCode: string;
@@ -238,6 +243,11 @@ export class AccountingSettingPM {
     private enableNegativeOffsetAPPayments: boolean;
     public get EnableNegativeOffsetAPPayments() { return this.enableNegativeOffsetAPPayments; }
     public set EnableNegativeOffsetAPPayments(newValue: boolean) { if (this.enableNegativeOffsetAPPayments != newValue) { this.enableNegativeOffsetAPPayments = newValue; this.MarkAsDirty("EnableNegativeOffsetAPPayments"); } }
+       
+	 
+    private enableInvoiceStocksManagement: boolean;
+    public get EnableInvoiceStocksManagement() { return this.enableInvoiceStocksManagement; }
+    public set EnableInvoiceStocksManagement(newValue: boolean) { if (this.enableInvoiceStocksManagement != newValue) { this.enableInvoiceStocksManagement = newValue; this.MarkAsDirty("EnableInvoiceStocksManagement"); } }
        
 	 
 

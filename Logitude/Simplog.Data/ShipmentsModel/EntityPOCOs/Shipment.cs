@@ -74,6 +74,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string IncotermId { get; set; }
         public string SalesmanUserId { get; set; }
         public string CreatedByUserId { get; set; }
+        public string OperationalClosedByUserId { get; set; }
+        
         public string DepartmentId { get; set; }
         public string Notes { get; set; }
         public string DescriptionOfGoods { get; set; }
@@ -263,6 +265,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string AgentReference1 { get; set; }
         public string AgentReference2 { get; set; }
 
+        // Computed Agent
+        public string AgentComputed { get; set; }
+
         public string CustomAgentExportId { get; set; }
         public string CustomAgentExportAddressId { get; set; }
         public string CustomAgentExportContactId { get; set; }
@@ -338,6 +343,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? OnCarriageETA { get; set; }
         public DateTime? OnCarriageATA { get; set; }
         public string OnCarriageVesselId { get; set; }
+
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Origin { get; set; }
+        public string LastFinalDestination { get; set; }
+
         #endregion
 
         #region Booking
@@ -347,6 +358,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool OrderIsDangerouseGoods { get; set; }
         public double? OrderVolumetricWeight { get; set; }
         public double? OrderChargeableWeight { get; set; }
+        public bool OrderGrossWeightEdited { get; set; }
+        public bool OrderChargeableWeightEdited { get; set; }
         #endregion
 
         #region AWB
@@ -442,6 +455,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         //[ForeignKey("CreatedByUserId")]
         public virtual User CreatedByUser { get; set; }
 
+        public virtual User OperationalClosedByUser { get; set; }
 
 
 
@@ -690,8 +704,10 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual EventType LastSharedEvent { get; set; }
         public double? GrossWeightPerTon { get; set; }
         public DateTime? FirstOperationalCloseDate { get; set; }
+        public DateTime? FirstAccountingCloseDate { get; set; }
         public DateTime? AMSClosingDate { get; set; }
         public string UpdatedByPartner { get; set; }
+        public string ComputedShipmentNumber { get; set; }
 
         #region INTTRA
         public DateTime? INTTRASIStatusDate { get; set; }
@@ -721,7 +737,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string OnCarriageAdditionalTransportModeCode { get; set; }
         public virtual PickUpDeliveryTransportMode OnCarriageAdditionalTransportMode { get; set; }
 
-        public string LastFinalDestination { get; set; }
         public DateTime? FirstPickupETD { get; set; }
         public DateTime? FirstPickupETA { get; set; }
         public bool SplitOnCarriage { get; set; }
@@ -754,5 +769,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Address FreightPayerAddress { get; set; }
 
         public bool HasContainerException { get; set; }
+        public string ARInvoices { get; set; }
     }
 }

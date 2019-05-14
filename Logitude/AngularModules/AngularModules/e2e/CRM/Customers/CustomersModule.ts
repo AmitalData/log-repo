@@ -6,31 +6,27 @@ import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
 export class CustomerModule {
     private Helper: FieldsHelper;
-    private Generator: GeneralFunctions;
+    private GeneralFun: GeneralFunctions;
 
     private addPotCustomer: NewPotentialCustomer;
 
 
     constructor() {
         this.Helper = new FieldsHelper();
-        this.Generator = new GeneralFunctions();
+        this.GeneralFun = new GeneralFunctions();
         this.addPotCustomer = new NewPotentialCustomer();
     }
 
     public CreateCustomer() {
-        var customerNo = this.Generator.RandomNum();
+        var customerNo = this.GeneralFun.RandomNum();
 
         this.addPotCustomer.CreateNewPotentialCustomer('Customer # ' + customerNo);
-        this.QuickSearchBox('Opportunity_Search', 'Customer # ' + customerNo);
+        this.GeneralFun.QuickSearchTextBox('Card_Search', 'Customer # ' + customerNo);
      
         // browser.driver.sleep(6000);
 
     }
-    QuickSearchBox(searchFeildId: string, searchByRef: string) {
-        this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.LogitudeQuickSearchItem', 0);
-    }
-
+  
 
 }
 

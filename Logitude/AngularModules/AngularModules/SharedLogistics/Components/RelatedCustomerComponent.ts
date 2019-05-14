@@ -1,4 +1,4 @@
-﻿import {Component, OnInit,Output,EventEmitter}  from '@angular/core';
+import {Component, OnInit,Output,EventEmitter}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
@@ -59,7 +59,7 @@ export class RelatedCustomerComponent extends BaseComponent{
 
     ViewLog(itemComponent) {
         if (itemComponent.Id != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: itemComponent.Id, ObjectTableName: 'APILogs', BackButtonLabel: "Back" });
@@ -90,7 +90,7 @@ export class RelatedCustomerComponent extends BaseComponent{
     public EditRelatedCustomer(item: AddEditCustomerTenantAccessCardViewModel) {
         this.TenantAccessCard = item.EntityPM;
         var service: CommonDomainService = new CommonDomainService();
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         service.GetSingleCustomerTenantAccess(this.EntityPM.Id).subscribe(res => {
             if (!res.HasError) {
                 this.RealCustomerTenantAccessPM = res.Result;
@@ -101,7 +101,7 @@ export class RelatedCustomerComponent extends BaseComponent{
                     logitudeWindow.Title = "Edit Card" + " - " + this.TenantAccessCard.CustomerCode + " - " + this.TenantAccessCard.CustomerName;
                     logitudeWindow.Show('./SharedLogistics/Components/EditRelatedCustomerComponent');
                     logitudeWindow.ComponentLoaded.subscribe(p => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     });
                     logitudeWindow.WindowClosed.subscribe(p => {
                         if (p == "OK") {
@@ -138,16 +138,22 @@ export class RelatedCustomerComponent extends BaseComponent{
             value = LastThirtyDaysDate;
         }
         filters.addAdditionalFilter("CreateDate", value, null, null, "GreaterThanOrEqual", false, true, false, "datetime");
-        filters.GetAll = true;        
+        filters.PageSize = 100;
+        filters.PageIndex = 0;
+        filters.SortBy = "CreateDate";
+        filters.SortDirection = "Descending";
         service.getByFilters(filters).subscribe(result => {
             this.APILogsObsList = result.Result.sort((a, b) => { return (DateTool.GetDateFromDate(a.CreateDate) === DateTool.GetDateFromDate(b.CreateDate)) ? 0 : (DateTool.GetDateFromDate(a.CreateDate) > DateTool.GetDateFromDate(b.CreateDate)) ? -1 : 1 });
-;
+
         });
     }
     QueriesSelectedChange($event) {
         var service: QueueMessageMoreDetailsListService = new QueueMessageMoreDetailsListService();
         var filters: ApiQueryFilters = new ApiQueryFilters();
-        filters.GetAll = true;
+        filters.PageSize = 100;
+        filters.PageIndex = 0;
+        filters.SortBy = "CreateDateTime";
+        filters.SortDirection = "Descending";
         service.getByFilters(filters).subscribe(result => {
             this.QueryObsList = result.Result;
         });
@@ -180,10 +186,10 @@ export class RelatedCustomerComponent extends BaseComponent{
 
 
     }
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs,private _entityResourceService: EntityResourceService) {
         super();
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccess", 0).subscribe(response => {
             this.EntityPM = entityArgs.EntityPM;
             this.ObjectTableName = "CustomerTenantAccess";
@@ -242,6 +248,10 @@ export class RelatedCustomerComponent extends BaseComponent{
         this.LogsSelectedChange(this.SelectedLogItem);
     }
 
+    RefreshQueues() {
+        this.QueriesSelectedChange(this.SelectedQueryItem);
+    }
+
     AddBatch() {
 
         if (this.SelectedCardPM != null) {
@@ -261,14 +271,14 @@ export class RelatedCustomerComponent extends BaseComponent{
 
     SetBatchTitle() {
         if (this.SelectedTabCode == "B") {
-            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Batch Build History";
+            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Batch Build History (last 100)";
         }
         else if (this.SelectedTabCode == "L") {
-            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Logs History";
+            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Logs History (last 100)";
             this.LogsSelectedChange(this.SelectedLogItem);
         }
         else if (this.SelectedTabCode == "Q") {
-            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Queues History ";
+            this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Queues History (last 100) ";
         }
     }
     public get SelectedItem() { return this.selectedItem; }
@@ -326,7 +336,7 @@ export class RelatedCustomerComponent extends BaseComponent{
                     this.TipVisibility = false;
                 }
             }
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
 
     }

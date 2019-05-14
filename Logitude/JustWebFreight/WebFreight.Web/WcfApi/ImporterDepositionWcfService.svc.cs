@@ -12,6 +12,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Web;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
@@ -38,9 +39,8 @@ namespace WebFreight.Web.WcfApi
 
                 if (importerDepositionPM != null)
                 {
-                    importerDepositionPM.Tenant = authToken.Tenant;
                     ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
-                    response = await importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM);
+                    response = await importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM, authToken.Tenant);
                 }
 
                 return response;

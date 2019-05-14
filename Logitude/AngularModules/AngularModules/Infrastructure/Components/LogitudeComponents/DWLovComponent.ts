@@ -51,7 +51,7 @@ import {DWQueryBuilderService} from '../../Services/ExtendedPMs/DWQueryBuilderSe
 })
 
 export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
-
+    private CurrentSession = SessionLocator.SelectedSession;
     public _DWQueryBuilderService: DWQueryBuilderService;
     private forceFocus: any;
     @Input()
@@ -144,7 +144,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
             this.searchTextNgModel = newValue;
             this.DisplayTextNgModel = "";
             if (this.searchTextNgModel) {
-                this.searchTextNgModel.split(";").forEach((item) => {
+                this.searchTextNgModel.split(";;").forEach((item) => {
                     this.DisplayTextNgModel += (item + "; ");
                 });
 
@@ -326,7 +326,7 @@ export class DWLovComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.FocusOnMe) {
                 var element = document.getElementById(this.ElementId);
                 element.focus();
-                SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, OnBlurEvent: this.OnBlurEvent });
+                this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, OnBlurEvent: this.OnBlurEvent });
                 this.timerToken = setTimeout(() => {
                     Selection(element);
                 }, 1);

@@ -5,4 +5,5 @@ export class DWQueryData {
     public Filters: any;
     public PageIndex: number;
     public PageSize: number;
+    public ColumnsSort: string;
 }

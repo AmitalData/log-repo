@@ -43,6 +43,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using System.Text;
 using System.IO;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -176,28 +177,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void GetLoggedContact()
         {
-
-            string email = SecurityUtility.GetAuthenticatedUser();
-           ContactQuery contactQuery = new ContactQuery(tenant);
-            this.loggedContact = contactQuery.GetContactByNameAndTenant(email, tenant, true);
-
-            if (this.loggedContact == null)
+            loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+            
+            if (loggedContact != null)
             {
-                loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
-                if (loggedContact != null)
-                {
-                    this.loggedContactId = loggedContact.Id;
-                    this.loggedContactName = loggedContact.EnglishName;
-                }
+                loggedContactId = loggedContact.Id;
+                loggedContactName = loggedContact.EnglishName;
             }
-            else
-            {
-                this.loggedContactId = loggedContact.Id;
-                this.loggedContactName = loggedContact.EnglishName;
-
-            }
-
-           
         }
 
         private bool isJournal;
@@ -221,7 +207,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.entityPM = theEntityPM;
-            isVoidingInvoice = this.entityPM.SetVoided;
+            this.isVoidingInvoice = this.entityPM.SetVoided;
             this.isApprovingInvoice = entityPM.SetApproved;
             this.invoice = new ARInvoice();
 
@@ -252,10 +238,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.UpdateInvoiceLines();
             this.UpdateTotalVats();
             this.BuildSearchFields();
+            // Full Accounting - Tax Fields Work 
+            this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
 
             ARInvoiceHelper helper = new ARInvoiceHelper();
             helper.ARInvoiceQuickbooksValidating(entityPM, this.isApprovingInvoice, isNewEntity,this.objectContext,this.myCommonContext,isVoidingInvoice);
-
+         
             ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
             invoiceRepository.Add(invoice);
             invoiceRepository.SubmitChanges();
@@ -265,10 +253,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 shipmentReceivableRepository.SubmitChanges();
             }
 
+            if (entityPM.IsInvoiceNumberFromStock)
+            {
+                this.ARInvoiceStockNumber();
+            }
+
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.OnApprovingInvoice();
-
           
             if (this.isApprovingInvoice || entityPM.IsAutoCredit)
             {
@@ -356,6 +348,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.invoice = invoiceRepository.GetSingleInvoice(entityPM.Id);
 
+            if (invoice.StatusCode == "AR")
+            {
+                if (this.entityPM.StatusCode == "AD")
+                {
+                    throw new ApplicationException("this invoice is already auto credited");
+                }
+            }
+
             this.ValidateInvoiceConnected();
 
             if (entityPM.SetApproved)
@@ -381,7 +381,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (entityPM.SetCancelDraft)
             {
                 this.CancelDraftInvoice();
+
+                ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
                 ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
+
+                if (isNewEntity)
+                {
+                    if (entityPM.NewConcurrencyGUID == null)
+                    {
+                        entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+                    }
+                }
+
+                invoice.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+                entityPM.ConcurrencyGUID = invoice.ConcurrencyGUID;
             }
 
             else
@@ -409,6 +422,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 this.InitializeComponent();
+
+                this.ARInvoiceStockNumber();
 
                 ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
                 ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
@@ -441,7 +456,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
-                
+               
+
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
                 invoiceRepository.Update(invoice);
                 invoiceRepository.SubmitChanges();
@@ -469,21 +485,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 this.BuildSearchFields();
+
+               
             }
 
             invoiceRepository.Update(invoice);
             invoiceRepository.SubmitChanges();
 
-            if(!String.IsNullOrEmpty(QBOARPaymentId))
+            if (!String.IsNullOrEmpty(QBOARPaymentId))
             {
                 ARPaymentHelper service = new ARPaymentHelper();
                 ARPaymentQuery PaymentQuery = new ARPaymentQuery(paymentRepository);
                 ARPaymentPM paymentPM = PaymentQuery.GetSinglePM(QBOARPaymentId, tenant);
                 if (paymentPM.TransferStatusCode == "TR")
-                {              
-                ARPaymentRepository repository = new ARPaymentRepository(tenant);
-                ARPayment payment = repository.GetSingleARPayment(paymentPM.Id, tenant);
-                service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
+                {
+                    ARPaymentRepository repository = new ARPaymentRepository(tenant);
+                    ARPayment payment = repository.GetSingleARPayment(paymentPM.Id, tenant);
+                    service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
                 }
             }
 
@@ -494,6 +512,90 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.OnApprovingInvoice();
         }
 
+        private void ARInvoiceStockNumber()
+        {
+            if(!this.isApprovingInvoice && !this.isVoidingInvoice)
+            {
+                IInvoiceContext context = InvoiceContext.GetContext(tenant);
+                ARInvoiceStockLineRepository aRInvoiceStockLineRepository = new ARInvoiceStockLineRepository(tenant);
+                ARInvoiceStockQuery aRInvoiceStockQuery = new ARInvoiceStockQuery(tenant);
+                ARInvoiceStockService aRInvoiceStockService = new ARInvoiceStockService(context, tenant);
+                ARInvoiceStockPM stock = new ARInvoiceStockPM();
+                ARInvoiceStockLine stockLine = new ARInvoiceStockLine();
+
+                if (this.isNewEntity)
+                {
+                    if(entityPM.ARInvoiceStockId != null)
+                    {
+                        stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(entityPM.ARInvoiceStockId, tenant);
+                        if(stockLine != null)
+                        {
+                            stockLine.IsUsed = true;
+                            stockLine.ARInvoiceId = entityPM.Id;
+                            stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            stockLine.ShipmentNumber = entityPM.MainEntityReference;
+                            aRInvoiceStockLineRepository.Update(stockLine);
+                            aRInvoiceStockLineRepository.SubmitChanges();
+                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, tenant);
+                            aRInvoiceStockService.Update(stock,false);
+                            this.CreateInvoiceStockEvent("NTFS", entityPM.Id, stockLine.Number + " added from " + stock.Name);
+                        }
+                    }
+                }
+
+                else
+                {
+                    if (entityPM.ARInvoiceStockId != this.invoice.ARInvoiceStockId)
+                    {
+                        stockLine = new ARInvoiceStockLine();
+                        if (entityPM.ARInvoiceStockId == null)
+                        {
+                            stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine( this.invoice.ARInvoiceStockId, tenant);
+                            stockLine.IsUsed = false;
+                            stockLine.ARInvoiceId = null;
+                            stockLine.ShipmentNumber = null;
+                            stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            aRInvoiceStockLineRepository.Update(stockLine);
+                            aRInvoiceStockLineRepository.SubmitChanges();
+                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, tenant);
+                            this.CreateInvoiceStockEvent("NRTS", entityPM.Id, stockLine.Number + " returned to " + stock.Name);
+                            this.entityPM.IsInvoiceNumberFromStock = false; 
+                        }
+
+                        else
+                        {
+                            stockLine = aRInvoiceStockLineRepository.GetSingleARInvoiceStockLine(entityPM.ARInvoiceStockId, tenant);
+                            stockLine.IsUsed = true;
+                            stockLine.ARInvoiceId = entityPM.Id;
+                            stockLine.ShipmentNumber = entityPM.MainEntityReference;
+                            stockLine.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                            stockLine.UpdatedByUserId = this.loggedContact.Id;
+                            aRInvoiceStockLineRepository.Update(stockLine);
+                            aRInvoiceStockLineRepository.SubmitChanges();
+                            stock = aRInvoiceStockQuery.GetSinglePM(stockLine.ARInvoiceStockId, tenant);
+                            this.CreateInvoiceStockEvent("NTFS", entityPM.Id, stockLine.Number + " added from "+ stock.Name);
+                        }
+                       
+                        aRInvoiceStockService.Update(stock, false);
+                    }
+                }
+            }
+        }
+       
+        private void CreateInvoiceStockEvent(String code, string entityId, string note)
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = entityId,
+                ObjectTableName = "ARInvoice",
+                Tenant = tenant,
+                UserId = loggedContactId,
+                EventTypeCode = code,
+                Notes = note,
+            });
+        }
         private void BuildFlatfile(ARInvoicePM ARInvoice)
         {
 
@@ -1101,7 +1203,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                 }
 
-                if (!entityPM.IsInvoiceNumberManuallySet)
+                if (!entityPM.IsInvoiceNumberManuallySet && !entityPM.IsInvoiceNumberFromStock)
                 {
                     if (string.IsNullOrEmpty(entityPM.InvoiceNumber))
                     {
@@ -1224,21 +1326,27 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (!entityPM.IsExternalAPI)
             {
-                if (string.IsNullOrEmpty(entityPM.InvoiceNumber) || entityPM.InvoiceNumber == entityPM.Id)
+                if (!entityPM.IsInvoiceNumberManuallySet)
                 {
-                    if (entityPM.IsConstituentInvoice)
+                    if (!entityPM.IsInvoiceNumberFromStock)
                     {
-                        entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null);
-                    }
+                        if (string.IsNullOrEmpty(entityPM.InvoiceNumber) || entityPM.InvoiceNumber == entityPM.Id)
+                        {
+                            if (entityPM.IsConstituentInvoice)
+                            {
+                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null);
+                            }
 
-                    else if (entityPM.IsConsolidationInvoice)
-                    {
-                        entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null);
-                    }
+                            else if (entityPM.IsConsolidationInvoice)
+                            {
+                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null);
+                            }
 
-                    else
-                    {
-                        entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null);
+                            else
+                            {
+                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null);
+                            }
+                        }
                     }
                 }
             }
@@ -1255,9 +1363,38 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             else
             {
-                entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
-                entityPM.AmountDueInLocalCurrency = entityPM.AmountDueInLocalCurrency == null ? 0 : entityPM.AmountDueInLocalCurrency.Value;
-                entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
+                if (this.isNewEntity)
+                {
+                    entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
+                    entityPM.AmountDueInLocalCurrency = entityPM.AmountDueInLocalCurrency == null ? 0 : entityPM.AmountDueInLocalCurrency.Value;
+                    entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
+                }
+                else
+                {
+
+
+                    bool isPaymentsChanged = false;
+
+                    if (invoicePaymentsChangeSet.Where(d => d.ChangeSetOp == ChangeSetOperation.Insert || d.ChangeSetOp == ChangeSetOperation.Delete).Count() > 0)
+                    {
+                        isPaymentsChanged = true;
+                    }
+
+                    if (!isPaymentsChanged)
+                    {
+                        if (entityPM.StatusCode == "PP" || entityPM.StatusCode == "PD")
+                        {
+
+                        }
+
+                        else
+                        {
+                            entityPM.AmountDue = entityPM.AmountInInvoiceCurrency == null ? 0 : entityPM.AmountInInvoiceCurrency.Value;
+                            entityPM.AmountDueInLocalCurrency = entityPM.AmountDueInLocalCurrency == null ? 0 : entityPM.AmountDueInLocalCurrency.Value;
+                            entityPM.AmountDueInProfitCurrency = entityPM.AmountDueInProfitCurrency == null ? 0 : entityPM.AmountDueInProfitCurrency.Value;
+                        }
+                    }
+                }
             }
         }
 
@@ -3020,18 +3157,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         if (payment.OpenAmount == 0)
                         {
+                            payment.IsClosed = true;
+
                             if (payment.StatusCode == "AD")
-                            {
-                                payment.IsClosed = true;
+                            {                                
                                 payment.StatusCode = "CL";
                             }
                         }
 
                         else
                         {
+                            payment.IsClosed = false;
+
                             if (payment.StatusCode != "DR")
                             {
-                                payment.IsClosed = false;
                                 payment.StatusCode = "AD";
                             }
                         }
@@ -3349,6 +3488,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     UpdateShipmentProfitClass.UpdateReceivables(entityPM.MainEntityId, tenant, true);
                     UpdateShipmentProfitClass.UpdateProfit(entityPM.MainEntityId, entityPM.Tenant);
+
+                    if (this.isApprovingInvoice || this.isVoidingInvoice)
+                    {
+                        // allActiveShipmentIds
+
+                        UpdateShipmentProfitClass.UpdateARInvoices(entityPM.MainEntityId, entityPM.Tenant);
+                    }
+
+                    else if(isNewEntity && this.entityPM.IsAutoCredit)
+                    {
+                        UpdateShipmentProfitClass.UpdateARInvoices(entityPM.MainEntityId, entityPM.Tenant);
+                    }
                 }
             }
         }

@@ -18,7 +18,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
            
 
             List<ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques
-                                                    where paymentIds.Contains(a.PaymentId) && a.Tenant == tenant && a.StatusCode != "8" && a.StatusCode != "5"
+                                                    where paymentIds.Contains(a.PaymentId) && a.Tenant == tenant && a.StatusCode != "6" && a.StatusCode != "5"
                                                     select a).ToList();
 
             return paymentCheques.Select(r => this.GetEntityPM(r)).ToList();
@@ -40,6 +40,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
 
         }
+
+      
 
         public List<ARPaymentChequePM>  GetListByPaymentId(string paymentId, int tenant)
         {

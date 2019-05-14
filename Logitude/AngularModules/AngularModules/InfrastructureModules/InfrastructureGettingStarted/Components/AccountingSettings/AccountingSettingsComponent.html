@@ -133,27 +133,38 @@
                                                                     </td>
                                                                 </tr>
 
-                                                                <!-- IsChronologicalDates -->
+                                                                <!-- IsARInvoiceChronologicalDates -->
                                                                 <tr>
                                                                     <td>
-                                                                        <LogLabel [ObjectFieldName]="'IsChronologicalDates'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        <LogLabel [ObjectFieldName]="'IsARInvoiceChronologicalDates'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
                                                                     <td>
-                                                                        <LogCheckBox [ObjectFieldName]="'IsChronologicalDates'" [Checked]="IsChronologicalDates" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        <LogCheckBox [ObjectFieldName]="'IsARInvoiceChronologicalDates'" [Checked]="IsARInvoiceChronologicalDates" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <!-- IsARPaymentChronologicalDates -->
+                                                                <tr>
+                                                                    <td>
+                                                                        <LogLabel [ObjectFieldName]="'IsARPaymentChronologicalDates'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <LogCheckBox [ObjectFieldName]="'IsARPaymentChronologicalDates'" [Checked]="IsARPaymentChronologicalDates" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                                     </td>
                                                                 </tr>
 
                                                                 <!-- IsARInvoicesTransferEnabled -->
                                                                 <!--<tr>
-                                                                    <td>
-                                                                        <LogLabel [ObjectFieldName]="'IsARInvoicesTransferEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                    </td>
+        <td>
+            <LogLabel [ObjectFieldName]="'IsARInvoicesTransferEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+        </td>
 
-                                                                    <td>
-                                                                        <LogCheckBox [ObjectFieldName]="'IsARInvoicesTransferEnabled'" [Checked]="IsARInvoicesTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                                    </td>
-                                                                </tr>-->
+        <td>
+            <LogCheckBox [ObjectFieldName]="'IsARInvoicesTransferEnabled'" [Checked]="IsARInvoicesTransferEnabled" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+        </td>
+    </tr>-->
                                                                 <!-- IsSingleTaxPerInvoice -->
                                                                 <tr>
                                                                     <td>
@@ -173,7 +184,7 @@
                                                                                     <HelpIcon [HideHeader]="true" [Text]="'You are limited to use one VAT type per invoice'"></HelpIcon>
                                                                                 </td>
                                                                             </tr>
-                                                                        </table>                                                                        
+                                                                        </table>
                                                                     </td>
                                                                 </tr>
 

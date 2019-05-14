@@ -23,11 +23,14 @@ export class FilterField extends BaseComponent {
     public IsFilterDeleteButtonVisible: boolean = false;
     public BooleanFiltersEnabled: boolean = false;
     public TextFiltersEnabled: boolean = false;
-
+    public LOVFiltersEnabled: boolean = false;
+    public DateFiltersEnabled: boolean = false;
+    public PickFiltersEnabled: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(objectField: any, queryId: string, iswidnowMode: boolean, AdvancedQFPMs: AdvancedQueryFilterPM[], parentClass: any = null, filterchangeevent: PubSubService = null) {
         super();
-        this.SessionIdx = SessionLocator.CurrentSession.SessionIndex;
-        this.ControlId = "CheckBox_" + SessionLocator.CurrentSession.GetNewId("CheckBox");
+        this.SessionIdx = this.CurrentSession.SessionIndex;
+        this.ControlId = "CheckBox_" + this.CurrentSession.GetNewId("CheckBox");
         this.QueryId = queryId;
         this.Filterchangeevent = filterchangeevent;
         this.ParentClass = parentClass;
@@ -54,6 +57,7 @@ export class FilterField extends BaseComponent {
                     }
                     else {
                         this.TextValue = preDefinedFilter.PredefinedValue;
+                        this.TextValue1 = preDefinedFilter.PredefinedValue2;
                     }
                 }
                 else {
@@ -81,6 +85,7 @@ export class FilterField extends BaseComponent {
                     }
                     else {
                         this.TextValue = preDefinedFilter.PredefinedValue;
+                        this.TextValue1 = preDefinedFilter.PredefinedValue2;
                     }
                 }
                 else {
@@ -93,16 +98,56 @@ export class FilterField extends BaseComponent {
             }
         }
 
-        if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
-            this.TextFiltersEnabled = true;
+        var currentQuery = window.Queries.filter(d => d.Id == this.QueryId)[0];
+        if (currentQuery != null) {
+            if (!AppTool.IsNullOrEmpty(currentQuery.SharedByUserId) && currentQuery.SharedByUserId != SessionLocator.LoggedUserId) {
+                if (FeatureLocator.HasFeaturePermession("User", "User.Feature.EditSharedViews")) {
+                    if (this.ObjectField) {
+                        this.TextFiltersEnabled = true;
+                        this.LOVFiltersEnabled = true;
+                        this.DateFiltersEnabled = true;
+                        this.PickFiltersEnabled = true;
 
-            if (this.ObjectField.DataTypeCode != "Constant") {
+                        if (this.ObjectField.DataTypeCode != "Constant") {
+                            this.IsFilterDeleteButtonVisible = true;
+                        }
+
+                        if (!this.IsCustomFilter) {
+                            this.BooleanFiltersEnabled = true;
+                        }
+                    }
+                }
+            }
+
+            else {
+                this.TextFiltersEnabled = true;
                 this.IsFilterDeleteButtonVisible = true;
-            }
-
-            if (!this.IsCustomFilter) {
                 this.BooleanFiltersEnabled = true;
+                this.LOVFiltersEnabled = true;
+                this.DateFiltersEnabled = true;
+                this.PickFiltersEnabled = true;
             }
+        }
+
+        else {
+            this.TextFiltersEnabled = true;
+            this.IsFilterDeleteButtonVisible = true;
+            this.BooleanFiltersEnabled = true;
+            this.LOVFiltersEnabled = true;
+            this.DateFiltersEnabled = true;
+            this.PickFiltersEnabled = true;
+        }
+
+        if (this.ObjectField.DataTypeCode == "Text" || this.ObjectField.DataTypeCode == "nText" || this.ObjectField.DataTypeCode == "Integer" || this.ObjectField.DataTypeCode == "Double" || this.ObjectField.DataTypeCode == "Decimal") {
+            this.UIProperties.SetEnabled("TextValue", null, this.TextFiltersEnabled);
+        }
+
+        else if (this.ObjectField.DataTypeCode == "LookUp") {
+            this.UIProperties.SetEnabled("TextValue", this.ObjectTable.Name, this.LOVFiltersEnabled);
+        }
+
+        else if (this.ObjectField.DataTypeCode == "PickList") {
+            this.UIProperties.SetEnabled(this.ObjectField.FieldName, this.ObjectTable.Name, this.PickFiltersEnabled);
         }
     }
     
@@ -388,9 +433,9 @@ export class FilterField extends BaseComponent {
             this.list.push(this.equalsOp);
             this.list.push(this.greaterThanOrEqualOp);
             this.list.push(this.lessThanOrEqualOp);
-            //if (ruleMode) {
-            //    list.push(notEqualsOp);
-            //}
+            if (field.DataTypeCode == "DateTime" || field.DataTypeCode == "Date") {
+                this.list.push(this.BetweenOp);
+            }
         }
 
 

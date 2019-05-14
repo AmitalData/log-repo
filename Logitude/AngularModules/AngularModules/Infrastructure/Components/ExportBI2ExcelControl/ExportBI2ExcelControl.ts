@@ -9,6 +9,7 @@ import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { AmitalGatewayUtil } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { BIReportXMLData} from '../../../Infrastructure/Services/InfrastructureDomainService';
 
 @Component({
     moduleId: module.id,
@@ -22,6 +23,7 @@ export class ExportBI2ExcelControl {
     Filters: ApiQueryFilters;
     url: string;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);//true;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private http: Http) {
         ServiceHelper.Http = http;
     }
@@ -32,12 +34,15 @@ export class ExportBI2ExcelControl {
     queryId: string;
     reportId: string;
     userid: string;
+    BIReportXMLData: BIReportXMLData = null;
+
     SetWindowArgs(args: any) {
         var myService: WebFreightDomainService = new WebFreightDomainService();
         this.queryId = args.queryId;
         this.reportId = args.reportId;
         this.queryName = args.reportName;
-        myService.GetExportBIReportToExcel(this.queryId, this.reportId).subscribe((myResponse: ServiceResponse) => {
+        this.BIReportXMLData = args.BIReportXMLData;
+        myService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 if (myResponse.Result == "Faild") {
                     this.btnRetryVisibile = true;
@@ -57,11 +62,11 @@ export class ExportBI2ExcelControl {
     SaveExcelFile(tenant: number, FileName: string, OTName: string) {
         var tempDate = new Date();
         var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + this.queryName + "_" + MyDate;
+        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + this.queryName + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007"; //+ "&bireport=" + "bireport";
         {
             window.open(url);
         }
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveBtnCLicked() {
@@ -72,7 +77,7 @@ export class ExportBI2ExcelControl {
         this.busyExportingVisibile = true;
         this.btnSaveToFileVisibile = false;
         var myService: WebFreightDomainService = new WebFreightDomainService();
-        myService.GetExportBIReportToExcel(this.queryId, this.reportId).subscribe((myResponse: ServiceResponse) => {
+        myService.GetExportBIReportToExcel(this.BIReportXMLData).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 if (myResponse.Result == "Faild") {
                     this.btnRetryVisibile = true;
@@ -90,6 +95,6 @@ export class ExportBI2ExcelControl {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

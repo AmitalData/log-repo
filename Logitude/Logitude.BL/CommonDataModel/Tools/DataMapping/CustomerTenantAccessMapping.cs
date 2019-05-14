@@ -52,7 +52,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CompanyName);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CompanyEmail);
             MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.ContactName);
-         
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CompanyVat);
+            MethodHelper.AddToSearchFields(ref mySearchFields, entityPM.CustomerTenant.ToString());
 
             if (mySearchFields.Length > 1000)
             {

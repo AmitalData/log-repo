@@ -314,10 +314,27 @@ export class ObjectTablePM {
     public get AllowedInQueues() { return this.allowedInQueues; }
     public set AllowedInQueues(newValue: boolean) { if (this.allowedInQueues != newValue) { this.allowedInQueues = newValue; this.MarkAsDirty("AllowedInQueues"); } }
        
+	 
+    private lovDisplayMemberPath: string;
+    public get LovDisplayMemberPath() { return this.lovDisplayMemberPath; }
+    public set LovDisplayMemberPath(newValue: string) { if (this.lovDisplayMemberPath != newValue) { this.lovDisplayMemberPath = newValue; this.MarkAsDirty("LovDisplayMemberPath"); } }
+       
+	 
+    private lovDisplayMemberPathLocal: string;
+    public get LovDisplayMemberPathLocal() { return this.lovDisplayMemberPathLocal; }
+    public set LovDisplayMemberPathLocal(newValue: string) { if (this.lovDisplayMemberPathLocal != newValue) { this.lovDisplayMemberPathLocal = newValue; this.MarkAsDirty("LovDisplayMemberPathLocal"); } }
+       
+	 
     private displayName: string;
     public get DisplayName() { return this.displayName; }
     public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
-
+       
+	 
+    private isTabsHidden: boolean;
+    public get IsTabsHidden() { return this.isTabsHidden; }
+    public set IsTabsHidden(newValue: boolean) { if (this.isTabsHidden != newValue) { this.isTabsHidden = newValue; this.MarkAsDirty("IsTabsHidden"); } }
+       
+	 
 
     public OldEntityPM: ObjectTablePM;
 		

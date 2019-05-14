@@ -30,7 +30,7 @@
 	BEGIN
 
 	set @Key = (select Id from DIM_Incoterms where Id = @Id)
-	if(@Key is  null) begin  insert into DIM_Incoterms values(@Id,@Name,@LocalName,@Code ,@SourceTenant , @ParentTenant); end
+	if(@Key is  null) begin  insert into DIM_Incoterms (Id,Name,[Local Name],Code,[Source Tenant],[Parent Tenant]) values(@Id,@Name,@LocalName,@Code ,@SourceTenant , @ParentTenant) end
 	else begin update   DIM_Currencies set Name =@Name,  [Local Name] =@LocalName ,  Code = @Code ,[Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant  Where Id = @Id; end
     
 

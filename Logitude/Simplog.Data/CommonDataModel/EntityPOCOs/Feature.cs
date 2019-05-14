@@ -18,6 +18,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsBusinessUnitEnabled { get; set; }
         public bool IsOld { get; set; }
         public bool IsCoreFeature  { get; set; }
+        public string ToggleCode { get; set; }
 
         [ForeignKey("FeatureTypeCode")]
         public FeatureType FeatureType { get; set; }
@@ -27,6 +28,5 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
          
         [ForeignKey("ObjectTableId")]
         public ObjectTable ObjectTable { get; set; }
-
     }
 }

@@ -56,20 +56,35 @@
             border: 1px solid #3BB3E2;
         }
 
+    .InputDivNoBorder {
+        height: 20px;
+        min-height: 20px;
+        max-height: 20px;
+        width: 100%;
+        outline: none;
+        font-size: 11px;
+        color: #45494A;
+        background: white;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
     .InputDivDisabled {
         opacity: 0.5;
         /*pointer-events: none;*/
     }
 
-  .TextAreaDisabled {
-    /*background:#e2e2e2 !important;*/
-    opacity: 0.5;
-  }
-
-    .ArialFont{
-        font-family:Arial;
+    .TextAreaDisabled {
+        /*background:#e2e2e2 !important;*/
+        opacity: 0.5;
     }
-    .FlipImgHoriz{
+
+    .ArialFont {
+        font-family: Arial;
+    }
+
+    .FlipImgHoriz {
         -moz-transform: scaleX(-1);
         -o-transform: scaleX(-1);
         -webkit-transform: scaleX(-1);
@@ -77,46 +92,47 @@
         filter: FlipH;
         -ms-filter: "FlipH";
         /*transform: rotate(180deg);*/
-
     }
-    .AlignRight{
+
+    .AlignRight {
         text-align: right;
         padding-right: 6px;
     }
-    .collapse-btn{
 
-        background-image: url('Images/Icons/collapse.png') !important;
+    .collapse-btn {
+        background-image: url('./Images/Icons/collapse.png') !important;
     }
-    .expand-btn{
+
+    .expand-btn {
         position: absolute;
         top: 2px;
-
-        width:20px;
+        width: 20px;
         height: 20px;
         cursor: pointer;
-
         background-color: #fff;
-        background-image: url('Images/Icons/expand.png');
+        background-image: url('./Images/Icons/expand.png');
         background-position: center;
-        background-repeat:  no-repeat;
+        background-repeat: no-repeat;
         background-size: 12px;
+        background-color: white;
+        border-radius: 5px;
+    }
 
-    }
-    .expand-btn:hover{
-        background-color: #dceeff;
-    }
-    .expand-btn:active{
-        background-color: #cfe0f0;
+        .expand-btn:hover {
+            background-color: #dceeff;
+        }
 
-        top: 1px;
-        right: 1px;
-    }
+        .expand-btn:active {
+            background-color: #cfe0f0;
+            top: 1px;
+            right: 1px;
+        }
 </style>
 
 
 <!-- [disabled]="IsDisabled" -->
 
-<div style="height:100%;width:100%">
+<div style="width:100%" [style.height]="textboxHeight">
     <div [id]="ErrorPopUpId"
          FixedPosition
          [ElementId]="ErrorPopUpId"
@@ -140,7 +156,10 @@
     <table *ngIf="uiProperty.IsVisible" class="FixedTable">
         <tr lang="en">
             <td style="height: 100%;">
-                <div *ngIf="!IsMultiline" [ngStyle]="InputDivStyle" style="position:relative;" class="InputDiv" [id]="InputDivId" (mouseover)="OnMouseOver()">
+                <div *ngIf="!IsMultiline" [ngStyle]="InputDivStyle" style="position:relative;"
+                [className]="IsRatioBox == true ? 'InputDivNoBorder' : 'InputDiv'" [id]="InputDivId"
+                (mouseover)="OnMouseOver()"
+                (mouseleave)="OnMouseLeave()">
                     <input [disabled]="IsDisabled" type="text" autocomplete="off"
                            style="-moz-box-shadow: inset 0 0 3px #AAAAAA;
                                   -webkit-box-shadow: inset 0 0 3px #AAAAAA;
@@ -163,7 +182,17 @@
                            (keydown)="OnKeyDown($event)"
                            [placeholder]="Placeholder"
                            [class.AlignRight]="AlignTextToRight"
-                           [id]="InputId" #input ondrop="return false" (paste)="OnPaste($event)"/>
+                           [id]="InputId" #input ondrop="return false"
+                           (paste)="OnPaste($event)"/>
+
+                            <div *ngIf="!IsDisabled && isMouseOver && (ObjectField?.EnableFullscreenTextBox)"
+                            [class.collapse-btn]="isExpanded"
+                            class="expand-btn"
+                            style="top: 0px;background-color: transparent;background-color: white;border-radius: 5px;"
+                            [style.right]="isRTL ? 'initial' : (multlineTextBoxLines > RowsCount ? '22px' : '0')"
+                            [style.left]="isRTL ? (multlineTextBoxLines > RowsCount ? '22px' : '0') : 'initial'"
+                            (click)="ExpandButtonClicked()"></div>
+
                 </div>
 
                 <div *ngIf="IsMultiline"
@@ -181,16 +210,15 @@
                               (focus)="onFocus()" [placeholder]="Placeholder"
                               (blur)="onBlur()"
                               (keydown)="OnKeyDown($event)"
-                              [attr.rows]="RowsCount"
                               [id]="InputId" style="box-shadow:none;border:1px solid transparent; font-size:12px; font-family:inherit;"
-                               ondrop="return false"
-                               (paste)="OnPaste($event)"></textarea>
+                              ondrop="return false"
+                              (paste)="OnPaste($event)"></textarea>
 
                     <div *ngIf="!IsDisabled && isMouseOver" [class.collapse-btn]="isExpanded"
-                        class="expand-btn"
-                        [style.right]="isRTL ? 'initial' : (multlineTextBoxLines > RowsCount ? '22px' : '2px')"
-                        [style.left]="isRTL ? (multlineTextBoxLines > RowsCount ? '22px' : '2px') : 'initial'"
-                        (click)="ExpandButtonClicked()"></div>
+                         class="expand-btn"
+                         [style.right]="isRTL ? 'initial' : (multlineTextBoxLines > RowsCount ? '22px' : '2px')"
+                         [style.left]="isRTL ? (multlineTextBoxLines > RowsCount ? '22px' : '2px') : 'initial'"
+                         (click)="ExpandButtonClicked()"></div>
 
                 </div>
             </td>

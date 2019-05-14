@@ -20,6 +20,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsBusinessUnitEnabled { get; set; }
         public bool IsOld { get; set; }
         public bool IsCoreFeature { get; set; }
+        public string ToggleCode { get; set; }
 
         // Dummy
         public string ObjectTableName { get; set; }

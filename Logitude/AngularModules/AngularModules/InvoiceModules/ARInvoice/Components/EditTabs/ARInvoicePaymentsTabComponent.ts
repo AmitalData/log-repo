@@ -31,6 +31,7 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
     public ItemsSource2Hidden: boolean = false;
     public IsResourcesReady: boolean = false;
     public isRTL: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -52,7 +53,7 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "NewARPaymentInvoiceTabCreated") {
                     this.entityArgs.EditComponent.ReloadEntityPM();
                 }
@@ -148,7 +149,7 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
 
         if (isLoading) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             if (this.myService == null) {
                 this.myService = new ARPaymentListService();
@@ -219,7 +220,7 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
                     }
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
@@ -267,6 +268,7 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
 }
 export class ARInvoicePaymentItem {
     public IsConnected: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private item: ARPaymentList, private fatherComponent: ARInvoicePaymentsTabComponent) {
 
         if (this.fatherComponent.EntityPM.InvoicePayments.filter(f => f.ARPaymentId == this.item.Id).length > 0) {
@@ -333,7 +335,7 @@ export class ARInvoicePaymentItem {
     get Status() { return this.item.StatusName; }
 
     ViewEntityClicked() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.item.Id, ObjectTableName: 'ARPayment', BackButtonLabel: "A/R Invoice: " + this.fatherComponent.EntityPM.InvoiceNumber });
@@ -409,8 +411,8 @@ export class ARInvoicePaymentItem {
         }
     }
     SaveEntity() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
 }

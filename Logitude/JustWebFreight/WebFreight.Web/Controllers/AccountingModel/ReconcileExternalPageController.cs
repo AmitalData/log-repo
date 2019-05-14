@@ -43,6 +43,7 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.BL.EntityQueryServices;
 using WebFreight.Web.DataContracts;
 using System.Web.Script.Serialization;
+using Logitude.Accounting.BL.CoreBL.BankAccountPages;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -148,8 +149,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-                if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+                
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -287,6 +287,46 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
+
+        public HttpResponseMessage PutLoadBankPages(ImageParameter fileUploadParamerter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string documentId = "";
+                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
+                {
+                    byte[] dosBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
+                    //string decodedString = Encoding.UTF8.GetString(data);
+
+                    var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
+                    var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
+                    string dosS = dosEnc.GetString(dosBytes);
+
+                    var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dosBytes);
+                    string winHebrewString = winHebrewEncoding.GetString(hebBytes);
+                    var bankAccountPageAnalyzer = new BankAccountPageAnalyzer();
+                    bankAccountPageAnalyzer.Analyze(authToken.Tenant, winHebrewString);
+
+                    ServiceResponse response = new ServiceResponse();
+                    response.Result = bankAccountPageAnalyzer.MyResultLoadBankPage;
+
+                    return Request.CreateResponse(HttpStatusCode.OK, response);
+                }
+                else
+                {
+                    throw new Exception("fileUploadParamerter is empty");
+                }
+
+                
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 }
 	 

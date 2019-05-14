@@ -7,15 +7,18 @@ namespace WebFreight.Web.Security
 {
     public class AutenticationException:Exception
     {
-        string Message;
-        public AutenticationException()
-        {
+		public AutenticationException()
+		{
+		}
 
-        }
+		public AutenticationException(string message)
+			: base(message)
+		{
+		}
 
-        public AutenticationException(string errorMessage)
-        {
-            Message = errorMessage;
-        }
-    }
+		public AutenticationException(string message, Exception inner)
+	  : base(message, inner)
+		{
+		}
+	}
 }

@@ -227,5 +227,27 @@ namespace Logitude.BL.Helpers
             AlphaNumeric = 14,
             AllotmentIdentification = 15,
         }
+
+        public static string ConvertFromBase64(string myString)
+        {
+            string myResult;
+            if (myString.Contains("Base64Encode"))
+            {
+                string value = myString.Substring(12);
+                value = value.Trim();
+
+                var base64EncodedBytes = System.Convert.FromBase64String(value);
+                //myResult = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+                Encoding hebrewEncoding = Encoding.GetEncoding("Windows-1255");
+                myResult = hebrewEncoding.GetString(base64EncodedBytes);
+            }
+
+            else
+            {
+                myResult = myString;
+            }
+
+            return myResult;
+        }
     }
 }

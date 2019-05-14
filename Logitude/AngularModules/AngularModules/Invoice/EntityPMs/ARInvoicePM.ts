@@ -932,6 +932,11 @@ export class ARInvoicePM {
     public set IsMultiCurrency(newValue: boolean) { if (this.isMultiCurrency != newValue) { this.isMultiCurrency = newValue; this.MarkAsDirty("IsMultiCurrency"); } }
        
 	 
+    private creditARInvoice: string;
+    public get CreditARInvoice() { return this.creditARInvoice; }
+    public set CreditARInvoice(newValue: string) { if (this.creditARInvoice != newValue) { this.creditARInvoice = newValue; this.MarkAsDirty("CreditARInvoice"); } }
+       
+	 
     private totalAmountForTaxReport: number;
     public get TotalAmountForTaxReport() { return this.totalAmountForTaxReport; }
     public set TotalAmountForTaxReport(newValue: number) { if (this.totalAmountForTaxReport != newValue) { this.totalAmountForTaxReport = newValue; this.MarkAsDirty("TotalAmountForTaxReport"); } }
@@ -945,6 +950,31 @@ export class ARInvoicePM {
     private totalVAT: number;
     public get TotalVAT() { return this.totalVAT; }
     public set TotalVAT(newValue: number) { if (this.totalVAT != newValue) { this.totalVAT = newValue; this.MarkAsDirty("TotalVAT"); } }
+       
+	 
+    private isFullAccounting: boolean;
+    public get IsFullAccounting() { return this.isFullAccounting; }
+    public set IsFullAccounting(newValue: boolean) { if (this.isFullAccounting != newValue) { this.isFullAccounting = newValue; this.MarkAsDirty("IsFullAccounting"); } }
+       
+	 
+    private concurrencyGUID: string;
+    public get ConcurrencyGUID() { return this.concurrencyGUID; }
+    public set ConcurrencyGUID(newValue: string) { if (this.concurrencyGUID != newValue) { this.concurrencyGUID = newValue; this.MarkAsDirty("ConcurrencyGUID"); } }
+       
+	 
+    private newConcurrencyGUID: string;
+    public get NewConcurrencyGUID() { return this.newConcurrencyGUID; }
+    public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
+       
+	 
+    private aRInvoiceStockId: string;
+    public get ARInvoiceStockId() { return this.aRInvoiceStockId; }
+    public set ARInvoiceStockId(newValue: string) { if (this.aRInvoiceStockId != newValue) { this.aRInvoiceStockId = newValue; this.MarkAsDirty("ARInvoiceStockId"); } }
+       
+	 
+    private isInvoiceNumberFromStock: boolean;
+    public get IsInvoiceNumberFromStock() { return this.isInvoiceNumberFromStock; }
+    public set IsInvoiceNumberFromStock(newValue: boolean) { if (this.isInvoiceNumberFromStock != newValue) { this.isInvoiceNumberFromStock = newValue; this.MarkAsDirty("IsInvoiceNumberFromStock"); } }
        
 	 
 

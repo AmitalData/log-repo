@@ -79,7 +79,9 @@ namespace WebFreight.Web.ReportsWebServices
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
 
-            ARPayment currentPayment = paymentRep.GetSingleARPayment(paymentId);
+            ARPayment currentPayment = (from a in invoiceCotnext.ARPayments.Include("PaymentCurrency").Include("BankAccountLite").Include("CreditCardType")
+                                        where a.Id == paymentId
+                                        select a).FirstOrDefault();
 
             if (currentPayment != null)
             {

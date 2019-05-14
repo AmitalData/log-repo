@@ -2125,6 +2125,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string cardId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CardId  
+	   {
+	    
+	     get
+		{
+		   return cardId;
+		 }
+		 set
+		 {
+		   if(cardId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardId",OldValue=cardId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cardId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

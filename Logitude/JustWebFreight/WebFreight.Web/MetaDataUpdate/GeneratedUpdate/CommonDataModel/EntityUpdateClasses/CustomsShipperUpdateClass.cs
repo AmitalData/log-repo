@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomsShipperUpdateClass
@@ -176,9 +180,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  @"Search ...",
+					  						DefaultText =  "Search ...",
 					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  @"Deposition Number / Shipper Code / English Name",
+					  						ListLableDefaultText =  "Deposition Number / Shipper Code / English Name",
 					  						IsMaxLength =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -234,9 +238,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomsShipperCode",
-					  						DefaultText =  @"Shipper Code",
+					  						DefaultText =  "Shipper Code",
 					  						ListFieldLable =  "CustomsShipperCodeListLable",
-					  						ListLableDefaultText =  @"Shipper Code",
+					  						ListLableDefaultText =  "Shipper Code",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -292,9 +296,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ValidDepositionNumber",
-					  						DefaultText =  @"Deposition Number",
+					  						DefaultText =  "Deposition Number",
 					  						ListFieldLable =  "ValidDepositionNumberListLable",
-					  						ListLableDefaultText =  @"Deposition Number",
+					  						ListLableDefaultText =  "Deposition Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -350,9 +354,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ValidityStartDate",
-					  						DefaultText =  @"Validity Start Date",
+					  						DefaultText =  "Validity Start Date",
 					  						ListFieldLable =  "ValidityStartDateListLable",
-					  						ListLableDefaultText =  @"Start Date",
+					  						ListLableDefaultText =  "Start Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -408,9 +412,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ValidityEndDate",
-					  						DefaultText =  @"ValidityEndDate",
+					  						DefaultText =  "ValidityEndDate",
 					  						ListFieldLable =  "ValidityEndDateListLable",
-					  						ListLableDefaultText =  @"End Date",
+					  						ListLableDefaultText =  "End Date",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -466,9 +470,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
-					  						DefaultText =  @"Name",
+					  						DefaultText =  "Name",
 					  						ListFieldLable =  "EnglishNameListLable",
-					  						ListLableDefaultText =  @"Name",
+					  						ListLableDefaultText =  "Name",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -524,9 +528,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShipperVAT",
-					  						DefaultText =  @"Vat Number",
+					  						DefaultText =  "Vat Number",
 					  						ListFieldLable =  "ShipperVATListLable",
-					  						ListLableDefaultText =  @"Vat Number",
+					  						ListLableDefaultText =  "Vat Number",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -582,7 +586,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DepositionsDateFilter",
-					  						DefaultText =  @"Depositions Date Filter",
+					  						DefaultText =  "Depositions Date Filter",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -626,54 +630,54 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query AllDepositionsQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_0.Id, Code = "AllDepositionsQuery",  QueryGroupCode = "3852", IndexOrder = 0, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsShipperFeature_0.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn AllDepositionsQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDepositionsQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllDepositionsQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDepositionsQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn AllDepositionsQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ShipperVAT" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllDepositionsQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDepositionsQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllDepositionsQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 4, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityStartDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDepositionsQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 4, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityStartDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn AllDepositionsQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 5, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityEndDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn AllDepositionsQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllDepositionsQueryQuery.Id, IndexOrder = 5, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityEndDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
   
 	      
 
 			  Query EndsNext30DaysQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_1.Id, Code = "EndsNext30DaysQuery",  QueryGroupCode = "3852", IndexOrder = 1, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsShipperFeature_1.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn EndsNext30DaysQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EndsNext30DaysQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn EndsNext30DaysQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EndsNext30DaysQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn EndsNext30DaysQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ShipperVAT" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn EndsNext30DaysQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EndsNext30DaysQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn EndsNext30DaysQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 4, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityStartDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EndsNext30DaysQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 4, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityStartDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn EndsNext30DaysQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 5, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityEndDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn EndsNext30DaysQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = EndsNext30DaysQueryQuery.Id, IndexOrder = 5, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityEndDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter EndsNext30DaysQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "DepositionsDateFilter" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "EndNext30Days",PredefinedValue2 = null, QueryId = EndsNext30DaysQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter EndsNext30DaysQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "DepositionsDateFilter" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "EndNext30Days",PredefinedValue2 = null, QueryId = EndsNext30DaysQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      
 
 			  Query InValidDepositionsQueryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CustomsShipperTextCode_2.Id, Code = "InValidDepositionsQuery",  QueryGroupCode = "3852", IndexOrder = 2, Tenant = 0, ObjectTableId = CustomsShipperObjectTable.Id, QuerySection = "CustomsShipper", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CustomsShipperFeature_2.Id, DefaultSortName = "ValidityStartDate", DefaultSortDirection = "Desending", Perspective = null }, queriesRepository, tenantQueries);
 	
-			 QueryColumn InValidDepositionsQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InValidDepositionsQueryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 0, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "CustomsShipperCode" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InValidDepositionsQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InValidDepositionsQueryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 1, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 300 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn InValidDepositionsQueryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 2, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ShipperVAT" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InValidDepositionsQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InValidDepositionsQueryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 3, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidDepositionNumber" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InValidDepositionsQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 4, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityStartDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InValidDepositionsQueryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 4, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityStartDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-			 QueryColumn InValidDepositionsQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 5, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityEndDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+			 QueryColumn InValidDepositionsQueryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InValidDepositionsQueryQuery.Id, IndexOrder = 5, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "ValidityEndDate" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
 
-             AdvancedQueryFilter InValidDepositionsQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "DepositionsDateFilter" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "InValidDepositions",PredefinedValue2 = null, QueryId = InValidDepositionsQueryQuery.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter InValidDepositionsQueryQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = CustomsShipperObjectFields.Where(d => d.FieldName == "DepositionsDateFilter" && d.ObjectTableId == CustomsShipperObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "InValidDepositions",PredefinedValue2 = null, QueryId = InValidDepositionsQueryQuery.Id, Tenant = 0}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 	   
 	    }
@@ -718,6 +722,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable CustomsShipperObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomsShipper" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature CustomsShipperFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsShipper.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomsShipperFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsShipper.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomsShipperFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomsShipperObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsShipper.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

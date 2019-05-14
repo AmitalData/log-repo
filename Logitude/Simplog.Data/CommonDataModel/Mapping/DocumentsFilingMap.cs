@@ -165,7 +165,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ComputedForwarderDocumentId).HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.EntityNumber)
-               .HasMaxLength(15)
+               .HasMaxLength(20)
                .IsUnicode(false);
 
             this.Property(t => t.IsDigitalSignRequired)

@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, EventEmitter}  from '@angular/core';
+import {Component, OnInit, EventEmitter}  from '@angular/core';
 import {FeatureLocator} from '../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
@@ -111,7 +111,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
     TenantPM: TenantPM;
     public tenantPMService: TenantPMService;
     OnCloseWindowEvent = new EventEmitter();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         if (this.tenantPMService == null) {
             this.tenantPMService = new TenantPMService();
@@ -195,13 +195,13 @@ export class SharedLogisticsSettingComponent implements OnInit {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
 
         if (this.TenantPM.IsDirty) {
             this.RejectChanges();
         }
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
@@ -216,7 +216,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
     SaveButtonClicked() {
 
         if (this.TenantPM.IsDirty) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             this.tenantPMService.update(this.TenantPM).subscribe(res=> {
 
                 this.CloseButtonClicked();

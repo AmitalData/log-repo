@@ -18,7 +18,7 @@ export class OperationsComp {
     this.Operation.SelectMenuWorkSpaceTabs('SHIP');
   //  this.ShipmentWorkSpace.CreateWizard('M');
 
-      this.ShipmentWorkSpace.CreateShipment('D', 'Export', 'A', '');
+      this.ShipmentWorkSpace.CreateShipment('M', 'Import', 'O', 'FCL');
      
 
 

@@ -289,7 +289,36 @@
         /* width: fit-content !important; */
         width: 75px;
         padding: 0 7px;
+        border-width: 1px;
+        margin-right: -1px;
     }
+    /* .FiltersMenu li:first-child, .FiltersMenu li:last-child{
+        border-radius: 0;
+    }
+
+    .FiltersMenu li:nth-child(1){
+        background: red;
+        color: red;
+    }
+    .FiltersMenu li:first-child{
+        background: blueviolet;
+        color: blueviolet;
+    } */
+
+
+    .aboodRTLFilterMenu li:first-child, .aboodRTLFilterMenu li:last-child{
+        border-radius: 0;
+    }
+    .aboodRTLFilterMenu li:first-child{
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+    .aboodRTLFilterMenu li:last-child{
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
+
 </style>
 
 <!-- Alert -->
@@ -338,19 +367,17 @@
                                                     | TextCodeTranslationPipe}}</td>
 
                                                 <td style="width: 235px;">
-                                                    <ul class="FiltersMenu" [style.float]="isRTL ? 'right' : 'left'" >
-                                                        <li id="filter_accounting" (click)="FilterItemClicked('filter_accounting')"
-                                                            style="height: 22px;" [class.SelectedFilter]="filterSelectedValue === 'filter_accounting'">
-                                                            {{'GLAccounts.O.filter_accounting' |
-                                                            TextCodeTranslationPipe}}
+                                                    <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
+                                                        <li float-start id="filter_accounting" (click)="FilterItemClicked('filter_accounting')" style="height: 22px;"
+                                                            [class.SelectedFilter]="filterSelectedValue === 'filter_accounting'">
+                                                            {{'GLAccounts.O.filter_accounting' | TextCodeTranslationPipe}}
                                                         </li>
-                                                        <li id="filter_reference" (click)="FilterItemClicked('filter_reference')"
-                                                            style="height: 22px;" [class.SelectedFilter]="filterSelectedValue === 'filter_reference'">
-                                                            {{'GLAccounts.O.filter_reference' |
-                                                            TextCodeTranslationPipe}}
+                                                        <li float-start id="filter_reference" (click)="FilterItemClicked('filter_reference')" style="height: 22px;"
+                                                            [class.SelectedFilter]="filterSelectedValue === 'filter_reference'">
+                                                            {{'GLAccounts.O.filter_reference' | TextCodeTranslationPipe}}
                                                         </li>
-                                                        <li id="filter_due" (click)="FilterItemClicked('filter_due')"
-                                                            style="height: 22px;" [class.SelectedFilter]="filterSelectedValue === 'filter_due'">
+                                                        <li float-start id="filter_due" (click)="FilterItemClicked('filter_due')" style="height: 22px;"
+                                                            [class.SelectedFilter]="filterSelectedValue === 'filter_due'">
                                                             {{'GLAccounts.O.filter_due' | TextCodeTranslationPipe}}
                                                         </li>
                                                     </ul>
@@ -382,7 +409,7 @@
                                                                 <!-- With Splitted by currency checkbox -->
                                                                 <div *ngIf="EntityPM.AccountTypeCode == '2' || EntityPM.AccountTypeCode == '3'"
                                                                     [style.float]="isRTL ? 'right' : 'left'">
-                                                                    <div [style.float]="isRTL ? 'right' : 'left'" style="width: 20px; padding-top: 2px;">
+                                                                    <div float-start style="width: 20px; padding-top: 2px;">
                                                                         <CheckBox (Checked)="SplittedByCurrencyCheckBox = $event"
                                                                             [IsChecked]="SplittedByCurrencyCheckBox"></CheckBox>
                                                                     </div>
@@ -395,7 +422,7 @@
                                                                 </div>
                                                                 <!-- with children checkbox-->
                                                                 <div [style.float]="isRTL ? 'right' : 'left'">
-                                                                    <div [style.float]="isRTL ? 'right' : 'left'" style="width: 20px; padding-top: 2px;">
+                                                                    <div float-start style="width: 20px; padding-top: 2px;">
                                                                         <CheckBox (Checked)="AttachedGLAccountCheckBox = $event"
                                                                             [IsChecked]="AttachedGLAccountCheckBox"></CheckBox>
                                                                     </div>
@@ -464,20 +491,19 @@
                                                 <td style="width:10px"></td>
                                                 <td colspan="3" style="" [style.text-align]="isRTL ? 'right' : 'left'">
 
-                                                    <span [style.float]="isRTL ? 'right' : 'left'"  style="height: 100%;padding-top: 10px; ">{{'Accounting.General.O.OpenAmount' | TextCodeTranslationPipe}}</span>
+                                                    <span float-start  style="height: 100%;padding-top: 10px; ">{{'Accounting.General.O.OpenAmount' | TextCodeTranslationPipe}}</span>
 
-                                                    <span  [style.float]="isRTL ? 'right' : 'left'" style="width:20px;height: 100%;">&nbsp;</span>
+                                                    <span  float-start style="width:20px;height: 100%;">&nbsp;</span>
 
                                                     <!-- open balance -->
-                                                    <span  [style.float]="isRTL ? 'right' : 'left'" style="height: 100%; padding: 7px 10px;direction: ltr;font-size: 16px;font-weight: bold;color: #60956e;font-family: sans-serif; padding-right: 5px;direction: ltr;"
+                                                    <span  float-start style="height: 100%; padding: 7px 10px;direction: ltr;font-size: 16px;font-weight: bold;color: #60956e;font-family: sans-serif; padding-right: 5px;direction: ltr;"
                                                         *ngIf="LTBSummery.StartBalanceLocal != undefined">
                                                         {{LTBSummery.StartBalanceLocal | NumbersPipe:'N2'}}
-                                                        {{EntityPM != null ? ( EntityPM.IsMultiCurrency ?
-                                                        TenantCurrencySign : EntityPM.CurrencySign ) : ''}}
+                                                        {{GetOpenBalanceCurrencySign()}}
                                                     </span>
 
                                                     <!-- info icon -->
-                                                    <span [style.float]="isRTL ? 'right' : 'left'" style="height: 100%; width: 30px;"  *ngIf="EntityPM.IsMultiCurrency" [attr.id]="'tooltip-1'" id="t" class="small-tooltip" (mouseover)="OnMouseOver()"
+                                                    <span float-start style="height: 100%; width: 30px;"  *ngIf="EntityPM.IsMultiCurrency" [attr.id]="'tooltip-1'" id="t" class="small-tooltip" (mouseover)="OnMouseOver()"
                                                         (mouseleave)="OnMouseLeave()">
 
                                                         <!--<img src="./Images/Info.png" width="18" height="18" />-->
@@ -563,7 +589,7 @@
 
                             <!-- With Splitted by currency checkbox -->
                             <!--<div *ngIf="EntityPM.AccountTypeCode == '2' || EntityPM.AccountTypeCode == '3'" [style.float]="isRTL ? 'left' : 'right'">
-                                <div [style.float]="isRTL ? 'right' : 'left'" style="width: 20px; padding-top: 2px;">
+                                <div float-start style="width: 20px; padding-top: 2px;">
                                     <CheckBox (Checked)="SplittedByCurrencyCheckBox = $event" [IsChecked]="SplittedByCurrencyCheckBox"></CheckBox>
                                 </div>
                                 <div [style.float]="isRTL ? 'left' : 'right'" [style.text-align]="isRTL ? 'right' : 'left'"
@@ -574,7 +600,7 @@
 
                             <!-- with children checkbox-->
                             <!--<div [style.float]="isRTL ? 'left' : 'right'">
-                                <div [style.float]="isRTL ? 'right' : 'left'" style="width: 20px; padding-top: 2px;">
+                                <div float-start style="width: 20px; padding-top: 2px;">
                                     <CheckBox (Checked)="AttachedGLAccountCheckBox = $event" [IsChecked]="AttachedGLAccountCheckBox"></CheckBox>
                                 </div>
                                 <div [style.float]="isRTL ? 'left' : 'right'" [style.text-align]="isRTL ? 'right' : 'left'"
@@ -634,11 +660,11 @@
             </div>
         </div>
 
-        <div [style.float]="isRTL ? 'right' : 'left'" style="width: calc(100% - 300px); overflow: auto;" *ngIf="TenantCurrency != EntityPM.CurrencyCode">
+        <div float-start style="width: calc(100% - 300px); overflow: auto;" *ngIf="TenantCurrency != EntityPM.CurrencyCode">
             <div class="footer-title">
                 {{'Accounting.General.O.TotalInCurrencies' | TextCodeTranslationPipe}}
             </div>
-            <div class="footer-cell" [style.float]="isRTL ? 'right' : 'left'" *ngFor="let currency of LTBSummery.EndBalanceForeignList; let i=index;">
+            <div class="footer-cell" float-start *ngFor="let currency of LTBSummery.EndBalanceForeignList; let i=index;">
 
                 <div *ngIf="i>0" style="border-left: 1px solid #c1c1c1;width: 2px; margin: 0px 15px; height: 37px"
                     [style.float]="isRTL ? 'right' : 'left'"></div>
@@ -657,7 +683,8 @@
                         <span style="font-size: 13px; color:#707070; padding-right: 20px;float: left;">{{TenantCurrency}}</span>
                         <span style="font-size: 13px; color:#21a373;text-align: right;float: right;direction: ltr;"
                             [class.red]="currency.BalanceForeign<=0">
-                            {{CalculateLocalAmount(currency.CurrencyId , currency.BalanceForeign) | NumbersPipe:'N2'}}
+                            {{currency.BalanceLocal | NumbersPipe:'N2'}}
+                            <!-- -oldway=>{{CalculateLocalAmount(currency.CurrencyId , currency.BalanceForeign) | NumbersPipe:'N2'}} -->
                             <!--{{TenantCurrencySign}}-->
                         </span>
                     </div>

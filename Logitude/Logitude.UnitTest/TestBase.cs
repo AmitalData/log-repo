@@ -14,6 +14,9 @@ using Logitude.Server.Tools;
 using Logitude.BL.Interfaces;
 using Logitude.BL.Security;
 using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Resolvers;
 
 namespace Logitude.UnitTest
 {
@@ -23,7 +26,38 @@ namespace Logitude.UnitTest
         [TestInitialize]
         public void InitializeTests()
         {
-            ContainerAccessor.Container.RegisterType<ILoggedContactUtil, MockLoggedContactUtil>("MockLoggedContactUtil", new InjectionFactory(c => new MockLoggedContactUtil()));
+            LoggedContactResolver.RegisterMockLoggedContactUtil();
+            DateTimeUtilResolver.RegisterMockDateTimeUtil();
+            TranslateTextsClassUtilResolver.RegisterMockTranslateTextsClassUtil();
+            IdCounterUtilResolver.RegisterMockIdCounterUtil();
+        }
+
+
+        public static void Aggregate(params Action[] actions)
+        {
+            var exceptions = new List<AssertFailedException>();
+
+            foreach (var action in actions)
+            {
+                try
+                {
+                    action();
+                }
+                catch (AssertFailedException ex)
+                {
+                    exceptions.Add(ex);
+                }
+            }
+
+            var assertionTexts =
+                exceptions.Select(assertFailedException => assertFailedException.Message);
+            if (0 != assertionTexts.Count())
+            {
+                throw new
+                    AssertFailedException(
+                    assertionTexts.Aggregate(
+                        (aggregatedMessage, next) => aggregatedMessage + Environment.NewLine + next));
+            }
         }
     }
 }

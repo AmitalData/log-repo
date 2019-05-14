@@ -55,7 +55,7 @@
     <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -341,7 +341,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Profact3.3.1.1.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\..\packages\Profact3.3.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid.SmtpApi, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
@@ -874,6 +874,7 @@
     <Compile Include="AccountingModel\Reports\Journal\JournalDataProvider.cs" />
     <Compile Include="AccountingModel\Reports\Journal\JournalPrintService.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\ARPaymentChequeStatusDomainService.Generated.cs" />
+    <Compile Include="AccountingModel\Reports\OpenFormatReport\OpenFormatReportPrintService.cs" />
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequeDataProvider.cs" />
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequePrintService.cs" />
     <Compile Include="AccountingModel\Reports\TaxDeductionReport\TaxDeductionReportPrintService.cs" />
@@ -923,6 +924,10 @@
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustomsInterface.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.RegistryDateType.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.TemperatureUnit.cs" />
+    <Compile Include="Controllers\AccountingModel\AccountingEntegrityCheckController.cs" />
+    <Compile Include="Controllers\AccountingModel\AccountingNoteController.cs" />
+    <Compile Include="Controllers\AccountingModel\AccountingNoteViewsController.cs" />
+    <Compile Include="Controllers\AccountingModel\AccountingOpController.cs" />
     <Compile Include="Controllers\AccountingModel\BankDepositController.cs" />
     <Compile Include="Controllers\AccountingModel\CashBookViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingIntegrityCheckViewsController.Generated.cs" />
@@ -936,6 +941,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountWithholdingTaxViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\IntegrityCheckStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalMoreDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\OpenFormatReportViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\PaymentChequeLineViewsController.Generated.cs" />
@@ -1010,6 +1016,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\FilingInboxViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\FTPDetailViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\HybridTenantThresholdViewsController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\NumberFormatViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\RegistryDateTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportsTemplatesVersionViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ReportsTemplateViewsController.Generated.cs" />
@@ -1542,11 +1549,12 @@
     <Compile Include="Controllers\GlobalModel\Extended\BatchServicesDefinitionExtendedController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\SystemMetadataLastUpdateController.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\DocumentTypeMetaDataController.cs" />
-    <Compile Include="Controllers\GlobalModel\Extended\WebhookKeysController.cs" />
+    <Compile Include="Controllers\GlobalModel\Extended\WebhookKeysExtendedController.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\AnalyzeQueueViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\ApiCredintialsViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\AWBMessagesCCSTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BatchServicesDefinitionViewsController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BluesnapContractTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\BluesnapContractViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\PaymentChannelViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\PaymentCurrencyViewsController.Generated.cs" />
@@ -1579,6 +1587,7 @@
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableRulesController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableViewsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\RatesTableViewsController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\SchedulerExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\SignUpController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\TenantSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\TextCodesController.cs" />
@@ -1589,6 +1598,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\APILogsViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BatchTaskExecutionStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BatchTaskExecutionViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BIReportFolderViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BIReportsTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BIReportViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\BusinessHourViewsController.Generated.cs" />
@@ -1597,6 +1607,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DirectionViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DWObjectFieldViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DWObjectTableViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\FeatureToggleViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\InboundEmailViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\LBPTeamMemberViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ObjectFieldViewsController.Generated.cs" />
@@ -1607,15 +1618,18 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\TasksSchedulerViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\TeamMemberBusinessRoleViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\TeamViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ToggleViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\APILogsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BatchTaskExecutionController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BIReportController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BIReportFolderController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BusinessHourController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BusinessProcessQueueController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\BusinessRoleController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DWObjectFieldController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DWObjectTableController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\EntityStatusController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\FeatureToggleController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\IATACodeController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\InboundEmailController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\QueueMessageMoreDetailsController.Generated.cs" />
@@ -1647,6 +1661,8 @@
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APPaymentStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\APPaymentViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceStocksStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceStockViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceTransferStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoiceViewsController.Generated.cs" />
@@ -1668,6 +1684,7 @@
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\APPaymentController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\APPaymentMethodController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARInvoiceController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARInvoiceStockController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ARPaymentController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\BankAccountLiteController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\CreditCardTypeController.Generated.cs" />
@@ -1703,6 +1720,7 @@
     <Compile Include="Controllers\ShipmentsModel\ApiHelpers\ShipmentAPiHelper.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentAdditionalCloudDataController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\SharedAgentManifestController.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentComputedFieldExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentTestDataController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ContainerFollowUpViewsController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\HarmonizeCodeViewsController.Generated.cs" />
@@ -1755,6 +1773,11 @@
     <Compile Include="Controllers\SystemLogsModel\ErrorLogViewsController.cs" />
     <Compile Include="Controllers\SystemLogsModel\Extended\FileLoggerController.cs" />
     <Compile Include="Controllers\SystemLogsModel\PerformanceLogsController.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffSettingViewsController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffViewsController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffController.Generated.cs" />
+    <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffSettingController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\SprintViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMBudgetViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMEmployeeTimeViewsController.Generated.cs" />
@@ -1806,6 +1829,7 @@
     <Compile Include="Controllers\WebDomainControllers\QuoteDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ReportsDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\ClockTimeGeneralDomainController.cs" />
+    <Compile Include="Controllers\WebDomainControllers\TariffDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\TimeManagementDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\TimeOfficeHourDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\TraceEventsDomainController.cs" />
@@ -1846,6 +1870,7 @@
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportService.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\XLSExportBase.cs" />
     <Compile Include="CustomWebServices\Testers\Tester.cs" />
+    <Compile Include="DataContracts\AutomationArgs.cs" />
     <Compile Include="DataContracts\BIReportXMLData.cs" />
     <Compile Include="DataContracts\DWQueryDataResult.cs" />
     <Compile Include="DataContracts\WebHookTesterData.cs" />
@@ -1860,6 +1885,7 @@
     <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
     <Compile Include="DataContracts\DWQueryData.cs" />
     <Compile Include="DataContracts\ShipmentTestData.cs" />
+    <Compile Include="DataProviders\LedgerTransactionDataProvider.cs" />
     <Compile Include="DataProviders\CrossDockEntryDataProvider.cs" />
     <Compile Include="DataContracts\EventTypeArgs.cs" />
     <Compile Include="DataContracts\ExportDocumentArgs.cs" />
@@ -2143,6 +2169,8 @@
     <Compile Include="DataProviders\ShipmentsStocksDataProvider.cs" />
     <Compile Include="DataProviders\TasksWithoutProjectsDataProvider.cs" />
     <Compile Include="DataProviders\UsersByTenantDataProvider.cs" />
+    <Compile Include="DataProviders\VehiclesDataProvider.Shared.cs" />
+    <Compile Include="DataProviders\VDKDataProvider.Shared.cs" />
     <Compile Include="DataProviders\VendorChargesAnalysisDataProvider.cs" />
     <Compile Include="DataProviders\WorkHoursPerProjectDataProvider.cs" />
     <Compile Include="DropBoxAuth.aspx.cs">
@@ -2162,6 +2190,8 @@
     <Compile Include="ExternalAPIs\QuoteDocumentController.cs" />
     <Compile Include="ExternalAPIs\QuoteStatusController.cs" />
     <Compile Include="ExternalAPIs\V1\ARInvoiceController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARPaymentCancellationController.cs" />
+    <Compile Include="ExternalAPIs\V1\ARPaymentController.cs" />
     <Compile Include="ExternalAPIs\V1\BlobInfoController.cs" />
     <Compile Include="ExternalAPIs\V1\CustomerController.cs" />
     <Compile Include="ExternalAPIs\V1\GLAccountController.cs" />
@@ -2174,6 +2204,9 @@
     <Compile Include="ExternalAPIs\V1\HouseController.cs" />
     <Compile Include="ExternalAPIs\V1\VendorPartnerController.cs" />
     <Compile Include="GlobalModel\GlobalDomainService.TenantManagmentPrivateLablesPM.cs" />
+    <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
+    <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
+    <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />
@@ -2186,7 +2219,6 @@
     <Compile Include="Helpers\APIHelpers\PartnerServicePM.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Global\QueriesController.cs" />
     <Compile Include="DataContracts\GeneralEntitiesArgs.cs" />
-    <Compile Include="Helpers\APIHelpers\QuoteSubjectArgs.cs" />
     <Compile Include="Helpers\APIHelpers\FeaturesUpdateHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TraceEventsServiceArgs.cs" />
     <Compile Include="Helpers\APIHelpers\UserLicenseUpdateHelper.cs" />
@@ -2206,6 +2238,7 @@
     <Compile Include="Helpers\EntityChangeAutomationHelper.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\ApiExceptionHandler.cs" />
     <Compile Include="Helpers\ExternalAPIHelpers\APIHelper.cs" />
+    <Compile Include="Helpers\FirstChanceExceptionEventArgsLogger.cs" />
     <Compile Include="Helpers\FlatFileHelper.cs" />
     <Compile Include="Helpers\IISManager.cs" />
     <Compile Include="Helpers\ImporterDepositionHelper.cs" />
@@ -2226,10 +2259,14 @@
     <Compile Include="Helpers\TableQueryReflector.cs" />
     <Compile Include="Helpers\MessageArgs.cs" />
     <Compile Include="Helpers\TermsofUseArgs.cs" />
+    <Compile Include="Helpers\TFSAggregatorAnalyzer.cs" />
     <Compile Include="Helpers\TFSAnalyzer.cs" />
+    <Compile Include="Helpers\TFSAggregatorParseWebhook.cs" />
     <Compile Include="Helpers\TFSParseWebhook.cs" />
     <Compile Include="Helpers\TimeClock\TMClockAnalyze.cs" />
+    <Compile Include="Helpers\TMMessageBuilderAnalyzer.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
+    <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceStocksStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.BankAccountLite.cs" />
     <Compile Include="LinksGateway.aspx.cs">
@@ -2368,6 +2405,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\MAWBStackUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\MeasurementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\MetodoPagoUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\NumberFormatUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PackageConnectedPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PackageTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\PackageUpdateClass.cs" />
@@ -2436,6 +2474,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BankPageEntryTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BatchTaskExecutionStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BatchTaskExecutionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportFolderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportsTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BIReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\BusinessProcessQueueUpdateClass.cs" />
@@ -2516,6 +2555,11 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SLALineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SplitOrMergeReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SprintUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffSettingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxDeductionReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxDeductionReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxReportLineStatusUpdateClass.cs" />
@@ -2553,6 +2597,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\ApiCredintialsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\AWBMessagesCCSTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BatchServicesDefinitionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentChannelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentCurrencyUpdateClass.cs" />
@@ -2572,6 +2617,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CounterDefinitionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CustomPickListUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DirectionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWCategoriesUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWObjectFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWObjectTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\EntityStatusUpdateClass.cs" />
@@ -2585,6 +2631,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\ObjectTableUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\PrepaidCollectUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\RatesTableUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\SchedulerLogsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TaskSchedulerHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TasksSchedulerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\TransportModeUpdateClass.cs" />
@@ -2612,6 +2659,9 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoicePaymentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceStockLineUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceStocksStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceStockUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceTotalVATUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceTransferStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARInvoiceTypeUpdateClass.cs" />
@@ -2672,6 +2722,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPayableLineStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPayableStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPayableUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentPickUpDeliveryPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableLineStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentReceivableUpdateClass.cs" />
@@ -2679,11 +2730,14 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ShipmentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\SpecialServicesTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\ShipmentsModelUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\TariffModuleUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\TarrifUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\TimeManagementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\WarehouseLibUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\ObjectFields\MetaDataUpdateClass.InvoiceModel.cs" />
     <Content Include="Monitoring\AgentSharedManifestMonitoring.aspx" />
     <Content Include="Monitoring\AnalyzeQueue.aspx" />
+    <Content Include="Monitoring\AzureDevOpsQueue.aspx" />
     <Content Include="Monitoring\EmailSendingFailedStatus.aspx" />
     <Content Include="Monitoring\FailedLoginLog.aspx" />
     <Content Include="Monitoring\FailedTokenLog.aspx" />
@@ -2711,6 +2765,10 @@
       <SubType>Designer</SubType>
     </Content>
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.BIReportsType.cs" />
+    <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.Toggle.cs" />
+    <Content Include="Integration Test\Shipment\PrepareShipmentVars.postman_collection.json" />
+    <Content Include="Integration Test\Shipment\CreateShipment.postman_collection.json" />
+    <Content Include="Integration Test\Reports\Reports.postman_collection.json" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
@@ -4687,6 +4745,7 @@
     <Compile Include="MetaDataUpdate\UpdateClasses\BookingUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\CRMUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\SocialUpdate.cs" />
+    <Compile Include="MetaDataUpdate\UpdateClasses\TariffModuleUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\TimeManagementUpdate.cs" />
     <Compile Include="MetaDataUpdate\UpdateClasses\WarehouseUpdate.cs" />
     <Compile Include="Monitoring\AgentSharedManifestMonitoring.aspx.cs">
@@ -4702,6 +4761,13 @@
     </Compile>
     <Compile Include="Monitoring\AnalyzeQueue.aspx.designer.cs">
       <DependentUpon>AnalyzeQueue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\AzureDevOpsQueue.aspx.cs">
+      <DependentUpon>AzureDevOpsQueue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\AzureDevOpsQueue.aspx.designer.cs">
+      <DependentUpon>AzureDevOpsQueue.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\EmailSendingFailedStatus.aspx.cs">
       <DependentUpon>EmailSendingFailedStatus.aspx</DependentUpon>
@@ -4908,11 +4974,14 @@
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportsWebServices\LogitudeReports\VehiclesManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\AccountingLedgerManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\ArchivoExportadoManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\DetailedShipmentChargesManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\ShipmentProfitVSQuoteEstimateManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\StatisticsByCustomerManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\EmployeeTimeSheetManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\TimeManagement\WorkPerDaysProjectManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VendorChargesAnalysisManager.cs" />
     <Compile Include="ReportsWebServices\OpportunitySummaryWebService.asmx.cs">
       <DependentUpon>OpportunitySummaryWebService.asmx</DependentUpon>
@@ -6176,6 +6245,14 @@
     <ProjectReference Include="..\..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
       <Project>{9ffc5b97-f09a-4eed-a66e-d4160374ae6e}</Project>
       <Name>Logitude.SystemLogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.TariffModule.BL\Logitude.TariffModule.BL.csproj">
+      <Project>{312a7909-04d0-49b5-8d73-77598451f22e}</Project>
+      <Name>Logitude.TariffModule.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
+      <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
+      <Name>Logitude.TariffModule.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Logitude.TimeManagement.BL\Logitude.TimeManagement.BL.csproj">
       <Project>{2b42c0df-9dd8-4ed1-8f6e-94746cfc1e63}</Project>

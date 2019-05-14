@@ -1,0 +1,138 @@
+
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:22px">
+                    <td style="color:#1B90CB;font-size:14px;">Filter By:</td>
+                </tr>
+
+                <tr style="height:28px;">
+                    <td>
+                        <table>
+                            <tr>
+
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+                                <td style="width:70px;min-width:70px;max-width:70px" class="Label">Delivery Date</td>
+                                <td style="width:10px;">
+                                    <div></div>
+                                </td>
+                                <td style="width:70px">From:</td>
+                                <td style="width:130px">
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
+                                <td style="width:15px"></td>
+                                <td style="width:60px">To:</td>
+                                <td style="width:130px">
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+                                <td style="width:20px"><div></div></td>
+                                <td style="width:70px;min-width:70px;max-width:70px" class="Label">Customer</td>
+                                <td style="width:200px;">
+                                    <div style="width:200px;">
+
+                                        <LogLov [ObjectFieldName]="'CustomerId'"
+                                                [SelectedValue]="CustomerId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Card'"
+                                                [DependencyFilter1Value]="'AG,AL,CG,CS,SG,SL,TR,VD,WH'"
+                                                [DependencyFilter1IsList]="true">
+                                        </LogLov>
+
+                                    </div>
+                                </td>
+                                <td style="width:20px"><div></div></td>
+                                <td style="width:70px;min-width:70px;max-width:70px" class="Label">Supplier</td>
+                                <td style="width:200px;">
+                                    <div style="width:200px;">
+
+                                        <LogLov [ObjectFieldName]="'SupplierId'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Card'"
+                                                [DependencyFilter1Value]="SupplierValues"
+                                                [DependencyFilter1IsList]="true"
+                                                [SelectedValue]="SupplierId">
+                                        </LogLov>
+
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                           
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:10px;">
+                                    <div>
+
+                                    </div>
+                                </td>
+                                <td style="width:80px">Branch</td>
+
+                                <td style="width:200px;">
+
+                                    <div style="width:200px;">
+                                        <LogLov [ObjectFieldName]="'BranchId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Branch'"
+                                                [HideColumns]="false">
+                                        </LogLov>
+                                    </div>
+                                </td>
+                                <td style="width:20px"><div></div></td>
+                                <td style="width:80px">Status</td>
+
+                                <td style="width:200px;">
+
+                                    <div style="width:200px;">
+                                        <LogLov [ObjectFieldName]="'EntityStatus'"
+                                                [ObjectTableName]="'Shipment'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'EntityStatus'"
+                                                [HideColumns]="false">
+                                        </LogLov>
+                                    </div>
+                                </td>
+                                <td style="width:20px"><div></div></td>
+                                <td style="width:200px">
+                                    <CheckBox (Checked)="IncludeOperationalClose = $event"
+                                              [IsChecked]="IncludeOperationalClose" [Text]="'Include Operationally Closed'"></CheckBox>
+                                </td>
+                                <td style="width:20px"><div></div></td>
+                                <td style="width:90px;">
+                                    <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+

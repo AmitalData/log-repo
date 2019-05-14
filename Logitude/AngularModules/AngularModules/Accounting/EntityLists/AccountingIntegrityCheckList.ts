@@ -19,6 +19,7 @@ export class AccountingIntegrityCheckList {
 	StatusName: string;
 	FromMonthInclusive: Date;
 	ToMonthInclusive: Date;
+	SearchFields: string;
 	
 }
  

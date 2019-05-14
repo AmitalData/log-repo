@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class CustomerFieldsUpdateSettingUpdateClass
@@ -173,9 +177,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ObjectFieldName",
-					  						DefaultText =  @"Object Field Name",
+					  						DefaultText =  "Object Field Name",
 					  						ListFieldLable =  "ObjectFieldNameListLable",
-					  						ListLableDefaultText =  @"Object Field Name",
+					  						ListLableDefaultText =  "Object Field Name",
 					  						HelpTextCode =  "ObjectFieldName",
 					  						Code =  "ObjectFieldName",
 					  						DependencyFilter3IsList =  false,
@@ -234,9 +238,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "ObjectFieldId",
-					  						DefaultText =  @"Object Field",
+					  						DefaultText =  "Object Field",
 					  						ListFieldLable =  "ObjectFieldIdListLable",
-					  						ListLableDefaultText =  @"Object Field",
+					  						ListLableDefaultText =  "Object Field",
 					  						HelpTextCode =  "ObjectFieldId",
 					  						Code =  "ObjectFieldId",
 					  						DependencyFilter3IsList =  false,
@@ -294,9 +298,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "UpdateDirection",
-					  						DefaultText =  @"Update Direction",
+					  						DefaultText =  "Update Direction",
 					  						ListFieldLable =  "UpdateDirectionListLable",
-					  						ListLableDefaultText =  @"Update Direction",
+					  						ListLableDefaultText =  "Update Direction",
 					  						HelpTextCode =  "UpdateDirection",
 					  						Code =  "UpdateDirection",
 					  						DependencyFilter3IsList =  false,
@@ -373,6 +377,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable CustomerFieldsUpdateSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerFieldsUpdateSetting" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature CustomerFieldsUpdateSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomerFieldsUpdateSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature CustomerFieldsUpdateSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomerFieldsUpdateSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFieldsUpdateSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

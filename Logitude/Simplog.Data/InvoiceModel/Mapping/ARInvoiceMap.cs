@@ -28,7 +28,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.PrepaidCollectId).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.DraftNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
-            this.Property(t => t.MainEntityReference).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.MainEntityReference).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.MainEntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerRef).HasMaxLength(105).IsUnicode(false);
             this.Property(t => t.HouseNumber).HasMaxLength(20).IsUnicode(true);
@@ -70,6 +70,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TotalAmountForTaxReport).HasPrecision(16, 2);
             this.Property(t => t.TotaVatableAmountForTaxReport).HasPrecision(16, 2);
             this.Property(t => t.TotalVAT).HasPrecision(16, 2);
+            this.Property(t => t.ConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.ARInvoiceStockId).HasMaxLength(15).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ARInvoices");
@@ -170,6 +172,13 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TotalAmountForTaxReport).HasColumnName("TotalAmountForTaxReport");
             this.Property(t => t.TotaVatableAmountForTaxReport).HasColumnName("TotaVatableAmountForTaxReport");
             this.Property(t => t.SATApprovalDate).HasColumnName("SATApprovalDate");
+            this.Property(t => t.IsFullAccounting).HasColumnName("IsFullAccounting");
+            this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID");
+            this.Property(t => t.ARInvoiceStockId).HasColumnName("ARInvoiceStockId");
+            this.Property(t => t.IsInvoiceNumberFromStock).HasColumnName("IsInvoiceNumberFromStock");
+
+             
+
             // Relationships
             this.HasOptional(t => t.BillToAddress).WithMany().HasForeignKey(d => d.BillToAddressId);
             this.HasRequired(t => t.Branch).WithMany().HasForeignKey(d => d.BranchId);

@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class VatTypePercentageUpdateClass
@@ -160,7 +164,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Percentage",
-					  						DefaultText =  @"Percentage",
+					  						DefaultText =  "Percentage",
 					  						HelpTextCode =  "Percentage",
 					  						Code =  "Percentage",
 					  						DependencyFilter3IsList =  false,
@@ -216,7 +220,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "FromDate",
-					  						DefaultText =  @"From Date",
+					  						DefaultText =  "From Date",
 					  						HelpTextCode =  "FromDate",
 					  						Code =  "FromDate",
 					  						DependencyFilter3IsList =  false,

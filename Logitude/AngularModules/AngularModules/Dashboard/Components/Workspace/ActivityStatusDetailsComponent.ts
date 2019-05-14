@@ -37,17 +37,17 @@ export class ActivityStatusDetailsComponent extends BaseComponent implements OnI
     public CustomersDashboardLegendId: string;
     public DirectionAndtransportModeLegendId: string;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TenantPM = InfraSettings.TenantPM;
-        this.DirectionAndTransportModeDashboardId = this.DirectionAndTransportModeDashboardId + SessionLocator.CurrentSession.GetChartId();
-        this.ShipmentsQuantityByTimeDashboardId = this.ShipmentsQuantityByTimeDashboardId + SessionLocator.CurrentSession.GetChartId();
-        this.CountriesDashboardId = this.CountriesDashboardId + SessionLocator.CurrentSession.GetChartId();
-        this.CustomersDashboardId = this.CustomersDashboardId + SessionLocator.CurrentSession.GetChartId();
-        this.CountriesDashboardLegendId = "CountriesDashboardLegendId_" + SessionLocator.CurrentSession.GetNewId("CountriesDashboardLegendId");        
-        this.CustomersDashboardLegendId = "CustomersDashboardLegendId_" + SessionLocator.CurrentSession.GetNewId("CustomersDashboardLegendId");        
-        this.DirectionAndtransportModeLegendId = "DirectionAndtransportModeLegendId_" + SessionLocator.CurrentSession.GetNewId("DirectionAndtransportModeLegendId");
+        this.DirectionAndTransportModeDashboardId = this.DirectionAndTransportModeDashboardId + this.CurrentSession.GetChartId();
+        this.ShipmentsQuantityByTimeDashboardId = this.ShipmentsQuantityByTimeDashboardId + this.CurrentSession.GetChartId();
+        this.CountriesDashboardId = this.CountriesDashboardId + this.CurrentSession.GetChartId();
+        this.CustomersDashboardId = this.CustomersDashboardId + this.CurrentSession.GetChartId();
+        this.CountriesDashboardLegendId = "CountriesDashboardLegendId_" + this.CurrentSession.GetNewId("CountriesDashboardLegendId");        
+        this.CustomersDashboardLegendId = "CustomersDashboardLegendId_" + this.CurrentSession.GetNewId("CustomersDashboardLegendId");        
+        this.DirectionAndtransportModeLegendId = "DirectionAndtransportModeLegendId_" + this.CurrentSession.GetNewId("DirectionAndtransportModeLegendId");
     }
 
 

@@ -272,7 +272,7 @@
                                                 </td>
 
                                                 <td *ngIf="FullAccounting  && IsCashBookValid">
-                                                    <div [style.text-align]="isRTL ? 'right' : 'left'" [style.float]="isRTL ? 'right' : 'left'" style="display: block;">
+                                                    <div [style.text-align]="isRTL ? 'right' : 'left'" float-start style="display: block;">
                                                         Cashbook: {{CashBookName}} (
                                                         <span (click)="EditGLAccount('CB')" class="hyperlink"> {{BranchGLAccountNumber}} </span>)
                                                     </div>
@@ -344,7 +344,7 @@
                                                     <LogLabel [ObjectFieldName]="'Account'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td *ngIf="FullAccounting" style="width:150px; left: -10px;">
+                                                <td *ngIf="FullAccounting && AccountingPaymentMethodCode == 'CH'" style="width:150px; left: -10px;">
                                                     <LogLabel [Text]="'Cheque Status'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
@@ -397,8 +397,8 @@
                                                     <LogTextBox [ObjectFieldName]="'Account'" [Text]="Account" [InputType]="'text'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
 
-                                                <td *ngIf="FullAccounting" style="width:150px;" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                    <div class="MediaFill" style="border: 1px solid #AAAAAA; opacity:0.5;border-radius: 3px;padding-left:10px;padding-right:10px;outline: none;font-size:12px;vertical-align:central;" [ngStyle]="{color: ARPaymentChequeStatusColor}">
+                                                <td *ngIf="FullAccounting && AccountingPaymentMethodCode == 'CH'" style="width:150px;text-align:center;" >
+                                                    <div class="MediaFill" style="font-size:12px;vertical-align:central;font-weight:bolder;text-align:center;" [ngStyle]="{color: ARPaymentChequeStatusColor}">
                                                         {{ARPaymentChequeStatus}}
                                                     </div>
                                                 </td>
@@ -673,27 +673,27 @@
                                 <tr style="width:100%;">
                                     <td style="vertical-align: middle;">
 
-                                        <div [style.float]="isRTL ? 'right' : 'left'" style="display:block; text-align:center;">
+                                        <div float-start style="display:block; text-align:center;">
                                             <div style="font-size: 24px; text-align: center;color:#282E30">{{Summary_Amount | NumbersPipe:'N2'}}</div>
                                             <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">{{'ARPayment.F.AmountInPaymentCurrency' | TextCodeTranslationPipe}}</div>
                                         </div>
 
-                                        <div [style.float]="isRTL ? 'right' : 'left'" style="display:block; text-align:center;">
+                                        <div float-start style="display:block; text-align:center;">
                                             <div style="font-size: 24px; text-align: center;color:#282E30; margin-left:15px;margin-right:15px;">  -  </div>
                                             <div></div>
                                         </div>
 
-                                        <div [style.float]="isRTL ? 'right' : 'left'" style="display:block;text-align:center;">
+                                        <div float-start style="display:block;text-align:center;">
                                             <div style="font-size: 24px; text-align: center;" [ngStyle]="{color: Summary_AmountPaidColor}">{{Summary_AmountPaid | NumbersPipe:'N2'}}</div>
                                             <div class="Label" style="text-align: center;font-size: 11px;margin-top:-5px;">{{'ARPayment.S.Details.AmountToPay' | TextCodeTranslationPipe}}</div>
                                         </div>
 
-                                        <div [style.float]="isRTL ? 'right' : 'left'" style="display:block;  text-align:center;">
+                                        <div float-start style="display:block;  text-align:center;">
                                             <div style="font-size: 24px; text-align: center;color:#282E30;margin-left:15px;margin-right:15px;"> = </div>
                                             <div></div>
                                         </div>
 
-                                        <div [style.float]="isRTL ? 'right' : 'left'" style="display:block;">
+                                        <div float-start style="display:block;">
                                             <div style="font-size: 24px;color:#282E30">{{OpenAmount | NumbersPipe:'N2'}}</div>
                                             <div style="vertical-align:top;">
                                                 <div class="Label" style="vertical-align:top;margin-top:-5px;display:inline-block;font-size:11px;color:#282E30;width:auto;color:#6E7172;">{{'ARPayment.F.OpenAmount' | TextCodeTranslationPipe}}</div>

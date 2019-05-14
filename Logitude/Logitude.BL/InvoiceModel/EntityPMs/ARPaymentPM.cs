@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Accounting.Def.EntityPMs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
@@ -130,6 +131,36 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string CadPago { get; set; }
         public string SelloPago { get; set; }
         public string BranchName { get; set; }
+
+        public DateTime? ApprovedDate { get; set; }
+        public string ApprovedByUserId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? FirstApproveDate { get; set; }
+        public bool IsFullAccounting { get; set; }
+        public string GLAccountId { get; set; }
+        public string GLAccountRecoMethodCode { get; set; }
+        public bool IsExternalEntity { get; set; }
+        private List<LedgerTransactionPM> invoicesLedgerTransactions;
+        public virtual List<LedgerTransactionPM> InvoicesLedgerTransactions
+        {
+            get
+            {
+                if (invoicesLedgerTransactions == null)
+                {
+                    invoicesLedgerTransactions = new List<LedgerTransactionPM>();
+                }
+
+                return invoicesLedgerTransactions;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    invoicesLedgerTransactions = value;
+                }
+            }
+        }
 
     }
 }

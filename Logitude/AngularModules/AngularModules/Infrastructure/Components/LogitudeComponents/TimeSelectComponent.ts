@@ -114,13 +114,14 @@ export class TimeSelectComponent implements OnInit {
     }
     GetDate(year: number, month: number, day: number, hour: number, minute: number, second: number) {
         var date: Date = new Date();
+        date.setUTCDate(1);
         date.setUTCFullYear(year);
         date.setUTCMonth(month);
         date.setUTCDate(day);
         date.setUTCHours(hour);
         date.setUTCMinutes(minute);
-        date.setUTCSeconds(0);
-
+        date.setUTCSeconds(second);
+        date.setUTCMilliseconds(0);
         return date;
     }
     ToDate(time: string) {

@@ -195,7 +195,9 @@ namespace MeatadataGeneratorTool.Helpers
             }
 
             field.FieldName = GetAttributeStringValue(fieldNode.Attributes["FieldName"]);
-            if (fieldNode.Attributes["OldFieldName"] != null)
+			field.GeneratedComponentPath = GetAttributeStringValue(fieldNode.Attributes["GeneratedComponentPath"]);
+
+			if (fieldNode.Attributes["OldFieldName"] != null)
             {
                 field.OldFieldName = GetAttributeStringValue(fieldNode.Attributes["OldFieldName"]);
             }
@@ -295,6 +297,15 @@ namespace MeatadataGeneratorTool.Helpers
             if (fieldNode.Attributes["HtmlHeaderComponentUrl"] != null)
             {
                 field.HtmlHeaderComponentUrl = GetAttributeStringValue(fieldNode.Attributes["HtmlHeaderComponentUrl"]);
+            }
+            if (fieldNode.Attributes["EnableFullscreenTextBox"] != null)
+            {
+
+                field.EnableFullscreenTextBox = GetAttributeBoolValue(fieldNode.Attributes["EnableFullscreenTextBox"]);
+            }
+            else
+            {
+                field.EnableFullscreenTextBox = false;
             }
 
 
@@ -410,6 +421,11 @@ namespace MeatadataGeneratorTool.Helpers
             else
             {
                 field.CopyToDW = false;
+            }
+
+            if (fieldNode.Attributes["ModelName"] != null)
+            {
+                field.ModelName = GetAttributeStringValue(fieldNode.Attributes["ModelName"]);
             }
 
             return field;
@@ -862,6 +878,17 @@ namespace MeatadataGeneratorTool.Helpers
                 DCField.IsCompositKey = false;
 
             }
+            try
+            {
+                DCField.CloseTableCode = GetAttributeStringValue(fieldNode.Attributes["CloseTableCode"]);
+
+            }
+            catch (Exception)
+            {
+                //DCField.CloseTableCode = false;
+
+            }
+
 
             return DCField;
         }
@@ -956,6 +983,8 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.HasApiHelper = GetAttributeBoolValue(entity.Attributes["HasApiHelper"]);
                 objectTable.QueryGroupCode = GetAttributeStringValue(entity.Attributes["Code"]);
                 objectTable.QueryGroupName = GetAttributeStringValue(entity.Attributes["Name"]);
+                objectTable.LovDisplayMemberPath = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPath"]);
+                objectTable.LovDisplayMemberPathLocal = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPathLocal"]);
                 if (entity.Attributes["NoViewController"] != null)
                 {
                     objectTable.NoViewController = GetAttributeBoolValue(entity.Attributes["NoViewController"]);
@@ -982,9 +1011,17 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     objectTable.NoTS = false;
                 }
+				if (entity.Attributes["NoDefaultFeatures"] != null)
+				{
+					objectTable.NoDefaultFeatures = GetAttributeBoolValue(entity.Attributes["NoDefaultFeatures"]);
+				}
+				else
+				{
+					objectTable.NoDefaultFeatures = false;
+				}
 
 
-                if (entity.Attributes["HasCompactSearch"] != null)
+				if (entity.Attributes["HasCompactSearch"] != null)
                 {
                     objectTable.HasCompactSearch = GetAttributeBoolValue(entity.Attributes["HasCompactSearch"]);
                 }
@@ -1053,6 +1090,16 @@ namespace MeatadataGeneratorTool.Helpers
                     objectTable.SearchFields = GetAttributeStringValue(entity.Attributes["SearchFields"]);
 
                 }
+
+                if (entity.Attributes["IsTabsHidden"] != null)
+                {
+                    objectTable.IsTabsHidden = GetAttributeBoolValue(entity.Attributes["IsTabsHidden"]);
+                }
+                else
+                {
+                    objectTable.IsTabsHidden = false;
+                }
+
 
             }
             return objectTable;

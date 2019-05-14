@@ -44,7 +44,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.AmountInInvoiceCurrency = entityPM.AmountInInvoiceCurrency;
                 entity.AmountInLocalCurrency = entityPM.AmountInLocalCurrency;
                 entity.AmountInProfitCurrency = entityPM.AmountInProfitCurrency;
-                entity.InvoiceNumber = entityPM.InvoiceNumber;
                 entity.PaymentTermId = entityPM.PaymentTermId;
                 entity.SubTotalInInvoiceCurrency = entityPM.SubTotalInInvoiceCurrency;
                 entity.SubTotalInLocalCurrency = entityPM.SubTotalInLocalCurrency;
@@ -54,6 +53,13 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.VendorGLAccountId = entityPM.VendorGLAccountId;
                 entity.AccountingDate = entityPM.AccountingDate;
                 entity.IsExternalEntity = entityPM.IsExternalEntity;
+
+                if (entityPM.InvoiceNumber != null)
+                {
+                    entityPM.InvoiceNumber = entityPM.InvoiceNumber.Trim();
+                }
+
+                entity.InvoiceNumber = entityPM.InvoiceNumber;
             }
             #endregion
 

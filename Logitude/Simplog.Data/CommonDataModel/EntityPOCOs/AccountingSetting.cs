@@ -16,7 +16,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool AllowManualInvoiceNumber { get; set; }
         public bool IsVatNumberMandatoryInAR { get; set; }
         public bool IsVatNumberMandatoryInAP { get; set; }
-        public bool IsChronologicalDates { get; set; }
+        public bool IsARInvoiceChronologicalDates { get; set; }
+        public bool IsARPaymentChronologicalDates { get; set; }
         public string ReceivableVATableTempCard { get; set; }
         public string ReceivableVATExemptTempCard { get; set; }
         public string PayableVATableTempCard { get; set; }
@@ -59,6 +60,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public bool EnableNegativeOffsetARPayments { get; set; }
         public bool EnableNegativeOffsetAPPayments { get; set; }
-        
+        public bool EnableInvoiceStocksManagement { get; set; }
     }
 }

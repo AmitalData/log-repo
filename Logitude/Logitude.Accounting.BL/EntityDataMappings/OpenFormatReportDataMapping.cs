@@ -17,6 +17,10 @@ using Logitude.BL.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using System.Web;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -39,19 +43,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         {
             CustomMappedPOCOProperties.Add(POCOPropertyNames.StatusTypeCode);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.CreatedByUserId);
-         //   CustomMappedPOCOProperties.Add(POCOPropertyNames.DateTypeCode);
 
-            ContactQuery query = new ContactQuery(entityPOCO.Tenant);
-            ContactPM loggedContact = null;
-            if (HttpContext.Current != null)
-            {
-                loggedContact = query.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
-            }
-            else
-            {
+            ContactPM loggedContact = GetLoggedContact(entityPOCO.Tenant);
 
-                loggedContact = query.GetSingleContactPM(entityPM.CreatedByUserId);
-            }
 
             if (entityPOCO.StatusTypeCode != null)
             {
@@ -59,18 +53,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 OpenFormatReportStatusPM status = statusQueryService.GetSingle(entityPOCO.StatusTypeCode, false, false);
                 if (status != null)
                 {
-                   // ContactPM loggedContact = null;
-
-                    //if (HttpContext.Current != null)
-                    //{
-                    //    loggedContact = query.GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
-                    //}
-                    //else
-                    //{
-
-                    //    loggedContact = query.GetSingleContactPM(entityPM.CreatedByUserId);
-                    //}
-                  //  ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
                     if (loggedContact.DontShowLocal)
                     {
 
@@ -85,12 +67,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
             if (entityPOCO.CreatedByUserId != null)
             {
-               
+                ContactQuery query = new ContactQuery(entityPOCO.Tenant);
                 ContactPM contact = query.GetSinglePM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
-              
-                   
 
-                //  ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
                 if (contact != null)
                 {
                     if (loggedContact.DontShowLocal)
@@ -105,27 +84,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
             }
 
+        }
 
-            //if (entityPOCO.DateTypeCode != null)
-            //{
-            //    OpenFormatDateTypeQueryService typeQueryService = new OpenFormatDateTypeQueryService(entityPOCO.Tenant);
-            //    OpenFormatDateTypePM dateType = typeQueryService.GetSingle(entityPOCO.DateTypeCode, false, false);
-            //    if (dateType != null)
-            //    {
-            //       // loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
-            //        if (loggedContact.DontShowLocal)
-            //        {
+        private ContactPM GetLoggedContact(int tenant)
+        {
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
 
-            //            entityPM.DateTypeName = dateType.EnglishName;
-            //        }
-            //        else { entityPM.DateTypeName = dateType.LocalName; }
-
-
-            //    }
-
-            //}
-
-
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
     }
 

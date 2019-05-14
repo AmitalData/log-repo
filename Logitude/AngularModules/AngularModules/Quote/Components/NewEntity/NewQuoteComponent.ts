@@ -46,7 +46,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     public QuoteSetting: QuoteSettingPM = null;
     public ValidationErrorsList: string[];
     public IsAddAgentVisible: boolean = false;
-    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;  
+    @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -665,6 +666,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     set ShipperContactId(newValue: string) {
         if (this.EntityPM.ShipperContactId != newValue) {
             this.EntityPM.ShipperContactId = newValue;
+
+            if (this.QuoteCustomerTypeCode == "SHI") {
+                this.EntityPM.CustomerContactId = newValue;
+            }
         }
     }
 
@@ -684,10 +689,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
 
     private GetShipperCardData() {
         if (AppTool.IsNullOrEmpty(this.ShipperId)) {
-            this.ShipperContactId = null;
             this.ShipperNote = null;
             this.EntityPM.ShipperName = null;
             this.ShipperAddressList = null;
+            this.EntityPM.ShipperContactId = null;
             this.EntityPM.ShipperMainAddressId = null;
             this.EntityPM.ShipperPickAddressId = null;
         }
@@ -699,7 +704,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 if (myCardList) {
                     this.EntityPM.ShipperName = myCardList.EnglishName;
                     this.ShipperNote = myCardList.Notes;
-                    this.ShipperContactId = myCardList.PrimaryContactId;
+                    this.EntityPM.ShipperContactId = myCardList.PrimaryContactId;
                     this.EntityPM.ShipperMainAddressId = myCardList.MainAddressId;
                     this.EntityPM.ShipperPickAddressId = myCardList.PickAddressId;
 
@@ -782,6 +787,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     set ConsigneeContactId(newValue: string) {
         if (this.EntityPM.ConsigneeContactId != newValue) {
             this.EntityPM.ConsigneeContactId = newValue;
+
+            if (this.QuoteCustomerTypeCode == "CON") {
+                this.EntityPM.CustomerContactId = newValue;
+            }
         }
     }
 
@@ -801,10 +810,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
 
     private GetConsigneeCardData() {
         if (AppTool.IsNullOrEmpty(this.ConsigneeId)) {
-            this.ConsigneeContactId = null;
             this.ConsigneeNote = null;
             this.EntityPM.ConsigneeName = null;
             this.ConsigneeAddressList = null;
+            this.EntityPM.ConsigneeContactId = null;
             this.EntityPM.ConsigneeMainAddressId = null;
             this.EntityPM.ConsigneePickAddressId = null;
         }
@@ -816,7 +825,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 if (myCardList) {
                     this.EntityPM.ConsigneeName = myCardList.EnglishName;
                     this.ConsigneeNote = myCardList.Notes;
-                    this.ConsigneeContactId = myCardList.PrimaryContactId;
+                    this.EntityPM.ConsigneeContactId = myCardList.PrimaryContactId;
                     this.EntityPM.ConsigneeMainAddressId = myCardList.MainAddressId;
                     this.EntityPM.ConsigneePickAddressId = myCardList.PickAddressId;
 
@@ -2077,10 +2086,9 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
             this.EntityPM.ChargeableWeightUnitCode = myChargeableWeightUnitCode;
             this.EntityPM.Ratio = AppTool.GetRatio(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
             this.EntityPM.DimFactor = AppTool.GetDimFactorFromRatio(this.EntityPM.Ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.ChargeableWeightUnitCode);
-        }
-        
-        this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
-        this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
+            this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
+            this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
+        }        
     }
     private SetPartners() {
         this.IsShipperMyCustomer = false;
@@ -2344,10 +2352,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         this.SetDataOnFinish();
 
@@ -2360,7 +2368,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }  
     }
     private SetDataOnFinish() {
@@ -2512,14 +2520,14 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
     private SubmitCreatingNewQuote() {              
         var myService: QuotePMService = new QuotePMService();
         myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
 
             else {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                this.CurrentSession.CloseCurrentWindowEmit('OK');
 
                 if (this.IsCopyFromQuote) {
                     this.RunInEditMode();
@@ -2528,7 +2536,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
         });
     }
     private RunInEditMode() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: "Quote", BackButtonLabel: "Quote: " + this.sourceEntityPM.QuoteNumber });
@@ -2536,7 +2544,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 let isEditComponentSaved = false;
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     if (isEditComponentSaved) {
-                        //SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 });
 
@@ -2731,6 +2739,7 @@ export class NewQuoteComponent extends BaseComponent implements OnInit {
                 }
 
                 QuoteUtilities.CopyQuoteCharges(this.EntityPM, this.sourceEntityPM, this.CopySaleIsChecked, this.CopyCostIsChecked);
+                this.EntityPM.TEU = QuoteUtilities.ComputeQuoteTEU(this.EntityPM);
 
                 if (this.EntityPM.ExchangeRate == null) {
                     if (!AppTool.IsNullOrZero(this.sourceEntityPM.EstimateProfit) && !AppTool.IsNullOrZero(this.sourceEntityPM.ExchangeRate)) {

@@ -103,6 +103,10 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<DWQueryColumn> DWQueryColumns { get; }
         IDbSet<DWQueryFilter> DWQueryFilters { get; }
         IDbSet<SharedUserQuery> SharedUserQueries { get; }
+        IDbSet<DWCategories> DWCategories { get; }
+        IDbSet<DWObjectFieldCategories> DWObjectFieldCategories { get; }
+        IDbSet<SchedulerLogs> SchedulerLogs { get; }
+
 
         void SetAsModified(object entity);
         void DetectChanges();

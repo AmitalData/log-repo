@@ -241,7 +241,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                                   // Column: To
                                   ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPortName,
-                                  MainCarriageToState = f.MainCarriageToState,
 
                                   ToPortName = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortName) ? f.MainCarriageFinalDestinationPortName : f.ToPortName,
                                   ToPortCountry = f.MainCarriageToPortCountryName,
@@ -260,7 +259,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                                   // Column: Origin
                                   MainCarriageFromPortName = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageFromCity : f.MainCarriageFromPortName,
-                                  MainCarriageFromState = f.MainCarriageFromState,
 
                                   MainCarriageATA = f.MainCarriageATA,
                                   MainCarriageETD = f.MainCarriageETD,
@@ -346,6 +344,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   MoveTypeName = f.MoveTypeName,
                                   ContainerLastStatusDate = f.ContainerLastStatusDate,
                                   BookingConfirmationNumber = f.BookingConfirmationNumber,
+                                  DeclarationDate = f.DeclarationDate,
+                                  DeclarationNumber = f.DeclarationNumber,
+                                  ARInvoices = f.ARInvoices,
                               };
 
             entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);

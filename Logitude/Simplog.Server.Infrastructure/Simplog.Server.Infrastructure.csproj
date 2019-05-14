@@ -206,6 +206,7 @@
     <Compile Include="Helpers\SettingUtil.cs" />
     <Compile Include="Helpers\TransactionFactory.cs" />
     <Compile Include="IContext.cs" />
+    <Compile Include="Interfaces\IDateTimeUtil.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="LogitudeCacheManager\LocalHttpCache.cs" />
     <Compile Include="LogitudeCacheManager\IServerCache.cs" />
@@ -224,6 +225,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\simplog.server.infrastructure.dll.licenses" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <Import Project="..\packages\Microsoft.Azure.Services.AppAuthentication.1.0.3\build\Microsoft.Azure.Services.AppAuthentication.targets" Condition="Exists('..\packages\Microsoft.Azure.Services.AppAuthentication.1.0.3\build\Microsoft.Azure.Services.AppAuthentication.targets')" />

@@ -8,14 +8,14 @@ import { Component, Input, AfterViewInit, OnInit, ChangeDetectorRef, EventEmitte
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ContactPMService} from '../../../Common/Services/StandardPMs/ContactPMService';
 import {ImageParameter} from '../../../Infrastructure/DataContracts/ImageParameter';
-declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload ,ArrayBufferToBase64: any; 
+declare var UploadLogoFile, HideImage, SetImage, ShowHideProgressDownload, ArrayBufferToBase64: any;
 
 @Component({
     moduleId: module.id,
 
     selector: 'ImageComponent',
     templateUrl: './ImageComponent.html',
-    inputs: ['EntityId', 'ImageId', "EntityName", 'QuotationMode', 'ImageId', 'WidthImage', 'HeightImage', 'ImageResizeWidth', 'ImageResizeHeight', 'HideBorder', 'DisplayOnly', 'ConversationHeaderId'],
+    inputs: ['EntityId', 'ImageId', "EntityName", 'ImageId', 'WidthImage', 'HeightImage', 'ImageResizeWidth', 'ImageResizeHeight', 'HideBorder', 'DisplayOnly', 'ConversationHeaderId'],
     providers: [ImageLibraryService],
 })
 
@@ -28,12 +28,11 @@ export class ImageComponent implements AfterViewInit, OnInit {
     IsLoadingImage: boolean = false;
     ImageResizeWidth: number;
     ImageResizeHeight: number;
-    QuotationMode: boolean = false;
     DefultImageHeight: string = "auto";
-    ImageKey: string = Guid.newGuid();    
+    ImageKey: string = Guid.newGuid();
     ImageFileHtmlId: string = Guid.NewRandomString();
     private contactPMService: ContactPMService;
-    ProgressDownloadId: string = Guid.newGuid();  
+    ProgressDownloadId: string = Guid.newGuid();
     DataImage: any;
     DisplayOnly: boolean = false;
     Tooltip: string = "Click to add the photo";// 
@@ -46,18 +45,18 @@ export class ImageComponent implements AfterViewInit, OnInit {
     WidthSocialImage: string = "";
     ColSpanArea3: string = "";
     IsShowSocialMessageAreaImage1: boolean = true;
-    IsShowSocialMessageAreaImage2: boolean= true;
-    IsShowSocialMessageAreaImage3: boolean= true;
-    IsShowSocialMessageAreaImage4: boolean =true;
+    IsShowSocialMessageAreaImage2: boolean = true;
+    IsShowSocialMessageAreaImage3: boolean = true;
+    IsShowSocialMessageAreaImage4: boolean = true;
 
 
-    @Output() UploadCompleted: EventEmitter<any> = new EventEmitter(); 
-    constructor(public _imageLibraryService: ImageLibraryService ,private cd: ChangeDetectorRef) {
+    @Output() UploadCompleted: EventEmitter<any> = new EventEmitter();
+    constructor(public _imageLibraryService: ImageLibraryService, private cd: ChangeDetectorRef) {
 
         this.contactPMService = new ContactPMService();
 
-        
-     
+
+
     }
     ngOnInit() {
 
@@ -103,7 +102,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
                     });
                 }
 
-                if (this.QuotationMode) {
+                if (this.EntityName == "Quotation") {
                     this.DefultImageHeight = "250px";
                 }
 
@@ -111,8 +110,8 @@ export class ImageComponent implements AfterViewInit, OnInit {
             }
         }
     }
-                   
-  
+
+
 
     ShowLogosIfExist(imageId: string, isUseCach = true) {
         if (!imageId) imageId = this.ImageId;
@@ -133,18 +132,21 @@ export class ImageComponent implements AfterViewInit, OnInit {
 
 
         if (!this.DisplayOnly) {
-          this.Tooltip = "Click to change the photo";
+            this.Tooltip = "Click to change the photo";
         }
 
         this.cd.detectChanges();
-       // this.GetImageFile(imageId);
+        // this.GetImageFile(imageId);
     }
 
-    GetImageFile(imageId: string, isFirEvent: boolean = false)
-    {
+    GetImageFile(imageId: string, isFirEvent: boolean = false) {
 
+        var type = "Base64";
+        if (this.EntityName == "Quotation") {
+            type += ("^ImageDetail");
+        }
         ShowHideProgressDownload(true, this.ProgressDownloadId);
-        this._imageLibraryService.DownloadFile(this.ImageId, "jpg", "images", SessionInfo.LoggedUserTenant, "Base64").subscribe((res: any) => {
+        this._imageLibraryService.DownloadFile(this.ImageId, "jpg", "images", SessionInfo.LoggedUserTenant, type).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
 
             ShowHideProgressDownload(false, this.ProgressDownloadId);
@@ -154,11 +156,11 @@ export class ImageComponent implements AfterViewInit, OnInit {
                     SessionLocator.UserIcons[imageId] = result;
                     SetImage(this.ImageKey, result, true);
                     if (isFirEvent) this.UploadCompleted.emit(this.ImageId);
-                
 
-                } 
 
-            } 
+                }
+
+            }
 
         });
 
@@ -173,27 +175,39 @@ export class ImageComponent implements AfterViewInit, OnInit {
     }
 
     UploadogoFile(event: any) {
-        if (this.QuotationMode) {
+        if (this.EntityName == "Quotation") {
             this.DefultImageHeight = "auto";
         }
 
-        var height: number = this.ImageResizeHeight ? this.ImageResizeHeight :150; 
-        var width: number = this.ImageResizeWidth ? this.ImageResizeWidth : 150; 
+        var height: number = this.ImageResizeHeight ? this.ImageResizeHeight : 150;
+        var width: number = this.ImageResizeWidth ? this.ImageResizeWidth : 150;
 
         var file: any = UploadLogoFile(this.ImageFileHtmlId);
-        if (file && (file.type == "image/jpeg" || file.type == "image/jpg")) {
-           // this.IsShowMessageComplate = false;
-           // this.IsShowProgressLoading = true;
-            this.ArrayBufferToBase64(file, "images", width, height, "jpg", this);
+
+        if (file) {
+
+            if (file.type == "image/jpeg" || file.type == "image/jpg") {
+                this.ArrayBufferToBase64(file, "images", width, height, this);
+            } else if (this.EntityName == "Quotation" && (file.type == "image/png" || file.type == "image/PNG")) {
+                this.ArrayBufferToBase64(file, "images", width, height, this);
+            }
         }
     }
 
 
 
-    ArrayBufferToBase64(file: any, filename: any, widht: number, height: number, extension: string, viewmode: any) {
+    ArrayBufferToBase64(file: any, filename: any, widht: number, height: number, viewmode: any) {
 
         if (file) {
             var reader: FileReader = new FileReader();
+            var extension: string = "";
+            var fileInfo = file.name.split('.');
+  
+            if (fileInfo.length > 1) {
+                extension = fileInfo[fileInfo.length - 1];
+            }
+            else extension = fileInfo[1];
+
 
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -229,7 +243,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
         filter.Width = widht;
         filter.Height = height;
         filter.Extension = extension;
-     
+
         filter.UploadMode = "ImageComponent";
 
         if (this.EntityName == "Customer") {
@@ -247,7 +261,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
             filter.EntityId = null;
             filter.ContactId = null;
             filter.Key = this.ImageId;
-           
+
         }
 
 
@@ -262,15 +276,15 @@ export class ImageComponent implements AfterViewInit, OnInit {
                         var empty: any = "";
                         SessionLocator.UserIcons[this.ImageId] = empty
                     }
-            
+
                     this.ImageId = result;
-                   
-                    this.ShowLogosIfExist(this.ImageId , false);
+
+                    this.ShowLogosIfExist(this.ImageId, false);
                 }
                 else ShowHideProgressDownload(false, this.ProgressDownloadId);
             } else ShowHideProgressDownload(false, this.ProgressDownloadId);
 
-     
+
 
         });
 
@@ -300,7 +314,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
         });
     }
     IsDefultFontSize: boolean = false;
-    ParticipantsImageList: string[][] = []; 
+    ParticipantsImageList: string[][] = [];
     BluidImage() {
         if (this.ParticipantsImageIdList.length > 0) {
 
@@ -312,7 +326,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
                 var ParticipantsList1: string[] = this.ParticipantsImageIdList[0].split('_');
                 var ParticipantsList2: string[] = this.ParticipantsImageIdList[1].split('_');
                 if (ParticipantsList1[1] == SessionLocator.LoggedUserId) {
-                    this.ShowSocialMessageLogosIfExist(ParticipantsList2[0], 1,  ParticipantsList2[2], ParticipantsList2[3]);
+                    this.ShowSocialMessageLogosIfExist(ParticipantsList2[0], 1, ParticipantsList2[2], ParticipantsList2[3]);
                 }
                 else if (ParticipantsList2[1] == SessionLocator.LoggedUserId) {
                     this.ShowSocialMessageLogosIfExist(ParticipantsList1[0], 1, ParticipantsList1[2], ParticipantsList1[3]);
@@ -329,7 +343,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
 
                 this.HeightSocialImage = "20px";
                 this.ColSpanArea3 = "1";
-       
+
                 if (!AppTool.IsNullOrEmpty(this.HeightImage)) {
                     var height = Number(this.HeightImage.replace("px", ""));
                     this.HeightSocialImage = (height / 2).toString() + "px";
@@ -339,15 +353,15 @@ export class ImageComponent implements AfterViewInit, OnInit {
                     this.WidthSocialImage = (width / 2).toString() + "px";
                 }
 
-              
-              
+
+
                 this.IsDefultFontSize = true;
                 this.ParticipantsImageIdList.forEach((item) => {
                     this.ParticipantsImageList.push(item.split('_'));
                 });
 
                 var count = 1;
-                
+
                 if (this.ParticipantsImageList.length > 4) {
                     this.IsShowOtherTextArea = true;
                     this.OtherAreaText = "+" + (this.ParticipantsImageList.length - 3).toString();
@@ -356,7 +370,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
                 else {
                     this.IsShowSocialMessageAreaImage4 = false;
                 }
-                if (this.ParticipantsImageList.length< 2) {
+                if (this.ParticipantsImageList.length < 2) {
                     this.IsShowSocialMessageAreaImage3 = false;
                 }
 
@@ -446,7 +460,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
     SocialMessageImage3Text: string;
     SocialMessageImage4Text: string;
 
-    SetSocialMessageImage(imageNumber: number, imageByte:any) {
+    SetSocialMessageImage(imageNumber: number, imageByte: any) {
 
         switch (imageNumber) {
 
@@ -481,7 +495,7 @@ export class ImageComponent implements AfterViewInit, OnInit {
         }
     }
 
-    SetSocialMessageAreaText(imageNumber: number, color: string , nameCode:string) {
+    SetSocialMessageAreaText(imageNumber: number, color: string, nameCode: string) {
 
         switch (imageNumber) {
 
@@ -489,8 +503,8 @@ export class ImageComponent implements AfterViewInit, OnInit {
                 this.IsShowSocialMessageAreaImage1 = true;
                 this.IsShowSocialMessageImage1 = false;
                 this.SocialMessageImage1Color = color;
-                this.SocialMessageImage1Text = !AppTool.IsNullOrEmpty(nameCode)? nameCode.toUpperCase():"";
-             
+                this.SocialMessageImage1Text = !AppTool.IsNullOrEmpty(nameCode) ? nameCode.toUpperCase() : "";
+
                 break;
 
             case 2:

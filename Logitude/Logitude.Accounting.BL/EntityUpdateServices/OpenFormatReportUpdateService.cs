@@ -27,7 +27,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             entityPM.Id = IdCounter.GetNumber("OpenFormatReport", entityPM.Tenant);
             entityPM.CreateDate = DateTime.Now;
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-           
+           entityPM.ToDate = new DateTime(entityPM.ToDate.Year, entityPM.ToDate.Month,  entityPM.ToDate.Day, 23, 59, 59);
             entityPM.ReportNumber= CodeCounter.GetNumber("OpenFormatReport", entityPM.Tenant).ToString(); ;
 
             entityPM.StatusTypeCode = "1";
@@ -49,7 +49,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if(entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                PNCFileArgs args = new PNCFileArgs() { ReportId = entityPM.Id, Tenant = entityPM.Tenant };
+                PNCFileArgs args = new PNCFileArgs() { ReportId = entityPM.Id, Tenant = entityPM.Tenant, TestingMode = entityPM.TestingMode };
                 var stringwriter = new System.IO.StringWriter();
                 var serializer = new XmlSerializer(typeof(PNCFileArgs));
                 serializer.Serialize(stringwriter, args);

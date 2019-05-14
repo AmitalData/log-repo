@@ -19,7 +19,22 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
         {
             if (isNewEntity)
             {
+                entityPOCO.BluesnapContractQTY = entityPM.NumberOfUsers;
+                entityPOCO.BluesnapCRMContractQTY = 1;
+                entityPOCO.BluesnapEAWBContractQTY = 1;
+                entityPOCO.BluesnapEAWBSContractQTY = 1;
+                entityPOCO.BluesnapOneTimeContractQTY = 1;
+                entityPOCO.BluesnapInttraStockContractQTY = 1;
+            }
 
+            else
+            {
+                entityPOCO.BluesnapContractQTY = entityPM.BluesnapContractQTY;
+                entityPOCO.BluesnapCRMContractQTY = entityPM.BluesnapCRMContractQTY;
+                entityPOCO.BluesnapEAWBContractQTY = entityPM.BluesnapEAWBContractQTY;
+                entityPOCO.BluesnapEAWBSContractQTY = entityPM.BluesnapEAWBSContractQTY;
+                entityPOCO.BluesnapOneTimeContractQTY = entityPM.BluesnapOneTimeContractQTY;
+                entityPOCO.BluesnapInttraStockContractQTY = entityPM.BluesnapInttraStockContractQTY;
             }
 
             entityPOCO.Name = entityPM.Name;
@@ -57,7 +72,13 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.IsSystemSupportEnabled = entityPM.IsSystemSupportEnabled;
             entityPOCO.IsCargonautEnabled = entityPM.IsCargonautEnabled;
             entityPOCO.IsDEXXConnectionEnabled = entityPM.IsDEXXConnectionEnabled;
-            entityPOCO.BluesnapContractCode = entityPM.BluesnapContractCode;
+            entityPOCO.BluesnapContractId = entityPM.BluesnapContractId;
+            entityPOCO.BluesnapCRMContractId = entityPM.BluesnapCRMContractId;
+            entityPOCO.BluesnapEAWBContractId = entityPM.BluesnapEAWBContractId;
+            entityPOCO.BluesnapEAWBSContractId = entityPM.BluesnapEAWBSContractId;
+            entityPOCO.BluesnapOneTimeContract = entityPM.BluesnapOneTimeContract;
+            entityPOCO.BluesnapInttraStockContractId = entityPM.BluesnapInttraStockContractId;
+
             entityPOCO.GlobalTenant.TTY = entityPM.TTY;
             entityPOCO.GlobalTenant.IsActive = entityPM.IsActive;
             entityPOCO.GlobalTenant.CompanyName = entityPM.Name;
@@ -128,6 +149,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                 {
                     tenant.Company = entityPM.Name;
                     tenant.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
+                    tenant.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
                     if (!entityPM.ManagesRegisteredAgent)
                     {
                         tenant.RegulatedAgentRegimeActivated = false;

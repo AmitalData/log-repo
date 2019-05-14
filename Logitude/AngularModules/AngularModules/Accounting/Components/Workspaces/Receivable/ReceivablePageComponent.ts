@@ -23,10 +23,10 @@ import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSe
 import { GLAccountTotalByMonthList } from '../../../EntityLists/GLAccountTotalByMonthList';
 
 import { GLAccountSummary } from '../../../DataContracts/AccountingSummery';
-import { AgingReportParameters  } from '../../../DataContracts/AgingReportParameters';
-import { PeriodM  } from '../../../DataContracts/PeriodM';
-import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import {ModulesService} from '../../../Services/ModulesService';
+import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
+import { PeriodM } from '../../../DataContracts/PeriodM';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ModulesService } from '../../../Services/ModulesService';
 
 @Component({
     moduleId: module.id,
@@ -60,23 +60,32 @@ export class ReceivablePageComponent {
     RecentGLAccountsCount: number = 0;
 
     public isRTL: boolean = false;
-
+    isReady: boolean = false;
 
     chartId: string = "";
-
-  constructor() {
-    this.chartId = "Receivable_" + SessionLocator.CurrentSession.GetChartId();
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor() {
+        this.chartId = "Receivable_" + this.CurrentSession.GetChartId();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { });
-        this._entityResourceService.getEntityResourceByTableName("ARPayment").subscribe((response: any) => { });
-        this._entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => { });
+        this.LoadResources();
+
+
         //this.LoadAllScreenData();
 
 
         //this.SelectedFilter = "Last 6 Months";
         this.SelectedFilter = this.FiltersList[1];
         this.PopulateDeptorsFilterData();
+    }
+    LoadResources() {
+        this._entityResourceService.getEntityResourceByTableName("ARPayment").subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => {
+                this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
+                    this.isReady = true;
+                });
+            });
+        });
     }
     InitComponent() {
         this.LoadAllScreenData();
@@ -158,12 +167,12 @@ export class ReceivablePageComponent {
             listArgs.Perspective = "GLAccountRecievable";
             listArgs.IgnoreSelectedPerspective = true;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -186,7 +195,7 @@ export class ReceivablePageComponent {
         logWindow.Height = 570;
         logWindow.Show("./InvoiceModules/ARPayment/Components/NewEntity/NewARPaymentComponent");
         logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
-        //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
         //    .then(cmpRef => {
         //        cmpRef.instance.ComponentRef = cmpRef;
         //        cmpRef.instance.Run({ EntityId: "", EntityPM: new ARPaymentPM(), ObjectTableName: 'ARPayment' });
@@ -229,11 +238,11 @@ export class ReceivablePageComponent {
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Receivables");
             //listArgs.DisplayTitle = displayTitle;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -249,11 +258,13 @@ export class ReceivablePageComponent {
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { InvoiceTypeCode: type };
         logWindow.Title = str;
+        logWindow.Width = 550;
+        logWindow.Height = 450;
 
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityPM: comp.EntityPM, ObjectTableName: 'ARInvoice' });
@@ -332,7 +343,7 @@ export class ReceivablePageComponent {
 
     EditGLAccount(entity: any) {
         if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'GLAccount', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Receivables") });
@@ -497,7 +508,8 @@ export class ReceivablePageComponent {
             this.barChartData[0].data[i] = value.toString();
 
             // Labels
-            var label = element.PeriodName.replace("b4", "Before"); // replace 'b4' with 'Before'
+            var label = element.PeriodName.replace("b4", !SessionLocator.LoggedUserPM.DontShowLocal ? "עד" : "Before"); // replace 'b4' with 'Before'
+            // var label = element.PeriodName.replace("b4", "Before"); // replace 'b4' with 'Before'
             label = label.startsWith("Before") ? label.replace("/20", "/") : label; // minimize year in 'Before' Column
             this.barChartLabels[i] = label;
 
@@ -520,8 +532,8 @@ export class ReceivablePageComponent {
     //#region Filters Code
 
     monthNames = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
+        "July", "August", "September", "October", "November", "December"
+    ];
 
     // aging chart
     //public FiltersList: string[] = [ 'Last 3 Month',
@@ -530,11 +542,11 @@ export class ReceivablePageComponent {
 
 
     public FiltersList: any[] =
-    [
-        { EnglishName: 'Last 3 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "שלושה")},
-        { EnglishName: 'Last 6 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "שישה") },
-        { EnglishName: 'Last 9 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "תשעה") }
-    ];
+        [
+            { EnglishName: 'Last 3 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "שלושה") },
+            { EnglishName: 'Last 6 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "שישה") },
+            { EnglishName: 'Last 9 Month', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LastXMonth").replace("#number", "תשעה") }
+        ];
 
 
     private selectedFilter: any;

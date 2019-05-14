@@ -10,6 +10,9 @@ namespace Logitude.Infrastructure.BL.CloseTables
 {
     public struct ToggleValues
     {   
+       public const string TestToggle = "TST";  
+       public const string EnableAzureRootFolder = "EZR";  
+       public const string LogBoxExport = "LEX";  
     }
 }
 

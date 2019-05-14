@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, OnInit}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -38,7 +38,7 @@ export class GeneratedDocumentCustomFieldComponent extends BaseComponent impleme
     ShowNoFieldsText: boolean;
     private entityPMService: EntityPMService;
     HasError: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor( ) {
         super();
         this.entityPMService = new EntityPMService();
@@ -141,11 +141,11 @@ export class GeneratedDocumentCustomFieldComponent extends BaseComponent impleme
                 }
 
 
-                SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                this.CurrentSession.StartBusyIndicatorSaving();
                 this.entityPMService.update(this.ObjectTableName, item.EntityPM).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         if (myResponse.HasError) {
                             this.HasError = true;
                             if (this.DocumentCustomArgs.editDocumentComponent != null) {

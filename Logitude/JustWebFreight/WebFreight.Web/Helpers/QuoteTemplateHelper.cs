@@ -417,8 +417,8 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALAMOUNTS", "Estimated total based on the above weight/volume", "Estimated total based on the above weight/volume", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALAMOUNTS", "Estimated total based on the above weight/volume", "Estimated total based on the above weight/volume", "Containers"));
 
-            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGENOTEPACKAGES", "Charge Note", "Charge Note", "Packages"));
-            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGENOTECONTAINERS", "Charge Note", "Charge Note", "Containers"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGENOTEPACKAGES", "Charge Notes", "Charge Notes", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGENOTECONTAINERS", "Charge Notes", "Charge Notes", "Containers"));
 
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALEMINMAXPACKAGES", "Min/Max", "Min/Max", "Packages"));
@@ -472,6 +472,7 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NUMBEROFPACKAGES", "Number Of Packages", "Number Of Packages", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NUMBEROFCONTAINERS", "Number Of Containers", "Number Of Containers", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TRANSITTIME", "Transit Time", "Transit Time", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("MOVETYPE", "Move Type", "Move Type", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGEGROUP", "Charge Group", "Charge Group", "TotalPerContainers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALPERCONTAINERS", "Total Per Containers", "Total Per Containers", "TotalPerContainers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NOTIFYNAME", "Notify Name", "Notify Name", "QuoteDetails"));
@@ -569,11 +570,11 @@ namespace WebFreight.Web.Helpers
             QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(tenant);
             
 
-            QuoteTemplatePM orignalQuoteTemplatePM = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
+            QuoteTemplatePM orignalQuoteTemplatePM = quoteTemplateQuery.GetSinglePM(quoteTemplateId);
 
             if (orignalQuoteTemplatePM != null)
             {
-                QuoteTemplateSetting copySetting = CopyQuoteTemplaetSetting(orignalQuoteTemplatePM.QuoteTemplateSettingId, tenant);
+                QuoteTemplateSetting copySetting = CopyQuoteTemplaetSetting(orignalQuoteTemplatePM.QuoteTemplateSettingId, tenant , orignalQuoteTemplatePM.Tenant);
                 if (copySetting != null)
                 {
                     newQuoteTemplateCopy = new QuoteTemplatePM()
@@ -765,6 +766,15 @@ namespace WebFreight.Web.Helpers
                     ShowTitleTotalPerContainersTable = setting.ShowTitleTotalPerContainersTable,
                     TotalPerContainersCurrencyType = !string.IsNullOrEmpty(setting.TotalPerContainersCurrencyType)? setting.TotalPerContainersCurrencyType : "SALE",
                     ShowPageBreakBeforeTotalPerContainersTable = setting.ShowPageBreakBeforeTotalPerContainersTable,
+                    ShowSaleMaxMinAmountContainers = setting.ShowSaleMaxMinAmountContainers,
+                    ShowSaleMaxMinAmountPackages =  setting.ShowSaleMaxMinAmountPackages,
+                    ShowChargeNoteContainers = setting.ShowChargeNoteContainers,
+                    ShowChargeDescriptionContainers = setting.ShowChargeDescriptionContainers,
+                    ShowChargeDescriptionPackages = setting.ShowChargeDescriptionPackages,
+                    ShowChargeNotePackages = setting.ShowChargeNotePackages,
+                    ShowTotalPerChargeGroupContainers = setting.ShowTotalPerChargeGroupContainers,
+                    ShowTotalPerChargeGroupPackages = setting.ShowTotalPerChargeGroupPackages,
+                
                 };
 
                 if (string.IsNullOrEmpty(copySetting.TotalPerContainersTableDesignId))

@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,31 +15,33 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
-{ 
+{
 
     public partial class JournalMoreDataListQueryService
     {
-	    private IQueryable<JournalMoreDataList> GetIqueryableList(IQueryable<JournalMoreData> iQueryable)
+        private IQueryable<JournalMoreDataList> GetIqueryableList(IQueryable<JournalMoreData> iQueryable)
         {
-		IQueryable<JournalMoreDataList> query = (from a in iQueryable
-                                            select new JournalMoreDataList()
-											{
-                     
-		                    	            });
+            IQueryable<JournalMoreDataList> query = (from a in iQueryable
+                                                     select new JournalMoreDataList()
+                                                     {
+                                                         GeneralData = a.GeneralData,
+                                                         JournalId = a.JournalId,
+                                                         Line =a.Line,
+                                                         Tenant =a.Tenant,
+                                                     });
             return query;
-		}
+        }
 
-		private IQueryable<JournalMoreData> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<JournalMoreData> iQueryable, int tenant)
+        private IQueryable<JournalMoreData> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<JournalMoreData> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<JournalMoreData> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<JournalMoreData> iQueryable, int tenant)
+            return iQueryable;
+        }
+        private IQueryable<JournalMoreData> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<JournalMoreData> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-		
-			}
+            return iQueryable;
+        }
+
+    }
 
 
 }
-	

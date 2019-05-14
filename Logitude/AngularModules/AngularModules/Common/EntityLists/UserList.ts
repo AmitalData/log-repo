@@ -47,6 +47,7 @@ export class UserList {
 		DocumentFilingInbox: string;
 		EmployeeGroupCustomFilter: string;
 		ShowLocalNameInLOV: boolean;
+		UserRoles: string;
 		GroupId: Array<string>;
 	
 }

@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Directive, ElementRef, Renderer, Input, Output, Component, EventEmitter, OnInit, OnChanges, OnDestroy} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
@@ -38,6 +38,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
 })
 
 export class LogCheckboxComponent implements OnInit, OnDestroy {
+    private CurrentSession = SessionLocator.SelectedSession;
     public ControlId: string = null;
     public ShowHelp: boolean = false;
     public ObjectField: ObjectFieldPM;
@@ -184,16 +185,16 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
 
         this.SetControlIds(baseIdCombination);
         //if (this.FocusOnMe) {// it means it is inside a grid.
-        if (SessionLocator.CurrentSession) {
-            this.CopyValueSubs = SessionLocator.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
+        if (this.CurrentSession) {
+            this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
                 if (id == this.ControlId) {
-                    SessionLocator.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                    this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
                 }
             });
 
-            if (SessionLocator.CurrentSession.CopiedCell) {
-                this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
-                SessionLocator.CurrentSession.CopiedCell = null;
+            if (this.CurrentSession.CopiedCell) {
+                this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+                this.CurrentSession.CopiedCell = null;
             }
         }
         //}

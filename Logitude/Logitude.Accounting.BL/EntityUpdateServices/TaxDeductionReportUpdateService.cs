@@ -1,10 +1,16 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -14,20 +20,31 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
-   public partial class TaxDeductionReportUpdateService
+    public partial class TaxDeductionReportUpdateService
     {
 
 
         protected override void OnCreating(TaxDeductionReportPM entityPM, EntityPM entityParentPM)
         {
             entityPM.CreateDate = DateTime.Now;
-     
+
             entityPM.UpdateDate = DateTime.Now;
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
             entityPM.StatusTypeCode = "1";
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
             entityPM.ReportNumber = CodeCounter.GetNumber("TaxDeductionReport", entityPM.Tenant).ToString();
 
+            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(entityPM.Tenant);
+            FullAccountingSettingPM setting = fullAccountingSettingQueryService.GetSingleFullAccountingSetting(entityPM.Tenant);
+
+            if(setting != null && setting.DeductionFileNumber == null)
+            {
+                ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
+                bool showLocals = !contact.DontShowLocal;
+                throw new Exception(TranslateTextsClass.Translate("Accounting.O.DeductionFileNumberNotFound", entityPM.Tenant, showLocals));
+
+
+            }
             Validate(entityPM);
         }
 
@@ -35,7 +52,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Trace(TaxDeductionReportPM entityPM, TaxDeductionReport entityPOCO, string changesXml)
         {
-            ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
+           ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 //create trace event with created type.
@@ -53,19 +70,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
-               
-                    EventTracerArgs eventTracerArgs = new EventTracerArgs()
-                    {
-                        EntityId = entityPM.Id,
-                        Tenant = entityPM.Tenant,
-                        UserId = loggedContact.Id,
-                        ObjectTableName = "TaxDeductionReport",
-                        IsAddedManually = false,
-                        EventTypeCode = "UPEV",
-                        Notes = "",
-                    };
-                    EventTracer.CreateTraceEvent(eventTracerArgs);
-                
+
+                EventTracerArgs eventTracerArgs = new EventTracerArgs()
+                {
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    UserId = loggedContact.Id,
+                    ObjectTableName = "TaxDeductionReport",
+                    IsAddedManually = false,
+                    EventTypeCode = "UPEV",
+                    Notes = "",
+                };
+                EventTracer.CreateTraceEvent(eventTracerArgs);
+
             }
 
             base.Trace(entityPM, entityPOCO, changesXml);
@@ -74,23 +91,40 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
-        private static ContactPM GetLoggedContact(int tenant)
-        {
 
+        public static ContactPM GetLoggedContact(int tenant)
+        {
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
+
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
+
+
+        protected override void AfterUpdating(TaxDeductionReportPM entityPM, EntityPM entityParentPM)
+        {
+            base.AfterUpdating(entityPM, entityParentPM);
+
+
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
+                entityPM.StatusTypeCode = "2";
+                entityPM.ChangeSetOp = ChangeSetOperation.Update;
+                this.Update(entityPM, true);
+
+                TaxDeductionReportService.Create856FileInBatch(entityPM.Id, entityPM.Tenant);
+
+                
             }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
         }
     }
+
 }

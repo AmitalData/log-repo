@@ -206,6 +206,7 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.ShipperCode = myPartnerCard.Code;
                         myDataProvider.ShipperAddress = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
                         myDataProvider.ShipperAddress_NoTel = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
+                        myDataProvider.ShipperAddress_NoTelFax = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
                         myDataProvider.ShipperVAT = myPartnerCard.VatNumber;
 
                         if (!string.IsNullOrEmpty(myShipperAddressId))
@@ -218,11 +219,13 @@ namespace WebFreight.Web.WebServices
                                 {
                                     myDataProvider.ShipperAddress = myPartnerCard.LocalName + Environment.NewLine;
                                     myDataProvider.ShipperAddress_NoTel = myPartnerCard.LocalName + Environment.NewLine;
+                                    myDataProvider.ShipperAddress_NoTelFax = myPartnerCard.LocalName + Environment.NewLine;
                                 }
 
                                 myDataProvider.ShipperAddress_WithName = DataProviders.General.GetAddressWithName(myPartnerAddress);
                                 myDataProvider.ShipperAddress = myDataProvider.ShipperAddress + DataProviders.General.GetAddress(myPartnerAddress);
                                 myDataProvider.ShipperAddress_NoTel = myDataProvider.ShipperAddress_NoTel + DataProviders.General.GetAddress(myPartnerAddress);
+                                myDataProvider.ShipperAddress_NoTelFax = myDataProvider.ShipperAddress_NoTelFax + DataProviders.General.GetAddress(myPartnerAddress);
                                 myDataProvider.ShipperATTN = myPartnerAddress.ATTN;
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
@@ -334,6 +337,8 @@ namespace WebFreight.Web.WebServices
                     Card myPartnerCard = CardRepository.GetSingleCard(shipment.ConsigneeId, tenant, true);
                     if (myPartnerCard != null)
                     {
+                        myDataProvider.ConsigneeAddress_NoTelFax = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
+
                         myDataProvider.ConsigneeAlways = myPartnerCard.EnglishName != null ? myPartnerCard.EnglishName + Environment.NewLine : "";
                         myDataProvider.ConsigneeVAT = myPartnerCard.VatNumber;
 
@@ -348,9 +353,11 @@ namespace WebFreight.Web.WebServices
                                 if (myPartnerAddress.IsLocalLanguage && !string.IsNullOrEmpty(myPartnerCard.LocalName))
                                 {
                                     myDataProvider.ConsigneeAlways = myPartnerCard.LocalName + Environment.NewLine;
+                                    myDataProvider.ConsigneeAddress_NoTelFax = myPartnerCard.LocalName + Environment.NewLine;
                                 }
 
                                 myDataProvider.ConsigneeAlways = myDataProvider.ConsigneeAlways + DataProviders.General.GetAddress(myPartnerAddress);
+                                myDataProvider.ConsigneeAddress_NoTelFax = myDataProvider.ConsigneeAddress_NoTelFax + DataProviders.General.GetAddress(myPartnerAddress);
 
                                 if (myPartnerAddress.PhoneNumber != null || myPartnerAddress.FaxNumber != null)
                                 {
@@ -1206,6 +1213,24 @@ namespace WebFreight.Web.WebServices
                                 newPackage.Dimensions = package.Length + "x" + package.Width + "x" + package.Height;
                             }
 
+                            #region Car Details
+                            newPackage.Make = package.Make;
+                            newPackage.Model = package.Model;
+                            newPackage.Year = package.Year;
+                            newPackage.Color = package.Color;
+                            newPackage.ChassisNumber = package.ChassisNumber;
+                            newPackage.RegistrationNumber = package.RegistrationNumber;
+
+                            if (!string.IsNullOrEmpty(package.CountryId))
+                            {
+                                Country country = CountryRepository.GetSingleCountry(package.CountryId, tenant, true);
+                                if (country != null)
+                                {
+                                    newPackage.CountryName = country.EnglishName;
+                                }
+                            }
+                            #endregion
+
                             #region Harmonize
                             if (package.IsMultiHarmonize)
                             {
@@ -1270,6 +1295,24 @@ namespace WebFreight.Web.WebServices
                             {
                                 newPackage.Dimensions = package.Length + "x" + package.Width + "x" + package.Height;
                             }
+
+                            #region Car Details
+                            newPackage.Make = package.Make;
+                            newPackage.Model = package.Model;
+                            newPackage.Year = package.Year;
+                            newPackage.Color = package.Color;
+                            newPackage.ChassisNumber = package.ChassisNumber;
+                            newPackage.RegistrationNumber = package.RegistrationNumber;
+
+                            if (!string.IsNullOrEmpty(package.CountryId))
+                            {
+                                Country country = CountryRepository.GetSingleCountry(package.CountryId, tenant, true);
+                                if (country != null)
+                                {
+                                    newPackage.CountryName = country.EnglishName;
+                                }
+                            }
+                            #endregion
 
                             #region Harmonize
                             if (package.IsMultiHarmonize)
@@ -1663,6 +1706,29 @@ namespace WebFreight.Web.WebServices
                         packageline.Width = package.Width.ToString();
                         packageline.Height = package.Height.ToString();
 
+                        #region Car Details
+                        packageline.Make = package.Make;
+                        packageline.Model = package.Model;
+                        packageline.Year = package.Year;
+                        packageline.Color = package.Color;
+                        packageline.ChassisNumber = package.ChassisNumber;
+                        packageline.RegistrationNumber = package.RegistrationNumber;
+
+                        if (!string.IsNullOrEmpty(package.CountryId))
+                        {
+                            Country country = CountryRepository.GetSingleCountry(package.CountryId, tenant, true);
+                            if (country != null)
+                            {
+                                packageline.CountryName = country.EnglishName;
+                            }
+                        }
+                        #endregion
+
+                        packageline.Reference1 = package.Reference1;
+                        packageline.Reference2 = package.Reference2;
+                        packageline.Reference3 = package.Reference3;
+                        packageline.Reference4 = package.Reference4;
+
                         #region Harmonize
                         if (package.IsMultiHarmonize)
                         {
@@ -1794,6 +1860,24 @@ namespace WebFreight.Web.WebServices
                             insidePackage.VolumetricWeight = insideItem.VolumetricWeight;
                             insidePackage.Weight = insideItem.Weight;
                             insidePackage.Description = insideItem.Description;
+
+                            #region Car Details
+                            insidePackage.Make = insideItem.Make;
+                            insidePackage.Model = insideItem.Model;
+                            insidePackage.Year = insideItem.Year;
+                            insidePackage.Color = insideItem.Color;
+                            insidePackage.ChassisNumber = insideItem.ChassisNumber;
+                            insidePackage.RegistrationNumber = insideItem.RegistrationNumber;
+
+                            if (!string.IsNullOrEmpty(insideItem.CountryId))
+                            {
+                                Country country = CountryRepository.GetSingleCountry(insideItem.CountryId, tenant, true);
+                                if (country != null)
+                                {
+                                    insidePackage.CountryName = country.EnglishName;
+                                }
+                            }
+                            #endregion
 
                             packageline.InsidePackagesLines.Add(insidePackage);
                         }
@@ -1990,6 +2074,24 @@ namespace WebFreight.Web.WebServices
             line.ContainerNumber = package.ContainerNumber;
             line.Seal1 = package.ShipperSeal;
             line.Seal2 = package.CarrierSeal;
+
+            #region Car Details
+            line.Make = package.Make;
+            line.Model = package.Model;
+            line.Year = package.Year;
+            line.Color = package.Color;
+            line.ChassisNumber = package.ChassisNumber;
+            line.RegistrationNumber = package.RegistrationNumber;
+
+            if (!string.IsNullOrEmpty(package.CountryId))
+            {
+                Country country = CountryRepository.GetSingleCountry(package.CountryId, tenant, true);
+                if (country != null)
+                {
+                    line.CountryName = country.EnglishName;
+                }
+            }
+            #endregion
 
             if (package.MarksAndNumbers == null)
             {

@@ -96,10 +96,7 @@ namespace WebFreight.Web.DataProviders
             public string ARInvoiceField8 { get; set; }
             public string ARInvoiceField9 { get; set; }
             public string ARInvoiceField10 { get; set; }
-
-
-
-
+            
             public string Notes { get; set; }
             public DateTime? RegisterDate { get; set; }
             public DateTime? ValueDate { get; set; }
@@ -107,6 +104,13 @@ namespace WebFreight.Web.DataProviders
 
             public string Shipper { get; set; }
             public string Consignee { get; set; }
+
+            public string BillToVendorId { get; set; }
+            public string BillToVendor { get; set; }
+
+            public string InvoiceStatus { get; set; }
+            public double? InvoiceAmount { get; set; }
+            public double? AmountPaid { get; set; }
         }
 
         public string Name { get; set; }

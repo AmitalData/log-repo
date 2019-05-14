@@ -204,11 +204,11 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                             }
                         }
 
-                        if (entityPM.BluesnapContractCode != poco.BluesnapContractCode)
+                        if (entityPM.BluesnapContractId != poco.BluesnapContractId)
                         {
                             IGlobalContext context = GlobalContext.GetContext(0);
                             BluesnapContractRepository repo = new BluesnapContractRepository(context);
-                            BluesnapContract entity_Pm = repo.GetSingleBluesnapContract(entityPM.BluesnapContractCode, 0);
+                            BluesnapContract entity_Pm = repo.GetSingleBluesnapContract(entityPM.BluesnapContractId, 0);
 
                             if (string.IsNullOrEmpty(notes))
                             {

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {CourierMasterPM} from '../../../../Customs/EntityPMs/CourierMasterPM';
 import { CourierMasterPMService } from '../../../../Customs/Services/StandardPMs/CourierMasterPMService';
@@ -28,6 +28,7 @@ export class NewCourierComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     FIELD_IS_REQUIERD: string;
     QueryNameText: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -104,22 +105,22 @@ export class NewCourierComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
 
     SubmitChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this.CourierMasterPMService.insert(this.EntityPM).subscribe(Result => {
 
             var mm: ServiceResponse = Result;
             if (!mm.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindowEmit("ok");
                 var entity = mm.Result;
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                    SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName, BackButtonLabel: this.QueryNameText });
@@ -132,7 +133,7 @@ export class NewCourierComponent extends BaseComponent {
 
             else {
                   this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

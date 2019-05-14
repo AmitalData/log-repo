@@ -35,16 +35,17 @@
 </head>-->  
   
 
+
 <table>
     <tr>
         <td>
-            
-            <div *ngIf="!IsDisableMode"  [attr.id]="Id"></div>
-            <div class="CustomToolBar" [style.height]="PreviewDivHeight" style="vertical-align:top;margin-top:-7px" *ngIf="IsDisableMode">
+
+            <div [attr.id]="Id"></div>
+            <!--<div class="CustomToolBar" [style.height]="PreviewDivHeight" style="vertical-align:top;margin-top:-7px" *ngIf="IsDisableMode">
                 <iframe [style.height]="PreviewDivHeight2" style="margin:0px;overflow-y:auto; overflow-x :hidden;vertical-align:top;width:100%;" [attr.id]="PreviewDivId">
-    
+
                 </iframe>
-            </div>
+            </div>-->
         </td>
     </tr>
 </table>

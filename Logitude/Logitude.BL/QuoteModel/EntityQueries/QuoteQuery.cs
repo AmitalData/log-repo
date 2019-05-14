@@ -134,6 +134,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                QuoteTypeName = f.QuoteType == null ? "" : f.QuoteType.Name,
                                                CarrierName = f.MainCarriageCarrierCard == null ? "" : f.MainCarriageCarrierCard.EnglishName,
                                                ChargeableWeight = f.ChargeableWeight,
+                                               ChargeableWeightInKG = f.ChargeableWeightInKG,
                                                GrossWeight = f.GrossWeight,
                                                GrossWeightInKG = f.GrossWeightInKG,
                                                GrossWeightPerTon = f.GrossWeightPerTon,
@@ -327,6 +328,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         GrossWeightInKG = f.GrossWeightInKG,
                         GrossWeightPerTon = f.GrossWeightPerTon,
                         ChargeableWeight = f.ChargeableWeight,
+                        ChargeableWeightInKG = f.ChargeableWeightInKG,
                         NumberOfContainers = f.NumberOfContainers,
                         NumberOfPackages = f.NumberOfPackages,
                         QuoteClosingReasonCode = f.QuoteClosingReasonCode,
@@ -1106,158 +1108,6 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return result;
         }
 
-        public string GetQuoteAutomaticSubject(QuotePM entityPM)
-        {
-            string mySubject = null;
-
-            int tenant = entityPM.Tenant;
-
-            bool isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
-
-            AddressRepository addressRepository = new AddressRepository(tenant);
-
-            if (!string.IsNullOrEmpty(entityPM.IncotermId))
-            {
-                IncotermRepository incotermRepository = new IncotermRepository(tenant);
-                Incoterm incoterm = incotermRepository.GetSingleIncoterm(entityPM.IncotermId, tenant);
-                if (incoterm != null)
-                {
-                    mySubject = incoterm.Code;
-                }
-            }
-
-            if (isInlandDomestic)
-            {
-                #region
-                if (!string.IsNullOrEmpty(entityPM.FromPartnerAddressId))
-                {
-                    Address myAddress = addressRepository.GetSingleAddress(entityPM.FromPartnerAddressId, tenant);
-                    if (myAddress != null)
-                    {
-                        if (!string.IsNullOrEmpty(myAddress.City))
-                        {
-                            mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " " + myAddress.City;
-                        }
-
-                        else if (!string.IsNullOrEmpty(myAddress.ZipCode))
-                        {
-                            mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " " + myAddress.ZipCode;
-                        }
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(entityPM.ToPartnerAddressId))
-                {
-                    Address myAddress = addressRepository.GetSingleAddress(entityPM.ToPartnerAddressId, tenant);
-                    if (myAddress != null)
-                    {
-                        if (!string.IsNullOrEmpty(myAddress.City))
-                        {
-                            mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " > " + myAddress.City;
-                        }
-
-                        else if (!string.IsNullOrEmpty(myAddress.ZipCode))
-                        {
-                            mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " > " + myAddress.ZipCode;
-                        }
-                    }
-                }
-                #endregion
-            }
-
-            else
-            {
-                #region
-                if (entityPM.IncludePickUp)
-                {
-                    if (!string.IsNullOrEmpty(entityPM.PickUpAddressId))
-                    {
-                        Address myAddress = addressRepository.GetSingleAddress(entityPM.PickUpAddressId, tenant);
-                        if (myAddress != null)
-                        {
-                            if (!string.IsNullOrEmpty(myAddress.City))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " " + myAddress.City;
-                            }
-
-                            else if (!string.IsNullOrEmpty(myAddress.ZipCode))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " " + myAddress.ZipCode;
-                            }
-                        }
-                    }
-
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(entityPM.FromAddressCity))
-                        {
-                            mySubject = string.IsNullOrEmpty(mySubject) ? entityPM.FromAddressCity : mySubject + " " + entityPM.FromAddressCity;
-                        }
-
-                        else if (!string.IsNullOrEmpty(entityPM.FromAddressZipCode))
-                        {
-                            mySubject = string.IsNullOrEmpty(mySubject) ? entityPM.FromAddressZipCode : mySubject + " " + entityPM.FromAddressZipCode;
-                        }
-                    }
-                }
-
-                else if (!string.IsNullOrEmpty(entityPM.FromPortId))
-                {
-                    PortPM myPort = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.FromPortId, true);
-                    if (myPort != null)
-                    {
-                        mySubject = string.IsNullOrEmpty(mySubject) ? myPort.Code : mySubject + " " + myPort.Code;
-                    }
-                }
-
-                if (entityPM.IncludeDelivery)
-                {
-                    if (!string.IsNullOrEmpty(entityPM.DeliveryAddressId))
-                    {
-                        Address myAddress = addressRepository.GetSingleAddress(entityPM.DeliveryAddressId, tenant);
-                        if (myAddress != null)
-                        {
-                            if (!string.IsNullOrEmpty(myAddress.City))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " > " + myAddress.City;
-                            }
-
-                            else if (!string.IsNullOrEmpty(myAddress.ZipCode))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " > " + myAddress.ZipCode;
-                            }
-                        }
-                    }
-
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(entityPM.ToAddressCity))
-                        {
-                            mySubject = string.IsNullOrEmpty(mySubject) ? entityPM.ToAddressCity : mySubject + " > " + entityPM.ToAddressCity;
-                        }
-
-                        else if (!string.IsNullOrEmpty(entityPM.ToAddressZipCode))
-                        {
-                            mySubject = string.IsNullOrEmpty(mySubject) ? entityPM.ToAddressZipCode : mySubject + " > " + entityPM.ToAddressZipCode;
-                        }
-                    }
-                }
-
-                else if (!string.IsNullOrEmpty(entityPM.ToPortId))
-                {
-                    PortPM myPort = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.ToPortId, true);
-                    if (myPort != null)
-                    {
-                        mySubject = string.IsNullOrEmpty(mySubject) ? myPort.Code : mySubject + " > " + myPort.Code;
-                    }
-                }
-
-                #endregion
-            }
-
-            return mySubject;
-        }
-
         private QuotePM MapPOCOToPM(Quote entityPOCO)
         {
             QuotePM entityPM = new QuotePM()
@@ -1339,6 +1189,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 GrossWeightInKG = entityPOCO.GrossWeightInKG,
                 GrossWeightPerTon = entityPOCO.GrossWeightPerTon,
                 ChargeableWeight = entityPOCO.ChargeableWeight,
+                ChargeableWeightInKG = entityPOCO.ChargeableWeightInKG,
                 TransportModeId = entityPOCO.TransportModeId,
                 Ratio = entityPOCO.Ratio,
                 DimFactor = entityPOCO.DimFactor,
@@ -1414,6 +1265,9 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                 QuotationSections = entityPOCO.QuotationSections,
                 NumberOfFollowUps = entityPOCO.NumberOfFollowUps,
                 SameOrFixed = entityPOCO.IsSaleCurrencySameAsCost ? "Same as Cost Currency" : "Fixed",
+                QuoteLevel = entityPOCO.ShipmentTypeId,
+                GrossWeightEdited = entityPOCO.GrossWeightEdited,
+                ChargeableWeightEdited = entityPOCO.ChargeableWeightEdited,
             };
 
             int tenant = entityPOCO.Tenant;
@@ -1996,9 +1850,61 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             }
             #endregion
 
-            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant);
-            entityPM.QuotePackages = quotePackageQuery.GetQuotePackagesForQuotePMIDTenant(entityId, tenant);
+            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant);           
             entityPM.TotalVATs = myTotalVATQuery.GetTotalVATs(entityId, tenant);
+
+            if (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "FTL")
+            {
+                if (entityPM.PackageType1Id != null || entityPM.PackageType1Quantity != null)
+                {
+                    QuotePackagePM quotePackage1 = new QuotePackagePM();
+                    quotePackage1.QuoteId = entityId;
+                    quotePackage1.PackageTypeId = entityPM.PackageType1Id;
+                    quotePackage1.Quantity = entityPM.QuoteTypeCode == "P" ? 1 : entityPM.PackageType1Quantity;
+                    entityPM.QuotePackages.Add(quotePackage1);
+                }
+
+                if (entityPM.PackageType2Id != null || entityPM.PackageType2Quantity != null)
+                {
+                    QuotePackagePM quotePackage2 = new QuotePackagePM();
+                    quotePackage2.QuoteId = entityId;
+                    quotePackage2.PackageTypeId = entityPM.PackageType2Id;
+                    quotePackage2.Quantity = entityPM.QuoteTypeCode == "P" ? 1 : entityPM.PackageType2Quantity;
+                    entityPM.QuotePackages.Add(quotePackage2);
+                }
+
+                if (entityPM.PackageType3Id != null || entityPM.PackageType3Quantity != null)
+                {
+                    QuotePackagePM quotePackage3 = new QuotePackagePM();
+                    quotePackage3.QuoteId = entityId;
+                    quotePackage3.PackageTypeId = entityPM.PackageType3Id;
+                    quotePackage3.Quantity = entityPM.QuoteTypeCode == "P" ? 1 : entityPM.PackageType3Quantity;
+                    entityPM.QuotePackages.Add(quotePackage3);
+                }
+
+                if (entityPM.PackageType4Id != null || entityPM.PackageType4Quantity != null)
+                {
+                    QuotePackagePM quotePackage4 = new QuotePackagePM();
+                    quotePackage4.QuoteId = entityId;
+                    quotePackage4.PackageTypeId = entityPM.PackageType4Id;
+                    quotePackage4.Quantity = entityPM.QuoteTypeCode == "P" ? 1 : entityPM.PackageType4Quantity;
+                    entityPM.QuotePackages.Add(quotePackage4);
+                }
+
+                if (entityPM.PackageType5Id != null || entityPM.PackageType5Quantity != null)
+                {
+                    QuotePackagePM quotePackage5 = new QuotePackagePM();
+                    quotePackage5.QuoteId = entityId;
+                    quotePackage5.PackageTypeId = entityPM.PackageType5Id;
+                    quotePackage5.Quantity = entityPM.QuoteTypeCode == "P" ? 1 : entityPM.PackageType5Quantity;
+                    entityPM.QuotePackages.Add(quotePackage5);
+                }
+            }
+
+            else
+            {
+                entityPM.QuotePackages = quotePackageQuery.GetQuotePackagesForQuotePMIDTenant(entityId, tenant);
+            }
 
             #region Summery Fields
             if (entityPM.QuoteCharges != null)
@@ -2195,6 +2101,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         SaleMeasurementId = item.SaleMeasurementId,
                         SaleMeasurementCode = item.SaleMeasurementCode,
                         SaleMeasurementShortName = item.SaleMeasurementShortName,
+                        SaleMeasurementLocalName = item.SaleMeasurementLocalName,
                         SaleQuantity = item.SaleQuantity,
                         SaleUnitPrice = item.SaleUnitPrice,
                         SaleTotalAmount = item.SaleTotalAmount,

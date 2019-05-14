@@ -66,7 +66,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("Journal", "READ", tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
 
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Journal", 0, true);

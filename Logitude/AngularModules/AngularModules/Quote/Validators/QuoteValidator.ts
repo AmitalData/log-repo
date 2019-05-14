@@ -1,4 +1,4 @@
-﻿import {QuotePM} from '../EntityPMs/QuotePM';
+import {QuotePM} from '../EntityPMs/QuotePM';
 import {QuoteChargePM} from '../EntityPMs/QuoteChargePM';
 import {AppTool} from '../../Infrastructure/Tools';
 import {QuoteTool} from '../Tools';
@@ -19,6 +19,10 @@ export class QuoteValidator {
             Validator.TryValidateObject(entityPM, objectTableName, errors);
 
             var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+            if (entityPM.Ratio > 10 || entityPM.Ratio < 1) {
+                errors.push("Ratio must be between 1-10");
+            }
 
             // General Data
             if (entityPM.ExpirationDays < 0) {
@@ -113,6 +117,8 @@ export class QuoteValidator {
                 }
             }
 
+            this.ValidateFCLDuplicatedPackages(entityPM, errors);
+
             //Pickup
             if (entityPM.IncludePickUp) {
                 var validatePickupFields = false;
@@ -194,7 +200,73 @@ export class QuoteValidator {
         
         return errors;
     }
+    private ValidateFCLDuplicatedPackages(entityPM: QuotePM, errors: string[]) {
+        var isFCLQuote = AppTool.IsFCLEntity(entityPM.TransportModeId, entityPM.ShipmentTypeId);
+        if (isFCLQuote) {
 
+            var list: string[] = [];
+            var isDuplicatedPackage: boolean = false;
+
+            if (!AppTool.IsNullOrEmpty(entityPM.PackageType1Id)) {
+
+                if (list.filter(f => f == entityPM.PackageType1Id).length > 0) {
+                    isDuplicatedPackage = true;
+                }
+
+                else {
+                    list.push(entityPM.PackageType1Id);
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(entityPM.PackageType2Id)) {
+
+                if (list.filter(f => f == entityPM.PackageType2Id).length > 0) {
+                    isDuplicatedPackage = true;
+                }
+
+                else {
+                    list.push(entityPM.PackageType2Id);
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(entityPM.PackageType3Id)) {
+
+                if (list.filter(f => f == entityPM.PackageType3Id).length > 0) {
+                    isDuplicatedPackage = true;
+                }
+
+                else {
+                    list.push(entityPM.PackageType3Id);
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(entityPM.PackageType4Id)) {
+
+                if (list.filter(f => f == entityPM.PackageType4Id).length > 0) {
+                    isDuplicatedPackage = true;
+                }
+
+                else {
+                    list.push(entityPM.PackageType4Id);
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(entityPM.PackageType5Id)) {
+
+                if (list.filter(f => f == entityPM.PackageType5Id).length > 0) {
+                    isDuplicatedPackage = true;
+                }
+
+                else {
+                    list.push(entityPM.PackageType5Id);
+                }
+            }
+
+            if (isDuplicatedPackage) {
+                errors.push("Cannot add the same container type twice. You can adjust the QTY for one of them");
+            }
+        }
+    }
     private ValidateCharge(charge: QuoteChargePM, errors: string[]) {
         var objectTableName: "QuoteCharge";
 

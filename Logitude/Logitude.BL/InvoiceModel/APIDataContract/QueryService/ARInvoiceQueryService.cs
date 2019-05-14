@@ -1,8 +1,11 @@
 ﻿using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +32,90 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+        public ARInvoicePM UpdateCreditInvoice(ARInvoicePM invoice, int tenant)
+        {
+            ARInvoicePM invoicePM = null;
+            if (String.IsNullOrEmpty(invoice.Id))
+            {
+                invoice.Id = IdCounter.GetNumber("ARInvoice", invoice.Tenant).ToString();
+            }
+            if (invoice.CreditARInvoice != null)
+            {
+                invoicePM = query.GetSingleInvoiceByInvoiceNumber(invoice.CreditARInvoice, tenant);
+            
+                if (invoicePM != null && invoicePM.StatusCode == "AD")
+                {
+                    if (invoicePM.BillToId != invoice.BillToId)
+                    {
+                        throw new ApplicationException("The bill to is different than the credited invoice bill to");
+                    }
+                    if (Math.Abs(invoicePM.AmountInLocalCurrency.Value) != Math.Abs(invoice.AmountInLocalCurrency.Value))
+                    {
+                        throw new ApplicationException("The total amount is different than the credited invoice total amount");
+                    }
+
+                    ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(tenant);
+
+                    ARInvoiceService service = new ARInvoiceService(context, tenant);
+
+                    if (invoicePM.StatusCode == "AR")
+                    {
+                        throw new ApplicationException("this invoice is already auto credited");
+                    }
+
+                    else
+                    {
+
+
+                        invoice.StatusCode = "AC";
+                        invoice.IsAutoCredit = true;
+
+                        //  invoice.InvoiceDate = DateTime.Today;
+
+                        invoice.SubTotalInInvoiceCurrency = invoice.SubTotalInInvoiceCurrency;
+                        invoice.SubTotalInLocalCurrency = invoice.SubTotalInLocalCurrency;
+                        invoice.AmountInInvoiceCurrency = invoice.AmountInInvoiceCurrency;
+                        invoice.AmountInLocalCurrency = invoice.AmountInLocalCurrency;
+                        invoice.AmountInProfitCurrency = invoice.AmountInProfitCurrency;
+                        invoice.AmountDue = 0;
+                        invoice.AmountDueInLocalCurrency = 0;
+                        invoice.AmountDueInProfitCurrency = 0;
+                        invoice.CreditedByARInvoiceId = invoicePM.Id;
+
+
+
+                        int i = 1;
+                        foreach (ARInvoiceLinePM item in invoice.InvoiceLines)
+                        {
+                            item.UnitPrice = item.UnitPrice;
+                            item.ForiegnCurrencyAmount = item.ForiegnCurrencyAmount;
+                            item.LocalCurrencyAmount = item.LocalCurrencyAmount;
+                            item.ProfitCurrencyAmount = item.ProfitCurrencyAmount;
+                            item.InvoiceCurrencyAmount = item.InvoiceCurrencyAmount;
+                        }
+
+                        //  service.Update(invoicePM);
+
+
+
+                    
+                      
+                        invoicePM.IsCancelled = true;
+                        invoicePM.CancelledByARInvoiceId = invoice.Id;
+                        invoicePM.StatusCode = "AR";
+                        invoicePM.AmountDue = 0;
+                        invoicePM.AmountDueInLocalCurrency = 0;
+                        invoicePM.AmountDueInProfitCurrency = 0;
+                      //  service.Update(invoicePM, true);
+
+
+                    }
+                }
+                }
+
+            return invoicePM;
+          
+         }
         public ARInvoice ARInvoiceDataMappingAndValidatin(ARInvoicePM MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             try
@@ -125,23 +212,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                         temp.BillToAddress.Address1 = myBillToAddress.Address1;
                         temp.BillToAddress.Address2 = myBillToAddress.Address2;
 
-                        //if (myBillToAddress.c != null)
-                        //{
-                        //    CountryQueryService CountryService0 = new CountryQueryService(Tenant);
-                        //    temp.Country = CountryService0.GetCountryById(MyEntityPM.CountryId, Tenant);
-
-                        //}
-                        //temp.City = MyEntityPM.City;
-                        //temp.ZipCode = MyEntityPM.ZipCode;
-                        //temp.PhoneNumber = MyEntityPM.PhoneNumber;
-                        //temp.FaxNumber = MyEntityPM.FaxNumber;
-
-                        //if (MyEntityPM.StateId != null)
-                        //{
-                        //    StateQueryService StateService1 = new StateQueryService(Tenant);
-                        //    temp.State = StateService1.GetStateById(MyEntityPM.StateId, Tenant);
-
-                        //}
+                     
                     }
                 }
                 temp.PrintNotes = MyEntity.PrintNotes;
@@ -240,6 +311,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 }
                 temp.Tenant = MyEntity.Tenant;
                 temp.IsDraft = MyEntity.IsDraft;
+             
+            
                 return temp;
             }
             catch (Exception ex)
@@ -268,6 +341,25 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
-      
+     
+
+        public ARInvoice ARInvoiceCustomDataMapping(string Id, int Tenant)
+        {
+            try
+            {
+
+                ARInvoiceQueryService ARInvoiceService0 = new ARInvoiceQueryService(Tenant);
+                var invoice = GetARInvoiceByInvoiceNumber(Id, Tenant);
+                return invoice;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+     
+
     }
 }

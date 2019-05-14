@@ -150,6 +150,46 @@ export class TasksSchedulerPM {
     public set IsLastRunError(newValue: boolean) { if (this.isLastRunError != newValue) { this.isLastRunError = newValue; this.MarkAsDirty("IsLastRunError"); } }
        
 	 
+    private type: string;
+    public get Type() { return this.type; }
+    public set Type(newValue: string) { if (this.type != newValue) { this.type = newValue; this.MarkAsDirty("Type"); } }
+       
+	 
+    private schedulerDetailsXML: string;
+    public get SchedulerDetailsXML() { return this.schedulerDetailsXML; }
+    public set SchedulerDetailsXML(newValue: string) { if (this.schedulerDetailsXML != newValue) { this.schedulerDetailsXML = newValue; this.MarkAsDirty("SchedulerDetailsXML"); } }
+       
+	 
+    private nextRunTimeUTC: Date;
+    public get NextRunTimeUTC() { return this.nextRunTimeUTC; }
+    public set NextRunTimeUTC(newValue: Date) { if (this.nextRunTimeUTC != newValue) { this.nextRunTimeUTC = newValue; this.MarkAsDirty("NextRunTimeUTC"); } }
+       
+	 
+    private lastRunTimeUTC: Date;
+    public get LastRunTimeUTC() { return this.lastRunTimeUTC; }
+    public set LastRunTimeUTC(newValue: Date) { if (this.lastRunTimeUTC != newValue) { this.lastRunTimeUTC = newValue; this.MarkAsDirty("LastRunTimeUTC"); } }
+       
+	 
+    private startDateTimeUTC: Date;
+    public get StartDateTimeUTC() { return this.startDateTimeUTC; }
+    public set StartDateTimeUTC(newValue: Date) { if (this.startDateTimeUTC != newValue) { this.startDateTimeUTC = newValue; this.MarkAsDirty("StartDateTimeUTC"); } }
+       
+	 
+    private version: number;
+    public get Version() { return this.version; }
+    public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
+       
+	 
+    private status: string;
+    public get Status() { return this.status; }
+    public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
+       
+	 
+    private schedulerDetailsData: any;
+    public get SchedulerDetailsData() { return this.schedulerDetailsData; }
+    public set SchedulerDetailsData(newValue: any) { if (this.schedulerDetailsData != newValue) { this.schedulerDetailsData = newValue; this.MarkAsDirty("SchedulerDetailsData"); } }
+       
+	 
 
     public OldEntityPM: TasksSchedulerPM;
 		

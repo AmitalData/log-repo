@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class ChargeTypeAccountingUpdateClass
@@ -159,7 +163,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
 					  						FullFieldLable =  "VatTypeId",
-					  						DefaultText =  @"VAT Type",
+					  						DefaultText =  "VAT Type",
 					  						HelpTextCode =  "VatTypeId",
 					  						Code =  "VatTypeId",
 					  						DependencyFilter3IsList =  false,
@@ -217,7 +221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
 					  						FullFieldLable =  "ChargeTypeId",
-					  						DefaultText =  @"Charge Type",
+					  						DefaultText =  "Charge Type",
 					  						HelpTextCode =  "ChargeTypeId",
 					  						Code =  "ChargeTypeId",
 					  						DependencyFilter3IsList =  false,
@@ -274,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
 					  						FullFieldLable =  "PayableDebitAccount",
-					  						DefaultText =  @"Payable Debit Account",
+					  						DefaultText =  "Payable Debit Account",
 					  						HelpTextCode =  "PayableDebitAccount",
 					  						Code =  "PayableDebitAccount",
 					  						DependencyFilter3IsList =  false,
@@ -331,7 +335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						NumberOfDigits =  0,
 					  						IsMaxLength =  false,
 					  						FullFieldLable =  "ReceivableCreditAccount",
-					  						DefaultText =  @"Receivable Credit Account",
+					  						DefaultText =  "Receivable Credit Account",
 					  						HelpTextCode =  "ReceivableCreditAccount",
 					  						Code =  "ReceivableCreditAccount",
 					  						DependencyFilter3IsList =  false,

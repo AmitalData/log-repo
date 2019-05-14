@@ -16,6 +16,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 {
@@ -33,10 +34,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
         private List<EventType> allEventTypes;
         private List<EntityStatus> allEntityStatuses;
         private IWebFreightContext objectContext;
+        private EventTypeRepository eventTypeRepository;
+        private TraceEventRepository traceEventRepository;
+        private EntityStatusRepository entityStatusRepository;
         private ObjectTableRepository objectTabelRepository;
         string myUserId = null;
         string myCustomerCareUserEmail = null;
-        private bool isInlandDomestic = false;
         public ShipmentTracing(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, string loggedContactId, bool isNewEntity)
         {
             this.tenant = entityPM.Tenant;
@@ -47,22 +50,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             this.isNewEntity = isNewEntity;
             this.todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             this.objectContext = WebFreightContext.GetContext(tenant);
-
             this.objectTabelRepository = new ObjectTableRepository(objectContext);
-
-            if (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I")
-            {
-                isInlandDomestic = true;
-            }
+            this.traceEventRepository = new TraceEventRepository(objectContext);
+            this.eventTypeRepository = new EventTypeRepository(objectContext);
+            this.entityStatusRepository = new EntityStatusRepository(objectContext);
 
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
             this.objectTableId = objectTable.Id;
-
-            EventTypeRepository eventTypeRepository = new EventTypeRepository(objectContext);
             this.allEventTypes = eventTypeRepository.GetEventTypesByTenantAndObjectTableId(tenant, objectTableId).ToList();
-
-            EntityStatusRepository entityStatusRepository = new EntityStatusRepository(objectContext);
-            allEntityStatuses = entityStatusRepository.GetEntityStatusByTenantAndObjectTableId(tenant, objectTableId).ToList();
+            this.allEntityStatuses = entityStatusRepository.GetEntityStatusByTenantAndObjectTableId(tenant, objectTableId).ToList();
         }
 
         public void BeginTracing()
@@ -91,6 +87,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 else
                 {
+                    if(entityPM.ShipmentDirectionConverted)
+                    {
+                        this.CreateTraceEvent("SDCV", entityPM.EventNote);
+                    }
+
                     if (entityPM.ConvertFromDirectToHouse)
                     {
                         entityPM.ConvertFromDirectToHouse = false;
@@ -108,6 +109,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                         entityPM.ConvertFromHouseToDirect = false;
 
                         this.CreateTraceEvent("CSHD", entityPM.EventNote);
+                    }
+
+                    if (entityPM.ConvertShipmentToLCL)
+                    {
+                        this.CreateTraceEvent("CNFL", entityPM.EventNote);
+                    }
+
+                    else if (entityPM.ConvertShipmentToFCL)
+                    {
+                        this.CreateTraceEvent("CNLF", entityPM.EventNote);
                     }
 
                     if (!entityPM.MarkFollowUpsAsDone)
@@ -277,99 +288,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     this.CreateTraceEvent("OBLD", entityPM.MAWBOBLDate);
                 }
 
-                // Main Leg
-                if (entityPM.MainCarriageETD != null && entityMasterData.MainCarriageETD == null)
-                {
-                    this.CreateTraceEvent("ETD", entityPM.MainCarriageETD);
-                }
-                else if (entityPM.MainCarriageETD == null && entityMasterData.MainCarriageETD != null)
-                {
-                    this.DeleteTraceEvent("ETD");
-                }
-
-                if (entityPM.MainCarriageATD != null && entityMasterData.MainCarriageATD == null)
-                {
-                    this.CreateTraceEvent("DEP", entityPM.MainCarriageATD);
-                }
-
-                else if (entityPM.MainCarriageATD == null && entityMasterData.MainCarriageATD != null)
-                {
-                    this.DeleteTraceEvent("DEP");
-                }
-
-                if (entityPM.MainCarriageATA != null && entityMasterData.MainCarriageATA == null)
-                {
-                    this.CreateTraceEvent("ARR", entityPM.MainCarriageATA);
-                }
-
-                else if (entityPM.MainCarriageATA == null && entityMasterData.MainCarriageATA != null)
-                {
-                    this.DeleteTraceEvent("ARR");
-                }
-
-                // Leg1
-                if (entityPM.Transshipment1ATD != null && entityMasterData.Transshipment1ATD == null)
-                {
-                    this.CreateTraceEvent("T1DP", entityPM.Transshipment1ATD);
-                }
-
-                else if (entityPM.Transshipment1ATD == null && entityMasterData.Transshipment1ATD != null)
-                {
-                    this.DeleteTraceEvent("T1DP");
-                }
-
-                if (entityPM.Transshipment1ATA != null && entityMasterData.Transshipment1ATA == null)
-                {
-                    this.CreateTraceEvent("T1AR", entityPM.Transshipment1ATA);
-                }
-
-                else if (entityPM.Transshipment1ATA == null && entityMasterData.Transshipment1ATA != null)
-                {
-                    this.DeleteTraceEvent("T1AR");
-                }
-
-                // Leg2
-                if (entityPM.Transshipment2ATD != null && entityMasterData.Transshipment2ATD == null)
-                {
-                    this.CreateTraceEvent("T2DP", entityPM.Transshipment2ATD);
-                }
-
-                else if (entityPM.Transshipment2ATD == null && entityMasterData.Transshipment2ATD != null)
-                {
-                    this.DeleteTraceEvent("T2DP");
-                }
-
-                if (entityPM.Transshipment2ATA != null && entityMasterData.Transshipment2ATA == null)
-                {
-                    this.CreateTraceEvent("T2AR", entityPM.Transshipment2ATA);
-                }
-
-                else if (entityPM.Transshipment2ATA == null && entityMasterData.Transshipment2ATA != null)
-                {
-                    this.DeleteTraceEvent("T2AR");
-                }
-
-                // Leg3
-                if (entityPM.Transshipment3ATD != null && entityMasterData.Transshipment3ATD == null)
-                {
-                    this.CreateTraceEvent("T3DP", entityPM.Transshipment3ATD);
-                }
-
-                else if (entityPM.Transshipment3ATD == null && entityMasterData.Transshipment3ATD != null)
-                {
-                    this.DeleteTraceEvent("T3DP");
-                }
-
-                if (entityPM.Transshipment3ATA != null && entityMasterData.Transshipment3ATA == null)
-                {
-                    this.CreateTraceEvent("T3AR", entityPM.Transshipment3ATA);
-                }
-
-                else if (entityPM.Transshipment3ATA == null && entityMasterData.Transshipment3ATA != null)
-                {
-                    this.DeleteTraceEvent("T3AR");
-                }
-
+                this.TraceMasterDataMain();
+                this.TraceMasterDataTR1();
+                this.TraceMasterDataTR2();
+                this.TraceMasterDataTR3();
 
                 DateTime? finalETA = this.GetFinalETA();
                 if (finalETA != null && entityMasterData.MainCarriageFinalDestinationETA == null)
@@ -379,6 +301,308 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 else if (finalETA == null && entityMasterData.MainCarriageFinalDestinationETA != null)
                 {
                     this.DeleteTraceEvent("ETA");
+                }
+            }
+        }
+        private void TraceMasterDataMain()
+        {
+            if (entityPM.MainCarriageETD != null && entityMasterData.MainCarriageETD == null)
+            {
+                this.CreateTraceEvent("ETD", entityPM.MainCarriageETD);
+            }
+            else if (entityPM.MainCarriageETD == null && entityMasterData.MainCarriageETD != null)
+            {
+                this.DeleteTraceEvent("ETD");
+            }
+
+            string DepartedCode = "DEP";
+            if (entityPM.MainCarriageATD != null && entityMasterData.MainCarriageATD == null)
+            {
+                this.CreateTraceEvent(DepartedCode, entityPM.MainCarriageATD);
+            }
+
+            else if (entityPM.MainCarriageATD == null && entityMasterData.MainCarriageATD != null)
+            {
+                this.DeleteTraceEvent(DepartedCode);
+            }
+
+            else if (entityPM.MainCarriageFromPortId != entityMasterData.MainCarriageFromPortId)
+            {
+                if (entityPM.MainCarriageATD != null)
+                {
+                    if (IsCurrentStatus(DepartedCode))
+                    {
+                        this.UpdateLocation(DepartedCode);
+                        //this.CreateTraceEvent(DepartedCode, entityPM.MainCarriageATD);
+                    }
+                }
+            }
+
+            string ArrivedCode = "ARR";
+            if (entityPM.MainCarriageATA != null && entityMasterData.MainCarriageATA == null)
+            {
+                this.CreateTraceEvent(ArrivedCode, entityPM.MainCarriageATA);
+            }
+
+            else if (entityPM.MainCarriageATA == null && entityMasterData.MainCarriageATA != null)
+            {
+                this.DeleteTraceEvent(ArrivedCode);
+            }
+
+            else if (entityPM.MainCarriageToPortId != entityMasterData.MainCarriageToPortId)
+            {
+                if (entityPM.MainCarriageATA != null)
+                {
+                    if (IsCurrentStatus(ArrivedCode))
+                    {
+                        this.UpdateLocation(ArrivedCode);
+                        //this.CreateTraceEvent(ArrivedCode, entityPM.MainCarriageATA);
+                    }
+                }
+            }
+        }
+        private void TraceMasterDataTR1()
+        {
+            string DepartedCode = "T1DP";
+            if (entityPM.Transshipment1ATD != null && entityMasterData.Transshipment1ATD == null)
+            {
+                this.CreateTraceEvent(DepartedCode, entityPM.Transshipment1ATD);
+            }
+
+            else if (entityPM.Transshipment1ATD == null && entityMasterData.Transshipment1ATD != null)
+            {
+                this.DeleteTraceEvent(DepartedCode);
+            }
+
+            else if (entityPM.Transshipment1FromPortId != entityMasterData.Transshipment1FromPortId)
+            {
+                if (entityPM.Transshipment1ATD != null)
+                {
+                    if (IsCurrentStatus(DepartedCode))
+                    {
+                        this.UpdateLocation(DepartedCode);
+                        //this.CreateTraceEvent(DepartedCode, entityPM.Transshipment1ATD);
+                    }
+                }
+            }
+
+            string ArrivedCode = "T1AR";
+            if (entityPM.Transshipment1ATA != null && entityMasterData.Transshipment1ATA == null)
+            {
+                this.CreateTraceEvent(ArrivedCode, entityPM.Transshipment1ATA);
+            }
+
+            else if (entityPM.Transshipment1ATA == null && entityMasterData.Transshipment1ATA != null)
+            {
+                this.DeleteTraceEvent(ArrivedCode);
+            }
+
+            else if (entityPM.Transshipment1ToPortId != entityMasterData.Transshipment1ToPortId)
+            {
+                if (entityPM.Transshipment1ATA != null)
+                {
+                    if (IsCurrentStatus(ArrivedCode))
+                    {
+                        this.UpdateLocation(ArrivedCode);
+                        //this.CreateTraceEvent(ArrivedCode, entityPM.Transshipment1ATA);
+                    }
+                }
+            }
+        }
+        private void TraceMasterDataTR2()
+        {
+            string DepartedCode = "T2DP";
+            if (entityPM.Transshipment2ATD != null && entityMasterData.Transshipment2ATD == null)
+            {
+                this.CreateTraceEvent(DepartedCode, entityPM.Transshipment2ATD);
+            }
+
+            else if (entityPM.Transshipment2ATD == null && entityMasterData.Transshipment2ATD != null)
+            {
+                this.DeleteTraceEvent(DepartedCode);
+            }
+
+            else if (entityPM.Transshipment2FromPortId != entityMasterData.Transshipment2FromPortId)
+            {
+                if (entityPM.Transshipment2ATD != null)
+                {
+                    if (IsCurrentStatus(DepartedCode))
+                    {
+                        this.UpdateLocation(DepartedCode);
+                        //this.CreateTraceEvent(DepartedCode, entityPM.Transshipment2ATD);
+                    }
+                }
+            }
+
+            string ArrivedCode = "T2AR";
+            if (entityPM.Transshipment2ATA != null && entityMasterData.Transshipment2ATA == null)
+            {
+                this.CreateTraceEvent(ArrivedCode, entityPM.Transshipment2ATA);
+            }
+
+            else if (entityPM.Transshipment2ATA == null && entityMasterData.Transshipment2ATA != null)
+            {
+                this.DeleteTraceEvent(ArrivedCode);
+            }
+
+            else if (entityPM.Transshipment2ToPortId != entityMasterData.Transshipment2ToPortId)
+            {
+                if (entityPM.Transshipment2ATA != null)
+                {
+                    if (IsCurrentStatus(ArrivedCode))
+                    {
+                        this.UpdateLocation(ArrivedCode);
+                        //this.CreateTraceEvent(ArrivedCode, entityPM.Transshipment2ATA);
+                    }
+                }
+            }
+        }
+        private void TraceMasterDataTR3()
+        {
+            string DepartedCode = "T3DP";
+            if (entityPM.Transshipment3ATD != null && entityMasterData.Transshipment3ATD == null)
+            {
+                this.CreateTraceEvent(DepartedCode, entityPM.Transshipment3ATD);
+            }
+
+            else if (entityPM.Transshipment3ATD == null && entityMasterData.Transshipment3ATD != null)
+            {
+                this.DeleteTraceEvent(DepartedCode);
+            }
+
+            else if (entityPM.Transshipment3FromPortId != entityMasterData.Transshipment3FromPortId)
+            {
+                if (entityPM.Transshipment3ATD != null)
+                {
+                    if (IsCurrentStatus(DepartedCode))
+                    {
+                        this.UpdateLocation(DepartedCode);
+                        //this.CreateTraceEvent(DepartedCode, entityPM.Transshipment3ATD);
+                    }
+                }
+            }
+
+            string ArrivedCode = "T3AR";
+            if (entityPM.Transshipment3ATA != null && entityMasterData.Transshipment3ATA == null)
+            {
+                this.CreateTraceEvent(ArrivedCode, entityPM.Transshipment3ATA);
+            }
+
+            else if (entityPM.Transshipment3ATA == null && entityMasterData.Transshipment3ATA != null)
+            {
+                this.DeleteTraceEvent(ArrivedCode);
+            }
+
+            else if (entityPM.Transshipment3ToPortId != entityMasterData.Transshipment3ToPortId)
+            {
+                if (entityPM.Transshipment3ATA != null)
+                {
+                    if (IsCurrentStatus(ArrivedCode))
+                    {
+                        this.UpdateLocation(ArrivedCode);
+                        //this.CreateTraceEvent(ArrivedCode, entityPM.Transshipment3ATA);
+                    }
+                }
+            }
+        }
+        private void TraceRoutingData()
+        {
+            this.TraceRoutingDataPreCarriage();
+            this.TraceRoutingDataOnCarriage();
+        }
+        private void TraceRoutingDataPreCarriage()
+        {
+            string DepartedCode = "PRCD";
+            if (entityPoco.PreCarriageATD == null && entityPM.PreCarriageATD != null)
+            {
+                this.CreateTraceEvent(DepartedCode, entityPM.PreCarriageATD, "From " + entityPM.PreCarriageFromPortName);
+            }
+
+            else if (entityPoco.PreCarriageATD != null && entityPM.PreCarriageATD == null)
+            {
+                this.DeleteTraceEvent(DepartedCode);
+            }
+
+            else if (entityPM.PreCarriageFromPortId != entityPoco.PreCarriageFromPortId)
+            {
+                if (entityPM.PreCarriageATD != null)
+                {
+                    if (IsCurrentStatus(DepartedCode))
+                    {
+                        this.UpdateLocation(DepartedCode);
+                        //this.CreateTraceEvent(DepartedCode, entityPM.PreCarriageATD, "From " + entityPM.PreCarriageFromPortName);
+                    }
+                }
+            }
+
+            string ArrivedCode = "PRCA";
+            if (entityPoco.PreCarriageATA == null && entityPM.PreCarriageATA != null)
+            {
+                this.CreateTraceEvent(ArrivedCode, entityPM.PreCarriageATA, "To " + entityPM.PreCarriageToPortName);
+            }
+
+            else if (entityPoco.PreCarriageATA != null && entityPM.PreCarriageATA == null)
+            {
+                this.DeleteTraceEvent(ArrivedCode);
+            }
+
+            else if (entityPM.PreCarriageToPortId != entityPoco.PreCarriageToPortId)
+            {
+                if (entityPM.PreCarriageATA != null)
+                {
+                    if (IsCurrentStatus(ArrivedCode))
+                    {
+                        this.UpdateLocation(ArrivedCode);
+                        //this.CreateTraceEvent(ArrivedCode, entityPM.PreCarriageATA, "To " + entityPM.PreCarriageToPortName);
+                    }
+                }
+            }
+        }
+        private void TraceRoutingDataOnCarriage()
+        {
+            string DepartedCode = "ONCD";
+            if (entityPoco.OnCarriageATD == null && entityPM.OnCarriageATD != null)
+            {
+                this.CreateTraceEvent(DepartedCode, entityPM.OnCarriageATD, "From " + entityPM.OnCarriageFromPortName);
+            }
+
+            else if (entityPoco.OnCarriageATD != null && entityPM.OnCarriageATD == null)
+            {
+                this.DeleteTraceEvent(DepartedCode);
+            }
+
+            else if (entityPM.OnCarriageFromPortId != entityPoco.OnCarriageFromPortId)
+            {
+                if (entityPM.OnCarriageATD != null)
+                {
+                    if (IsCurrentStatus(DepartedCode))
+                    {
+                        this.UpdateLocation(DepartedCode);
+                        //this.CreateTraceEvent(DepartedCode, entityPM.OnCarriageATD, "From " + entityPM.OnCarriageFromPortName);
+                    }
+                }
+            }
+
+            string ArrivedCode = "ONCA";
+            if (entityPoco.OnCarriageATA == null && entityPM.OnCarriageATA != null)
+            {
+                this.CreateTraceEvent(ArrivedCode, entityPM.OnCarriageATA, "To " + entityPM.OnCarriageToPortName);
+            }
+
+            else if (entityPoco.OnCarriageATA != null && entityPM.OnCarriageATA == null)
+            {
+                this.DeleteTraceEvent(ArrivedCode);
+            }
+
+            else if (entityPM.OnCarriageToPortId != entityPoco.OnCarriageToPortId)
+            {
+                if (entityPM.OnCarriageATA != null)
+                {
+                    if (IsCurrentStatus(DepartedCode))
+                    {
+                        this.UpdateLocation(ArrivedCode);
+                        //this.CreateTraceEvent(ArrivedCode, entityPM.OnCarriageATA, "To " + entityPM.OnCarriageToPortName);
+                    }
                 }
             }
         }
@@ -414,72 +638,138 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             return myResult;
         }
 
-        private void TraceRoutingData()
-        {
-            TraceEventRepository traceeventRep = new TraceEventRepository(tenant);
-
-            if (entityPoco.PreCarriageATA == null && entityPM.PreCarriageATA != null)
-            {
-                this.CreateTraceEvent("PRCA", entityPM.PreCarriageATA, "To " + entityPM.PreCarriageToPortName);
-            }
-
-            else if (entityPoco.PreCarriageATA != null && entityPM.PreCarriageATA == null)
-            {
-                this.DeleteTraceEvent("PRCA");
-            }
-
-            if (entityPoco.PreCarriageATD == null && entityPM.PreCarriageATD != null)
-            {
-                this.CreateTraceEvent("PRCD", entityPM.PreCarriageATD, "From " + entityPM.PreCarriageFromPortName);
-            }
-
-            else if (entityPoco.PreCarriageATD != null && entityPM.PreCarriageATD == null)
-            {
-                this.DeleteTraceEvent("PRCD");
-            }
-
-            if (entityPoco.OnCarriageATA == null && entityPM.OnCarriageATA != null)
-            {
-                this.CreateTraceEvent("ONCA", entityPM.OnCarriageATA, "To " + entityPM.OnCarriageToPortName);
-            }
-
-            else if (entityPoco.OnCarriageATA != null && entityPM.OnCarriageATA == null)
-            {
-                this.DeleteTraceEvent("ONCA");
-            }
-
-            if (entityPoco.OnCarriageATD == null && entityPM.OnCarriageATD != null)
-            {
-                this.CreateTraceEvent("ONCD", entityPM.OnCarriageATD, "From " + entityPM.OnCarriageFromPortName);
-            }
-
-            else if (entityPoco.OnCarriageATD != null && entityPM.OnCarriageATD == null)
-            {
-                this.DeleteTraceEvent("ONCD");
-            }
-        }
         public void TracePickUp(ShipmentPickUpPM itemPM, ShipmentPickUpDelivery itemPOCO)
         {
             if (!entityPM.IsHybrid)
             {
-                if (itemPOCO.ATA == null && itemPM.ATA != null)
-                {
-                    this.CreateTraceEvent("RCS", itemPM.ATA, itemPM);
-                }
-
-                else if (itemPOCO.ATA != null && itemPM.ATA == null)
-                {
-                    this.DeleteTraceEvent("RCS");
-                }
-
+                string DepartedCode = "PICD";
                 if (itemPOCO.ATD == null && itemPM.ATD != null)
                 {
-                    this.CreateTraceEvent("PICD", itemPM.ATD, itemPM);
+                    this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
                 }
 
                 else if (itemPOCO.ATD != null && itemPM.ATD == null)
                 {
-                    this.DeleteTraceEvent("PICD");
+                    this.DeleteTraceEvent(DepartedCode);
+                }
+
+                else
+                {
+                    if (itemPM.ATD != null)
+                    {
+                        if (IsCurrentStatus(DepartedCode))
+                        {
+                            if (itemPM.PickUpDeliveryFromTypeCode != itemPOCO.PickUpDeliveryFromTypeCode)
+                            {
+                                this.UpdateLocation(DepartedCode);
+                                //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
+                            }
+
+                            else
+                            {
+                                switch (itemPM.PickUpDeliveryFromTypeCode)
+                                {
+                                    case "PART":
+                                        {
+                                            if (itemPM.FromAddressId != itemPOCO.FromAddressId)
+                                            {
+                                                this.UpdateLocation(DepartedCode);
+                                                //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
+                                            }
+
+                                            break;
+                                        }
+
+                                    case "PORT":
+                                        {
+                                            if (itemPM.FromPortId != itemPOCO.FromPortId)
+                                            {
+                                                this.UpdateLocation(DepartedCode);
+                                                //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
+                                            }
+
+                                            break;
+                                        }
+
+                                    case "CASL":
+                                        {
+                                            if (itemPM.FromAddressCity != itemPOCO.FromAddressCity)
+                                            {
+                                                this.UpdateLocation(DepartedCode);
+                                                //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
+                                            }
+
+                                            break;
+                                        }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                string ArrivedCode = "RCS";
+                if (itemPOCO.ATA == null && itemPM.ATA != null)
+                {
+                    this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                }
+
+                else if (itemPOCO.ATA != null && itemPM.ATA == null)
+                {
+                    this.DeleteTraceEvent(ArrivedCode);
+                }
+
+                else
+                {
+                    if (itemPM.ATA != null)
+                    {
+                        if (IsCurrentStatus(ArrivedCode))
+                        {
+                            if (itemPM.PickUpDeliveryToTypeCode != itemPOCO.PickUpDeliveryToTypeCode)
+                            {
+                                this.UpdateLocation(ArrivedCode);
+                                //this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                            }
+
+                            else
+                            {
+                                switch (itemPM.PickUpDeliveryToTypeCode)
+                                {
+                                    case "PART":
+                                        {
+                                            if (itemPM.ToAddressId != itemPOCO.ToAddressId)
+                                            {
+                                                this.UpdateLocation(ArrivedCode);
+                                                //this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                                            }
+
+                                            break;
+                                        }
+
+                                    case "PORT":
+                                        {
+                                            if (itemPM.ToPortId != itemPOCO.ToPortId)
+                                            {
+                                                this.UpdateLocation(ArrivedCode);
+                                                //this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                                            }
+
+                                            break;
+                                        }
+
+                                    case "CASL":
+                                        {
+                                            if (itemPM.ToAddressCity != itemPOCO.ToAddressCity)
+                                            {
+                                                this.UpdateLocation(ArrivedCode);
+                                                //this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                                            }
+
+                                            break;
+                                        }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -489,24 +779,134 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
             {
                 if (itemPM.PickUpDeliveryTypeCode == "DELV")
                 {
-                    if (itemPOCO.ATA == null && itemPM.ATA != null)
-                    {
-                        this.CreateTraceEvent("PIOD", itemPM.ATA, itemPM);
-                    }
-
-                    else if (itemPOCO.ATA != null && itemPM.ATA == null)
-                    {
-                        this.DeleteTraceEvent("PIOD");
-                    }
-
+                    string DepartedCode = "DELD";
                     if (itemPOCO.ATD == null && itemPM.ATD != null)
                     {
-                        this.CreateTraceEvent("DELD", itemPM.ATD, itemPM);
+                        this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
                     }
 
                     else if (itemPOCO.ATD != null && itemPM.ATD == null)
                     {
-                        this.DeleteTraceEvent("DELD");
+                        this.DeleteTraceEvent(DepartedCode);
+                    }
+
+                    else
+                    {
+                        if (itemPM.ATD != null)
+                        {
+                            if (IsCurrentStatus(DepartedCode))
+                            {
+                                if (itemPM.PickUpDeliveryFromTypeCode != itemPOCO.PickUpDeliveryFromTypeCode)
+                                {
+                                    this.UpdateLocation(DepartedCode);
+                                    //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
+                                }
+
+                                else
+                                {
+                                    switch (itemPM.PickUpDeliveryFromTypeCode)
+                                    {
+                                        case "PART":
+                                            {
+                                                if (itemPM.FromAddressId != itemPOCO.FromAddressId)
+                                                {
+                                                    this.UpdateLocation(DepartedCode);
+                                                    //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
+                                                }
+
+                                                break;
+                                            }
+
+                                        case "PORT":
+                                            {
+                                                if (itemPM.FromPortId != itemPOCO.FromPortId)
+                                                {
+                                                    this.UpdateLocation(DepartedCode);
+                                                    //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
+                                                }
+
+                                                break;
+                                            }
+
+                                        case "CASL":
+                                            {
+                                                if (itemPM.FromAddressCity != itemPOCO.FromAddressCity)
+                                                {
+                                                    this.UpdateLocation(DepartedCode);
+                                                    //this.CreateTraceEvent(DepartedCode, itemPM.ATD, itemPM);
+                                                }
+
+                                                break;
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    string ArrivedCode = "PIOD";
+                    if (itemPOCO.ATA == null && itemPM.ATA != null)
+                    {
+                        this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                    }
+
+                    else if (itemPOCO.ATA != null && itemPM.ATA == null)
+                    {
+                        this.DeleteTraceEvent(ArrivedCode);
+                    }
+
+                    else
+                    {
+                        if (itemPM.ATA != null)
+                        {
+                            if (IsCurrentStatus(ArrivedCode))
+                            {
+                                if (itemPM.PickUpDeliveryToTypeCode != itemPOCO.PickUpDeliveryToTypeCode)
+                                {
+                                    this.UpdateLocation(ArrivedCode);
+                                    //this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                                }
+
+                                else
+                                {
+                                    switch (itemPM.PickUpDeliveryToTypeCode)
+                                    {
+                                        case "PART":
+                                            {
+                                                if (itemPM.ToAddressId != itemPOCO.ToAddressId)
+                                                {
+                                                    this.UpdateLocation(ArrivedCode);
+                                                    //this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                                                }
+
+                                                break;
+                                            }
+
+                                        case "PORT":
+                                            {
+                                                if (itemPM.ToPortId != itemPOCO.ToPortId)
+                                                {
+                                                    this.UpdateLocation(ArrivedCode);
+                                                    //this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                                                }
+
+                                                break;
+                                            }
+
+                                        case "CASL":
+                                            {
+                                                if (itemPM.ToAddressCity != itemPOCO.ToAddressCity)
+                                                {
+                                                    this.UpdateLocation(ArrivedCode);
+                                                    //this.CreateTraceEvent(ArrivedCode, itemPM.ATA, itemPM);
+                                                }
+
+                                                break;
+                                            }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -807,9 +1207,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                             Location = args.StatusLocation,
                         };
 
-                        TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
-                        traceEventRepository.Add(myTraceEvent);
-                        traceEventRepository.SubmitChanges();
+                        this.traceEventRepository.Add(myTraceEvent);
+                        this.traceEventRepository.SubmitChanges();
                         objectContext.SaveChanges();
 
                         if (eventType.IsCustomerView)
@@ -830,22 +1229,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 if (eventType != null)
                 {
-                    TraceEventRepository traceEventRepository = new TraceEventRepository(tenant);
-                    TraceEvent traceEvent = traceEventRepository.GetSingleTraceEventByEntityId(entityPM.Id, eventType.Id, tenant);
+                    List<TraceEvent> AllEventTraces = this.traceEventRepository.GetAllTraceEventsByEventType(entityPM.Id, eventType.Id, tenant).ToList();
 
-                    if (traceEvent != null)
+                    if (AllEventTraces.Count > 0)
                     {
-                        traceEvent.Deleted = true;
-                        traceEventRepository.Update(traceEvent);
+                        foreach (TraceEvent iTraceEvent in AllEventTraces)
+                        {
+                            iTraceEvent.Deleted = true;
+                            traceEventRepository.Update(iTraceEvent);
+                        }
+
                         traceEventRepository.SubmitChanges();
 
                         if (!string.IsNullOrEmpty(eventType.EntityStatusId))
                         {
-
                             TraceEvent previousEvent = null;
-                            List<TraceEvent> traceEventList = traceEventRepository.GetTraceEvents(tenant, entityPM.Id, objectTableId).ToList();
 
-                            foreach (TraceEvent e in traceEventList)
+                            List<TraceEvent> iTraceEventList = (from a in objectContext.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                                                                 where a.Tenant == tenant
+                                                                 && a.EntityId == entityPM.Id
+                                                                 && a.ObjectTableId == objectTableId
+                                                                 && a.EventType.EntityStatus != null
+                                                                 && a.Deleted == false
+                                                                 select a).ToList();
+
+                            foreach (TraceEvent e in iTraceEventList)
                             {
                                 if (!e.Deleted)
                                 {
@@ -914,34 +1322,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                                 entityMasterData.StatusDate = entityPM.StatusDate;
                                 entityMasterData.StatusLocation = entityPM.StatusLocation;
                             }
-
-
-                            //if (external)
-                            //{
-                            //    IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-
-                            //    ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
-                            //    Shipment shipment = shipmentRepository.GetSingleShipment(shipmentPM.Id, shipmentPM.Tenant);
-                            //    shipment.StatusId = shipmentPM.StatusId;//previousEvent.EventType.EntityStatusId;
-                            //    shipment.StatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            //    shipment.LastStatusLogDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                            //    shipmentRepository.Update(shipment);
-                            //    shipmentRepository.SubmitChanges();
-
-                            //    if (shipment.ShipmentLevelCode != "H")
-                            //    {
-                            //        ShipmentMasterDataRepository shipmentMasterDataRepository = new ShipmentMasterDataRepository(shipmentsContext);
-                            //        ShipmentMasterData masterData = shipmentMasterDataRepository.GetSingleMasterData(shipment.Id);
-                            //        if (masterData != null)
-                            //        {
-                            //            masterData.StatusId = shipment.StatusId;
-                            //            masterData.StatusDate = shipment.StatusDate;
-
-                            //            shipmentMasterDataRepository.Update(masterData);
-                            //            shipmentMasterDataRepository.SubmitChanges();
-                            //        }
-                            //    }
-                            //}
                         }
                     }
                 }
@@ -1534,6 +1914,60 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                 entityPM.LastSharedEventDate = null;
                 entityPM.LastSharedEventName = null;
             }
+        }
+
+        private void UpdateLocation(string eventTypeCode)
+        {
+            if (!string.IsNullOrEmpty(eventTypeCode))
+            {
+                EventType eventType = allEventTypes.Where(d => d.Code == eventTypeCode).FirstOrDefault();
+
+                if (eventType != null)
+                {
+                    entityPM.StatusLocation = GetStatusLocation(new EventStatusTracerArgs() { EventTypeCode = eventTypeCode });
+
+                    entityPoco.StatusLocation = entityPM.StatusLocation;
+
+                    if (entityPM.ShipmentLevelCode == "D" || entityPM.ShipmentLevelCode == "C")
+                    {
+                        entityMasterData.StatusLocation = entityPM.StatusLocation;
+                    }
+
+                    List<TraceEvent> AllEventTraces = this.traceEventRepository.GetAllTraceEventsByEventType(entityPM.Id, eventType.Id, tenant).Where(d => d.Deleted == false).ToList();
+
+                    if (AllEventTraces.Count > 0)
+                    {
+                        foreach (TraceEvent iTraceEvent in AllEventTraces)
+                        {
+                            iTraceEvent.Location = entityPM.StatusLocation;
+                            traceEventRepository.Update(iTraceEvent);
+                        }
+
+                        traceEventRepository.SubmitChanges();
+                    }
+                }
+            }
+        }
+        private bool IsCurrentStatus(string eventTypeCode)
+        {
+            bool iResult = false;
+
+            if (!string.IsNullOrEmpty(eventTypeCode))
+            {
+                EventType eventType = allEventTypes.Where(d => d.Code == eventTypeCode).FirstOrDefault();
+                if (eventType != null)
+                {
+                    if (eventType.EntityStatusId != null && this.entityPM.StatusId != null)
+                    {
+                        if (eventType.EntityStatusId == this.entityPM.StatusId)
+                        {
+                            iResult = true;
+                        }
+                    }
+                }
+            }
+
+            return iResult;
         }
     }
 

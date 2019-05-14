@@ -92,7 +92,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   DocumentFilingInbox = a.DocumentFilingInbox,
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
-                                  ShowLocalNameInLOV=a.ShowLocalNameInLOV,
+                                  ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                  UserRoles = a.UserRoles,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -176,6 +177,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                              UserRoles = a.UserRoles,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -261,6 +263,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                      UserRoles = a.UserRoles,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -343,7 +346,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                  UserRoles = a.UserRoles,
                               }).FirstOrDefault();
+
                     if (entity != null)
                     {
                         entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
@@ -412,7 +417,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                              UserRoles = a.UserRoles,
                           }).FirstOrDefault();
+
                 if (entity != null)
                 {
                     entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
@@ -496,6 +503,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                      UserRoles = a.UserRoles,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -511,8 +519,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                             UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                             entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
-
-
+                            
                             if (CacheManager.CacheWrapper.Get(entityName) == null)
                             {
                                 if (entity != null)
@@ -580,7 +587,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                  UserRoles = a.UserRoles,
                               }).FirstOrDefault();
+
                     if (entity != null)
                     {
                         UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -650,7 +659,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                              UserRoles = a.UserRoles,
                           }).FirstOrDefault();
+
                 if (entity != null)
                 {
                     UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -719,7 +730,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       IsProductRestricted = a.IsProductRestricted,
                                       ProductTypeCode = a.ProductTypeCode,
                                       ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
-
                                       IsDistributor = a.IsDistributor,
                                       DistributorCode = a.DistributorCode,
                                       IsCustomerCare = a.Tenant == 0 && !a.IsDistributor,
@@ -734,6 +744,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                      UserRoles = a.UserRoles,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -815,11 +826,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                  UserRoles = a.UserRoles,
                               }).FirstOrDefault();
 
                     if (entity != null)
                     {
-
                         entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
                         UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
                         UserLastLoginQuery query = new UserLastLoginQuery(rep);
@@ -886,6 +897,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                              UserRoles = a.UserRoles,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -962,8 +974,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                            ShowInboxToolTip = a.ShowInboxToolTip,
                                            ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                           UserRoles = a.UserRoles,
                                        };
-
             return users;
         }
 
@@ -1011,7 +1023,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             IsProductRestricted = a.IsProductRestricted,
                             ProductTypeCode = a.ProductTypeCode,
                             ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
-
                             IsDistributor = a.IsDistributor,
                             DistributorCode = a.DistributorCode,
                             IsCustomerCare = a.Tenant == 0 && !a.IsDistributor,
@@ -1026,7 +1037,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                             ShowInboxToolTip = a.ShowInboxToolTip,
                             ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                            UserRoles = a.UserRoles,
                         };
+
             IQueryable<UserPM> query2 = null;
             if (!string.IsNullOrEmpty(email))
             {
@@ -1094,6 +1107,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsTwoFactorAuthenticationEnabled = user.IsTwoFactorAuthenticationEnabled,
                                               DocumentFilingInbox = user.DocumentFilingInbox,
                                               ShowLocalNameInLOV = user.ShowLocalNameInLOV,
+                                              UserRoles = user.UserRoles,
                                           };
 
             //int tenant = 0;
@@ -1256,77 +1270,77 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return entity;
         }
 
-        public UserPM GetSinglePMByCode(string code, int tenant  )
+        public UserPM GetSinglePMByCode(string code, int tenant)
         {
             string entityName = "UserPM" + code + tenant;
-           
-
-            UserPM entity = (from a in repository.context.Users.Include("Contact")
-                          where a.Tenant == tenant
-                          && a.Code == code
-                          select new UserPM()
-                          {
-                              BranchId = a.BranchId,
-                              BranchName = a.Branch != null ? a.Branch.EnglishName : "",
-                              DepartmentName = a.Department != null ? a.Department.EnglishName : "",
-                              DepartmentId = a.DepartmentId,
-                              Id = a.Id,
-                              Notes = a.Notes,
-                              Tenant = a.Tenant,
-                              Email = a.Contact.Email,
-                              EnglishName = a.Contact.EnglishName,
-                              Anniversary = a.Contact.Anniversary,
-                              Birthday = a.Contact.Birthday,
-                              BusinessPhone = a.Contact.BusinessPhone,
-                              FacebookId = a.Contact.FacebookId,
-                              Fax = a.Contact.Fax,
-                              InActive = a.Contact.InActive,
-                              LocalName = a.Contact.LocalName,
-                              SearchFields = a.SearchFields,
-                              Mobile = a.Contact.Mobile,
-                              Position = a.Contact.Position,
-                              ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
-                              IsBranchRestricted = a.IsBranchRestricted,
-                              IsSalesman = a.IsSalesman,
-                              IsFreelancer = a.IsFreelancer,
-                              FreelancerId = a.FreelancerId,
-                              FreelancerName = a.Freelancer != null ? a.Freelancer.EnglishName : null,
-                              BusinessUnitId = a.BusinessUnitId,
-                              Code = a.Code,
-                              CreateDate = a.CreateDate,
-                              ExpirationDate = a.ExpirationDate,
-                              LicencedUser = a.LicencedUser,
-                              IsProductRestricted = a.IsProductRestricted,
-                              ProductTypeCode = a.ProductTypeCode,
-                              ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
-                              IsDistributor = a.IsDistributor,
-                              DistributorCode = a.DistributorCode,
-                              IsCustomerCare = a.Tenant == 0 && !a.IsDistributor,
-                              PersonalId = a.PersonalId,
-                              IsShowContactDetailsInTheMobileApp = a.IsShowContactDetailsInTheMobileApp,
-                              Technology = a.Technology,
-                              SetAngularAsDefault = a.SetAngularAsDefault,
-                              DisplayGettingStarted = a.Contact.DisplayGettingStarted,
-                              IsTwoFactorAuthenticationEnabled = a.IsTwoFactorAuthenticationEnabled,
-                              DocumentFilingInbox = a.DocumentFilingInbox,
-                              ShowLogBoxToolTip = a.ShowLogBoxToolTip,
-                              ShowLocalNameInLOV = a.ShowLocalNameInLOV,
-                          }).FirstOrDefault();
-                if (entity != null)
-                {
-                    UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
-                    UserLastLoginQuery query = new UserLastLoginQuery(rep);
-                    entity.UserLastLogin = query.GetSinglePM(entity.Id, tenant);
-
-                    UserPermittedBranchRepository userPermRep = new UserPermittedBranchRepository(this.repository.context);
-                    UserPermittedBranchQuery userPermittedBranchQuery = new UserPermittedBranchQuery(userPermRep);
-                    entity.UserPermittedBranches = userPermittedBranchQuery.GetContactFromUserPermittedBranchPMsByUserId(entity.Id, entity.Tenant).ToList();
-
-                    UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
-                    UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
-                    entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
-                }
             
+            UserPM entity = (from a in repository.context.Users.Include("Contact")
+                             where a.Tenant == tenant
+                             && a.Code == code
+                             select new UserPM()
+                             {
+                                 BranchId = a.BranchId,
+                                 BranchName = a.Branch != null ? a.Branch.EnglishName : "",
+                                 DepartmentName = a.Department != null ? a.Department.EnglishName : "",
+                                 DepartmentId = a.DepartmentId,
+                                 Id = a.Id,
+                                 Notes = a.Notes,
+                                 Tenant = a.Tenant,
+                                 Email = a.Contact.Email,
+                                 EnglishName = a.Contact.EnglishName,
+                                 Anniversary = a.Contact.Anniversary,
+                                 Birthday = a.Contact.Birthday,
+                                 BusinessPhone = a.Contact.BusinessPhone,
+                                 FacebookId = a.Contact.FacebookId,
+                                 Fax = a.Contact.Fax,
+                                 InActive = a.Contact.InActive,
+                                 LocalName = a.Contact.LocalName,
+                                 SearchFields = a.SearchFields,
+                                 Mobile = a.Contact.Mobile,
+                                 Position = a.Contact.Position,
+                                 ComputedLocalName = string.IsNullOrEmpty(a.Contact.LocalName) ? a.Contact.EnglishName : a.Contact.LocalName,
+                                 IsBranchRestricted = a.IsBranchRestricted,
+                                 IsSalesman = a.IsSalesman,
+                                 IsFreelancer = a.IsFreelancer,
+                                 FreelancerId = a.FreelancerId,
+                                 FreelancerName = a.Freelancer != null ? a.Freelancer.EnglishName : null,
+                                 BusinessUnitId = a.BusinessUnitId,
+                                 Code = a.Code,
+                                 CreateDate = a.CreateDate,
+                                 ExpirationDate = a.ExpirationDate,
+                                 LicencedUser = a.LicencedUser,
+                                 IsProductRestricted = a.IsProductRestricted,
+                                 ProductTypeCode = a.ProductTypeCode,
+                                 ProductTypeName = a.ProductType != null ? a.ProductType.Name : null,
+                                 IsDistributor = a.IsDistributor,
+                                 DistributorCode = a.DistributorCode,
+                                 IsCustomerCare = a.Tenant == 0 && !a.IsDistributor,
+                                 PersonalId = a.PersonalId,
+                                 IsShowContactDetailsInTheMobileApp = a.IsShowContactDetailsInTheMobileApp,
+                                 Technology = a.Technology,
+                                 SetAngularAsDefault = a.SetAngularAsDefault,
+                                 DisplayGettingStarted = a.Contact.DisplayGettingStarted,
+                                 IsTwoFactorAuthenticationEnabled = a.IsTwoFactorAuthenticationEnabled,
+                                 DocumentFilingInbox = a.DocumentFilingInbox,
+                                 ShowLogBoxToolTip = a.ShowLogBoxToolTip,
+                                 ShowLocalNameInLOV = a.ShowLocalNameInLOV,
+                                 UserRoles = a.UserRoles,
+                             }).FirstOrDefault();
+
+            if (entity != null)
+            {
+                UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
+                UserLastLoginQuery query = new UserLastLoginQuery(rep);
+                entity.UserLastLogin = query.GetSinglePM(entity.Id, tenant);
+
+                UserPermittedBranchRepository userPermRep = new UserPermittedBranchRepository(this.repository.context);
+                UserPermittedBranchQuery userPermittedBranchQuery = new UserPermittedBranchQuery(userPermRep);
+                entity.UserPermittedBranches = userPermittedBranchQuery.GetContactFromUserPermittedBranchPMsByUserId(entity.Id, entity.Tenant).ToList();
+
+                UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
+                UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
+                entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
+            }
 
             return entity;
         }
@@ -1346,11 +1360,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         Tenant = a.Tenant,
                                         Email = a.Contact.Email,
                                         EnglishName = a.Contact.EnglishName,
-
                                         InActive = a.Contact.InActive,
                                         LocalName = a.Contact.LocalName,
                                         SearchFields = a.SearchFields,
-
                                         IsBranchRestricted = a.IsBranchRestricted,
                                         IsSalesman = a.IsSalesman,
                                         IsFreelancer = a.IsFreelancer,
@@ -1378,8 +1390,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     }).ToList();
             return users;
         }
-
-
+        
         public List<UserPM> GetUserPMsByUserIds(List<string> userIds, int tenant)
         {
             List<UserPM> users = (from a in repository.context.Users.Include("Contact")
@@ -1395,7 +1406,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       Tenant = a.Tenant,
                                       Email = a.Contact.Email,
                                       EnglishName = a.Contact.EnglishName,
-
                                       InActive = a.Contact.InActive,
                                       LocalName = a.Contact.LocalName,
                                       SearchFields = a.SearchFields,
@@ -1445,21 +1455,33 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              DocumentFilingInbox = a.DocumentFilingInbox,
                          }).ToList();
 
+
+                #region SetInActiveUsers
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                List<string> contactId = users.Select(d => d.Id).ToList();
+                List<ContactList> contactLists = contactQuery.GetContactListsByListIds(contactId, tenant).Where(d=>d.InActive).ToList();
+                foreach(ContactList contact in contactLists)
+                {
+                    var user = users.Where(d => d.Id == contact.Id).FirstOrDefault();
+                    user.InActive = contact.InActive;
+                }
+                #endregion
             }
+
             return users;
         }
-
 
         public string GetTechnologyOfUser(string userId)
         {
             string technology = "";
             User user = repository.context.Users.Where(D => D.Id == userId).FirstOrDefault();
+
             if (user != null)
             {
                 technology = user.Technology;
             }
-            return technology;
 
+            return technology;
         }
 
         public List<UserList> GetUserListsByEmailsString(string emails, int tenant)
@@ -1479,8 +1501,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              LocalName = a.Contact.LocalName,
                              DocumentFilingInbox = a.DocumentFilingInbox,
                          }).ToList();
-
             }
+
             return users;
         }
 
@@ -1555,13 +1577,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 UserPermittedProductRepository perProductRep = new UserPermittedProductRepository(this.repository.context);
                 UserPermittedProductQuery perProductQuery = new UserPermittedProductQuery(perProductRep);
                 entity.UserPermittedProducts = perProductQuery.GetContactFromUserPermittedProductPMsByUserId(entity.Id, entity.Tenant).ToList();
-
             }
 
             return entity;
         }
-
-
+        
         public List<UserList> GetUserListsByTenant(int tenant, bool includeInactiveUsers)
         {
             List<UserList> result = new List<UserList>();
@@ -1622,8 +1642,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                       }).FirstOrDefault();
             return entity;
         }
-
-
+        
         public UserPM GetSingleUserPMByEmailLite(string email, int tenant)
         {
            UserPM entity = (from a in repository.context.Users.Include("Contact")
@@ -1635,22 +1654,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           Tenant = a.Tenant,
                           Email = a.Contact.Email,
                           EnglishName = a.Contact.EnglishName,
-
                       }).FirstOrDefault();
+
             return entity;
         }
 
-
         public List<string> GetUserIdsByTenant(int tenant)
         {
-
-
             var usersIds = (from a in repository.context.Users
                          where a.Tenant == tenant
                          select a.Id).ToList();
 
             return usersIds;
         }
-
     }
 }

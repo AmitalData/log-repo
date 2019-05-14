@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -35,7 +35,7 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
 
     customsRequierdFieldsWebService: CustomsRequierdFieldsWebService = new CustomsRequierdFieldsWebService();
     _EntityResourceService: EntityResourceService = new EntityResourceService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.FieldsList = new ObservableCollection([]);
@@ -53,7 +53,7 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
                 });
             }
 
-            //SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            //this.CurrentSession.StartBusyIndicatorLoading();
             this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((res: any) => {
                 this.GetObjectFields();
             });
@@ -87,7 +87,7 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
 
         this.FieldsList.InsertCollection(items);
         this.OriginalFieldsList.InsertCollection(items);
-        //SessionLocator.CurrentSession.StopBusyIndicator();
+        //this.CurrentSession.StopBusyIndicator();
 
         //BuildSelectedList();
     }
@@ -104,10 +104,10 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
         }
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
 
         var items: RequierdFieldObject[] = [];
         // 1- 
@@ -126,8 +126,8 @@ export class AddEditRequiredFieldsComponent extends BaseComponent {
             console.log("[Response] customsRequierdFieldsWebService.PostRequiredFields: ", res);
 
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.CloseCurrentWindow();
         });
 
     }

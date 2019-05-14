@@ -6,16 +6,14 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.Helpers;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Web;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using Logitude.Server.Tools;
-using Logitude.Server.Tools.SignalRHubs;
+//using Logitude.Server.Tools.SignalRHubs;
 
 namespace Logitude.BL.Helpers
 {
@@ -121,7 +119,7 @@ namespace Logitude.BL.Helpers
             }
 
             tableLastUpdateRepository.SubmitChanges();
-            SignalRHubMessageSender.SendTenantChannelMessage("CachedTableUpdate", entityObjectTable.Name, tenant);
+            //SignalRHubMessageSender.SendTenantChannelMessage("CachedTableUpdate", entityObjectTable.Name, tenant);
             //HubEventPublisher.PublishChannelEvent(new HubChannelEvent() { ChannelName = "Tenant" + tenant, EventName = "CachedTableUpdate", Data = entityObjectTable.Name });
         }
     

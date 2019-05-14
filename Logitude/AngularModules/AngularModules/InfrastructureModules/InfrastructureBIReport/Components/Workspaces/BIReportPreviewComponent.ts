@@ -1,4 +1,4 @@
-import { Component, ComponentRef, OnInit, ViewChild, Output, EventEmitter} from '@angular/core';
+import { Component, ComponentRef, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 //import { AgGridModule } from "ag-grid-angular/main";
 import { BIReportPM } from '../../../../Infrastructure/EntityPMs/BIReportPM';
 import { BIReportPMService } from '../../../../Infrastructure/Services/StandardPMs/BIReportPMService';
@@ -8,6 +8,7 @@ import { DWQueryData } from '../../../../Common/DataContracts/DWQueryData';
 import { DWSubQueryPMService } from '../../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
 import { DWQueryBuilderService } from '../../../../Infrastructure/Services/ExtendedPMs/DWQueryBuilderService';
 import { DateTimePipe } from '../../../../Controls/Pipes/DateTimePipe';
+import { NumbersPipe } from '../../../../Infrastructure/Pipes/NumbersPipe';
 import { AgGridNg2 } from 'ag-grid-angular/main';
 import { InfrastructureDomainService, BIReportXMLData, BITabularViewSettings, Column } from '../../../../Infrastructure/Services/InfrastructureDomainService';
 import { AppTool } from '../../../../Infrastructure/Tools';
@@ -16,6 +17,9 @@ import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { EntityPMService } from '../../../../Infrastructure/Services/EntityPMService';
 import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
 import { DWObjectFieldsDetails } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { EditShipmentLinkRendererComponent } from "../TemplateRenderer/EditShipmentLinkRendererComponent";
+import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 
 @Component({
     moduleId: module.id,
@@ -28,6 +32,7 @@ export class BIReportPreviewComponent implements OnInit {
     public EntityPM: BIReportPM = null;
     public EntityId: string;
     public DWQueryId: string;
+    public FolderId: string;
     public DWQueryData: DWQueryData;
     SelectedFiltersDataSource: any[] = [];
     public _DWSubQueryPMService: DWSubQueryPMService;
@@ -35,18 +40,30 @@ export class BIReportPreviewComponent implements OnInit {
     public _DWQueryBuilderHelper: DWQueryBuilderHelper
     public _BIReportPMService: BIReportPMService;
     public _InfrastructureDomainService: InfrastructureDomainService;
+    public _ShipmentPMService: ShipmentPMService;
     public columnDefs: any[] = [];
     public rowData: any[] = [];
     public BIReportName = "";
     @Output() RunReportCommand = new EventEmitter();
+    @Output() BackCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     private _EntityPMService: EntityPMService = new EntityPMService();
     private timerToken: any;
     public BIReportXMLData: BIReportXMLData = null;
-
+    public HasDeletionFeature = false;
+    public columnTypes;
+    public context;
+    public CountText: string;
+    public IsFilterValueChanged: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
+        this._DWQueryBuilderHelper.FilterValueChanged.subscribe((QueryId) => {
+            this.IsFilterValueChanged = true;
+            //this.timerToken = setTimeout(() => this.IsFilterValueChanged = false, 500);
+        });
     }
     ngOnInit() {
+        this.HasDeletionFeature = FeatureLocator.HasFeaturePermession("BIReport", "BIReportDelete");
         this._DWSubQueryPMService.getByQueryId(this.DWQueryId).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.DWQueryData = myResult.Result;
@@ -64,12 +81,14 @@ export class BIReportPreviewComponent implements OnInit {
         this.InitializeServices();
         this.DWQueryId = args['DWQueryId'];
         this.EntityId = args['EntityId'];
+        this.FolderId = args['FolderId'];
     }
     InitializeServices() {
         this._InfrastructureDomainService = new InfrastructureDomainService();
         this._DWSubQueryPMService = new DWSubQueryPMService();
         this._BIReportPMService = new BIReportPMService();
         this._DWQueryBuilderService = new DWQueryBuilderService();
+        this._ShipmentPMService = new ShipmentPMService();
     }
 
     //#region Build ag-grid Data
@@ -86,11 +105,13 @@ export class BIReportPreviewComponent implements OnInit {
                     this.EntityPM = result.BIReportPM;
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
                     this.BuildColumns(result);
+                    this.BuildRows(result);
                 }
             });
         }
     }
-    public UpdateAGGrid(arg: BIReportXMLData) {
+
+    public UpdateAGGrid(arg: BIReportXMLData, msg = null, count = 0) {
         var sortsList = [];
         if (arg.BITabularViewSettings != null && arg.BITabularViewSettings.Columns != null) {
             arg.BITabularViewSettings.Columns.forEach(item => {
@@ -107,92 +128,204 @@ export class BIReportPreviewComponent implements OnInit {
             if (sortsList != null) {
                 sortsList = sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 });
                 this.IsSorting = true;
-                this.agGrid.api.setSortModel(sortsList);
+                //this.agGrid.api.setSortModel(sortsList);
             }
-            //var params = {
-            //    force: true,
-            //};
             this.agGrid.api.refreshCells();
+
+            if (count > 50000 || msg == "MT5000") {
+                this.CountText = "Showing the first 50,000 rows, download the excel to view all."
+            }
+            else {
+                this.CountText = count + " rows";
+            }
+
         }
     }
+    
     public BuildColumns(arg: BIReportXMLData) {
         this.columnDefs = [];
+
+        this.agGrid.api.setColumnDefs(this.columnDefs);
         var columns = arg.BITabularViewSettings.Columns.sort((a, b) => { return (a.Index === b.Index) ? 0 : (a.Index < b.Index) ? -1 : 1 });
         if (columns != null) {
             for (var i = 0; i < columns.length; i++) {
                 if (columns[i].IsChecked) {
-                    if (columns[i].DataTypeCode == "DateTime") {
+                    var type = this.GetColumnDataType(columns[i].DataTypeCode);
+                    if (type == "dateColumn") {
                         this.columnDefs.push({
                             colId: columns[i].Code,
-                            headerName: columns[i].Name,
+                            headerName: columns[i].Code,
                             field: columns[i].Code,
                             sortable: true,
                             width: columns[i].Width,
                             resizable: true,
+                            //cellClass: columns[i].DataTypeCode,
+                            Index: columns[i].Index,
+                            type: type,
                             cellRenderer: this.DateCellRenderer,
-                            cellClass: columns[i].DataTypeCode,
-                            //filter: 'agTextColumnFilter',
-                            pivotIndex: columns[i].Index,
-
-                        });                            //sort: sortingDirction,
+                            filter: 'agDateColumnFilter'
+                            //sort: sortingDirction,
+                        });
                     }
-                    else {
+                    else if (type == "integerColumn"){
                         this.columnDefs.push({
                             colId: columns[i].Code,
-                            headerName: columns[i].Name,
+                            headerName: columns[i].Code,
                             field: columns[i].Code,
                             sortable: true,
                             filter: true,
                             width: columns[i].Width,
                             resizable: true,
-                            cellClass: columns[i].DataTypeCode,
-                            pivotIndex: columns[i].Index,
-                            //sort: sortingDirction,
+                            Index: columns[i].Index,
+                            type: type,
+                        });
+                    }
+                    else if (type == "numericColumn") {
+                        this.columnDefs.push({
+                            colId: columns[i].Code,
+                            headerName: columns[i].Code,
+                            field: columns[i].Code,
+                            sortable: true,
+                            filter: true,
+                            width: columns[i].Width,
+                            resizable: true,
+                            //cellClass: columns[i].DataTypeCode,
+                            Index: columns[i].Index,
+                            type: type,
+                            valueFormatter: function (params) {
+                                var pipe = new NumbersPipe();
+                                return pipe.transform(params.value, "N2");
+                            },
+                           
+                        });
+                    }
+                    else if (type == "booleanColumn") {
+                        this.columnDefs.push({
+                            colId: columns[i].Code,
+                            headerName: columns[i].Code,
+                            field: columns[i].Code,
+                            sortable: true,
+                            filter: true,
+                            width: columns[i].Width,
+                            resizable: true,
+                            // cellClass: columns[i].DataTypeCode,
+                            Index: columns[i].Index,
+                            type: type,
+                            cellRenderer: params => {
+                                if (params && params.value == "Yes") {
+                                    return `<img src="./Images/CheckBoxIcon.png" class="CenterCenter" />`;
+                                }
+                            },
+                           
+                        });
+                    }
+                    else if (columns[i].Code == "Shipment Number") {
+                        this.columnDefs.push({
+                            colId: columns[i].Code,
+                            headerName: columns[i].Code,
+                            field: columns[i].Code,
+                            sortable: true,
+                            filter: true,
+                            width: columns[i].Width,
+                            resizable: true,
+                            Index: columns[i].Index,
+                            //type: type,
+                            cellRendererFramework: EditShipmentLinkRendererComponent,
+                        });
+                    }
+                    else {
+                        this.columnDefs.push({
+                            colId: columns[i].Code,
+                            headerName: columns[i].Code,
+                            field: columns[i].Code,
+                            sortable: true,
+                            filter: true,
+                            width: columns[i].Width,
+                            resizable: true,
+                            //cellClass: columns[i].DataTypeCode,
+                            Index: columns[i].Index,
+                            type: type,
+                           
                         });
                     }
                 }
             }
+
+            this.agGrid.api.setColumnDefs(this.columnDefs);
+            this.agGrid.api.refreshHeader();
+            this.context = { componentParent: this };
         }
-       
-        this.BuildRows(arg);
     }
+
+    private GetColumnDataType(type: string) {
+        var datatype = "";
+        switch (type) {
+            case "Date":
+            case "DateTime":
+                {
+                    datatype = "dateColumn";
+                    break;
+                }
+            case "Integer":
+                {
+                    datatype = "integerColumn";
+                    break;
+                }
+            case "UnsInteger":
+            case "Double":
+            case "Decimal":
+            case "SigDouble":
+            case "UnsDecimal":
+                {
+                    datatype = "numericColumn";
+                    break;
+                }
+            case "nText":
+            case "Text":
+                {
+                    datatype = "stringColumn";
+                    break;
+                }
+            case "Boolean":
+                {
+                    datatype = "booleanColumn";
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
+
+        return datatype;
+    }
+
     public BuildRows(arg: BIReportXMLData) {
         this.rowData = [];
-        this.StopBusyIndicator();
-        this._DWQueryBuilderService.GetNewDWQueryData(arg.DWQueryData).subscribe(myResult => {
-            if (!myResult.HasError) {
-                this.rowData = myResult.Result.SQLDataResult;
-                this.timerToken = setTimeout(() => this.UpdateAGGrid(arg), 500);
-                this.StopBusyIndicator();
-            }
-            else {
-                this.StopBusyIndicator();
-            }
-
-            //this.LoadBIReportData();
-        });
-        //this.RunReportCommand.emit(arg.DWQueryData);
-
-        //if (arg.DWQueryData != null && arg.DWQueryData.SubQueryData != null && arg.DWQueryData.SubQueryData.SQLString != null) {
-        //    this.StartBusyIndicator("Loading ..");
-        //    this._DWQueryBuilderService.GetDWQueryData(arg.DWQueryData.SubQueryData.SQLString, "Fact_Shipments").subscribe(myResult => {
-        //        if (!myResult.HasError) {
-        //            this.rowData = myResult.Result;
-        //            this.timerToken = setTimeout(() => this.UpdateAGGrid(arg), 500);
-        //            this.StopBusyIndicator();
-        //        }
-        //        else {
-        //            this.StopBusyIndicator();
-        //        }
-        //    });
-        //}
-        //else {
-        //    this.StopBusyIndicator();
-        //}
+        this.CountText = "";
+        this.StartBusyIndicator();
+        this.RunReportCommand.emit({ MyData: arg.DWQueryData, FirstTime: true });
     }
+
     private DateCellRenderer(params: any) {
-        var DatePipe = new DateTimePipe();
-        return DatePipe.transform(params.value, "SD");
+        var datepipe = new DateTimePipe();
+        return datepipe.transform(params.value, "SD");
+    }
+
+    public methodFromParent(cell) {
+        this.StartBusyIndicator("Loading ...");
+        this._ShipmentPMService.getSingleByShipmentNumber(cell).subscribe(myResult => {
+            if (!myResult.HasError) {
+                var Id = myResult.Result;
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({ EntityId: Id, ObjectTableName: 'Shipment', BackButtonLabel: "BI Report" });
+                    });
+            }
+
+            this.StopBusyIndicator();
+        });
     }
     //#endregion
 
@@ -277,6 +410,7 @@ export class BIReportPreviewComponent implements OnInit {
         windowArgs.queryId = this.DWQueryId;
         windowArgs.reportId = this.EntityPM.Id;
         windowArgs.reportName = this.EntityPM.Name;
+        windowArgs.BIReportXMLData = this.BIReportXMLData;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 500;
         logitudeWindow.Height = 200;
@@ -301,10 +435,11 @@ export class BIReportPreviewComponent implements OnInit {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     // save
-                    this.SaveBIReport();
+                    this.SaveBIReport(true);
                 }
                 else if (confirmWindow.No) {
                     if (this.ComponentRef) {
+                        this.BackCompleted.emit(false);
                         this.ComponentRef.destroy();
                     }
                 }
@@ -315,17 +450,18 @@ export class BIReportPreviewComponent implements OnInit {
         }
         else {
             if (this.ComponentRef) {
-                SessionLocator.CurrentSession.FireEvent("BIRefresh");
+                this.BackCompleted.emit(false);
+                this.CurrentSession.FireEvent("BIRefresh");
                 this.ComponentRef.destroy();
             }
         }
     }
-    SaveBIReport() {
+    SaveBIReport(isBackBtn = false) {
         if (this.EntityId == null) {
             this.NewBIReport();
         }
         else {
-            this.UpdateBIReport(false);
+            this.UpdateBIReport(false, isBackBtn);
         }
     }
     NewBIReport() {
@@ -336,19 +472,21 @@ export class BIReportPreviewComponent implements OnInit {
         logWindow.Title = windowTitle;
         var windowArgs: any = {};
         windowArgs.DWQueryId = this.DWQueryId;
+        windowArgs.FolderId = this.FolderId;
         logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
         logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/NewBIReport');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
-                this.EntityPM = s.EntityPM;
-                this.EntityId = s.EntityPM.Id;
-                this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
-                this.UpdateBIReport(false);
+                if (d != "cancel") {
+                    this.EntityPM = s.EntityPM;
+                    this.EntityId = s.EntityPM.Id;
+                    this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
+                    this.UpdateBIReport(false);
+                }
             });
         });
     }
-    UpdateBIReport(arg: boolean) {
+    UpdateBIReport(arg: boolean, isBackBtn = false) {
         // call method in server side to build xml 
         var sorting = this.agGrid.api.getSortModel();
         var coulmns = this.agGrid.columnApi.getColumnState();
@@ -358,7 +496,10 @@ export class BIReportPreviewComponent implements OnInit {
         result.BIReportId = this.EntityId;
         result.BIReportPM = this.EntityPM;
         result.BITabularViewSettings.Columns = [];
+        result.DWQueryData = this.BIReportXMLData.DWQueryData;
+
         var newColumn = new Column();
+        var sortsList = [];
 
         this.BIReportXMLData.DWQueryData.Columns.forEach(item => {
             newColumn = new Column();
@@ -378,24 +519,46 @@ export class BIReportPreviewComponent implements OnInit {
                 if (sortItem != null) {
                     newColumn.SortDirction = sortItem["sort"];
                     newColumn.SortOrder = sorting.indexOf(sortItem);
+
+                    sortsList.push({
+                        colId: item.DisplayName,
+                        sort: newColumn.SortDirction,
+                        order: newColumn.SortOrder
+                    });
                 }
             }
             result.BITabularViewSettings.Columns.push(newColumn);
         });
 
+        if (sortsList != null && sortsList.length > 0) {
+            this.BIReportXMLData.DWQueryData.ColumnsSort = "";
+            sortsList.sort((a, b) => { return (a.order === b.order) ? 0 : (a.order < b.order) ? -1 : 1 }).forEach(item => {
+                result.DWQueryData.ColumnsSort += item.colId + " " + item.sort + ",";
+            });
+            result.DWQueryData.ColumnsSort = result.DWQueryData.ColumnsSort.replace(/,\s*$/, "");
+        }
+
         this._InfrastructureDomainService.UpdateBIReportXMLData(result).subscribe(myResult => {
-            this.hasChanged = false;
-            this.StopBusyIndicator();
-            if (arg) {
-                this.ShowQueryBuilder();
+            if (!myResult.HasError) {
+                this.BIReportXMLData = myResult.Result;
+                this.EntityPM = this.BIReportXMLData.BIReportPM;
+                this.EntityId = this.BIReportXMLData.BIReportId;
+                this.hasChanged = false;
+                this.StopBusyIndicator();
+
+                if (arg) {
+                    this.ShowQueryBuilder();
+                }
+
+                if (this.ComponentRef && isBackBtn) {
+                    this.BackCompleted.emit(true);
+                    this.ComponentRef.destroy();
+                }
+
             }
         });
     }
-    OnNewBIReportWindowClosed(arg: string) {
-        if (arg != 'cancel') {
-            this.EntityId = arg;
-        }
-    }
+
     ShowQueryBuilderClicked() {
         if (this.HasChanges) {
             this.UpdateBIReport(true);
@@ -411,13 +574,19 @@ export class BIReportPreviewComponent implements OnInit {
         windowArgs.IsBIReportEditScreen = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1200;
-        logWindow.Height = 820;
+        logWindow.Height = 780;
         logWindow.Title = "Query Builder";
         logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
-                if (s != null && d != null && d != "cancel") {
-                    this.DWQueryId = s.ID;
+                if ((d != null && d != "cancel")) {
+                    this.DWQueryData = s.QueryData;
+                    if (this.DWQueryData.Filters) {
+                        var MyFilter = this._DWQueryBuilderHelper.RestoreFilters(this.DWQueryData.Filters);
+                        var temp = [];
+                        temp.push(MyFilter);
+                        this.SelectedFiltersDataSource = temp;
+                    }
                     this.LoadBIReportData();
                 }
             });
@@ -425,12 +594,12 @@ export class BIReportPreviewComponent implements OnInit {
     }
     EditBIReportClicked() {
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: 'BIReport' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
-                        this._EntityPMService.getSingle( "BIReport",this.EntityPM.Id).then((res: any) => {
+                        this._EntityPMService.getSingle("BIReport", this.EntityPM.Id).then((res: any) => {
                             res.subscribe((aa: any) => {
                                 this.BIReportName = aa.Result != null ? aa.Result.Name : "";
                             })
@@ -440,12 +609,27 @@ export class BIReportPreviewComponent implements OnInit {
         }
     }
     RunReportButtonClicked() {
-        this.RunReportCommand.emit(this.DWQueryData);
+        this.IsFilterValueChanged = false;
+        this.RunReportCommand.emit(this.BIReportXMLData.DWQueryData);//this.DWQueryData);
     }
+    public HasValidationError = false;
     OnRunReportComplete(MyData) {
-        this.rowData = MyData;
-        this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML), 500);
+        if (MyData.Msg == "ValidationError") {
+            this.HasValidationError = true;
+            this.rowData = [];
+            this.StopBusyIndicator();
+        }
+        else {
+            this.HasValidationError = false;
+            this.rowData = MyData.rowData;
+            this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, MyData.Msg, MyData.Count), 500);
+            this.StopBusyIndicator();
+        }
+
         this.StopBusyIndicator();
+    }
+    OnComputeFiltersComplete(MyData) {
+        this.BIReportXMLData.DWQueryData = MyData;
     }
     CountClicked() {
         alert("Count : " + this.agGrid.api.getDisplayedRowCount());
@@ -454,20 +638,47 @@ export class BIReportPreviewComponent implements OnInit {
         if (!this.IsNewEntity) {
             var windowTitle = "Show/Hide/Reorder Column(s)";
             var logWindow = new LogitudeWindow();
-            logWindow.Width = 350;
-            logWindow.Height = 400;
+            logWindow.Width = 500;
+            logWindow.Height = 600;
             logWindow.Title = windowTitle;
             var windowArgs: any = {};
             windowArgs.father = this;
             logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => this.OnNewBIReportWindowClosed($event));
             logWindow.Show('./InfrastructureModules/InfrastructureBIReport/Components/NewEntity/AgGridColumnsOperations');
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe(d => {
                     if (s != null && d != "cancel") {
                         this.BuildColumns(this.BIReportXMLData);
+                        this.BuildRows(this.BIReportXMLData);
                     }
                 });
+            });
+        }
+    }
+    onDeleteBIReportClick() {
+        if (!this.IsNewEntity) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 450;
+            confirmWindow.Height = 190;
+            confirmWindow.NoButtonText = "Cancel";
+            confirmWindow.YesButtonText = "Delete";
+            confirmWindow.Title = "Confirm Deletion";
+            confirmWindow.Show("Deleting this report will remove it from the BI reports list Once deleted it can't be restored");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    // save
+                    this._InfrastructureDomainService.DeleteBIReport(this.EntityPM.Id).subscribe(myResult => {
+                        if (!myResult.HasError) {
+                            if (this.ComponentRef) {
+                                this.CurrentSession.FireEvent("BIRefresh");
+                                this.ComponentRef.destroy();
+                            }
+                        }
+                    });
+                }
+                else if (confirmWindow.No) {
+                    //nth
+                }
             });
         }
     }

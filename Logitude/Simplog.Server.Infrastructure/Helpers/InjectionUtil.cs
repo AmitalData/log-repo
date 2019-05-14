@@ -15,6 +15,7 @@ namespace Simplog.Server.Infrastructure.Helpers
         readonly Func<int> _GetTenantFromToken;
         private Action<string, string, int, string> _checkContactFeature;
         private Func<IByteCompressorUtil> _ByteCompressorUtilProvider;
+        private Func<IHtmlEditorHelper> _HtmlEditorHelper;
         private I_IISManager _IISManager;
 
         private InjectionUtil(
@@ -66,14 +67,26 @@ namespace Simplog.Server.Infrastructure.Helpers
 
         }
 
-        public I_IISManager IISManager { get => _IISManager; private set => _IISManager = value; }
+        //public I_IISManager IISManager { get => _IISManager; private set => _IISManager = value; }
+
+        public I_IISManager IISManager {
+            get
+            {
+                return _IISManager;
+            }
+            set
+            {
+                _IISManager = value;
+            }
+        }
 
         public static void Init(
             Func<IAmitalRestrictOwnerService> CreateAmitalRestrictOwnerModelService,
             Func<int> getTenantFromToken,
             Action<string, string, int, string> checkContactFeature,
             Func<IByteCompressorUtil> iByteCompressorUtilProvider,
-            I_IISManager myIISManager
+            I_IISManager myIISManager,
+            Func<IHtmlEditorHelper> myIHtmlEditorHelper
             )
         {
             if (_Instance != null)
@@ -85,6 +98,7 @@ namespace Simplog.Server.Infrastructure.Helpers
 
             _Instance = new InjectionUtil(CreateAmitalRestrictOwnerModelService, getTenantFromToken, checkContactFeature);
             _Instance._ByteCompressorUtilProvider = iByteCompressorUtilProvider;
+            _Instance._HtmlEditorHelper = myIHtmlEditorHelper;
             _Instance._IISManager = myIISManager;
 
         }
@@ -100,6 +114,22 @@ namespace Simplog.Server.Infrastructure.Helpers
             string deCompressText = _ByteCompressorUtilProvider().DeCompressText(compressText);
             return deCompressText;
         }
+
+        //public string SendEmailOutActivityForEntity(byte[] htmlData, byte[] textData, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string myEntityId, string customerId, string objectTableId, string attachments, string entityReference, string documentTypeCode, string eventTypeCode)
+
+        //{
+        //    string res= _HtmlEditorHelper().SendEmailOutActivityForEntity(htmlData, textData, tenant,
+        //        toEmail, subject, cc, bcc, userId,
+        //        myEntityId, customerId, objectTableId, attachments, entityReference, documentTypeCode, eventTypeCode);
+        //    return res;
+        //}
+
+        public string SendHtmlDocument(byte[] htmlData, string internalDocumentId, string externalDocumentId, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string entityId, string objectTableId, string attachments, string entityReference, string from, string replyTo)
+        {
+            string res = _HtmlEditorHelper().SendHtmlDocument(htmlData, internalDocumentId, externalDocumentId, tenant, toEmail, subject, cc, bcc, userId, entityId, objectTableId, attachments, entityReference, from, replyTo);
+            return res;
+
+        }
     }
 
     public interface IByteCompressorUtil
@@ -112,6 +142,12 @@ namespace Simplog.Server.Infrastructure.Helpers
     public interface I_IISManager
     {
         void RecycleMe();
+    }
+
+    public interface IHtmlEditorHelper
+    {
+        //string SendEmailOutActivityForEntity(byte[] htmlData, byte[] textData, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string myEntityId, string customerId, string objectTableId, string attachments, string entityReference, string documentTypeCode, string eventTypeCode);
+        string SendHtmlDocument(byte[] htmlData, string internalDocumentId, string externalDocumentId, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string entityId, string objectTableId, string attachments, string entityReference, string from, string replyTo);
     }
 }
 

@@ -95,6 +95,7 @@ namespace CommunicationWorkerRole
                 {
                     if (!General.IsUpdating())
                     {
+                        APILogsPM LogPM = null;
                         try
                         {
                             //int tenant = 0;
@@ -119,7 +120,7 @@ namespace CommunicationWorkerRole
                                 #region APILogs
                                 var aPILogsRepository = new APILogsRepository(webFreightContext);
                                 APILogs Log = aPILogsRepository.GetSingleAPILogsByCorrelationId(CorrelationId, tenant);
-                                APILogsPM LogPM;
+                               
                                 bool IsNewLog = false;
                                 if (Log == null)
                                 {
@@ -166,12 +167,18 @@ namespace CommunicationWorkerRole
                                 #endregion
                                 try
                                 {
-                                    
+                                    apiLogsService = new APILogsService(webFreightContext, tenant);
+                                    ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+
                                     if (!string.IsNullOrEmpty(ShipmentId))
                                     {
 
-                                        apiLogsService = new APILogsService(webFreightContext, tenant);
-                                        ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+                                        var Objecttable = objectTabelRepository.GetObjectTableByName("Shipment", tenant, true);
+                                        LogPM.ObjectTableId = Objecttable.Id;
+                                        LogPM.EntityId = ShipmentId;
+                                        //LogPM.Refrence = Shipment.ShipmentNumber;
+                                        LogPM.Tenant = tenant;
+                                        
                                         ShipmentQuery shipmentQuery = new ShipmentQuery(Tenant);
                                         bool IsCanclled = false;
                                         bool CancleByChangeCustomer = false;
@@ -181,15 +188,13 @@ namespace CommunicationWorkerRole
                                         var customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetOldestCustomerTenantAccessCardsBatch(Shipment.CustomerId, tenant, importerTenant);
                                         if (Shipment != null && (customerTenantAccessCardsBatch != null ? (Shipment.CreateDateTime >= customerTenantAccessCardsBatch.FromDatetime):true))
                                         {
-                                            var Objecttable = objectTabelRepository.GetObjectTableByName("Shipment", tenant, true);
-                                            LogPM.ObjectTableId = Objecttable.Id;
-                                            LogPM.EntityId = Shipment.Id;
                                             LogPM.Refrence = Shipment.ShipmentNumber;
-                                            LogPM.Tenant = Shipment.Tenant;
                                             if (((Shipment.CustomerId != CustomerId) || CustomerChanged == "true") && !string.IsNullOrEmpty(Shipment.CustomerShipmentNumber))
                                             {
                                                 #region Change Customer Logic
+
                                                 LogPM.Subject = "Send updates Of Shipment To Importer By ImporterShipments Controller";
+                                                LogPM.Refrence = Shipment.ShipmentNumber;
                                                 if (IsNewLog)
                                                 {
                                                     LogPM.CustomerId = CustomerId;
@@ -197,7 +202,6 @@ namespace CommunicationWorkerRole
                                                     LogPM.QueueType = "Shipment";
                                                     apiLogsService.Create(LogPM);
                                                 }
-
                                                 CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                                                 CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, Shipment.CustomerId);
                                                 if (Shipment.CustomerTenantNumber != null && Shipment.CustomerTenantNumber != importerTenant && (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess))
@@ -613,12 +617,19 @@ namespace CommunicationWorkerRole
                                                                 Code = Shipment.OnCarriageToPortCode,
                                                                 CountryCode = Shipment.OnCarriageToPortCountryCode
                                                             },
-                                                            Incoterm = new CodeProperties()
-                                                            {
-                                                                Code = Shipment.IncotermCode
-                                                            }
+                                                            //Incoterm = new CodeProperties()
+                                                            //{
+                                                            //    Code = Shipment.IncotermCode
+                                                            //}
 
                                                         };
+                                                        if (!string.IsNullOrEmpty(Shipment.IncotermCode))
+                                                        {
+                                                            shipmentAM.Incoterm = new CodeProperties()
+                                                            {
+                                                                Code = Shipment.IncotermCode
+                                                            };
+                                                        }
                                                         shipmentAM.ShipmentPackagesAM = new List<ShipmentPackageAM>();
                                                         foreach (var package in Shipment.ShipmentPackages)
                                                         {
@@ -834,12 +845,18 @@ namespace CommunicationWorkerRole
                                                                 Code = Shipment.OnCarriageToPortCode,
                                                                 CountryCode = Shipment.OnCarriageToPortCountryCode
                                                             },
-                                                            Incoterm = new CodeProperties()
+                                                            //Incoterm = new CodeProperties()
+                                                            //{
+                                                            //    Code = Shipment.IncotermCode
+                                                            //}
+                                                        };
+                                                        if (!string.IsNullOrEmpty(Shipment.IncotermCode))
+                                                        {
+                                                            shipmentAM.Incoterm = new CodeProperties()
                                                             {
                                                                 Code = Shipment.IncotermCode
-                                                            }
-                                                        };
-
+                                                            };
+                                                        }
                                                         shipmentAM.ShipmentPackagesAM = new List<ShipmentPackageAM>();
                                                         foreach (var package in Shipment.ShipmentPackages)
                                                         {
@@ -1075,6 +1092,35 @@ namespace CommunicationWorkerRole
                         }
                         catch (Exception ex)
                         {
+                            if (LogPM != null)
+                            {
+                                //LogPM.CustomerId = CustomerId;
+                                //LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+                                try
+                                {
+                                    string errorMessage = ex.Message + Environment.NewLine;
+
+                                    if (ex.InnerException != null)
+                                    {
+
+                                        errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
+
+                                    }
+
+                                    errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
+                                    var msg = ex.Message + DateTime.Now;
+                                    LogPM.DiagnosticLog = msg;
+                                    LogPM.ExceptionsMessage = errorMessage;
+                                    LogPM.QueueType = "Shipment";
+                                    apiLogsService.Create(LogPM);
+                                }
+                                catch (Exception e)
+                                {
+
+                                    ExceptionHandler.HandleException(e, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
+                                }
+                               
+                            }
                             ConnectClient();
                             ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
                             Thread.Sleep(10000);

@@ -19,8 +19,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 JournalId = poco.JournalId,
                 Line = poco.Line,
-                TaxReportId = poco.TaxReportId,
-                TaxReportStatusCode = poco.TaxReportStatusCode,
                 Tenant = poco.Tenant,
                 GeneralData = poco.GeneralData,
 

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<entity Id="&quot;7a095e9c-91b5-4759-9b09-28b51032a1db&quot;" Code="&quot;DIM_Levels&quot;" Name="&quot;DIM_Levels&quot;" TypeCode="&quot;Dimension&quot;" IsClosed="true" DefaultFilterBy="&quot;[Name]&quot;">
+  <fields>
+    <field Id="&quot;8fb99742-c218-4035-9bee-ec0ed01fd31f&quot;" Code="&quot;[Code]&quot;" Name="&quot;Code&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="1" IsPrimaryKey="false" IsMeasurement="false" DisplayInQueryBuilder="true" LOVAdditionalColumns="&quot;[Name]&quot;" HideTree="false" />
+    <field Id="&quot;62b06789-779d-4e63-b409-51a56c028210&quot;" Code="&quot;[Name]&quot;" Name="&quot;Name&quot;" DataTypeCode="&quot;Text&quot;" IsRequired="true" MinLength="0" MaxLength="40" IsPrimaryKey="true" IsMeasurement="false" DisplayInQueryBuilder="true" LOVAdditionalColumns="&quot;[Code]&quot;" HideTree="false" />
+  </fields>
+</entity>

@@ -15,6 +15,8 @@ import {ComputingPartnerList} from '../EntityLists/ComputingPartnerList';
 import {PerformanceLogger} from '../../Infrastructure/Utilities/PerformanceLogger';
 import {VatTypePMService} from '../Services/StandardPMs/VatTypePMService';
 import {FilingInboxPM} from '../EntityPMs/FilingInboxPM'; 
+import { AccountingSettingPM } from '../EntityPMs/AccountingSettingPM';
+import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass'
 
 @Injectable()
 
@@ -43,11 +45,11 @@ export class CommonDomainService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
     }
 
-    GetBlueSnapToken(VaultedShopperId:string) {
+    GetBlueSnapToken(VaultedShopperId:string,countryName:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetBlueSnapToken?VaultedShopperId=' + VaultedShopperId, {
+            return this._http.get(this._apiUrl + '/GetBlueSnapToken?VaultedShopperId=' + VaultedShopperId + '&countryname=' + countryName, {
                 headers: authHeader
             }).map(response => {
                 var myResult = response.json();
@@ -60,11 +62,11 @@ export class CommonDomainService {
     }
 
 
-    GetBlueSnapSecretToken(VaultedShopperId: string) {
+    GetBlueSnapSecretToken(VaultedShopperId: string,countryName:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl + '/GetBlueSnapSecretToken?VaultedShopperId=' + VaultedShopperId, {
+            return this._http.get(this._apiUrl + '/GetBlueSnapSecretToken?VaultedShopperId=' + VaultedShopperId + '&countryname=' + countryName, {
                 headers: authHeader
             }).map(response => {
                 var myResult = response.json();
@@ -647,21 +649,7 @@ export class CommonDomainService {
         });
     }
 
-    UpdateComputingPartnerTranslationList(entityPMList: any[]) {
-        return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-            var url = ServiceHelper.GetLogitudeURL() + 'api/TimeOfficeHourDomain';
 
-            return this._http.post(url, JSON.stringify(entityPMList), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
-                var myResponse = new ServiceResponse();
-                myResponse.Result = myResponse;
-                return myResponse;
-            });
-        });
-    }
     getNoneZeroTenantTranslation(computingPartnerId:string,ObjectTableId:string,Code:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -996,6 +984,24 @@ export class CommonDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+    OnCreatingIsraelTenant() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetOnCreatingIsraelTenant', { headers: authHeader }).map(response => {
+                var myResult = response.json();
+
+                var entity: AccountingSettingPM;
+                if (myResult) {
+                    entity = this.MapJsonToAccountingSettingPM(myResult);
+                }
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
     // FilingInbox
     GetFilingInboxes(filters: ApiQueryFilters, userId: string, isShowDeleted: boolean) {
@@ -1135,6 +1141,79 @@ export class CommonDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    GetTenantEcommerceSupportEmail(id: number) {
+
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetTenantEcommerceSupportEmail?' + 'id=' + id, {
+                headers: authHeader
+            }).map(response => {
+                var pm = response.json();
+
+
+                //var entity: TenantPM;
+                //if (pm) {
+                //    entity = this.MapJsonToEntityPM(pm);
+                //}
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = pm;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    MapJsonToAccountingSettingPM(jsonPM: any, mapParent: boolean = true, entityPM: AccountingSettingPM = null) {
+        if (!entityPM) {
+
+            entityPM = new AccountingSettingPM();
+        }
+
+        var customFields: Array<string> = [];
+        for (var i = 1; i < 11; i++) {
+            customFields.push("Field" + i);
+        }
+
+        var jsonPMKeys = Object.keys(jsonPM);
+
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+
+                continue;
+            }
+            var property = jsonPMKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
+                if (jsonPM[property]) {
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+                    entityPM[property] = customFieldClass;
+                }
+            }
+            else {
+                entityPM[property] = jsonPM[property];
+            }
+
+        }
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
+        }
+        else {
+
+            entityPM.OldEntityPM = null;
+        }
+
+        entityPM.IsDirty = false;
+        return entityPM;
+    }
+
 }
 
 export class TranslationHeader {

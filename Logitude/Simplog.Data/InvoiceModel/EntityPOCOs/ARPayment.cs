@@ -68,6 +68,9 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string SelloPago { get; set; }
         public DateTime? SATApprovalDate { get; set; }
 
+        public DateTime? ApprovedDate { get; set; }
+        public string ApprovedByUserId { get; set; }
+
         public string BankAccountLiteId { get; set; }
         [ForeignKey("BankAccountLiteId")]
         public virtual BankAccountLite BankAccountLite { get; set; }
@@ -128,5 +131,10 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         [ForeignKey("MetodoPagoCode")]
         public virtual MetodoPago MetodoPago { get; set; }
 
+        [ForeignKey("ApprovedByUserId")]
+        public virtual User ApprovedByUser { get; set; }
+        public DateTime? FirstApproveDate { get; set; }
+        public bool IsFullAccounting { get; set; }
+        public bool IsExternalEntity { get; set; }
     }
 }

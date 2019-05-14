@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
+import {Component, AfterViewInit, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {AppTool, ArrayTool} from '../../../../Infrastructure/Tools';
@@ -35,6 +35,7 @@ export class VehicleEditComponent extends BaseComponent {
     public TabsItemsSource: TabItem[] = [];
     public IsNewEntity: boolean = false;
     public ValidationErrorsList: any[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private entityPMService: EntityPMService, public EntityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new VehiclePM();
@@ -166,11 +167,11 @@ export class VehicleEditComponent extends BaseComponent {
 
     }
     OkButtonClicked() {
-        //SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        //this.CurrentSession.CloseCurrentWindowEmit("Ok");
         this.SaveEntityChanges(null);
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
     private SaveEntityChanges(customSendOptionsArgs) {
             this.EntityPM.Tenant = SessionLocator.Tenant;
@@ -180,7 +181,7 @@ export class VehicleEditComponent extends BaseComponent {
                 return;
             }
 
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
             //if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 //this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
@@ -188,7 +189,7 @@ export class VehicleEditComponent extends BaseComponent {
                 this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (myResponse.HasError) {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -232,7 +233,7 @@ export class VehicleEditComponent extends BaseComponent {
 
                                     myIIGGeneralMessagesService.PostVehicleRequest(currRequestParams)
                                         .subscribe((myServiceResponse: ServiceResponse) => {
-                                            //SessionLocator.CurrentSession.StopBusyIndicator();
+                                            //this.CurrentSession.StopBusyIndicator();
 
                                             //this.ResponseData = myServiceResponse.Result;
                                             //this.OnMassageDisplayMethod();
@@ -243,7 +244,7 @@ export class VehicleEditComponent extends BaseComponent {
                         }
 
                     }, error => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         var myErrors: string[] = [];
                         myErrors.push(error.message);
                         this.ValidationErrorsList = myErrors;

@@ -56,6 +56,8 @@ namespace Logitude.TimeManagement.Data.EntityLists
        public bool NeedsProrating  { get; set; }
        [DataMember]
        public string LocationName  { get; set; }
+       [DataMember]
+       public string SprintName  { get; set; }
    }
 
 }

@@ -16,6 +16,9 @@ import {TaxScreenComponent} from './Components/Logbox/TaxScreenComponent';
 import {GoodsValueComponent} from './Components/Logbox/GoodsValueComponent';
 import {DenyReasonComponent} from './Components/Logbox/DenyReasonComponent';
 import {LogBoxPackagesComponent} from './Components/Logbox/LogBoxPackagesComponent';
+import {DepositionRequestComponent} from './Components/Logbox/DepositionRequestComponent';
+
+
 
 export const Components =
     [
@@ -37,6 +40,7 @@ export const Components =
         DigitalSignDocTypeComponent,
         LogBoxPackagesComponent,
         ECommercePaymentRequestMobileComponent,
+        DepositionRequestComponent,
     ];
 
 
@@ -64,6 +68,8 @@ export class ModuleDeclarations {
             case "DigitalSignDocTypeComponent": { myResult = DigitalSignDocTypeComponent; break; }
             case "LogBoxPackagesComponent": { myResult = LogBoxPackagesComponent; break; }
             case "ECommercePaymentRequestMobileComponent": { myResult = ECommercePaymentRequestMobileComponent; break; }
+            case "DepositionRequestComponent": { myResult = DepositionRequestComponent; break; }
+                
         }
 
         return myResult;

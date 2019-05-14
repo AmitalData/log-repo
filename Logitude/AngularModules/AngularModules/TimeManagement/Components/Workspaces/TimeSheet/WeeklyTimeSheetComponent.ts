@@ -26,6 +26,7 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
     public DataContext = this;
     public HasChanges: boolean = false;
     private myDomainService: TimeManagementDomainService = new TimeManagementDomainService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
     }
@@ -150,8 +151,8 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
         this.TotalThuDayClockHours = totalThuDayClockHoursString;
         this.TotalSatDayClockHours = totalSatDayClockHoursString;
         this.TotalFriDayClockHours = totalFriDayClockHoursString;
-        this.TotalWeekClockHours = totalSunDayClockHours + totalMonDayClockHours + totalTueDayClockHours +
-            totalWedDayClockHours + totalThuDayClockHours + totalSatDayClockHours + totalFriDayClockHours;
+        this.TotalWeekClockHours = (totalSunDayClockHours + totalMonDayClockHours + totalTueDayClockHours +
+            totalWedDayClockHours + totalThuDayClockHours + totalSatDayClockHours + totalFriDayClockHours) * 60;
     }
 
     private employeeUserId: string = null;
@@ -295,7 +296,7 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
 
                 else {
                   
-                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    this.CurrentSession.StartBusyIndicatorSaving();
                     this.HasChanges = false;
                     var myServiceHelper = new TimeManagementAPIHelper();
                     myServiceHelper.Id = SessionLocator.Tenant;
@@ -312,7 +313,7 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
                     }
 
                     this.myDomainService.UpdateTimeSheetList(myServiceHelper).subscribe((myResponse: ServiceResponse) => {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                         if (!myResponse.HasError) {
                             this.OnDataLoaded(myResponse.Result);
                         }
@@ -346,7 +347,7 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
         if (this.myDomainService == null) {
             this.myDomainService = new TimeManagementDomainService();
         }
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.myDomainService.GetTMProjects(this.EmployeeUserId, this.LocationCode, this.PeriodStartDate).subscribe((myResponse: ServiceResponse) => {
             this.ItemSource = [];
             if (myResponse.HasError) {
@@ -365,7 +366,7 @@ export class WeeklyTimeSheetComponent extends BaseComponent {
                 setTimeout(() => this.SetTotalDatesFromClockOfList(myResponse.Result.OfficeClockDays), 2);
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 }

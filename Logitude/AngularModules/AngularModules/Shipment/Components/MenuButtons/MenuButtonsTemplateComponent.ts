@@ -1,9 +1,10 @@
-﻿import {Component, EventEmitter, Output, ComponentRef} from '@angular/core';
+import {Component, EventEmitter, Output, ComponentRef} from '@angular/core';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {EntityPMServiceResponse} from '../../../Infrastructure/DataContracts/EntityPMServiceResponse';
 import {EntityPMService} from '../../../Infrastructure/Services/EntityPMService';
+import { AppTool } from '../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -22,11 +23,12 @@ export class MenuButtonsTemplateComponent extends BaseComponent {
     public EventNotes: string = "";
     public IsReasonStackPanel: boolean = false;
     public ActionStepsStateList: any;
+    public IsConvertShipmentType: boolean = false; 
     public ComponentRef: ComponentRef<MenuButtonsTemplateComponent>;
     @Output() ReopenDone: EventEmitter<string> = new EventEmitter<string>();
     @Output() SaveClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() SaveCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityPMService: EntityPMService) {
         super();
     }
@@ -39,27 +41,30 @@ export class MenuButtonsTemplateComponent extends BaseComponent {
         this.EventNotes = args.EventNote;
         this.IsReasonStackPanel = args.IsReasonStackPanel;
         this.ActionStepsStateList = args.ActionStepsStateList;
-        if (args.EnabledOkButton != null)
+        this.IsConvertShipmentType = args.IsConvertShipmentType;
+
+        if (args.EnabledOkButton != null) {
             this.EnabledOkButton = args.EnabledOkButton;
+        }
 
         this.ValidationErrorsList = args.ValidationErrorsList;
         this.ValidationWarningsList = args.ValidationWarningsList;
     }
     public EnabledOkButton: boolean = true;
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
     OkButtonClicked() {
         var errors: string[] = [];
-        
+
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            //this.SaveClicked.emit(true);
             this.ReopenDone.emit(this.EventNotes);
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("confirm");
+            this.CurrentSession.CloseCurrentWindowEmit("confirm");
         }
     }
 
@@ -80,11 +85,11 @@ export class MenuButtonsTemplateComponent extends BaseComponent {
     private SaveEntityChanges(isClosing: boolean) {
         if (this.EntityPM.IsDirty) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             this.entityPMService.update(this.ObjectTableName, this.EntityPM).then((res: any) => {
                 res.subscribe(response => {
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                     var mm: EntityPMServiceResponse = response;
                     if (!mm.HasError) {
@@ -104,7 +109,7 @@ export class MenuButtonsTemplateComponent extends BaseComponent {
 
                 }, error => {
                     console.log("Error===========>", error);
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             });
         }
@@ -115,8 +120,7 @@ export class MenuButtonsTemplateComponent extends BaseComponent {
             this.ComponentRef.destroy();
             this.ComponentRef = null;
         }
-    }
-
+    }    
 }
 
 export class MenuButtonsTemplateArgs {
@@ -130,6 +134,5 @@ export class MenuButtonsTemplateArgs {
     public EnabledOkButton: boolean = true;
     public ValidationWarningsList: Array<string> = [];
     public ValidationErrorsList: Array<string> = [];
-
-    
+    public IsConvertShipmentType: boolean = false;   
 }

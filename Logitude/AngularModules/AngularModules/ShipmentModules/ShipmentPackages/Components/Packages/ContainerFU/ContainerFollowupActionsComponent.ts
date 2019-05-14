@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -9,6 +9,7 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 export class ContainerFollowupActionsComponent {
     public Code: string;
     public RoutingLinkText: string;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -30,10 +31,10 @@ export class ContainerFollowupActionsComponent {
     }
 
     SelectAction(typeCode: string) {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(typeCode);
+        this.CurrentSession.CloseCurrentWindowEmit(typeCode);
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }

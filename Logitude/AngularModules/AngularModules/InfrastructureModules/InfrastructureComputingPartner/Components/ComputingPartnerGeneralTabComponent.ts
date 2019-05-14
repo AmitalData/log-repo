@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -28,6 +28,7 @@ export class ComputingPartnerGeneralTabComponent extends BaseComponent {
     public ObjectTableName: string = "ComputingPartner";
     public ItemSourceCollection: ObservableCollection;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;       
@@ -35,7 +36,7 @@ export class ComputingPartnerGeneralTabComponent extends BaseComponent {
         this.BuildObsList();
         this.SetUIProperties();
     }
-
+    
     public InActiveEnabled: boolean = true;
     SetUIProperties() {
         var isFieldsEnabled: boolean = SessionLocator.Tenant == this.EntityPM.Tenant? true : false;
@@ -46,6 +47,12 @@ export class ComputingPartnerGeneralTabComponent extends BaseComponent {
         this.InActiveEnabled = isFieldsEnabled;
 
     }
+
+
+
+
+
+
     BuildObsList() {
         this.ItemSourceCollection.Clear();
         var list: Array<AddEditComputingPartnerComponent> = [];
@@ -70,15 +77,15 @@ export class ComputingPartnerGeneralTabComponent extends BaseComponent {
 
         if (this.ValidationErrorsList.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             var myService: ComputingPartnerPMService = new ComputingPartnerPMService();
             myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
 
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                    this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                 }
 
                 else {

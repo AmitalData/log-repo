@@ -4,6 +4,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -70,7 +71,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
             //ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(entityPM.Tenant);
-
+            entityPM.StatusCode = "6";
             if (entityPM.OutputOrInput == "O")
             {
 
@@ -87,22 +88,57 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     entityPM.StatusCode = "1";
                 }
-               
-
-               else  if (entityPM.Reference != null)
+                else if(entityPM.VatNumber != null)
                 {
-                    var chars = Regex.Matches(entityPM.Reference, @"[a-zA-Z]");
+                    if (entityPM.VatNumber.Length > 9)
+                    {
+                        entityPM.StatusCode = "2";
+                    }
+                    else
+                    {
+
+
+                        var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
+                        if (chars.Count == 0)
+                        {
+                            var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
+                            if (digit != 0)
+                            {
+                                entityPM.StatusCode = "2";
+                            }
+                           
+                        }
+                        else
+                        {
+                            entityPM.StatusCode = "2";
+                        }
+                        
+                    }
+                }
+
+                if (entityPM.VatableInvoiceAmount != null && entityPM.VatableInvoiceAmount != 0)
+                {
+                  //  string s = entityPM.VatableInvoiceAmount.ToString();
+                    string[] amount = entityPM.VatableInvoiceAmount.ToString().Split('.');
+                    if (amount.Count() > 1 && amount[1] != "00" )
+                    {
+                        entityPM.StatusCode = "4";
+                    }
+                   
+                }
+
+
+                 if (entityPM.Reference != null)
+                {
+                    var chars = Regex.Matches(entityPM.Reference, @"[^\d{9}$]");
                     if (chars.Count != 0)
                     {
                         entityPM.StatusCode = "3";
                     }
-                    else { entityPM.StatusCode = "6"; }
+                    
                 }
 
-                else
-                {
-                    entityPM.StatusCode = "6";
-                }
+               
 
             }
 
@@ -114,25 +150,55 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     entityPM.StatusCode = "1";
                 }
-
-             else   if (entityPM.Reference != null)
+                else if (entityPM.VatNumber != null)
                 {
-                    var chars = Regex.Matches(entityPM.Reference, @"[a-zA-Z]");
+                    if (entityPM.VatNumber.Length > 9)
+                    {
+                        entityPM.StatusCode = "2";
+                    }
+                    else
+                    {
+
+
+                        var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
+                        if (chars.Count == 0)
+                        {
+                            var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
+                            if (digit != 0)
+                            {
+                                entityPM.StatusCode = "2";
+                            }
+                          
+                        }
+                        else
+                        {
+                            entityPM.StatusCode = "2";
+                        }
+                       
+                    }
+                }
+
+                if (entityPM.Reference != null)
+                {
+                    var chars = Regex.Matches(entityPM.Reference, @"[^\d{9}$]");
                     if (chars.Count != 0)
                     {
                         entityPM.StatusCode = "3";
                     }
-                    else
-                    {
-                        entityPM.StatusCode = "6";
-                    }
-
+                   
                 }
 
-                else
+                if(entityPM.VatableInvoiceAmount != 0 && entityPM.VatableInvoiceAmount != null)
                 {
-                    entityPM.StatusCode = "6";
+                    //string s = entityPM.VatableInvoiceAmount.ToString();
+                    string[] amount = entityPM.VatableInvoiceAmount.ToString().Split('.');
+                    if (amount.Count()>1 && amount[1] != "00" )
+                    {
+                        entityPM.StatusCode = "4";
+                    }
+                   
                 }
+                
 
 
 

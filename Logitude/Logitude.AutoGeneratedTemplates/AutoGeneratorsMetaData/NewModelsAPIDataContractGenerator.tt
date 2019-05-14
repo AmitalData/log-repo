@@ -451,7 +451,7 @@ using <#=myspacestring#>
 								 var IsMulti = ((XElement)field).Attributes().Where(a => a.Name == "IsMulti").FirstOrDefault().Value; 
 						 
 								 string IsCustomType = ((XElement)field).Attributes().Where(a => a.Name == "IsCustomType").FirstOrDefault().Value;
-								  var CustomNameTemp = ((XElement)field).Attributes().Where(a => a.Name == "CustomName").FirstOrDefault();
+								  var CustomNameTemp = ((XElement)field).Attributes().Where(a => a.Name == "CloseTableCode").FirstOrDefault();
 								 string CustomName = "null";
 								 if(CustomNameTemp != null){
 								 CustomName = CustomNameTemp.Value.Trim('"');

@@ -34,7 +34,7 @@
 	BEGIN
 
 	set @Key = (select Id from Dim_Users where Id = @Id)
-	if(@Key is  null) begin  insert into Dim_Users values(@Id,@Name,@LocalName ,@Email,@Department, @Branch, @SourceTenant , @ParentTenant ); end
+	if(@Key is  null) begin  insert into Dim_Users (Id,Name,[Local Name],Email, Department ,Branch,  [Source Tenant],[Parent Tenant]) values(@Id,@Name,@LocalName ,@Email,@Department, @Branch, @SourceTenant , @ParentTenant ); end
 	else begin update   Dim_Users set Name =@Name,  [Local Name] =@LocalName ,  Email = @Email , Department = @Department,  Branch = @Branch,  [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant  Where Id = @Id; end
 
 

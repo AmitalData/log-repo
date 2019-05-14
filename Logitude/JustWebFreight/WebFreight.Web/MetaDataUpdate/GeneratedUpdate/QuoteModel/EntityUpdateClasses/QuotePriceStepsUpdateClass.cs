@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateClasses
 {
    public class QuotePriceStepsUpdateClass
@@ -168,7 +172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "Step",
-					  						DefaultText =  @"Step",
+					  						DefaultText =  "Step",
 					  						HelpTextCode =  "Step",
 					  						Code =  "Step",
 					  						DependencyFilter3IsList =  false,
@@ -225,10 +229,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "CostUnitPrice",
-					  						DefaultText =  @"Cost Unit Price",
+					  						DefaultText =  "Cost Unit Price",
 					  						HelpTextCode =  "CostUnitPrice",
 					  						ShortFieldLable =  "CostStepPrices",
-					  						ShortFieldLableDefaultText =  @"Cost break price",
+					  						ShortFieldLableDefaultText =  "Cost break price",
 					  						Code =  "CostUnitPrice",
 					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -284,10 +288,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "SaleUnitPrice",
-					  						DefaultText =  @"Sales Unit Price",
+					  						DefaultText =  "Sales Unit Price",
 					  						HelpTextCode =  "SaleUnitPrice",
 					  						ShortFieldLable =  "SaleStepPrices",
-					  						ShortFieldLableDefaultText =  @"Sale break price",
+					  						ShortFieldLableDefaultText =  "Sale break price",
 					  						Code =  "SaleUnitPrice",
 					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -343,11 +347,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 					  						AllowedInAirlineMessaging =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "MarkupValue",
-					  						DefaultText =  @"Markup Value",
+					  						DefaultText =  "Markup Value",
 					  						HelpTextCode =  "MarkupValue",
-					  						HelpTextDefaultText =  @"The fixed markup amount to add on the cost price in order to get the sale price.",
+					  						HelpTextDefaultText =  "The fixed markup amount to add on the cost price in order to get the sale price.",
 					  						ShortFieldLable =  "MarkupValue",
-					  						ShortFieldLableDefaultText =  @"Markup",
+					  						ShortFieldLableDefaultText =  "Markup",
 					  						Code =  "MarkupValue",
 					  						DependencyFilter3IsList =  false,
 					  						AllowedInCustomerFieldsSettings =  false,

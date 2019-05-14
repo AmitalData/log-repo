@@ -399,6 +399,30 @@ namespace Logitude.CRM.Data.EntityListQueryServices
 
             return dataList;
         }
+
+        public OpportunityList GetSingleOpportunityByQuote(string id, int tenant)
+        {
+            OpportunityList query = (from a in context.Opportunities.Include("Owner").Include("Owner.Contact").Include("Stage")
+                                            where a.Tenant == tenant && a.Id == id
+                                            select new OpportunityList()
+                                            {
+                                                Id = a.Id,
+                                                Tenant = a.Tenant,                                                
+                                                Subject = a.Subject,
+                                                OwnerId = a.OwnerId,
+                                                OwnerName = a.Owner == null ? null : (a.Owner.Contact == null ? null : a.Owner.Contact.EnglishName),
+                                                StageName = a.Stage == null ? null : a.Stage.Name,
+                                                EstimatedClosingDate = a.EstimatedClosingDate,
+                                                StageId = a.StageId,                                                
+                                                CreateDate = a.CreateDate,                                                
+                                                UpdateDate = a.UpdateDate,
+                                                UpdatedByUserId = a.UpdatedByUserId,                                                
+                                                IsClosed = a.IsClosed,
+                                                IsCancelled = a.IsCancelled,                                                                                             
+                                                BusinessUnitId = a.BusinessUnitId,                                               
+                                            }).FirstOrDefault();
+            return query;
+        }
 	}
 }
 	

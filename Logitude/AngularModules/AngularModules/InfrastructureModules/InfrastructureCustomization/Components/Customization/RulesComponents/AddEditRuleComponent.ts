@@ -63,6 +63,7 @@ export class AddEditRuleComponent extends BaseComponent {
     private currentRuleFields: ObjectTableRuleFieldPM[] = [];
     private removedFields: ObjectTableRuleFieldPM[] = [];
     public BooleanValues = ["True", "False"];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
        
@@ -73,14 +74,14 @@ export class AddEditRuleComponent extends BaseComponent {
         this.FieldsValues = new FieldsValues();
         this.RemovedConditionObjectFields = [];
 
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.SearchFieldsId = "RuleSearchFields_-1_-1";
             this.FiltersSearchFieldsId = "RuleFiltersSearchFieldsId_-1_-1";
         }
 
         else {
-            this.SearchFieldsId = "NewRuleSearchFields_" + SessionLocator.CurrentSession.GetNewId("NewRuleSearchFields");
-            this.FiltersSearchFieldsId = "NewRuleFiltersSearchFieldsId_" + SessionLocator.CurrentSession.GetNewId("NewRuleFiltersSearchFieldsId");
+            this.SearchFieldsId = "NewRuleSearchFields_" + this.CurrentSession.GetNewId("NewRuleSearchFields");
+            this.FiltersSearchFieldsId = "NewRuleFiltersSearchFieldsId_" + this.CurrentSession.GetNewId("NewRuleFiltersSearchFieldsId");
         }
     }
 
@@ -423,7 +424,7 @@ export class AddEditRuleComponent extends BaseComponent {
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
             this._objectTableRulePMService.insert(this.DataContext).subscribe(resp => {
                 
@@ -437,12 +438,12 @@ export class AddEditRuleComponent extends BaseComponent {
                         ruleFields.push(r);
                     });
                     this._objectTableRuleFieldPMService.updateRuleFieldsList(ruleFields).subscribe(resp2 => {
-                        SessionLocator.CurrentSession.CurrentWindow.Close('saved');
+                        this.CurrentSession.CurrentWindow.Close('saved');
                     });
 
                 }
                 else {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     this.ValidationErrorsList = resp.ErrorsArray;
                 }
 
@@ -485,7 +486,7 @@ export class AddEditRuleComponent extends BaseComponent {
             });
 
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
             this._objectTableRulePMService.update(this.DataContext).subscribe(resp => {
                
@@ -507,11 +508,11 @@ export class AddEditRuleComponent extends BaseComponent {
                     });
 
                     this._objectTableRuleFieldPMService.updateRuleFieldsList(ruleFields).subscribe(resp2 => {
-                        SessionLocator.CurrentSession.CurrentWindow.Close('saved');
+                        this.CurrentSession.CurrentWindow.Close('saved');
                     });
                 }
                 else {
-                    SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     this.ValidationErrorsList = resp.ErrorsArray;
                 }
 
@@ -522,7 +523,7 @@ export class AddEditRuleComponent extends BaseComponent {
 
 
     CancelClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     
@@ -754,7 +755,7 @@ export class AddEditRuleComponent extends BaseComponent {
         this.TriggerTypes = [];
 
 
-        var type1: TriggerType = new TriggerType("ALLW", "Allways");
+        var type1: TriggerType = new TriggerType("ALLW", "Always");
         this.TriggerTypes.push(type1);
 
         var type2: TriggerType = new TriggerType("COND", "Condition");

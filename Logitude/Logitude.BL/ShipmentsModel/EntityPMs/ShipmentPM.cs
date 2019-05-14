@@ -7,6 +7,7 @@ using Logitude.BL.Validators;
 using System.Runtime.Serialization;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
@@ -150,7 +151,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public int ConnectedShipments { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string MasterShipmentNumber { get; set; }
+        public string ComputedShipmentNumber { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? ChargeableWeightInKG { get; set; }
@@ -316,7 +317,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public CustomFieldClass Field21 { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field22 { get; set; }
-         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field23 { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public CustomFieldClass Field24 { get; set; }
@@ -428,6 +429,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StatusLocation { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int StatusWeight { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -464,6 +468,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFinalDestinationPortId { get; set; }
+        public string OriginFinalDestinationPortId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFinalDestinationPortCode { get; set; }
@@ -698,6 +703,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AgentId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string AgentComputed { get; set; }
+
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AgentAddressId { get; set; }
@@ -984,6 +993,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageFromPortId { get; set; }
         public string MainCarriageToPortId { get; set; }
+        public string OriginMainCarriageFromPortId { get; set; }
 
         public string MainCarriageFromPortCode { get; set; }
         public string MainCarriageFromPortName { get; set; }
@@ -1106,6 +1116,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public double? OrderGrossWeight { get; set; }
         public double? BookingVolume { get; set; }
 
+        public bool OrderGrossWeightEdited { get; set; }
+        public bool OrderChargeableWeightEdited { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int? BookingNumberOfPackages { get; set; }
         public bool OrderIsDangerouseGoods { get; set; }
@@ -1224,6 +1237,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LocalCustomsSentByUserId { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string OperationalClosedByUserId { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LocalCustomsSentByUserName { get; set; }
 
@@ -1240,11 +1257,16 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? CustomsClearanceDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string MasterShipmentNumber { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ProductCode { get; set; }
 
         public string SecurityKey { get; set; }
         public double? TEU { get; set; }
 
+        public bool DontCreateConvertEvent { get; set; }
         public bool ConvertFromHouseToDirect { get; set; }
         public bool ConvertFromDirectToHouse { get; set; }
         public bool IsRefreshShipmentFollowUps { get; set; }
@@ -2161,6 +2183,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public DateTime? FirstOperationalCloseDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? FirstAccountingCloseDate { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string OldStatusValue { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2206,6 +2231,15 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string LastFinalDestination { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string From { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string To { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string Origin { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstPickupETD { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -2243,6 +2277,9 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsSharedLogisticsMoneyTabEnabled { get; set; }
         public bool IsSharedLogisticsMainCarrierVisible { get; set; }
         public bool IsSharedLogisticsPickDelvCarrierVisible { get; set; }
+        public bool IsSharedLogisticsAgentVisible { get; set; }
+        public bool IsSharedLogisticsShipperVisible { get; set; }
+        public bool IsSharedLogisticsConsigneeVisible { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? FirstPickupATA { get; set; }
@@ -2293,9 +2330,29 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         public bool HasContainerException { get; set; }
 
-        public bool IsRequestedDocuments { get; set; }
-        public bool IsDigitalSignRequired { get; set; }
-      
 
+
+
+        //ShipmentComputedFields
+        public bool IsMissingDocuments { get; set; }
+        public DateTime? LastDocumentDateTime { get; set; }
+        public int MissingDocumentsCount { get; set; }
+        public string MissingDocumentsNames { get; set; }
+        public bool IsRequestedDocuments { get; set; }
+        public int RequestedDocumentsCount { get; set; }
+        public int NumberOfHouses { get; set; }
+        public bool IsDigitalSignRequired { get; set; }
+        public bool IsDepositionRequired { get; set; }
+        public string ImporterDepositionRequestDetails { get; set; }
+        public bool IsShipmentComputedFieldChange { get; set; }
+
+        public string PackagesTypesNames { get; set; }
+        public string PackagesTypesPrintAs { get; set; }
+        public string ContainersNumbers  { get; set; }
+        public string ARInvoices { get; set; }
+        public bool ConvertShipmentToLCL { get; set; }
+        public bool ConvertShipmentToFCL { get; set; }
+
+        public bool ShipmentDirectionConverted { get; set; }
     }
 }

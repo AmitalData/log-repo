@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuotePM} from '../../../../Quote/EntityPMs/QuotePM';
@@ -272,22 +272,6 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, OnDestr
 
             this.EntityPM.Ratio = AppTool.GetRatioFromDimFactor(this.DimFactor, this.DimensionsUnitCode, this.ChargeableWeightUnitCode);
             QuoteUtilities.OnQuoteRatioChanged(this.EntityPM);
-        }
-    }
-
-    NumericButtonClicked(isIncreas: boolean) {
-        if (this.IsQuoteEditEnabled) {
-            if (isIncreas) {
-                if (this.Ratio < 10) {
-                    this.Ratio += 1;
-                }
-            }
-
-            else {
-                if (this.Ratio > 1) {
-                    this.Ratio -= 1;
-                }
-            }
         }
     }
 

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -27,6 +27,7 @@ export class ExternalAccountsByProductsComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     private myDomainService: PartnersDomainService;
     private myProductTypeListService: ProductTypeListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -47,7 +48,7 @@ export class ExternalAccountsByProductsComponent extends BaseComponent {
 
     AllProductTypes: ProductTypeList[] = [];
     LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.myProductTypeListService.getAllFromCache().subscribe((myResponse1: ServiceResponse) => {
             if (!myResponse1.HasError) {
@@ -61,7 +62,7 @@ export class ExternalAccountsByProductsComponent extends BaseComponent {
                     this.BuildItemsSource(myResult);
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         });
     }
@@ -114,15 +115,15 @@ export class ExternalAccountsByProductsComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         if (!this.EntityPM.IsDirty) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
         else {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var errors: string[] = [];
             Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
@@ -148,18 +149,18 @@ export class ExternalAccountsByProductsComponent extends BaseComponent {
                 this.myDomainService.Put(args).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
                         this.ValidationErrorsList = myResponse.ErrorsArray;
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
 
                     else {
                         this.EntityPM.IsDirty = false;
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                        this.CurrentSession.CloseCurrentWindowEmit("Ok");
                     }
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         }
     }

@@ -459,7 +459,8 @@
 
                                                                                             <!-- nText -->
                                                                                             <div *ngSwitchCase="'nText'" style="display: inline-flex;">
-                                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
+                                                                                                <ComboBox [IsDisabled]="!item.TextFiltersEnabled" style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
+
                                                                                                 <div style="width:150px;">
                                                                                                     <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true" [InputType]="item.ObjectField.DataTypeCode"></LogTextBox>
                                                                                                 </div>
@@ -467,7 +468,8 @@
 
                                                                                             <!-- LookUp -->
                                                                                             <div *ngSwitchCase="'LookUp'" style="display: inline-flex;">
-                                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" (SelectedItemChanged)="item.OperationValueChanged($event)" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
+                                                                                                <ComboBox [IsDisabled]="!item.LOVFiltersEnabled" style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" (SelectedItemChanged)="item.OperationValueChanged($event)" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
+
                                                                                                 <div style="width:150px;">
                                                                                                     <LogLov *ngIf="item.ObjectField"
                                                                                                             [SelectedValue]="item.TextValue"
@@ -484,20 +486,21 @@
                                                                                             <!-- DateTime -->
                                                                                             <div *ngSwitchCase="'DateTime'" style="display: inline-flex;">
                                                                                                 <div style="width:300px;">
-                                                                                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                                                                                    <CustomDatePicker [IsDisabled]="!item.DateFiltersEnabled" (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <!-- Date -->
                                                                                             <div *ngSwitchCase="'Date'" style="display: inline-flex;">
                                                                                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
-                                                                                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                                                                                    <CustomDatePicker [IsDisabled]="!item.DateFiltersEnabled" (SelectedItemChanged)="item.onTextChange($event)" [QueryId]="QueryId" [ObjectField]="item.ObjectField"></CustomDatePicker>
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <!-- Integer -->
                                                                                             <div *ngSwitchCase="'Integer'" style="display: inline-flex;">
-                                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
+                                                                                                <ComboBox [IsDisabled]="!item.TextFiltersEnabled" style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
+
                                                                                                 <div style="width:150px;">
                                                                                                     <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                                                                                 </div>
@@ -505,7 +508,8 @@
 
                                                                                             <!-- Double -->
                                                                                             <div *ngSwitchCase="'Double'" style="display: inline-flex;">
-                                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
+                                                                                                <ComboBox [IsDisabled]="!item.TextFiltersEnabled" style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" (SelectedItemChanged)="item.OperationValueChanged($event)" [Binding]="'Name'"></ComboBox>
+
                                                                                                 <div style="width:150px;">
                                                                                                     <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                                                                                 </div>
@@ -513,7 +517,8 @@
 
                                                                                             <!-- Decimal -->
                                                                                             <div *ngSwitchCase="'Decimal'" style="display: inline-flex;">
-                                                                                                <ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
+                                                                                                <ComboBox [IsDisabled]="!item.TextFiltersEnabled" style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
+
                                                                                                 <div style="width:150px;">
                                                                                                     <LogTextBox (ValueChanged)="item.onTextChange($event)" *ngIf="item.ObjectField != undefined" [ObjectFieldName]="'TextValue'" [DataContext]="item" [NoValidation]="true"></LogTextBox>
                                                                                                 </div>
@@ -521,7 +526,8 @@
 
                                                                                             <!-- PickList -->
                                                                                             <div *ngSwitchCase="'PickList'" style="display: inline-flex;">
-                                                                                                <ComboBox style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
+                                                                                                <ComboBox [IsDisabled]="!item.PickFiltersEnabled" style="width:150px;margin-right:5px;" (SelectedItemChanged)="item.OperationValueChanged($event)" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'"></ComboBox>
+
                                                                                                 <div style="width:150px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
                                                                                                     <PickList [ObjectFieldName]="item.ObjectField.FieldName"
                                                                                                               [ObjectTableName]="item.ObjectTable.Name" [NoValidation]="true" [FromNewView]="true"

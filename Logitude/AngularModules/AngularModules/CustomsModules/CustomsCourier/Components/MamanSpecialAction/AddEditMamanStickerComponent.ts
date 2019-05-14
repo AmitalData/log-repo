@@ -29,13 +29,13 @@ export class AddEditMamanStickerComponent
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
     private _DeclarationMamanSpecialActionPMService: DeclarationMamanSpecialActionPMService = new DeclarationMamanSpecialActionPMService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             this.IsLoaded = true;
         });
     }
@@ -86,7 +86,7 @@ export class AddEditMamanStickerComponent
     //#endregion\
 
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         this._DeclarationMamanSpecialActionPMService.insert(this.EntityPM).subscribe(res => {
             this._DeclarationWebService.GetDeclarationMamanSpecialAction(this.EntityPM.DeclarationId, this.EntityPM.Tenant, "U", "4").subscribe(myResult => {
                 if (myResult.HasError) {
@@ -95,7 +95,7 @@ export class AddEditMamanStickerComponent
                     return;
                 }
                 else {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     var myMessageWindow = new MessageWindow();
                     myMessageWindow.Show(myResult.Result);
                 }
@@ -106,7 +106,7 @@ export class AddEditMamanStickerComponent
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

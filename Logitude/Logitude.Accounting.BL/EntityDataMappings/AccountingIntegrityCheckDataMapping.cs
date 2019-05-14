@@ -22,6 +22,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         public void CustomPMToPOCO(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck entityPOCO)
         {
             CustomMappedPOCOProperties.Add(POCOPropertyNames.ParametersXML);
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
 
             entityPOCO.Id = entityPM.Id;
 
@@ -36,11 +37,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             // serialize
             string _xmlString = LogitudeXmlSerializer.SerializeObjectToXmlElementString<AccountingIntegrityInParam>(_paramsObj);
 
+            //get status name
+            if (entityPM.StatusCode != null)
+            {
+                IntegrityCheckStatusQueryService query = new IntegrityCheckStatusQueryService(entityPM.Tenant);
+
+                var checkStatus = query.GetSingle(entityPM.StatusCode, false, false);
+                if (checkStatus != null)
+                {
+                    entityPM.StatusName = checkStatus.Name;
+                }
+            }
+
             // set
             if (!string.IsNullOrWhiteSpace(_xmlString))
             {
                 entityPOCO.ParametersXML = _xmlString;
             }
+
+            BuildSearchFields(entityPM, entityPOCO);
+
 
         }
 
@@ -49,6 +65,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CustomMappedPMProperties.Add(PMPropertyNames.StatusName);
             CustomMappedPMProperties.Add(PMPropertyNames.FromMonthInclusive);
             CustomMappedPMProperties.Add(PMPropertyNames.ToMonthInclusive);
+            CustomMappedPMProperties.Add(PMPropertyNames.SearchFields);
 
             if (entityPOCO.StatusCode != null)
             {
@@ -74,8 +91,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.ToMonthInclusive = _params.ToMonthInclusive;
                 }
             }
+
+            BuildSearchFields(entityPM, entityPOCO);
         }
-   }
+
+        private void BuildSearchFields(AccountingIntegrityCheckPM entityPM, AccountingIntegrityCheck poco)
+        {
+            string result = "";
+
+
+            if (!string.IsNullOrEmpty(entityPM.StatusName))
+            {
+                result = entityPM.StatusName + ',' + entityPM.StatusCode;
+            }
+
+            entityPM.SearchFields = result;
+            poco.SearchFields = result;
+
+        }
+
+    }
 
 
 }

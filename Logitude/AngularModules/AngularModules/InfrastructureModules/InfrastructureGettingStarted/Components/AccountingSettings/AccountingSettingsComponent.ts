@@ -27,6 +27,7 @@ export class AccountingSettingsComponent extends BaseComponent {
     public IsResourcesReady: boolean = false;
     public IsEnableMultiRateAPInvoicesVisible: boolean = false;
     public IsEnableMultiCurrencyAPPaymentsVisible: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService){
         super();
 
@@ -50,12 +51,12 @@ export class AccountingSettingsComponent extends BaseComponent {
     }
 
     private LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.entityResourceService.getEntityResourceByTableName("AccountingSetting").subscribe(res2 => {
             this.myAccountingSettingPMService.get(SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     this.EntityPM = myResponse.Result;
@@ -103,7 +104,8 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("AllowMinusInvoicelines", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AllowPositiveAmountsInTheCreditNote", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AllowManualInvoiceNumber", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("IsChronologicalDates", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("IsARPaymentChronologicalDates", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsARInvoicesTransferEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsARPaymentsTransferEnabled", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsSingleTaxPerInvoice", this.ObjectTableName, false);
@@ -120,7 +122,7 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
 
         else {
-            this.UIProperties.SetEnabled("IsChronologicalDates", this.ObjectTableName, !this.AllowManualInvoiceNumber);
+            this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, !this.AllowManualInvoiceNumber);
 
             var isARInvoicesTransferEnabled = false;
             var isAPInvoicesTransferEnabled = false;
@@ -137,8 +139,22 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("IsAPInvoicesTransferEnabled", this.ObjectTableName, isAPInvoicesTransferEnabled);
             this.UIProperties.SetEnabled("IsARPaymentsTransferEnabled", this.ObjectTableName, isARPaymentsTransferEnabled);
             //this.UIProperties.SetEnabled("IsSingleTaxPerInvoice", this.ObjectTableName, isSingleTaxPerInvoiceEnabled);
+
+
+            if (SessionLocator.TenantPM.CountryCode == "IL" && SessionLocator.LoggedUserPM.IsCustomerCare == false) {
+                this.UIProperties.SetEnabled("AllowVoidARI", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowVoidARP", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAR", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowManualInvoiceNumber", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsARPaymentChronologicalDates", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowVoidAPI", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("AllowVoidAPP", this.ObjectTableName, false)
+                this.UIProperties.SetEnabled("IsVatNumberMandatoryInAP", this.ObjectTableName, false)
+            }
         }
 
+        this.UIProperties.SetEnabled("EnableInvoiceStocksManagement", this.ObjectTableName, !this.IsARInvoiceChronologicalDates);
         this.SetUIProperties_RegistryDate();
     }
     SetUIProperties_RegistryDate() {
@@ -198,19 +214,33 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.EntityPM.AllowManualInvoiceNumber = value;
 
             if (value) {
-                this.IsChronologicalDates = false;
+                this.IsARInvoiceChronologicalDates = false;
             }
 
-            this.UIProperties.SetEnabled("IsChronologicalDates", this.ObjectTableName, !this.AllowManualInvoiceNumber);
+            this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, !this.AllowManualInvoiceNumber);
         }
     }
 
-    get IsChronologicalDates() { return this.EntityPM.IsChronologicalDates; }
-    set IsChronologicalDates(value: boolean) {
-        if (this.EntityPM.IsChronologicalDates != value) {
-            this.EntityPM.IsChronologicalDates = value;
+    get IsARInvoiceChronologicalDates() { return this.EntityPM.IsARInvoiceChronologicalDates; }
+    set IsARInvoiceChronologicalDates(value: boolean) {
+        if (this.EntityPM.IsARInvoiceChronologicalDates != value) {
+            this.EntityPM.IsARInvoiceChronologicalDates = value;
+
+            if (value) {
+                this.EnableInvoiceStocksManagement = false;
+            }
+
+            this.UIProperties.SetEnabled("EnableInvoiceStocksManagement", this.ObjectTableName, !value);
         }
     }
+
+    get IsARPaymentChronologicalDates() { return this.EntityPM.IsARPaymentChronologicalDates; }
+    set IsARPaymentChronologicalDates(value: boolean) {
+        if (this.EntityPM.IsARPaymentChronologicalDates != value) {
+            this.EntityPM.IsARPaymentChronologicalDates = value;
+        }
+    }
+
 
     get IsARInvoicesTransferEnabled() { return this.EntityPM.IsARInvoicesTransferEnabled; }
     set IsARInvoicesTransferEnabled(value: boolean) {
@@ -345,14 +375,21 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
     }
 
+    get EnableInvoiceStocksManagement() { return this.EntityPM.EnableInvoiceStocksManagement; }
+    set EnableInvoiceStocksManagement(value: boolean) {
+        if (this.EntityPM.EnableInvoiceStocksManagement != value) {
+            this.EntityPM.EnableInvoiceStocksManagement = value;
+        }
+    }
+
     //Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         if (this.EntityPM.IsDirty) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var isLoadingVatGroups = false;
             if (this.EnableMultiPercentageVATTypes != this.enableMultiPercentageVATTypes_Old) {
@@ -364,7 +401,7 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.myAccountingSettingPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse.HasError) {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -384,13 +421,13 @@ export class AccountingSettingsComponent extends BaseComponent {
                                     SessionLocator.AllVatTypesGroups = myResponse.Result;
                                 }
 
-                                SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                                this.CurrentSession.CloseCurrentWindowEmit("OK");
                             });
                         }
 
                         else {
                             SessionLocator.AllVatTypesGroups = [];
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+                            this.CurrentSession.CloseCurrentWindowEmit("OK");
                         }
                     });                   
                 }
@@ -398,7 +435,7 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
 
         else {
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
     ViewAdvancedSettings() {
@@ -409,5 +446,13 @@ export class AccountingSettingsComponent extends BaseComponent {
         logWindow.Title = windowTitle;
         logWindow.DataContext = this;
         logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/AccountingSettings/AccountingAdvancedSettingsComponent');
+    }
+
+    ManageStocksClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.IsFillScreen_90 = true;
+        logWindow.IsShowCloseButton = true;
+        logWindow.Title = "Invoice Stocks";
+        logWindow.Show('./InvoiceModules/InvoiceStocks/Components/ManageStocksComponent');
     }
 }

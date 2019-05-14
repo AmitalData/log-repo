@@ -4,8 +4,13 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -75,7 +80,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             
             // 1- Creating a New Journal
             JournalPM newJournal = new JournalPM();
-            InitJournal(entityPM, ref newJournal);
+            InitJournal(entityPM,  newJournal);
 
             // 2- Get cashbook and Validate
             CashBookPM cashBook = cashBookQueryService.GetSingle(entityPM.CashBookId, true, false);
@@ -83,7 +88,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 //showlocal
                 bool showLocal = false;
-                ContactPM user = GetLoggedContact(entityPM.Tenant);
+                ContactPM user = LoggedContactResolver.GetLoggedContact(tenant);//GetLoggedContact(entityPM.Tenant);
                 if (user != null)
                     showLocal = !user.DontShowLocal;
 
@@ -117,13 +122,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
         
-        void InitJournal(BankDepositPM entityPM, ref JournalPM newJournal)
+        public void InitJournal(BankDepositPM entityPM, JournalPM newJournal)
         {
             newJournal.ChangeSetOp = ChangeSetOperation.Insert;
             newJournal.Tenant = entityPM.Tenant;
-            newJournal.CreateDate = DateTime.Now;
+            newJournal.CreateDate = GetCurrentDateTime(entityPM.Tenant);
             newJournal.CreatedByUserId = entityPM.CreatedByUserId;
-            newJournal.UpdateDate = DateTime.Now;
+            newJournal.UpdateDate = GetCurrentDateTime(entityPM.Tenant);
             newJournal.UpdatedByUserId = entityPM.UpdatedByUserId;
             newJournal.AccountingDate = entityPM.AccountingDate;
             newJournal.TypeCode = "0"; //Manual
@@ -338,24 +343,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public virtual Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
+
         public virtual ContactPM GetLoggedContact(int tenant)
         {
-
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
+
 
         public virtual string IdCounterWrapperGetNumber(int Tenant)
         {

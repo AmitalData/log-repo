@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
@@ -28,6 +28,7 @@ export class LogBoxSettings extends BaseComponent implements OnInit, AfterViewIn
     public ObjectTableName: string = "Tenant";
     public TenantPm: TenantPM = new TenantPM();
     public IsVisibile: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.LoadTenantPMMethod();
@@ -115,6 +116,13 @@ export class LogBoxSettings extends BaseComponent implements OnInit, AfterViewIn
         }
     }
 
+    get AutoArchiveOnInvoice() { return this.TenantPm.AutoArchiveOnInvoice; }
+    set AutoArchiveOnInvoice(newValue: boolean) {
+        if (this.TenantPm.AutoArchiveOnInvoice != newValue) {
+            this.TenantPm.AutoArchiveOnInvoice = newValue;
+        }
+    }
+    
 
 
     get IsCustomerTenantShare() { return this.TenantPm.IsCustomerTenantShare; }
@@ -151,7 +159,7 @@ export class LogBoxSettings extends BaseComponent implements OnInit, AfterViewIn
 
     //Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -169,19 +177,19 @@ export class LogBoxSettings extends BaseComponent implements OnInit, AfterViewIn
     }
 
     SubmitTenantChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        this.CurrentSession.StartBusyIndicator("Saving...");
 
         var myService: TenantPMService = new TenantPMService();
         myService.update(this.TenantPm).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     InfraSettings.TenantPM = this.TenantPm;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });

@@ -72,6 +72,9 @@ using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.Data.Repsitories;
 using System.IO;
 using WebFreight.Web.App_Code.AngularJS_App_Code.Global;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.EntityListQueryServices;
+using Logitude.Infrastructure.Data.EntityLists;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -382,7 +385,39 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 FeatureQuery featureQuery = new FeatureQuery(tenant);
                 LoggedUserFeatures loggedUserFeatures = featureQuery.GetAllowedFeaturesForLoggedUser(loggedUserId, tenant);
-                List<FeaturePM> myResult = loggedUserFeatures.Features;
+                List<FeaturePM> myResult1 = loggedUserFeatures.Features;
+
+                List<FeaturePM> myResult = new List<FeaturePM>();
+                List<string> toggleCodes = myResult1.Where(d => !string.IsNullOrEmpty(d.ToggleCode)).Select(s => s.ToggleCode).ToList();
+
+                if(toggleCodes.Count == 0)
+                {
+                    myResult = myResult1;
+                }
+
+                else
+                {
+                    FeatureToggleRepository featureToggleRepository = new FeatureToggleRepository(0);
+                    List<FeatureToggle> featureToggles = featureToggleRepository.GetAllByToggleCodeList(toggleCodes, 0).ToList();
+
+                    foreach (FeaturePM item in myResult1)
+                    {
+                        if (string.IsNullOrEmpty(item.ToggleCode))
+                        {
+                            myResult.Add(item);
+                        }
+
+                        else
+                        {
+                            FeatureToggle featureToggle = featureToggles.Where(d => d.TenantNumber == tenant).FirstOrDefault();
+                            if (featureToggle != null)
+                            {
+                                myResult.Add(item);
+                            }
+                        }
+                    }
+                }
+
 
                 //if (tenant == 4)
                 //{
@@ -1506,7 +1541,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetAllTasksSchedulerPMs()
+        public HttpResponseMessage GetAllTasksSchedulerPMs(string schedulerType)
         {
             try
             {
@@ -1518,7 +1553,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 TasksSchedulerRepository tasksSchedulerRepository = new TasksSchedulerRepository(tenant);
                 TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(tasksSchedulerRepository);
-                List<TasksSchedulerPM> myResult = tasksSchedulerQuery.GetTasksSchedulerPMs(tenant);
+                List<TasksSchedulerPM> myResult = tasksSchedulerQuery.GetTasksSchedulerPMsBByType(schedulerType, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1667,13 +1702,21 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (entityPM != null)
                 {
                     QueryData.BIReportPM = entityPM;
+                    QueryData.BIReportId = entityPM.Id;
+                    var sortingList = new List <Column> (); 
+
                     if (!string.IsNullOrEmpty(entityPM.AGGridOptionsXML))
                     {
                         var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(entityPM.AGGridOptionsXML);
                         if(bITabularViewSettings!= null && Columns != null)
                         {
-                            foreach(var item in bITabularViewSettings.Columns.ToList())
+                            foreach(Column item in bITabularViewSettings.Columns.ToList())
                             {
+                                if (item.SortDirction != null)
+                                {
+                                    sortingList.Add(item);
+                                }
+                                
                                 var queryColumn = Columns.Where(a => a.DisplayName.Replace("[", "").Replace("]", "") == item.Code).FirstOrDefault();
                                 if (queryColumn == null)
                                 {
@@ -1683,7 +1726,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             }
                         }
 
-                        foreach(var item in Columns)
+                        if(sortingList != null && sortingList.Count() > 0)
+                        {
+                            foreach (Column item in sortingList.OrderBy(o => o.SortOrder).ToList())
+                            {
+                                QueryData.DWQueryData.ColumnsSort += "["+item.Code +"]"+ " " + item.SortDirction + ",";
+                            }
+                            QueryData.DWQueryData.ColumnsSort = QueryData.DWQueryData.ColumnsSort.TrimEnd(',');
+
+                        }
+
+                        foreach (var item in Columns)
                         {
                             var queryColumn = bITabularViewSettings.Columns.Where(a => a.Code == item.DisplayName.Replace("[", "").Replace("]", "")).FirstOrDefault();
                             if (queryColumn == null)
@@ -1691,11 +1744,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 isUpdated = true;
                                 bITabularViewSettings.Columns.Add(new Column
                                 {
-                                    Code = item.DisplayName.Replace("[","").Replace("]",""),
+                                    Code = item.DisplayName.Replace("[", "").Replace("]", ""),
                                     Name = item.Name,
                                     IsChecked = true,
                                     Width = 150,
                                     DataTypeCode = item.DataTypeCode,
+                                    Index = bITabularViewSettings.Columns.Max(a => a.Index) + 1,
                                 });
                             }
                         }
@@ -1717,6 +1771,34 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             isUpdated = false;
                         }
                     }
+
+                    else
+                    {
+                        var bITabularViewSettings = new BITabularViewSettings();
+                        bITabularViewSettings.Columns = new List<Column>();
+                        foreach (var item in Columns)
+                        {
+                            bITabularViewSettings.Columns.Add(new Column
+                            {
+                                Code = item.DisplayName.Replace("[", "").Replace("]", ""),
+                                Name = item.Name,
+                                IsChecked = true,
+                                Width = 150,
+                                DataTypeCode = item.DataTypeCode,
+                            });
+                        }
+                        QueryData.BITabularViewSettings = bITabularViewSettings;
+                        var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.BITabularViewSettings);
+                        IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                        BIReportRepository repository = new BIReportRepository(objectContext);
+                        var entityPOCO = repository.GetSingle(entityPM.Id, entityPM.Tenant);
+                        if (entityPM != null)
+                        {
+                            entityPOCO.AGGridOptionsXML = ColumnsXML;
+                            repository.Update(entityPOCO);
+                            repository.SubmitChanges();
+                        }
+                    }
                 }
                 else
                 {
@@ -1734,7 +1816,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         });
                     }
                     QueryData.BITabularViewSettings = bITabularViewSettings;
-
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, QueryData);
             }
@@ -1780,11 +1861,129 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         DWQueryData.Columns = Columns;
                         DWQueryData.Filters = Filters;
                     }
+                    var sortingList = new List<Column>();
+                    foreach (Column item in bITabularViewSettings.Columns.ToList())
+                    {
+                        if (item.SortDirction != null)
+                        {
+                            sortingList.Add(item);
+                        }
+
+                    }
+                    if (sortingList != null && sortingList.Count() > 0)
+                    {
+                        foreach (Column item in sortingList.OrderBy(o => o.SortOrder).ToList())
+                        {
+                            DWQueryData.ColumnsSort += "[" + item.Code + "]" + " " + item.SortDirction + ",";
+                        }
+                        DWQueryData.ColumnsSort = QueryData.DWQueryData.ColumnsSort.TrimEnd(',');
+                    }
+
+                    QueryData_Updated.BIReportPM = entityPM;
+                    QueryData_Updated.BIReportId = entityPM.Id;
                     QueryData_Updated.DWQueryData = DWQueryData;
                     QueryData_Updated.BITabularViewSettings = bITabularViewSettings;
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, QueryData_Updated);
             }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetDeleteBIReport(string Id )
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                IWebFreightContext webContext = WebFreightContext.GetContext(authToken.Tenant);
+                BIReportRepository repository = new BIReportRepository(objectContext);
+                DWQueryRepository dWQueryRepository = new DWQueryRepository(webContext);
+                DWSubQueryRepository dWSubQueryRepository = new DWSubQueryRepository(webContext);
+
+                BIReport BIReport = repository.GetSingle(Id, authToken.Tenant);
+                if (BIReport != null)
+                {
+                    var queryId = BIReport.DWQueryId;
+                    repository.Remove(BIReport);
+                    repository.SubmitChanges();
+
+                    DWSubQuery DWSubQuery = dWSubQueryRepository.GetSingleDWSubQueryByDWQueryId(queryId, authToken.Tenant);
+                    DWQuery DWQuery = dWQueryRepository.GetSingleDWQuery(queryId, authToken.Tenant);
+                    if(DWQuery != null)
+                    {
+                        if (DWSubQuery != null)
+                        {
+                            dWSubQueryRepository.Remove(DWSubQuery);
+                        }
+                        
+                        dWQueryRepository.Remove(DWQuery);
+                        dWQueryRepository.SubmitChanges();
+                    }
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetDeleteFolder(string Id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                IWebFreightContext webContext = WebFreightContext.GetContext(authToken.Tenant);
+                BIReportFolderRepository repository = new BIReportFolderRepository(objectContext);
+            
+                BIReportFolder bIReportFolder = repository.GetSingle(Id, authToken.Tenant);
+                if (bIReportFolder != null)
+                {
+                    repository.Remove(bIReportFolder);
+                    repository.SubmitChanges();
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+       
+
+        public HttpResponseMessage GetFeatureToggles()
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+                    string loggedUserEmail = authToken.Email;
+
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+
+                    IInfrastructureContext context = InfrastructureContext.GetContext(0);
+                    FeatureToggleRepository repository = new FeatureToggleRepository(context);
+                    FeatureToggleListQueryService listQueryService = new FeatureToggleListQueryService(context);
+
+                    IQueryable<FeatureToggle> featureToggles = repository.GetAll(0);
+                    IQueryable<FeatureToggleList> myResult = listQueryService.GetIqueryableList(featureToggles);
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

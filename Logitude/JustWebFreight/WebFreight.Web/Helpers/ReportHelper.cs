@@ -25,6 +25,7 @@ using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
 using WebFreight.Web.TaxesApprovalModel;
 using WebFreight.Web.WebServices;
@@ -1158,6 +1159,16 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "LTRP":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(LedgerTransactionsDataProvider));
+                        LedgerTransactionsDataProvider reportDataProvider = (LedgerTransactionsDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "LTRP", Name = "LedgerTransactionsDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
                 case "OSBC":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(OpenShipmentsByCustomerDataProvider));
@@ -1238,6 +1249,28 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+
+                case "VDK":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(VDKDataProvider));
+                        VDKDataProvider reportDataProvider = (VDKDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "VDK", Name = "VDKDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
+
+                case "VEHI":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(VehiclesDataProvider));
+                        VehiclesDataProvider reportDataProvider = (VehiclesDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "Vehicles", Name = "VehiclesDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
                 case "VDCA":
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(VendorChargesAnalysisDataProvider));
@@ -1292,7 +1325,7 @@ namespace WebFreight.Web.Helpers
             }
 
             report.AutoLocalizeReportOnRun = true;
-
+            //report.Culture = "he-IL"; // we can use report globalization to translate lables, google "Glabalization manager stimulsoft" for more
             report.Render(false);
 
 
@@ -1613,13 +1646,31 @@ namespace WebFreight.Web.Helpers
 
                 case "EMTS":
                     {
-                        dataProvider = logitudeReportsWebService.LoadEmployeeTimeSheetData(filters, reportFliter.tenant);
+                        //dataProvider = logitudeReportsWebService.LoadEmployeeTimeSheetData(filters, reportFliter.tenant);
+
+                        EmployeeTimeSheetManager myDataManager = new EmployeeTimeSheetManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+
                         break;
                     }
 
                 case "WDTS":
                     {
-                        dataProvider = logitudeReportsWebService.LoadWorkPerDaysProjectData(filters, reportFliter.tenant);
+                        WorkPerDaysProjectManager myDataManager = new WorkPerDaysProjectManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+
+                        //var isUsingNewCode = false;
+                        //if (isUsingNewCode)
+                        //{
+                        //    WorkPerDaysProjectManager myDataManager = new WorkPerDaysProjectManager(filters, reportFliter.tenant);
+                        //    dataProvider = myDataManager.GetData();
+                        //}
+
+                        //else
+                        //{
+                        //    dataProvider = logitudeReportsWebService.LoadWorkPerDaysProjectData(filters, reportFliter.tenant);
+                        //}
+
                         break;
                     }
 
@@ -1671,10 +1722,28 @@ namespace WebFreight.Web.Helpers
                         break;
                     }
 
+                case "VDK":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadVDKDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
+                case "VEHI":
+                    {
+                        
+                        VehiclesManager myDataManager = new VehiclesManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
                 case "VDCA":
                     {
                         VendorChargesAnalysisManager myDataManager = new VendorChargesAnalysisManager(filters, reportFliter.tenant);
                         dataProvider = myDataManager.GetData();
+                        break;
+                    }
+
+                case "LTRP":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter.tenant);
                         break;
                     }
 
@@ -1734,6 +1803,8 @@ namespace WebFreight.Web.Helpers
                     case "OSBC":
                     case "PTVC":
                     case "LICM":
+                    case "LTRP":
+
                         return true;
 
                     default:
@@ -1788,6 +1859,7 @@ namespace WebFreight.Web.Helpers
                             InActive = report.InActive,
                             ReportGroupId = report.ReportGroupId,
                             FeatureId = report.FeatureId,
+                            LocalName = report.LocalName
                         };
                         reportRepository.Add(newReport);
                         myReports.Add(newReport);

@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {QuotePackagePM} from '../../../../Quote/EntityPMs/QuotePackagePM';
@@ -17,6 +17,7 @@ export class AddEditPackageComponent {
     public DataContext: QuotePackageItem;
     public ObjectTableName: string = "QuotePackage";
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -41,7 +42,7 @@ export class AddEditPackageComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -69,9 +70,10 @@ export class AddEditPackageComponent {
                 this.DataContext.fatherComponent.BuildItemsSource();   
             }
 
-            this.DataContext.fatherComponent.ComputeTotals();
             this.DataContext.IsNewEntity = false;
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.DataContext.fatherComponent.ResetTotalEditedValues();
+            this.DataContext.fatherComponent.ComputeTotals();
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 

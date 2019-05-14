@@ -1,4 +1,4 @@
-﻿import {Component, OnDestroy}  from '@angular/core';
+import {Component, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentPM} from '../../../../Shipment/EntityPMs/ShipmentPM';
@@ -32,6 +32,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     public ItemsSource1Hidden: boolean = false;
     public ItemsSource2Hidden: boolean = false;
     private myService: ShipmentListService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -47,13 +48,13 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         this.Listen();
     }
 
-    private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null; 
+
     Listen() {
         if (this.entityArgs.EditComponent) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.UpdateFiltersFields();
                     this.SetUIProperties();
 
                     if (this.isLoadMasterRequested) {
@@ -83,7 +84,9 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                 
+
+                    this.UpdateFiltersFields();
                     this.SetUIProperties();
 
                     if (this.isLoadHousesRequested) {
@@ -94,8 +97,23 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
                 this.isLoadHousesRequested = false;
             });
         }
+
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            if (s == "ReloadHouses") {
+                this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+
+                this.UpdateFiltersFields();
+                this.LoadAllHouses();
+            }
+        });
     }
+
+    private SessionEvent: any = null;
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null; 
     ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
@@ -123,6 +141,9 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             }
         }
 
+        this.UpdateFiltersFields();
+    }
+    UpdateFiltersFields() {
         this.fromPortId = this.EntityPM.MainCarriageFromPortId;
         this.toPortId = this.EntityPM.MainCarriageFinalDestinationPortId;
         this.branchId = this.EntityPM.BranchId;
@@ -214,7 +235,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     private isLoadHousesRequested: boolean = false;
     private isLoadMasterRequested: boolean = false;    
     private LoadAllHouses() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.ItemsSource1 = [];
         this.ItemsSource2 = [];
         this.LoadItemsSource1();
@@ -354,7 +375,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
             }
 
             this.SetCellNotesWidth();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -450,7 +471,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
         });
     }
     RunViewShipment() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.myRequestedHouseId, ObjectTableName: 'Shipment', BackButtonLabel: this.ObjectTableName + ": " + this.EntityPM.ShipmentNumber });

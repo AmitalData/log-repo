@@ -283,6 +283,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool CustomerTenantShareImportFile { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool CustomerTenantShareExportFile { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool AllowAgentInCustomersLOV { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -353,8 +357,15 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string TemperatureUnitCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string NumberFormatCode { get; set; }
+
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string DefaultSLAId { get; set; }
         public string StockTypeCode { get; set; }
+
+        public bool AutoArchiveOnInvoice { get; set; }
+        public string EcommerceSupportEmail { get; set; }
 
 
     }

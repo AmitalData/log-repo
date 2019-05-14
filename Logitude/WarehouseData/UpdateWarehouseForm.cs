@@ -136,6 +136,9 @@ namespace WarehouseData
 
                             #endregion
 
+                            warehouseHelper.RunSqlFunctions(destinationConnectionString);
+
+
                             #region Update Dimensions Table
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
@@ -146,7 +149,7 @@ namespace WarehouseData
                                 SetControlPropertyValue("Text", "Updating ...", table.DBTableName, "Dim");
                                 SetControlPropertyValue("ForeColor", Color.Black, table.DBTableName, "Dim");
 
-                                warehouseHelper.ExecuteScript("IncrementalWarehouse", destinationConnectionString , table);
+                                warehouseHelper.BuildAndExecuteDataWarehouseScript("IncrementalWarehouse", destinationConnectionString , table);
 
                                 stopWatchDimensionsTable.Stop();
                                 TimeSpan stopWatchDimensionsTableTs = stopWatchDimensionsTable.Elapsed;
@@ -172,7 +175,7 @@ namespace WarehouseData
                                 }
 
                                 warehouseHelper.RemoveDataFromFactShipment(table, destinationConnectionString);
-                                warehouseHelper.ExecuteScript( "IncrementalWarehouse", destinationConnectionString, table);
+                                warehouseHelper.BuildAndExecuteDataWarehouseScript( "IncrementalWarehouse", destinationConnectionString, table);
 
 
                                 if (table.TableName == "Shipment")

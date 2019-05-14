@@ -10,7 +10,8 @@ import {TransportModeListHeaderTemplate} from './Components/ListHeaderTemplates/
 import {DirectionListHeaderTemplate} from './Components/ListHeaderTemplates/DirectionListHeaderTemplate';
 import {ReactivateShipmentComponent} from './Components/Reactivate/ReactivateShipmentComponent';
 import {ReferenceNumberCellDisplayListTemplate} from './Components/ListTemplates/ReferenceNumberCellDisplayListTemplate';
-import {StatusCellDisplayListTemplate} from './Components/ListTemplates/StatusCellDisplayListTemplate';
+import { StatusCellDisplayListTemplate } from './Components/ListTemplates/StatusCellDisplayListTemplate';
+import { TaskCellDisplayListTemplate } from './Components/ListTemplates/TaskCellDisplayListTemplate';
 import {DateCellDisplayListTemplate} from './Components/ListTemplates/DateCellDisplayListTemplate';
 import {ApprovePaymentButtonListTemplate} from './Components/ListTemplates/ApprovePaymentButtonListTemplate';
 import {NewShipmentComponent} from './Components/NewEntity/NewShipmentComponent';
@@ -33,7 +34,8 @@ import {SpotLightDateComponent} from './Components/Spotlight/SpotLightDateCompon
 import {SplitShipmentComponent} from './Components/SplitShipment/SplitShipmentComponent';
 import { SplitPartialPackageComponent } from './Components/SplitShipment/SplitPartialPackageComponent';
 import { RemoveTasksButtonListTemplate } from './Components/ListTemplates/RemoveTasksButtonListTemplate';
-
+import { AnalyzeChampXMLComponent } from './Components/Helpers/AnalyzeChampXMLComponent';
+import { ShipmenDirectionConvertComponent } from './Components/MenuButtons/ShipmenDirectionConvertComponent';
 
 export const Components =
     [
@@ -49,6 +51,7 @@ export const Components =
         ReactivateShipmentComponent,
         ReferenceNumberCellDisplayListTemplate,
         StatusCellDisplayListTemplate,
+        TaskCellDisplayListTemplate,
         NewShipmentComponent,
         NewMasterComponent,
         WizardAddEditAddressComponent,
@@ -70,7 +73,8 @@ export const Components =
         SplitShipmentComponent,
         SplitPartialPackageComponent,
         RemoveTasksButtonListTemplate,
-
+        AnalyzeChampXMLComponent,
+        ShipmenDirectionConvertComponent,
     ];
 
 export const ControlsComponents =
@@ -101,6 +105,7 @@ export class ModuleDeclarations {
             case "WizardDimensionsComponent": { myResult = WizardDimensionsComponent; break; }
             case "WizardAddEditDimensionsComponent": { myResult = WizardAddEditDimensionsComponent; break; }
             case "StatusCellDisplayListTemplate": { myResult = StatusCellDisplayListTemplate; break; }
+            case "TaskCellDisplayListTemplate": { myResult = TaskCellDisplayListTemplate; break; }
             case "DateCellDisplayListTemplate": { myResult = DateCellDisplayListTemplate; break; }
             case "ActionButtonsListTemplate": { myResult = ActionButtonsListTemplate; break; }
             case "ConnectButtonsListTemplate": { myResult = ConnectButtonsListTemplate; break; }
@@ -118,6 +123,8 @@ export class ModuleDeclarations {
             case "SplitShipmentComponent": { myResult = SplitShipmentComponent; break; }
             case "SplitPartialPackageComponent": { myResult = SplitPartialPackageComponent; break; }
             case "RemoveTasksButtonListTemplate": { myResult = RemoveTasksButtonListTemplate; break; }
+            case "AnalyzeChampXMLComponent": { myResult = AnalyzeChampXMLComponent; break; }
+            case "ShipmenDirectionConvertComponent": { myResult = ShipmenDirectionConvertComponent; break; }
         }
 
         return myResult;

@@ -23,7 +23,9 @@ export class AddEditOceanPackageComponent {
     public ObjectTableName: string = "ShipmentPackage";
     public SelectedTabCode: string = "0";
     public IsFCLEntity: boolean = false;
+    public IsLCLEntity: boolean = false; 
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -33,6 +35,7 @@ export class AddEditOceanPackageComponent {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext.FillMethodsList();
         this.IsFCLEntity = dataContext.IsFCLEntity;
+        this.IsLCLEntity = dataContext.IsLCLEntity;
         this.SetLabels();
         this.Clone();
     }
@@ -52,7 +55,7 @@ export class AddEditOceanPackageComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var isValid: boolean = this.Validate();
@@ -82,7 +85,7 @@ export class AddEditOceanPackageComponent {
 
             this.UpdateDeliveryPackage();
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
@@ -237,6 +240,9 @@ export class AddEditOceanPackageComponent {
         this.myCloner.AddField('Volume');
         this.myCloner.AddField('VolumetricWeight');
         this.myCloner.AddField('Weight');
+        this.myCloner.AddField('Tare');
+        this.myCloner.AddField('ShipperSeal');
+        this.myCloner.AddField('Notes');       
         this.myCloner.AddField('IsDangerous');
         this.myCloner.AddField('ClassNumber');
         this.myCloner.AddField('UnNumber');
@@ -244,10 +250,8 @@ export class AddEditOceanPackageComponent {
         this.myCloner.AddField('IMDGCode');
         this.myCloner.AddField('FlashPoint');
         this.myCloner.AddField('MaterialDescription');
-        this.myCloner.AddField('ShipperSeal');
-        this.myCloner.AddField('CarrierSeal');
-        this.myCloner.AddField('Tare');
         this.myCloner.AddField('Harmonize');
+        this.myCloner.AddField('CarrierSeal');
         this.myCloner.AddField('Temperature');
         this.myCloner.AddField('Ventilation');
         this.myCloner.AddField('MarksAndNumbers');
@@ -255,6 +259,18 @@ export class AddEditOceanPackageComponent {
         this.myCloner.AddField('SOC');
         this.myCloner.AddField('VGM');
         this.myCloner.AddField('MethodUsed');
+        this.myCloner.AddField('CommodityNumber');
+        this.myCloner.AddField('Reference1');
+        this.myCloner.AddField('Reference2');
+        this.myCloner.AddField('Reference3');
+        this.myCloner.AddField('Reference4');
+        this.myCloner.AddField('Make');
+        this.myCloner.AddField('Model');
+        this.myCloner.AddField('Year');
+        this.myCloner.AddField('Color');
+        this.myCloner.AddField('ChassisNumber');
+        this.myCloner.AddField('RegistrationNumber');
+        this.myCloner.AddField('CountryId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
     }

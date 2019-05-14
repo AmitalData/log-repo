@@ -16,16 +16,17 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 
 export class MultilineTextBoxWindow implements OnInit {
     public DataContext: any;
-    public ObjectFieldName: string;
-    public ObjectTableName: string;
+    DisplayMode: boolean = false;
 
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
     }
 
     SetWindowArgs(args){
-        this.ObjectFieldName = args.ObjectFieldName;
-        this.ObjectTableName = args.ObjectTableName;
         this.Text = args.TextValue;
+        if (args.DisplayMode) {
+            this.DisplayMode = args.DisplayMode;
+        }
     }
 
     private text: string;
@@ -40,9 +41,9 @@ export class MultilineTextBoxWindow implements OnInit {
     ngOnInit() {}
 
     OkButtonClicked(){
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.text);
+        this.CurrentSession.CloseCurrentWindowEmit(this.text);
     }
     CancelButtonClicked(){
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("");
+        this.CurrentSession.CloseCurrentWindowEmit("<!#cancelled>");
     }
 }

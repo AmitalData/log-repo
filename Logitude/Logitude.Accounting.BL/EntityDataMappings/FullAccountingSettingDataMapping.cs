@@ -133,10 +133,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             }
 
             TenantPM tenantpm = TenantQuery.GetSingleTenantPM(entityPM.Tenant, false);
-            entityPM.TenantPaymentTermId = tenantpm.PaymentTermId;
-            entityPM.AccountingActivated = tenantpm.AccountingActivated;
-            entityPM.AccountingActivationDate = tenantpm.AccountingActivationDate;
-
+            if (tenantpm != null)
+            {
+                entityPM.TenantPaymentTermId = tenantpm.PaymentTermId;
+                entityPM.AccountingActivated = tenantpm.AccountingActivated;
+                entityPM.AccountingActivationDate = tenantpm.AccountingActivationDate;
+            }
+           
 
         }
    }

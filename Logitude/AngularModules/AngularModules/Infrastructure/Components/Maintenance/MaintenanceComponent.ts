@@ -24,6 +24,7 @@ export class MaintenanceComponent {
     public ItemsSource: MaintenanceMenuItem[];
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ItemsSource = [];
         this.BuildPagesMenu();
@@ -478,24 +479,24 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Full Accounting Setting";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-            if (FeatureLocator.HasFeaturePermession("General", "General.Features.YearTransfer")) {
-                var item = new MenusTablePM();
-                item.CategoryTypeCode = "ACC";
-                item.Icon = "Settings"
-                item.Code = "ACYT";
-                item.ObjectTableName = "Year Transfer";
-                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-            }
-            if (FeatureLocator.HasFeaturePermession("General", "General.Features.AccountingPeriods")) {
-                var item = new MenusTablePM();
-                item.CategoryTypeCode = "ACC";
-                item.Icon = "Settings"
-                item.Code = "ACPD";
-                item.ObjectTableName = "AccountingPeriod";
-                var ObjectTable = window.ObjectTables.filter(d => d.Name == "AccountingPeriod")[0];
-                item.ObjectTableId = ObjectTable.Id;
-                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-            }
+            //if (FeatureLocator.HasFeaturePermession("General", "General.Features.YearTransfer")) {
+            //    var item = new MenusTablePM();
+            //    item.CategoryTypeCode = "ACC";
+            //    item.Icon = "Settings"
+            //    item.Code = "ACYT";
+            //    item.ObjectTableName = "Year Transfer";
+            //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            //}
+            //if (FeatureLocator.HasFeaturePermession("General", "General.Features.AccountingPeriods")) {
+            //    var item = new MenusTablePM();
+            //    item.CategoryTypeCode = "ACC";
+            //    item.Icon = "Settings"
+            //    item.Code = "ACPD";
+            //    item.ObjectTableName = "AccountingPeriod";
+            //    var ObjectTable = window.ObjectTables.filter(d => d.Name == "AccountingPeriod")[0];
+            //    item.ObjectTableId = ObjectTable.Id;
+            //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            //}
 
             
 
@@ -513,6 +514,18 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
 
+        if (FeatureLocator.HasFeaturePermession("General", "SCHEDULERS")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "MNG";
+            item.Icon = "List"
+            item.Code = "MASC";
+            item.ObjectTableName = "TasksScheduler";
+            item.TextCode = "General.Features.Schedulers";
+            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TasksScheduler")[0].Id
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
+        }
+        
         if (FeatureLocator.HasFeaturePermession("General", "MAINCUSTOMERS")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "Par";
@@ -572,13 +585,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "BatchServicesLog")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "MNG";
-            item.Icon = "List"
-            item.Code = "TMNG";
-            item.ObjectTableName = "TasksScheduler";
-            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TasksScheduler")[0].Id
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
         }
 
         else {
@@ -833,7 +840,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "ACYT": {
-                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+                    this.CurrentSession.StartBusyIndicatorLoading();
                     this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe(response => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
@@ -869,11 +876,11 @@ export class MaintenanceComponent {
                 }
                 case "MTUS": {
                     this._entityResourceService.getEntityResourceByTableName("User", 0).subscribe((resp: any) => {
-                        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run(null);
-                                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                this.CurrentSession.AddMenuReference(cmpRef);
                             });
                     });
                     break;
@@ -986,11 +993,11 @@ export class MaintenanceComponent {
                 }
                 case "MTTC": {
                     this._entityResourceService.getEntityResourceByTableName("TicketClassification", 0).subscribe((resp: any) => {
-                        SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketClassificationMaintenanceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/TicketClassificationMaintenanceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                             .then(cmpRef => {
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.Run();
-                                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                this.CurrentSession.AddMenuReference(cmpRef);
                             });
                     });
                     break;
@@ -1080,14 +1087,35 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent');
                     break;
                 }
-                case "TMNG": {
+
+                case "CRTE": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = "Create Tenant";
+                    logitudeWindow.Height = 500;
+                    logitudeWindow.Width = 750;
+                    logitudeWindow.ShowCloseButton = false;
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CreateTenant/CreateTenantComponent');
+                    break;
+                }
+
+
+
+
+                case "MASC": {
                     this._entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe(response => {
+
                         var logWindow = new LogitudeWindow();
-                        logWindow.Width = 1100;
+                        logWindow.Width = 1200;
                         logWindow.Height = 1000;
-                        logWindow.Title = "Task Scheduler";
+                        if (!FeatureLocator.HasFeaturePermession("TasksScheduler", "READ") || (!FeatureLocator.HasFeaturePermession("TasksScheduler", "TASK") && !FeatureLocator.HasFeaturePermession("TasksScheduler", "FTP"))) {
+                            logWindow.Width =800;
+                            logWindow.Height = 500;
+                        }
+
+
+                        logWindow.Title = "Schedulers";
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/TaskSchedulerComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/MainSchedulerComponent');
                     });
                     break;
                 }
@@ -1197,11 +1225,11 @@ export class MaintenanceComponent {
 
                 //  case "TXRP": {
                 //    this._entityResourceService.getEntityResourceByTableName("TaxReport", 0).subscribe((resp: any) => {
-                //        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                //        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 //            .then(cmpRef => {
                 //                cmpRef.instance.ComponentRef = cmpRef;
                 //                cmpRef.instance.Run(null);
-                //                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                //                this.CurrentSession.AddMenuReference(cmpRef);
                 //            });
                 //    });
                 //    break;
@@ -1254,11 +1282,11 @@ export class MaintenanceComponent {
                             listArgs.BackButtonTitle = "Maintenance";
                             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
                                 listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
-                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                     .then(cmpRef => {
                                         cmpRef.instance.ComponentRef = cmpRef;
                                         cmpRef.instance.Run(listArgs);
-                                        //SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                        //this.CurrentSession.AddMenuReference(cmpRef);
                                     });
                             });
                         }
@@ -1357,11 +1385,11 @@ export class MaintenanceComponent {
             var listArgs = new ListComponentArgs();
             listArgs.DisplayTitle = item.TranslatedName;//TextCodeTranslator.Translate();
             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsClosedTablesComponent',
-                SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     //cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         });
     }
@@ -1371,11 +1399,11 @@ export class MaintenanceComponent {
             var listArgs = new ListComponentArgs();
             listArgs.DisplayTitle = item.TranslatedName;//TextCodeTranslator.Translate();
             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsMaintenance/Components/Maintenance/InterfaceManagementComponent',
-                SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     //cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         });
     }
@@ -1406,7 +1434,7 @@ class MaintenanceMenuItem {
             var r = "";
         }
 
-        if (this.Code == "MTCL" || this.Code == "MTIS" || this.Code == "MCSG") {
+        if (this.Code == "MTCL" || this.Code == "MTIS" || this.Code == "MCSG" || this.Code == "MASC" || this.Code == "CRTE") {
             myResult = TextCodeTranslator.TranslateTable(this.item.TextCode);
         }
 

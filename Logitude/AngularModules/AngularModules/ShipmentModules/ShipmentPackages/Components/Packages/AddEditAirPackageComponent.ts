@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ShipmentPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
@@ -18,13 +18,14 @@ export class AddEditAirPackageComponent {
     public ObjectTableName: string = "ShipmentPackage";
     public OkBtnId: string;
     public ValidationErrorsList: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.OkBtnId = "OkBtn_-1_-1"; 
         }
 
         else {
-            this.OkBtnId = "OkBtn_" + SessionLocator.CurrentSession.GetNewId("OkBtn"); 
+            this.OkBtnId = "OkBtn_" + this.CurrentSession.GetNewId("OkBtn"); 
         }
     }
 
@@ -50,7 +51,7 @@ export class AddEditAirPackageComponent {
 
     CancelButtonClicked() {
         this.RejectChanges();
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -91,10 +92,11 @@ export class AddEditAirPackageComponent {
                 //this.DataContext.fatherComponent.SetGenerateData();
                 //this.DataContext.fatherComponent.ComputeTotals();
             }
+
             this.DataContext.fatherComponent.SetGenerateData();
             this.DataContext.fatherComponent.ResetTotalEditedValues();
             this.DataContext.fatherComponent.ComputeTotals();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("OK");
+            this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
     }
 
@@ -109,6 +111,13 @@ export class AddEditAirPackageComponent {
         this.myCloner.AddField('Volume');
         this.myCloner.AddField('VolumetricWeight');
         this.myCloner.AddField('Weight');
+        this.myCloner.AddField('CommodityNumber');
+        this.myCloner.AddField('Notes');
+        this.myCloner.AddField('Reference1');
+        this.myCloner.AddField('Reference2');
+        this.myCloner.AddField('Reference3');
+        this.myCloner.AddField('Reference4');        
+        
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.ShipmentPM);
     }

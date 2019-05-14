@@ -2,6 +2,11 @@
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Stimulsoft.Report;
@@ -129,27 +134,16 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
             return bankDepositDP;
         }
 
-        private ContactPM GetLoggedContactData(string userEmail, int tenant)
+        private ContactPM GetLoggedContact(int tenant)
         {
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contactPM = contactQuery.GetContactByEmailOnly(userEmail, tenant);
-            return contactPM;
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
-        private string GetLoggedContactEmail(int tenant)
-        {
-            string email = "";
-            if (HttpContext.Current != null)
-            {
-                email = HttpContext.Current.User.Identity.Name;
-            }
-            else
-            {
-                email = "system@tenant" + tenant.ToString() + ".com";
-            }
 
-            return email;
-        }
 
     }
 }

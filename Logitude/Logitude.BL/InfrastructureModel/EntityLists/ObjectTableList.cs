@@ -52,6 +52,8 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string NameField { get; set; }
         public bool DisableSearchBox { get; set; }
         public bool AllowedInQueues { get; set; }
-
+        public string LovDisplayMemberPath { get; set; }
+        public string LovDisplayMemberPathLocal { get; set; }
+        public bool IsTabsHidden { get; set; }
     }
 }

@@ -8,17 +8,17 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel; 
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure.Helpers; 
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using WebFreight.Web.DataContracts;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
-using WebFreight.Web.WebServices;
-using System.Text.RegularExpressions;
-using System.Web.UI;
+using Logitude.BL.CommonDataModel.EntityQueries;  
+using WebFreight.Web.DataContracts;   
+using WebFreight.Web.Helpers;  
+using WebFreight.Web.Security;     
+using WebFreight.Web.WebServices; 
+using System.Text.RegularExpressions;  
+using System.Web.UI; 
 
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Counters;
@@ -30,7 +30,7 @@ using Simplog.Server.Infrastructure.Azure;
 using Microsoft.Practices.Unity;
 using System.IO;
 using Logitude.Server.Tools;
-using Logitude.SystemLogs;
+using Logitude.SystemLogs; 
 using System.ServiceModel;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Diagnostics;
@@ -69,14 +69,14 @@ namespace WebFreight.Web
             userdata.Token = logintokenparam.Token;
             return userdata;
         }
-
+         
         public UserData PostLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool isAngular)
         {
             UserData userData = null;
             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
             AuthenticationToken auttoken = authenticationTokenRepository.GetSingleToken(logintokenparam.Token);
             if (auttoken != null)
-            {
+            { 
                 LoginParameters loginParameters = new LoginParameters() { Email = auttoken.Email, GetToken = true, IsUser = true, Password = auttoken.Password + "@HashPassword" };
                 if (!string.IsNullOrEmpty(logintokenparam.CardId))
                 {
@@ -88,8 +88,8 @@ namespace WebFreight.Web
             }
             return userData;
         }
-
-
+         
+          
         public UserData PostTrayLoginUsingAuthenticaionToken(LoginTokenParameter logintokenparam, bool fromTray, bool useTenant)
         {
             UserData userdata;
@@ -204,7 +204,7 @@ namespace WebFreight.Web
             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
             AuthenticationToken auttoken = authenticationTokenRepository.GetSingleToken(logintokenparam.Token);
             if (auttoken != null)
-            {
+            { 
                 // userdata =  PostLoginToken(auttoken.Email, auttoken.Password, true);
 
                 LoginParameters loginParameters = new LoginParameters()
@@ -381,7 +381,7 @@ namespace WebFreight.Web
                     fileInfo.Extension = "jpg";
                     datainByte = storageservice.Read(fileInfo);
                 }
-
+                 
                 if (datainByte == null)
                 {
                     fileInfo.FileName = "smalllogo" + companyId;
@@ -2943,7 +2943,7 @@ namespace WebFreight.Web
 
 
 
-
+         
     }
     public class LoginTokenParameter
     {

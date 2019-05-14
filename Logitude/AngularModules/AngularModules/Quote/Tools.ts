@@ -1,4 +1,4 @@
-﻿import {QuotePM} from './EntityPMs/QuotePM';
+import {QuotePM} from './EntityPMs/QuotePM';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {AppTool, ArrayTool} from '../Infrastructure/Tools';
 import {QuoteStageList} from './EntityLists/QuoteStageList';
@@ -106,6 +106,9 @@ export class QuoteTool {
                                 case "PRVL": { myCostQuantity = entityPM.ValueOfGoods; break; }
                                 case "PRFR": { myCostQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"); break; }
                                 case "QTY": { myCostQuantity = entityPM.NumberOfPackages; break; }
+                                case "CWKG": { myCostQuantity = entityPM.ChargeableWeightInKG; break; }
+                                case "GWKG": { myCostQuantity = entityPM.GrossWeightInKG; break; }
+
                                 default: { break; }
                             }
 
@@ -119,7 +122,10 @@ export class QuoteTool {
                                 case "GWTN": { mySaleQuantity = entityPM.GrossWeightPerTon; break; }
                                 case "PRVL": { mySaleQuantity = entityPM.ValueOfGoods; break; }
                                 case "PRFR": { mySaleQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"); break; }
-                                case "QTY": { myCostQuantity = entityPM.NumberOfPackages; break; }
+                                case "QTY": { mySaleQuantity = entityPM.NumberOfPackages; break; }
+                                case "CWKG": { mySaleQuantity = entityPM.ChargeableWeightInKG; break; }
+                                case "GWKG": { mySaleQuantity = entityPM.GrossWeightInKG; break; }
+
                                 default: { break; }
                             }                            
 

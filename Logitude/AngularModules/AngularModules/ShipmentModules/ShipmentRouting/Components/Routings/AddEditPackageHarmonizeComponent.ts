@@ -21,6 +21,7 @@ export class AddEditPackageHarmonizeComponent {
     public IsEditingEnabled: boolean = true;
     public ValidationErrorsList: string[];
     public IsVisibile: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
 
     }
@@ -59,7 +60,7 @@ export class AddEditPackageHarmonizeComponent {
             }
         });
         this.EntityPM.IsDirty = this.isPackageDirty;
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
@@ -108,7 +109,7 @@ export class AddEditPackageHarmonizeComponent {
                 }
             }
 
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+            this.CurrentSession.CloseCurrentWindowEmit("Ok");
         }
     }
     private myCloner: Cloner;

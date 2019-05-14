@@ -22,10 +22,13 @@ import {NewShipmentComponentArgs} from '../../../Shipment/Args';
 import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainService';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {QuoteDomainService} from '../../../Quote/Services/QuoteDomainService';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 export class QuoteMenuButtonsHandler {
     public EntityPM: QuotePM;
     public entityArgs: EntityArgs
+    private CurrentSession = SessionLocator.SelectedSession;
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -125,7 +128,6 @@ export class QuoteMenuButtonsHandler {
                         else {
                             button.IsDisabled = true;
                         }
-
                     }
 
                     if (button.EventCode == "ReactivateQuote") {
@@ -188,14 +190,70 @@ export class QuoteMenuButtonsHandler {
 
                         else {
                             button.IsDisabled = false;
-
                         }
-
 
                         if (this.EntityPM.IsQuoteDataExternal && this.EntityPM.IsQuoteDocumentExternal) {
                             button.IsDisabled = true;
                         }
                     }
+
+                    if (button.EventCode == "ConvertQuotetoLCL") {
+                        if (this.EntityPM.IsClosed || this.EntityPM.IsCancelled) {
+                            if (this.EntityPM.TransportModeId == "O") {
+                                if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                            }
+                        }
+
+                        else {
+                            if (this.EntityPM.TransportModeId == "O") {
+                                if (this.EntityPM.ShipmentTypeId == "FCLD") {
+                                    button.IsHidden = false;
+                                    button.IsDisabled = false;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                            }
+
+                            else {
+                                button.IsHidden = true;
+                            }
+                        }
+                    }
+
+                    if (button.EventCode == "ConvertQuotetoFCL") {
+                        if (this.EntityPM.IsClosed || this.EntityPM.IsCancelled) {
+                            if (this.EntityPM.TransportModeId == "O") {
+                                if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                            }
+                        }
+
+                        else {
+                            if (this.EntityPM.TransportModeId == "O") {
+                                if (this.EntityPM.ShipmentTypeId == "LCLD") {
+                                    button.IsHidden = false;
+                                    button.IsDisabled = false;
+                                }
+                                else {
+                                    button.IsHidden = true;
+                                }
+                            }
+
+                            else {
+                                button.IsHidden = true
+                            }
+                        }
+                    } 
                 }
 
                 return menuButtons;
@@ -262,12 +320,104 @@ export class QuoteMenuButtonsHandler {
                         break;
                     }
 
+                case "ConvertQuotetoLCL":
+                    {
+                        this.ConvertQuoteToLCLClicked();
+                        break;
+                    }
+
+
+                case "ConvertQuotetoFCL":
+                    {
+                        this.ConvertQuoteToFCLClicked();
+                        break;
+                    }
+
                 default: {
                     this.isButtonClicked = false;
                     break;
                 }
             }
         }
+    }
+
+    private IsConvertToLCLClicked: boolean = false;
+    private IsConvertToFCLClicked: boolean = false;
+    private ConvertQuoteToLCLClicked() {
+        var errors: string[] = [];
+        this.Validate();
+
+        if (this.isValid) {
+            this.IsConvertToLCLClicked = true;
+            this.entityArgs.EditComponent.SaveChanges();
+        }
+    }
+    private ConvertQuoteToFCLClicked() {
+        var errors: string[] = [];
+        this.Validate();
+
+        if (this.isValid) {
+            this.IsConvertToFCLClicked = true;
+            this.entityArgs.EditComponent.SaveChanges();
+        }
+    }
+    private DoConvertQuoteType(type: string) {
+        var args = new QuoteEventNotesArgs();
+        var windowTitle: string;
+        
+        args.EntityPM = this.EntityPM;        
+        args.IsConvertQuoteType = true;         
+        args.NotesHeader = "Notes";        
+
+        switch (type) {
+            case "ToLCL":
+                {
+                    windowTitle = "Convert Quote From FCL To LCL";
+                    break;
+                }
+
+            case "ToFCL":
+                {
+                    windowTitle = "Convert Quote From LCL To FCL";
+                    break;
+                }
+        }
+
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = args;
+        logWindow.Width = 935;
+        logWindow.Height = 570;
+
+        logWindow.Title = windowTitle;
+        logWindow.Show('./Quote/Components/MenuButtons/QuoteEventNotesComponent');
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                var notes = s.EventNote;
+                if (d == "OK") {
+                    this.EntityPM.EventNote = notes;
+
+                    switch (type) {
+                        case "ToLCL":
+                            {
+                                this.EntityPM.ConvertToLCL = true;
+                                this.EntityPM.ConvertToFCL = false;
+                                break;
+                            }
+
+                        case "ToFCL":
+                            {
+                                this.EntityPM.ConvertToLCL = false;
+                                this.EntityPM.ConvertToFCL = true;
+                                break;
+                            }
+                    }
+
+                    this.Reload = true;
+                    this.entityArgs.EditComponent.SaveChanges();
+                    this.isButtonClicked = false;
+                }
+            });
+        });
     }
 
     private myQuoteStageListService: QuoteStageListService;
@@ -277,11 +427,15 @@ export class QuoteMenuButtonsHandler {
     
     isValid: boolean = false;
     isButtonClicked: boolean = false;
+    Reload: boolean = false;
     StopFlags() {
         this.isButtonClicked = false;
         this.isBuildingShipment = false;
         this.isCopyingQuote = false;
         this.IsRunQuotation = false;
+        this.Reload = false;
+        this.IsConvertToLCLClicked = false;
+        this.IsConvertToFCLClicked = false;
     }
     Validate() {
         var validator = new QuoteValidator();
@@ -312,6 +466,18 @@ export class QuoteMenuButtonsHandler {
 
                     if (this.IsRunQuotation) {
                         this.OpenQuotationWindow();
+                    }
+
+                    if (this.IsConvertToLCLClicked) {
+                        this.DoConvertQuoteType("ToLCL");
+                    }
+
+                    if (this.IsConvertToFCLClicked) {
+                        this.DoConvertQuoteType("ToFCL");
+                    }
+                    
+                    if (this.Reload) {
+                        this.entityArgs.EditComponent.ReloadEntityPM();
                     }
                 }
 
@@ -716,15 +882,16 @@ export class QuoteMenuButtonsHandler {
     private OpenQuotationWindow() {
         var windowArgs: any = {};
         windowArgs.QuotePM = this.EntityPM;
-
+       
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = window.innerWidth - 150;
         logWindow.Height = window.innerHeight - 150;
         logWindow.IsShowCloseButton = true;
+        windowArgs.QuotationWindow = logWindow;
         logWindow.Title = TextCodeTranslator.Translate("Quote.B.Quotation");
         logWindow.Show('./QuoteModules/QuoteOthers/Components/Quotation/QuotationComponent');
-
+ 
         logWindow.WindowClosed.subscribe(s => {
             this.isButtonClicked = false;
         });

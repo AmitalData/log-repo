@@ -38,7 +38,7 @@ export class MasterBOLQueryComponent
 
     private _IsFromDeclaration: boolean = false;
     private _DeclarationId: string = "";
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.InternalCargosList = new ObservableCollection([]);
@@ -73,7 +73,7 @@ export class MasterBOLQueryComponent
     }
 
     EditButtonClicked(item) {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(item);
+        this.CurrentSession.CloseCurrentWindowEmit(item);
     }
 
     SetMenuArg(MenuArg) {
@@ -181,10 +181,10 @@ export class MasterBOLQueryComponent
             return;
         }
 
-        SessionLocator.CurrentSession.StartBusyIndicator("");
+        this.CurrentSession.StartBusyIndicator("");
         this._DeclarationExtendedListService.GetConsignmentListPMByCustomFileNo(this.CustomFileNo)
             .subscribe((myResponse: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.FetchDeclaration(myResponse, true);
             });
     }
@@ -229,7 +229,7 @@ export class MasterBOLQueryComponent
 
     //#region General Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     FillErrors() {

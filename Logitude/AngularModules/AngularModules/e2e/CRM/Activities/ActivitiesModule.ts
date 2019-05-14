@@ -13,7 +13,7 @@ import { GeneralFunctions } from '../../Helpers/GeneralFunctions';
 
 export class ActivitiesModule {
     private Helper: FieldsHelper;
-    private Generator: GeneralFunctions;
+    private GeneralFun: GeneralFunctions;
 
     private addTask: NewTask;
     private editTask: EditTasks;
@@ -26,7 +26,7 @@ export class ActivitiesModule {
 
     constructor() {
         this.Helper = new FieldsHelper();
-        this.Generator = new GeneralFunctions();
+        this.GeneralFun = new GeneralFunctions();
         this.addTask = new NewTask();
         this.editTask = new EditTasks();
 
@@ -39,26 +39,23 @@ export class ActivitiesModule {
     }
 
     public CreateActivity() {
-        var activityNo = this.Generator.RandomNum();
+        var activityNo = this.GeneralFun.RandomNum();
 
-        this.addTask.CreateNewTask('Task # ' + activityNo);
-        this.QuickSearchBox('Activity_Search', 'Task # ' + activityNo);
         this.editTask.EditTask('Task # ' + activityNo);
+        this.addTask.CreateNewTask('Task # ' + activityNo);
+        this.GeneralFun.QuickSearchTextBox('Activity_Search', 'Task # ' + activityNo);
 
         this.addPhoneCall.CreateNewPhoneCall('Phone Call # ' + activityNo);
-        this.QuickSearchBox('Activity_Search', 'Phone Call # ' + activityNo);
+        this.GeneralFun.QuickSearchTextBox('Activity_Search', 'Phone Call # ' + activityNo);
         this.editPhoneCall.EditPhoneCall('Phone Call # ' + activityNo);
 
         this.addAppointment.CreateNewAppointment('Appointment # ' + activityNo);
-        this.QuickSearchBox('Activity_Search', 'Appointment # ' + activityNo);
+        this.GeneralFun.QuickSearchTextBox('Activity_Search', 'Appointment # ' + activityNo);
         this.editAppointment.EditAppointment('Appointment # ' + activityNo);
         // browser.driver.sleep(6000);
 
     }
-    QuickSearchBox(searchFeildId: string, searchByRef: string) {
-        this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
-        this.Helper.WaitByCssAndClick_FromTagInsideList('.LogitudeQuickSearchItem', 0);
-    }
+    
 
  
 }

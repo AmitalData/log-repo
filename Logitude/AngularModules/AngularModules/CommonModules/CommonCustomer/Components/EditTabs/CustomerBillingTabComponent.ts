@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -23,11 +23,16 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public HasCreditLimitFeature: boolean = false;
     public IsCreditLimitActivated: boolean = false;
     public LocalCurrencyCode: string;
+    public IsAccountingActivated: boolean;
+
     @ViewChild('BillingChild', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     public DisplaySATSettings: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+     
+
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
 
         this.HasCreditLimitFeature = FeatureLocator.HasFeaturePermession("CreditLimitSetting", "Module");
@@ -45,6 +50,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     }
 
     ngOnInit() {
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.SetUIProperties();
         this.RunComponent();
         this.LoadCreditLimitData();
@@ -163,7 +169,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
-            this.SessionEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "EntityActivated") {
                     this.SetUIProperties_GeneratedComponent();
                 }

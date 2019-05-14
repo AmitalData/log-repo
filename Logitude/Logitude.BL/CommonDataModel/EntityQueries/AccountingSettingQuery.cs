@@ -41,7 +41,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                AllowVoidAPP = a.AllowVoidAPP,
                                                AllowVoidARI = a.AllowVoidARI,
                                                AllowVoidARP = a.AllowVoidARP,
-                                               IsChronologicalDates = a.IsChronologicalDates,
+                                               IsARInvoiceChronologicalDates = a.IsARInvoiceChronologicalDates,
+                                               IsARPaymentChronologicalDates = a.IsARPaymentChronologicalDates,
                                                IsVatNumberMandatoryInAP = a.IsVatNumberMandatoryInAP,
                                                IsVatNumberMandatoryInAR = a.IsVatNumberMandatoryInAR,
                                                ReceivableVATableTempCard = a.ReceivableVATableTempCard,
@@ -73,6 +74,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EnableNegativeOffsetARPayments = a.EnableNegativeOffsetARPayments,
                                                EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                                                EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
+                                               EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                            }).FirstOrDefault();
 
             return account;
@@ -91,7 +93,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                AllowVoidAPP = a.AllowVoidAPP,
                                                AllowVoidARI = a.AllowVoidARI,
                                                AllowVoidARP = a.AllowVoidARP,
-                                               IsChronologicalDates = a.IsChronologicalDates,
+                                               IsARInvoiceChronologicalDates = a.IsARInvoiceChronologicalDates,
+                                               IsARPaymentChronologicalDates = a.IsARPaymentChronologicalDates,
                                                IsVatNumberMandatoryInAP = a.IsVatNumberMandatoryInAP,
                                                IsVatNumberMandatoryInAR = a.IsVatNumberMandatoryInAR,
                                                ReceivableVATableTempCard = a.ReceivableVATableTempCard,
@@ -123,6 +126,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EnableNegativeOffsetARPayments = a.EnableNegativeOffsetARPayments,
                                                EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                                                EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
+                                               EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                            }).FirstOrDefault();
 
             if (account != null)
@@ -155,7 +159,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        AllowVoidAPP = a.AllowVoidAPP,
                                        AllowVoidARI = a.AllowVoidARI,
                                        AllowVoidARP = a.AllowVoidARP,
-                                       IsChronologicalDates = a.IsChronologicalDates,
+                                       IsARInvoiceChronologicalDates = a.IsARInvoiceChronologicalDates,
+                                       IsARPaymentChronologicalDates = a.IsARPaymentChronologicalDates,
                                        IsVatNumberMandatoryInAP = a.IsVatNumberMandatoryInAP,
                                        IsVatNumberMandatoryInAR = a.IsVatNumberMandatoryInAR,
                                        ReceivableVATableTempCard = a.ReceivableVATableTempCard,
@@ -187,6 +192,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EnableNegativeOffsetARPayments = a.EnableNegativeOffsetARPayments,
                                        EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                                        EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
+                                       EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                    });
 
                     foreach (var c in systems)
@@ -220,7 +226,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               AllowVoidAPP = a.AllowVoidAPP,
                               AllowVoidARI = a.AllowVoidARI,
                               AllowVoidARP = a.AllowVoidARP,
-                              IsChronologicalDates = a.IsChronologicalDates,
+                              IsARInvoiceChronologicalDates = a.IsARInvoiceChronologicalDates,
+                              IsARPaymentChronologicalDates = a.IsARPaymentChronologicalDates,
                               IsVatNumberMandatoryInAP = a.IsVatNumberMandatoryInAP,
                               IsVatNumberMandatoryInAR = a.IsVatNumberMandatoryInAR,
                               ReceivableVATableTempCard = a.ReceivableVATableTempCard,
@@ -252,6 +259,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               EnableNegativeOffsetARPayments = a.EnableNegativeOffsetARPayments,
                               EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                               EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
+                              EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                           }).FirstOrDefault();
             }
 
@@ -271,7 +279,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             AllowVoidAPP = a.AllowVoidAPP,
                                                             AllowVoidARI = a.AllowVoidARI,
                                                             AllowVoidARP = a.AllowVoidARP,
-                                                            IsChronologicalDates = a.IsChronologicalDates,
+                                                            IsARInvoiceChronologicalDates = a.IsARInvoiceChronologicalDates,
+                                                            IsARPaymentChronologicalDates = a.IsARPaymentChronologicalDates,
                                                             IsVatNumberMandatoryInAP = a.IsVatNumberMandatoryInAP,
                                                             IsVatNumberMandatoryInAR = a.IsVatNumberMandatoryInAR,
                                                             ReceivableVATableTempCard = a.ReceivableVATableTempCard,
@@ -303,6 +312,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             EnableNegativeOffsetARPayments = a.EnableNegativeOffsetARPayments,
                                                             EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                                                             EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
+                                                            EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                                         });
 
             return accounts;
@@ -320,7 +330,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            AllowVoidAPP = a.AllowVoidAPP,
                                                            AllowVoidARI = a.AllowVoidARI,
                                                            AllowVoidARP = a.AllowVoidARP,
-                                                           IsChronologicalDates = a.IsChronologicalDates,
+                                                           IsARInvoiceChronologicalDates = a.IsARInvoiceChronologicalDates,
+                                                           IsARPaymentChronologicalDates = a.IsARPaymentChronologicalDates,
                                                            IsVatNumberMandatoryInAP = a.IsVatNumberMandatoryInAP,
                                                            IsVatNumberMandatoryInAR = a.IsVatNumberMandatoryInAR,
                                                            ReceivableVATableTempCard = a.ReceivableVATableTempCard,
@@ -352,6 +363,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                            EnableNegativeOffsetARPayments = a.EnableNegativeOffsetARPayments,
                                                            EnableNegativeOffsetAPPayments = a.EnableNegativeOffsetAPPayments,
                                                            EnableMultiCurrencyAPPayments = a.EnableMultiCurrencyAPPayments,
+                                                           EnableInvoiceStocksManagement = a.EnableInvoiceStocksManagement,
                                                        };
             return result;
         }

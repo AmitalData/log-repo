@@ -68,6 +68,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -79,6 +80,7 @@
     <Compile Include="CustomFilters\TeamCustomFilter.cs" />
     <Compile Include="EntityKeys\BatchTaskExecutionKeys.cs" />
     <Compile Include="EntityKeys\BatchTaskExecutionStatusKeys.cs" />
+    <Compile Include="EntityKeys\BIReportFolderKeys.cs" />
     <Compile Include="EntityKeys\BIReportKeys.cs" />
     <Compile Include="EntityKeys\BIReportsTypeKeys.cs" />
     <Compile Include="EntityKeys\BusinessProcessQueueKeys.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="EntityKeys\ToggleKeys.cs" />
     <Compile Include="EntityListQueryServices\BatchTaskExecutionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BatchTaskExecutionStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\BIReportFolderListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BIReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BIReportsTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessProcessQueueListQueryService.cs" />
@@ -98,6 +101,7 @@
     <Compile Include="EntityListQueryServices\FeatureToggleListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\BIReportFolderListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BIReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BIReportsTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessProcessQueueListQueryService.Generated.cs" />
@@ -115,6 +119,7 @@
     <Compile Include="EntityListQueryServices\ToggleListQueryService.cs" />
     <Compile Include="EntityLists\Generated\BatchTaskExecutionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BatchTaskExecutionStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\BIReportFolderList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BIReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BIReportsTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessProcessQueueList.Generated.cs" />
@@ -127,6 +132,7 @@
     <Compile Include="EntityLists\Generated\ToggleList.Generated.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionStatusMap.cs" />
+    <Compile Include="EntityMapping\BIReportFolderMap.cs" />
     <Compile Include="EntityMapping\BIReportMap.cs" />
     <Compile Include="EntityMapping\BIReportsTypeMap.cs" />
     <Compile Include="EntityMapping\BusinessProcessQueueMap.cs" />
@@ -140,6 +146,7 @@
     <Compile Include="EntityPOCOs\BatchTaskExecution.cs" />
     <Compile Include="EntityPOCOs\BatchTaskExecutionStatus.cs" />
     <Compile Include="EntityPOCOs\BIReport.cs" />
+    <Compile Include="EntityPOCOs\BIReportFolder.cs" />
     <Compile Include="EntityPOCOs\BIReportsType.cs" />
     <Compile Include="EntityPOCOs\BusinessProcessQueue.cs" />
     <Compile Include="EntityPOCOs\BusinessRole.cs" />
@@ -154,6 +161,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repsitories\BatchTaskExecutionRepository.cs" />
     <Compile Include="Repsitories\BatchTaskExecutionStatusRepository.cs" />
+    <Compile Include="Repsitories\BIReportFolderRepository.cs" />
     <Compile Include="Repsitories\BIReportRepository.cs" />
     <Compile Include="Repsitories\BIReportsTypeRepository.cs" />
     <Compile Include="Repsitories\BusinessProcessQueueRepository.cs" />
@@ -161,6 +169,7 @@
     <Compile Include="Repsitories\FeatureToggleRepository.cs" />
     <Compile Include="Repsitories\Generated\BatchTaskExecutionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BatchTaskExecutionStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\BIReportFolderRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BIReportRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BIReportsTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessProcessQueueRepository.Generated.cs" />

@@ -11,9 +11,9 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {EntityResourceService} from '../../Services/EntityResourceService';
 import {UserPM} from '../../../Common/EntityPMs/UserPM';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {LoginService, LoginParameters} from '../../Services/LoginService';
+import {LoginService} from '../../Services/LoginService';
 import {Headers} from '@angular/http';
-import {AmitalGatewayUtil, UnifreightMessageM} from '../../Utilities/AmitalGatewayUtil';
+import {AmitalGatewayUtil} from '../../Utilities/AmitalGatewayUtil';
 import {Observable}     from 'rxjs/Rx';
 import {NotificationExtendedListService} from '../../../Customs/Services/ExtendedLists/NotificationExtendedListService';
 import {CommonDomainService} from '../../../Common/Services/CommonDomainService';
@@ -22,6 +22,9 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { DetectUserInActivity } from '../../Helpers/DetectUserInActivity';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { BluesnapContractPMService } from '../../Services/StandardPMs/BluesnapContractPMService';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 
 @Component({
     moduleId: module.id,
@@ -39,7 +42,11 @@ export class HomeComponent implements OnDestroy{
     @ViewChild("ApplicationLocation", { read: ViewContainerRef }) ApplicationLocation: ViewContainerRef;
     SettingBtnVisibility: boolean = false;
     IsShowLastSuccessfulLoginComponent: boolean = true;
+    public IfBlueSnapContracts: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    private BluesnapContractService: BluesnapContractPMService = new BluesnapContractPMService();
+    public ShowNewReleaseToolTip: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
@@ -55,9 +62,8 @@ export class HomeComponent implements OnDestroy{
         if (!this.IsNewSignupTenant) {
             this.InitializeAppHeader();
             this.CheckAmitalBrowserInUse();
-        }   
-
-
+        }  
+        
         if (!SessionInfo.KeepUserLoggedIn) {
             // sessionTimeout
             var sessionTimeout: DetectUserInActivity = new DetectUserInActivity();
@@ -66,14 +72,15 @@ export class HomeComponent implements OnDestroy{
             // tokenExpiration
             var tokenExpiration: DetectUserInActivity = new DetectUserInActivity(true);
             tokenExpiration.Start(SessionInfo.WebTokenLifeTimeInMinutes, SessionInfo.WebTokenExpirationWarningInMinutes , "M");//(3, 1, "M")
-
-
         }
 
+        if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ReleaseNotesURL) && SessionLocator.ShowUserNewReleaseToolTip && !SessionLocator.PrivateLableSettings) {
+            this.ShowNewReleaseToolTip = true;
+        }
     }
 
     OnSessionMouseUp($event) {
-        SessionLocator.CurrentSession.MouseUpEvent.emit($event);
+        this.CurrentSession.MouseUpEvent.emit($event);
     }
 
     // InitializeComponent
@@ -85,7 +92,12 @@ export class HomeComponent implements OnDestroy{
     public SystemFontFamily: string = "'Lucida Sans Unicode', 'Lucida Grande', sans-serif";
     table: any;
     InitializeComponent() {
+        this.IsBluesnapAccount = !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.BluesnapAccount);
+        this.IsCountryIsrael = SessionLocator.TenantManagementJS.CountryName == "Israel";
 
+
+        
+        
         var isNewSignupTenant = false;
 
         if (AppTool.IsNullOrEmpty(SessionLocator.TenantPM.CurrencyId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.ProfitCurrencyId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.AddressId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.AgentId)) {
@@ -127,6 +139,9 @@ export class HomeComponent implements OnDestroy{
     public IsFillLocalStorageVisible: boolean = false;
     public IsDocumentsBackupVisible: boolean = false;
     public IsCurrenciesRatesVisible: boolean = false;
+    public IsBluesnapAccount: boolean = false;
+    public IsCountryIsrael: boolean = false;
+    
     InitializeAppHeader() {
         this.EnvironmentUrl = Environment.GetEnvironmentUrl();
         this.EnvironmentSRC = Environment.GetEnvironmentIcon();
@@ -172,6 +187,11 @@ export class HomeComponent implements OnDestroy{
             this.IsDocumentsBackupVisible = true;
         }
 
+        if (FeatureLocator.HasFeaturePermession("BluesnapContract", "PaymentSettingButton")) {
+            this.IfBlueSnapContracts = true;
+        }
+
+
     }
 
     // UserSettings
@@ -196,6 +216,7 @@ export class HomeComponent implements OnDestroy{
         }
         //this.loginService.CurrentTenant = SessionLocator.TenantPM.Id;
         this.loginService.CheckTenantMangmnt(SessionLocator.LoggedUserId).subscribe(myResult2 => {
+            SessionLocator.BlockType = null;
             var tt: TenantUserDataClass = myResult2;
             this.TrialMessage = "";
             this.messageWindow.Close();
@@ -206,7 +227,6 @@ export class HomeComponent implements OnDestroy{
             SessionLocator.TenantManagementJS.TrailDaysLeft = tt.TrailDaysLeft;
             SessionLocator.TenantManagementJS.PaidDaysLeft = tt.PaidDaysLeft;
             SessionLocator.TenantManagementJS.SuspendDaysLeft = tt.SuspendDaysLeft;
-
             var stopTimer = false;
             if (tt.DoBlocking) {
 
@@ -269,8 +289,11 @@ export class HomeComponent implements OnDestroy{
                     }
                 }
 
+             
+
 
             }
+
 
             if (!stopTimer)
                 this.RunComponentTimerTrial();
@@ -300,7 +323,6 @@ export class HomeComponent implements OnDestroy{
             HeaderMessage = "Your company subscription will expire in " + SessionLocator.TenantManagementJS.SuspendDaysLeft + " days.";
             WindowMessage = "Your company subscription will expire in " + SessionLocator.TenantManagementJS.SuspendDaysLeft + " days due to credit \ncard failure. \nPlease contact your e-commerce vendor or " + email;
         }
-
         this.messageWindow.Title = HeaderMessage;
         this.messageWindow.Message = WindowMessage;
         this.messageWindow.Show(this.messageWindow.Message);
@@ -365,10 +387,28 @@ export class HomeComponent implements OnDestroy{
     }
     AccountAndTenantExpirationFunction() {
         this.TrialMessage = "";
-        if (SessionLocator.LoggedUserPM.ExpirationDate != null) {
-            if (SessionLocator.LoggedUserPM.ExpirationDaysLeft <= 7) {
-                this.CheckUserExpiration(SessionLocator.LoggedUserPM);
+        if (AppTool.IsNullOrEmpty(SessionLocator.BlockType)) {
+            if (SessionLocator.LoggedUserPM.ExpirationDate != null) {
+                if (SessionLocator.LoggedUserPM.ExpirationDaysLeft <= 7) {
+                    this.CheckUserExpiration(SessionLocator.LoggedUserPM);
 
+
+                }
+                else {
+                    if (SessionLocator.TenantManagementJS.PaymentFailure) {
+                        this.CheckPaymentFailure();
+                    }
+
+                    else if (SessionLocator.TenantManagementJS.IsTrial) {
+                        this.CheckTrialDays();
+                    }
+
+                    else if (!SessionLocator.TenantManagementJS.IsRecurring && !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate + "")) {
+                        this.CheckPaidUntilDays();
+                    }
+
+
+                }
 
             }
             else {
@@ -380,28 +420,14 @@ export class HomeComponent implements OnDestroy{
                     this.CheckTrialDays();
                 }
 
-                else if (!SessionLocator.TenantManagementJS.IsRecurring && !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate + "")) {
+                else if (!SessionLocator.TenantManagementJS.IsRecurring && !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
                     this.CheckPaidUntilDays();
                 }
 
 
             }
 
-        }
-        else {
-            if (SessionLocator.TenantManagementJS.PaymentFailure) {
-                this.CheckPaymentFailure();
-            }
-
-            else if (SessionLocator.TenantManagementJS.IsTrial) {
-                this.CheckTrialDays();
-            }
-
-            else if (!SessionLocator.TenantManagementJS.IsRecurring && !AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
-                this.CheckPaidUntilDays();
-            }
-
-
+         
         }
 
         this.RunComponentTimerTrial();
@@ -467,7 +493,7 @@ export class HomeComponent implements OnDestroy{
                         let locs = this.AllLocations.toArray().filter(f => f.Code == 'SessionLocation');
                         let myLocation: LocationDirective = locs.filter(f => f.Index == myCA23EditTab.Index)[0];
 
-                        let viewContainerRef = myCA23EditTab.SessionComponent.viewContainerRef
+                        //let viewContainerRef = myCA23EditTab.SessionComponent.viewContainerRef
                         if (myLocation != null) {
                             SessionLocator.DynamicLoader.Load("./Infrastructure/Components/Session/SessionComponent", myLocation.viewContainerRef).then(cmpRef => {
                                 cmpRef.instance.SessionIndex = myCA23EditTab.Index;
@@ -478,7 +504,7 @@ export class HomeComponent implements OnDestroy{
 
                                 myCA23EditTab.IsSessionLoaded = true;
                                 myCA23EditTab.SessionComponent = cmpRef.instance;
-                                SessionLocator.CurrentSession = myCA23EditTab.SessionComponent;
+                                this.CurrentSession = myCA23EditTab.SessionComponent;
                                 cmpRef.instance.RunComponent();
                                 AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
 
@@ -654,6 +680,10 @@ export class HomeComponent implements OnDestroy{
 
                 SessionLocator.ApplicationLocation = this.ApplicationLocation;
 
+                if (SessionLocator.BlockType) {
+                    this.IsApplicationBlocked = true;
+                }
+
                 if (this.SelectedTabItem == null) {
                     this.SelectionChanged(this.Tabs[0]);
                 }
@@ -668,7 +698,7 @@ export class HomeComponent implements OnDestroy{
                                 this.RunComponentTimer();
                             }
 
-                            else {
+                            else if (!this.IsApplicationBlocked) {
                                 this.CreateSession(this.SelectedTabItem);
                             }
                         }
@@ -705,25 +735,27 @@ export class HomeComponent implements OnDestroy{
     SelectionChanged(clickdTab: SessionTabItem) {
         if (clickdTab != null) {
             if (this.SelectedTabItem != clickdTab) {
-                this.SelectedTabItem = clickdTab;                
+                this.SelectedTabItem = clickdTab;
+                
+                    this.Tabs.forEach((item) => {
+                        item.IsSelected = false;
 
-                this.Tabs.forEach((item) => {
-                    item.IsSelected = false;
+                        if (item.SessionComponent) {
+                            item.SessionComponent.StopChangeDetection();
+                        }
+                    });
 
-                    if (item.SessionComponent) {
-                        item.SessionComponent.StopChangeDetection();
+                    this.SelectedTabItem.IsSelected = true;
+
+                    if (this.SelectedTabItem.SessionComponent) {
+                        this.SelectedTabItem.SessionComponent.StartChangeDetection();
                     }
-                });
-
-                this.SelectedTabItem.IsSelected = true;
-
-                if (this.SelectedTabItem.SessionComponent) {
-                    this.SelectedTabItem.SessionComponent.StartChangeDetection();
-                }
+                
             }
 
             if (this.SelectedTabItem.IsSessionLoaded) {
-                SessionLocator.CurrentSession = this.SelectedTabItem.SessionComponent;              
+                SessionLocator.SelectedSession = this.SelectedTabItem.SessionComponent;    
+                this.CurrentSession = SessionLocator.SelectedSession;           
             }
 
             else {
@@ -748,7 +780,9 @@ export class HomeComponent implements OnDestroy{
 
                             tabItem.IsSessionLoaded = true;
                             tabItem.SessionComponent = cmpRef.instance;
-                            SessionLocator.CurrentSession = tabItem.SessionComponent;                           
+
+                            SessionLocator.SelectedSession = tabItem.SessionComponent;
+                            this.CurrentSession = SessionLocator.SelectedSession;                      
                             cmpRef.instance.RunComponent();
 
                             if (tabItem.Index == 0) {
@@ -770,48 +804,53 @@ export class HomeComponent implements OnDestroy{
         }      
     }
 
+
+
     CloseTab(tabItem: SessionTabItem) {
-        var isNeedingConfirmation = false;
-        var tab = SessionLocator.CurrentSession.CurrentEditComponent; 
-        if (tabItem.SessionComponent.CurrentEditComponent != null) {
-            tab = tabItem.SessionComponent.CurrentEditComponent;
-            SessionLocator.CurrentSession = tabItem.SessionComponent;
-        }
-        if (tab) {
-            isNeedingConfirmation = tab.NeedCloseConfirmation();
-        }
-        if (isNeedingConfirmation) {
-            var confirmWindow = new ConfirmWindow();
-            confirmWindow.Width = 450;
-            confirmWindow.Height = 190;
-            confirmWindow.ShowCancelButton = true;
-            confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
-            confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
-            confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
-            confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(tab.ObjectTableName)));
-            confirmWindow.WindowClosed.subscribe((event: any) => {
-                if (confirmWindow.Yes) {
 
+        var ClosedTabEditComponent = tabItem.SessionComponent.CurrentEditComponent;
 
-                    if (!this.SaveCompletedEvent) {
-                        this.SaveCompletedEvent = tab.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                            if (isSaveSuccess) {
-                                this.Close(tabItem);
-                            }
+        if (ClosedTabEditComponent) {
+            if (ClosedTabEditComponent.NeedCloseConfirmation()) {
 
-                            AppTool.KillEventEmitter(this.SaveCompletedEvent);
-                            this.SaveCompletedEvent = null;
-                        });
+                this.SelectionChanged(tabItem);
+
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.IsOverAll = true;
+                confirmWindow.Width = 450;
+                confirmWindow.Height = 190;
+                confirmWindow.ShowCancelButton = true;
+                confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.DontSave");
+                confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+                confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+                confirmWindow.Show(TextCodeTranslator.Translate("General.M.ThisEntityhasunsavedchanges").replace("%Entity", TextCodeTranslator.Translate(ClosedTabEditComponent.ObjectTableName)));
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        if (!this.SaveCompletedEvent) {
+                            this.SaveCompletedEvent = ClosedTabEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                                if (isSaveSuccess) {
+                                    this.Close(tabItem);
+                                }
+
+                                AppTool.KillEventEmitter(this.SaveCompletedEvent);
+                                this.SaveCompletedEvent = null;
+                            });
+                        }
+
+                        ClosedTabEditComponent.SaveChanges();
                     }
 
-                    tab.SaveChanges();
-                }
+                    else if (confirmWindow.No) {
+                        this.Close(tabItem);
+                    }
+                });
+            }
 
-                else if (confirmWindow.No) {
-                    this.Close(tabItem);
-                }
-            });
+            else {
+                this.Close(tabItem);
+            }
         }
+
         else {
             this.Close(tabItem);
         }
@@ -846,7 +885,7 @@ export class HomeComponent implements OnDestroy{
     }
 
     RunSignupWizard() {
-        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/Maintenance/Wizard/WizardBaseComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load("./Infrastructure/Components/Maintenance/Wizard/WizardBaseComponent", this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 //cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.RunComponent();
@@ -878,8 +917,8 @@ export class HomeComponent implements OnDestroy{
         logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/TranslationLabels/SelectLanguagesComponent');
     }
     SignatureClicked() {
-        if (!SessionLocator.CurrentSession.IsOpenSignatureWindowFromSetting) {
-            SessionLocator.CurrentSession.IsOpenSignatureWindowFromSetting = true;
+        if (!this.CurrentSession.IsOpenSignatureWindowFromSetting) {
+            this.CurrentSession.IsOpenSignatureWindowFromSetting = true;
             this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
 
                 var windowArgs: any = {};
@@ -902,7 +941,7 @@ export class HomeComponent implements OnDestroy{
                 logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
 
                 logWindow.WindowClosed.subscribe(($event: any) => {
-                    SessionLocator.CurrentSession.IsOpenSignatureWindowFromSetting = false;
+                    this.CurrentSession.IsOpenSignatureWindowFromSetting = false;
 
                 });
             });
@@ -912,8 +951,8 @@ export class HomeComponent implements OnDestroy{
         }
     }
     ChangePasswordClicked() {
-        if (!SessionLocator.CurrentSession.IsOpenChangePasswordWindowFromSetting) {
-            SessionLocator.CurrentSession.IsOpenChangePasswordWindowFromSetting = true;
+        if (!this.CurrentSession.IsOpenChangePasswordWindowFromSetting) {
+            this.CurrentSession.IsOpenChangePasswordWindowFromSetting = true;
             var logWindow = new LogitudeWindow();
                 logWindow.Width = 600;
                 logWindow.Height = 400;
@@ -924,7 +963,7 @@ export class HomeComponent implements OnDestroy{
             });
 
             logWindow.WindowClosed.subscribe(($event: any) => {
-                SessionLocator.CurrentSession.IsOpenChangePasswordWindowFromSetting = false;
+                this.CurrentSession.IsOpenChangePasswordWindowFromSetting = false;
 
             });
 
@@ -943,8 +982,8 @@ export class HomeComponent implements OnDestroy{
     DataBackupClicked() {
 
 
-        if (!SessionLocator.CurrentSession.IsOpenDatabaseBackupWindowFromSetting) {
-            SessionLocator.CurrentSession.IsOpenDatabaseBackupWindowFromSetting = true;
+        if (!this.CurrentSession.IsOpenDatabaseBackupWindowFromSetting) {
+            this.CurrentSession.IsOpenDatabaseBackupWindowFromSetting = true;
             var logWindow = new LogitudeWindow();
             logWindow.Width = 450;
             logWindow.Height = 140;
@@ -953,7 +992,7 @@ export class HomeComponent implements OnDestroy{
             logWindow.IsShowCloseButton = true;
             logWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/DatabaseBackupComponent');
             logWindow.WindowClosed.subscribe(($event: any) => {
-                SessionLocator.CurrentSession.IsOpenDatabaseBackupWindowFromSetting = false;
+                this.CurrentSession.IsOpenDatabaseBackupWindowFromSetting = false;
 
             });
         }
@@ -964,15 +1003,15 @@ export class HomeComponent implements OnDestroy{
 
     DocumentsBackupClicked() {
 
-        if (!SessionLocator.CurrentSession.IsOpenDocumentBackupWindowFromSetting) {
-            SessionLocator.CurrentSession.IsOpenDocumentBackupWindowFromSetting = true;
+        if (!this.CurrentSession.IsOpenDocumentBackupWindowFromSetting) {
+            this.CurrentSession.IsOpenDocumentBackupWindowFromSetting = true;
             var logWindow = new LogitudeWindow();
             logWindow.Width = 1360;
             logWindow.Height = 600;
             logWindow.Title = "Documents Backup";
             logWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentsBackup/DocumentFilingBackupBatchesComponent');
             logWindow.WindowClosed.subscribe(($event: any) => {
-                SessionLocator.CurrentSession.IsOpenDocumentBackupWindowFromSetting = false;
+                this.CurrentSession.IsOpenDocumentBackupWindowFromSetting = false;
 
             });
         }
@@ -980,69 +1019,513 @@ export class HomeComponent implements OnDestroy{
     }
 
 
+    private SubscribeToLogitude(EmptyOrError: boolean, contractId: string, temp) {
+
+        var storeid: string = "543002";
+        var isSandbox = false;
+        if (!AppTool.IsNullOrEmpty(temp.ContractId) && (EmptyOrError || AppTool.IsNullOrEmpty(contractId))) {
+            contractId = temp.ContractId;
+            storeid = temp.Storeid;
+            temp = temp.Token;
+            isSandbox = true;
+        }
+
+        else if (EmptyOrError || AppTool.IsNullOrEmpty(contractId)) {
+            temp = temp.Token;
+
+            if (SessionLocator.TenantManagementJS.CountryName == "Israel") {
+                contractId = "3256464";
+            }
+            else {
+                contractId = "3148346";
+            }
+        }
+        else {
+            temp = temp.Token;
+        }
+
+        var link = "";
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapContractQTY;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://checkout.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+
+        }
+        if (AppTool.IsNullOrEmpty(temp)) {
+            if (isSandbox) {
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;;
+            }
+            else {
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;;;
+            }
+        }
+
+        var win = window.open(link, '_blank');
+        win.focus();
+    }
+
+
+    private SubscribeToAWB(EmptyOrError: boolean, contractId: string, temp) {
+
+        var storeId: string = "543002";
+        var isSandbox = false;
+        if (!AppTool.IsNullOrEmpty(temp.ContractId) && (EmptyOrError || AppTool.IsNullOrEmpty(contractId) )) {
+            contractId = temp.ContractId;
+            storeId = temp.Storeid;
+            temp = temp.Token;
+            isSandbox = true;
+        }
+
+        else if (EmptyOrError || AppTool.IsNullOrEmpty(contractId)) {
+            temp = temp.Token;
+
+            contractId = "3285402";
+        }
+
+        else {
+            temp = temp.Token;
+        }
+
+        var link = "";
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBContractQTY;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://checkout.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+
+        }
+        if (AppTool.IsNullOrEmpty(temp)) {
+            if (isSandbox) {
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+            else {
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+        }
+
+        var win = window.open(link, '_blank');
+        win.focus();
+    }
+
+
+
+    private BuyToAWB(EmptyOrError: boolean, contractId: string, temp) {
+
+        var storeId: string = "543002";
+        var isSandbox = false;
+        if (!AppTool.IsNullOrEmpty(temp.ContractId) && (EmptyOrError || AppTool.IsNullOrEmpty(contractId))) {
+            contractId = temp.ContractId;
+            storeId = temp.Storeid;
+            temp = temp.Token;
+            isSandbox = true;
+        }
+
+
+        else if (EmptyOrError || AppTool.IsNullOrEmpty(contractId)) {
+            temp = temp.Token;
+
+            contractId = "3233898";
+        }
+
+        else {
+            temp = temp.Token;
+        }
+        var link = "";
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapEAWBSContractQTY;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://checkout.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+
+        }
+        if (AppTool.IsNullOrEmpty(temp)) {
+            if (isSandbox) {
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+            else {
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+        }
+
+        var win = window.open(link, '_blank');
+        win.focus();
+    }
+
+
+    private OneTimeBuy(EmptyOrError: boolean, contractId: string, temp) {
+        var storeId: string = "543002";
+        var isSandbox = false;
+        if (!AppTool.IsNullOrEmpty(temp.ContractId) && (EmptyOrError || AppTool.IsNullOrEmpty(contractId))) {
+            contractId = temp.ContractId;
+            storeId = temp.Storeid;
+            temp = temp.Token;
+            isSandbox = true;
+        }
+
+        else if (EmptyOrError || AppTool.IsNullOrEmpty(contractId)) {
+            temp = temp.Token;
+            if (SessionLocator.TenantManagementJS.CountryName == "Israel") {
+                contractId = "3529380";
+            }
+            else {
+                contractId = "3300952";
+            }
+        }
+
+        else {
+            temp = temp.Token;
+        }
+
+
+        var link = "";
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapOneTimeContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapOneTimeContractQTY;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://checkout.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+
+        }
+        if (AppTool.IsNullOrEmpty(temp)) {
+            if (isSandbox) {
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+            else {
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId  + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+        }
+
+        var win = window.open(link, '_blank');
+        win.focus();
+    }
+
+
+    private SubscribeToCRM(EmptyOrError: boolean, contractId: string, temp) {
+        var storeId: string = "543002";
+        var isSandbox = false;
+        if (!AppTool.IsNullOrEmpty(temp.ContractId) && (EmptyOrError || AppTool.IsNullOrEmpty(contractId))) {
+            contractId = temp.ContractId;
+            storeId = temp.Storeid;
+            temp = temp.Token;
+            isSandbox = true;
+        }
+        else if (EmptyOrError || AppTool.IsNullOrEmpty(contractId)) {
+            temp = temp.Token;
+
+            if (SessionLocator.TenantManagementJS.CountryName == "Israel") {
+                contractId = "3529378";
+            }
+            else {
+                contractId = "3280846";
+            }
+        }
+        else {
+            temp = temp.Token;
+        }
+
+        var link = "";
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapCRMContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapCRMContractQTY;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://checkout.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+
+        }
+        if (AppTool.IsNullOrEmpty(temp)) {
+            if (isSandbox) {
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+            else {
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+        }
+
+        var win = window.open(link, '_blank');
+        win.focus();
+    }
+
+
+    private SubscribeToInttra(EmptyOrError: boolean, contractId: string, temp) {
+        var storeId: string = "543002";
+        var isSandbox = false;
+        if (!AppTool.IsNullOrEmpty(temp.ContractId) && (EmptyOrError || AppTool.IsNullOrEmpty(contractId))) {
+            contractId = temp.ContractId;
+            storeId = temp.Storeid;
+            temp = temp.Token;
+            isSandbox = true;
+        }
+        else if (EmptyOrError || AppTool.IsNullOrEmpty(contractId)) {
+            temp = temp.Token;
+                contractId = "3542118";            
+        }
+        else {
+            temp = temp.Token;
+        }
+
+        var link = "";
+        var numberofUsers: number = AppTool.IsNullOrZero(SessionLocator.TenantManagementJS.BluesnapInttraStockContractQTY) ? 1 : SessionLocator.TenantManagementJS.BluesnapInttraStockContractQTY;
+        if (isSandbox) {
+            var link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+        }
+        else {
+            var link = "https://checkout.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+
+        }
+        if (AppTool.IsNullOrEmpty(temp)) {
+            if (isSandbox) {
+                link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+            else {
+                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+            }
+        }
+
+        var win = window.open(link, '_blank');
+        win.focus();
+    }
+
+
 
 
     SubscribeClicked(code: string) {
-        console.log(code);
         var link: string = "";
-        switch (code) {
-            case "LOG":
-                {                    
-                    var myService: CommonDomainService = new CommonDomainService();
-                    myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount).subscribe((myResult) => {
-                        var temp = myResult.Result;
-                        this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
-                        var contractId: string = SessionLocator.TenantManagementJS.BluesnapContractId;
-                        if (AppTool.IsNullOrEmpty(contractId)) {
-                            if (SessionLocator.TenantManagementJS.CountryName == "Israel") {
-                                contractId = "3256464";
+        var EmptyOrError: boolean = true;
+
+            switch (code) {
+                case "LOG":
+                    {
+                        var myService: CommonDomainService = new CommonDomainService();
+                        this.CurrentSession.StartBusyIndicatorLoading();
+
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                            var temp: BluesnapParameters = myResult.Result;
+                            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+                            var contractId: string = SessionLocator.TenantManagementJS.BluesnapContractId;
+                            if (!AppTool.IsNullOrEmpty(contractId)) {
+                                this.BluesnapContractService.get(contractId).subscribe((res: ServiceResponse) => {
+                                    this.CurrentSession.StopBusyIndicator();
+                                    if (res) {
+                                        if (!res.HasError) {
+                                            contractId = res.Result.ContractId;
+                                            EmptyOrError = false;
+                                            this.SubscribeToLogitude(EmptyOrError, contractId, temp);
+                                        }
+                                        else {
+                                            this.SubscribeToLogitude(EmptyOrError, null, temp);
+
+                                        }
+                                    }
+                                    else {
+                                        this.SubscribeToLogitude(EmptyOrError, null, temp);
+                                    }
+                                });
                             }
                             else {
-                                contractId = "3507474";
+                                this.CurrentSession.StopBusyIndicator();
+                                this.SubscribeToLogitude(EmptyOrError, contractId,temp);
                             }
-                        }
+                         
+                        });
+                        break;
+                    }
 
-                        var numberofUsers: number = SessionLocator.TenantManagementJS.NumberOfUsers;                       
-                        var link = "https://cp.bluesnap.com/buynow/checkout?storeId=543002&sku" + 3507474 + "=" + numberofUsers + "&currency=USD&enc=" + temp + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                case "AWB":
+                    {
+                        this.CurrentSession.StartBusyIndicatorLoading();
 
-                        if (AppTool.IsNullOrEmpty(temp)) {
-                            link = "https://www.bluesnap.com/jsp/buynow.jsp?contractId=3148346&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant + "&quantity=" + SessionLocator.TenantManagementJS.NumberOfUsers;
-                        }
-                        
-                        var win = window.open(link, '_blank');
-                        win.focus();
-                    });        
-                    break;
-                }
+                        var myService: CommonDomainService = new CommonDomainService();
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                            var temp: BluesnapParameters = myResult.Result;
+                            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+                            var contractId: string = SessionLocator.TenantManagementJS.BluesnapEAWBContractId;
+                            if (!AppTool.IsNullOrEmpty(contractId)) {
+                                this.BluesnapContractService.get(contractId).subscribe((res: ServiceResponse) => {
+                                    this.CurrentSession.StopBusyIndicator();
+                                    if (res) {
+                                        if (!res.HasError) {
+                                            contractId = res.Result.ContractId;
+                                            EmptyOrError = false;
+                                            this.SubscribeToAWB(EmptyOrError, contractId, temp);
+                                        }
+                                        else {
+                                            this.SubscribeToAWB(EmptyOrError, null, temp);
 
-            case "AWB":
-                {
+                                        }
+                                    }
+                                    else {
+                                        this.SubscribeToAWB(EmptyOrError, null, temp);
+                                    }
+                                });
+                            }
+                            else {
+                                this.CurrentSession.StopBusyIndicator();
+                                this.SubscribeToAWB(EmptyOrError, contractId, temp);
+                            }
+                        });
+                        break;                        
+                    }
 
-                    link = "https://www.bluesnap.com/jsp/buynow.jsp?contractId=3285402&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant + "&quantity=" + SessionLocator.TenantManagementJS.NumberOfUsers;
-                    var win = window.open(link, '_blank');
-                    win.focus();
+                case "BUY":
+                    {
+                        this.CurrentSession.StartBusyIndicatorLoading();
 
-                    break;
-                }
+                        var myService: CommonDomainService = new CommonDomainService();
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                            var temp: BluesnapParameters = myResult.Result;
+                            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+                            var contractId: string = SessionLocator.TenantManagementJS.BluesnapEAWBSContractId;
 
-            case "BUY":
-                {
-                    link = "https://www.bluesnap.com/jsp/buynow.jsp?contractId=3233898&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant + "&quantity=1";
-                    var win = window.open(link, '_blank');
-                    win.focus();
+                            if (!AppTool.IsNullOrEmpty(contractId)) {
+                                this.BluesnapContractService.get(contractId).subscribe((res: ServiceResponse) => {
+                                    this.CurrentSession.StopBusyIndicator();
+                                    if (res) {
+                                        if (!res.HasError) {
+                                            contractId = res.Result.ContractId;
+                                            EmptyOrError = false;
+                                            this.BuyToAWB(EmptyOrError, contractId, temp);
 
-                    break;
-                }
+                                        }
+                                        else {
+                                            this.BuyToAWB(EmptyOrError, null, temp);
+
+                                        }
+                                    }
+                                    else {
+                                        this.BuyToAWB(EmptyOrError, null, temp);
+                                    }
+                                });
+                            }
+                            else {
+                                this.CurrentSession.StopBusyIndicator();
+                                this.BuyToAWB(EmptyOrError, contractId, temp);
+
+                            }
+
+                          
+                        });
+                        break;
+                    }
+
+
+
+                case "CRM":
+                    {
+                        this.CurrentSession.StartBusyIndicatorLoading();
+
+                        var myService: CommonDomainService = new CommonDomainService();
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                            var temp: BluesnapParameters= myResult.Result;
+                            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+                            var contractId: string = SessionLocator.TenantManagementJS.BluesnapCRMContractId;
+                            if (!AppTool.IsNullOrEmpty(contractId)) {
+                                this.BluesnapContractService.get(contractId).subscribe((res: ServiceResponse) => {
+                                    this.CurrentSession.StopBusyIndicator();
+                                    if (res) {
+                                        if (!res.HasError) {
+                                            contractId = res.Result.ContractId;
+                                            EmptyOrError = false;
+                                            this.SubscribeToCRM(EmptyOrError, contractId, temp);
+                                        }
+                                        else {
+                                            this.SubscribeToCRM(EmptyOrError, null, temp);
+
+                                        }
+                                    }                                        
+                                        else {
+                                        this.SubscribeToCRM(EmptyOrError, null, temp);
+                                        }
+                                    
+                                });
+                            }
+                            else {
+                                this.CurrentSession.StopBusyIndicator();
+                                this.SubscribeToCRM(EmptyOrError, contractId, temp);
+
+                            }                          
+                        });
+                        break;
+                    }
+
+
+
+                case "OTP":
+                    {
+                        this.CurrentSession.StartBusyIndicatorLoading();
+
+                        var myService: CommonDomainService = new CommonDomainService();
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                            this.CurrentSession.StopBusyIndicator();
+                            var temp: BluesnapParameters = myResult.Result;
+                            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+                            var contractId: string = SessionLocator.TenantManagementJS.BluesnapOneTimeContract;
+                            if (!AppTool.IsNullOrEmpty(contractId)) {
+                                EmptyOrError = false;
+                                this.OneTimeBuy(EmptyOrError, contractId, temp);                                    
+                            }
+                            else {
+                                this.CurrentSession.StopBusyIndicator();
+                                this.OneTimeBuy(EmptyOrError, contractId, temp);
+                            }
+                         
+                        });
+                        break;
+                    }
+
+
+                case "INT":
+                    {
+                        this.CurrentSession.StartBusyIndicatorLoading();
+
+                        var myService: CommonDomainService = new CommonDomainService();
+                        myService.GetBlueSnapSecretToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
+                            var temp: BluesnapParameters = myResult.Result;
+                            this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
+                            var contractId: string = SessionLocator.TenantManagementJS.BluesnapInttraStockContractId;
+                            if (!AppTool.IsNullOrEmpty(contractId)) {
+                                this.BluesnapContractService.get(contractId).subscribe((res: ServiceResponse) => {
+                                    this.CurrentSession.StopBusyIndicator();
+                                    if (res) {
+                                        if (!res.HasError) {
+                                            contractId = res.Result.ContractId;
+                                            EmptyOrError = false;
+                                            this.SubscribeToInttra(EmptyOrError, contractId, temp);
+                                        }
+                                        else {
+                                            this.SubscribeToInttra(EmptyOrError, null, temp);
+
+                                        }
+                                    }
+                                    else {
+                                        this.SubscribeToInttra(EmptyOrError, null, temp);
+                                    }
+
+                                });
+                            }
+                            else {
+                                this.CurrentSession.StopBusyIndicator();
+                                this.SubscribeToInttra(EmptyOrError, contractId, temp);
+
+                            }
+                        });
+                        break;
+                    }
+            
         }
     }
-    ManageBluesnapAccountClicked() {
+    public ManageBluesnapAccountClicked() {
 
 
         var myService: CommonDomainService = new CommonDomainService();
-        myService.GetBlueSnapToken(SessionLocator.TenantManagementJS.BluesnapAccount).subscribe((myResult) => {
+        myService.GetBlueSnapToken(SessionLocator.TenantManagementJS.BluesnapAccount, SessionLocator.TenantManagementJS.CountryName).subscribe((myResult) => {
             var temp = myResult.Result;
+            temp = temp.Token;
             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
-            var link = "https://cp.bluesnap.com/jsp/account_login.jsp";
+            var link = "https://checkout.bluesnap.com/jsp/account_login.jsp";
             if (!AppTool.IsNullOrEmpty(temp)) {         
                 link = "https://www.bluesnap.com/jsp/entrance.jsp?target=cp&token=" + temp + "&pageToShow=my_account.jsp"
             }
@@ -1064,16 +1547,57 @@ export class HomeComponent implements OnDestroy{
 
         this.SignoutCompleted.emit("event from child");
     }
+
+    public IsApplicationBlocked: boolean = false;
     SignoutClickedToBlockScreen() {
-        SessionLocator.Index = 0;
+        this.IsApplicationBlocked = true;
+        //SessionLocator.Index = 0;
 
-        SessionLocator.AllSessions.forEach((item) => {
-            item.DestroySession();
-        });
+        //SessionLocator.AllSessions.forEach((item) => {
+        //    item.DestroyMenuReferences();
+        //    item.DestroyListComponentReferences();
+        //    item.MainMenuComponent.BlockScreenLoad();
+        //});
 
-        this.SignoutCompleted.emit('Block');
+        if (this.Tabs.length > 1) {
+            for (var i = this.Tabs.length - 1; i > 0; i--) {
+
+                var item: SessionTabItem = this.Tabs[i];
+                this.Tabs.splice(i, 1);
+                item.SessionComponent.DestroySession();
+            }
+        }
+
+        this.SelectionChanged(this.Tabs[0]);
+
+        this.Tabs[0].SessionComponent.MainMenuComponent.BlockScreenLoad();
+        
+
+       // this.SignoutCompleted.emit('Block');
 
     }
+    
+    Clos555e(tabItem: SessionTabItem) {
+
+        var itemIndex = this.Tabs.indexOf(tabItem);
+        if (itemIndex > -1) {
+
+            this.Tabs.splice(itemIndex, 1);
+
+            if (tabItem.IsSelected) {
+
+                this.SelectionChanged(this.Tabs[this.Tabs.length - 1]);
+            }
+
+            tabItem.SessionComponent.DestroySession();
+            tabItem = null;
+
+            if (this.Tabs.length <= 4) {
+                if (!this.IsShowLastSuccessfulLoginComponent) this.IsShowLastSuccessfulLoginComponent = true;
+            }
+        }
+    }
+
     OnClearCache() {
         window.ObjectFields = [];
         window.TextCodes = [];
@@ -1202,11 +1726,23 @@ export class HomeComponent implements OnDestroy{
         let cpath: string = path ? `; path=${path}` : '';
         document.cookie = `${name}=${value}; ${expires}${cpath}`;
     }
+    
+    ViewReleaseNotes() {
+        window.open(ObjectsLocator.GlobalSetting.ReleaseNotesURL);
+    }
 
+    HideReleaseMessageClicked() {        
+        this.ShowNewReleaseToolTip = false;
 
+        var service: UserExtendedPMService = new UserExtendedPMService();
+        service.AddUserToReleaseNotesUsers(SessionLocator.LoggedUserId).subscribe((response: ServiceResponse) => {            
+            if (response) {
+                if (!response.HasError) {
 
-
-
+                }
+            }
+        });
+    }
 }
 
 export class SessionTabItem {
@@ -1258,6 +1794,22 @@ export class SessionTabItem {
     SetSessionTabHeader(myHeader: string) {
         this.Header = myHeader;
     }
+}
+
+export class BluesnapParameters {
+    private token: string;
+    public get Token() { return this.token; }
+    public set Token(value: string) { this.token = value; }
+
+    private storeid: string;
+    public get Storeid() { return this.storeid; }
+    public set Storeid(value: string) { this.storeid = value; }
+
+
+    private contractId: string;
+    public get ContractId() { return this.contractId; }
+    public set ContractId(value: string) { this.contractId = value; }
+
 }
 export class TenantUserDataClass {
     private id: string;

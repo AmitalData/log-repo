@@ -334,7 +334,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Transshipment3CarrierNumber = oldEntity.Transshipment3CarrierNumber,
                 Transshipment3CarrierCode = oldEntity.Transshipment3CarrierCode,
                 Transshipment3CarrierPrefix = oldEntity.Transshipment3CarrierPrefix,
-               
+
                 Field1 = oldEntity.Field1,
                 Field2 = oldEntity.Field2,
                 Field3 = oldEntity.Field3,
@@ -375,6 +375,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 Field38 = oldEntity.Field38,
                 Field39 = oldEntity.Field39,
                 Field40 = oldEntity.Field40,
+
+                ProjectNumber = oldEntity.ProjectNumber,
             };
 
             this.CopyPartners(entityPM, oldEntity);

@@ -13,6 +13,7 @@ import {FontTool, DateTool} from '../../../../Infrastructure/Tools';
 
 export class StockWindowComponent {
     public ItemsSource: MessagingStockListItem[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.ItemsSource = [];
         this.LoadData();
@@ -23,7 +24,7 @@ export class StockWindowComponent {
     private LoadData() {
 
         this.DataSource = [];               
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
             
         if (this.myDomainService == null) {
             this.myDomainService = new ShipmentDomainService();
@@ -32,7 +33,7 @@ export class StockWindowComponent {
         this.myDomainService.GetLoggedTenantMessagingStockLists().subscribe((myResult:any) => {
             this.DataSource = myResult;
             this.BuildItemsSource();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -75,7 +76,7 @@ export class StockWindowComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 

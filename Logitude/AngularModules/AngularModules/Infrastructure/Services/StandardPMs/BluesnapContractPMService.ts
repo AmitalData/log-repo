@@ -16,7 +16,7 @@ import {ServiceHelper} from '../../Utilities/ServiceHelper';
 import {SessionInfo} from '../../Utilities/SessionInfo';
 import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
-
+import { BluesnapContractPMInitService } from '../../EntityPMInitServices/BluesnapContractPMInitService';
 import {BluesnapContractPM} from '../../EntityPMs/BluesnapContractPM';
 
 
@@ -47,8 +47,11 @@ export class BluesnapContractPMService {
                     var entity: BluesnapContractPM;
 					if(pm)
 					{
-                      entity = this.MapJsonToEntityPM(pm);
+                        entity = this.MapJsonToEntityPM(pm);
+                        BluesnapContractPMInitService.InitValues(entity, false);
+                        BluesnapContractPMInitService.ApplyUIPoperties(entity, false);
                     }
+
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

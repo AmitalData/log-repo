@@ -6,33 +6,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.BL.CommonDataModel.APIDataContract.;
-using Logitude.BL.QuoteModel.APIDataContract.; 
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.QuoteModel.APIDataContract.ApiV1; 
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.APIDataContract.;
-using Logitude.BL.ShipmentsModel.APIDataContract.;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using System.Xml.Serialization;
 
-namespace Logitude.Accounting.BL.APIDataContract.
+namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 {
    
     public class JournalLine
     {
 
 	    
-    public string JournalId { get; set; }
+    public string JournalNumber { get; set; }
     
     public int Line { get; set; }
     
     public int Tenant { get; set; }
     
-    public GLAccount DebitControlAccount { get; set; }
+    public string DebitControlAccount { get; set; }
     
-    public GLAccount DebitAccount { get; set; }
+    public string DebitAccount { get; set; }
     
-    public GLAccount CreditControlAccount { get; set; }
+    public string CreditControlAccount { get; set; }
     
-    public GLAccount CreditAccount { get; set; }
+    public string CreditAccount { get; set; }
     
     public DateTime DocumentDate { get; set; }
     
@@ -54,16 +54,12 @@ namespace Logitude.Accounting.BL.APIDataContract.
     
     public string Reference3 { get; set; }
     
-    public string CreditAccountNumber { get; set; }
-    
-    public string DebitAccountNumber { get; set; }
-    
     public string Notes { get; set; }
     
     public decimal? ExternalOpenAmount { get; set; }
     
-    public bool? IsCreditAccountMulti { get; set; }
+    public string ActionCode { get; set; }
     
-    public bool? IsDebitAccountMulti { get; set; }
+    public string ExternalReconcileNumber { get; set; }
     }
 } 

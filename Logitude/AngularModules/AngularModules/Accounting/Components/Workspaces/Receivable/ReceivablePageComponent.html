@@ -7,6 +7,7 @@
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
         border-radius: 2px;
+        color:white;
     }
     .red{
         color: #b91a1a !important;
@@ -52,14 +53,14 @@
 
     <tr>
         <td>
-            <table>
+            <table *ngIf="isReady">
                 <tr>
                     <!-- Queries -->
                     <td style="width:265px; min-width: 200px;">
                         <table>
                             <tr class="SectionHeader">
                                 <td>
-                                    <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.CustomersQueries' | TextCodeTranslationPipe}}</label>
+                                    <label float-start style="margin-right: 10px;">{{'Accounting.General.O.CustomersQueries' | TextCodeTranslationPipe}}</label>
                                 </td>
                             </tr>
 
@@ -129,7 +130,7 @@
                                                     <div tabindex="0" class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
                                                         <label>{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</label>
                                                         <img src="./Images/ToggleIcon.png" />
-                                                        <div  [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'" class="ToggleButtonMenu" style="width: 110px;">
+                                                        <div  [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'" class="ToggleButtonMenu" style="width: 120px;">
                                                             <button (click)="NewGeneralARInvoice('IN')">{{'Accounting.General.O.NewInvoice' | TextCodeTranslationPipe}} </button>
                                                             <button (click)="NewGeneralARInvoice('CD')">{{'Accounting.General.O.NewCreditNote' | TextCodeTranslationPipe}} </button>
                                                         </div>
@@ -211,7 +212,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td>
-                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{RecentGLAccountsCount}} {{'Accounting.General.O.RecentCustomers' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{RecentGLAccountsCount}} {{'Accounting.General.O.RecentCustomers' | TextCodeTranslationPipe}}</label>
                                             </td>
                                         </tr>
 
@@ -319,7 +320,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td colspan="3">
-                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.AgingGraph' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{'Accounting.General.O.AgingGraph' | TextCodeTranslationPipe}}</label>
 
                                             </td>
                                         </tr>
@@ -376,7 +377,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td style="padding: 0px 5px;">
-                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.Top10Debtors' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{'Accounting.General.O.Top10Debtors' | TextCodeTranslationPipe}}</label>
                                                 <div [style.float]="isRTL ? 'left' : 'right'" style="width: 160px; float: right;">
                                                     <!--<ComboBox [ItemsSource]="DeptorsFiltersList"
                                                               [SelectedItem]="SelectedDeptorsFilter"
@@ -414,7 +415,7 @@
                                                                             <div></div>
                                                                         </td>
 
-                                                                        <td rowspan="2" style="float: right; font-size: 16px; color:#e15a00;padding-top: 5px;">
+                                                                        <td rowspan="2" style="float: right; font-size: 16px; color:#00a24d;padding-top: 5px;">
                                                                             {{(SelectedDeptorsFilter.EnglishName == 'Balance Due' ? item.LocalBalanceInDue : item.BalanceInLocalCurrency) | NumbersPipe:'n2'}}
                                                                         </td>
 

@@ -38,6 +38,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool HasException { get; set; }
         [Column("DoneDateTimeUTC")]
 	    public DateTime? DoneDateTimeUTC { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 

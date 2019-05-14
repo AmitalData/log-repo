@@ -1,4 +1,4 @@
-﻿
+
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import 'rxjs/add/operator/map';
 import {Component, OnInit }  from '@angular/core';
@@ -29,6 +29,7 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
     SelectedAutomationCondationOrList: AutomationConditionViewModel;
     DataContext: DelayAutomationconditionsComponent = this;
     addEditAutomationsComponent: AddEditAutomationsComponent;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -71,7 +72,7 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveButtonClicked() {
@@ -80,7 +81,6 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
 
         this.AutomationCondationAndList.forEach((item) => {
            
-                item.CurrentEntityPM.AutomationsId = this.addEditAutomationsComponent.CurrentEntityPM.Id;
                 item.CurrentEntityPM.UpdateDate = this.addEditAutomationsComponent.CurrentEntityPM.UpdateDate;
                 item.CurrentEntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
                 automationConditionList.push(item.CurrentEntityPM);
@@ -89,7 +89,6 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
 
         this.AutomationCondationOrList.forEach((item) => {
 
-            item.CurrentEntityPM.AutomationsId = this.addEditAutomationsComponent.CurrentEntityPM.Id;
             item.CurrentEntityPM.UpdateDate = this.addEditAutomationsComponent.CurrentEntityPM.UpdateDate;
             item.CurrentEntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
             automationConditionList.push(item.CurrentEntityPM);
@@ -99,7 +98,7 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
 
       this.addEditAutomationsComponent.AutomatedBackupClass.DelayAautomationConditionLists = automationConditionList;
  
-       SessionLocator.CurrentSession.CloseCurrentWindow();
+       this.CurrentSession.CloseCurrentWindow();
     }
 
     AddAutomationConditionMethod(conditionType: string) {
@@ -114,7 +113,6 @@ export class DelayAutomationconditionsComponent extends BaseComponent implements
         automationConditionPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
         automationConditionPM.OperatorCode = "Equals";
         automationConditionPM.ObjectFieldId = "";
-        automationConditionPM.AutomationsId = this.addEditAutomationsComponent.CurrentEntityPM.Id;
 
 
         if (conditionType == "And") {

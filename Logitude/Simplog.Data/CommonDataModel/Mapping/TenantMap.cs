@@ -61,6 +61,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CustomerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IsCustomerTenantShare).IsRequired();
             this.Property(t => t.CustomerTenantShareImportFile).IsRequired();
+            this.Property(t => t.CustomerTenantShareExportFile).IsRequired();
             this.Property(t => t.AllowAgentInCustomersLOV).IsRequired();
             this.Property(t => t.LogBoxAdminUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SCACCode).HasMaxLength(4).IsUnicode(false);
@@ -69,6 +70,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StorageEncryptionKey).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.TemperatureUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.DefaultSLAId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.AutoArchiveOnInvoice).IsRequired();
+            this.Property(t => t.StockTypeCode)
+         .HasMaxLength(15)
+         .IsUnicode(false);
+            this.Property(t => t.EcommerceSupportEmail).HasMaxLength(50).IsUnicode(false); 
+
 
             this.ToTable("Tenants");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -107,6 +114,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CustomerId).HasColumnName("CustomerId");
             this.Property(t => t.IsCustomerTenantShare).HasColumnName("IsCustomerTenantShare");
             this.Property(t => t.CustomerTenantShareImportFile).HasColumnName("CustomerTenantShareImportFile");
+            this.Property(t => t.CustomerTenantShareExportFile).HasColumnName("CustomerTenantShareExportFile");
             this.Property(t => t.IsNotesRightToLeftEnabled).HasColumnName("IsNotesRightToLeftEnabled");
             this.Property(t => t.IsInternalTicketByDefault).HasColumnName("IsInternalTicketByDefault");
             this.Property(t => t.IsFullTextSearchEnabled).HasColumnName("IsFullTextSearchEnabled");
@@ -119,7 +127,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.TemperatureUnitCode).HasColumnName("TemperatureUnitCode");
             this.Property(t => t.DefaultSLAId).HasColumnName("DefaultSLAId");
             this.Property(t => t.StockTypeCode).HasColumnName("StockTypeCode");
-            
+            this.Property(t => t.AutoArchiveOnInvoice).HasColumnName("AutoArchiveOnInvoice");
+            this.Property(t => t.NumberFormatCode).HasColumnName("NumberFormatCode");
+            this.Property(t => t.EcommerceSupportEmail).HasColumnName("EcommerceSupportEmail");
+
+
+
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -210,6 +223,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.VatFormatType).WithMany().HasForeignKey(d => d.VatFormatTypeCode);
             this.HasOptional(t => t.VatFormatCountry).WithMany().HasForeignKey(d => d.VatFormatCountryId);
             this.HasOptional(t => t.TemperatureUnit).WithMany().HasForeignKey(d => d.TemperatureUnitCode);
+            this.HasOptional(t => t.NumberFormat).WithMany().HasForeignKey(d => d.NumberFormatCode);
+
         }
     }
 }

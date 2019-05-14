@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 declare var SelectingElement: any;
 import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, ApplicationRef, ViewChild} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
@@ -129,14 +129,15 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
     @Output() OriginalText = new EventEmitter();
 
     @Input() DebounceTime: number;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private ngzone: NgZone, private cd: ChangeDetectorRef,
         private appref: ApplicationRef) {
         this.show = false;
         this.IdentityKey = AppTool.GetNewGuid();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
 
-        //SessionLocator.CurrentSession.isShiftClicked = false;
-        //SessionLocator.CurrentSession.isTabWithShiftClicked = false;
+        //this.CurrentSession.isShiftClicked = false;
+        //this.CurrentSession.isTabWithShiftClicked = false;
     }
     keydown: boolean;
     isCtrlKeyDown: boolean = false;
@@ -197,7 +198,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
         //                            //    if (element) {
         //                            //        element.focus();
         //                            //    }
-        //                            //    SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true });
+        //                            //    this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true });
         //                            //}
         //                        }
         //                    });
@@ -223,7 +224,7 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
             var element = document.getElementById(this.InputId);
             element.focus();
 
-            SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IdentityKey: this.IdentityKey });
+            this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IdentityKey: this.IdentityKey });
             this.timerToken = setTimeout(() => {
                 SelectingElement(element);
             }, 1);
@@ -280,17 +281,17 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.SetControlIds(baseIdCombination);
 
         if (this.FocusOnMe) {// it means it is inside a grid.
-            this.CopyValueSubs= SessionLocator.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
+            this.CopyValueSubs= this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
                 if (id == this.InputId) {
-                    //SessionLocator.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
-                    this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
-                    SessionLocator.CurrentSession.CopiedCell = null;
+                    //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+                    this.CurrentSession.CopiedCell = null;
                 }
             });
 
-            if (SessionLocator.CurrentSession.CopiedCell) {
-                //this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
-                //SessionLocator.CurrentSession.CopiedCell = null;
+            if (this.CurrentSession.CopiedCell) {
+                //this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+                //this.CurrentSession.CopiedCell = null;
             }
         }
 
@@ -482,8 +483,8 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
         var CTRL = 17;
         var key = event.keyCode;
         //if (key == SHIFT) {
-        //    SessionLocator.CurrentSession.isShiftClicked = false;
-        //    SessionLocator.CurrentSession.isTabWithShiftClicked = false;
+        //    this.CurrentSession.isShiftClicked = false;
+        //    this.CurrentSession.isTabWithShiftClicked = false;
         //    console.log("isTabWithShiftClicked = false;")
         //}
         if (key == SHIFT) {
@@ -510,19 +511,19 @@ export class LogTextBoxV2Component implements OnInit, AfterViewInit, OnDestroy {
             if (this.FocusOnMe) {
                 //var element = document.getElementById(this.InputId);
                 //element.focus();
-                //SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true, IdentityKey: this.IdentityKey });
+                //this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true, IdentityKey: this.IdentityKey });
             }
         }
         //if (key == SHIFT) {
-        //    SessionLocator.CurrentSession.isShiftClicked = true;
+        //    this.CurrentSession.isShiftClicked = true;
         //}
         if (key == TAB) {
-            //if (SessionLocator.CurrentSession.isShiftClicked == true) {
-            //    SessionLocator.CurrentSession.isTabWithShiftClicked = true;
+            //if (this.CurrentSession.isShiftClicked == true) {
+            //    this.CurrentSession.isTabWithShiftClicked = true;
             //    //console.log("isTabWithShiftClicked = true;");
             //}
             //else {
-            //    SessionLocator.CurrentSession.AllowShiftTab = true;
+            //    this.CurrentSession.AllowShiftTab = true;
             //}
         }
         var result = this.CheckKey(key, keyChar);

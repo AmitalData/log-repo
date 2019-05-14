@@ -72,7 +72,22 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public bool PaymentFailure { get; set; }
         public DateTime? SuspendDate  { get; set; }
         public string InternalNotes { get; set; }
-        public string BluesnapContractCode { get; set; }
+        public string BluesnapContractId { get; set; }
+        public string BluesnapCRMContractId { get; set; }
+        public string BluesnapEAWBContractId { get; set; }
+        public string BluesnapEAWBSContractId { get; set; }
+        public string BluesnapOneTimeContract { get; set; }
+        public string BluesnapInttraStockContractId { get; set; }
+
+
+        public int BluesnapContractQTY { get; set; }
+        public int BluesnapCRMContractQTY { get; set; }
+        public int BluesnapEAWBContractQTY { get; set; }
+        public int BluesnapEAWBSContractQTY { get; set; }
+        public int BluesnapOneTimeContractQTY { get; set; }
+        public int BluesnapInttraStockContractQTY { get; set; }
+        
+
         public string AWBMessagesCCSTypeCode { get; set; }
         public string PIMA { get; set; }
         public bool IsEAWBOnlyDemo { get; set; }
@@ -136,8 +151,21 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         [ForeignKey("PaymentCurrencyCode")]
         public virtual PaymentCurrency PaymentCurrency { get; set; }
 
-        [ForeignKey("BluesnapContractCode")]
+        [ForeignKey("BluesnapContractId")]
         public virtual BluesnapContract BluesnapContract { get; set; }
+
+        [ForeignKey("BluesnapCRMContractId")]
+        public virtual BluesnapContract BluesnapContractCRM { get; set; }
+
+        [ForeignKey("BluesnapEAWBContractId")]
+        public virtual BluesnapContract BluesnapContractEAWB { get; set; }
+
+        [ForeignKey("BluesnapEAWBSContractId")]
+        public virtual BluesnapContract BluesnapContractEAWBS { get; set; }
+
+        [ForeignKey("BluesnapInttraStockContractId")]
+        public virtual BluesnapContract BluesnapInttraStockContract { get; set; }
+        
 
         [ForeignKey("AWBMessagesCCSTypeCode")]
         public virtual AWBMessagesCCSType AWBMessagesCCSType { get; set; }

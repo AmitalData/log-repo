@@ -17,6 +17,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
+using System.Xml.Serialization;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Server.Tools.QueueService;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -60,28 +70,44 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                 TaxReportRepository repo = new TaxReportRepository(entityPM.Tenant);
-                AccountingPeriodQueryService accountingPeriodQueryService = new AccountingPeriodQueryService(entityPM.Tenant);
-                bool exist = repo.CheckIfTaxReportExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
-                bool higherDateReportExist = repo.CheckIfTaxReportWithHigherDateExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
-                //List<AccountingPeriodList> accountingPeriods = accountingPeriodQueryService.GetAccountingPeriodListByYearAndType(entityPM.Year, "1", entityPM.Tenant);
-                ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
-                //var openMonth = accountingPeriods.Where(d => (d.ClosedMonth < entityPM.TaxReportMonth.Month && d.OpenMonth > entityPM.TaxReportMonth.Month) || d.OpenMonth == entityPM.TaxReportMonth.Month ).Any();
+                int count = repo.ReportCount(entityPM.Tenant);
 
-                bool showLocals = !contact.DontShowLocal;
-                if (exist == true)
+
+                if (count > 0)
                 {
-                    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.ReportExist", entityPM.Tenant, showLocals));
-                }
-                if (higherDateReportExist == true)
-                {
-                    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.HigherMonthReport", entityPM.Tenant, showLocals));
-                }
+                    AccountingPeriodQueryService accountingPeriodQueryService = new AccountingPeriodQueryService(entityPM.Tenant);
+                    bool exist = repo.CheckIfTaxReportExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
+                    bool previousCompletedExist = repo.CheckIfPreviousReportExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
+                    bool previousNotCompletedExist = repo.CheckIfPreviousNotCompReportExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
 
-                //if (openMonth)
-                //{
+                    bool higherDateReportExist = repo.CheckIfTaxReportWithHigherDateExist(entityPM.TaxReportMonth.Month, entityPM.Year, entityPM.Tenant);
 
-                //    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.ReportWithClosedMonth", entityPM.Tenant, showLocals));
-                //}
+                    ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
+
+                    bool showLocals = !contact.DontShowLocal;
+
+
+                    if (exist == true)
+                    {
+                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.ReportExist", entityPM.Tenant, showLocals));
+                    }
+                    if (higherDateReportExist == true)
+                    {
+                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.HigherMonthReport", entityPM.Tenant, showLocals));
+                    }
+
+                    if (previousNotCompletedExist)
+                    {
+                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.NotCompletedReportExist", entityPM.Tenant, showLocals));
+                    }
+
+                    if (!previousCompletedExist)
+                    {
+
+                        throw new ApplicationException(TranslateTextsClass.Translate("Accounting.O.CompletedReportExist", entityPM.Tenant, showLocals));
+                    }
+
+                }
 
             }
 
@@ -90,66 +116,131 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
-        private static ContactPM GetLoggedContact(int tenant)
-        {
 
+        public static ContactPM GetLoggedContact(int tenant)
+        {
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
 
-        protected override void AfterUpdating(TaxReportPM entityPM, EntityPM entityParentPM) {
-            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+
+        protected override void AfterUpdating(TaxReportPM entityPM, EntityPM entityParentPM)
+        {
+            //IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
+            //TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
+            //TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
+
+               //TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
+
             }
+            //if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            //{
+            //    List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
+            //    TaxReportService.CalculateReportTotals(entityPM, lines);
+            //    entityPM.ChangeSetOp = ChangeSetOperation.Update;
+            //    taxReportUpdateService.Update(entityPM, true);
+            //}
+
+            UpdateReportStatus(entityPM);
+
+        }
+
+        private void UpdateReportStatus(TaxReportPM taxReportPM)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+            TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
+            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
+
+            List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(taxReportPM.Id, taxReportPM.Tenant).ToList();
+
+            if (taxReportPM.StatusCode != VatReportStatusValues.Cancelled && taxReportPM.StatusCode != VatReportStatusValues.Transmitted)
+            {
+                bool hasErrors = lines.Any(d => d.StatusCode != "6"); // 6- Ready for transmit
+                if (hasErrors && taxReportPM.StatusCode != VatReportStatusValues.Error)
+                {
+                    taxReportPM.StatusCode = VatReportStatusValues.Error;
+
+                    taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                    taxReportUpdateService.Update(taxReportPM, true);
+                }
+                else if (!hasErrors && taxReportPM.StatusCode == VatReportStatusValues.Error)
+                {
+                    taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                    taxReportPM.StatusCode = VatReportStatusValues.Draft;
+                    taxReportUpdateService.Update(taxReportPM, true);
+                }
+            }
+
         }
 
         protected override void OnUpdating(TaxReportPM entityPM, TaxReport entityPOCO)
         {
             IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
             TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
+            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
 
             if (entityPOCO.IsCancelled == false && entityPM.IsCancelled == true)
             {
-                // canceled!!
+                // canceled!!C:\source\log-repo\Logitude\JustWebFreight\WebFreight.Web\obj\
                 CancelTaxReport(entityPM);
                 return;
             }
             if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-                // recalculate totals
-                List<TaxReportLineList> lines = (reportLineListQueryService.GetReportLines(entityPM.Id, entityPOCO.Tenant)).ToList();
-
-
-                entityPM.TaxableOutputAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
-                entityPM.OutputTaxAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
-                entityPM.ExemptTaxableOutput = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
-                entityPM.OutputLinesCount = lines.Where(d => d.OutputOrInput == "O").Count();
-                entityPM.OtherInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
-                entityPM.InputLinesCount = lines.Where(d => d.OutputOrInput == "I" && d.TransmitStatusCode == "1" ).Count();
-                entityPM.EquipmentInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
 
                 //updates
                 if (!entityPM.IsNew)
                 {
                     entityPM.LastUpdateDate = DateTime.Now;
+
+                    // update totals
+                    List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(entityPM.Id, entityPM.Tenant).ToList();
+                    List<TaxReportLinePM> linesPM = new List<TaxReportLinePM>();
+                    lines.ForEach(d =>
+                    {
+                        var item = new TaxReportLinePM()
+                        {
+                            Tenant = d.Tenant,
+                            LastUpdateDateTime = d.LastUpdateDateTime,
+                            UpdatedByUserId = d.UpdatedByUserId,
+                            SearchFields = d.SearchFields,
+                            TaxReportId = d.TaxReportId,
+                            Line = d.Line,
+                            OutputOrInput = d.OutputOrInput,
+                            LineTypeCode = d.LineTypeCode,
+                            VatNumber = d.VatNumber,
+                            Reference = d.Reference,
+                            ReferecneGroup = d.ReferecneGroup,
+                            ReferenceDate = d.ReferenceDate,
+                            VatAmount = d.VatAmount,
+                            VatableInvoiceAmount = d.VatableInvoiceAmount,
+                            StatusCode = d.StatusCode,
+                            TransmitStatusCode = d.TransmitStatusCode,
+                            JournalId = d.JournalId,
+                            IsManuallyChanged = d.IsManuallyChanged,
+                            IsEquipment = d.IsEquipment,
+                            StatusLocalName = d.StatusLocalName,
+                            StatusEnglishName = d.StatusEnglishName,
+                            JournalNumber = d.JournalNumber
+                        };
+                        linesPM.Add(item);
+                    });
+                    TaxReportService.CalculateReportTotals(entityPM, linesPM);
+
                 }
                 entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
 
             }
-
 
             base.OnUpdating(entityPM, entityPOCO);
         }

@@ -1,4 +1,4 @@
-﻿import {Component, Output, EventEmitter, ChangeDetectionStrategy,OnInit} from '@angular/core';
+import {Component, Output, EventEmitter, ChangeDetectionStrategy,OnInit} from '@angular/core';
 import {FontTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {IdGeneratorPipe} from '../Pipes/IdGeneratorPipe';
@@ -20,7 +20,7 @@ import {IdGeneratorPipe} from '../Pipes/IdGeneratorPipe';
             <td style="width: 16px; min-width: 16px;">
                 <div class="LogitudeRadioButton">
                     <input [attr.id]="ControlId" type="radio" [attr.name]="Name" [disabled]="!IsEnabled" [checked]="IsChecked" (click)="OnClick()" />
-                    <label [attr.for]="ControlId"></label>
+                    <label  [attr.id]="ControlId2" [attr.for]="ControlId"></label>
                 </div>
             </td>
 
@@ -110,10 +110,16 @@ import {IdGeneratorPipe} from '../Pipes/IdGeneratorPipe';
 
 export class RadioButton implements OnInit {
     public ControlId: string = null;
+    public ControlId2: string = null;
+
+
+
+    
     public Top: number = null;
     public TextColor: string = FontTool.Gray;
     public IsComboBoxWithCheck: boolean = false;
     @Output() Checked: EventEmitter<boolean> = new EventEmitter<boolean>();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -122,8 +128,8 @@ export class RadioButton implements OnInit {
         var pipe: IdGeneratorPipe = new IdGeneratorPipe();
 
         this.ControlId = pipe.transform(this.Text + "_" + this.Name);
-
-        this.Name += SessionLocator.CurrentSession.GetNewId("RadioButton");
+        this.ControlId2 = this.ControlId + "_LBL";
+        this.Name += this.CurrentSession.GetNewId("RadioButton");
     }
 
     private name: string;

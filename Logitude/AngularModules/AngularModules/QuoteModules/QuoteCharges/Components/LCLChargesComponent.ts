@@ -28,6 +28,7 @@ import {CommonDomainService} from '../../../Common/Services/CommonDomainService'
 import {VatTypePercentagePM} from '../../../Common/EntityPMs/VatTypePercentagePM';
 import {VATTypesGroupPM} from '../../../Common/EntityPMs/VATTypesGroupPM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import { DecimalFormatter } from '../../../Infrastructure/Utilities/DecimalFormatter';
 
 @Component({
     selector: 'LCLChargesComponent',
@@ -261,20 +262,15 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
         if (this.IsEditingEnabled) {
             if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
-                isExchangeRateEnabled = true;
-
-                if (AppTool.IsNullOrEmpty(this.SaleCurrencyId)) {
-                    isExchangeRateEnabled = false;
-                }
-
-                else if (this.SaleCurrencyId == SessionLocator.LocalCurrencyId) {
-                    isExchangeRateEnabled = false;
-                }
+                if (this.SaleCurrencyId) {
+                    if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
+                        isExchangeRateEnabled = true;
+                    }
+                }                 
             }
         }      
 
-        //this.IsExchangeRateEnabled = isExchangeRateEnabled;
-        this.IsExchangeRateEnabled = true;
+        this.IsExchangeRateEnabled = isExchangeRateEnabled;
         this.IsCurrencyFilterVisible = this.LocalCurrencyId == this.EntityPM.SaleCurrencyId ? false : true;
         this.UIProperties.SetEnabled("SaleCurrencyId", this.ObjectTableName, this.IsEditingEnabled);
         this.UIProperties.SetEnabled("ExchangeRate", this.ObjectTableName, isExchangeRateEnabled);
@@ -562,9 +558,16 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             }
 
             else {
-                this.ItemsSource.Collection.forEach((item) => {
+                this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
                     item.OnQuoteSaleCurrencyChanged();
-                })
+                });
+
+                this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
+                    if (item.IsAllIN) {
+                        item.EntityPM.IsAllIN = false;
+                        item.IsAllIN = true;
+                    }
+                });
 
                 this.ComputeTotals();
             }
@@ -584,9 +587,16 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         if (this.EntityPM.ExchangeRate != newValue) {
             this.EntityPM.ExchangeRate = AppTool.Round(newValue, 5);
 
-            this.ItemsSource.Collection.forEach((item) => {
+            this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
                 item.OnQuoteSaleCurrencyChanged();
-            })
+            });
+
+            this.ItemsSource.Collection.forEach((item: QuoteChargeItem) => {
+                if (item.IsAllIN) {
+                    item.EntityPM.IsAllIN = false;
+                    item.IsAllIN = true;
+                }
+            });
 
             this.ComputeTotals();
         }
@@ -740,7 +750,25 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "CHWT" && f.SaleQuantity != entityQuantity).length > 0) {
                     isDifferentOrders = true;
                 }
-                
+
+                //CWKG
+                entityQuantity = this.EntityPM.ChargeableWeightInKG;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "CWKG" && f.CostQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "CWKG" && f.SaleQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+
+                 //GWKG
+                entityQuantity = this.EntityPM.GrossWeightInKG;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "GWKG" && f.CostQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "GWKG" && f.SaleQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+
                 //"VOLU"
                 entityQuantity = this.EntityPM.Volume;
                 if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "VOLU" && f.CostQuantity != entityQuantity).length > 0) {
@@ -1072,6 +1100,8 @@ export class QuoteChargeItem extends BaseComponent {
             switch (this.CostMeasurementCode) {
                 case "GRWT":
                 case "CHWT":
+                case "CWKG":
+                case "GWKG":
                 //case "VOLU":
                 case "BTEU":
                 case "FIXD":
@@ -1117,24 +1147,17 @@ export class QuoteChargeItem extends BaseComponent {
 
         if (this.IsEditingEnabled) {
             if (FeatureLocator.HasFeaturePermession("Quote", "QouteEditExchangeRate")) {
-                isEnabled = true;
-
-                if (AppTool.IsNullOrEmpty(this.CostCurrencyId)) {
-                    isEnabled = false;
-                }
-
-                else if (this.CostCurrencyId == SessionLocator.LocalCurrencyId) {
-                    isEnabled = false;
-                }
-
-                else if (this.CostCurrencyId == this.fatherComponent.SaleCurrencyId) {
-                    isEnabled = false;
-                }
+                if (this.CostCurrencyId) {
+                    if (this.CostCurrencyId != SessionLocator.LocalCurrencyId) {
+                        if (this.CostCurrencyId != this.fatherComponent.SaleCurrencyId) {
+                            isEnabled = true;
+                        }
+                    }
+                }                                 
             }
         }
 
-        //this.IsEnabled_CostExchangeRate = isEnabled;
-        this.IsEnabled_CostExchangeRate = true;
+        this.IsEnabled_CostExchangeRate = isEnabled;
         this.UIProperties.SetEnabled("CostExchangeRate", this.ObjectTableName, isEnabled);
     }
 
@@ -1162,6 +1185,8 @@ export class QuoteChargeItem extends BaseComponent {
             switch (this.SaleMeasurementCode) {
                 case "GRWT":
                 case "CHWT":
+                case "CWKG":
+                case "GWKG":
                 //case "VOLU":
                 case "BTEU":
                 case "FIXD":
@@ -1222,7 +1247,15 @@ export class QuoteChargeItem extends BaseComponent {
                 if (iAmount < this.CostMinAmount) {
                     iAmount = this.CostMinAmount;
                     iVisible = true;
+
                     iTitle = "Amount is due to Charge Min Amount";
+                    iTitle += "\n";
+                    iTitle += "Cost Min Amount: " + DecimalFormatter.format(this.CostMinAmount, 3);
+
+                    if (this.CostMaxAmount != null) {
+                        iTitle += "\n";
+                        iTitle += "Cost Max Amount: " + DecimalFormatter.format(this.CostMaxAmount, 3);
+                    }
                 }
             }
 
@@ -1230,7 +1263,16 @@ export class QuoteChargeItem extends BaseComponent {
                 if (iAmount > this.CostMaxAmount) {
                     iAmount = this.CostMaxAmount;
                     iVisible = true;
+
                     iTitle = "Amount is due to Charge Max Amount";
+
+                    if (this.CostMinAmount != null) {
+                        iTitle += "\n";
+                        iTitle += "Cost Min Amount: " + DecimalFormatter.format(this.CostMinAmount, 3);
+                    }
+
+                    iTitle += "\n";
+                    iTitle += "Cost Max Amount: " + DecimalFormatter.format(this.CostMaxAmount, 3);
                 }
             }
         }
@@ -1256,6 +1298,13 @@ export class QuoteChargeItem extends BaseComponent {
                     iAmount = this.SaleMinAmount;
                     iVisible = true;
                     iTitle = "Amount is due to Charge Min Amount";
+                    iTitle += "\n";
+                    iTitle += "Sale Min Amount: " + DecimalFormatter.format(this.SaleMinAmount, 3);
+
+                    if (this.SaleMaxAmount != null) {
+                        iTitle += "\n";
+                        iTitle += "Sale Max Amount: " + DecimalFormatter.format(this.SaleMaxAmount, 3);
+                    }
                 }
             }
 
@@ -1264,6 +1313,14 @@ export class QuoteChargeItem extends BaseComponent {
                     iAmount = this.SaleMaxAmount;
                     iVisible = true;
                     iTitle = "Amount is due to Charge Max Amount";
+
+                    if (this.SaleMinAmount != null) {
+                        iTitle += "\n";
+                        iTitle += "Sale Min Amount: " + DecimalFormatter.format(this.SaleMinAmount, 3);
+                    }
+
+                    iTitle += "\n";
+                    iTitle += "Sale Max Amount: " + DecimalFormatter.format(this.SaleMaxAmount, 3);
                 }
             }
         }
@@ -1800,6 +1857,9 @@ export class QuoteChargeItem extends BaseComponent {
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
+                case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
+                case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
+
                 default: { break; }
             }
         }
@@ -2106,6 +2166,9 @@ export class QuoteChargeItem extends BaseComponent {
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
+                case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
+                case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
+
                 default: { break; }
             }
         }

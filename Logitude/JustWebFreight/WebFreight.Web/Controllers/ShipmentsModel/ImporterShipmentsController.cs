@@ -43,12 +43,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
     public class ImporterShipmentsController : ApiController
     {
 
-        public bool GetIfShipmentExists(int importertenant,int Tenant, string shipmentnumber)// NotFinished
+        public bool GetIfShipmentExists(int importertenant, int Tenant, string shipmentnumber)// NotFinished
         {
             //SecurityUtility.AuthenticationOnTenant(importertenant);
             //SecurityUtility.CheckContactFeature("Shipment", "READ", importertenant);
             ShipmentQuery shipmentQuery = new ShipmentQuery(importertenant);
-            var Temp = shipmentQuery.GetSingleShipmentPMByForwarderNumber(shipmentnumber, importertenant,Tenant);
+            var Temp = shipmentQuery.GetSingleShipmentPMByForwarderNumber(shipmentnumber, importertenant, Tenant);
             if (Temp != null)//&& !Temp.IsCancelled
             {
                 return true;
@@ -175,7 +175,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         IsNew = true;
                     }
                     APIException Result = MapEntityAMToEntityPM(Shipment, ImporterShipment);
-                   
+
                     if (Result == null)
                     {
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(ImporterShipment.Tenant);
@@ -344,7 +344,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     }
                     else
                     {
-                        ImporterShipment = shipmentQuery.GetSingleShipmentPMByForwarderNumber(Shipment.ForwarderShipmentNumber, Shipment.ImporterTenant,Shipment.Tenant);
+                        ImporterShipment = shipmentQuery.GetSingleShipmentPMByForwarderNumber(Shipment.ForwarderShipmentNumber, Shipment.ImporterTenant, Shipment.Tenant);
                     }
 
                     if (ImporterShipment == null)
@@ -355,7 +355,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     APIException Result = MapEntityAMToEntityPM(Shipment, ImporterShipment);
 
                     if (Result == null)
-                    { 
+                    {
                         IShipmentsContext objectContext = ShipmentsContext.GetContext(Shipment.ImporterTenant);
                         if (!IsNew)
                         {
@@ -367,7 +367,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                                 ImporterShipment.ShipmentPackages.Add(package);
                             }
                         }
-                      
+
                         string systemEmail = "system@tenant" + Shipment.ImporterTenant + ".com";
                         ShipmentService shipmentService = new ShipmentService(objectContext, ImporterShipment, systemEmail);
                         ImporterShipment.DontAddToImportersQueue = true;
@@ -562,7 +562,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 privatelabel = query.GetSinglePM(currentTenant.PrivateLabelId);
 
             }
-           
+
+
             entityPM.Tenant = entityAM.ImporterTenant;
             entityPM.GrossWeightUnitCode = "KG";
             entityPM.DimensionsUnitCode = "Cm";
@@ -613,7 +614,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 var IncotermId = IncotermCodePropertiesMapping.GetIncotermIdFromIncotermProperties(entityAM.ImporterTenant, entityAM.Incoterm);
                 if (!string.IsNullOrEmpty(IncotermId))
                 {
-                    entityPM.IncotermId = IncotermId; 
+                    entityPM.IncotermId = IncotermId;
                 }
                 else
                 {
@@ -879,9 +880,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             entityPM.OnCarriageATD = entityAM.OnCarriageATD;
             entityPM.PreCarriageATA = entityAM.PreCarriageATA;
             entityPM.PreCarriageATD = entityAM.PreCarriageATD;
-            entityPM.ExceptionDate = entityAM.ExceptionDate;
-            entityPM.ExceptionDescription = entityAM.ExceptionDescription;
-            entityPM.HasException = entityAM.HasException;
+           
             entityPM.DimensionsUnitCode = entityAM.DimensionsUnitCode;
             entityPM.GrossWeightUnitCode = entityAM.GrossWeightUnitCode;
             entityPM.ChargeableWeightUnitCode = entityAM.ChargeableWeightUnitCode;
@@ -901,13 +900,34 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             }
 
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
-            entityPM.CustomsClearanceDate = entityAM.CustomsClearanceDate;
+            
+            if (currentTenant.AutoArchiveOnInvoice == true && entityAM.OriginalStatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityPM.IsOperationalClosed == false)
+            {
+                entityPM.IsOperationalClosed = true;
+            }
+            if (entityPM.CustomsClearanceDate == null)
+            {
+                entityPM.ExceptionDate = entityAM.ExceptionDate;
+                entityPM.ExceptionDescription = entityAM.ExceptionDescription;
+                entityPM.HasException = entityAM.HasException;
+            }
+            if (entityPM.CustomsClearanceDate == null && entityAM.CustomsClearanceDate != null && entityAM.HasException == true)
+            {
+
+                entityPM.HasException = false;
+                entityPM.ExceptionDate = null;
+                entityPM.ExceptionDescription = null;
+                entityPM.ExceptionResolvedDescription = "Customs Clearance";
+
+            }
             if (entityAM.CustomsClearanceDate != null && entityAM.IsImporterApprovalRequired && entityPM.ApproveDateTime == null && string.IsNullOrEmpty(entityPM.ApprovedBy))
             {
                 entityPM.ApprovedBy = "System";
                 entityPM.ApproveDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 entityPM.VersionApproved = entityAM.VersionApproved;
             }
+      
+            entityPM.CustomsClearanceDate = entityAM.CustomsClearanceDate;
             if (Partner != null)
             {
                 entityPM.ForwarderPartnerId = Partner.Id;
@@ -1153,7 +1173,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
             if (entityAM.ShipmentPackagesAM != null)
             {
                 if (entityPM.ShipmentPackages == null)
-                { 
+                {
                     entityPM.ShipmentPackages = new List<ShipmentPackagePM>();
                 }
 
@@ -1183,7 +1203,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     {
                         Responce.ErrorType = "Validation Error";
                         Responce.ErrorMessage = "PackageTypeCode field is required.";
-                        return Responce; 
+                        return Responce;
                     }
                     if (!string.IsNullOrEmpty(package.ContainerNumber))
                     {
@@ -1210,7 +1230,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     MyPackage.Volume = package.Volume;
                     entityPM.ShipmentPackages.Add(MyPackage);
                 }
-               
+
             }
             return null;
         }

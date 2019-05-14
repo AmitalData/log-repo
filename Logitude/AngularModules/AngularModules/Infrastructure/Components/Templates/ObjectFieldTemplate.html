@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr>
         <td>
@@ -39,15 +39,22 @@
                         <div class="MediaFillRelative" *ngIf="IsAutoFormat">
 
                             <div class="MediaFillRelative" *ngIf="!CustomField">
-                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue}}</div>
-                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue | CustomNumbersPipe:DigitsAfterPoints}}</div>
+                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Integer'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue | NumbersPipe:'n0'}}</div>
+                                <div class="TextTrimming" *ngIf="DataTypeCode == 'Decimal' || DataTypeCode == 'Double'" [style.textAlign]="NumberFieldTextAlign">{{FieldValue | NumbersPipe:DigitsAfterPoints}}</div>
                                 <div class="TextTrimming" *ngIf="DataTypeCode == 'Date' || DataTypeCode == 'DateTime'" [style.textAlign]="TextAlign">{{FieldValue | DateTimeToDatePipe}}</div>
 
                                 <div *ngIf="DataTypeCode == 'Boolean'">
 
                                     <div *ngIf=IsHeaderScreenTemplate>
+
+                                        <div *ngIf="FieldValue">{{'General.O.Yes' | TextCodeTranslationPipe}}</div>
+                                        <div *ngIf="!FieldValue">{{'General.O.No' | TextCodeTranslationPipe}}</div>
+
+                                        <!--
                                         <img *ngIf="FieldValue" src="./Images/CheckBoxIcon.png" [className]="isRTL ? 'RightCenter' : 'LeftCenter'" />
                                         <div *ngIf="!FieldValue">{{'General.O.False' | TextCodeTranslationPipe}}</div>
+                                        -->
+
                                     </div>
 
                                     <div *ngIf=!IsHeaderScreenTemplate [style.textAlign]="TextAlign">

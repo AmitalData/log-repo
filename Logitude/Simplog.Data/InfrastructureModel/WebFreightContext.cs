@@ -109,6 +109,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new AccountingPaymentMethodMap());
             modelBuilder.Configurations.Add(new ARPaymentMap());
             modelBuilder.Configurations.Add(new ARPaymentStatuMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStocksStatusMap());
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
             modelBuilder.Configurations.Add(new AWBStatuMap());
@@ -350,6 +351,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new TaskSchedulerHistoryMap());
             modelBuilder.Configurations.Add(new DWObjectTableMap());
             modelBuilder.Configurations.Add(new DWObjectFieldMap());
+            
 
             modelBuilder.Configurations.Add(new DWQueryMap());
             modelBuilder.Configurations.Add(new DWSubQueryMap());
@@ -357,6 +359,9 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new DWQueryFilterMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
+            modelBuilder.Configurations.Add(new DWCategoriesMap());
+            modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
+            modelBuilder.Configurations.Add(new SchedulerLogsMap());
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
@@ -813,6 +818,12 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
+        public IDbSet<SchedulerLogs> SchedulerLogs
+        {
+            get;
+            set;
+        }
+
         public void SetAsModified(object entity)
         {
             this.Entry(entity).State = EntityState.Modified;
@@ -963,6 +974,18 @@ namespace Simplog.Data.InfrastructureModel
         {
             get;
             set;
-        }        
+        }
+
+        public IDbSet<DWCategories> DWCategories
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DWObjectFieldCategories> DWObjectFieldCategories
+        {
+            get;
+            set;
+        }
     }
 }

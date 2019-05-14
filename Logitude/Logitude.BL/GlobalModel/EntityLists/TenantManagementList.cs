@@ -72,7 +72,19 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public bool IsDEXXConnectionEnabled { get; set; }
         public DateTime? LastFWBCargonautSentDate { get; set; }
         public DateTime? LastFHLCargonautSentDate { get; set; }
-        public string BluesnapContractCode { get; set; }
+        public string BluesnapContractId { get; set; }
+        public string BluesnapCRMContractId { get; set; }
+        public string BluesnapEAWBContractId { get; set; }
+        public string BluesnapEAWBSContractId { get; set; }
+        public string BluesnapOneTimeContract { get; set; }
+        public string BluesnapInttraStockContractId { get; set; }
+        public int BluesnapContractQTY { get; set; }
+        public int BluesnapCRMContractQTY { get; set; }
+        public int BluesnapEAWBContractQTY { get; set; }
+        public int BluesnapEAWBSContractQTY { get; set; }
+        public int BluesnapOneTimeContractQTY { get; set; }
+        public int BluesnapInttraStockContractQTY { get; set; }
+
         public string AWBMessagesCCSTypeCode { get; set; }
         public string PIMA { get; set; }
         public bool IsEAWBOnlyDemo { get; set; }

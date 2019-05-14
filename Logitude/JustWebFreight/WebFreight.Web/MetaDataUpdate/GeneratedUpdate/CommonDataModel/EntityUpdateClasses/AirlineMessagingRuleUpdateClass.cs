@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class AirlineMessagingRuleUpdateClass
@@ -172,9 +176,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "MessageTypeCode",
-					  						DefaultText =  @"Message Type",
+					  						DefaultText =  "Message Type",
 					  						ListFieldLable =  "MessageTypeCodeListLable",
-					  						ListLableDefaultText =  @"Message Type",
+					  						ListLableDefaultText =  "Message Type",
 					  						HelpTextCode =  "MessageTypeCode",
 					  						Code =  "MessageTypeCode",
 					  						DependencyFilter3IsList =  false,
@@ -233,7 +237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "RuleFieldId",
-					  						DefaultText =  @"Rule Field",
+					  						DefaultText =  "Rule Field",
 					  						HelpTextCode =  "RuleFieldId",
 					  						Code =  "RuleFieldId",
 					  						DependencyFilter3IsList =  false,
@@ -291,9 +295,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "RuleFieldName",
-					  						DefaultText =  @"Rule Field",
+					  						DefaultText =  "Rule Field",
 					  						ListFieldLable =  "RuleFieldNameListLable",
-					  						ListLableDefaultText =  @"Rule Field",
+					  						ListLableDefaultText =  "Rule Field",
 					  						HelpTextCode =  "RuleFieldName",
 					  						Code =  "RuleFieldName",
 					  						DependencyFilter3IsList =  false,
@@ -351,7 +355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "IsMandatoryForSending",
-					  						DefaultText =  @"Is Mandatory For Sending",
+					  						DefaultText =  "Is Mandatory For Sending",
 					  						HelpTextCode =  "IsMandatoryForSending",
 					  						Code =  "IsMandatoryForSending",
 					  						DependencyFilter3IsList =  false,
@@ -409,7 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "MaxSize",
-					  						DefaultText =  @"Max Size",
+					  						DefaultText =  "Max Size",
 					  						HelpTextCode =  "MaxSize",
 					  						Code =  "MaxSize",
 					  						DependencyFilter3IsList =  false,
@@ -468,9 +472,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "AirlineId",
-					  						DefaultText =  @"Airline",
+					  						DefaultText =  "Airline",
 					  						ListFieldLable =  "AirlineIdListLable",
-					  						ListLableDefaultText =  @"Airline",
+					  						ListLableDefaultText =  "Airline",
 					  						HelpTextCode =  "AirlineId",
 					  						Code =  "AirlineId",
 					  						DependencyFilter3IsList =  false,
@@ -528,9 +532,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						HasTemplate =  false,
 					  						FullFieldLable =  "InActive",
-					  						DefaultText =  @"Inactive",
+					  						DefaultText =  "Inactive",
 					  						ListFieldLable =  "InActiveListLable",
-					  						ListLableDefaultText =  @"Inactive",
+					  						ListLableDefaultText =  "Inactive",
 					  						HelpTextCode =  "InActive",
 					  						Code =  "InActive",
 					  						DependencyFilter3IsList =  false,
@@ -557,6 +561,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable AirlineMessagingRuleObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AirlineMessagingRule" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature AirlineMessagingRuleFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AirlineMessagingRuleObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineMessagingRule.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature AirlineMessagingRuleFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AirlineMessagingRuleObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineMessagingRule.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature AirlineMessagingRuleFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AirlineMessagingRuleObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineMessagingRule.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

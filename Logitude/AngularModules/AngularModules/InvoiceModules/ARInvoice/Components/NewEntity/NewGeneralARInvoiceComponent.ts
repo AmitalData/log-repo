@@ -34,6 +34,7 @@ import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GL
 import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import {AccountingPeriodExtendedListService} from '../../../../Accounting/Services/ExtendedLists/AccountingPeriodExtendedListService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { reject } from 'q';
 
 @Component({
     selector: 'NewGeneralARInvoiceComponent',
@@ -52,13 +53,13 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.InitializeServices();
-            this.GetClosedMonth();
+
         });
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
@@ -74,6 +75,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.TypeCode = args["InvoiceTypeCode"];
         this.CreateNewEntity();
+
     }
 
     private myCardListService: CardListService;
@@ -95,18 +97,22 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.myAccountingPeriodListService = new AccountingPeriodExtendedListService();
     }
 
-    private accountingPeriod:any;
+    private accountingPeriod: any;
     private GetClosedMonth() {
-        var periodTypeCode = "1" // 1-Regular
-        this.myAccountingPeriodListService.getByYear(new Date().getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.accountingPeriod = myResponse.Result;
+        return new Promise(resolve => {
+            var periodTypeCode = "1" // 1-Regular
+            this.myAccountingPeriodListService.getByYear(this.InvoiceDate.getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.accountingPeriod = myResponse.Result;
+                        resolve(myResponse.Result);
+                    }
                 }
-            }
+            });
+
         });
     }
-     
+
     CreateNewEntity() {
         var todayDate = DateTool.GetCurrentDateAsUtc();
         this.EntityPM = new ARInvoicePM();
@@ -139,13 +145,14 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         //}
         this.EntityPM.Description = myDescription;
         this.EntityPM.IsGeneralInvoice = true;
+        this.EntityPM.IsFullAccounting = true;
         this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
         this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
         this.EntityPM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
 
         this.SetUIProperties();
         this.BuildPartnersTypes();
-        this.LoadData();
+        this.LoadCurrencyRates();
         this.IsResourcesReady = true;
     }
 
@@ -181,28 +188,17 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
     }
     SetUIProperties_ExchangeRate() {
-        var isFieldtEnabled = true;
+        var isFieldtEnabled = false;
 
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
-            isFieldtEnabled = false;
-        }
-
-        else {
-            if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.TenantPM.CurrencyId == null) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.TenantPM.CurrencyId == this.InvoiceCurrencyId) {
-                isFieldtEnabled = false;
+        if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
+            if (this.InvoiceCurrencyId) {
+                if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                    isFieldtEnabled = true;
+                }
             }
         }
 
-        //this.RateIsEnabled = isFieldtEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isFieldtEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_General(isEnabled: boolean) {
@@ -254,7 +250,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     }
 
     public SelectedPartnerType: InvoicePartnerType = null;
- 
+
     private billToPartnerTypeId: string;
     get BillToPartnerTypeId() { return this.billToPartnerTypeId; }
     set BillToPartnerTypeId(newValue: string) {
@@ -496,7 +492,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
 
             InvoiceTool.ComputeARInvoiceDueDate(this.EntityPM);
             this.ComputeRelativeRateDate();
-            this.LoadData();
+            this.LoadCurrencyRates();
         }
     }
 
@@ -530,40 +526,30 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
     }
 
-    // Load Date 
+    // Load Date
     private LastRatesList: LastRate[] = [];
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
-    private myCurrencyRatesService: CurrencyRatesService;
-    LoadData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-        if (this.myCurrencyRatesService == null) {
-            this.myCurrencyRatesService = new CurrencyRatesService();
-        }
+    private myCurrencyRatesService: CurrencyRatesService = new CurrencyRatesService();
+    LoadCurrencyRates() {
 
-        var loadingDate = this.EntityPM.InvoiceDate;
-        if (loadingDate == null) {
-            loadingDate = DateTool.GetCurrentDateAsUtc();
-        }
+        return new Promise(resolve => {
 
-        this.myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.TenantPM.CurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
+            var loadingDate = this.EntityPM.InvoiceDate || DateTool.GetCurrentDateAsUtc();
 
-            if (!myResponse.HasError) {
-                this.LastRatesList = myResponse.Result;
-                this.SetCurrencyRateData();
+            this.myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.TenantPM.CurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
 
-                this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse2: ServiceResponse) => {
-                    if (!myResponse2.HasError) {
-                        this.VatTypePercentagesList = myResponse2.Result;
-                    }
+                if (!myResponse.HasError) {
+                    this.LastRatesList = myResponse.Result;
+                    this.SetCurrencyRateData();
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                });
-            }
-
-            else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-            }
+                    resolve(myResponse.Result);
+                }
+                else {
+                    reject();
+                }
+            });
         });
+
     }
     SetCurrencyRateData() {
         var myRate: number = null;
@@ -656,35 +642,41 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         logWindow.Show('./CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent');
     }
 
-    //Commands 
+    //Commands
     private isOkClicked = false;
     private errors: string[] = [];
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        this.isOkClicked = true;
-        this.ValidateEntity();
-      
-        if (this.ValidationErrorsList.length == 0) {
-            this.OnEntityValid();
-        }
+
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        this.GetClosedMonth().then(res => {
+
+            this.CurrentSession.StopBusyIndicator();
+
+            this.isOkClicked = true;
+
+            var isEntityValid = this.ValidateEntity();
+            if (isEntityValid) {
+
+                this.CurrentSession.StartBusyIndicatorLoading();
+                this.LoadCurrencyRates().then(res => {
+                    this.SubmitChanges();
+                });
+
+            }
+
+        });
+
     }
     ValidateEntity() {
         this.errors = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (this.accountingPeriod) {
-            if (this.InvoiceDate != null) {
-                var month = this.InvoiceDate.getMonth() + 1;
-                if (month > this.accountingPeriod.OpenMonth || month < this.accountingPeriod.ClosedMonth) {
-                    this.errors.push("Closed Month");
-                }
-            }
-        }
-        else {
-            this.errors.push("Closed Month");
-        }
+        var isValid = this.IsMonthOpenForAccountingDate();
+        if (!isValid) this.errors.push(TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth")); // closed month
 
         if (this.glaccount != null && this.glaccount.IsMultiCurrency == false && this.InvoiceCurrencyId != this.glaccount.CurrencyId) {
             this.errors.push(TextCodeTranslator.Translate("ARInvoice.M.NewGeneralInvoiceErrorMsg2"));
@@ -695,7 +687,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
 
         if (AppTool.IsNullOrEmpty(this.BillToId)) {
-            this.errors.push(msg.replace("%FieldName", "Bill to"));
+            this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.BillToId")));
         }
 
         //if (AppTool.IsNullOrEmpty(this.BillToAddressId)) {
@@ -703,11 +695,11 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         //}
 
         if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-            this.errors.push(msg.replace("%FieldName", "Currency"));
+            this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceCurrencyId")));
         }
 
         if (this.InvoiceDate == null) {
-            this.errors.push(msg.replace("%FieldName", "Invoice Date"));
+            this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate")));
         }
 
         else {
@@ -720,30 +712,64 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         }
 
         if (this.DueDate == null) {
-            this.errors.push(msg.replace("%FieldName", "Due Date"));
+            this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.DueDate")));
         }
 
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAR) {
             if (AppTool.IsNullOrEmpty(this.VatNumber)) {
-                this.errors.push(msg.replace("%FieldName", "Vat Number"));
+                this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.VatNumber")));
             }
         }
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
-                this.errors.push(msg.replace("%FieldName", "Forma Pago"));
+                this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
             }
         }
 
-        if (this.DueDate.valueOf() < this.InvoiceDate.valueOf()) {
-            this.errors.push(TextCodeTranslator.Translate("ARInvoice.M.DueDateLowerThanInvoiceDate"));
+        if(this.DueDate && this.InvoiceDate){
+            if (this.DueDate.valueOf() < this.InvoiceDate.valueOf()) {
+                this.errors.push(TextCodeTranslator.Translate("ARInvoice.M.DueDateLowerThanInvoiceDate"));
+            }
         }
 
         this.ValidationErrorsList = this.errors;
+        return this.errors.length == 0;
     }
+    IsMonthOpenForAccountingDate() {
+        var valid = true;
+        if (this.accountingPeriod == null) {
+            valid = false;
+            //errorsList.Add(transText);
+        }
+        else {
+            var accountingDateMonth = this.EntityPM.InvoiceDate.getMonth() + 1;
 
-    OnEntityValid() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            if (accountingDateMonth > this.accountingPeriod.ClosedMonth) {
+                //Valid ... AccountingDateMonth must be greater than close Mounth
+            }
+            else {
+                //Not Valid ... AccountingDateMonth must be greater than close Mounth
+                //not valid  8>=8
+                //not valid  0>=1 - Must Open mounth before work on year !!
+                valid = false;
+                //errorsList.Add(transText); //ClosedMonth Must B
+            }
+            if (accountingDateMonth == this.accountingPeriod.OpenMonth) {
+                //valid ... accountingDateMonth can be  equal to OpenMonth
+            }
+            else if (accountingDateMonth < this.accountingPeriod.OpenMonth) {
+                //valid ... accountingDateMonth can be  less than OpenMonth
+            }
+            else {
+                valid = false;
+                //errorsList.Add(transText);
+            }
+        }
+        return valid;
+    }
+    SubmitChanges() {
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.InitializeComponent();
     }
     InitializeComponent() {
@@ -758,6 +784,6 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.EntityPM.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
         this.EntityPM.StatusCode = "DR";
         this.EntityPM.StatusName = "Draft";
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 }

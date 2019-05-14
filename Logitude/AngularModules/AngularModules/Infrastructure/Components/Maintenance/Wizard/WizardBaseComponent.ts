@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList, Output, EventEmitter, ComponentRef}  from '@angular/core';
+import {Component, ViewChildren, QueryList, Output, EventEmitter, ComponentRef}  from '@angular/core';
 import {BaseComponent} from '../../LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Validators/Validator';
 import {InfraSettings} from '../../../Utilities/InfraSettings';
@@ -20,7 +20,8 @@ import {EntityResourceService} from '../../../Services/EntityResourceService';
 import {RatesTablePM} from '../../../EntityPMs/RatesTablePM';
 import {RatesTablePMService} from '../../../Services/StandardPMs/RatesTablePMService';
 import {CachedDataManager} from '../../../Utilities/CachedDataManager';
-import {ObjectsLocator} from '../../../Locators/ObjectsLocator';
+import { ObjectsLocator } from '../../../Locators/ObjectsLocator';
+import { ObjectsUpdater } from '../../../Locators/ObjectsUpdater';
 
 @Component({
     moduleId: module.id,
@@ -38,6 +39,7 @@ export class WizardBaseComponent extends BaseComponent {
     @Output() SaveCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() SignOutCompleted: EventEmitter<boolean> = new EventEmitter<boolean>(); 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.InitServices();
@@ -343,7 +345,7 @@ export class WizardBaseComponent extends BaseComponent {
 
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var isSavingVAT: boolean = false;
             if (this.PercentagePM) {
@@ -488,8 +490,12 @@ export class WizardBaseComponent extends BaseComponent {
                             this.OnCreatingMoroccoTenant();
                         }
 
+                        else if (this.TenantPM.CountryCode == "IL") {
+                            this.OnCreatingIsraelTenant();
+                        }
+
                         else {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                             this.SaveCompleted.emit(true);
                         }
                     }
@@ -516,7 +522,7 @@ export class WizardBaseComponent extends BaseComponent {
                         SessionLocator.AllVatTypesGroups = myResponse2.Result;
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     this.SaveCompleted.emit(true);
                 });
             }
@@ -535,7 +541,7 @@ export class WizardBaseComponent extends BaseComponent {
                 }
 
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.SaveCompleted.emit(true);
             }
         });
@@ -551,15 +557,30 @@ export class WizardBaseComponent extends BaseComponent {
                     ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments = true;
                 }
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.SaveCompleted.emit(true);
             }
         });
     }
+    OnCreatingIsraelTenant() {
+        this.myCommonDomainService.OnCreatingIsraelTenant().subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) {
+                this.ShowServiceErrors(myResponse);
+            }
+
+            else {
+                ObjectsUpdater.UpdateAccountingSettingPM(myResponse.Result);             
+
+                this.CurrentSession.StopBusyIndicator();
+                this.SaveCompleted.emit(true);
+            }
+        });
+    }
+
     ShowServiceErrors(myResponse: ServiceResponse) {
         if (myResponse) {
             this.ValidationErrorsList = myResponse.ErrorsArray;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 }

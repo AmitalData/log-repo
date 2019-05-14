@@ -41,10 +41,10 @@
             background-color: green;
         }*/
     .ListBoxItem {
-        min-height: 25px;
+        min-height: 20px;
         margin-left: 5px;
         margin-right: 5px;
-        line-height: 25px;
+        line-height: 20px;
         background-color: transparent;
     }
 
@@ -60,8 +60,8 @@
 
     .SelectedListBoxItem {
         cursor: pointer;
-        min-height: 25px;
-        line-height: 25px;
+        min-height: 20px;
+        line-height: 20px;
         margin: 0px 5px 0px 5px;
         background: #E8F7FF; /* For browsers that do not support gradients */
         background: -webkit-linear-gradient(#E8F7FF, #85CAEC); /* For Safari 5.1 to 6.0 */
@@ -71,6 +71,7 @@
     }
 
     .LinkBtn {
+        display:none;
         text-decoration: underline;
         float: left;
         color: blue;
@@ -218,340 +219,473 @@
         user-select: none; /* Non-prefixed version, currently
                                       not supported by any browser */
     }
+    .OutterLink{
+
+    }
+        .OutterLink:hover .LinkBtn {
+            display: block;
+            text-decoration: underline;
+            float: left;
+            color: blue;
+            font-size: 11px;
+            text-indent: 3px;
+        }
+        .Visible{
+            visibility:visible;
+        }
+    .Hidden {
+        visibility: hidden;
+    }
+    .TooltipText {
+        /*white-space: normal;*/
+        /*word-wrap: break-word;*/
+        white-space: pre-line;
+        overflow-x: hidden;
+        overflow-y: auto;
+        line-height: 13px;
+    }
+
+    .Tooltip:hover .TooltipContent {
+        visibility: visible;
+    }
+
+    .Tooltip .TooltipContent {
+        /*padding: 10px 14px 17px 16px;*/
+        /*background: url('./Images/Tootip.png') no-repeat;*/
+        position: fixed;
+        padding-left: 12px;
+        padding-right: 14px;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        visibility: hidden;
+        z-index: 1;
+    }
+
+    .Tooltip {
+        position: relative;
+        /*background-image: url('./Images/Help.png');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;*/
+    }
+
+    .LogitudeHelpIconTextBox {
+        padding: 0px;
+        text-indent: 0px;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        font-size: 11px;
+        color: #595B5B;
+        line-height: 11px;
+    }
 </style>
-<table>
-    <tr>
-        <td>
-            <table>
-                <tr>
-                    <td style="width: 35%;height:100%;">
-                        <div style="height:100%;width:100%;border:solid 1px #BABABA;border-radius:5px">
-                            <table>
-                                <tr>
-                                    <td style="height:25px;width:100%;">
-                                        <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
-                                            <div style="float:left;">
-                                                <label style="margin:5px;vertical-align: middle;">Available Fields</label><!--{{'General.O.AvailableColumns' | TextCodeTranslationPipe}}-->
-                                            </div>
-                                            <!--{{General.O<!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="height:23px;width:100%">
-                                        <div style="width:100%;height:100%;">
-                                            <input type="text" [id]="SearchFieldsId" placeholder="{{'General.O.Search' | TextCodeTranslationPipe}}" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;width:100%;height:100%;">
-                                            <br>
-                                            <img *ngIf="SearchText" class="DeleteButton" [className]="'RightCenter'" style="display:inline-block;margin-right: 5px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <table class="BodyBackground">
-                                            <tr>
-                                                <td>
-                                                    <div style="overflow:auto;max-height:685px;overflow-x:hidden;">
-                                                        <table style="vertical-align:top;top:0px;">
-                                                            <tr style="text-align:left;vertical-align:top" *ngFor="let Group of DataSource">
-                                                                <td style="min-height:30px;">
-                                                                    <table class="noselect">
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div (click)="Group.GroupClicked()" style="width:100%;height:100%;background-color: #E4E4E4;border-bottom: 1px solid;border-top: 1px solid;border-color:rgb(167, 169, 172);height: 27px;">
-                                                                                    <div style="float:left;">
-                                                                                        <img [src]="Group.DetailsIcon" style="margin-top:5px;" />
-                                                                                        <label style="margin:5px;vertical-align: middle;">{{Group.Key}}</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr *ngIf="Group.IsDetailesOpened">
-                                                                            <td>
-                                                                                <table *ngFor="let item of Group.FieldsList" style="margin-left:5px;">
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <table>
-                                                                                                <tr>
-                                                                                                    <td *ngIf="item &&  item.HasTree" style="width:20px">
-                                                                                                        <div style="width:20px">
-                                                                                                            <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
-                                                                                                            <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+
+    <table>
+        <tr>
+            <td>
+                <div style="height:100%;">
+                    <!--overflow:auto;-->
+                    <table>
+                        <tr>
+                            <td style="width: 390px;height:691px;">
+                                <div style="height:691px;width:100%;border:solid 1px #BABABA;border-radius:5px;overflow:auto;">
+                                    <table>
+                                        <tr>
+                                            <td style="height:25px;width:100%;">
+                                                <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
+                                                    <div style="float:left;">
+                                                        <label style="margin:5px;vertical-align: middle;">Available Fields</label><!--{{'General.O.AvailableColumns' | TextCodeTranslationPipe}}-->
+                                                    </div>
+                                                    <!--{{General.O<!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="height:23px;width:100%">
+                                                <div style="width:100%;height:100%;">
+                                                    <input type="text" [id]="SearchFieldsId" placeholder="{{'General.O.Search' | TextCodeTranslationPipe}}" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [(ngModel)]="SearchText" style="background-color:white;background: url(Images/Search.png) no-repeat scroll;background-position: right center;padding-right:30px;width:100%;height:100%;">
+                                                    <br>
+                                                    <img *ngIf="SearchText" class="DeleteButton" [className]="'RightCenter'" style="display:inline-block;margin-right: 5px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table class="BodyBackground">
+                                                    <tr>
+                                                        <td>
+                                                            <div style="overflow:hidden;overflow-x:hidden;">
+                                                                <table style="vertical-align:top;top:0px;">
+                                                                    <tr style="text-align:left;vertical-align:top" *ngFor="let Group of DataSource">
+                                                                        <td style="min-height:30px;">
+                                                                            <table class="noselect">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div (click)="Group.GroupClicked()" style="width:100%;height:100%;padding-top:2px;background-color: #E4E4E4;border-bottom: 1px solid;border-top: 1px solid;border-color:rgb(167, 169, 172);height: 27px;">
+                                                                                            <div style="text-align: left;width: 100%;height: 100%;">
+                                                                                                <img [src]="Group.DetailsIcon" style="margin-top:3px;float: left" />
+                                                                                                <label style="margin:5px;vertical-align: middle;">{{Group.Key}}</label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr *ngIf="Group.IsDetailesOpened">
+                                                                                    <td>
+                                                                                        <table *ngFor="let item of Group.FieldsList" style="margin-left:5px;height:20px;">
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <div [attr.id]="item.TooltipId" class="Tooltip" (mouseover)="mouseover(item)">
+                                                                                                        <div [attr.id]="item.TooltipContentId" *ngIf="item.HelpText"
+                                                                                                             class="TooltipContent"
+                                                                                                             [style.width.px]="Width"
+                                                                                                             [style.height.px]="Height"
+                                                                                                             [style.max-width.px]="Width"
+                                                                                                             [style.max-height.px]="Width">
+
+                                                                                                            <div class="FillContent">
+                                                                                                                <table>
+
+                                                                                                                    <tr style="height: 20px;">
+                                                                                                                        <td style="width: 15px; border: none !important; background: none !important; padding: 0 !important;">
+                                                                                                                            <div class="MediaFill">
+                                                                                                                                <div class="MediaFillRelative">
+                                                                                                                                    <div [attr.title]="'Help'" class="LeftCenter" style="width: 13px; height: 13px; background:url(./Images/Help.png) no-repeat; background-size: 100% 100%;"></div>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </td>
+
+                                                                                                                        <td style="border: none !important; background: none !important; padding: 0 !important;">
+                                                                                                                            <div class="MediaFill TextTrimming" style="color: #1B90CB; font-size: 13px; text-align: left; line-height: 20px;">
+                                                                                                                                Help
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+
+
+
+                                                                                                                    <tr style="height: 2px;">
+                                                                                                                        <td colspan="2" style="border: none !important; background: none !important; padding: 0 !important;">
+                                                                                                                            <div></div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+
+                                                                                                                    <tr>
+                                                                                                                        <td colspan="2" style="border: none !important; background: none !important; padding: 0 !important;">
+                                                                                                                            <div class="MediaFill">
+                                                                                                                                <textarea class="LogitudeHelpIconTextBox"
+                                                                                                                                          [(ngModel)]="item.HelpText"
+                                                                                                                                          autocomplete="off"
+                                                                                                                                          autocorrect="off"
+                                                                                                                                          autocapitalize="off"
+                                                                                                                                          spellcheck="false"
+                                                                                                                                          [readonly]="true"></textarea>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </div>
                                                                                                         </div>
-                                                                                                    </td>
-
-                                                                                                    <td *ngIf="item &&  !item.HasTree" style="width:20px">
-                                                                                                        <div style="width:20px"></div>
-
-                                                                                                    </td>
-
-
-                                                                                                    <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" (mouseover)="item.OnMouseOver($event)" (mouseout)="item.OnMouseOut($event)" *ngIf="item" style="width:100px;height:24px">
+                                                                                                    
                                                                                                         <table>
                                                                                                             <tr>
-                                                                                                                <td style="width:70%;">
-                                                                                                                    <p style="display:inline-block;">{{item.Name}}</p>
+                                                                                                                <td *ngIf="item &&  item.HasTree" style="width:20px">
+                                                                                                                    <div style="width:20px">
+                                                                                                                        <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
+                                                                                                                        <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+                                                                                                                    </div>
                                                                                                                 </td>
-                                                                                                                <td *ngIf="item" style="width:5%;"></td>
-                                                                                                                <td *ngIf="item && item.ShowBtns == true" style="width:10%;">
-                                                                                                                    <span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
+
+                                                                                                                <td *ngIf="item &&  !item.HasTree" style="width:20px">
+                                                                                                                    <div style="width:20px"></div>
+
                                                                                                                 </td>
-                                                                                                                <td *ngIf="item " style="width:1%;"></td>
-                                                                                                                <td *ngIf="item && item.ShowBtns == true" style="width:10%;">
-                                                                                                                    <span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
-                                                                                                                </td>
-                                                                                                                <td *ngIf="item" style="width:4%;"></td>
-                                                                                                                <td *ngIf="item && item.HasTree" style="width:30%;"></td>
-                                                                                                            </tr>
-                                                                                                        </table>
-
-                                                                                                    </td>
 
 
-                                                                                                </tr>
-
-                                                                                                <tr>
-
-                                                                                                    <td style="width:20px"></td>
-
-
-
-                                                                                                    <td colspan="2">
-                                                                                                        <table *ngIf="item && item.IsViewTree">
-                                                                                                            <tr style="text-align:left;vertical-align:top;" *ngFor="let item of item.Items">
-                                                                                                                <td style="min-height:30px;">
+                                                                                                                <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" *ngIf="item" style="width:100px;height:20px">
                                                                                                                     <table>
-                                                                                                                        <tr>
-                                                                                                                            <td *ngIf="item &&  item.HasTree" style="width:20px">
-                                                                                                                                <div style="width:20px">
-                                                                                                                                    <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
-                                                                                                                                    <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
-                                                                                                                                </div>
+                                                                                                                        <tr class="OutterLink">
+                                                                                                                            <td style="width:85%;">
+                                                                                                                                <p style="display:inline-block;">{{item.DisplayName}}</p>
                                                                                                                             </td>
-
-                                                                                                                            <td *ngIf="item &&  !item.HasTree" style="width:20px">
-                                                                                                                                <div style="width:20px"></div>
-
+                                                                                                                            <td *ngIf="item" style="width:5%;"></td>
+                                                                                                                            <td class="LinkBtn" style="width:70px;">
+                                                                                                                                <span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
                                                                                                                             </td>
+                                                                                                                            <td *ngIf="item " style="width:1%;"></td>
+                                                                                                                            <td class="LinkBtn" style="width:65px;">
+                                                                                                                                <span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
+                                                                                                                            </td>
+                                                                                                                            <td *ngIf="item" style="width:4%;"></td>
+                                                                                                                            <!--<td *ngIf="item &&  item.HasTree" style="width:30%;"></td>-->
+                                                                                                                        </tr>
+                                                                                                                    </table>
 
-                                                                                                                            <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" (mouseover)="item.OnMouseOver($event)" (mouseout)="item.OnMouseOut($event)" *ngIf="item" style="width:100px;height:24px">
+                                                                                                                </td>
+
+
+                                                                                                            </tr>
+
+                                                                                                            <tr>
+
+                                                                                                                <td style="width:20px"></td>
+
+
+
+                                                                                                                <td colspan="2">
+                                                                                                                    <table *ngIf="item && item.IsViewTree">
+                                                                                                                        <tr style="text-align:left;vertical-align:top;" *ngFor="let item of item.Items">
+                                                                                                                            <td style="min-height:30px;">
                                                                                                                                 <table>
                                                                                                                                     <tr>
-                                                                                                                                        <td style="width:70%;">
-                                                                                                                                            <p style="display:inline-block;">{{item.Name}}</p>
+                                                                                                                                        <td *ngIf="item &&  item.HasTree" style="width:20px">
+                                                                                                                                            <div style="width:20px">
+                                                                                                                                                <span *ngIf="item && !item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon.png" /></span>
+                                                                                                                                                <span *ngIf="item && item.IsViewTree" style="width:20px"><img (click)="item.LoadItems(item)" style="margin-right:5px;margin-top:0px;border:0px;background-color:transparent;height:12px;width:12px" src="./Images/treeIcon2.png" /></span>
+                                                                                                                                            </div>
                                                                                                                                         </td>
-                                                                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:5%;"></td>
-                                                                                                                                        <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;">
-                                                                                                                                            <span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
+
+                                                                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:20px">
+                                                                                                                                            <div style="width:20px"></div>
+
                                                                                                                                         </td>
-                                                                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:1%;"></td>
-                                                                                                                                        <td *ngIf="item &&  !item.HasTree && item.ShowBtns == true" style="width:10%;">
-                                                                                                                                            <span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
+
+                                                                                                                                        <td class="ListBoxItem" colspan="2" [class.SelectedListBoxItem]="SelectedItem == item" (click)="SetSelectedItem(item)" *ngIf="item" style="width:100px;height:20px">
+                                                                                                                                            <table>
+                                                                                                                                                <tr class="OutterLink">
+                                                                                                                                                    <td style="width:70%;">
+                                                                                                                                                        <p style="display:inline-block;">{{item.Name}}</p>
+                                                                                                                                                    </td>
+                                                                                                                                                    <td *ngIf="item &&  !item.HasTree" style="width:5%;"></td>
+                                                                                                                                                    <td class="LinkBtn" style="width:10%;">
+                                                                                                                                                        <span class="LinkBtn" (click)="btnAdd_Click(item)">Add Column</span>
+                                                                                                                                                    </td>
+                                                                                                                                                    <td *ngIf="item &&  !item.HasTree" style="width:1%;"></td>
+                                                                                                                                                    <td class="LinkBtn" style="width:10%;">
+                                                                                                                                                        <span class="LinkBtn" (click)="btnAddFilter_Click(item)">Add Filter</span>
+                                                                                                                                                    </td>
+                                                                                                                                                    <td *ngIf="item &&  !item.HasTree" style="width:4%;"></td>
+                                                                                                                                                    <td *ngIf="item &&  item.HasTree" style="width:30%;"></td>
+                                                                                                                                                </tr>
+                                                                                                                                            </table>
                                                                                                                                         </td>
-                                                                                                                                        <td *ngIf="item &&  !item.HasTree" style="width:4%;"></td>
-                                                                                                                                        <td *ngIf="item &&  item.HasTree" style="width:30%;"></td>
+
                                                                                                                                     </tr>
                                                                                                                                 </table>
                                                                                                                             </td>
-
                                                                                                                         </tr>
                                                                                                                     </table>
                                                                                                                 </td>
                                                                                                             </tr>
                                                                                                         </table>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </table>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </table>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
+                                                                                                    </div> 
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
 
 
-                                                                </td>
+                                                                        </td>
 
 
-                                                            </tr>
+                                                                    </tr>
 
 
-                                                            <tr>
-                                                                <td>
-                                                                    <div></div>
-                                                                </td>
-                                                            </tr>
-
-
-
-                                                        </table>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="height:100%;"></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-
-                            </table>
-
-                        </div>
-                    </td>
-                    <td style="width: 1%; vertical-align: middle;">
-                        <!--<table>
-                            <tr>
-                                <td>
-                                    <button (click)="btnAdd_Click()" class="Button" [disabled]="!IsbtnAddEnabled" style="width:80px;margin: 7px;">
-                                        {{'General.B.Add' | TextCodeTranslationPipe}}
-                                        <img src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
-                                        <img *ngIf="RTL == true" src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
-                                    </button>
-                                    <button (click)="btnRemove_Click()" class="Button" [disabled]="!IsbtnRemoveEnabled" style="width:80px;margin: 7px;">
-                                        <img src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
-                                        <img *ngIf="RTL == true" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
-                                        {{'General.B.Remove' | TextCodeTranslationPipe}}
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <button (click)="btnAddFilter_Click()" class="Button" [disabled]="!IsbtnAddFilterEnabled" style="width:80px;margin: 7px;">
-                                        {{'General.B.Add' | TextCodeTranslationPipe}}
-                                        <img src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
-                                        <img *ngIf="RTL == true" src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
-                                    </button>
-                                    <button (click)="btnRemoveFilter_Click()" class="Button" [disabled]="!IsbtnRemoveFilterEnabled" style="width:80px;margin: 7px;">
-                                        <img src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
-                                        <img *ngIf="RTL == true" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
-                                        {{'General.B.Remove' | TextCodeTranslationPipe}}
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>-->
-
-                    </td>
-                    <td style="height:100%;">
-                        <table>
-                            <tr style="height:120px;">
-                                <td>
-                                    <div style="height:100%;width:100%;border:solid 1px #BABABA;border-radius:5px">
-                                        <table>
-                                            <tr>
-                                                <td style="height:25px;width:100%;">
-                                                    <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
-                                                        <div style="float:left;">
-                                                            <table>
-                                                                <tr>
-                                                                    <td style="width:1px;">
-                                                                        <label style="margin:5px;vertical-align: middle;">Selected Query Columns</label><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
-                                                                        <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
-                                                                    </td>
-                                                                    <td width="3px;">
-                                                                        <div></div>
-                                                                    </td>
-                                                                    <td style="width: 49px;">
-                                                                        <HelpIcon *ngIf="IsBIReportEditScreen" style="width: 18px;height:18px;" [Header]="'Help'" [Text]="'Added Columns will be added to the end of the report columns. Removed columns will be removed from the report automatically.'"></HelpIcon>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div></div>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                        <!--<div style="float:right;">
-                                                            <button (click)="btnUp_Click()" class="Button" [disabled]="IsbtnDownEnabled" style="width:26px;margin-right: 2px;margin-top:3px;float:right;">
-                                                                <img src="./Images/Icons/ArrowUp.png" style="height:16px;vertical-align:middle;" />
-                                                            </button>
-                                                            <button (click)="btnDown_Click()" class="Button" [disabled]="IsbtnUpEnabled" style="width:26px;margin-top:3px;margin-right: 5px; float:right;">
-                                                                <img src="./Images/Icons/ArrowDown.png" style="height:16px;vertical-align:middle;" />
-                                                            </button>
-                                                        </div>-->
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="EmailBoxMultiLinesText" style="height:100%;white-space: normal;max-width: 812px;overflow-y: auto;background:linear-gradient(#F2F8FF, #E6EBF0);">
-                                                        <div class="ItemBox" *ngFor="let item of SelectedFieldsDataSource" [class.SelectedItemBox]="FieldSelectedItem == item" (click)="SetFieldSelectedItem(item)">
-                                                            <div class="SelectedItemBoxContent">
-                                                                <table>
                                                                     <tr>
                                                                         <td>
-                                                                            <span style="width:20px;"><img *ngIf="FieldSelectedItem == item" (click)="btnUp_Click()" src="./Images/ArrowLeft.png" class="ArrowBtn" /></span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span style="margin-left:2px;cursor: default;">{{item.DisplayName}}</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span><img (click)="btnRemove_Click(item)" src="./Images/RedX2.png" class="RemoveBtn" /></span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <span style="width:20px;"><img *ngIf="FieldSelectedItem == item" (click)="btnDown_Click()" src="./Images/ArrowRight.png" class="ArrowBtn" /></span>
+                                                                            <div></div>
                                                                         </td>
                                                                     </tr>
+
+
+
                                                                 </table>
                                                             </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="height:100%;"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
 
-                                                        </div>
-                                                    </div>
-                                                    <!--<table class="BodyBackground">
-                                                        <tr>
-                                                            <td>
-                                                                <ul style="width:100%;margin-top:5px;height:120px;overflow:auto;background-color:transparent;max-height:120px">
-                                                                    <li *ngFor="let item of SelectedFieldsDataSource" class="ListBoxItem" [class.SelectedListBoxItem]="FieldSelectedItem == item" (click)="SetFieldSelectedItem(item)">{{item.DisplayName}}</li>
-                                                                </ul>
-                                                            </td>
-                                                        </tr>
-                                                        <tr><td style="height:100%;"></td></tr>
-                                                    </table>-->
+                                    </table>
 
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="height:10px;">
-                                <td></td>
-                            </tr>
-                            <tr style="height:220px;">
-                                <td>
-                                    <div style="height:100%;width:100%;border:solid 1px #BABABA;border-radius:5px">
-                                        <table>
-                                            <tr>
-                                                <td style="height:25px;width:100%;">
-                                                    <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
-                                                        <div style="float:left;">
-                                                            <label style="margin:5px;vertical-align: middle;">Selected Filters </label><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
-                                                            <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <table class="BodyBackground">
+                                </div>
+                            </td>
+                            <td style="width: 1%; vertical-align: middle;">
+                               
+                            </td>
+                            <td style="height:691px;">
+                                <div style="height:691px;overflow:auto;">
+                                    <table>
+                                        <tr style="height:120px;">
+                                            <td>
+                                                <div style="height:100%;width:100%;border:solid 1px #BABABA;border-radius:5px">
+                                                    <table>
                                                         <tr>
-                                                            <td>
-                                                                <div class="EmailBoxMultiLinesText" style="white-space: normal;max-width: 815px;max-height:345px;overflow: auto;">
-                                                                    <div style="margin:5px;">
+                                                            <td style="height:25px;width:100%;">
+                                                                <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
+                                                                    <div style="float:left;">
                                                                         <table>
                                                                             <tr>
-                                                                                <td>
-                                                                                    <div class="EmailBoxMultiLinesText" style="white-space: normal;">
-                                                                                        <!--<div class="GroupItem">
-                                                                                            <div class="OperatorItem">
-                                                                                                <div class="Operator">
-                                                                                                    <ComboBox *ngIf="SelectedFiltersDataSource[0]" (SelectedItemChanged)="SelectedFiltersDataSource[0].AndOrOpsChanged($event)" [ItemsSource]="AndOrOps" [SelectedItem]="SelectedFiltersDataSource[0].AndOr"></ComboBox>
-                                                                                                </div>-->
-                                                                                        <DWQueryBuilderFilters [SelectedFiltersDataSource]="SelectedFiltersDataSource" [DataContext]="DataContext" [SelectedFiltersDataSourceChanged]="SelectedFiltersDataSourceChanged"></DWQueryBuilderFilters>
-                                                                                        <!--</div>
-                                                                                        </div>-->
-
-                                                                                    </div>
+                                                                                <td style="width:1px;">
+                                                                                    <label style="margin:5px;vertical-align: middle;">Selected Query Columns</label><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
+                                                                                    <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
                                                                                 </td>
+                                                                                <td width="3px;">
+                                                                                    <div></div>
+                                                                                </td>
+                                                                                <td style="width: 49px;">
+                                                                                    <HelpIcon *ngIf="IsBIReportEditScreen" style="width: 18px;height:18px;" [Header]="'Help'" [Text]="'Added Columns will be added to the end of the report columns. Removed columns will be removed from the report automatically.'"></HelpIcon>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                    <!--<div style="float:right;">
+                                        <button (click)="btnUp_Click()" class="Button" [disabled]="IsbtnDownEnabled" style="width:26px;margin-right: 2px;margin-top:3px;float:right;">
+                                            <img src="./Images/Icons/ArrowUp.png" style="height:16px;vertical-align:middle;" />
+                                        </button>
+                                        <button (click)="btnDown_Click()" class="Button" [disabled]="IsbtnUpEnabled" style="width:26px;margin-top:3px;margin-right: 5px; float:right;">
+                                            <img src="./Images/Icons/ArrowDown.png" style="height:16px;vertical-align:middle;" />
+                                        </button>
+                                    </div>-->
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="height:95px;">
+                                                                <div class="EmailBoxMultiLinesText" style="height:100%;white-space: normal;max-width: 812px;overflow-y: auto;background:linear-gradient(#F2F8FF, #E6EBF0);">
+                                                                    <div class="ItemBox" *ngFor="let item of SelectedFieldsDataSource" [class.SelectedItemBox]="FieldSelectedItem == item" (mouseover)="ShowOrderArrows(item)" (click)="SetFieldSelectedItem(item)">
+                                                                        <div class="SelectedItemBoxContent">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <span style="width:20px;"><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnUp_Click(item)" src="./Images/ArrowLeft.png" class="ArrowBtn" /></span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span style="margin-left:2px;cursor: default;">{{item.DisplayName.replace('[', '').replace(']', '')}}</span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span><img (click)="btnRemove_Click(item)" src="./Images/RedX2.png" class="RemoveBtn" /></span>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <span style="width:20px;"><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnDown_Click(item)" src="./Images/ArrowRight.png" class="ArrowBtn" /></span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <!--<table class="BodyBackground">
+                                    <tr>
+                                        <td>
+                                            <ul style="width:100%;margin-top:5px;height:120px;overflow:auto;background-color:transparent;max-height:120px">
+                                                <li *ngFor="let item of SelectedFieldsDataSource" class="ListBoxItem" [class.SelectedListBoxItem]="FieldSelectedItem == item" (click)="SetFieldSelectedItem(item)">{{item.DisplayName}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr><td style="height:100%;"></td></tr>
+                                </table>-->
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr style="height:10px;">
+                                            <td></td>
+                                        </tr>
+                                        <tr style="height:220px;">
+                                            <td>
+                                                <div style="height:100%;width:100%;border:solid 1px #BABABA;border-radius:5px">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="height:25px;width:100%;">
+                                                                <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
+                                                                    <div style="float:left;">
+                                                                        <label style="margin:5px;vertical-align: middle;">Selected Filters </label><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
+                                                                        <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="height:195px;">
+                                                                <table class="BodyBackground" style="height:300px;">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="EmailBoxMultiLinesText" style="white-space: normal;max-width: 815px;height:300px;overflow: auto;">
+                                                                                <div style="margin:5px;">
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div class="EmailBoxMultiLinesText" style="white-space: normal;">
+                                                                                                    <!--<div class="GroupItem">
+                                                                    <div class="OperatorItem">
+                                                                        <div class="Operator">
+                                                                            <ComboBox *ngIf="SelectedFiltersDataSource[0]" (SelectedItemChanged)="SelectedFiltersDataSource[0].AndOrOpsChanged($event)" [ItemsSource]="AndOrOps" [SelectedItem]="SelectedFiltersDataSource[0].AndOr"></ComboBox>
+                                                                        </div>-->
+                                                                                                    <DWQueryBuilderFilters [SelectedFiltersDataSource]="SelectedFiltersDataSource" [DataContext]="DataContext" [SelectedFiltersDataSourceChanged]="SelectedFiltersDataSourceChanged"></DWQueryBuilderFilters>
+                                                                                                    <!--</div>
+                                                                    </div>-->
+
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <BusyIndicator [Text]="FiltersBusyIndicatorText" [IsBusy]="FiltersShowBusyIndicator"></BusyIndicator>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td style="height:100%;"></td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr style="height:10px;">
+                                            <td></td>
+                                        </tr>
+                                        <tr style="height: 220px;">
+                                            <td>
+                                                <div style="height:100%;width:100%;border:solid 1px #BABABA;border-radius:5px">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="height:25px;width:100%;">
+                                                                <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
+                                                                    <div style="float:left;">
+                                                                        <label style="margin:5px;vertical-align: middle;">Preview Data (up to 100 records)</label><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
+                                                                        <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
+                                                                    </div>
+                                                                    <div style="float:right;">
+                                                                        <table style="margin-right: 10px;margin-top: 2px;">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <button style="min-width: 35px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="SaveChanges(true)">SQL</button>
+                                                                                </td>
+                                                                                <td style="width:3px;"></td>
+                                                                                <td>
+                                                                                    <IconButton [Name]="'Refresh'" (click)="SaveChanges()"></IconButton>
+                                                                                </td>
+
                                                                             </tr>
                                                                         </table>
                                                                     </div>
@@ -559,152 +693,133 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="height:100%;"></td>
+                                                            <td style="height:195px;">
+                                                                <div class="LocationDirective" style="height:195px;">
+                                                                    <div *ngIf="IsPreview == false" class="BodyBackground MediaFill">
+                                                                        <LogTextBox [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'Notes'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="Notes" [InputType]="'Text'"></LogTextBox>
+                                                                    </div>
+                                                                    <div *ngIf="IsPreview == true" class="BodyBackground MediaFill">
+                                                                        <div class="SimpleGridView">
+                                                                            <div class="SimpleGridViewHeader" *ngIf="SampleData.length > 0">
+                                                                                <table>
+                                                                                    <tr class="SimpleGridHeaderRow">
+                                                                                        <td *ngFor="let item of SelectedFieldsDataSource; let i=index;" style="width: 100px; max-width: 100px;min-width:100px;padding-left: 4px;">{{item.DisplayName.replace('[', '').replace(']','')}}</td>
+                                                                                        <td></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </div>
+
+                                                                            <div class="SimpleGridViewBody">
+                                                                                <!--style="bottom:25px;height: Calc(100% - 25px);"-->
+                                                                                <table *ngIf="SampleData.length > 0">
+                                                                                    <tr class="SimpleGridViewRow" *ngFor="let item of SampleData;">
+
+                                                                                        <td *ngFor="let Column of SelectedFieldsDataSource; let i=index;" class="CellStretched  TextTrimming" style="width: 100px; max-width: 100px;min-width:100px;padding-left: 4px;">
+                                                                                            <div  [style.padding-right] ="Column.DataTypeCode == 'Integer' ? '4px':'0px'"    [style.text-align]="Column.DataTypeCode == 'Integer' ? 'right':'left'" *ngIf="Column.IsMeasurement == false && Column.DataTypeCode != 'Decimal' && Column.DataTypeCode != 'Double'">
+                                                                                                {{item[Column.DisplayName.replace('[', '').replace(']','')]}}
+                                                                                            </div>
+
+                                                                                            <div *ngIf="Column.IsMeasurement == true || Column.DataTypeCode == 'Decimal' || Column.DataTypeCode == 'Double'" style="text-align:right;padding-right:4px;">
+                                                                                                {{item[Column.DisplayName.replace('[', '').replace(']','')] | NumbersPipe:'N2'}}
+                                                                                            </div>
+
+
+                                                                                        </td>
+                                                                                        <td style="width:100%;"></td>
+
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td colspan="5">
+                                                                                            <div></div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                                <div *ngIf="SampleData.length == 0" style="width:100%;height:100%;text-align:center;vertical-align:middle;font-weight: bold;color: gray;font-size: 13px;">
+                                                                                    <div *ngIf="IsDataReturened == false">No Data Available</div>
+                                                                                    <table *ngIf="IsDataReturened == true">
+                                                                                        <tr style="height:1px;">
+                                                                                            <td></td>
+                                                                                            <td style="width:200px;">
+                                                                                                <button style="min-width: 35px; padding-left: 5px; padding-right: 5px;height:40px;font-size:13px;" class="Button" (click)="SaveChanges()">Load Preview Data</button>
+                                                                                            </td>
+                                                                                            <td></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td></td>
+                                                                                            <td style="width:200px;"></td>
+                                                                                            <td></td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                     </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="height:10px;">
-                                <td></td>
-                            </tr>
-                            <tr style="height: 220px;">
-                                <td>
-                                    <div style="height:100%;width:100%;border:solid 1px #BABABA;border-radius:5px">
-                                        <table>
-                                            <tr>
-                                                <td style="height:25px;width:100%;">
-                                                    <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
-                                                        <div style="float:left;">
-                                                            <label style="margin:5px;vertical-align: middle;">Preview</label><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
-                                                            <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
-                                                        </div>
-                                                        <div style="float:right;">
-                                                            <table style="margin-right: 10px;margin-top: 2px;">
-                                                                <tr>
-                                                                    <td>
-                                                                        <button style="min-width: 35px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="SaveChanges(true)">SQL</button>
-                                                                    </td>
-                                                                    <td style="width:3px;"></td>
-                                                                    <td>
-                                                                        <IconButton [Name]="'Refresh'" (click)="SaveChanges()"></IconButton>
-                                                                    </td>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div> 
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+            </td>
+        </tr>
+        <tr style="height:10px;">
+            <td></td>
+        </tr>
+        <tr style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 30px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
 
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="LocationDirective" style="height:150px;">
-                                                        <div *ngIf="IsPreview == false" class="BodyBackground MediaFill">
-                                                            <LogTextBox [HideColumns]="true" [HideLastColumn]="true" [IsFreeText]="true" [ObjectFieldName]="'Notes'" [IsMultiline]="true" [DataContext]="DataContext" [Text]="Notes" [InputType]="'Text'"></LogTextBox>
-                                                        </div>
-                                                        <div *ngIf="IsPreview == true" class="BodyBackground MediaFill">
-                                                            <div class="SimpleGridView">
-                                                                <div class="SimpleGridViewHeader" *ngIf="SampleData.length > 0">
-                                                                    <table>
-                                                                        <tr class="SimpleGridHeaderRow">
-                                                                            <td *ngFor="let item of SelectedFieldsDataSource; let i=index;" style="width: 100px; max-width: 100px;min-width:100px;padding-left: 4px;">{{item.DisplayName.replace('[', '').replace(']','')}}</td>
-                                                                            <td></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        </td>
 
-                                                                <div class="SimpleGridViewBody">
-                                                                    <!--style="bottom:25px;height: Calc(100% - 25px);"-->
-                                                                    <table *ngIf="SampleData.length > 0">
-                                                                        <tr class="SimpleGridViewRow" *ngFor="let item of SampleData;">
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
 
-                                                                            <td *ngFor="let Column of SelectedFieldsDataSource; let i=index;" class="CellStretched  TextTrimming" style="width: 100px; max-width: 100px;min-width:100px;padding-left: 4px;">
-                                                                                <div *ngIf="Column.IsMeasurement == false">
-                                                                                    {{item[Column.DisplayName.replace('[', '').replace(']','')]}}
-                                                                                </div>
-                                                                                <div *ngIf="Column.IsMeasurement == true" style="text-align:right;padding-right:4px;">
-                                                                                    {{item[Column.DisplayName.replace('[', '').replace(']','')] | NumbersPipe:'N2'}}
-                                                                                </div>
-                                                                            </td>
-                                                                            <td style="width:100%;"></td>
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="SaveButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                        </td>
 
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td colspan="5">
-                                                                                <div></div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                    <div *ngIf="SampleData.length == 0" style="width:100%;height:100%;text-align:center;vertical-align:middle;font-weight: bold;color: gray;font-size: 13px;">
-                                                                        No Data Available
-                                                                    </div>
-                                                                </div>
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
 
-                                                            </div>
-                                                        </div>
-                                                        <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr style="height:10px;">
-        <td></td>
-    </tr>
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 30px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
+                        <td *ngIf="false" style="width: 57px;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="text" style="float:left;width:120px;" [(ngModel)]="ID" />
+                                    </td>
+                                    <td style="width: 5px;">
+                                        <div style="width: 5px;height:20px;"></div>
+                                    </td>
+                                    <td>
+                                        <button class="RedButton" (click)="EditButtonClicked()">Edit</button>
+                                    </td>
+                                </tr>
+                            </table>
 
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
-                    </td>
+                        </td>
 
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
-                    </td>
 
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <table>
-                            <tr>
-                                <td>
-                                    <input type="text" style="float:left;width:120px;" [(ngModel)]="ID" />
-                                </td>
-                                <td style="width: 5px;">
-                                    <div style="width: 5px;height:20px;"></div>
-                                </td>
-                                <td>
-                                    <button class="RedButton" (click)="EditButtonClicked()">Edit</button>
-                                </td>
-                            </tr>
-                        </table>
-
-                    </td>
-
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>

@@ -62,7 +62,9 @@ using Simplog.Data.ShipmentsModel;
 				   temp.Reference1 = item.Reference1;
 				   temp.Reference2 = item.Reference2;
 				   temp.Reference3 = item.Reference3;
-				   temp.CommodityNumber = item.CommodityNumber;					
+				   temp.CommodityNumber = item.CommodityNumber;
+				   temp.Reference4 = item.Reference4;
+				   temp.Notes = item.Notes;					
 					MyList.Add(temp);
 				}
 					
@@ -117,7 +119,9 @@ using Simplog.Data.ShipmentsModel;
 					temp.Reference1 = item.Reference1;
 					temp.Reference2 = item.Reference2;
 					temp.Reference3 = item.Reference3;
-					temp.CommodityNumber = item.CommodityNumber;					   
+					temp.CommodityNumber = item.CommodityNumber;
+					temp.Reference4 = item.Reference4;
+					temp.Notes = item.Notes;					   
 						MyList.Add(temp);
 					}
 						

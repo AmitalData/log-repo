@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure;
@@ -18,8 +19,8 @@ namespace WebFreight.Web.TopicQueues
         SubscriptionClient subscriptionClient;
         public CacheMessageHandler()
         {
-            string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
-            string subscribtionName = roleId[roleId.Length - 1];
+            //string[] roleId = RoleEnvironment.CurrentRoleInstance.Id.Split('_');
+            string subscribtionName = Environment.MachineName;//roleId[roleId.Length - 1];
             subscriptionClient = Microsoft.ServiceBus.Messaging.SubscriptionClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(LogitudeSettings.DeploymentStage), StorageAcountDetails.DataCacheTopicName, subscribtionName);
         }
 
@@ -29,14 +30,31 @@ namespace WebFreight.Web.TopicQueues
             {
                 try
                 {
-                    var message = subscriptionClient.Receive();
+                    var message = subscriptionClient.Receive(new TimeSpan(0,1,0));
                     if (message != null)
                     {
                         string Key = message.Properties["Key"].ToString();
-                        CacheManager.CacheWrapper.Remove(Key);
+
+                        if (Key.Contains("$"))
+                        {
+                            string[] iKeys = Key.Split('$');
+
+                            foreach(string iKey in iKeys)
+                            {
+                                CacheManager.CacheWrapper.Remove(iKey);
+                            }
+                        }
+
+                        else
+                        {
+                            CacheManager.CacheWrapper.Remove(Key);
+                        }
+
                         message.Complete();
                     }
+                    Thread.Sleep(2000);
                 }
+
                 catch { }
             }
         }

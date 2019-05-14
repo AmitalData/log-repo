@@ -19,6 +19,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
 
 import {FeatureTogglePM} from '../../EntityPMs/FeatureTogglePM';
 
+import {FeatureTogglePMInitService} from '../../EntityPMInitServices/FeatureTogglePMInitService';
 
 @Injectable()
 
@@ -48,6 +49,8 @@ export class FeatureTogglePMService {
 					if(pm)
 					{
                       entity = this.MapJsonToEntityPM(pm);
+                      FeatureTogglePMInitService.InitValues(entity, false);
+                      FeatureTogglePMInitService.ApplyUIPoperties(entity, false);
                     }
 
                 var serviceResponse: ServiceResponse;
@@ -247,6 +250,10 @@ export class FeatureTogglePMService {
 		    var entityPM: FeatureTogglePM;
 			entityPM = new FeatureTogglePM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+
+			FeatureTogglePMInitService.InitValues(entityPM, true);
+			FeatureTogglePMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 

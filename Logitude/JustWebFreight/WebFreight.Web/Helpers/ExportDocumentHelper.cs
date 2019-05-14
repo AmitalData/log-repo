@@ -43,6 +43,7 @@ using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.AccountingModel.Reports.PaymentCheque;
 using WebFreight.Web.AccountingModel.Reports.TaxDeductionReport;
 using Logitude.Accounting.BL.DataContract;
+using WebFreight.Web.AccountingModel.Reports.OpenFormatReport;
 
 namespace WebFreight.Web.Helpers
 {
@@ -440,6 +441,19 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "TDDP", Name = "TaxDeductionReportData", BusinessObjectValue = taxDeductionDP };
+                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
+
+                    }
+
+                    break;
+
+                case "OFDP":
+                    {
+                        OpenFormatReportPrintService service = new OpenFormatReportPrintService();
+                        OpenFormatReportDataProvider OpenFormatReporDP = service.LoadDataProvider(entityId, tenant);
+
+                        theT2 = System.DateTime.Now.Ticks;
+                        StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "OFDP", Name = "OpenFormatReportDataProvider", BusinessObjectValue = OpenFormatReporDP };
                         report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
 
                     }

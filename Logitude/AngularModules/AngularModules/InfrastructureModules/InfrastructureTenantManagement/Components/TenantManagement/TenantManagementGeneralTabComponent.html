@@ -258,14 +258,14 @@
                                                                     </tr>
 
                                                                     <!--<tr class="FormFieldRow">
-        <td>
-            <label style="margin-left: 10px;color: rgb(110, 113, 114);">Document Share As Default</label>
-        </td>
+                                            <td>
+                                                <label style="margin-left: 10px;color: rgb(110, 113, 114);">Document Share As Default</label>
+                                            </td>
 
-        <td>
-            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'DocumentShareAsDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-        </td>
-    </tr>-->
+                                            <td>
+                                                <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'DocumentShareAsDefault'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                            </td>
+                                        </tr>-->
                                                                 </table>
                                                             </td>
 
@@ -789,18 +789,9 @@
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
+                                                                   
 
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'BluesnapAccount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogTextBox [ObjectFieldName]="'BluesnapAccount'" [Text]="BluesnapAccount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                    <tr class="FormFieldRow">
+                                                                    <tr class="FormFieldRow" *ngIf="false">
                                                                         <td>
                                                                             <LogLabel [ObjectFieldName]="'MainContract'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
@@ -820,20 +811,7 @@
                                                                         </td>
                                                                     </tr>
 
-                                                                    <tr class="FormFieldRow">
-                                                                        <td>
-                                                                            <LogLabel [ObjectFieldName]="'BluesnapContractCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                                        </td>
-
-                                                                        <td>
-                                                                            <LogLov [ObjectFieldName]="'BluesnapContractCode'"
-                                                                                    [ObjectTableName]="ObjectTableName"
-                                                                                    [SelectedValue]="BluesnapContractCode"
-                                                                                    [DataContext]="DataContext"
-                                                                                    [LookUpTableName]="'BluesnapContract'">
-                                                                            </LogLov>
-                                                                        </td>
-                                                                    </tr>
+                                                                  
 
                                                                     <tr class="FormFieldRow">
                                                                         <td>
@@ -944,6 +922,227 @@
                                                         </tr>
                                                     </table>
                                                 </fieldset>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td style="width:15px;">
+                                    <div></div>
+                                </td>
+                                <td style="width:410px;">
+                                    <table>
+                                        <!--Contract Fields-->
+                                        <tr>
+                                            <td style="vertical-align:top">
+                                                <fieldset class="FieldSet">
+                                                    <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Contracts</legend>
+
+                                                    <table style="margin:5px;">
+                                                        <tr>
+                                                            <td>
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapAccount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapAccount'" [Text]="BluesnapAccount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'BluesnapContractId'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [SelectedValue]="BluesnapContractId"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [QueryFilterItems]="BluesnapContractIdFilterItems"
+                                                                                    [LookUpTableName]="'BluesnapContract'">
+                                                                            </LogLov>
+                                                                        </td>
+
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapContractQTYs'" [Text]="BluesnapContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+
+
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapCRMContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'BluesnapCRMContractId'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [SelectedValue]="BluesnapCRMContractId"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [QueryFilterItems]="BluesnapCRMContractIdFilterItems"
+                                                                                    [LookUpTableName]="'BluesnapContract'">
+                                                                            </LogLov>
+                                                                        </td>
+
+
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapCRMContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapCRMContractQTYs'" [Text]="BluesnapCRMContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+
+                                                                    </tr>
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapEAWBContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'BluesnapEAWBContractId'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [SelectedValue]="BluesnapEAWBContractId"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [QueryFilterItems]="BluesnapEAWBContractIdFilterItems"
+                                                                                    [LookUpTableName]="'BluesnapContract'">
+                                                                            </LogLov>
+                                                                        </td>
+
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapEAWBContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapEAWBContractQTYs'" [Text]="BluesnapEAWBContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapEAWBSContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'BluesnapEAWBSContractId'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [SelectedValue]="BluesnapEAWBSContractId"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [QueryFilterItems]="BluesnapEAWBSContractIdFilterItems"
+                                                                                    [LookUpTableName]="'BluesnapContract'">
+                                                                            </LogLov>
+                                                                        </td>
+
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapEAWBSContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapEAWBSContractQTYs'" [Text]="BluesnapEAWBSContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapOneTimeContract'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'BluesnapOneTimeContract'" [DataContext]="DataContext"
+                                                                                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                                                    </td>
+
+                                                                                    <td style="width:36px"></td>
+                                                                                </tr>
+                                                                            </table>
+
+                                                                        </td>
+
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapOneTimeContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapOneTimeContractQTYs'" [Text]="BluesnapOneTimeContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapInttraStockContractId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogLov [ObjectFieldName]="'BluesnapInttraStockContractId'"
+                                                                                    [ObjectTableName]="ObjectTableName"
+                                                                                    [SelectedValue]="BluesnapInttraStockContractId"
+                                                                                    [DataContext]="DataContext"
+                                                                                    [QueryFilterItems]="BluesnapInttraStockContractIdFilterItems"
+                                                                                    [LookUpTableName]="'BluesnapContract'">
+                                                                            </LogLov>
+                                                                        </td>
+
+                                                                        <td style="width:50px">
+                                                                            <LogLabel [ObjectFieldName]="'BluesnapInttraStockContractQTYs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td style="width:70px">
+                                                                            <LogTextBox [ObjectFieldName]="'BluesnapInttraStockContractQTYs'" [Text]="BluesnapInttraStockContractQTYs" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                        </td>
+                                                                    </tr>
+
+
+
+                                                                    <tr style="height:10px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </table>
+                                                            </td>
+
+                                                            <td style="width:15px;">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </fieldset>
+                                            </td>
+                                        </tr>
+
+                                        <tr style="height:10px;">
+                                            <td>
+                                                <div></div>
                                             </td>
                                         </tr>
 

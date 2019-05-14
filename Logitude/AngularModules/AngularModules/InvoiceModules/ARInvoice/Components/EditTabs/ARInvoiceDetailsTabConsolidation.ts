@@ -46,6 +46,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
     public EntityWarning: string = "";
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");    
@@ -192,23 +193,16 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         var isFieldEnabled = false;
 
         if (this.IsEditingEnabled) {
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
-                if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                    isFieldEnabled = true;
-                }
-
-                else if (SessionLocator.TenantPM.CurrencyId != null) {
-                    isFieldEnabled = true;
-                }
-
-                else if (SessionLocator.TenantPM.CurrencyId != this.InvoiceCurrencyId) {
-                    isFieldEnabled = true;
+            if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
+                if (this.InvoiceCurrencyId) {
+                    if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                        isFieldEnabled = true;
+                    }
                 }
             } 
         }
         
-        //this.RateIsEnabled = isFieldEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isFieldEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldEnabled);
     }
     SetUIProperties_PrintNotes() {
@@ -540,7 +534,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
     private myCurrencyRatesService: CurrencyRatesService;
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -553,21 +547,21 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
 
         this.myCurrencyRatesService.GetCurrenciesExchangeRateByValueDate(SessionLocator.AccountingCurrencyId, loadingDate).subscribe((myResponse1: ServiceResponse) => {
             if (myResponse1.HasError) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
 
             else {
                 this.LastRatesList = myResponse1.Result;
                 this.LoadInvoices();
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 this.CheckNotifyPastDateOnInvoiceEdit();
             }
         });
     }
     UpdateData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -587,7 +581,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
                 this.SetCurrencyRateData();                
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     SetCurrencyRateData() {
@@ -1067,7 +1061,8 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
     }
 }
 export class SubInvoiceLine {
-    public entityList: ARInvoiceList;    
+    public entityList: ARInvoiceList;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(item: ARInvoiceList, private fatherComponent: ARInvoiceDetailsTabConsolidation) {
         this.entityList = item;
 
@@ -1162,8 +1157,8 @@ export class SubInvoiceLine {
             this.fatherComponent.SetUIProperties_Connected();
 
             if (!AppTool.IsNullOrEmpty(this.fatherComponent.EntityPM.Id)) {
-                if (SessionLocator.CurrentSession.CurrentEditComponent) {
-                    SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+                if (this.CurrentSession.CurrentEditComponent) {
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
                 }
             }
         }
@@ -1175,7 +1170,7 @@ export class SubInvoiceLine {
             myBackButtonLabel += ": " + this.fatherComponent.EntityPM.InvoiceNumber;
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.Id, ObjectTableName: 'ARInvoice', BackButtonLabel: myBackButtonLabel });

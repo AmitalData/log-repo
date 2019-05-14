@@ -101,7 +101,15 @@ namespace MeatadataGeneratorTool
             set { fieldName = value; IsChecked = true; FirePropertyChanged("FieldName"); this.SetPMandList(value); }
         }
 
-        string oldfieldName;
+		 string generatedComponentPath ;
+
+		public string GeneratedComponentPath
+		{
+			get { return generatedComponentPath; }
+			set { generatedComponentPath = value; FirePropertyChanged("GeneratedComponentPath"); }
+		}
+
+		string oldfieldName;
         //[Required(ErrorMessage = "Field 'FieldName' is required.")]
         public string OldFieldName
         {
@@ -689,7 +697,7 @@ namespace MeatadataGeneratorTool
             get { return isIncludeInSearchFieldsEnabled; }
             set { isIncludeInSearchFieldsEnabled = value; FirePropertyChanged("IsIncludeInSearchFieldsEnabled"); }
         }
-        
+
         string validForQuerySection1;
         public string ValidForQuerySection1
         {
@@ -1044,6 +1052,19 @@ namespace MeatadataGeneratorTool
             set { hTMLListComponentName = value; FirePropertyChanged("HtmlListComponentName"); }
         }
 
+        private bool enableFullscreenTextBox;
+        public bool EnableFullscreenTextBox
+        {
+            get
+            {
+                return enableFullscreenTextBox;
+            }
+            set
+            {
+                enableFullscreenTextBox = value;
+                FirePropertyChanged("EnableFullscreenTextBox");
+            }
+        }
 
         string helpTextCode;
         public string HelpTextCode
@@ -1442,6 +1463,13 @@ namespace MeatadataGeneratorTool
         public bool IsSpellCheckedHelpLocalDefaultText { get;  set; }
         public bool IsSpellCheckedShortLocalDefaultText { get;  set; }
         public bool IsSpellCheckedListLocalDefaultText { get; internal set; }
+ 
+        string modelName;
+        public string ModelName
+        {
+            get { return modelName; }
+            set { modelName = value; FirePropertyChanged("ModelName"); }
+        }
 
         //public Window AdvanceSettingsWindow = new Window();
         ObjectFieldsAdvanceSettings AdvanceSettingsControl;
@@ -1463,5 +1491,7 @@ namespace MeatadataGeneratorTool
 
         }
         
+
+
     }
 }

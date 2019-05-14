@@ -16,7 +16,7 @@ import {TasksSchedulerPM} from '../EntityPMs/TasksSchedulerPM';
 import { BIReportPM } from '../EntityPMs/BIReportPM';
 import { ClassLevelValidator } from '../Validators/ClassLevelValidator';
 import { DWQueryData } from '../../Common/DataContracts/DWQueryData';
-
+import { FeatureToggleList } from '../EntityLists/FeatureToggleList';
 
 @Injectable()
 
@@ -400,6 +400,35 @@ export class InfrastructureDomainService {
         });
     }
 
+    getDWObjectFieldsWithChildrenByDWTableId(DWOTId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var MyApi = ServiceHelper.GetLogitudeURL() + 'api/dwobjectfields'
+        return this._http.get(MyApi + "/getDWObjectFieldsWithChildrenByDWTableId" + '?DWOTId=' + DWOTId, { headers: authHeader }).map(response => {
+
+
+            var result = response.json();
+
+            var entity: any;
+            var DWObjectFieldPMLists: any[];
+            DWObjectFieldPMLists = new Array<any>();
+
+
+            result.forEach((item) => {
+                entity = this.MapJsonToEntityPM(item);
+                DWObjectFieldPMLists.push(entity);
+            });
+
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = DWObjectFieldPMLists;
+            return pmresponse;
+        }).catch(ServiceHelper.HandleServiceError);
+
+
+    }
+
     private MapJsonToBusinessHourEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: BusinessHourPM = null) {
         if (!entityPM) {
             entityPM = new BusinessHourPM();
@@ -645,11 +674,11 @@ export class InfrastructureDomainService {
         return entityPM;
     }
 
-    GetAllTasksSchedulerPMs() {
+    GetAllTasksSchedulerPMs(schedulerType:string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetAllTasksSchedulerPMs';
+        var url = this._apiUrl + '/GetAllTasksSchedulerPMs?schedulerType=' + schedulerType;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
@@ -741,11 +770,12 @@ export class InfrastructureDomainService {
             if (errorsArray.length == 0) {
                 var mappedEntity: BIReportPM;
                 mappedEntity = this.MapJsonToEntityPM(QueryData.BIReportPM, false);
+                var temp = this.deepClone(QueryData.DWQueryData);
                 QueryData.BIReportPM = mappedEntity;
-                var temp = this.deepClone(QueryData);
-
+                QueryData.DWQueryData = temp;
+                var temp2 = this.deepClone(QueryData);
                 /////////////////////////////////////////////////////
-                return this._http.put(this._apiUrl + "/PutBIReport", JSON.stringify(temp),
+                return this._http.put(this._apiUrl + "/PutBIReport", JSON.stringify(temp2),
                     { headers: authHeader }).map((res) => {
                         var pm = res.json();
                         var entity: BIReportXMLData = new BIReportXMLData();
@@ -766,7 +796,41 @@ export class InfrastructureDomainService {
         );
     }
 
-    MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: BIReportPM = null) {
+    DeleteBIReport(Id: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetDeleteBIReport?' + 'Id=' + Id , {
+                headers: authHeader
+            }).map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+                var servertime = response.headers.get('ServerExecutionTime');
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    DeleteFolder(Id: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        var callTime = new Date();
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetDeleteFolder?' + 'Id=' + Id, {
+                headers: authHeader
+            }).map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response.json();
+                var servertime = response.headers.get('ServerExecutionTime');
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    MapJsonToEntityPM(jsonPM: any, getCallMap: boolean = true, entityPM: any = null) {
 
         if (!entityPM) {
 
@@ -776,7 +840,7 @@ export class InfrastructureDomainService {
         var jsonPMKeys = Object.keys(jsonPM);
 
         for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties") {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
@@ -785,8 +849,7 @@ export class InfrastructureDomainService {
         }
         return entityPM;
     }
-
-
+    
     public deepClone(obj, hash = new WeakMap()) {
         // Do not try to clone primitives or functions
         if (Object(obj) !== obj || obj instanceof Function) {
@@ -822,9 +885,48 @@ export class InfrastructureDomainService {
             key => ({
                 [key]:
 
-                    key != "UIProperties" && key != "MyParentClass" ? this.deepClone(obj[key], hash) : true
+                    key != "UIProperties" && key != "MyParentClass" && key != "ShowSampleDateCommand" && key != "Items" && key != "TooltipId" && key != "TooltipContentId" && key != "CurrentSession" ? this.deepClone(obj[key], hash) : true
 
             })));
+    }
+
+    GetFeatureToggles() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetFeatureToggles';
+
+        return Observable.defer(() => {
+
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var allLists = response.json();
+                var _mappedListsArray: Array<FeatureToggleList> = [];
+
+                for (var key in allLists) {
+                    var entity: FeatureToggleList;
+                    entity = this.MapJsonToFeatureToggleList(allLists[key]);
+                    _mappedListsArray.push(entity);
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = _mappedListsArray;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    private MapJsonToFeatureToggleList(jsonItem: any) {
+        var entityList: FeatureToggleList = new FeatureToggleList();
+        var jsonItemKeys = Object.keys(jsonItem);
+
+        for (var key in jsonItemKeys) {
+            var property = jsonItemKeys[key];
+            entityList[property] = jsonItem[property];
+        }
+
+        return entityList;
     }
 }
 

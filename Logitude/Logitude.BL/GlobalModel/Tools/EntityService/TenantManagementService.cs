@@ -4,6 +4,7 @@ using Logitude.BL.GlobalModel.Tools.TraceEvents;
 using Logitude.BL.GlobalModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -368,26 +369,70 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
 
             if (isClearing)
             {
-                List<User> allUsers = new List<User>();
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                {
-                    UserRepository userRepository = new UserRepository(entityPM.Id);
-                    allUsers = userRepository.GetUsers(entityPM.Id).ToList();
+                bool isUsingNewCode = true;
 
-                    scope.Complete();
+                if (isUsingNewCode)
+                {
+                    string iKeys = null;
+
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        ICommonDataContext iContext = CommonDataContext.GetContext(tenant);
+                        var iData = (from d in iContext.Users.Include("Contact")
+                                     where d.Tenant == tenant && d.Contact.UserType == "R"
+                                     select new
+                                     {
+                                         Id = d.Id,
+                                         Email = d.Contact.Email,
+                                     }).ToList();
+
+                        foreach (var item in iData)
+                        {
+                            string key = item.Email + "_" + item.Id + "_info";
+
+                            if (iKeys == null)
+                            {
+                                iKeys = key;
+                            }
+
+                            else
+                            {
+                                iKeys += "$" + key;
+                            }
+                        }
+
+                        scope.Complete();
+                    }
+
+                    if (iKeys != null)
+                    {
+                        CacheManager.CacheWrapper.Invalidate(iKeys);
+                    }
                 }
 
-                foreach (User item in allUsers)
+                else
                 {
-                    if (item.Contact != null)
-                    {
-                        string email = item.Contact.Email;
-                        if (!string.IsNullOrEmpty(email))
-                        {
-                            string key = email + "_" + entityPM.Id + "_info";
-                            CacheManager.CacheWrapper.Invalidate(key);
-                        }
-                    }
+                    //List<User> allUsers = new List<User>();
+                    //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    //{
+                    //    UserRepository userRepository = new UserRepository(entityPM.Id);
+                    //    allUsers = userRepository.GetUsers(entityPM.Id).ToList();
+
+                    //    scope.Complete();
+                    //}
+
+                    //foreach (User item in allUsers)
+                    //{
+                    //    if (item.Contact != null)
+                    //    {
+                    //        string email = item.Contact.Email;
+                    //        if (!string.IsNullOrEmpty(email))
+                    //        {
+                    //            string key = email + "_" + entityPM.Id + "_info";
+                    //            CacheManager.CacheWrapper.Invalidate(key);
+                    //        }
+                    //    }
+                    //}
                 }
             }
         }

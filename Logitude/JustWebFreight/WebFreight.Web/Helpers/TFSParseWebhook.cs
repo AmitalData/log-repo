@@ -1,7 +1,5 @@
 ﻿using Logitude.BL.Helpers;
-using Logitude.Server.Tools.Counters;
 using Logitude.TimeManagement.BL.EntityPMs;
-using Logitude.TimeManagement.BL.EntityQueryServices;
 using Logitude.TimeManagement.BL.EntityUpdateServices;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
@@ -10,20 +8,20 @@ using Microsoft.TeamFoundation.WorkItemTracking.WebApi;
 using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
 using Microsoft.VisualStudio.Services.Common;
 using Microsoft.VisualStudio.Services.WebApi;
+using Microsoft.VisualStudio.Services.WebApi.Patch.Json;
+using Microsoft.VisualStudio.Services.WebApi.Patch;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Transactions;
 using System.Web;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.Helpers
 {
@@ -62,11 +60,11 @@ namespace WebFreight.Web.Helpers
         }
 
         bool isFirst = true;
-        private string GetWorkItemById(int wi, bool isOutSide = true)
+        public string GetWorkItemById(int wi, bool isOutSide = true)
         {
             // Create a connection to the account
             string accountUri = "https://logitudeteam.visualstudio.com";
-            var personalAccessToken = "qcxofyaix25ph4bxun4n2pzmicxhp3d3t2w6bgissmpgsjwn4egq";
+            var personalAccessToken = "qsxsy6j454xpslikiuzc5oynhh5djttgxj4gmnlzpuaeypbuyc3q";
             int workItemId = wi;
 
             // new VssOAuthAccessTokenCredential(personalAccessToken)
@@ -90,13 +88,16 @@ namespace WebFreight.Web.Helpers
                 }
                 if (projectNo == null)
                 {
-
-                    var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
-                    if (relation != null)
+                    if (workitem.Relations != null)
                     {
-                        isFirst = false;
-                        string last = relation.Url.Split('/').Last();
-                        return this.GetWorkItemById(Int32.Parse(last));
+                        var relation = workitem.Relations.Where(a => a.Rel == "System.LinkTypes.Hierarchy-Reverse").FirstOrDefault();
+
+                        if (relation != null)
+                        {
+                            isFirst = false;
+                            string last = relation.Url.Split('/').Last();
+                            return this.GetWorkItemById(Int32.Parse(last));
+                        }
                     }
                 }
             }
@@ -148,6 +149,7 @@ namespace WebFreight.Web.Helpers
             TMProjectRepository tmProjectRepository = new TMProjectRepository(myContext);
             ComputingPartnerTranslationHelper computingPartnerHelper = new ComputingPartnerTranslationHelper(Tenant);
             UserRepository userRepository = new UserRepository(Tenant);
+            TMEmployeeTimeUpdateService service = new TMEmployeeTimeUpdateService(myContext, new Dictionary<string, IContext>(), Tenant);
 
             User assignedToUser = null;
             User updatedByUser = null;
@@ -190,10 +192,9 @@ namespace WebFreight.Web.Helpers
                 if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && (Details.TaskState == "In Progress" || Details.TaskState == "Committed" || Details.TaskState == "Done"))
                 {
                     if (!CheckTMLineDuplication(this.Details.WorkItemId, Tenant)) {
-                        var newItem = new TMEmployeeTime();
-                        newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
+                        var newItem = new TMEmployeeTimePM();
+                        //newItem.Id = IdCounter.GetNumber("TMEmployeeTime", Tenant);
                         newItem.Tenant = Tenant;
-                        //newItem.TimeInMinutes = System.Convert.ToInt32(Details.RemainingWork.Value) * 60;
                         newItem.DateOfWork = this.Details.ChangedDate != null ? this.Details.ChangedDate.Date : this.Details.ChangedDate;
                         newItem.CreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
                         newItem.UpdateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
@@ -210,8 +211,8 @@ namespace WebFreight.Web.Helpers
                         SprintRepository sprintRepository = new SprintRepository(Tenant);
                         var sprintPOCO = sprintRepository.GetSprintByName(sprint, Tenant);
                         newItem.SprintId = sprintPOCO != null ? sprintPOCO.Id : null;
-                        tmEmployeeTimeRepository.Add(newItem);
-                        tmEmployeeTimeRepository.SubmitChanges();
+                        newItem.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                        service.Update(newItem, true);
                     }
                 }
             }
@@ -226,8 +227,6 @@ namespace WebFreight.Web.Helpers
             var isDuplicate = false;
             var todayDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
             ITimeManagementContext myContext = TimeManagementContext.GetContext(Tenant);
-            TMEmployeeTimeQueryService queryService = new TMEmployeeTimeQueryService(myContext);
-
             IQueryable<TMEmployeeTime> iQueryable;
 
             iQueryable = (from d in myContext.TMEmployeeTimes
@@ -242,18 +241,110 @@ namespace WebFreight.Web.Helpers
         public List<TMEmployeeTime> GetProjects(List<TMEmployeeTime> list, int tenant)
         {
             ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
-            TMEmployeeTimeRepository myTMEmployeeTimeRepository = new TMEmployeeTimeRepository(tenant);
-            TMProjectRepository myTMProjectRepository = new TMProjectRepository(tenant);
+            TMEmployeeTimeRepository iTMEmployeeTimeRepository = new TMEmployeeTimeRepository(myContext);
+            TMProjectRepository iTMProjectRepository = new TMProjectRepository(myContext);
+            int count = 0;
+
             foreach (var item in list)
             {
-                projectNo = this.GetWorkItemById(Int32.Parse(item.WINumber), false);
-                item.ProjectId = myTMProjectRepository.GetTMProjectByNumber(projectNo, tenant);
-                TMEmployeeTime tmEmployee = myTMEmployeeTimeRepository.GetSingle(item.Id, item.Tenant);
-                tmEmployee.ProjectId = item.ProjectId;
-                myTMEmployeeTimeRepository.Update(tmEmployee);
+                int iWorkItemNumber;
+
+                if (Int32.TryParse(item.WINumber, out iWorkItemNumber))
+                {
+                    string iProjectNumber = GetWorkItemById(iWorkItemNumber, false);
+                    if (!string.IsNullOrEmpty(iProjectNumber))
+                    {
+                        string iProjectId = iTMProjectRepository.GetTMProjectByNumber(iProjectNumber, tenant);
+
+                        if (!string.IsNullOrEmpty(iProjectId))
+                        {
+                            if (item.ProjectId != iProjectId)
+                            {
+                                item.ProjectId = iProjectId;
+                                iTMEmployeeTimeRepository.Update(item);
+                                count++;
+                            }
+                        }
+                    }
+                }
+
+                if (count >= 100)
+                {
+                    count = 0;
+                    iTMEmployeeTimeRepository.SubmitChanges();
+                }
             }
-            myTMEmployeeTimeRepository.SubmitChanges();
+
+            if (count > 0)
+            {
+                iTMEmployeeTimeRepository.SubmitChanges();
+            }
             return list;
+        }
+
+        public void CalculateCompletedWorkHours(int tenant)
+        {
+            ITimeManagementContext myContext = TimeManagementContext.GetContext(tenant);
+            List<TMEmployeeTime> tmEmployeelist = (from d in myContext.TMEmployeeTimes
+                                                   where d.Tenant == tenant && d.DateOfWork != null && d.WINumber != null
+                                                   select d).ToList();
+
+            var groupedItems = (from d in tmEmployeelist
+                                group d by new { d.WINumber, d.Tenant } into g
+                                select new
+                                {
+                                    Tenant = g.Key.Tenant,
+                                    WINumber = g.Key.WINumber,
+                                    CompletedWork = (g.Sum(s => s.TimeInMinutes)) / 60.00,
+                                });
+            int counter = 0;
+            int currentIndex = 0;
+            int groupSize = groupedItems.Count();
+            foreach (var item in groupedItems)
+            {
+                counter += 1;
+                currentIndex += 1;
+                SendQueueMessage(item.WINumber, item.CompletedWork, item.Tenant);
+
+                if (counter == 10)
+                {
+                    counter = 0;
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+        }
+        private void SendQueueMessage(string wINumber, double completedWork, int tenant)
+        {
+            string queueName = "timemanagementqueue";
+            if (!string.IsNullOrEmpty(wINumber))
+            {
+                try
+                {
+                    DbQueueService queueservice = new DbQueueService(queueName, tenant);
+                    Dictionary<string, string> message = new Dictionary<string, string>()
+                    {
+                        { "Tenant", tenant.ToString() },
+                        { "WorkItemNumber",  wINumber },
+                        { "CompletedWork", completedWork.ToString("0.##")},
+                    };
+
+                    queueservice.Send(message);
+                }
+                catch (Exception ex)
+                {
+                    string ip = "";
+                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                    {
+                        string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+                        if (string.IsNullOrEmpty(currentIP))
+                        {
+                            currentIP = HttpContext.Current.Request.UserHostAddress;
+                        }
+                        ip = currentIP;
+                    }
+                    throw new Exception(ex + "\t" + ip);
+                }
+            }
         }
     }
 }

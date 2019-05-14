@@ -1,4 +1,4 @@
-﻿declare var System: any;
+declare var System: any;
 declare var window: any;
 import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -60,7 +60,7 @@ export class SendToContactsComponent implements OnInit {
 
     public ShowBCC: boolean = true;
     public ShowCC: boolean = true;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _entityListService: EntityListService, public _documentOutPMService: DocumentOutPMService, private cd: ChangeDetectorRef) {
 
 
@@ -72,7 +72,7 @@ export class SendToContactsComponent implements OnInit {
         window.CcEmailLists = [];
         window.BccEmailLists = [];
 
-        SessionLocator.CurrentSession.SessionEvent.subscribe((res) => {
+        this.CurrentSession.SessionEvent.subscribe((res) => {
 
             if (res && res.IsCheck) this.RefreshEmailList(res);
 
@@ -91,8 +91,8 @@ export class SendToContactsComponent implements OnInit {
 
     SetWindowArgs(args: any) {
 
-        if (AppTool.IsNullOrEmpty(SessionLocator.CurrentSession.Sessionkey)) {
-            SessionLocator.CurrentSession.Sessionkey = Guid.newGuid();
+        if (AppTool.IsNullOrEmpty(this.CurrentSession.Sessionkey)) {
+            this.CurrentSession.Sessionkey = Guid.newGuid();
         }
 
 
@@ -142,7 +142,7 @@ export class SendToContactsComponent implements OnInit {
 
 
 
-        ComponentArgs.AddComponent(new ParameterComponentArgs(SessionLocator.CurrentSession.Sessionkey + "SendTo", this));
+        ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "SendTo", this));
 
 
 
@@ -275,8 +275,15 @@ export class SendToContactsComponent implements OnInit {
             ServerSideSortable: true,
         });
 
-
-
+        this.columns.push({
+            FieldName: "Position",
+            DataTypeCode: 'String',
+            IsCustomTemplate: true,
+            Display: 'Position',
+            Styles: { width: '140px' },
+            ServerSideSortable: true,
+        });
+        
     }
 
 
@@ -342,9 +349,9 @@ export class SendToContactsComponent implements OnInit {
         var item = null;
         var index = 0;
 
-        if (!AppTool.IsNullOrEmpty(SessionLocator.CurrentSession.Sessionkey)) {
+        if (!AppTool.IsNullOrEmpty(this.CurrentSession.Sessionkey)) {
             if (ComponentArgs && ComponentArgs.ComponentLists) {
-                var sessionkey: string = SessionLocator.CurrentSession.Sessionkey + "SendTo";
+                var sessionkey: string = this.CurrentSession.Sessionkey + "SendTo";
                 var Component = ComponentArgs.ComponentLists.filter(d => d.key == sessionkey)[0];
                 if (Component) {
                     var myComponent = Component.Component;
@@ -448,7 +455,7 @@ export class SendToContactsComponent implements OnInit {
     CloseButtonClicked() {
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

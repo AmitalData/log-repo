@@ -4,10 +4,14 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -95,7 +99,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
-                ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
+                ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
 
                 if (entityPM.StatusCode == "1")
                 {
@@ -152,7 +156,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         {
                             if (item.StatusCode != "6" && item.StatusCode != "5")
                             {
-                                if ((item.StatusCode == "2") || (item.StatusCode == "1" && item.ValueDate > DateTime.Today))
+                                if (item.ValueDate > DateTime.Today)
                                 {
                                     moreDataPM.TotFutureOpenChequesInLocalCur += item.LocalAmount;
 
@@ -174,5 +178,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             }
         }
+
+
+        public ContactPM GetLoggedContact(int tenant)
+        {
+
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
+
     }
 }

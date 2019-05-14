@@ -32,5 +32,11 @@ export class TasksSchedulerList {
 		StartDateTime: Date;
 		RepeatInMinutes: number;
 		IsLastRunError: boolean;
+		Type: string;
+		NextRunTimeUTC: Date;
+		LastRunTimeUTC: Date;
+		StartDateTimeUTC: Date;
+		Version: number;
+		Status: string;
 	
 }

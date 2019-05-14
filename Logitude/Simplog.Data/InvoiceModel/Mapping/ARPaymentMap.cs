@@ -39,7 +39,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ExternalAccountingEntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.InvoiceNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ShipmentNumber).HasMaxLength(15).IsUnicode(false);
-
+            this.Property(t => t.ApprovedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SATXML).IsMaxLength().IsUnicode(true);
             this.Property(t => t.SATPaymentMethodCode).HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.SATTransferStatusCode).IsRequired().HasMaxLength(2).IsUnicode(false);
@@ -107,12 +107,17 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TransmissionError).HasColumnName("TransmissionError");
             this.Property(t => t.BankAccountLiteId).HasColumnName("BankAccountLiteId");
             this.Property(t => t.MetodoPagoCode).HasColumnName("MetodoPagoCode");
-
+            this.Property(t => t.IsFullAccounting).HasColumnName("IsFullAccounting");
             this.Property(t => t.TipoCadenaPago).HasColumnName("TipoCadenaPago");
             this.Property(t => t.CadPago).HasColumnName("CadPago");
             this.Property(t => t.CertPago).HasColumnName("CertPago");
             this.Property(t => t.SelloPago).HasColumnName("SelloPago");
             this.Property(t => t.SATApprovalDate).HasColumnName("SATApprovalDate");
+            this.Property(t => t.ApprovedDate).HasColumnName("ApprovedDate");
+            this.Property(t => t.ApprovedByUserId).HasColumnName("ApprovedByUserId");
+            this.Property(t => t.FirstApproveDate).HasColumnName("FirstApproveDate");
+            this.Property(t => t.IsExternalEntity).HasColumnName("IsExternalEntity");
+
             // Relationships
             this.HasOptional(t => t.ARAccount).WithMany().HasForeignKey(d => d.ARAccountId);
             this.HasOptional(t => t.DebitAccount).WithMany().HasForeignKey(d => d.DebitAccountId);
@@ -134,6 +139,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasOptional(t => t.MetodoPago).WithMany().HasForeignKey(d => d.MetodoPagoCode);
 
             this.Property(t => t.SATAdditionalFieldsXML).HasColumnName("SATAdditionalFieldsXML");
+            this.HasOptional(t => t.ApprovedByUser).WithMany().HasForeignKey(d => d.ApprovedByUserId);
 
 
         }

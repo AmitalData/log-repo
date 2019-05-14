@@ -23,6 +23,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public ObjectTableName: string = "User";
     public DataContext = this;
     public TechnologyList: CodeNameClass[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public TenantLoginPolicyListService: TenantLoginPolicyListService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -35,20 +36,20 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.SetUIProperties();
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.SetUIProperties();
                     }
                 });
@@ -307,13 +308,10 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         }
     }
     
-    public get ShowLocalNameInLOV () { return this.EntityPM.ShowLocalNameInLOV ; }
+    public get ShowLocalNameInLOV () { return this.EntityPM.ShowLocalNameInLOV; }
     public set ShowLocalNameInLOV (value: boolean) {
         if (this.EntityPM.ShowLocalNameInLOV  != value) {
             this.EntityPM.ShowLocalNameInLOV  = value;
         }
     }
-
-
-
 }

@@ -686,7 +686,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.ApproveDateTime = entityAM.ApproveDateTime;
             }
             entityPM.IsImporterApprovalRequired = entityAM.IsImporterApprovalRequired;
-
+            if (currentTenant.AutoArchiveOnInvoice == true && entityAM.StatusCode == "INPR" && entityAM.CustomsClearanceDate != null && entityAM.IsOperationalClosed == false)
+            {
+                entityPM.IsOperationalClosed = true;
+            }
 
             if (Partner != null)
             {

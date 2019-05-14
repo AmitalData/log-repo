@@ -503,6 +503,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? Volume { get; set; }
         public string BranchName { get; set; }
         public string MoveTypeName { get; set; }
+        public string AgentComputed { get; set; }
 
         public string LocalCustomsTransmissionsStatusCode { get; set; }
         public string LocalCustomsTransmissionsStatusName { get; set; }
@@ -571,11 +572,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public bool AsAgreedOtherCharges { get; set; }
         public string AccountNumber { get; set; }
         public string MainCarriageFromCity { get; set; }
-        public string MainCarriageFromState { get; set; }
         public string MainCarriageFromCountryCode { get; set; }
 
         public string MainCarriageToCity { get; set; }
-        public string MainCarriageToState { get; set; }
         public string MainCarriageToCountryCode { get; set; }
 
         public string CASSCode { get; set; }
@@ -612,6 +611,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? RegistryDate { get; set; }
         public bool IsAssembly { get; set; }
         public DateTime? FirstOperationalCloseDate { get; set; }
+        public DateTime? FirstAccountingCloseDate { get; set; }
 
         public string LastSharedEventId { get; set; }
         public string LastSharedEventName { get; set; }
@@ -631,6 +631,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? WarehouseLegLastFreeDate { get; set; }
         public string WarehouseLegRemarks { get; set; }
         public string WarehouseLegReference { get; set; }
+
         #region followup fields
 
         public string FollowUpId { get; set; }
@@ -642,7 +643,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string FollowUpType { get; set; }
         #endregion
 
-
         public string INTTRASIError { get; set; }
         public DateTime? INTTRASIStatusDate { get; set; }
         public string INTTRASIStatusCode { get; set; }
@@ -653,6 +653,13 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? FirstPickupETA { get; set; }
         public DateTime? INTTRALastStatusDate { get; set; }
         public DateTime? ContainerLastStatusDate { get; set; }
+
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Origin { get; set; }
+        public string DeclarationNumber { get; set; }
+        public DateTime? DeclarationDate { get; set; }
+        public string ARInvoices { get; set; }
 
     }
 }

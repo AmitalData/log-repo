@@ -1,16 +1,18 @@
-﻿import {Component, Output, EventEmitter, OnInit, AfterViewInit} from '@angular/core';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
-import {ListComponentArgs} from '../../../../Infrastructure/Args';
-import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
-import {JournalExtendedListService} from '../../../Services/ExtendedLists/JournalExtendedListService';
-import {JournalList} from '../../../EntityLists/JournalList';
-import {JournalPM} from '../../../EntityPMs/JournalPM';
-import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ObjectsLocator } from './../../../../Infrastructure/Locators/ObjectsLocator';
+import { Component, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { InfraSettings } from '../../../../Infrastructure/Utilities/InfraSettings';
+import { ListComponentArgs } from '../../../../Infrastructure/Args';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
+import { JournalExtendedListService } from '../../../Services/ExtendedLists/JournalExtendedListService';
+import { JournalList } from '../../../EntityLists/JournalList';
+import { JournalPM } from '../../../EntityPMs/JournalPM';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { JournalSummary } from '../../../DataContracts/AccountingSummery';
 
 
 @Component({
@@ -24,26 +26,89 @@ export class JournalPageComponent implements AfterViewInit {
     public RecentJournalsCount: number = 0;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private myJournalService: JournalExtendedListService = new JournalExtendedListService();
+    private CurrentSession = SessionLocator.SelectedSession;
 
+    private _JournalExtendedListService: JournalExtendedListService = new JournalExtendedListService();
+    public isScreenLoaded: boolean = false;
+    public isRTL: boolean = false;
+    public showLocal: boolean = false;
     constructor() {
-        this.LoadAllScreenData();
+
+        // this.LoadAllScreenData();
+        this.getResources();
+
+
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+
 
     }
 
+    private getResources() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
+            this._entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) => {
+                this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => {
+                        this.isScreenLoaded = true;
+                        this.CurrentSession.StopBusyIndicator();
+                        this.InitComponent();
+                    });
+                });
+            });
+        });
+    }
+
     ngAfterViewInit() {
-        this.LoadAllScreenData();
+        // this.LoadAllScreenData();
     }
 
     public IsQueryVisible_MyViewsGroup: boolean = false;
 
     InitComponent() {
         this.LoadAllScreenData();
+        this.SetQueriesVisibility();
+
         this.IsQueryVisible_MyViewsGroup = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
     }
 
     RefreshButtonClicked() {
         this.LoadAllScreenData();
     }
+
+    // Queries Features
+    public Draft_JournalsVisibility: boolean = false;
+    public Non_Approved_JournalsVisibility: boolean = false;
+    public Approved_JournalsVisibility: boolean = false;
+    public All_journalsVisibility: boolean = false;
+    public ExternalJournalsVisibility: boolean = false;
+    public Auto_Created_JournalsVisibility: boolean = true;
+
+    SetQueriesVisibility() {
+        this.Draft_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "DraftJournal") ? true : false;
+        this.Non_Approved_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "SavedJournal") ? true : false;
+        this.Approved_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "ApprovedJournal") ? true : false;
+        this.All_journalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "JOURNAL") ? true : false;
+        this.ExternalJournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "ExternalJournals") ? true : false;
+        //this.Auto_Created_JournalsVisibility = FeatureLocator.HasFeaturePermession("Journal", "Auto_Created_Journals") ? true : false;
+    }
+
+    journalSummary: JournalSummary = new JournalSummary();
+    LoadQueriesCounts() {
+
+        this._JournalExtendedListService.GetJournalsSummary().subscribe(myResult => {
+            if (myResult != null) {
+
+                this.journalSummary.AllJournalsCount = myResult.AllJournalsCount > 1000 ? "1000+" : myResult.AllJournalsCount.toString();
+                this.journalSummary.ApprovedJournalsCount = myResult.ApprovedJournalsCount > 1000 ? "1000+" : myResult.ApprovedJournalsCount.toString();
+                this.journalSummary.DraftJournalsCount = myResult.DraftJournalsCount > 1000 ? "1000+" : myResult.DraftJournalsCount.toString();
+                this.journalSummary.VoidedJournalsCount = myResult.VoidedJournalsCount > 1000 ? "1000+" : myResult.VoidedJournalsCount.toString();
+                this.journalSummary.WaitingJournalsCount = myResult.WaitingJournalsCount > 1000 ? "1000+" : myResult.WaitingJournalsCount.toString();
+            }
+        });
+    }
+
+
 
     public LoadAllScreenData() {
         this.LoadQueriesCounts();
@@ -59,12 +124,9 @@ export class JournalPageComponent implements AfterViewInit {
         this.LoadAllScreenData();
     }
 
-    LoadQueriesCounts() {
-    }
-
     EditJournal(entity: any) {
         if (entity != null) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: 'Journal' });
@@ -73,20 +135,6 @@ export class JournalPageComponent implements AfterViewInit {
                     });
                 });
         }
-    }
-
-    RunNewJournalWizard() {
-        var windowTitle = "New Journal";
-        var entityPM: JournalPM = new JournalPM();
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityPM: entityPM, ObjectTableName: 'Journal', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.FullAccounting") });
-                cmpRef.instance.BackCompleted.subscribe(bk => {
-                    this.LoadAllScreenData();
-                    //this.isWindowOpened = false;
-                });
-            });
     }
 
     ViewAccountingQuery(myQueryCode: string) {
@@ -150,12 +198,12 @@ export class JournalPageComponent implements AfterViewInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = "Full Accounting";
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run(listArgs);
                         cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.AddMenuReference(cmpRef);
                     });
             });
         }
@@ -177,4 +225,109 @@ export class JournalPageComponent implements AfterViewInit {
             }
         });
     }
+
+    // Journals
+    ViewJournalQuery(myQueryCode: string) {
+        if (myQueryCode != null) {
+
+            var displayTitle = "";
+            var queryCode = myQueryCode;
+            queryCode = "All Journals";
+
+            var filters = new ApiQueryFilters();
+            switch (myQueryCode) {
+                case "Draft_Journals":
+                    {
+                        displayTitle = "Draft Journals";
+                        filters.addAdditionalFilter("AccountingEntityCode", "1", null, null, "Equals", false, false, false, "string");
+                        queryCode = "Draft Journals";
+                        displayTitle = TextCodeTranslator.Translate("Journal.Q.DraftJournal");
+
+                        break;
+                    }
+                case "Non_Approved_Journals":
+                    {
+                        displayTitle = "Waiting for approval Journals";
+                        filters.addAdditionalFilter("AccountingEntityCode", "1", null, null, "Equals", false, false, false, "string");
+                        queryCode = "Saved Journals";
+                        displayTitle = TextCodeTranslator.Translate("Journal.Q.SavedJournal");
+
+                        break;
+                    }
+                case "Approved_Journals":
+                    {
+                        displayTitle = "Approved Journals";
+                        filters.addAdditionalFilter("AccountingEntityCode", "1", null, null, "Equals", false, false, false, "string");
+                        queryCode = "Approved Journals";
+                        displayTitle = TextCodeTranslator.Translate("Journal.Q.ApprovedJournal");
+
+                        break;
+                    }
+                case "All_journals":
+                    {
+                        displayTitle = "All Journals";
+                        queryCode = "All Journals";
+                        displayTitle = TextCodeTranslator.Translate("Journal.Q.Journal");
+
+                        break;
+                    }
+                case "Auto_Created_Journals":
+                    {
+                        displayTitle = "Automatic Created Journals";
+                        filters.addAdditionalFilter("AccountingEntityCode", "1", null, null, "NotEqual", false, false, false, "string");
+                        queryCode = "All Journals";
+                        displayTitle = TextCodeTranslator.Translate("Journal.Q.AutoCreatedJournals");
+
+                        break;
+                    }
+
+                case "External Journals":
+                    {
+                        displayTitle = "Extrnal Journals";
+                        queryCode = "External Journals";
+                        displayTitle = TextCodeTranslator.Translate("Journal.Q.ExternalJournals");
+
+                        break;
+                    }
+
+                default: { break; }
+            }
+
+            var listArgs = new ListComponentArgs();
+            listArgs.QueryCode = queryCode;
+            listArgs.Filters = filters;
+            listArgs.ObjectTableName = "Journal";
+            listArgs.DisplayTitle = displayTitle;
+            listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Main");
+            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run(listArgs);
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                        this.CurrentSession.AddMenuReference(cmpRef);
+                    });
+            });
+        }
+    }
+
+    RunNewJournalWizard() {
+        var windowTitle = "New Journal";
+        var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewJournal");
+
+
+        var entityPM: JournalPM = new JournalPM();
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityPM: entityPM, ObjectTableName: 'Journal', BackButtonLabel: TextCodeTranslator.Translate("Accounting.General.O.Main")
+                });
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    this.LoadAllScreenData();
+                    //this.isWindowOpened = false;
+                });
+            });
+    }
+
 }

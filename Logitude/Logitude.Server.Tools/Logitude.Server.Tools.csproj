@@ -235,6 +235,7 @@
     <Compile Include="EntityPM.cs" />
     <Compile Include="EntityPMBase.cs" />
     <Compile Include="EntityQueryService.cs" />
+    <Compile Include="EntityTraceEventService.cs" />
     <Compile Include="EntityUpdateService.Base64Fields.cs" />
     <Compile Include="EntityUpdateService.Context.cs" />
     <Compile Include="EntityUpdateService.cs" />
@@ -247,6 +248,8 @@
     <Compile Include="ExternalServices\SignManager.cs" />
     <Compile Include="ExternalServices\UnifreightFillingService.cs" />
     <Compile Include="FTP\FTPService.cs" />
+    <Compile Include="FTP\FTPServiceExceptionThrower.cs" />
+    <Compile Include="FTP\FTPServiceResponse.cs" />
     <Compile Include="FTP\SFTPService.cs" />
     <Compile Include="Helpers\AesFunction.cs" />
     <Compile Include="Helpers\AmitalConvertUtil.cs" />
@@ -261,6 +264,7 @@
     <Compile Include="Helpers\DbEntityFunctions.cs" />
     <Compile Include="Helpers\DictionaryJsonConverter.cs" />
     <Compile Include="Helpers\EntityListFilter.cs" />
+    <Compile Include="Helpers\FeatureToggleHelper.cs" />
     <Compile Include="Helpers\FieldDbVaildUtil.cs" />
     <Compile Include="Helpers\FieldValueResolver.cs" />
     <Compile Include="Helpers\General.cs" />
@@ -281,11 +285,17 @@
     <Compile Include="Helpers\TextCodesTranslator.cs" />
     <Compile Include="Helpers\TextCodesTranslator.Shared.cs" />
     <Compile Include="Helpers\TotangoActivityLogger.cs" />
+    <Compile Include="Helpers\TraceEventResponse.cs" />
     <Compile Include="Helpers\TranslateTextsClass.cs" />
     <Compile Include="Interfaces\IDomainServiceUpdateClass.cs" />
     <Compile Include="EntityValidateService.cs" />
+    <Compile Include="Interfaces\IIdCounterUtil.cs" />
+    <Compile Include="Interfaces\ITranslateTextsClassUtil.cs" />
     <Compile Include="LogitudeExceptionExt.cs" />
     <Compile Include="LogitudeXmlSerializer.cs" />
+    <Compile Include="Mocks\MockDateTimeUtil.cs" />
+    <Compile Include="Mocks\MockIdCounterUtil.cs" />
+    <Compile Include="Mocks\MockTranslateTextsClassUtil.cs" />
     <Compile Include="Models\AmitalRestrictOwnerModel.cs" />
     <Compile Include="MyRegularExpressionAttribute.Shared.cs" />
     <Compile Include="QueueService\AzureQueueService.cs" />
@@ -309,6 +319,9 @@
     <Compile Include="QueueService\QueueSendService.cs" />
     <Compile Include="QueueService\QueueServiceManager.cs" />
     <Compile Include="QueueService\StateMachineProcess.cs" />
+    <Compile Include="Resolvers\DateTimeUtilResolver.cs" />
+    <Compile Include="Resolvers\IdCounterUtilResolver.cs" />
+    <Compile Include="Resolvers\TranslateTextsClassUtilResolver.cs" />
     <Compile Include="RestClient.cs" />
     <Compile Include="Service References\BlobServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -330,11 +343,14 @@
     <Compile Include="Task.cs" />
     <Compile Include="ApiSearchFilters.cs" />
     <Compile Include="Utils\ConcurrentKiller.cs" />
+    <Compile Include="Utils\DateTimeUtil.cs" />
+    <Compile Include="Utils\IdCounterUtil.cs" />
     <Compile Include="Utils\LogChangesService.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\ProcessLockTableUtil.cs" />
     <Compile Include="Utils\ProxyUtil.cs" />
     <Compile Include="Utils\SMTP.cs" />
+    <Compile Include="Utils\TranslateTextsClassUtil.cs" />
     <Compile Include="Wildcard.cs" />
     <Compile Include="WorkerEntryPoint.cs" />
   </ItemGroup>

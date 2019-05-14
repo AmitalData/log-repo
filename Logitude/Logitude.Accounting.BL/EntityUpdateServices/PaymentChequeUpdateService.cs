@@ -4,9 +4,13 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -25,38 +29,41 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnCreating(PaymentChequePM entityPM, EntityPM entityParentPM)
         {
-            entityPM.Id = IdCounter.GetNumber("PaymentCheque", entityPM.Tenant);
-            entityPM.CreateDate = DateTime.Now;
-            entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-            entityPM.UpdateDate = DateTime.Now;
-            entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
-            entityPM.InternalNumber = CodeCounter.GetNumber("PaymentCheque.InternalNumber", entityPM.Tenant).ToString();
-            entityPM.PaymentChequeStatusCode = "1";
-            entityPM.UniqueField = entityPM.Id;
-            ValidateEntity(entityPM);
-            TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
-            TenantPM currentTenant = tenantQuery.GetSinglePM(entityPM.Tenant);
-            BankAccountQueryService bankQuery = new BankAccountQueryService(entityPM.Tenant);
-            BankAccountPM bank = bankQuery.GetSingle(entityPM.BankAccountId, false, true);
-            if (currentTenant.CurrencyId == bank.GLAccountCurrencyId)
-            {
 
-                entityPM.ExchangeRate = 1;
-                entityPM.ForeignAmount = entityPM.LocalAmount;
-            }
-            if (!string.IsNullOrEmpty(entityPM.Notes))
-            {
-                PaymentChequeLinePM paymentChequeLine =  new PaymentChequeLinePM()
-                { PaymentChequeId = entityPM.Id,
-                    Amount = entityPM.ForeignAmount,
-                    Line = 1,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    Tenant = entityPM.Tenant,
-                    Notes = entityPM.Notes,
-                    SequenceNumeric=1
-                };
-                entityPM.PaymentChequeLines.Add(paymentChequeLine);
-            }
+            PaymentChequeOnCreatingService paymentChequeOnCreatingService = new PaymentChequeOnCreatingService(MainContext as IAccountingContext);
+            paymentChequeOnCreatingService.OnCreating(entityPM);
+            //entityPM.Id = IdCounter.GetNumber("PaymentCheque", entityPM.Tenant);
+            //entityPM.CreateDate = DateTime.Now;
+            //entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+            //entityPM.UpdateDate = DateTime.Now;
+            //entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+            //entityPM.InternalNumber = CodeCounter.GetNumber("PaymentCheque.InternalNumber", entityPM.Tenant).ToString();
+            //entityPM.PaymentChequeStatusCode = "1";
+            //entityPM.UniqueField = entityPM.Id;
+            //ValidateEntity(entityPM);
+            //TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
+            //TenantPM currentTenant = tenantQuery.GetSinglePM(entityPM.Tenant);
+            //BankAccountQueryService bankQuery = new BankAccountQueryService(entityPM.Tenant);
+            //BankAccountPM bank = bankQuery.GetSingle(entityPM.BankAccountId, false, true);
+            //if (currentTenant.CurrencyId == bank.GLAccountCurrencyId)
+            //{
+
+            //    entityPM.ExchangeRate = 1;
+            //    entityPM.ForeignAmount = entityPM.LocalAmount;
+            //}
+            //if (!string.IsNullOrEmpty(entityPM.Notes))
+            //{
+            //    PaymentChequeLinePM paymentChequeLine =  new PaymentChequeLinePM()
+            //    { PaymentChequeId = entityPM.Id,
+            //        Amount = entityPM.ForeignAmount,
+            //        Line = 1,
+            //        ChangeSetOp = ChangeSetOperation.Insert,
+            //        Tenant = entityPM.Tenant,
+            //        Notes = entityPM.Notes,
+            //        SequenceNumeric=1
+            //    };
+            //    entityPM.PaymentChequeLines.Add(paymentChequeLine);
+            //}
         }
         protected override void OnUpdating(PaymentChequePM entityPM)
         {
@@ -252,23 +259,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-        private static ContactPM GetLoggedContact(int tenant)
-        {
 
+        public static ContactPM GetLoggedContact(int tenant)
+        {
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
+
     }
 }

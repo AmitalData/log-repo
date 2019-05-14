@@ -49,7 +49,7 @@ namespace Logitude.BL.Helpers
         string from = "";
         string replyTo = "";
         string cc = "";
-        public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant , List<QuoteTemplateSectionPM> templateSections , int? userTenant = null)
+        public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null)
         {
             IQuotesContext context = QuotesContext.GetContext(tenant);
             QuoteQuery quoteQuery = new QuoteQuery(new QuoteRepository(context));
@@ -82,14 +82,14 @@ namespace Logitude.BL.Helpers
 
             if (templateSections == null)
             {
-                    if (quotePM.QuoteTemplateId == quoteTemplateId)
+                if (quotePM.QuoteTemplateId == quoteTemplateId)
+                {
+                    if (!string.IsNullOrEmpty(quotePM.QuotationSections))
                     {
-                        if (!string.IsNullOrEmpty(quotePM.QuotationSections))
-                        {
-                            templateSections = sectionsQuery.GetQuoteTemplateSectionPMsByIds(quotePM.QuotationSections.Split(',').ToList(), tenant);
-                        }
+                        templateSections = sectionsQuery.GetQuoteTemplateSectionPMsByIds(quotePM.QuotationSections.Split(',').ToList(), tenant);
                     }
-              
+                }
+
                 if (templateSections == null)
                 {
                     templateSections = sectionsQuery.GetQuoteTemplateSectionPMsByTemplateId(quoteTemplateId, tenant);
@@ -128,7 +128,7 @@ namespace Logitude.BL.Helpers
             List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList = quotetemplateTableDesignQuery.GetQuoteTemplateTableDesignPMsByTenant(tenant).ToList();
             List<QuoteTemplateTextCodePM> textcodes = quoteTemplateTextCodeQuery.GetQuoteTemplateTextCodePMsByQuoteTemplateId(template.Tenant, template.Id).ToList();
 
-          
+
 
             if (!string.IsNullOrEmpty(quoteId))
             {
@@ -162,7 +162,7 @@ namespace Logitude.BL.Helpers
             byte[] footerdata = GetQuoteTemplatePageHeaderFooter(template, setting, quoteTemplateTextDesignsList, tenant, true, "Footer");
             footerHtmlString += GetBodyString(footerdata);
 
-            PdfConverter pdfConverter = new PdfConverter();
+            HtmlToPdfConverter pdfConverter = new HtmlToPdfConverter();
             pdfConverter.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
             pdfConverter.PdfDocumentOptions.PdfPageSize = PdfPageSize.A4;
             pdfConverter.HtmlViewerWidth = 800;
@@ -248,8 +248,9 @@ namespace Logitude.BL.Helpers
             bodyHtmlString = htmlDocument.DocumentNode.InnerHtml;
 
             bodyHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, bodyHtmlString, quotePM, template, ref objectTabelRepository, ref objectTable);
-
-            data = pdfConverter.GetPdfBytesFromHtmlString(bodyHtmlString);
+            pdfConverter.TriggeringMode = TriggeringMode.Auto;
+            //data = pdfConverter.GetPdfBytesFromHtmlString(bodyHtmlString);
+            data = pdfConverter.ConvertHtml(bodyHtmlString, null);
 
             return data;
         }
@@ -265,7 +266,7 @@ namespace Logitude.BL.Helpers
                     objectTable = objectTabelRepository.GetObjectTableByName("Quote", tenant, true);
                 }
 
-                htmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, template.CreatedByUserId, tenant, htmlString, ref subject, ref from,ref cc, ref replyTo, quotePM);
+                htmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, template.CreatedByUserId, tenant, htmlString, ref subject, ref from, ref cc, ref replyTo, quotePM);
             }
             return htmlString;
         }
@@ -293,9 +294,9 @@ namespace Logitude.BL.Helpers
             heightAreaNumber = CmToPx(Centimeter) * per;
             if (Centimeter == 1 || Centimeter == 2) heightAreaNumber -= 5;
 
-            HeightArea = heightAreaNumber.ToString() + "px"; 
+            HeightArea = heightAreaNumber.ToString() + "px";
 
-             QuoteTemplateTableDesignPM TableDesign = new QuoteTemplateTableDesignPM()
+            QuoteTemplateTableDesignPM TableDesign = new QuoteTemplateTableDesignPM()
             {
                 BorderColor = type == "Header" ? setting.PageHeaderBorderColor : setting.PageFooterBorderColor,
                 BorderThickness = type == "Header" ? setting.PageHeaderBorderThickness : setting.PageFooterBorderThickness,
@@ -348,10 +349,9 @@ namespace Logitude.BL.Helpers
             string borderTypeCode = type == "Header" ? setting.PageHeaderBorderTypeCode : setting.PageFooterBorderTypeCode;
             #endregion
 
-
-            if (pageArea1Type == "Logo" &&  area1Width > 0)
+            if (pageArea1Type == "Logo" && area1Width > 0)
             {
-                AppendHeaderFooterAreaImage(borderTypeCode, area1Width, area1Height, image1Width, area1ImageAlignment, area1ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, isHtml);
+                AppendHeaderFooterAreaImage(borderTypeCode, area1Width, area1Height, image1Width, area1ImageAlignment, area1ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, (int)heightAreaNumber, isHtml);
             }
             else if (pageArea1Type == "Text" && area1Width > 0)
             {
@@ -359,9 +359,9 @@ namespace Logitude.BL.Helpers
 
             }
 
-            if (pageArea2Type == "Logo" &&  area2Width > 0)
+            if (pageArea2Type == "Logo" && area2Width > 0)
             {
-                AppendHeaderFooterAreaImage(borderTypeCode, area2Width, area2Height, image2Width, area2ImageAlignment, area2ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, isHtml);
+                AppendHeaderFooterAreaImage(borderTypeCode, area2Width, area2Height, image2Width, area2ImageAlignment, area2ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, (int)heightAreaNumber, isHtml);
             }
             else if (pageArea2Type == "Text" && area2Width > 0)
             {
@@ -371,7 +371,7 @@ namespace Logitude.BL.Helpers
 
             if (pageArea3Type == "Logo" && area3Width > 0)
             {
-                AppendHeaderFooterAreaImage(borderTypeCode, area3Width, area3Height, image3Width, area3ImageAlignment, area3ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, isHtml);
+                AppendHeaderFooterAreaImage(borderTypeCode, area3Width, area3Height, image3Width, area3ImageAlignment, area3ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, (int)heightAreaNumber, isHtml);
             }
             else if (pageArea3Type == "Text" && area3Width > 0)
             {
@@ -418,20 +418,20 @@ namespace Logitude.BL.Helpers
             ++CountArea;
         }
 
-        private void AppendHeaderFooterAreaImage(string borderTypeCode, double? areaWidth, int areaHeight, int imageWidth, string areaImageAlignment, string imageDetailId, int tenant, ref int NumberOfTd, ref int CountArea, string HeightArea, StringBuilder HtmlTemplate, QuoteTemplateTableDesignPM TableDesign, bool isPdf, bool isHtml = false)
+        private void AppendHeaderFooterAreaImage(string borderTypeCode, double? areaWidth, int areaHeight, int imageWidth, string areaImageAlignment, string imageDetailId, int tenant, ref int NumberOfTd, ref int CountArea, string HeightArea, StringBuilder HtmlTemplate, QuoteTemplateTableDesignPM TableDesign, bool isPdf, int heightAreaNumber, bool isHtml = false)
         {
             string styleTd = GetStyleRowTablePageHeaderFooter(borderTypeCode, HeightArea, areaWidth, areaImageAlignment, ++NumberOfTd, TableDesign, "#ffffff");
 
             var per = isPdf ? 2.5 : !isHtml ? 1.25 : 1;
-            string Height = ((double)areaHeight * per).ToString() + "px";
-            string Width = ((double)imageWidth * per).ToString() + "px";
-
+            string Height = ((double)areaHeight * per) > heightAreaNumber ? "100%" : ((double)areaHeight * per).ToString() + "px";
+            string Width = ((int)imageWidth * per) > 820 ? "100%" : ((double)imageWidth * per).ToString() + "px";
+            // heightAreaNumber
             string margin = isPdf ? ";margin:2px" : "";
             string styleimage = "style='" + "width:" + Width + margin + ";Height:" + Height + ";max-Height:" + HeightArea + ";text-align:" + areaImageAlignment + "'";
 
             HtmlTemplate.Append("<td " + styleTd + ">");
             HtmlTemplate.Append("<span " + styleimage + ">");
-            if(!string.IsNullOrEmpty(imageDetailId)) HtmlTemplate.Append(GetImageHtmlString(imageDetailId, tenant, styleimage));
+            if (!string.IsNullOrEmpty(imageDetailId)) HtmlTemplate.Append(GetImageHtmlString(imageDetailId, tenant, styleimage));
             HtmlTemplate.Append("</span>");
             HtmlTemplate.Append("</td>");
             ++CountArea;
@@ -446,6 +446,7 @@ namespace Logitude.BL.Helpers
 
         public byte[] GetQuoteTemplateHtmlReport(QuotePM quotePM, QuoteTemplatePM template, QuoteTemplateSettingPM setting, List<QuoteTemplateSectionPM> templateSections, List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList, List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList, List<QuoteTemplateTextCodePM> textcodes, int tenant, string userId, bool includeHeaderFooter, string requestArea, int? userTenant = null)
         {
+
             int tenantNumber = userTenant != null ? (int)userTenant : tenant;
             string htmlString = "";
 
@@ -462,7 +463,7 @@ namespace Logitude.BL.Helpers
                 }
             }
 
-          
+
             if (includeHeaderFooter)
             {
                 QuoteTemplateSectionPM headerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PH" && !s.IsExcluded).FirstOrDefault();
@@ -525,6 +526,7 @@ namespace Logitude.BL.Helpers
                     {
                         htmlString += Environment.NewLine + GetBodyString(sectiondata);
                         htmlString += Environment.NewLine;
+
                     }
                 }
             }
@@ -566,7 +568,7 @@ namespace Logitude.BL.Helpers
 
                 if (systemEntity != null)
                 {
-                    
+
                     if (!string.IsNullOrEmpty(systemEntity.LocalCurrencyId))
                     {
                         Currency currency = currencyRepository.GetSingleCurrency(systemEntity.LocalCurrencyId, tenantNumber);
@@ -585,11 +587,11 @@ namespace Logitude.BL.Helpers
 
             IsShowlanguage = setting.ShowLocalLanguage;
 
-            bool isHaveMaxMinValue = quotePM.QuoteSaleCharges.Where(d=>d.SaleMaxAmount!=null || d.SaleMinAmount!=null).Any();
+            bool isHaveMaxMinValue = quotePM.QuoteSaleCharges.Where(d => d.SaleMaxAmount != null || d.SaleMinAmount != null).Any();
             if (!isHaveMaxMinValue)
             {
-                if(pricingSectionType == "PP") setting.ShowSaleMaxMinAmountPackages = false;
-               else if (pricingSectionType == "PC") setting.ShowSaleMaxMinAmountContainers = false;
+                if (pricingSectionType == "PP") setting.ShowSaleMaxMinAmountPackages = false;
+                else if (pricingSectionType == "PC") setting.ShowSaleMaxMinAmountContainers = false;
             }
 
 
@@ -623,15 +625,13 @@ namespace Logitude.BL.Helpers
 
                 isRightToLeft = setting.RightToLeft;
 
-          
-           
-   
-       
-                HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+                HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
                 if ((pricingSectionType == "PP" && setting.ShowTitlePricingPackages) || (pricingSectionType == "PC" && setting.ShowTitlePricingContainsers))
                 {
                     BuildPricingTitle(HtmlTemplate, quotetemplateTextDesignPMPricingTitle, pricingSectionType, textcodes, setting.RightToLeft);
+
+                    HtmlTemplate.Append("<div  style='height:8px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
                 }
 
                 string StyleTable = GetStyleTable(quotetemplatetableDesignPM);
@@ -650,7 +650,7 @@ namespace Logitude.BL.Helpers
                     HtmlTemplate.Append("<table " + dir + " width='100%' " + StyleTable + " >");
                 }
 
-     
+
                 IEnumerable<IGrouping<string, QuoteSaleChargePM>> chargegroups = quotePM.QuoteSaleCharges.GroupBy(q => q.ChargesGroupCode);
                 buildHeadercolumn(HtmlTemplate, setting, quotetemplateTextDesignPMHeader, quotetemplatetableDesignPM, quotePM, pricingSectionType, setting.RightToLeft, textcodes);
 
@@ -736,7 +736,7 @@ namespace Logitude.BL.Helpers
                 }
                 else
                 {
-               
+
 
                     BuildTableRows(quotePM, quotePM.QuoteSaleCharges, HtmlTemplate, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, pricingSectionType, setting);
 
@@ -748,7 +748,8 @@ namespace Logitude.BL.Helpers
 
 
                 HtmlTemplate.Append("</table>");
-                HtmlTemplate.Append("<p style='height:1px ;margin-bottom:3px;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</p>");
+
+                //HtmlTemplate.Append("<div style='height:5px ;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</p>");
                 #endregion
 
                 if (!isShowPerContainers)
@@ -795,13 +796,17 @@ namespace Logitude.BL.Helpers
                     bool ShowTotalInLocalCurrency = pricingSectionType == "PC" ? setting.ShowTotalInLocalCurrencyContainers : setting.ShowTotalInLocalCurrencyPackages;
 
 
+                    if (ShowTotalInSaleCurrency || ShowTotalInLocalCurrency)
+                    {
+                        HtmlTemplate.Append("<div  style='height:5px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+                    }
                     AppendTotalCurrencyHtml(quotePM, setting, HtmlTemplate, ShowTotalInSaleCurrency, ShowTotalInLocalCurrency, quoteTemplateTextDesignTotalsLabel, quoteTemplateTextDesignTotalsValue,
                       Name, SaleTotalAmountInSaleCurrency, SaleTotalAmountInLocalCurrency);
                     #endregion
 
 
                     HtmlTemplate.Append("</div>");
-                    HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+                    HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
                     #endregion
                 }
@@ -936,7 +941,7 @@ namespace Logitude.BL.Helpers
 
 
                     HtmlTemplate.Append("</table>");
-                    HtmlTemplate.Append("<p style='height:1px ;margin-bottom:3px;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</p>");
+                    HtmlTemplate.Append("<div style='height:10px ;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</div>");
 
                 }
 
@@ -952,7 +957,7 @@ namespace Logitude.BL.Helpers
 
             string dir = "";
             if (setting.RightToLeft) dir = "dir='RTL'";
-            string totalInSaleCurrency = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, false) +  BuildTotalInSale(SaleTotalAmountInSaleCurrency  + " " + quotePM.SaleCurrencyCode, quoteTemplateTextDesignTotalsValue, false,true);
+            string totalInSaleCurrency = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(SaleTotalAmountInSaleCurrency + " " + quotePM.SaleCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
             string totalInLocalCurrency = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, true) + BuildTotalInSale(SaleTotalAmountInLocalCurrency + " " + LocalCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
 
             if (!quotePM.IsSaleCurrencySameAsCost)
@@ -964,7 +969,7 @@ namespace Logitude.BL.Helpers
                 }
                 else if (showTotalInSaleCurrency)
                 {
-                    totalInSaleCurrency = BuildTotalInSale(Name + " : " , quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(SaleTotalAmountInSaleCurrency + " " + quotePM.SaleCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
+                    totalInSaleCurrency = BuildTotalInSale(Name + " : ", quoteTemplateTextDesignTotalsLabel, false) + BuildTotalInSale(SaleTotalAmountInSaleCurrency + " " + quotePM.SaleCurrencyCode, quoteTemplateTextDesignTotalsValue, false, true);
                     HtmlTemplate.Append("<div " + dir + " style='display:block;'>" + totalInSaleCurrency + "</div>");
                 }
                 else if (showTotalInLocalCurrency)
@@ -1021,7 +1026,7 @@ namespace Logitude.BL.Helpers
 
                 }
 
-                
+
             }
         }
 
@@ -1076,7 +1081,7 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("<meta charset='utf-8'>");
             HtmlTemplate.Append("</head>");
             HtmlTemplate.Append("<body>");
-            HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
             if (QuoteTemplaetHeaderFieldList.Count() > 0)
             {
@@ -1326,7 +1331,7 @@ namespace Logitude.BL.Helpers
                 HtmlTemplate.Append("</div>");
             }
 
-            HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
             HtmlTemplate.Append("</body>");
             HtmlTemplate.Append("</html>");
 
@@ -1369,7 +1374,7 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("<meta charset='utf-8'>");
             HtmlTemplate.Append("</head>");
             HtmlTemplate.Append("<body>");
-            HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
             if (QuoteTemplaetDetailsFieldList.Count() > 0)
             {
@@ -1418,7 +1423,7 @@ namespace Logitude.BL.Helpers
                     {
                         quotetemplateTextDesignPMDetailsTitle.Alignment = "Right";
                     }
-                    string styledetailstitle = GetSpanRowStyle(quotetemplateTextDesignPMDetailsTitle, "", "auto");
+                    string styledetailstitle = GetSpanRowStyle(quotetemplateTextDesignPMDetailsTitle, "Header", "auto");
 
                     FieldName = "";
                     FieldName = GetNameColum("GENERALDETAILS", textcodes, "QD");
@@ -1438,9 +1443,11 @@ namespace Logitude.BL.Helpers
                     {
                         HtmlTemplate.Append("<div " + styledetailstitle + ">" + FieldName + "</div>");
                     }
+
+                    HtmlTemplate.Append("<div  style='height:8px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
                 }
 
-                HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+
 
 
 
@@ -1652,7 +1659,7 @@ namespace Logitude.BL.Helpers
                 HtmlTemplate.Append("</div>");
             }
 
-            HtmlTemplate.Append("<div  style='height:15px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
             HtmlTemplate.Append("</body>");
             HtmlTemplate.Append("</html>");
 
@@ -1701,12 +1708,12 @@ namespace Logitude.BL.Helpers
                 SaleTotalAmountInLocalCurrency = 4000,
                 SaleTotalAmountInSaleCurrency = 1750,
                 SaleCurrencyCode = "USD",
-                
+
             };
 
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT",Notes = "test" ,ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description", SaleMaxAmount=50,SaleMinAmount=20 });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT", Notes = "test2" ,ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description1", SaleMaxAmount = 40, SaleMinAmount = 25 });
-            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "DEMU", Notes = "test3",ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description2", SaleMaxAmount = 45, SaleMinAmount = 33 });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT", Notes = "test", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description", SaleMaxAmount = 50, SaleMinAmount = 20 });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "AFT", Notes = "test2", ChargesGroupCode = "FRT", ChargesTypeName = "Air Freight", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description1", SaleMaxAmount = 40, SaleMinAmount = 25 });
+            quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "DEMU", Notes = "test3", ChargesGroupCode = "HNDCH", ChargesTypeName = "Demmurage", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description2", SaleMaxAmount = 45, SaleMinAmount = 33 });
             quotePM.QuoteSaleCharges.Add(new QuoteSaleChargePM() { ChargesTypeCode = "DU", Notes = "test4", ChargesGroupCode = "FRT", ChargesTypeName = "Duties", SaleQuantity = 500, SaleUnitPrice = 1, SaleMeasurementShortName = "Ch Weight", SaleTotalAmount = 500, SaleTotalAmountLocal = 600, CurrencyCode = "USD", ChargesTypeDescription = "Air Freight Description3", SaleMaxAmount = 22, SaleMinAmount = 15 });
 
             return quotePM;
@@ -1756,11 +1763,10 @@ namespace Logitude.BL.Helpers
             ImageDetail imageDetail = imageDetailsRepository.GetSingleImageDetail(imageDetailId, tenant);
             string rawData = "";
             byte[] imageData = this.GetFile(imageDetail.Id, imageDetail.Extension, "images", tenant);
+            string extension = "png";
             if (imageData != null)
             {
-
-
-
+                extension = imageDetail.Extension;
                 char[] base64Data = new char[(int)(Math.Ceiling((double)imageData.Length / 3) * 4)];
                 Convert.ToBase64CharArray(imageData, 0, imageData.Length, base64Data, 0);
                 System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
@@ -1770,7 +1776,7 @@ namespace Logitude.BL.Helpers
                 ms.Write(imageData, 0, imageData.Length);
                 System.Drawing.Image image = System.Drawing.Image.FromStream(ms, true);
             }
-            imagHtml = "<img " + styleimage + " src='data:image/jpg;base64," + rawData + "'/>";
+            imagHtml = "<img " + styleimage + " src='data:image/" + extension + ";base64," + rawData + "'/>";
 
             return imagHtml;
         }
@@ -1800,7 +1806,7 @@ namespace Logitude.BL.Helpers
             string style = "";
             string unDerLine = headerDesign.UnDerLine ? ";text-decoration: underline" : "";
 
-            alignment = isRightToLeft ? "right" : alignment;
+            // alignment = isRightToLeft ? "right" : alignment;
 
             style = "style='" + "font-weight:" + headerDesign.FontWeight + ";font-family:" + headerDesign.FontFamily +
               ";font-size:" + FontSize + ";color:" + TextColor + ";vertical-align:central" + ";height:auto" + unDerLine + ";text-align:" + alignment + " '";
@@ -1811,48 +1817,44 @@ namespace Logitude.BL.Helpers
         private string GetQuoteTemplateDetailsFieldValue(string fieldname, QuotePM quotePM)
         {
             string FieldValue = "";
-
-            AddressRepository addressRep = new AddressRepository(quotePM.Tenant);
-            ContactRepository contactRep = new ContactRepository(quotePM.Tenant);
-            CardRepository cardRep = new CardRepository(quotePM.Tenant);
-
             if (fieldname == "EXPIRATIONDAYS")
             {
-                FieldValue = quotePM.ExpirationDays.ToString();
+                FieldValue = quotePM.ExpirationDays != null ? quotePM.ExpirationDays.ToString() : "";
             }
             else if (fieldname == "EXPIRATIONDATE")
             {
-                FieldValue = ConvertToShortDate((DateTime)quotePM.ExpirationDate, quotePM.Tenant);
+                FieldValue = quotePM.ExpirationDate != null ? ConvertToShortDate((DateTime)quotePM.ExpirationDate, quotePM.Tenant) : "";
             }
-            else
-                if (fieldname == "SHIPPERNAME")
+            else if (fieldname == "SHIPPERNAME")
             {
                 FieldValue = quotePM.ShipperName;
             }
             else if (fieldname == "SHIPPERADDRESS")
             {
-                Address address = addressRep.GetSingleAddress(quotePM.ShipperMainAddressId, quotePM.Tenant);
-
-                if (address != null)
+                if (!string.IsNullOrEmpty(quotePM.ShipperMainAddressId))
                 {
-                    FieldValue = General.GetAddress(address);
+                    AddressRepository addressRep = new AddressRepository(quotePM.Tenant);
+                    Address address = addressRep.GetSingleAddress(quotePM.ShipperMainAddressId, quotePM.Tenant);
+
+                    if (address != null)
+                    {
+                        FieldValue = General.GetAddress(address);
+                    }
                 }
             }
             else if (fieldname == "SHIPPERCONTACT")
             {
-                Contact contact = contactRep.GetSingleContact(quotePM.ShipperContactId, quotePM.Tenant);
-
-                if (contact != null)
+                if (!string.IsNullOrEmpty(quotePM.ShipperContactId))
                 {
-                    FieldValue = contact.EnglishName;
+                    ContactRepository contactRep = new ContactRepository(quotePM.Tenant);
+                    FieldValue = contactRep.GetContactNameById(quotePM.ShipperContactId, quotePM.Tenant);
                 }
             }
-
             else if (fieldname == "SHIPPERREFERENCES")
             {
-                FieldValue = quotePM.ShipperReference1 + quotePM.ShipperReference2;
-            }
 
+                FieldValue = CombinedReferences(quotePM.ShipperReference1, quotePM.ShipperReference2);
+            }
             // Consignee
             else if (fieldname == "CONSIGNEENAME")
             {
@@ -1860,28 +1862,31 @@ namespace Logitude.BL.Helpers
             }
             else if (fieldname == "CONSIGNEEADDRESS")
             {
-                Address address = addressRep.GetSingleAddress(quotePM.ConsigneeMainAddressId, quotePM.Tenant);
-
-                if (address != null)
+                if (!string.IsNullOrEmpty(quotePM.ConsigneeMainAddressId))
                 {
-                    FieldValue = General.GetAddress(address);
+                    AddressRepository addressRep = new AddressRepository(quotePM.Tenant);
+                    Address address = addressRep.GetSingleAddress(quotePM.ConsigneeMainAddressId, quotePM.Tenant);
+
+                    if (address != null)
+                    {
+                        FieldValue = General.GetAddress(address);
+                    }
                 }
             }
             else if (fieldname == "CONSIGNEECONTACT")
             {
-                Contact contact = contactRep.GetSingleContact(quotePM.ConsigneeContactId, quotePM.Tenant);
-
-                if (contact != null)
+                if (!string.IsNullOrEmpty(quotePM.ConsigneeContactId))
                 {
-                    FieldValue = contact.EnglishName;
+                    ContactRepository contactRep = new ContactRepository(quotePM.Tenant);
+                    FieldValue = contactRep.GetContactNameById(quotePM.ConsigneeContactId, quotePM.Tenant);
+
                 }
             }
-
             else if (fieldname == "CONSIGNEEREFERENCES")
             {
-                FieldValue = quotePM.ConsigneeReference1 + quotePM.ConsigneeReference2;
-            }
 
+                FieldValue = CombinedReferences(quotePM.ConsigneeReference1, quotePM.ConsigneeReference2);
+            }
             else if (fieldname == "CUSTOMERNAME")
             {
                 FieldValue = quotePM.CustomerName;
@@ -1892,54 +1897,41 @@ namespace Logitude.BL.Helpers
             }
             else if (fieldname == "CUSTOMERCONTACT")
             {
-                Contact contact = contactRep.GetSingleContact(quotePM.CustomerContactId, quotePM.Tenant);
-
-                if (contact != null)
+                if (!string.IsNullOrEmpty(quotePM.CustomerContactId))
                 {
-                    FieldValue = contact.EnglishName;
+                    ContactRepository contactRep = new ContactRepository(quotePM.Tenant);
+                    FieldValue = contactRep.GetContactNameById(quotePM.CustomerContactId, quotePM.Tenant);
                 }
             }
-            else if (fieldname == "TRANSITTIME")
+            else if (fieldname == "CUSTOMERREFERENCES")
             {
-                FieldValue = quotePM.TransitTime;
-            }
 
-            else if(fieldname == "CUSTOMERREFERENCES")
-            {
-                FieldValue = quotePM.CustomerReference1 + quotePM.CustomerReference2;
+                FieldValue = CombinedReferences(quotePM.CustomerReference1, quotePM.CustomerReference2);
             }
-
-            else
-                    if (fieldname == "QUOTENUMBER")
+            else if (fieldname == "QUOTENUMBER")
             {
                 FieldValue = quotePM.QuoteNumber;
             }
-
             else if (fieldname == "PICKUPFROM")
             {
                 FieldValue = quotePM.PickupLocation;
             }
-
             else if (fieldname == "DELIVERYTO")
             {
                 FieldValue = quotePM.DeliveryLocation;
             }
-
             else if (fieldname == "FROMPORT" || fieldname == "FROMLOCATION")
             {
                 FieldValue = quotePM.FromPortName;
             }
-
             else if (fieldname == "TOPORT" || fieldname == "TOLOCATION")
             {
                 FieldValue = quotePM.ToPortName;
             }
-
             else if (fieldname == "INCOTERMS")
             {
                 FieldValue = quotePM.IncotermName;
             }
-
             else if (fieldname == "SERVICE")
             {
                 // FieldValue = quotePM.
@@ -1953,38 +1945,35 @@ namespace Logitude.BL.Helpers
                     }
                 }
             }
-
-            else if (fieldname == "SALESMAN")
+            else if (fieldname == "TRANSITTIME")
             {
-                FieldValue = quotePM.SalesmanName;
+                FieldValue = quotePM.TransitTime;
             }
-
+            else if (fieldname == "MOVETYPE")
+            {
+                if (!string.IsNullOrEmpty(quotePM.MoveTypeId))
+                {
+                    MoveTypeQuery moveTypeQuery = new MoveTypeQuery(quotePM.Tenant);
+                    FieldValue = moveTypeQuery.GetMoveTypeNameById(quotePM.MoveTypeId, quotePM.Tenant);
+                }
+            }
             else if (fieldname == "DESCRIPTIONOFGOODS")
             {
                 FieldValue = quotePM.DescriptionOfGoods;
             }
-
             else if (fieldname == "DANGEROUSGOODS")
             {
-                if (quotePM.IsDangerous)
-                {
-                    FieldValue = "Yes";
-                }
-                else
-                {
-                    FieldValue = "No";
-                }
+                if (quotePM.IsDangerous) FieldValue = "Yes";
+                else FieldValue = "No";
             }
-
             else if (fieldname == "TRUCKER" || fieldname == "SHIPINGLINE" || fieldname == "AIRLINE")
             {
-                Card card = cardRep.GetSingleCard(quotePM.MainCarriageCarrierId, quotePM.Tenant);
-                if (card != null)
+                if (!string.IsNullOrEmpty(quotePM.MainCarriageCarrierId))
                 {
-                    FieldValue = card.EnglishName;
+                    CardRepository cardRep = new CardRepository(quotePM.Tenant);
+                    FieldValue = cardRep.GetEnglishNameCardById(quotePM.MainCarriageCarrierId, quotePM.Tenant);
                 }
             }
-
             else if (fieldname == "CHARGEABLEWEIGHT")
             {
                 if (quotePM.ChargeableWeight != null)
@@ -1992,7 +1981,6 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.ChargeableWeight.ToString() + " " + quotePM.ChargeableWeightUnitCode.ToString();
                 }
             }
-
             else if (fieldname == "GROSSWEIGHT")
             {
                 if (quotePM.GrossWeight != null)
@@ -2000,7 +1988,6 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.GrossWeight.ToString() + " " + quotePM.GrossWeightUnitCode.ToString();
                 }
             }
-
             else if (fieldname == "VOLUME")
             {
                 if (quotePM.Volume != null)
@@ -2008,7 +1995,6 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.Volume.ToString() + " " + quotePM.VolumeUnitCode.ToString();
                 }
             }
-
             else if (fieldname == "VOLUMETRICWEIGHT")
             {
                 if (quotePM.VolumetricWeight != null)
@@ -2016,7 +2002,6 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.VolumetricWeight.ToString() + " " + quotePM.VolumeUnitCode.ToString();
                 }
             }
-
             else if (fieldname == "NUMBEROFPACKAGES")
             {
                 if (quotePM.NumberOfPackages != null)
@@ -2024,7 +2009,6 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.NumberOfPackages.ToString();
                 }
             }
-
             else if (fieldname == "NUMBEROFCONTAINERS")
             {
                 if (quotePM.NumberOfContainers != null)
@@ -2032,38 +2016,42 @@ namespace Logitude.BL.Helpers
                     FieldValue = quotePM.NumberOfContainers.ToString();
                 }
             }
-
             else if (fieldname == "NOTIFYNAME")
             {
                 FieldValue = quotePM.NotifyName;
             }
-
             else if (fieldname == "NOTIFYADDRESS")
             {
-                Address address = addressRep.GetSingleAddress(quotePM.NotifyAddressId, quotePM.Tenant);
-
-                if (address != null)
+                if (!string.IsNullOrEmpty(quotePM.NotifyAddressId))
                 {
-                    FieldValue = General.GetAddress(address);
+                    AddressRepository addressRep = new AddressRepository(quotePM.Tenant);
+                    Address address = addressRep.GetSingleAddress(quotePM.NotifyAddressId, quotePM.Tenant);
+
+                    if (address != null)
+                    {
+                        FieldValue = General.GetAddress(address);
+                    }
                 }
             }
-
             else if (fieldname == "NOTIFYCONTACT")
             {
-                Contact contact = contactRep.GetSingleContact(quotePM.NotifyContactId, quotePM.Tenant);
-
-                if (contact != null)
+                if (!string.IsNullOrEmpty(quotePM.NotifyContactId))
                 {
-                    FieldValue = contact.EnglishName;
+                    ContactRepository contactRep = new ContactRepository(quotePM.Tenant);
+                    FieldValue = contactRep.GetContactNameById(quotePM.NotifyContactId, quotePM.Tenant);
                 }
             }
-
-            else
-            {
-                FieldValue = "CustomField";
-            }
-
+            else FieldValue = "CustomField";
             return FieldValue;
+        }
+
+        private static string CombinedReferences(string ref1, string ref2)
+        {
+            string result = ref1;
+            if (!string.IsNullOrEmpty(ref1) && !string.IsNullOrEmpty(ref2)) result += ",";
+            result += ref2;
+
+            return result;
         }
 
         public string GetQuoteTemplateHeaderFieldValue(string fieldname, QuotePM quotePM)
@@ -2304,40 +2292,40 @@ namespace Logitude.BL.Helpers
                     if (quotePM.PackageType1Id != null)
                     {
                         packageType = PackageTypeRepository.GetSinglePackageType(quotePM.PackageType1Id, quotePM.Tenant, true);
-                        string containerTypeCode = packageType.Code;
-                        string Name = quotePM.PackageType1Quantity + " x " + containerTypeCode;
-                        HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft , true));
+                        string containerTypePrintAs = packageType.PrintAs;
+                        string Name = quotePM.PackageType1Quantity + " x " + containerTypePrintAs;
+                        HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft, true));
                     }
 
                     if (quotePM.PackageType2Id != null)
                     {
                         packageType = PackageTypeRepository.GetSinglePackageType(quotePM.PackageType2Id, quotePM.Tenant, true);
-                        string containerTypeCode = packageType.Code;
-                        string Name = quotePM.PackageType2Quantity + " x " + containerTypeCode;
-                        HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft , true));
+                        string containerTypePrintAs = packageType.PrintAs;
+                        string Name = quotePM.PackageType2Quantity + " x " + containerTypePrintAs;
+                        HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft, true));
                     }
 
                     if (quotePM.PackageType3Id != null)
                     {
                         packageType = PackageTypeRepository.GetSinglePackageType(quotePM.PackageType3Id, quotePM.Tenant, true);
-                        string containerTypeCode = packageType.Code;
-                        string Name = quotePM.PackageType3Quantity + " x " + containerTypeCode;
-                        HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft , true));
+                        string containerTypePrintAs = packageType.PrintAs;
+                        string Name = quotePM.PackageType3Quantity + " x " + containerTypePrintAs;
+                        HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft, true));
                     }
 
                     if (quotePM.PackageType4Id != null)
                     {
                         packageType = PackageTypeRepository.GetSinglePackageType(quotePM.PackageType4Id, quotePM.Tenant, true);
-                        string containerTypeCode = packageType.Code;
-                        string Name = quotePM.PackageType4Quantity + " x " + containerTypeCode;
-                        HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft , true));
+                        string containerTypePrintAs = packageType.PrintAs;
+                        string Name = quotePM.PackageType4Quantity + " x " + containerTypePrintAs;
+                        HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft, true));
                     }
 
                     if (quotePM.PackageType5Id != null)
                     {
                         packageType = PackageTypeRepository.GetSinglePackageType(quotePM.PackageType5Id, quotePM.Tenant, true);
-                        string containerTypeCode = packageType.Code;
-                        string Name = quotePM.PackageType5Quantity + " x " + containerTypeCode;
+                        string containerTypePrintAs = packageType.PrintAs;
+                        string Name = quotePM.PackageType5Quantity + " x " + containerTypePrintAs;
                         HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft, true));
                     }
                 }
@@ -2375,7 +2363,7 @@ namespace Logitude.BL.Helpers
 
         }
 
-        private void AppendHeaderColumn(string textCode,StringBuilder HtmlTemplate, QuoteTemplateSettingPM setting, QuoteTemplateTextDesignPM quotetemplateTextDesignPMHeader, QuoteTemplateTableDesignPM quoteTemplateTableDesignPM, string pricingSectionType, List<QuoteTemplateTextCodePM> textcodes)
+        private void AppendHeaderColumn(string textCode, StringBuilder HtmlTemplate, QuoteTemplateSettingPM setting, QuoteTemplateTextDesignPM quotetemplateTextDesignPMHeader, QuoteTemplateTableDesignPM quoteTemplateTableDesignPM, string pricingSectionType, List<QuoteTemplateTextCodePM> textcodes)
         {
             string Name = GetNameColum(textCode, textcodes, pricingSectionType);
             HtmlTemplate.Append(BuildTableColumn(Name, quotetemplateTextDesignPMHeader, quoteTemplateTableDesignPM, "Header", setting.RightToLeft));
@@ -2394,10 +2382,11 @@ namespace Logitude.BL.Helpers
             {
                 FieldName = GetNameColum("PRICINGCONTAINERS", textcodes, "PC");
             }
-            else if (typepricing == "TotalPerContainers") {
+            else if (typepricing == "TotalPerContainers")
+            {
                 FieldName = GetNameColum("TOTALPERCONTAINERS", textcodes, "TotalPerContainers");
             }
-            
+
             if (quotetemplateTextDesignPMPricingTitle.Italic)
             {
                 if (RightToLeft)
@@ -2422,7 +2411,7 @@ namespace Logitude.BL.Helpers
                 }
             }
 
-            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            //HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
         }
 
         private string GetStyleTableHeaderFooter(QuoteTemplateTableDesignPM tableDesign, string height)
@@ -2484,7 +2473,7 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowSaleCurrencyColumnPackages) ++TdCount;
                 if (setting.ShowChargeDescriptionPackages) ++TdCount;
                 if (setting.ShowChargeNotePackages) ++TdCount;
-                if (setting.ShowSaleMaxMinAmountPackages)++TdCount;
+                if (setting.ShowSaleMaxMinAmountPackages) ++TdCount;
             }
             else
             {
@@ -2517,7 +2506,7 @@ namespace Logitude.BL.Helpers
                 if (setting.ShowChargeDescriptionContainers) ++TdCount;
                 if (setting.ShowChargeNoteContainers) ++TdCount;
                 if (setting.ShowSaleMaxMinAmountContainers) ++TdCount;
-                
+
 
             }
         }
@@ -2537,7 +2526,7 @@ namespace Logitude.BL.Helpers
             }
             else
             {
-                result = "<span  " + style + styleleftToRight  + ">" + columncontent + "</span>";
+                result = "<span  " + style + styleleftToRight + ">" + columncontent + "</span>";
             }
 
 
@@ -2552,11 +2541,11 @@ namespace Logitude.BL.Helpers
             string stylespan = GetSpanRowStyle(headerDesign, "");
             string result = "";
 
-            var alignment = bodyRightToLeft || CodeTypeTd == "FieldPrice" ? ";text-align:right" : ";text-align:" + headerDesign.Alignment;
+            var alignment = CodeTypeTd == "FieldPrice" ? ";text-align:right" : ";text-align:" + headerDesign.Alignment;
             if (CodeTypeTd == "Field") alignment = bodyRightToLeft ? ";text-align:right" : ";text-align:left";
             styleAlgiment = "style='" + "height:auto" + ";width:auto" + alignment + " '";
 
-            string headerLeftToRight = headeLeftToRight ? "dir='LTR' ":"";
+            string headerLeftToRight = headeLeftToRight ? "dir='LTR' " : "";
 
 
             if (headerDesign.Italic)
@@ -2565,7 +2554,7 @@ namespace Logitude.BL.Helpers
             }
             else
             {
-                result = "<td " + style + ">" + "<div  " + styleAlgiment + ">" + "<span " + headerLeftToRight  + stylespan + ">" + columncontent + "</span>" + "</div>" + "</td>";
+                result = "<td " + style + ">" + "<div  " + styleAlgiment + ">" + "<span " + headerLeftToRight + stylespan + ">" + columncontent + "</span>" + "</div>" + "</td>";
             }
 
             return result;
@@ -2577,8 +2566,8 @@ namespace Logitude.BL.Helpers
 
             string alignment = type == "Lable" ? "right" : Design.Alignment;
 
-            if(type == "PricingTableTitle") alignment = "";
-    
+            if (type == "PricingTableTitle") alignment = "";
+
             string fontSize = GetFontSizeInPixles(Design.FontSize, per).ToString() + "px";
             string textColor = Design.TextColor;
             if (Design.TextColor.Length > 7) textColor = Design.TextColor.Remove(1, 2);
@@ -2590,7 +2579,7 @@ namespace Logitude.BL.Helpers
             string unDerLine = Design.UnDerLine ? ";text-decoration: underline" : "";
 
             string visible = type == "TotalHidden" ? ";visibility:hidden" : "";
-            string margin = type == "" ? ";margin-top:35px" : type == "PricingTitle" || type == "PricingTableTitle" ? ";margin-top:20px" : "";
+            string margin = type == "" ? ";margin-top:35px" : "";
 
 
 
@@ -2600,13 +2589,9 @@ namespace Logitude.BL.Helpers
             if (string.IsNullOrEmpty(alignment))
             {
                 style = "style='" + "font-weight:" + Design.FontWeight + ";font-family:" + Design.FontFamily +
-                 ";font-size:" + fontSize + ";color:" + textColor + ";vertical-align:central" + unDerLine  + widht + visible + margin + ";background-color:" + backgroundColor + " '";
+                 ";font-size:" + fontSize + ";color:" + textColor + ";vertical-align:central" + unDerLine + widht + visible + margin + ";background-color:" + backgroundColor + " '";
 
             }
-
-           
-
-
 
             return style;
         }
@@ -2700,16 +2685,16 @@ namespace Logitude.BL.Helpers
             return NameTextCode;
         }
 
-        
+
         private void BuildTableRows(QuotePM quotePM, List<QuoteSaleChargePM> quoteSaleCharges, StringBuilder HtmlTemplate, QuoteTemplateTextDesignPM quoteTemplateTextDesignLines, QuoteTemplateTableDesignPM quotetemplatetableDesignPM, string pricingSectionType, QuoteTemplateSettingPM setting)
         {
 
-            int i = -1; 
+            int i = -1;
             foreach (QuoteSaleChargePM chargePM in quoteSaleCharges)
             {
                 ++i;
                 HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
-               
+
                 if (pricingSectionType == "PP")
                 {
                     if (setting.ShowChargeCodePackages)
@@ -2762,7 +2747,9 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowMeasurementPackages)
                     {
-                        HtmlTemplate.Append(BuildTableColumn(chargePM.SaleMeasurementShortName, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
+                        var value = setting.RightToLeft ? chargePM.SaleMeasurementLocalName : chargePM.SaleMeasurementShortName;
+
+                        HtmlTemplate.Append(BuildTableColumn(value, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
 
                     }
 
@@ -2821,7 +2808,7 @@ namespace Logitude.BL.Helpers
                         HtmlTemplate.Append(BuildTableColumn(saleMaxMinAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
                     }
 
-          
+
 
 
                 }
@@ -2849,25 +2836,29 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowMeasurementContainers)
                     {
-                        HtmlTemplate.Append(BuildTableColumn(chargePM.SaleMeasurementShortName, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
+                        var value = setting.RightToLeft ? chargePM.SaleMeasurementLocalName : chargePM.SaleMeasurementShortName;
+                        HtmlTemplate.Append(BuildTableColumn(value, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "Field", setting.RightToLeft));
                         row += 1;
                     }
 
                     if (setting.ShowFixedPriceContainers)
                     {
-
                         if (ViewFixedPrice)
                         {
                             string AA = " ";
-                            if (chargePM.SaleUnitPrice != null)
+                            if (chargePM.SaleMeasurementCode != "BCNT")
                             {
-                                double value = (double)chargePM.SaleUnitPrice;
-                                AA = value.ToString("N"); // 1,234.512
+                                if (chargePM.SaleAmountInSaleCurrency != null)
+                                {
+                                    double value = (double)chargePM.SaleAmountInSaleCurrency;
+                                    AA = value.ToString("N"); // 1,234.512
+                                }
                             }
+
                             HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
                             row += 1;
                         }
-                      
+
                     }
 
                     if (setting.ShowPriceByContainerColumn)
@@ -2903,7 +2894,7 @@ namespace Logitude.BL.Helpers
                                     value = (double)chargePM.SaleContainerType2UnitPrice;
                                     AA = value.ToString("N");
                                 }
-                                
+
                                 HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
                             }
                         }
@@ -2920,7 +2911,7 @@ namespace Logitude.BL.Helpers
                                     value = (double)chargePM.SaleContainerType3UnitPrice;
                                     AA = value.ToString("N"); // 1,234.512
                                 }
-                                
+
                                 HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
                             }
                         }
@@ -2938,7 +2929,7 @@ namespace Logitude.BL.Helpers
                                     //double value = chargePM.SaleContainerType4UnitPrice != null ? (double)chargePM.SaleContainerType4UnitPrice : 0;
                                     AA = value.ToString("N"); // 1,234.512
                                 }
-                              
+
                                 HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
                             }
                         }
@@ -3016,7 +3007,13 @@ namespace Logitude.BL.Helpers
             }
         }
 
-        private  string  GetSaleMaxMinAmountValue(QuoteSaleChargePM chargePM)
+
+
+
+
+
+
+        private string GetSaleMaxMinAmountValue(QuoteSaleChargePM chargePM)
         {
             var saleMinAmount = string.Empty;
             var saleMaxAmount = string.Empty;
@@ -3103,7 +3100,7 @@ namespace Logitude.BL.Helpers
             AddPerContainerClassToLists(totalPerContainerClassLists, value, Name, fieldCode, chargePM);
 
         }
-        private static void AddPerContainerClassToLists(List<TotalPerContainerClass> totalPerContainerClassLists,  double value , string name,string fieldCode, QuoteSaleChargePM chargePM)
+        private static void AddPerContainerClassToLists(List<TotalPerContainerClass> totalPerContainerClassLists, double value, string name, string fieldCode, QuoteSaleChargePM chargePM)
         {
             if (totalPerContainerClassLists != null)
             {
@@ -3286,7 +3283,7 @@ namespace Logitude.BL.Helpers
         public string FieldCode { get; set; }
         public string ChargeGroupCode { get; set; }
         public double? SaleExchangeRate { get; set; }
-      
+
     }
 }
 

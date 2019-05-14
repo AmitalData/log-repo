@@ -59,7 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.CheckContactFeature("BankDeposit", "READ", tenant);
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
-                ContactPM contact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
+                ContactPM contact = contactQuery.GetSingleByEmail(loggedUserEmail, tenant);
 
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
                 ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("BankDeposit", 0, true);

@@ -34,6 +34,10 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
                 .HasMaxLength(8000)
                 .IsUnicode(false);
 
+            this.Property(t => t.Log)
+              .HasMaxLength(500)
+              .IsUnicode(false);
+
             this.Property(t => t.CommunicationLogId)
                 .HasMaxLength(15)
                 .IsUnicode(false);
@@ -47,7 +51,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
                 .IsUnicode(true);
 
             this.Property(t => t.EntityReference)
-                .HasMaxLength(15)
+                .HasMaxLength(20)
                 .IsUnicode(false);
 
             this.Property(t => t.ObjectTableName)
@@ -81,6 +85,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.FileSize).HasColumnName("FileSize");
             this.Property(t => t.Status).HasColumnName("Status");
             this.Property(t => t.ErrorMessage).HasColumnName("ErrorMessage");
+            this.Property(t => t.Log).HasColumnName("Log");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.CommunicationLogId).HasColumnName("CommunicationLogId");
             this.Property(t => t.Subject).HasColumnName("Subject");

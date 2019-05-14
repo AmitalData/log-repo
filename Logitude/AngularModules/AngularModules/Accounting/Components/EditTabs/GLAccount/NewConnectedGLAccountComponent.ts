@@ -40,6 +40,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
     entityResourceService: EntityResourceService = new EntityResourceService();
     GLAccountPMService: GLAccountPMService = new GLAccountPMService();
     gLAccountCurrencyExtendedPMService: GLAccountCurrencyExtendedPMService = new GLAccountCurrencyExtendedPMService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -113,7 +114,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
         }
           this.ValidationErrorsList = errors;
           if (this.ValidationErrorsList.length == 0) {
-
+              this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
               this.GLAccountPMService.get(this.entityPM.ControlAccountId).subscribe((response: ServiceResponse) => {
                   if (response) {
                       if (!response.HasError) {
@@ -156,24 +157,27 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                                                   if (response) {
                                                       if (!response.HasError) 
                                                       {
-                                                          SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                                                            this.CurrentSession.StopBusyIndicator();
+                                                          this.CurrentSession.CloseCurrentWindowEmit("ok");
                                                       }
                                                       else {
+                                                            this.CurrentSession.StopBusyIndicator();
                                                           this.ValidationErrorsList = response.ErrorsArray;
                                                       }
                                                   }
                                               });
 
-                                           //  SessionLocator.CurrentSession.CloseCurrentWindow();
+                                           //  this.CurrentSession.CloseCurrentWindow();
                                           }
                                           else {
+                                                 this.CurrentSession.StopBusyIndicator();
                                               this.ValidationErrorsList = response.ErrorsArray;
                                           }
                                       }
 
 
 
-                                      //  SessionLocator.CurrentSession.StopBusyIndicator();
+                                      //  this.CurrentSession.StopBusyIndicator();
 
                                   });
                                  
@@ -181,7 +185,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                           }
 
                           else {
-                              
+                                 this.CurrentSession.StopBusyIndicator();
                               errors.push(TextCodeTranslator.Translate("GLAccounts.O.ControlAccountNotFound"));
                               this.ValidationErrorsList = errors;
                           }
@@ -196,7 +200,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.accountPM = null;
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 

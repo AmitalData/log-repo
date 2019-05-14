@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Logitude.BL.Security
 {
@@ -14,15 +15,33 @@ namespace Logitude.BL.Security
     {
         public ContactPM GetLoggedContact(int tenant)
         {
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-               //SecurityUtility.GetAuthenticatedUser()
-               AuthenticationUtil.ResolveUserIdentityName(tenant)
-               , tenant);
-            if (loggedContact == null)
+            ContactPM loggedContact=null;
+            try
             {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
+                if (HttpContext.Current != null)
+                {
+                    loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
+
+
+                    // add by Abdullah & Mohammad to fix customer care contact issue, BUG 48520
+                    // if (null and tenant <> 0) - customer care
+                    //      get it by tenant 0 
+                    if (tenant != 0 && loggedContact == null)
+                    {
+                        loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(AuthenticationUtil.ResolveUserIdentityName(tenant), 0);
+                    }
+                    // note: the user will be found by method (GetContactByEmailOnly) in the cache 
+
+                }
+                else
+                {
+                    loggedContact = new ContactQuery(tenant).GetSingleByEmail("system@tenant" + tenant + ".com", tenant);
+                }
             }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
+            catch { }
+            
+
+            loggedContact = loggedContact ?? new ContactPM() { DontShowLocal = true };
             return loggedContact;
         }
     }

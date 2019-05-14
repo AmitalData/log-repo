@@ -284,7 +284,12 @@ namespace WebFreight.Web.GlobalModelDB
             }
         }
 
-
-
+        public IDbSet<BluesnapContractType> BluesnapContractTypes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        } 
     }
 }

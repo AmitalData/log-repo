@@ -13,7 +13,7 @@ namespace Simplog.Data.QuoteModel.Mapping
 
             // Properties
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.QuoteNumber).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.QuoteNumber).IsRequired().HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.ShipperReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.QuoteTemplateId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipperReference2).HasMaxLength(50).IsUnicode(false);
@@ -141,6 +141,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
             this.Property(t => t.ChargeableWeight).HasColumnName("ChargeableWeight");
             this.Property(t => t.GrossWeight).HasColumnName("GrossWeight");
+            this.Property(t => t.ChargeableWeightInKG).HasColumnName("ChargeableWeightInKG");
             this.Property(t => t.LastModified).HasColumnName("LastModified");
             this.Property(t => t.Field1).HasColumnName("Field1");
             this.Property(t => t.Field2).HasColumnName("Field2");
@@ -283,6 +284,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.NotifyAddressId).HasColumnName("NotifyAddressId");
             this.Property(t => t.NotifyContactId).HasColumnName("NotifyContactId");
             this.Property(t => t.NumberOfFollowUps).HasColumnName("NumberOfFollowUps");
+            this.Property(t => t.GrossWeightEdited).HasColumnName("GrossWeightEdited");
+            this.Property(t => t.ChargeableWeightEdited).HasColumnName("ChargeableWeightEdited");
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);

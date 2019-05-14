@@ -14,6 +14,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         public string LocalName { get; set; }
         public string EnglishName { get; set; }
         public bool? IsMultiCurrency { get; set; }
+        public string InternalNumber { get; set; }
 
         public Currency Currency { get; set; }
         public ReconcileMethod ReconcileMethod { get; set; }

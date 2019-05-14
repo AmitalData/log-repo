@@ -156,12 +156,12 @@
         </tr>
     </table>
 
-    <div class="ComboBoxDropdown" [attr.id]="DropdownId" [hidden]="!IsOpened">
+    <div class="ComboBoxDropdown" [attr.id]="DropdownId" style="z-index:5;" [hidden]="!IsOpened">
         <div class="ScrollViewer">
             <ul class="ScrollContent" [attr.id]="ListControlId">
                 <li id="{{'ComboBoxItem' | IdGeneratorPipe}}" class="ComboBoxItem TextTrimming" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngFor="let item of ItemsSource" [class.SelectedComboboxItem]="item === SelectedItem" (mousedown)="ItemClicked(item)">
-                    <span *ngIf="Binding == null">{{item}}</span>
-                    <span *ngIf="Binding != null">{{item[Binding]}}</span>
+                    <span *ngIf="Binding == null" [title]="item">{{item}}</span>
+                    <span *ngIf="Binding != null" [title]="item[Binding]">{{item[Binding]}}</span>
                 </li>
             </ul>
         </div>

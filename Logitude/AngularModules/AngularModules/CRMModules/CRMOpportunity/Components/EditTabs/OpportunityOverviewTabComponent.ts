@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OpportunityPM} from '../../../../CRM/EntityPMs/OpportunityPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {OpportunityPMService} from '../../../../CRM/Services/StandardPMs/OpportunityPMService';
@@ -55,6 +55,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
     RegardingEntity: string = "";
     EntityId: string = "";
     EntityDescription: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -101,10 +102,10 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
         this.SetUIProperties_TotalsOfProducts();
 
 
-        this.SearchTextCompetitorsDropButtonId += "2" + SessionLocator.CurrentSession.GetNewId("SearchTextCompetitorsDropButtonId_2");
-        this.SearchTextCompetitorsId += "2" + SessionLocator.CurrentSession.GetNewId("SearchTextCompetitorsId_2");
-        this.SearchTextAdditionalServiceModeDropButtonId += "2"+ SessionLocator.CurrentSession.GetNewId("SearchTextAdditionalServiceModeDropButtonId_2");
-        this.SearchTextAdditionalServiceId += "2" + SessionLocator.CurrentSession.GetNewId("SearchTextAdditionalServiceId_2");
+        this.SearchTextCompetitorsDropButtonId += "2" + this.CurrentSession.GetNewId("SearchTextCompetitorsDropButtonId_2");
+        this.SearchTextCompetitorsId += "2" + this.CurrentSession.GetNewId("SearchTextCompetitorsId_2");
+        this.SearchTextAdditionalServiceModeDropButtonId += "2"+ this.CurrentSession.GetNewId("SearchTextAdditionalServiceModeDropButtonId_2");
+        this.SearchTextAdditionalServiceId += "2" + this.CurrentSession.GetNewId("SearchTextAdditionalServiceId_2");
 
     }
     SetUIProperties_TotalsOfProducts() {
@@ -180,7 +181,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
     }
 
     EditCompetitor(Item: CompetitorViewModelData) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: Item.CompetitorId, ObjectTableName: 'Competitor', BackButtonLabel: "CRM Details" });
@@ -285,28 +286,28 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
     public get NoQuotesVisibility() { if (this.QuotesObslist.length > 0) return true; return false; }
 
     private Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     // Your work after you get PM
                     if (this.SavingMethodCode == "NewQuote")
                         this.OpenNewQuote();
                     this.SetUIProperties();
                     this.SavingMethodCode = "";
-                    SessionLocator.CurrentSession.FireEvent("SocialPostsRefresh");
+                    this.CurrentSession.FireEvent("SocialPostsRefresh");
                 }
             });
 
-            SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.SetUIProperties();
                     // Your work after you get PM
                 }
             });
 
-            SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "LoadActivity") {
                     this.LoadActivities();
                 }
@@ -382,11 +383,11 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
 
     NewQuote() {
         this.SavingMethodCode = "NewQuote";
-        SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
 
     EditQuote(item: QuoteObslistItemClass) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: item.entityId, ObjectTableName: 'Quote', BackButtonLabel: "Quotes" });
@@ -723,7 +724,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
     ViewEntity(entity) {
         if (!AppTool.IsNullOrEmpty(entity)) {
             this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe(response => {
-                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({EntityId: entity.Id, ObjectTableName: "Activity", BackButtonLabel: "Opportunities" });
@@ -779,7 +780,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
         listArgs.DisplayTitle = listArgs.QueryCode;
         listArgs.BackButtonTitle = "Back";
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);

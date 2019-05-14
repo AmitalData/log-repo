@@ -1,4 +1,4 @@
-﻿import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef} from '@angular/core';
+import { Component, EventEmitter, Output, Input, OnInit, ElementRef, ChangeDetectorRef} from '@angular/core';
 import { AppTool } from '../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
@@ -81,11 +81,12 @@ export class SendButton implements OnInit {
         }
         this.Text = myDisplayText;
     }
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _CD: ChangeDetectorRef, myElement: ElementRef) {
         this.ItemsSource = [];
 
         this._ElementRef = myElement;
-        var idIndex = SessionLocator.CurrentSession.GetNewId("SenButton");
+        var idIndex = this.CurrentSession.GetNewId("SenButton");
         this._CustomSendOptionsComponentId = "CustomSendOptionsComponent_" + idIndex;
         this._CustomSendOptionsComponentMenuId = "CustomSendOptionsComponentMenuId_" + idIndex;
         this.ControlId = "ComboBox_" + idIndex;

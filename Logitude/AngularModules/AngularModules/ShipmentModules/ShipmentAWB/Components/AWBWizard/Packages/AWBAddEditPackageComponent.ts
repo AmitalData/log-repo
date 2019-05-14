@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {Validator} from '../../../../../Infrastructure/Validators/Validator';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLocator';
@@ -19,6 +19,7 @@ export class AWBAddEditPackageComponent {
     public ObjectTableName: string;
     public DataContext: AWBWizardPackageItem;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
        
     }
@@ -48,7 +49,7 @@ export class AWBAddEditPackageComponent {
     CancelButtonClicked() {
         this.RejectChanges();
         this.DataContext.IsWindowMode = false;
-        SessionLocator.CurrentSession.CloseCurrentWindow();        
+        this.CurrentSession.CloseCurrentWindow();        
     }
     
     OkButtonClicked() {
@@ -77,7 +78,7 @@ export class AWBAddEditPackageComponent {
             this.DataContext.IsWindowMode = false;
             this.EntityPM.IsAWBWizardDefault = false;
             this.DataContext.SetUIProperties();
-            SessionLocator.CurrentSession.CloseCurrentWindow();            
+            this.CurrentSession.CloseCurrentWindow();            
         }
     }
 

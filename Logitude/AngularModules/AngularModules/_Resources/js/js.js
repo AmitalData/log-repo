@@ -1,4 +1,4 @@
-﻿function attachmentUploader(id) {
+function attachmentUploader(id) {
     var file = document.querySelector('#' + id).files[0];
     return file;
 }
@@ -145,6 +145,7 @@ function selectionStart(input) {
     return input.selectionStart;
 }
 
+
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -270,7 +271,7 @@ var changeDirection = function (dir, align) {
     this.selection.restore();
 }
 
-function RegisterCustomFroalaEditorButtom() {
+function RegisterCustomFroalaEditorButtom(viewModel) {
     $.FroalaEditor.DefineIcon('rightToLeft', { NAME: 'long-arrow-left' });
     $.FroalaEditor.RegisterCommand('rightToLeft', {
         title: 'RTL',
@@ -292,6 +293,21 @@ function RegisterCustomFroalaEditorButtom() {
             changeDirection.apply(this, ['ltr', 'left']);
         }
     })
+
+
+    $.FroalaEditor.DefineIcon('PageBreak');
+    $.FroalaEditor.RegisterCommand('PageBreak', {
+        title: 'Page Break',
+        icon: 'Break',
+        callback: function () {
+            if (viewModel) {
+                viewModel.InSertHtml("[PageBreak]");
+            }
+        },
+        undo: true
+    });
+
+
 }
 
 function GetHtmlFromFrame(id) {
@@ -356,3 +372,13 @@ var dragger = function () {
         },
     }
 }();
+
+
+function CopyText(id) {
+    var element = document.getElementById(id);
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+}

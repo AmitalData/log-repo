@@ -1,4 +1,4 @@
-﻿
+
 <!--<style>
     .CustomMultiLinesText {
     width: 1400px;
@@ -83,11 +83,11 @@
     <tr style="height:5px"><td colspan="2" style="text-align:left;height:5px"><div></div></td> </tr>
 
 
-    <tr [style.height]="!ResponseBody ? '700px':'230px'" [style.max-height]="!ResponseBody ? '700px':'230px'">
+    <tr [style.height]="!ResponseBody && !Logs ? '700px':'230px'" [style.max-height]="!ResponseBody && !Logs ? '700px':'230px'">
         <td style="vertical-align:top"><span style="margin-left:15px;vertical-align:top">Message Body</span></td>
         <td style="vertical-align:top">
 
-            <div [style.max-height]="!ResponseBody ? '700px':'230px'" [style.height]="!ResponseBody ? '700px':'230px'" style="margin-left:15px;" class="CustomMultiLinesText">
+            <div [style.max-height]="!ResponseBody && !Logs ? '700px':'230px'" [style.height]="!ResponseBody && !Logs ? '700px':'230px'" style="margin-left:15px;" class="CustomMultiLinesText">
 
                 <div style="font-family:'Lucida Sans Unicode';color:#1B90CB; white-space: normal;word-wrap: break-word;width: 1380px;margin-top:5px;margin-bottom:5px; margin-left:10px;margin-right:10px;font-size:15px">
                     {{MessageBody}}
@@ -99,15 +99,15 @@
         </td>
     </tr>
 
-    <tr *ngIf="ResponseBody"  style="height:20px"><td colspan="2" style="text-align:left;height:20px"><div></div></td> </tr>
+    <tr *ngIf="ResponseBody" style="height:20px"><td colspan="2" style="text-align:left;height:20px"><div></div></td> </tr>
 
     <tr *ngIf="ResponseBody" style="height:20px">
         <td style="text-align:left"><button style="width:50px;font-size:12px;margin-left:10px;height:22px;" class="Button" (click)="ViewResponseBodyButtonClicked()" *ngIf="!EntityPM.IsBodySecured">View</button></td>
     </tr>
 
 
-    <tr *ngIf="ResponseBody"  style="height:5px"><td colspan="2" style="text-align:left;height:5px"><div></div></td> </tr>
-    <tr *ngIf="ResponseBody"  style="height:230px;">
+    <tr *ngIf="ResponseBody" style="height:5px"><td colspan="2" style="text-align:left;height:5px"><div></div></td> </tr>
+    <tr *ngIf="ResponseBody" style="height:230px;">
         <td style="vertical-align:top"><span style="margin-left:15px;vertical-align:top">Response Body</span></td>
         <td style="vertical-align:top">
 
@@ -123,5 +123,21 @@
         </td>
     </tr>
 
+    <tr *ngIf="Logs" style="height:5px"><td colspan="2" style="text-align:left;height:5px"><div></div></td> </tr>
+    <tr *ngIf="Logs" style="height:230px;">
+        <td style="vertical-align:top"><span style="margin-left:15px;vertical-align:top">Logs</span></td>
+        <td style="vertical-align:top">
+
+            <div style="margin-left:15px" class="CustomMultiLinesText">
+
+                <div style="font-family:'Lucida Sans Unicode'; color:#1B90CB;white-space: normal;word-wrap: break-word;width: 1380px;margin-top:5px;margin-bottom:5px; margin-left:10px;margin-right:10px;font-size:15px">
+                    {{Logs}}
+                </div>
+            </div>
+
+
+
+        </td>
+    </tr>
     <tr><td colspan="2"><div></div></td> </tr>
 </table>

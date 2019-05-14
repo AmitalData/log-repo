@@ -29,139 +29,131 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             repository = chargesTypeRepository;
         }
 
-        public ChargesTypePM GetSinglePM(string id, int tenant)
+        public ChargesTypePM GetSingle(string id, int tenant)
         {
             ChargesTypePM entity = null;
-            string entityName = "ChargesTypePM" + id + tenant;
 
-            if (HttpContext.Current != null)
-            {
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
-                {
-                    entity = (from a in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement")
-                              where a.Id == id && a.Tenant == tenant
-                              select new ChargesTypePM()
-                              {
-                                  AddedManually = a.AddedManually,
-                                  Code = a.Code,
-                                  MeasurementId = a.MeasurementId,
-                                  MeasurementCode = a.Measurement.Code,
-                                  MeasurementShortName = a.Measurement.ShortName,
-                                  Id = a.Id,
-                                  InActive = a.InActive,
-                                  LocalName = a.LocalName,
-                                  ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                  EnglishName = a.EnglishName,
-                                  Tenant = a.Tenant,
-                                  AWBPrintDescription = a.AWBPrintDescription,
-                                  ChargesGroupCode = a.ChargesGroupCode,
-                                  ChargesGroupId = a.ChargesGroupId,
-                                  IATACodeId = a.IATACodeId,
-                                  Description = a.Description,
-                                  IsAir = a.IsAir,
-                                  IsOcean = a.IsOcean,
-                                  IsInland = a.IsInland,
-                                  IsAutoDisplayInConsolidation = a.IsAutoDisplayInConsolidation,
-                                  IsAutoDisplayInShipment = a.IsAutoDisplayInShipment,
-                                  IsPayable = a.IsPayable,
-                                  IsReceivable = a.IsReceivable,
-                                  VatTypeId = a.VatTypeId,
-                                  DueTypeCode = a.DueTypeCode,
-                                  IsAutoDisplayInQuote = a.IsAutoDisplayInQuote,
-                                  ContainerMeasurementId = a.ContainerMeasurementId,
-                                  ContainerMeasurementCode = a.ContainerMeasurement != null ? a.ContainerMeasurement.Code : null,
-                                  ViewOrder = a.ViewOrder,
-                                  SearchFields = a.SearchFields,
-                                  ReceivableAccountId = a.ReceivableAccountId,
-                                  PayableAccountId = a.PayableAccountId,
-                                  AccountingVATSplit = a.AccountingVATSplit,
-                                  ReceivableCreditAccount = a.ReceivableCreditAccount,
-                                  PayableDebitAccount = a.PayableDebitAccount,
-                                  ReceivablesChargesTypeExternalCode = a.ReceivablesChargesTypeExternalCode,
-                                  PayablesChargesTypeExternalCode = a.PayablesChargesTypeExternalCode,
-                                  PayableDebitGLAcountId = a.PayableDebitGLAcountId,
-                                  ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
-                                  IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
-                                  IsCustoms = a.IsCustoms,
-                                  IsBackToBack = a.IsBackToBack,
-                                  SATExternalId = a.SATExternalId,
-                                  IsExpense = a.IsExpense,
-                              }).FirstOrDefault();
+            entity = (from a in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement")
+                      where a.Id == id && a.Tenant == tenant
+                      select new ChargesTypePM()
+                      {
+                          AddedManually = a.AddedManually,
+                          Code = a.Code,
+                          MeasurementId = a.MeasurementId,
+                          MeasurementCode = a.Measurement.Code,
+                          MeasurementShortName = a.Measurement.ShortName,
+                          Id = a.Id,
+                          InActive = a.InActive,
+                          LocalName = a.LocalName,
+                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                          EnglishName = a.EnglishName,
+                          Tenant = a.Tenant,
+                          AWBPrintDescription = a.AWBPrintDescription,
+                          ChargesGroupCode = a.ChargesGroupCode,
+                          ChargesGroupId = a.ChargesGroupId,
+                          IATACodeId = a.IATACodeId,
+                          Description = a.Description,
+                          IsAir = a.IsAir,
+                          IsOcean = a.IsOcean,
+                          IsInland = a.IsInland,
+                          IsAutoDisplayInConsolidation = a.IsAutoDisplayInConsolidation,
+                          IsAutoDisplayInShipment = a.IsAutoDisplayInShipment,
+                          IsPayable = a.IsPayable,
+                          IsReceivable = a.IsReceivable,
+                          VatTypeId = a.VatTypeId,
+                          DueTypeCode = a.DueTypeCode,
+                          IsAutoDisplayInQuote = a.IsAutoDisplayInQuote,
+                          ContainerMeasurementId = a.ContainerMeasurementId,
+                          ContainerMeasurementCode = a.ContainerMeasurement != null ? a.ContainerMeasurement.Code : null,
+                          ViewOrder = a.ViewOrder,
+                          SearchFields = a.SearchFields,
+                          ReceivableAccountId = a.ReceivableAccountId,
+                          PayableAccountId = a.PayableAccountId,
+                          AccountingVATSplit = a.AccountingVATSplit,
+                          ReceivableCreditAccount = a.ReceivableCreditAccount,
+                          PayableDebitAccount = a.PayableDebitAccount,
+                          ReceivablesChargesTypeExternalCode = a.ReceivablesChargesTypeExternalCode,
+                          PayablesChargesTypeExternalCode = a.PayablesChargesTypeExternalCode,
+                          PayableDebitGLAcountId = a.PayableDebitGLAcountId,
+                          ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
+                          IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
+                          IsCustoms = a.IsCustoms,
+                          IsBackToBack = a.IsBackToBack,
+                          SATExternalId = a.SATExternalId,
+                          IsExpense = a.IsExpense,
+                          IsDomestic = a.IsDomestic, 
+                          IsImport = a.IsImport, 
+                          IsDrop = a.IsDrop, 
+                          IsExport = a.IsExport, 
+                      }).FirstOrDefault();
 
-                    ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
-                    entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
+            ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
+            entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
 
-                    string cname = "ChargesTypePM" + entity.Id + entity.Tenant;
+            ChargesTypePM securedPm = new ChargesTypePM();
+            SecuredMapping.GetMappedPM(entity, securedPm, "ChargesType", tenant);
 
-                    if (CacheManager.CacheWrapper.Get(cname) == null)
-                    {
-                        CacheManager.CacheWrapper.Insert(cname, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                    }
+            return securedPm;
+        }
 
-                    entity = (ChargesTypePM)CacheManager.CacheWrapper.Get(entityName);
-                }
-                else
-                {
-                    entity = (ChargesTypePM)CacheManager.CacheWrapper.Get(entityName);
-                }
-            }
+        public ChargesTypePM GetSinglePM(string id, int tenant)
+        {
+            ChargesTypePM entity = (from a in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement")
+                                    where a.Id == id && a.Tenant == tenant
+                                    select new ChargesTypePM()
+                                    {
+                                        AddedManually = a.AddedManually,
+                                        Code = a.Code,
+                                        MeasurementId = a.MeasurementId,
+                                        MeasurementCode = a.Measurement.Code,
+                                        MeasurementShortName = a.Measurement.ShortName,
+                                        Id = a.Id,
+                                        InActive = a.InActive,
+                                        LocalName = a.LocalName,
+                                        ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                        EnglishName = a.EnglishName,
+                                        Tenant = a.Tenant,
+                                        AWBPrintDescription = a.AWBPrintDescription,
+                                        ChargesGroupCode = a.ChargesGroupCode,
+                                        ChargesGroupId = a.ChargesGroupId,
+                                        IATACodeId = a.IATACodeId,
+                                        Description = a.Description,
+                                        IsAir = a.IsAir,
+                                        IsOcean = a.IsOcean,
+                                        IsInland = a.IsInland,
+                                        IsAutoDisplayInConsolidation = a.IsAutoDisplayInConsolidation,
+                                        IsAutoDisplayInShipment = a.IsAutoDisplayInShipment,
+                                        IsPayable = a.IsPayable,
+                                        IsReceivable = a.IsReceivable,
+                                        VatTypeId = a.VatTypeId,
+                                        DueTypeCode = a.DueTypeCode,
+                                        IsAutoDisplayInQuote = a.IsAutoDisplayInQuote,
+                                        ContainerMeasurementId = a.ContainerMeasurementId,
+                                        ContainerMeasurementCode = a.ContainerMeasurement != null ? a.ContainerMeasurement.Code : null,
+                                        ViewOrder = a.ViewOrder,
+                                        SearchFields = a.SearchFields,
+                                        ReceivableAccountId = a.ReceivableAccountId,
+                                        PayableAccountId = a.PayableAccountId,
+                                        AccountingVATSplit = a.AccountingVATSplit,
+                                        ReceivableCreditAccount = a.ReceivableCreditAccount,
+                                        PayableDebitAccount = a.PayableDebitAccount,
+                                        ReceivablesChargesTypeExternalCode = a.ReceivablesChargesTypeExternalCode,
+                                        PayablesChargesTypeExternalCode = a.PayablesChargesTypeExternalCode,
+                                        PayableDebitGLAcountId = a.PayableDebitGLAcountId,
+                                        ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
+                                        IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
+                                        IsCustoms = a.IsCustoms,
+                                        IsBackToBack = a.IsBackToBack,
+                                        SATExternalId = a.SATExternalId,
+                                        IsExpense = a.IsExpense,
+                                        IsDomestic = a.IsDomestic,
+                                        IsImport = a.IsImport,
+                                        IsDrop = a.IsDrop,
+                                        IsExport = a.IsExport,
+                                    }).FirstOrDefault();
 
-            else
-            {
-                entity = (from a in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement")
-                          where a.Id == id && a.Tenant == tenant
-                          select new ChargesTypePM()
-                          {
-                              AddedManually = a.AddedManually,
-                              Code = a.Code,
-                              MeasurementId = a.MeasurementId,
-                              MeasurementCode = a.Measurement.Code,
-                              MeasurementShortName = a.Measurement.ShortName,
-                              Id = a.Id,
-                              InActive = a.InActive,
-                              LocalName = a.LocalName,
-                              ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                              EnglishName = a.EnglishName,
-                              Tenant = a.Tenant,
-                              AWBPrintDescription = a.AWBPrintDescription,
-                              ChargesGroupCode = a.ChargesGroupCode,
-                              ChargesGroupId = a.ChargesGroupId,
-                              IATACodeId = a.IATACodeId,
-                              Description = a.Description,
-                              IsAir = a.IsAir,
-                              IsOcean = a.IsOcean,
-                              IsInland = a.IsInland,
-                              IsAutoDisplayInConsolidation = a.IsAutoDisplayInConsolidation,
-                              IsAutoDisplayInShipment = a.IsAutoDisplayInShipment,
-                              IsPayable = a.IsPayable,
-                              IsReceivable = a.IsReceivable,
-                              VatTypeId = a.VatTypeId,
-                              DueTypeCode = a.DueTypeCode,
-                              IsAutoDisplayInQuote = a.IsAutoDisplayInQuote,
-                              ContainerMeasurementId = a.ContainerMeasurementId,
-                              ContainerMeasurementCode = a.ContainerMeasurement != null ? a.ContainerMeasurement.Code : null,
-                              ViewOrder = a.ViewOrder,
-                              SearchFields = a.SearchFields,
-                              ReceivableAccountId = a.ReceivableAccountId,
-                              PayableAccountId = a.PayableAccountId,
-                              AccountingVATSplit = a.AccountingVATSplit,
-                              ReceivableCreditAccount = a.ReceivableCreditAccount,
-                              PayableDebitAccount = a.PayableDebitAccount,
-                              ReceivablesChargesTypeExternalCode = a.ReceivablesChargesTypeExternalCode,
-                              PayablesChargesTypeExternalCode=a.PayablesChargesTypeExternalCode,
-                              PayableDebitGLAcountId = a.PayableDebitGLAcountId,
-                              ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
-                              IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
-                              IsCustoms = a.IsCustoms,
-                              IsBackToBack = a.IsBackToBack,
-                              SATExternalId = a.SATExternalId,
-                              IsExpense = a.IsExpense,
-                          }).FirstOrDefault();
-
-
-                ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
-                entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
-            }
+            ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
+            entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
 
             ChargesTypePM securedPm = new ChargesTypePM();
             SecuredMapping.GetMappedPM(entity, securedPm, "ChargesType", tenant);
@@ -226,6 +218,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsBackToBack = a.IsBackToBack,
                                   SATExternalId = a.SATExternalId,
                                   IsExpense = a.IsExpense,
+                                  IsDomestic = a.IsDomestic,
+                                  IsImport = a.IsImport,
+                                  IsDrop = a.IsDrop,
+                                  IsExport = a.IsExport,
                               }).FirstOrDefault();
 
                     ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -302,6 +298,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               IsBackToBack = a.IsBackToBack,
                               SATExternalId = a.SATExternalId,
                               IsExpense = a.IsExpense,
+                              IsDomestic = a.IsDomestic,
+                              IsImport = a.IsImport,
+                              IsDrop = a.IsDrop,
+                              IsExport = a.IsExport,
                           }).FirstOrDefault();
 
 
@@ -364,6 +364,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     IsBackToBack = a.IsBackToBack,
                                                     SATExternalId = a.SATExternalId,
                                                     IsExpense = a.IsExpense,
+                                                    IsDomestic = a.IsDomestic,
+                                                    IsImport = a.IsImport,
+                                                    IsDrop = a.IsDrop,
+                                                    IsExport = a.IsExport,
                                                 };
             return charges;
         }
@@ -423,6 +427,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              IsBackToBack = a.IsBackToBack,
                              SATExternalId = a.SATExternalId,
                              IsExpense = a.IsExpense,
+                             IsDomestic = a.IsDomestic,
+                             IsImport = a.IsImport,
+                             IsDrop = a.IsDrop,
+                             IsExport = a.IsExport,
                          }).AsQueryable();
 
             IQueryable<ChargesTypePM> query2 = null;
@@ -505,6 +513,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      IsCustoms = f.IsCustoms,
                                                      SATExternalId = f.SATExternalId,
                                                      IsExpense = f.IsExpense,
+                                                     IsDomestic = f.IsDomestic,
+                                                     IsImport = f.IsImport,
+                                                     IsDrop = f.IsDrop,
+                                                     IsExport = f.IsExport,
                                                  };
             return result;
         }
@@ -560,6 +572,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    IsCustoms = f.IsCustoms,
                                                    SATExternalId = f.SATExternalId,
                                                    IsExpense = f.IsExpense,
+                                                   IsDomestic = f.IsDomestic,
+                                                   IsImport = f.IsImport,
+                                                   IsDrop = f.IsDrop,
+                                                   IsExport = f.IsExport,
                                                }).FirstOrDefault();
 
             return chargesTypeList;
@@ -619,6 +635,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              IsCustoms = f.IsCustoms,
                              SATExternalId = f.SATExternalId,
                              IsExpense = f.IsExpense,
+                             IsDomestic = f.IsDomestic,
+                             IsImport = f.IsImport,
+                             IsDrop = f.IsDrop,
+                             IsExport = f.IsExport,
                          }).OrderBy(d=>d.Code).Skip(skip).Take(take);
 
 

@@ -1,4 +1,4 @@
-﻿import {ShipmentPM} from '../EntityPMs/ShipmentPM';
+import {ShipmentPM} from '../EntityPMs/ShipmentPM';
 import {AppTool, FormatTool} from '../../Infrastructure/Tools';
 import {ShipmentTool, RoutingHelper} from '../Tools';
 import {Validator} from '../../Infrastructure/Validators/Validator';
@@ -31,6 +31,10 @@ export class ShipmentValidator implements IShipmentValidator {
             this.IsFCLEntity = AppTool.IsFCLEntity(this.entityPM.TransportModeId, this.entityPM.ShipmentTypeId);
 
             Validator.TryValidateObject(this.entityPM, "Shipment", this.Errors);
+
+            if (entityPM.Ratio > 10 || entityPM.Ratio < 1) {
+                this.Errors.push("Ratio must be between 1-10");
+            }
 
             this.ValidatePartners(); 
             this.ValidatePorts();                       
@@ -279,4 +283,3 @@ export class ShipmentValidator implements IShipmentValidator {
     }
 }
 
- 

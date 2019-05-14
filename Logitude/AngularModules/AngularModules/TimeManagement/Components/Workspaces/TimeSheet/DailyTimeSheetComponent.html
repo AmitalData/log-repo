@@ -45,6 +45,7 @@
             <td style="width:10px;">
                 <div></div>
             </td>
+
             <td>
                 <table>
                     <tr style="height:5px;">
@@ -52,167 +53,182 @@
                             <div></div>
                         </td>
                     </tr>
-                    <tr style="height:22px;">
-                        <td style="float:right;color:#1B90CB;">{{LoggedUserName}}</td>
-                    </tr>
-                    <tr style="height:5px;">
-                        <td>
-                            <div></div>
-                        </td>
-                    </tr>
+
                     <tr style="height:22px;">
                         <td>
                             <table>
                                 <tr>
-                                    <td style="width:10px;">
-                                        <div></div>
-                                    </td>
-
-
-                                    <!-- Locations Filters -->
-                                    <td style="width:70px;">
-                                        <LogLabel [Text]="'Location'" [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
-                                    </td>
-
-                                    <td style="width:170px;">
-                                        <LocationsFilter (SelectedValueChanged)="SelectedLocationFilter = $event" [SelectedValue]="SelectedLocationFilter"></LocationsFilter>
-                                    </td>
-
-                                    <td style="width:5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <!-- Dates Filters -->
-                                    <td style="width:50px;">
-                                        <LogLabel [Text]="'Date'" [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
-                                    </td>
-
-                                    <td style="width:200px;">
-                                        <DatesFilter (SelectedValueChanged)="SelectedDateFilter = $event" [SelectedValue]="SelectedDateFilter"></DatesFilter>
-                                    </td>
-
-                                    <td style="width:5px;">
-                                        <div></div>
-                                    </td>
-
-                                    <td style="width:410px;" *ngIf="SelectedDateFilter == 'P'">
-                                        <table>
-                                            <tr>
-                                                <td style="width:200px;">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width:70px;">
-                                                                <div style="width:70px">From Date:</div>
-                                                            </td>
-                                                            <td style="width:120px;">
-                                                                <div style="width:120px;">
-                                                                    <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td style="width:5px">
-                                                    <div style="width:5px"></div>
-                                                </td>
-                                                <td style="width:200px;">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width:55px;">
-                                                                <div style="width:55px;"> To Date: </div>
-                                                            </td>
-                                                            <td style="width:120px;">
-                                                                <div style="width:120px;">
-                                                                    <LogDatePicker [ObjectFieldName]="'EndDate'" [SelectedDateValue]="EndDate" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td style="width:5px">
-                                                    <div style="width:5px"></div>
-                                                </td>
-                                                <td style="width:100px;">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width:100px">
-                                                                <button class="Button" (click)="SearchButtonClicked()">Search</button>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
+                                    <!--<td style="width: 1px;">
+                                        <button class="Button" (click)="ProrateButtonClicked()">Prorate</button>
+                                    </td>-->
 
                                     <td>
                                         <div></div>
                                     </td>
 
-                                    <!-- Buttons -->
-                                    <td style="float:right;width:400px">
-                                        <table>
-                                            <tr style="height: 32px;">
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                                <td style="width: 30px;">
-                                                    <button class="Button" style="height:25px;width:25px;" (click)="RefreshButtonClicked()">
-                                                        <img class="CenterCenter" style="padding-left:2px;padding-right:2px;" src="./Images/Buttons/Refresh.png" />
-                                                    </button>
-                                                </td>
-
-                                                <td style="width: 5px;">
-                                                    <div></div>
-                                                </td>
-
-
-                                                <td style="width: 30px;">
-                                                        <button class="Button" style="height:25px;width:25px;" (click)="RefreshButtonClicked()">
-                                                            <img class="CenterCenter" style="padding-left:2px;padding-right:2px;" src="./Images/Buttons/Refresh.png" />
-                                                        </button>
-                                                </td>
-
-                                                <td style="width: 90px;">
-                                                    <button class="Button" style="height:25px;" (click)="AddLineClicked()">
-                                                        <img class="LeftCenter" style="width:17px;height:12px;padding-left:2px;padding-right:2px;" src="./Images/Buttons/AddGreenSolid.png" />
-                                                        Add Line
-                                                    </button>
-                                                </td>
-
-                                                <td style="width: 5px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td style="width: 145px;">
-                                                    <button class="Button" style="height:25px;" (click)="PrintPreviewClicked()">
-                                                        <img class="LeftCenter" style="width:17px;height:12px;padding-left:2px;padding-right:2px;" src="./Images/FileIcons/File-pdf-48.png" />
-                                                        Print Preview (PDF)
-                                                    </button>
-                                                </td>
-
-                                                <td style="width: 5px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td style="width: 57px;">
-                                                    <button *ngIf="!HasChanges" class="Button" style="height:25px;">
-                                                        <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LeftCenter" />
-                                                        <span style="line-height: 19px;" [ngStyle]="{'margin-left': '5px'}">Save</span>
-                                                    </button>
-                                                    <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveClicked()" style="height:25px;">
-                                                        <img src="./Images/Buttons/Save.Red.png" [className]="LeftCenter" [ngStyle]="{'margin-left': '2px'}" />
-                                                        <span style="line-height: 19px;" [ngStyle]="{'margin-left': '5px'}">Save</span>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
+                                    <td style="width: 1px; color:#1B90CB;">{{LoggedUserName}}</td>
                                 </tr>
                             </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height:5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <tr style="height:22px;">
+                        <td>
+                            <div class="MediaFill">
+                                <table>
+                                    <tr>
+
+                                        <!-- Locations Filters -->
+                                        <td style="width:60px;">
+                                            <LogLabel [Text]="'Location'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogLabel>
+                                        </td>
+
+                                        <td style="width:165px;">
+                                            <LocationsFilter (SelectedValueChanged)="SelectedLocationFilter = $event" [SelectedValue]="SelectedLocationFilter"></LocationsFilter>
+                                        </td>
+
+                                        <td style="width:5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <!-- Dates Filters -->
+                                        <td style="width:45px;">
+                                            <LogLabel [Text]="'Date'" [DataContext]="DataContext" [NoObjectField]="true"></LogLabel>
+                                        </td>
+
+                                        <td style="width:200px;">
+                                            <DatesFilter (SelectedValueChanged)="SelectedDateFilter = $event" [SelectedValue]="SelectedDateFilter"></DatesFilter>
+                                        </td>
+
+                                        <td style="width:5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width:60px;">
+                                            <LogLabel [Text]="'Employee'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogLabel>
+                                        </td>
+
+                                        <td style="width:120px;">
+                                            <LogLov [NoObjectField]="true"
+                                                    [ObjectFieldName]="'EmployeeUserId'"
+                                                    [DataContext]="DataContext"
+                                                    [SelectedValue]="EmployeeUserId"
+                                                    [LookUpTableName]="'User'"
+                                                    [HideColumns]="true">
+                                            </LogLov>
+                                        </td>
+
+                                        <td style="width:5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width:1px;" *ngIf="SelectedDateFilter == 'P'">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:165px; min-width: 165px;">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:70px;">
+                                                                    <div>From Date:</div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div>
+                                                                        <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+
+                                                    <td style="width:5px; min-width: 5px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                    <td style="width:150px; min-width: 150px;">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width:55px;">
+                                                                    <div>To Date: </div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div>
+                                                                        <LogDatePicker [ObjectFieldName]="'EndDate'" [SelectedDateValue]="EndDate" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                        <td style="width:5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width:1px">
+                                            <button class="Button" (click)="SearchButtonClicked()">Search</button>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 25px;">
+                                            <button class="Button" style="height:25px;width:25px;" (click)="RefreshButtonClicked()">
+                                                <img class="CenterCenter" style="padding-left:2px;padding-right:2px;" src="./Images/Buttons/Refresh.png" />
+                                            </button>
+                                        </td>
+
+                                        <td style="width:5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 70px;">
+                                            <button class="Button" style="height:25px;" (click)="AddLineClicked()">
+                                                <img class="LeftCenter" style="margin-left: 5px;" src="./Images/Buttons/AddGreenSolid.png" />
+                                                <span style="line-height: 22px; margin-left: 15px; font-size: 11px;">Add Line</span>
+                                            </button>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 120px;">
+                                            <button class="Button" style="height:25px;" (click)="PrintPreviewClicked()">
+                                                <img class="LeftCenter" style="width:17px;height:12px; margin-left: 2px;" src="./Images/FileIcons/File-pdf-48.png" />
+                                                <span style="line-height: 22px; margin-left: 15px; font-size: 11px;">Print Preview (PDF)</span>
+                                            </button>
+                                        </td>
+
+                                        <td style="width: 5px;">
+                                            <div></div>
+                                        </td>
+
+                                        <td style="width: 50px;">
+                                            <button *ngIf="!HasChanges" class="Button" style="height:25px;">
+                                                <img [className]="LeftCenter" src="./Images/Buttons/Save.png" />
+                                                <span style="line-height: 22px; margin-left: 5px; font-size: 11px;">Save</span>
+                                            </button>
+
+                                            <button *ngIf="HasChanges" class="EntityChangesButton" style="height:25px;" (click)="SaveClicked()">
+                                                <img [className]="LeftCenter" src="./Images/Buttons/Save.Red.png" />
+                                                <span style="line-height: 22px; margin-left: 5px; font-size: 11px;">Save</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
                         </td>
                     </tr>
 
@@ -259,7 +275,7 @@
                                             {{item.LocationName}}
                                         </log-cell-template>
                                     </log-column>
-                                   
+
                                     <!-- Hours -->
                                     <log-column [width]="'120'" [Alignment]="'center'" [header]="'Hours'">
                                         <log-cell-template template="let item" #logcelltemplate>
@@ -279,6 +295,27 @@
                                             <Hyperlink [FontSize]="14" (click)="item.ViewWI(item.WINumber)" [Text]="item.WINumber"></Hyperlink>
                                         </log-cell-template>
                                     </log-column>
+
+
+                                    <!-- SprintId -->
+                                    <log-column [width]="'150'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.SprintId' | TextCodeTranslationPipe">
+                                        <log-cell-template template="let item" #logcelltemplate>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                                {{item.SprintName}}
+                                            </div>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [FocusOnMe]="'true'"
+                                                        [DataContext]="item.DataContext"
+                                                        [ObjectTableName]="'TMEmployeeTime'"
+                                                        [ObjectFieldName]="'SprintId'"
+                                                        [SelectedValue]="item.SprintId"
+                                                        [LookUpTableName]="'Sprint'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
 
                                     <!-- Description -->
                                     <log-column [width]="'250'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.Description' | TextCodeTranslationPipe ">
@@ -341,15 +378,19 @@
                                         <td style="width:150px;min-width:150px;max-width:150px;">
                                             <div style="color:#1B90CB;text-align:left;margin-left:10px;">Totals</div>
                                         </td>
+
                                         <td *ngIf="SelectedDateFilter == 'P'" style="width:120px;min-width:120px;max-width:120px;">
                                             <div></div>
                                         </td>
+
                                         <td style="width:120px;min-width:120px;max-width:120px;text-align:center; font-size: 16px;">
                                             {{TotalDayHours | TimeToHoursMinutesPipe}}
+
                                             <span *ngIf="TotalFromClock != null && SelectedLocationFilter=='O'" style="font-size: 16px;">
                                                 | <span style="font-size: 16px;color:black;">{{TotalFromClock}}</span>
                                             </span>
                                         </td>
+
                                         <td>
                                             <div></div>
                                         </td>

@@ -19,7 +19,9 @@ import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/L
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { FormGroup, FormBuilder} from '@angular/forms';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { CachedDataManager } from '../../../../Infrastructure/Utilities/CachedDataManager';
+
 declare var insertAtSubject: any;
 
 @Component({
@@ -43,6 +45,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
     SelectedObjectTable: ObjectTablePM;
     private documentTypePMService: DocumentTypePMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(fb: FormBuilder,  public _documentTypePMExtendedService: DocumentTypePMExtendedService) {
         super();
  
@@ -245,16 +248,17 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
              if (this.ValidationErrorsList.length == 0) {
 
-                 SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
 
                  this.documentTypePMService.insert(this.NewDocumentTypePM).subscribe(res=> {
-                     SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                     this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                      var pmResponse: ServiceResponse = res;
                      if (!pmResponse.HasError) {
                          var myResult = pmResponse.Result;
                          if (myResult) {
-                             SessionLocator.CurrentSession.CloseCurrentWindow();
+                             this.CurrentSession.CloseCurrentWindow();
+                             CachedDataManager.RefreshTableData("DocumentType", true);
                          }
                      }
                      else {
@@ -326,7 +330,7 @@ export class NewDocumentTypeComponent extends BaseComponent implements OnInit {
 
     CloseButtonClicked() {
 
-       SessionLocator.CurrentSession.CloseCurrentWindow();
+       this.CurrentSession.CloseCurrentWindow();
 
     }
 

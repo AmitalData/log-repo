@@ -147,6 +147,21 @@ export class ReconciliationLinePM {
     public set OpenAmountCurrencySign(newValue: string) { if (this.openAmountCurrencySign != newValue) { this.openAmountCurrencySign = newValue; this.MarkAsDirty("OpenAmountCurrencySign"); } }
        
 	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
+    private reconciledWithTransactionId: string;
+    public get ReconciledWithTransactionId() { return this.reconciledWithTransactionId; }
+    public set ReconciledWithTransactionId(newValue: string) { if (this.reconciledWithTransactionId != newValue) { this.reconciledWithTransactionId = newValue; this.MarkAsDirty("ReconciledWithTransactionId"); } }
+       
+	 
+    private isRecoCancelled: boolean;
+    public get IsRecoCancelled() { return this.isRecoCancelled; }
+    public set IsRecoCancelled(newValue: boolean) { if (this.isRecoCancelled != newValue) { this.isRecoCancelled = newValue; this.MarkAsDirty("IsRecoCancelled"); } }
+       
+	 
 
     public OldEntityPM: ReconciliationLinePM;
 	

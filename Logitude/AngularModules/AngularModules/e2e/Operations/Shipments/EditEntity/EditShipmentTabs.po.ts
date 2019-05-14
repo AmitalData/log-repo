@@ -53,18 +53,16 @@ export class EditTabsComponent {
 
     this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
     this.GeneralTabScenario.GeneralTab(LogitudeShipType);
-    this.OrderTabScenario.OrderTab(LogitudeShipType,ShipmentType);
-    this.PartnersTabScenario.PartnersTab(LogitudeShipType);
-    this.PackagesTabScenario.PackagesTab(LogitudeShipType,ShipmentType);
+    // this.OrderTabScenario.OrderTab(LogitudeShipType,ShipmentType);
+    // this.PartnersTabScenario.PartnersTab(LogitudeShipType);
+    // this.PackagesTabScenario.PackagesTab(LogitudeShipType,ShipmentType);
     this.RoutingTabScenario.RoutingTab(LogitudeShipType,ShipmentType);
-    this.PayablesTabScenario.PayablesTab(shipperRef1);
+    // this.PayablesTabScenario.PayablesTab(shipperRef1);
     // this.ReceivablesTabScenario.RecievablesTab(LogitudeShipType);
     // this.DocsOutTabScenario.DocsOutTab();
     if(LogitudeShipType=='M'){
       this.ShipmentsTabScenario.ShipmentsTab();
     }
-    browser.driver.sleep(3000);
-
   }
 
 }

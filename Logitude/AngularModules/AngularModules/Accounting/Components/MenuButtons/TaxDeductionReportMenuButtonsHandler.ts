@@ -20,7 +20,9 @@ import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManag
 import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-
+import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { DocumentsFilingViewsExtService } from '../../../Common/Services/ExtendedLists/DocumentsFilingViewsExtService';
+import { DocumentTypeListExtendedService } from '../../../Common/Services/ExtendedLists/DocumentTypeListExtendedService';
 
 export class TaxDeductionReportMenuButtonsHandler {
 
@@ -30,11 +32,17 @@ export class TaxDeductionReportMenuButtonsHandler {
     public ObjectTableName: string = "TaxDeductionReport"
     EntityResourceService: EntityResourceService = new EntityResourceService();
    // _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
-
+    _DocumentsFilingViewsExtService: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
+    documentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+    documentTypeListExtendedService: DocumentTypeListExtendedService = new DocumentTypeListExtendedService();
+    objectTable: any;
+    docFilingPM: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
+        this.objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
     }
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
@@ -55,6 +63,19 @@ export class TaxDeductionReportMenuButtonsHandler {
                                 
                                 break;
                             }
+
+                        case "DNPD":
+                        case "TXFL":
+                            {
+                                if (this.EntityPM.StatusTypeCode != "3") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+
+                                break;
+                            }
                     }
                 }
             }
@@ -62,12 +83,16 @@ export class TaxDeductionReportMenuButtonsHandler {
 
         return menuButtons;
     }
+    documentType: any;
 
     public MenuButtonClick(menuButton: MenuButtonPM) {
 
         switch (menuButton.EventCode) {
             case "DNPD": 
                 {
+                   
+                                       
+                    
 
                     var myPrintHelper = new GeneralPrintHelper("TaxDeductionReport", "TDDP", this.EntityPM.Id, null, this.EntityPM.Email, null);
                     if (myPrintHelper.IsLoadPrintControl) {
@@ -75,32 +100,80 @@ export class TaxDeductionReportMenuButtonsHandler {
                         myPrintHelper.ShowPrintControl();
                     }
 
+                    //this.documentTypeListExtendedService.getDocumentTypeListByCode("TDDP", this.EntityPM.Tenant).subscribe(myResult => {
+                    
+                    //    var mm: ServiceResponse = myResult;
+                    //    if (!mm.HasError) {
+                    //        this.documentType = mm.Result;
+
+                    //        if (this.documentType) {
+
+                    //            this.documentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.documentType.Id, this.objectTable.Id, this.EntityPM.Id, this.EntityPM.Tenant).subscribe(myResult => {
+                               
+                    //                var mm: ServiceResponse = myResult;
+                    //                if (!mm.HasError) {
+                    //                    this.docFilingPM = mm.Result;
+
+                    //                    if (this.docFilingPM) {
+                    //                        DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
+
+
+                    //                    }
+                    //                }
+
+                    //            });
+
+                    //        }
+                    //    }
+
+                    //});
+
+
+                    //this._DocumentsFilingViewsExtService.get(this.EntityPM.Id, this.objectTable.Id).subscribe(myResult => {
+                    //    console.log("[GetLastDocumentsFilingPM]", myResult);
+                    //    var mm: ServiceResponse = myResult;
+                    //    if (!mm.HasError) {
+                    //        this.docFilingPM = mm.Result;
+
+                    //        if (this.docFilingPM) {
+
+                    //            DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
+
+                    //        }
+
+                    //    }
+
+                    //});
+
+
+
                     break;
                 }
             case "TXFL":
                 {
-                    this.EntityResourceService.getEntityResourceByTableName("TaxReport").subscribe(response => {
+
                    
-                    var windowTitle = TextCodeTranslator.Translate("TaxReport.B.Download");
+              
 
-                    var windowArgs: any = {};
-                    windowArgs.ObjectTableName = "TaxDeductionReport";
-                    windowArgs.EntityPM = this.EntityPM;
-                    windowArgs.StartDirectly = false; // start service after show window
-                    windowArgs.TimerInterval = 1000; // wait time between requests
 
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Width = 350;
-                    logWindow.Height = 150;
-                    logWindow.Title = windowTitle;
-                    logWindow.ShowCloseButton = true;
-                    logWindow.WindowArgs = windowArgs;
-                    logWindow.WindowClosed.subscribe(($event: any) => {
-                        this.entityArgs.EditComponent.ReloadEntityPM();
-                    });
-                    logWindow.Show('./Accounting/Components/Others/AccountingFlatFileDownloadComponent');
+                        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.EntityPM.Id, this.objectTable.Id).subscribe(myResult => {
+                            console.log("[GetLastDocumentsFilingPM]", myResult);
+                            var mm: ServiceResponse = myResult;
+                            if (!mm.HasError) {
+                                this.docFilingPM = mm.Result;
 
-                    });
+                                if (this.docFilingPM) {
+                                 
+                                        DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
+                                    
+                                }
+
+                            }
+                           
+                        });
+
+
+                   
                     break;
                 }
 
@@ -111,11 +184,11 @@ export class TaxDeductionReportMenuButtonsHandler {
     }
 
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
 }

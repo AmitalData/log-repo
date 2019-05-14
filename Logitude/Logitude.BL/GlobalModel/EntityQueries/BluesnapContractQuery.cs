@@ -24,47 +24,53 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             repository = bluesnapContractRepository;
         }
 
-        public BluesnapContractPM GetSinglePM(string code, int tenant = 0)
+        public BluesnapContractPM GetSinglePM(string Id, int tenant = 0)
         {
             BluesnapContractPM entity;
-            entity = (from a in repository.context.BluesnapContracts
-                      where a.Code == code
+            entity = (from a in repository.context.BluesnapContracts.Include("BluesnapContractType")
+                      where a.Id == Id
                       select new BluesnapContractPM()
                       {
+                          Id=a.Id,
                           Code = a.Code,
                           SearchFields = a.SearchFields,
                           Name = a.Name,
                           ContractId = a.ContractId,
                           InActive = a.InActive,
                           Tenant = tenant,
+                          BluesnapContractTypeCode=a.BluesnapContractTypeCode,
+                          BluesnapContractTypeName=a.BluesnapContractType!=null?a.BluesnapContractType.Name:"",
                       }).FirstOrDefault();
 
             return entity;
         }
 
-        public BluesnapContractPM GetSingleBluesnapContractPM(string code, int tenant)
+        public BluesnapContractPM GetSingleBluesnapContractPM(string Id, int tenant)
         {
-            if (!string.IsNullOrEmpty(code))
+            if (!string.IsNullOrEmpty(Id))
             {
-                string entityName = "BluesnapContractPM" + code + tenant;
+                string entityName = "BluesnapContractPM" + Id + tenant;
                 BluesnapContractPM entity;
                 if (HttpContext.Current != null)
                 {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
-                        var entitystatuses = (from a in repository.context.BluesnapContracts
+                        var entitystatuses = (from a in repository.context.BluesnapContracts.Include("BluesnapContractType")
 
                                               select new BluesnapContractPM()
                                               {
+                                                  Id=a.Id,
                                                   Code = a.Code,
                                                   SearchFields = a.SearchFields,
                                                   Name = a.Name,
                                                   ContractId = a.ContractId,
                                                   InActive = a.InActive,
+                                                  BluesnapContractTypeCode = a.BluesnapContractTypeCode,
+                                                  BluesnapContractTypeName = a.BluesnapContractType != null ? a.BluesnapContractType.Name : "",
                                               });
                         foreach (var s in entitystatuses)
                         {
-                            string name = "BluesnapContractPM" + s.Code + tenant;
+                            string name = "BluesnapContractPM" + s.Id + tenant;
                             if (CacheManager.CacheWrapper.Get(name) == null)
                             {
                                 CacheManager.CacheWrapper.Insert(name, s, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -79,8 +85,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                 }
                 else
                 {
-                    entity = (from a in repository.context.BluesnapContracts
-                              where a.Code == code
+                    entity = (from a in repository.context.BluesnapContracts.Include("BluesnapContractType")
+                              where a.Id == Id
                               select new BluesnapContractPM()
                               {
                                   Code = a.Code,
@@ -88,6 +94,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                   Name = a.Name,
                                   ContractId = a.ContractId,
                                   InActive = a.InActive,
+                                  BluesnapContractTypeCode = a.BluesnapContractTypeCode,
+                                  BluesnapContractTypeName = a.BluesnapContractType != null ? a.BluesnapContractType.Name : "",
                               }).FirstOrDefault();
                 }
 
@@ -98,15 +106,18 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
         public IQueryable<BluesnapContractList> GetIQueryableEntityList(IQueryable<BluesnapContract> iQueryable)
         {
-            IQueryable<BluesnapContractList> result = from a in iQueryable
+            IQueryable<BluesnapContractList> result = from a in iQueryable.Include("BluesnapContractType")
                                                       select new BluesnapContractList()
                                                           {
+                                                          Id=a.Id,
                                                               Code = a.Code,
                                                               SearchFields = a.SearchFields,
                                                               Name = a.Name,
                                                               ContractId = a.ContractId,
                                                               InActive = a.InActive,
-                                                          };
+                                                          BluesnapContractTypeCode = a.BluesnapContractTypeCode,
+                                                          BluesnapContractTypeName = a.BluesnapContractType != null ? a.BluesnapContractType.Name : "",
+                                                      };
             return result;
         }
     }

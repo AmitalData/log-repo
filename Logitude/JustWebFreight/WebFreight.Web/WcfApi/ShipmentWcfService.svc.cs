@@ -157,7 +157,10 @@ namespace WebFreight.Web.WcfApi
                         response.ErrorMessage = "CreatedByUserId field doesn’t  exist!";
                         return response;
                     }
-
+					if (string.IsNullOrWhiteSpace(entityPM.MasterShipmentDataId))
+					{
+						entityPM.MasterShipmentDataId = null;
+					}
 
                     #region Resolving Keys
 

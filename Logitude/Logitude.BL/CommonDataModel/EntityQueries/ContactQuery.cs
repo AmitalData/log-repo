@@ -163,7 +163,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 IGlobalContext globalContext = GlobalContext.GetContext();
-                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.ToList();
+                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c=> contacts.Any(ct=> ct.Email == c.Email) ).ToList();
 
                 foreach (var c in contacts)
                 {
@@ -226,7 +226,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 IGlobalContext globalContext = GlobalContext.GetContext();
-                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.ToList();
+				List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == email).ToList();
 
                 foreach (var c in contacts)
                 {
@@ -736,7 +736,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                             {
                                 IGlobalContext globalContext = GlobalContext.GetContext();
-                                List<ContactPassword> contactPasswords = globalContext.ContactPasswords.ToList();
+								List<ContactPassword> contactPasswords = globalContext.ContactPasswords.Where(c => c.Email == name).ToList();
 
                                 ContactPassword contactPassword = contactPasswords.Where(cn => cn.Email == entity.Email).FirstOrDefault();
                                 if (contactPassword != null)
@@ -1070,8 +1070,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             IQueryable<Contact> contacts = repository.GetContactsByIds(contactIds, tenant);
             List<string> contactEmailLists = (from a in contacts
-                                              where contactIds.Contains(a.Id) && !a.InActive
-                                             select a.Email).ToList();
+                                              where contactIds.Contains(a.Id) && !a.InActive && a.UserType == "R"
+                                              select a.Email).ToList();
             return contactEmailLists;
         }
 
@@ -1193,21 +1193,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
-        public List<ContactList> GetContactListsByListIds(List<string>contactIds, int tenant)
+        public IQueryable<ContactList> GetContactListsByListIds(List<string>contactIds, int tenant)
         {
-            List<ContactList> contactLists = (from a in repository.context.Contacts
-                                    where contactIds.Contains(a.Id) && a.Tenant == tenant
-                                  select new ContactList()
-                                    {
-                                        Id = a.Id,
-                                        Tenant = a.Tenant,
-                                        EnglishName = a.EnglishName,
-                                        LocalName = a.LocalName,
-                                        Mobile = a.Mobile,
-                                        Fax = a.Fax,
-                                        BusinessPhone =a.BusinessPhone,
-
-                                    }).ToList();
+            IQueryable<ContactList> contactLists = (from a in repository.context.Contacts
+                                                    where contactIds.Contains(a.Id) && a.Tenant == tenant
+                                                    select new ContactList()
+                                                    {
+                                                        Id = a.Id,
+                                                        Tenant = a.Tenant,
+                                                        EnglishName = a.EnglishName,
+                                                        LocalName = a.LocalName,
+                                                        Mobile = a.Mobile,
+                                                        Fax = a.Fax,
+                                                        BusinessPhone = a.BusinessPhone,
+                                                        InActive =a.InActive,
+                                                    });
             return contactLists;
         }
 
@@ -1446,6 +1446,69 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return result;
         }
+
+
+        public ContactPM GetSingleByEmail(string email, int tenant)
+        {
+            email = email.ToLower();
+            ContactPM contact = (from a in repository.context.Contacts
+                                 where a.Email == email
+                                 && a.Tenant == tenant
+                                 select new ContactPM()
+                                 {
+                                     Anniversary = a.Anniversary,
+                                     Birthday = a.Birthday,
+                                     BusinessPhone = a.BusinessPhone,
+                                     Email = a.Email,
+                                     SearchFields = a.SearchFields,
+                                     EnglishName = a.EnglishName,
+                                     FacebookId = a.FacebookId,
+                                     Fax = a.Fax,
+                                     Id = a.Id,
+                                     InActive = a.InActive,
+                                     LocalName = a.LocalName,
+                                     ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                     Mobile = a.Mobile,
+                                     Notes = a.Notes,
+                                     Tenant = a.Tenant,
+                                     Signature = a.Signature,
+                                     SignatureHtml = a.SignatureHtml,
+                                     DontShowLocal = a.DontShowLocalLabels,
+                                     DisplayGettingStarted = a.DisplayGettingStarted,
+                                     BirthdayReminder = a.BirthdayReminder,
+                                     AnniversaryReminder = a.AnniversaryReminder,
+                                     ImageDetailId = a.ImageDetailId,
+                                     DoneDate = a.DoneDate,
+                                     BirthDayOfYear = a.BirthDayOfYear,
+                                     ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                     Position = a.Position,
+                                     ExternalId = a.ExternalId,
+                                     IndexColor = a.IndexColor,
+                                     CompanyName = a.CompanyName,
+                                     CreateDate = a.CreateDate,
+                                 }).FirstOrDefault();
+
+            if (contact != null)
+            {
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    IGlobalContext globalContext = GlobalContext.GetContext();
+                    ContactPassword contactPassword = globalContext.ContactPasswords.Where(cn => cn.Email == contact.Email).FirstOrDefault();
+
+                    if (contactPassword != null)
+                    {
+                        contact.IsLocked = contactPassword.IsLocked;
+                        contact.MustChangePassword = contactPassword.MustChangePassword;
+                        contact.NumberOfRetries = contactPassword.NumberOfRetries;
+                    }
+                }
+            }
+
+            return contact;
+        }
+
+
+
 
 
     }

@@ -176,8 +176,6 @@ export class QuoteUtilities {
         entityPM.BranchId = copiedEntityPM.BranchId;
         entityPM.DepartmentId = copiedEntityPM.DepartmentId;
         entityPM.QuoteTypeCode = copiedEntityPM.QuoteTypeCode;
-        entityPM.SaleCurrencyId = copiedEntityPM.SaleCurrencyId;
-        entityPM.ExchangeRate = copiedEntityPM.ExchangeRate;
         entityPM.IncotermId = copiedEntityPM.IncotermId;
         entityPM.MoveTypeId = copiedEntityPM.MoveTypeId;
         entityPM.IsByKG = copiedEntityPM.IsByKG;
@@ -215,6 +213,13 @@ export class QuoteUtilities {
         entityPM.ValueOfGoods = copiedEntityPM.ValueOfGoods;
         entityPM.ValueOfGoodsCurrencyId = copiedEntityPM.ValueOfGoodsCurrencyId;
         entityPM.IsChargesByVAT = copiedEntityPM.IsChargesByVAT;
+        entityPM.GrossWeightEdited = copiedEntityPM.GrossWeightEdited;
+        entityPM.ChargeableWeightEdited = copiedEntityPM.ChargeableWeightEdited;
+
+        entityPM.IsSaleCurrencySameAsCost = copiedEntityPM.IsSaleCurrencySameAsCost;
+        entityPM.SaleCurrencyId = copiedEntityPM.SaleCurrencyId;
+        entityPM.ExchangeRate = copiedEntityPM.ExchangeRate;
+        entityPM.IsFixedPrice = copiedEntityPM.IsFixedPrice;
 
         //entityPM.ShipperId = copiedEntityPM.ShipperId;
         //entityPM.ShipperContactId = copiedEntityPM.ShipperContactId;
@@ -312,7 +317,7 @@ export class QuoteUtilities {
             newChargePM.ContainerType5MarkUpTypeCode = "F";
             newChargePM.IsChargeBySteps = item.IsChargeBySteps;                       
             newChargePM.ChargesGroupCode = item.ChargesGroupCode;
-
+            newChargePM.Notes = item.Notes;
             if (isCopyCost) {
                 newChargePM.CostUnitPrice = item.CostUnitPrice;
                 newChargePM.CostQuantity = item.CostQuantity;
@@ -556,6 +561,8 @@ export class QuoteUtilities {
         shipmentPM.OrderVolumetricWeight = entityPM.VolumetricWeight;
         shipmentPM.OrderGrossWeight = entityPM.GrossWeight;
         shipmentPM.OrderChargeableWeight = entityPM.ChargeableWeight;
+        shipmentPM.OrderGrossWeightEdited = entityPM.GrossWeightEdited;
+        shipmentPM.OrderChargeableWeightEdited = entityPM.ChargeableWeightEdited;
         shipmentPM.Ratio = entityPM.Ratio;
         shipmentPM.DimFactor = entityPM.DimFactor;
         shipmentPM.BookingNumberOfPackages = entityPM.NumberOfPackages;

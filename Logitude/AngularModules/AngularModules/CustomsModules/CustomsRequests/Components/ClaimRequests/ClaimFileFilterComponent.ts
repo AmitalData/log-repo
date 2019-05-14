@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationRestoreArgs } from '../../../../Customs/Args';
@@ -38,7 +38,7 @@ export class ClaimFileFilterComponent
     CloseFilesCollapsList: ObservableCollection;
     RefundOrderList: ObservableCollection;
     RequireDocumentsList: ObservableCollection;
-    
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
     
@@ -152,7 +152,7 @@ export class ClaimFileFilterComponent
 
     //#region General Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     FillErrors() {

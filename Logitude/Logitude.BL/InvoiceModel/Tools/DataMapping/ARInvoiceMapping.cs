@@ -30,7 +30,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.Tenant = entityPM.Tenant;
                 entityPM.CreateDate = todayDateTime;
 
-                if (entityPM.IsExternalAPI)
+                if (entityPM.IsExternalAPI )
                 {
                     entity.IssuedByUserId = entityPM.IssuedByUserId;
                     entity.CreatedByUserId = entityPM.CreatedByUserId;
@@ -118,7 +118,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                     entityPM.MasterNumber = null;
                 }
             }
-
+            entity.IsExternalEntity = entityPM.IsExternalEntity;
             entity.HouseNumber = entityPM.HouseNumber;
             entity.MasterNumber = entityPM.MasterNumber;
             entityPM.UpdateDate = todayDateTime;
@@ -173,6 +173,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.TotalAmountForTaxReport = entityPM.TotalAmountForTaxReport;
             entity.TotalVAT = entityPM.TotalVAT;
             entity.TotaVatableAmountForTaxReport = entityPM.TotaVatableAmountForTaxReport;
+            entity.IsFullAccounting = entityPM.IsFullAccounting;
+            entity.ARInvoiceStockId = entityPM.ARInvoiceStockId;
+            entity.IsInvoiceNumberFromStock = entityPM.IsInvoiceNumberFromStock;
+            entity.UsoCFDICode = entityPM.UsoCFDICode;
+            entity.RelatedInvoice  = entityPM.RelatedInvoice;
 
             entityPM.SetVoided = false;
             entityPM.SetAsSent = false;
@@ -193,6 +198,17 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                     entityPM.JournalNumber = journal.JournalNumber;
                 }
             }
+
+            if (isNewState)
+            {
+                if (entityPM.NewConcurrencyGUID == null)
+                {
+                    entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+                }
+            }
+
+            entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+            entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
         }
 
         public static void MapInvoiceLine(ARInvoiceLinePM entityPM, ARInvoiceLine entity, bool isNewState)

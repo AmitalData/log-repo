@@ -36,6 +36,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime FromMonthInclusive  { get; set; }
        [DataMember]
        public DateTime ToMonthInclusive  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
    }
 
 }

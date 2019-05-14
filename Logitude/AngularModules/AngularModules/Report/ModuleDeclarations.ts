@@ -1,6 +1,7 @@
 import { ReportComponent } from './Components/Workspaces/ReportComponent';
 import { MainReportsWorkspace } from './Components/Workspaces/MainReportsWorkspace';
 import { BIReportComponent } from './Components/Workspaces/BIReportComponent';
+import { BIFolderReportComponent } from './Components/Workspaces/BIFolderReportComponent';
 import {ReportTemplateComponent} from './Components/ReportTemplateComponent';
 import {ReportsPreviewComponent} from './Components/ReportsPreviewComponent';
 import {ReportsTemplateRestoreComponent} from './Components/ReportsTemplateRestoreComponent';
@@ -37,6 +38,7 @@ import {StatementByInvoiceDateFilterComponent} from './Components/FilterReportCo
 import {InvoicesByPartnerFilterComponent} from './Components/FilterReportComponent/InvoicesByPartnerFilterComponent';
 import {ArchivoExportadoComponent} from './Components/FiltersComponent/Accounting/ArchivoExportadoComponent';
 import {InvoicesRoutingsFilterComponent} from './Components/FiltersComponent/Accounting/InvoicesRoutingsFilterComponent';
+import { LedgerTransactionsFilterControl } from './Components/FiltersComponent/Accounting/LedgerTransactionsFilterControl';
 import {AgingFilterComponent} from './Components/FiltersComponent/Accounting/AgingFilterComponent';
 import { RevenueExpenseFilterComponent } from './Components/FilterReportComponent/RevenueExpenseFilterComponent';
 import { TrailBalanceFiltersComponent } from './Components/FilterReportComponent/TrailBalanceFiltersComponent';
@@ -59,6 +61,7 @@ import {ShipmentProfitVSQuoteEstimateComponent} from './Components/FiltersCompon
 import {ParentVsChildTenantsComponent} from './Components/FilterReportComponent/ParentVsChildTenantsComponent';
 import {UsersByTenantReportFilterComponent} from './Components/FiltersComponent/CRM/UsersByTenantReportFilterComponent';
 import {LicenseManagementFilterComponent} from './Components/FiltersComponent/Operational/LicenseManagementFilterComponent';
+import { VehiclesFilterComponent } from './Components/FiltersComponent/Operational/VehiclesFilterComponent';
 
 // Time Sheet
 import {EmployeeTimeSheetFilterComponent} from './Components/FilterReportComponent/EmployeeTimeSheetFilterComponent';
@@ -69,11 +72,15 @@ import { TasksOfNoProjectsFilterComponent } from './Components/FilterReportCompo
 import { ShipmentDetailsFilterComponent } from './Components/FilterReportComponent/ShipmentDetailsFilterComponent';
 
 
+//VDK Templates
+import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilterComponent';
+
 export const Components =
     [
         MainReportsWorkspace,
         ReportComponent,
         BIReportComponent,
+        BIFolderReportComponent,
         ReportTemplateComponent,
         ReportsPreviewComponent,
         ReportsTemplateRestoreComponent,
@@ -82,7 +89,7 @@ export const Components =
         AccountingLedgerFilterComponent,
         FlightBookingFilterComponent,
         ParticipantsUsersActivitiesFilterComponent,
-        ActivityStatusDashboardFilterComponent, 
+        ActivityStatusDashboardFilterComponent,
         EAWBFilterComponent,
         BookingFilterComponent,
         StatisticsByAgentFilterComponent,
@@ -111,6 +118,7 @@ export const Components =
         ShipmentProfitVSQuoteEstimateComponent,
         ArchivoExportadoComponent,
         AgingFilterComponent,
+        LedgerTransactionsFilterControl,
         InventoryReportFilterConmponent,
         InvoicesRoutingsFilterComponent,
         EmployeeTimeSheetFilterComponent,
@@ -126,6 +134,8 @@ export const Components =
         ShipmentDetailsFilterComponent,
         DetailedShipmentChargesAnalysisComponent,
         VendorChargesAnalysisFilterComponent,
+        VDKFilterComponent,
+        VehiclesFilterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -137,10 +147,11 @@ export class ModuleDeclarations {
             case "MainReportsWorkspace": { myResult = MainReportsWorkspace; break; }
             case "ReportComponent": { myResult = ReportComponent; break; }
             case "BIReportComponent": { myResult = BIReportComponent; break; }
+            case "BIFolderReportComponent": { myResult = BIFolderReportComponent; break; }
             case "ReportsPreviewComponent": { myResult = ReportsPreviewComponent; break; }
-            case "ReportTemplateComponent": { myResult = ReportTemplateComponent; break; }     
-            case "ReportsTemplateRestoreComponent": { myResult = ReportsTemplateRestoreComponent; break; }  
-            case "NewReportsTemplateComponent": { myResult = NewReportsTemplateComponent; break; }  
+            case "ReportTemplateComponent": { myResult = ReportTemplateComponent; break; }
+            case "ReportsTemplateRestoreComponent": { myResult = ReportsTemplateRestoreComponent; break; }
+            case "NewReportsTemplateComponent": { myResult = NewReportsTemplateComponent; break; }
             case "IATAStatisticsFilterComponent": { myResult = IATAStatisticsFilterComponent; break; }
             case "AccountingLedgerFilterComponent": { myResult = AccountingLedgerFilterComponent; break; }
             case "FlightBookingFilterComponent": { myResult = FlightBookingFilterComponent; break; }
@@ -170,25 +181,28 @@ export class ModuleDeclarations {
             case "MonthlyConversionFilterComponent": { myResult = MonthlyConversionFilterComponent; break; }
             case "StageChangingFilterComponent": { myResult = StageChangingFilterComponent; break; }
             case "ARInvoicesDepositReportFilterComponent": { myResult = ARInvoicesDepositReportFilterComponent; break; }
-            case "CASSReportFilterComponent": { myResult = CASSReportFilterComponent; break; } 
-            case "ShipmentProfitVSQuoteEstimateComponent": { myResult = ShipmentProfitVSQuoteEstimateComponent; break; }       
-            case "ArchivoExportadoComponent": { myResult = ArchivoExportadoComponent; break; }  
-            case "AgingFilterComponent": { myResult = AgingFilterComponent; break; }  
-            case "InventoryReportFilterConmponent": { myResult = InventoryReportFilterConmponent; break; } 
+            case "CASSReportFilterComponent": { myResult = CASSReportFilterComponent; break; }
+            case "ShipmentProfitVSQuoteEstimateComponent": { myResult = ShipmentProfitVSQuoteEstimateComponent; break; }
+            case "ArchivoExportadoComponent": { myResult = ArchivoExportadoComponent; break; }
+            case "AgingFilterComponent": { myResult = AgingFilterComponent; break; }
+            case "LedgerTransactionsFilterControl": { myResult = LedgerTransactionsFilterControl; break; }
+            case "InventoryReportFilterConmponent": { myResult = InventoryReportFilterConmponent; break; }
             case "InvoicesRoutingsFilterComponent": { myResult = InvoicesRoutingsFilterComponent; break; }
-            case "EmployeeTimeSheetFilterComponent": { myResult = EmployeeTimeSheetFilterComponent; break; }  
+            case "EmployeeTimeSheetFilterComponent": { myResult = EmployeeTimeSheetFilterComponent; break; }
             case "WorkDaysPerProjectFilterComponent": { myResult = WorkDaysPerProjectFilterComponent; break; }
             case "TasksOfNoProjectsFilterComponent": { myResult = TasksOfNoProjectsFilterComponent; break; }
-            case "OpenShipmentsByCustomerFilterComponent": { myResult = OpenShipmentsByCustomerFilterComponent; break; } 
+            case "OpenShipmentsByCustomerFilterComponent": { myResult = OpenShipmentsByCustomerFilterComponent; break; }
             case "ParentVsChildTenantsComponent": { myResult = ParentVsChildTenantsComponent; break; }
             case "RevenueExpenseFilterComponent": { myResult = RevenueExpenseFilterComponent; break; }
             case "TrailBalanceFiltersComponent": { myResult = TrailBalanceFiltersComponent; break; }
             case "UsersByTenantReportFilterComponent": { myResult = UsersByTenantReportFilterComponent; break; }
-            case "LicenseManagementFilterComponent": { myResult = LicenseManagementFilterComponent; break; }  
-            case "ShipmentsStocksFiltersComponent": { myResult = ShipmentsStocksFiltersComponent; break; }  
+            case "LicenseManagementFilterComponent": { myResult = LicenseManagementFilterComponent; break; }
+            case "ShipmentsStocksFiltersComponent": { myResult = ShipmentsStocksFiltersComponent; break; }
             case "ShipmentDetailsFilterComponent": { myResult = ShipmentDetailsFilterComponent; break; }
             case "DetailedShipmentChargesAnalysisComponent": { myResult = DetailedShipmentChargesAnalysisComponent; break; }
             case "VendorChargesAnalysisFilterComponent": { myResult = VendorChargesAnalysisFilterComponent; break; }
+            case "VDKFilterComponent": { myResult = VDKFilterComponent; break; }
+            case "VehiclesFilterComponent": { myResult = VehiclesFilterComponent; break; }                
         }
 
         return myResult;

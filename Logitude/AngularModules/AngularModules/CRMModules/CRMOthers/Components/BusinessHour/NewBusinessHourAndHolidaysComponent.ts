@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -26,7 +26,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
     public HolidaysDataList: BusinessHourHolidayArgs[];
     public IsVisible = false;
     private IsNew = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.entityPM = new BusinessHourPM();
@@ -477,7 +477,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         this.UpadteDates();
@@ -499,12 +499,12 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         }
     }
     InsertBusinesHour() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         var service = new BusinessHourPMService();
         service.insert(this.entityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('ok');
+                this.CurrentSession.CloseCurrentWindowEmit('ok');
             }
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -512,12 +512,12 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         });
     }
     UpdateBusinesHour() {
-        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CurrentSession.StartBusyIndicatorSaving();
         var service = new BusinessHourPMService();
         service.update(this.entityPM).subscribe((myResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse.HasError) {
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('ok');
+                this.CurrentSession.CloseCurrentWindowEmit('ok');
             }
             else {
                 this.ValidationErrorsList = myResponse.ErrorsArray;

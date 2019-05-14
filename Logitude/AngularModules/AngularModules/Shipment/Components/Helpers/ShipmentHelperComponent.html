@@ -1,7 +1,10 @@
-﻿
+
 <table style="height: 24px;">
 
     <tr>
+        <td *ngIf="IsAnalyzeChampXMLButtonVisible" style="padding-left: 10px; padding-right: 5px;">
+            <button class="Button" (click)="AnalyzeChampXMLClicked()">Analyze Champ XML</button>
+        </td>
 
         <td *ngIf="IsSendToCustomVisible" style="padding-left: 10px; padding-right: 5px;">
             <button class="Button" (click)="SendToCustomsClicked()">Send to Customs</button>
@@ -27,6 +30,10 @@
 
         <td *ngIf="IsAWBWizardButtonVisible">
             <button class="Button" (click)="AWBButtonClicked()">{{AWBWizardButtonLabel}}</button>
+        </td>
+
+        <td *ngIf="IsImportAWBWizardButtonVisible"  style="padding-left: 10px; padding-right: 5px;">
+            <button class="Button" (click)="AWBImportButtonClicked()">{{AWBImportWizardButtonLabel}}</button>
         </td>
 
         <td style="padding-left: 10px; padding-right: 5px;">

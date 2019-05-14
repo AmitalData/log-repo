@@ -11,6 +11,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.Tools.DataMapping;
 using Logitude.BL.GlobalModel.Tools.TraceEvents;
+using Logitude.Server.Tools.Counters;
 
 namespace Logitude.BL.GlobalModel.Tools.EntityService
 {
@@ -38,6 +39,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         {
             this.isNewEntity = true;
             this.entityPm = entityPM;
+            this.entityPm.Id = IdCounter.GetNumber("BluesnapContract", tenant).ToString();
 
             bool exist = this.IsEntityExists();
 
@@ -58,6 +60,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 this.isNewEntity = true;
                 this.entityPm = entityPM;
                 this.Poco = new BluesnapContract();
+                this.Poco.Id = this.entityPm.Id;
 
                 BluesnapContractTracing.Trace(entityPM, Poco, isNewEntity);
                 this.Poco.Code = entityPM.Code;
@@ -72,10 +75,10 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPm = entityPM;
 
-            this.Poco = entityRepository.GetSingleBluesnapContract(entityPM.Code, 0);
+            this.Poco = entityRepository.GetSingleBluesnapContract(entityPM.Id, 0);
 
-            string entityName = "BluesnapContract" + entityPM.Code + 0;
-            string entityPmName = "BluesnapContractPM" + entityPM.Code + 0;
+            string entityName = "BluesnapContract" + entityPM.Id + 0;
+            string entityPmName = "BluesnapContractPM" + entityPM.Id + 0;
 
             if (CacheManager.CacheWrapper.Get(entityName) != null)
             {

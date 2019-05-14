@@ -52,6 +52,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 SaleMeasurementId = a.SaleMeasurementId,
                                                 SaleMeasurementCode = a.SaleMeasurement == null ? "" : a.SaleMeasurement.Code,
                                                 SaleMeasurementShortName = a.SaleMeasurement == null ? "" : a.SaleMeasurement.ShortName,
+                                                SaleMeasurementLocalName = a.SaleMeasurement == null ? "" : a.SaleMeasurement.LocalName,
+
                                                 CostCurrencyId = a.CostCurrencyId,
                                                 CostCurrencyCode = a.CostCurrency == null ? "" : a.CostCurrency.Code,
                                                 CostExchangeRate = a.CostExchangeRate,
@@ -141,6 +143,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                               SaleMeasurementId = a.SaleMeasurementId,
                                               SaleMeasurementCode = a.SaleMeasurement == null ? "" : a.SaleMeasurement.Code,
                                               SaleMeasurementShortName = a.SaleMeasurement == null ? "" : a.SaleMeasurement.ShortName,
+                                              SaleMeasurementLocalName = a.SaleMeasurement == null ? "" : a.SaleMeasurement.LocalName,
                                               CostCurrencyId = a.CostCurrencyId,
                                               CostCurrencyCode = a.CostCurrency == null ? "" : a.CostCurrency.Code,
                                               CostExchangeRate = a.CostExchangeRate,

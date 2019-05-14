@@ -480,6 +480,52 @@ namespace Logitude.TimeManagement.BL.EntityPMs
 			
 		 }
 	   }
+	  private string categoryName ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CategoryName  
+	   {
+	    
+	     get
+		{
+		   return categoryName;
+		 }
+		 set
+		 {
+		   if(categoryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CategoryName",OldValue=categoryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   categoryName=value;
+		   }
+			
+		 }
+	   }
+	  private bool excludeFromProrating ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool ExcludeFromProrating  
+	   {
+	    
+	     get
+		{
+		   return excludeFromProrating;
+		 }
+		 set
+		 {
+		   if(excludeFromProrating != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExcludeFromProrating",OldValue=excludeFromProrating,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   excludeFromProrating=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

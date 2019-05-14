@@ -480,6 +480,11 @@ export class TenantPM {
     public set CustomerTenantShareImportFile(newValue: boolean) { if (this.customerTenantShareImportFile != newValue) { this.customerTenantShareImportFile = newValue; this.MarkAsDirty("CustomerTenantShareImportFile"); } }
        
 	 
+    private customerTenantShareExportFile: boolean;
+    public get CustomerTenantShareExportFile() { return this.customerTenantShareExportFile; }
+    public set CustomerTenantShareExportFile(newValue: boolean) { if (this.customerTenantShareExportFile != newValue) { this.customerTenantShareExportFile = newValue; this.MarkAsDirty("CustomerTenantShareExportFile"); } }
+       
+	 
     private allowAgentInCustomersLOV: boolean;
     public get AllowAgentInCustomersLOV() { return this.allowAgentInCustomersLOV; }
     public set AllowAgentInCustomersLOV(newValue: boolean) { if (this.allowAgentInCustomersLOV != newValue) { this.allowAgentInCustomersLOV = newValue; this.MarkAsDirty("AllowAgentInCustomersLOV"); } }
@@ -605,6 +610,11 @@ export class TenantPM {
     public set TemperatureUnitCode(newValue: string) { if (this.temperatureUnitCode != newValue) { this.temperatureUnitCode = newValue; this.MarkAsDirty("TemperatureUnitCode"); } }
        
 	 
+    private numberFormatCode: string;
+    public get NumberFormatCode() { return this.numberFormatCode; }
+    public set NumberFormatCode(newValue: string) { if (this.numberFormatCode != newValue) { this.numberFormatCode = newValue; this.MarkAsDirty("NumberFormatCode"); } }
+       
+	 
     private defaultSLAId: string;
     public get DefaultSLAId() { return this.defaultSLAId; }
     public set DefaultSLAId(newValue: string) { if (this.defaultSLAId != newValue) { this.defaultSLAId = newValue; this.MarkAsDirty("DefaultSLAId"); } }
@@ -613,6 +623,16 @@ export class TenantPM {
     private stockTypeCode: string;
     public get StockTypeCode() { return this.stockTypeCode; }
     public set StockTypeCode(newValue: string) { if (this.stockTypeCode != newValue) { this.stockTypeCode = newValue; this.MarkAsDirty("StockTypeCode"); } }
+       
+	 
+    private autoArchiveOnInvoice: boolean;
+    public get AutoArchiveOnInvoice() { return this.autoArchiveOnInvoice; }
+    public set AutoArchiveOnInvoice(newValue: boolean) { if (this.autoArchiveOnInvoice != newValue) { this.autoArchiveOnInvoice = newValue; this.MarkAsDirty("AutoArchiveOnInvoice"); } }
+       
+	 
+    private ecommerceSupportEmail: string;
+    public get EcommerceSupportEmail() { return this.ecommerceSupportEmail; }
+    public set EcommerceSupportEmail(newValue: string) { if (this.ecommerceSupportEmail != newValue) { this.ecommerceSupportEmail = newValue; this.MarkAsDirty("EcommerceSupportEmail"); } }
        
 	 
 

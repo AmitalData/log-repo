@@ -13,7 +13,7 @@
     </tr>
 
 
-  
+
     <tr style="height:32px">
         <td style="width:30px">
             <LogLabel [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
@@ -24,7 +24,7 @@
                            [DataContext]="DataContext" [HideColumns]="false"></LogDatePicker>
         </td>
         <td></td>
-       
+
     </tr>
 
     <tr style="height:32px">
@@ -36,6 +36,21 @@
             <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
                            [DataContext]="DataContext" [HideColumns]="false"></LogDatePicker>
         </td>
+
+        <td></td>
+    </tr>
+
+    <tr style="height:32px" *ngIf="testingMode">
+        <td style="width:30px" >
+            <LogLabel [ObjectFieldName]="'TestingMode'" [ObjectTableName]="ObjectTableName"
+                      [DataContext]="DataContext"></LogLabel>
+        </td>
+      
+        <td style="width:60px">
+            <LogCheckBox [ObjectFieldName]="'TestingMode'" [Checked]="TestingMode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+        </td>
+       
 
         <td></td>
     </tr>

@@ -145,6 +145,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new InvoiceModel.Mapping.AccountingPaymentMethodMap());
             modelBuilder.Configurations.Add(new ARPaymentMap());
             modelBuilder.Configurations.Add(new ARPaymentStatuMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStocksStatusMap());
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
             modelBuilder.Configurations.Add(new AWBStatuMap());
@@ -436,6 +437,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new PaymentGatewayPartnersMap());
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new CustomerDepositionMap());
+            modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -495,6 +497,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CommunicationStatusType> CommunicationStatusTypes { get; set; }
         public IDbSet<CommunicationLogType> CommunicationLogTypes { get; set; }
         public IDbSet<WarehouseType> WarehouseTypes { get; set; }
+        public IDbSet<NumberFormat> NumberFormats { get; set; }
         public IDbSet<DocumentTypeTemplate> DocumentTypeTemplates { get; set; }
         public IDbSet<TemplateFormat> TemplateFormats { get; set; }
         public IDbSet<DWHSetting> DWHSettings { get; set; }
@@ -995,6 +998,7 @@ namespace Simplog.Data.CommonDataModel
 
        public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
+        public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
 
         public DbConnection GetConnection()
         {

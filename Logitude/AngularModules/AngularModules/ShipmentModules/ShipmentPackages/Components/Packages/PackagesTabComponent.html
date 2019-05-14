@@ -1,55 +1,5 @@
 
 <style type="text/css">
-    .RatioBox .NumericButtonDisabled {
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
-    .RatioBox .NumericButton:hover {
-        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
-        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
-        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
-        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
-    }
-
-    .RatioBox .NumericButton {
-        width: 15px;
-        height: 10px;
-        border: 1px solid #6A8299;
-        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
-        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
-        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-        position: relative;
-    }
-
-    .RatioBoxDisabled {
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
-    .RatioBox {
-        height: 22px;
-        min-height: 22px;
-        max-height: 22px;
-        line-height: 21px;
-        width: 70px;
-        border: 1px solid #AAAAAA;
-        outline: none;
-        font-size: 11px;
-        color: #45494A;
-        background: white;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        -moz-box-shadow: inset 0 0 3px #AAAAAA;
-        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
-        box-shadow: inset 0 0 3px #AAAAAA;
-        overflow: hidden;
-    }
-
     .GreenAddButtonDisabled {
         pointer-events: none;
     }
@@ -81,8 +31,17 @@
                                 <tr>
                                     <td>{{'Shipment.TH.Packages' | TextCodeTranslationPipe}}</td>
 
+                                    <td style="width: 90px" *ngIf="false">
+                                        <!--*ngIf="IsFCLEntity"-->
+                                        <button class="Button" (click)="DownloadPackagesClicked()">Download</button>
+                                    </td>
+
+                                    <td style="width:5px;" *ngIf="IsFCLEntity">
+                                        <div></div>
+                                    </td>
+
                                     <td style="width: 90px">
-                                        <button  id="{{ 'AddPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackageClicked()">{{AddButtonLabel}}</button>
+                                        <button id="{{ 'AddPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackageClicked()">{{AddButtonLabel}}</button>
                                     </td>
 
                                     <td style="width:5px;" *ngIf="IsFCLEntity">
@@ -90,7 +49,7 @@
                                     </td>
 
                                     <td style="width: 120px" *ngIf="IsInsideButtonVisible">
-                                        <button  id="{{ 'AddInsidePackage' | IdGeneratorPipe}}" [disabled]="!IsAddInsideButtonEnabled" class="Button" (click)="AddInsideButtonClicked()">{{'Shipment.B.Packages.AddInsidePackage' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'AddInsidePackage' | IdGeneratorPipe}}" [disabled]="!IsAddInsideButtonEnabled" class="Button" (click)="AddInsideButtonClicked()">{{'Shipment.B.Packages.AddInsidePackage' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width:5px;">
@@ -98,7 +57,7 @@
                                     </td>
 
                                     <td style="width: 1px">
-                                        <IconButton  id="{{ 'PackageSettings' | IdGeneratorPipe}}" [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
+                                        <IconButton id="{{ 'PackageSettings' | IdGeneratorPipe}}" [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
                                     </td>
 
                                     <td style="width:5px;" *ngIf="IsRebuildButtonVisible">
@@ -106,7 +65,7 @@
                                     </td>
 
                                     <td style="width: 1px" *ngIf="IsRebuildButtonVisible">
-                                        <button   id="{{ 'ReBuildPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="RebuildButtonClicked()">{{'Shipment.B.Packages.Rebuild' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'ReBuildPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="RebuildButtonClicked()">{{'Shipment.B.Packages.Rebuild' | TextCodeTranslationPipe}}</button>
                                     </td>
                                 </tr>
                             </table>
@@ -167,27 +126,7 @@
 
                                         <div style="width: 70px; display: block; float:left; margin-left: 15px;">
                                             <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-
-                                            <div class="RatioBox" [class.RatioBoxDisabled]="!IsEditingEnabled">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 15px; font-size: 11px; padding-left: 3px;">1:</td>
-
-                                                        <td style="font-size: 11px; padding-left: 2px;">
-                                                            {{Ratio | NumbersPipe:'N2'}}
-                                                        </td>
-
-                                                        <td style="width: 15px;">
-                                                            <div class="NumericButton" [class.NumericButtonDisabled]="!IsEditingEnabled" (mousedown)="NumericButtonClicked(true)">
-                                                                <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
-                                                            </div>
-                                                            <div class="NumericButton" [class.NumericButtonDisabled]="!IsEditingEnabled" (mousedown)="NumericButtonClicked(false)">
-                                                                <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
+                                            <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled"></RatioBox>
                                         </div>
 
                                         <!--<div style="width: 110px; display: block; float:left; margin-left: 2px;">

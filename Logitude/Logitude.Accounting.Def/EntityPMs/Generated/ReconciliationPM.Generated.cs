@@ -331,6 +331,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string accountReconcileMethodCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountReconcileMethodCode  
+	   {
+	    
+	     get
+		{
+		   return accountReconcileMethodCode;
+		 }
+		 set
+		 {
+		   if(accountReconcileMethodCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountReconcileMethodCode",OldValue=accountReconcileMethodCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   accountReconcileMethodCode=value;
+		   }
+			
+		 }
+	   }
+	  private string accountCurrencyId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountCurrencyId  
+	   {
+	    
+	     get
+		{
+		   return accountCurrencyId;
+		 }
+		 set
+		 {
+		   if(accountCurrencyId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountCurrencyId",OldValue=accountCurrencyId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   accountCurrencyId=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

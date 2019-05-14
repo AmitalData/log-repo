@@ -123,7 +123,7 @@ namespace Logitude.CRM.Data.EntityMapping
 
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ShipmentNumber).HasColumnName("ShipmentNumber").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.FirstResolveDate).HasColumnName("FirstResolveDate");
 
@@ -145,7 +145,7 @@ namespace Logitude.CRM.Data.EntityMapping
 
             this.Property(t => t.QuoteId).HasColumnName("QuoteId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.QuoteNumber).HasColumnName("QuoteNumber").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.QuoteNumber).HasColumnName("QuoteNumber").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.SLAId).HasColumnName("SLAId").HasMaxLength(15).IsUnicode(false);
 

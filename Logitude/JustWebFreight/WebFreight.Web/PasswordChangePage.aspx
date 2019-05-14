@@ -236,7 +236,7 @@
 
                 <tbody>
                     <tr>
-                        <td />
+                        <td></td>
                         <td>
                             <div id="mapBackground">
                                 <table>
@@ -446,7 +446,7 @@
            
          } else document.getElementById("BackToLogin").style.display = "none";
            var url = window.location.href;
-           var isDSV = url.toLowerCase().indexOf("dsv") > -1 ? true : false;
+           var isDSV = url.toLowerCase().indexOf("system.dsv.co.il") > -1 ? true : false;
            var myDomain = url.split('/')[2];
            if (isDSV == true) {
                window.sessionStorage.setItem("ResetPWD", "true");
@@ -757,7 +757,7 @@
                 emalData.push(userEmailArray[1].split('.')[1]);
 
                 if (emalData) {
-                    emalData.forEach((item) => {
+                    emalData.forEach(function(item) {
                         if (item) {
                             if (password.toLowerCase().indexOf(item.toLowerCase()) > -1) {
                                 ContainsEmail = true;
@@ -827,7 +827,7 @@
 
             var seriesNumnberCount = 0;
             var seriesNumnberList = [];
-            passwordNumnberList.forEach((item) => {
+            passwordNumnberList.forEach(function(item) {
                 var IsNotSeriesNumnber = false;
                 if (item <= 9 || ((item >= 65 && item <= 90))) {
                     if (seriesNumnberList.length == 0) {

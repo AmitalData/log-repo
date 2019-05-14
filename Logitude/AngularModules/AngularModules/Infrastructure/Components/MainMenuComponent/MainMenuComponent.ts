@@ -23,15 +23,16 @@ import { retry } from 'rxjs/operators';
 export class MainMenuComponent {
     public SelectedMenu: MainMenuItem;
     public MainMenuItems: Array<MainMenuItem>;
-    public MainMenuWidth: number = 142;
+    public MainMenuWidth: number = 145;
     private MainMenuWidthCollapsed: number = 45;
-    private MainMenuWidthOpened: number = 142;
+    private MainMenuWidthOpened: number = 145;
 
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild("MainMenuContainer", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     LayoutDirection: string = 'ltr';
     @Output() SelectionChanging: EventEmitter<any> = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.MainMenuItems = new Array<MainMenuItem>();
         this.MainMenuItems = this.GetMainMenuItemsFromWindow();
@@ -51,13 +52,15 @@ export class MainMenuComponent {
         var myResult: MainMenuItem[] = [];
 
         window.MenusTables.filter(f => f.MenuTypeCode.toUpperCase() == "MAIN").forEach((item) => {
-
+         
        
             var isAddingItem = false;
 
             if (item.FeatureId == null) {
                 isAddingItem = true;
             }
+
+
 
             else {
                 if (FeatureLocator.IsFeatureGranted(item.FeatureId)) {
@@ -94,7 +97,7 @@ export class MainMenuComponent {
 
                 let locs = this.AllLocations.toArray().filter(f => f.Code == 'MainMenuContainer');
                 let myLocation: LocationDirective = locs[0];
-                SessionLocator.CurrentSession.SessionMenuLocation = myLocation;
+                this.CurrentSession.SessionMenuLocation = myLocation;
 
                 this.InitSelectedMenu();
             }
@@ -151,7 +154,7 @@ export class MainMenuComponent {
         }
 
         else {
-            if (SessionLocator.LoggedUserPM.DisplayGettingStarted && SessionLocator.CurrentSession.SessionIndex == 0) {
+            if (SessionLocator.LoggedUserPM.DisplayGettingStarted && this.CurrentSession.SessionIndex == 0) {
                 selectedMenuTextCode = "General.MH.GettingStarted";
             }
 
@@ -172,23 +175,47 @@ export class MainMenuComponent {
 
     private isChangingSelected: boolean = false;
     private ClickedMenuItem: MainMenuItem = null;
+    public BlockScreenLoad() {
+        if (!AppTool.IsNullOrEmpty(SessionLocator.BlockType)) {
+            this.CurrentSession.DestroyMenuReferences();
+            this.CurrentSession.DestroyListComponentReferences();
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/LoginComponent/BlockScreenComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                });
+
+        }
+    }
     SelectionChanged(item: MainMenuItem) {
         if (this.ClickedMenuItem != item) {
 
             this.ClickedMenuItem = item;
-            this.SelectionChanging.emit(true);
+            // Code
+            if (!AppTool.IsNullOrEmpty(SessionLocator.BlockType)) {
 
-            var isSubscribed: boolean = false;
-            if (this.SelectionChanging) {
-                if (this.SelectionChanging.observers) {
-                    if (this.SelectionChanging.observers.length > 0) {
-                        isSubscribed = true;
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/LoginComponent/BlockScreenComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                    });
+
+            }
+            else {
+
+
+                this.SelectionChanging.emit(true);
+
+                var isSubscribed: boolean = false;
+                if (this.SelectionChanging) {
+                    if (this.SelectionChanging.observers) {
+                        if (this.SelectionChanging.observers.length > 0) {
+                            isSubscribed = true;
+                        }
                     }
                 }
-            }
 
-            if (isSubscribed == false) {
-                this.ChangeMenu();
+                if (isSubscribed == false) {
+                    this.ChangeMenu();
+                }
             }
         }
         else {
@@ -216,7 +243,7 @@ export class MainMenuComponent {
     public FollowUpsTableId: string = null;
     public OldObjectTable: string = null;
     public pointerEvents: string = 'all';
-   // count: number = 0;
+    // count: number = 0;
     ChangeScreen() {
         if (this.isLoaderReady) {
 
@@ -225,8 +252,8 @@ export class MainMenuComponent {
             var isListComponent: boolean = false;
 
             //if (this.count % 2 == 0) {
-                SessionLocator.CurrentSession.DestroyMenuReferences();
-                SessionLocator.CurrentSession.DestroyListComponentReferences();
+                this.CurrentSession.DestroyMenuReferences();
+                this.CurrentSession.DestroyListComponentReferences();
                // this.count++;
            // }
 
@@ -258,6 +285,11 @@ export class MainMenuComponent {
 
                     case "General.MH.TimeManagement": {
                         myComponentPath = "./TimeManagement/Components/Workspaces/TimeManagementWorkspaceComponent"; 
+                        break;
+                    }
+
+                    case "General.MH.TariffModule": {
+                        myComponentPath = "./TariffModule/Components/Workspaces/TariffModuleWorkspaceComponent";
                         break;
                     }
 
@@ -361,11 +393,11 @@ export class MainMenuComponent {
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.HideBackButton = true;
                         this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe(response => {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
                                     cmpRef.instance.Run(listArgs);
-                                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
                                     this.ChangeSessionHeader(this.SelectedMenu);
                                     this.isChangingSelected = false;
                                     //this.pointerEvents = 'all';
@@ -383,11 +415,11 @@ export class MainMenuComponent {
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.HideBackButton = true;
                         this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response => {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
                                     cmpRef.instance.Run(listArgs);
-                                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
                                     this.ChangeSessionHeader(this.SelectedMenu);
                                     this.isChangingSelected = false;
                                    // this.pointerEvents = 'all';
@@ -403,11 +435,11 @@ export class MainMenuComponent {
                       //  listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                        listArgs.HideBackButton = true;
                         this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral", 0).subscribe(response => {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
                                     cmpRef.instance.Run(listArgs);
-                                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
                                     this.ChangeSessionHeader(this.SelectedMenu);
                                     this.isChangingSelected = false;
                                     //this.pointerEvents = 'all';
@@ -419,12 +451,12 @@ export class MainMenuComponent {
 
                     case "General.MH.Social": { // Abed Code
                         ServiceLocator.SendTotangoUserActivity("Social", "Main View");
-                        SessionLocator.DynamicLoader.Load('./Social/Components/SocialMainComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./Social/Components/SocialMainComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                             .then(cmpRef => {
 
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.InitializeSocialMainComponent(null);
-                                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                this.CurrentSession.AddMenuReference(cmpRef);
                                 this.ChangeSessionHeader(this.SelectedMenu);
                                 this.isChangingSelected = false;
                                 //this.pointerEvents = 'all';
@@ -440,11 +472,11 @@ export class MainMenuComponent {
                         listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder");
                         listArgs.HideBackButton = true;
                         this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe(response => {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
                                     cmpRef.instance.Run(listArgs);
-                                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
                                     this.ChangeSessionHeader(this.SelectedMenu);
                                     this.isChangingSelected = false;
                                     //this.pointerEvents = 'all';
@@ -463,12 +495,12 @@ export class MainMenuComponent {
 
                     case "General.MH.CrossDocks": { // Abed Code
                         ServiceLocator.SendTotangoUserActivity("CrossDocks", "Main View");
-                        SessionLocator.DynamicLoader.Load('./Warehouse/Components/Workspaces/WarehouseWorkspaceComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                        SessionLocator.DynamicLoader.Load('./Warehouse/Components/Workspaces/WarehouseWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                             .then(cmpRef => {
 
                                 cmpRef.instance.ComponentRef = cmpRef;
                                 cmpRef.instance.InitComponent();
-                                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                this.CurrentSession.AddMenuReference(cmpRef);
                                 this.ChangeSessionHeader(this.SelectedMenu);
                                 this.isChangingSelected = false;
                                 //this.pointerEvents = 'all';
@@ -485,11 +517,11 @@ export class MainMenuComponent {
                         //  listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.HideBackButton = true;
                         this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit", 0).subscribe(response => {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
                                     cmpRef.instance.Run(listArgs);
-                                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
                                     this.ChangeSessionHeader(this.SelectedMenu);
                                     this.isChangingSelected = false;
                                     //this.pointerEvents = 'all';
@@ -512,11 +544,11 @@ export class MainMenuComponent {
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.HideBackButton = true;
                         this._entityResourceService.getEntityResourceByTableName("CustomsShipper", 0).subscribe(response => {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
                                     cmpRef.instance.Run(listArgs);
-                                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                    this.CurrentSession.AddMenuReference(cmpRef);
                                     this.ChangeSessionHeader(this.SelectedMenu);
                                     this.isChangingSelected = false;
                                     // this.pointerEvents = 'all';
@@ -553,11 +585,11 @@ export class MainMenuComponent {
                                     }
 
                                     this._entityResourceService.getEntityResourceByTableName(objectTable.Name, 0).subscribe(response => {
-                                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                             .then(cmpRef => {
                                                 cmpRef.instance.ComponentRef = cmpRef;
                                                 cmpRef.instance.Run(listArgs);
-                                                SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                                                this.CurrentSession.AddMenuReference(cmpRef);
                                                 this.ChangeSessionHeader(this.SelectedMenu);
                                                 this.isChangingSelected = false;
                                                 //this.pointerEvents = 'all';
@@ -578,7 +610,7 @@ export class MainMenuComponent {
             }
 
             if (myComponentPath != null) {
-                SessionLocator.DynamicLoader.Load(myComponentPath, SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+                SessionLocator.DynamicLoader.Load(myComponentPath, this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
                         if (this.SelectedMenu.TextCode == 'General.MH.CustomsRequestsSheets') {
                             if (cmpRef.entityArgs) {
@@ -586,9 +618,9 @@ export class MainMenuComponent {
                                 cmpRef.entityArgs.EntityPM = null;
                             }
                         }
-                        SessionLocator.CurrentSession.DestroyMenuReferences();
-                        SessionLocator.CurrentSession.DestroyListComponentReferences();
-                        SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                        this.CurrentSession.DestroyMenuReferences();
+                        this.CurrentSession.DestroyListComponentReferences();
+                        this.CurrentSession.AddMenuReference(cmpRef);
                         this.ChangeSessionHeader(this.SelectedMenu);
                         this.isChangingSelected = false;
                         //this.pointerEvents = 'all';
@@ -608,7 +640,7 @@ export class MainMenuComponent {
         }
     }
     ChangeSessionHeader(menu: MainMenuItem) {
-        SessionLocator.CurrentSession.ChangeSessionHeader({ MenuTextCode: menu.TextCode });
+        this.CurrentSession.ChangeSessionHeader({ MenuTextCode: menu.TextCode });
     }
 
     private isMainSidebarCollapsed: boolean = false;

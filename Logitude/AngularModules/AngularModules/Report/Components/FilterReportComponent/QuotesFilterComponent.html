@@ -1,4 +1,4 @@
-﻿
+
 <table>
     <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
         <td>
@@ -25,7 +25,9 @@
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'"
                                             [ObjectTableName]="'Quote'"
-                                            [ShowInActive]="'true'">
+                                            [ShowInActive]="'true'"
+                                            [HideAddLink]="'true'"
+                                            >
                                     </LogLov>
                                 </td>
 
@@ -69,7 +71,7 @@
 
                                 <td style="width:160px">Expiration date less than:</td>
                                 <td style="width:200px;">
-                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+                                    <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
                                 </td>
 
                                 <td style="width:90px;">

@@ -17,20 +17,6 @@
                         </log-cell-template>
                     </log-column>
 
-                    <!-- Event Date -->
-                    <log-column [width]="'130'" [header]="'Event Date'">
-                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                            {{item.EventDate | DateTimePipe:'DT'}}
-                        </log-cell-template>
-                    </log-column>
-
-                    <!-- Received date -->
-                    <log-column [width]="'130'" [header]="'Received date'">
-                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
-                            {{item.ReceivingDate | DateTimePipe:'DT'}}
-                        </log-cell-template>
-                    </log-column>
-
                     <!-- Location -->
                     <log-column [width]="'80'" [header]="'Location'">
                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
@@ -56,6 +42,20 @@
                     <log-column [width]="'250'" [header]="'Vessel / Voyage'">
                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                             {{item.VesselName}} / {{item.VoyageNumber}}
+                        </log-cell-template>
+                    </log-column>
+
+                    <!-- Event Date -->
+                    <log-column [width]="'140'" [header]="'Event Date'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.EventDate | DateTimePipe:'DT'}}
+                        </log-cell-template>
+                    </log-column>
+
+                    <!-- Received date -->
+                    <log-column [width]="'140'" [header]="'Received Date'">
+                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                            {{item.ReceivingDate | DateTimePipe:'DT'}}
                         </log-cell-template>
                     </log-column>
                 </logitude-edit-grid>

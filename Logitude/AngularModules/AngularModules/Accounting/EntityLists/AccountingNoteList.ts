@@ -16,6 +16,8 @@ export class AccountingNoteList {
 	UpdatedByUserId: string;
 	CardId: string;
 	Notes: string;
+	UpdatedByUserName: string;
+	CreatedByUserName: string;
 	
 }
  

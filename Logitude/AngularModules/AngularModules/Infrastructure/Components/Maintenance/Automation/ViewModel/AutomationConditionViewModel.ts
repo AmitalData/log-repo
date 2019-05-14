@@ -20,7 +20,6 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     SelectedOperator: Operator;
     isChangeOperator: boolean;
     IsSetValue: boolean;
-    Id: string;
     FieldValue: any;
     IsLoadOperatorList: boolean = false;
     DelayAutomationconditionsViewModel: any;
@@ -52,7 +51,6 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         this.InitLOVFilters();
         this.AllowedinAutomationConditionsFieldLists = addEditAutomationsViewModel.AllowedinAutomationConditionsFieldLists;
         this.ObjectFieldPM = this.AllowedinAutomationConditionsFieldLists.filter(d => d.Id == this.CurrentEntityPM.ObjectFieldId)[0];
-        this.Id = entityPM.Id;
         this.FieldValue = this.CurrentEntityPM.Value;
         this.DateTypeList = [];
         this.DateTypeList.push(new Operator("@Today-", "-"));
@@ -271,8 +269,15 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                 if (item.Id != oldObjectFieldId) {
 
                     this.IsHideGeneralControl = false;
-                    this.FieldValue = "";
-                    this.CurrentEntityPM.Value = "";
+                    this.FieldValue = item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime" ? 0 : "";
+
+
+                    if (item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime") {
+                        var todayDate = DateTool.GetCurrentDateTimeAsUtc();
+                        this.CurrentEntityPM.Value = this.SelectedDateType.Name + "*" + this.FieldValue + "*" + FieldValueResolver.ConvertUTCDateToString(todayDate, "Automation");
+                    } else this.CurrentEntityPM.Value = "";
+
+                   
                     this.AddEditAutomationsViewModel.IsChangeCondition = true;
                     var ischange = false;
 
@@ -301,6 +306,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                         this.IsRefrachCustomField = !this.IsRefrachCustomField;
                     }
 
+           
                     this.BuildCustomFromFieldbjectFieldLists();
 
                 }

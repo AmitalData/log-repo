@@ -348,7 +348,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 {
                     tenants = new List<Tenant>() {
                         new Tenant() { Id = 1 , PasswordPolicy=PasswordPolicies.Where(d=>d.Code=="MEDU").FirstOrDefault(), PasswordPolicyCode="MEDU" , Company="OMG",AccountingSetting=new AccountingSetting(){ Id = 1,}  },
-                        new Tenant() { Id = 2 , AddressId="1-2" , Company="AMA",AccountingSetting=new AccountingSetting(){ Id = 2,IsVatNumberMandatoryInAP = true,IsChronologicalDates = true, IsVatNumberMandatoryInAR = true,}} };
+                        new Tenant() { Id = 2 , AddressId="1-2" , Company="AMA",AccountingSetting=new AccountingSetting(){ Id = 2,IsVatNumberMandatoryInAP = true,IsARInvoiceChronologicalDates = true, IsVatNumberMandatoryInAR = true,}} };
                 }
                 return new MockObjectSet<Tenant>(tenants);
             }
@@ -2561,6 +2561,35 @@ namespace Simplog.Data.CommonDataModel.Mocks
             {
                 throw new NotImplementedException();
             }
-        } 
+        }
+
+
+        public IDbSet<NumberFormat> NumberFormats
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        //public IDbSet<UsersReleaseNotesDisplay>  { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

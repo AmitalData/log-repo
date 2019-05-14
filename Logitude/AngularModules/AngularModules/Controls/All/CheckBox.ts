@@ -1,5 +1,9 @@
-﻿import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
-import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
+
+import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { IdGeneratorPipe } from '../pipes/idgeneratorpipe';
+
+
 
 @Component({
     selector: "CheckBox",
@@ -19,7 +23,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
             <td style="width: 16px; min-width: 16px; padding:0 !important;">
                 <div class="LogitudeCheckBox" [style.zIndex]="ZIndex">
                     <input [attr.id]="ControlId" type="checkbox" [disabled]="!IsEnabled" [checked]="IsChecked" (click)="OnClick()" (blur)="OnLostFocus()" />
-                    <label [attr.for]="ControlId"></label>
+                    <label [attr.id]="ControlId2" [attr.for]="ControlId"></label>
                 </div>
             </td>
 
@@ -84,13 +88,16 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 
 export class CheckBox{
     public ControlId: string = null;
+    public ControlId2: string = null;
+
     public Top: number = null;
     public ZIndex: number = 0;
     @Output() Checked: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        this.ControlId = "CheckBox_" + SessionLocator.CurrentSession.GetNewId("CheckBox");
+        this.ControlId = "CheckBox_" + this.CurrentSession.GetNewId("CheckBox");
+        this.ControlId2 = this.ControlId + "_LBL";
     }
 
     private isChecked: boolean = false;

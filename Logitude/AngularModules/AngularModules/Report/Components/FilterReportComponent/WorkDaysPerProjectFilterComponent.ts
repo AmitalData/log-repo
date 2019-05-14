@@ -32,7 +32,8 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
     queryFilterItem: QueryFilterItem;
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "TMEmployeeTime";
-    private includeInnerProject: boolean;
+
+    private includeInnerProject: boolean = true;
     public get IncludeInnerProject() { return this.includeInnerProject; }
     public set IncludeInnerProject(value: boolean) {
         if (value != this.includeInnerProject) {
@@ -44,8 +45,6 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
     }
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
-        this.EmployeeUserId = SessionLocator.LoggedUserId;
-
         var month = new Date().getMonth();
         var Year = new Date().getFullYear();
         var daysofmonth = this.daysInMonth(new Date());

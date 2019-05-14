@@ -110,9 +110,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
             ;
             var listallRevenueExpenseCards = allRevenueExpenseCards.ToList();
-            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal,RevenueType, MyJournalActionTypeEnum.Debit);
+            //         CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal,RevenueType, MyJournalActionTypeEnum.Debit);
 
-            //CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, MyJournalActionTypeEnum.Credit);
+            //         CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, MyJournalActionTypeEnum.Credit);
+            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, RevenueType, MyJournalActionTypeEnum.Credit);
+
             CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, MyJournalActionTypeEnum.Debit);
 
 
@@ -122,8 +124,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                           .OrderBy(r => r.CurrencyId)
                                           join glAcc in allRevenueExpenseCards.OrderBy(r => r.RevenueExpenseType)
                                           on myCurrencySum.AccountId equals glAcc.Id
-                                          //select GetJournalLine(GetMyEnum( glAcc.RevenueExpenseType), myCurrencySum, journal));
-                                          select GetJournalLine(MyJournalActionTypeEnum.Credit, myCurrencySum, journal, RevenueExpenseGLAccountId));
+                                          select GetJournalLine(GetMyEnum( glAcc.RevenueExpenseType), myCurrencySum, journal, RevenueExpenseGLAccountId, glAcc.RevenueExpenseType));
+                                          //select GetJournalLine(MyJournalActionTypeEnum.Credit, myCurrencySum, journal, RevenueExpenseGLAccountId));
 
             journal.JournalLines.AddRange(journalLinesOfChildAcc);
             
@@ -136,21 +138,23 @@ namespace Logitude.Accounting.BL.CoreBL
             {
 
                 case RevenueType:
-                    return MyJournalActionTypeEnum.Credit;
-                    
+                   // return MyJournalActionTypeEnum.Credit;
+                    return MyJournalActionTypeEnum.Debit;
+
                     break;
 
                 case ExpenseType:
                 default:
-                    return MyJournalActionTypeEnum.Debit;
+                   // return MyJournalActionTypeEnum.Debit;
+                    return MyJournalActionTypeEnum.Credit;
                     break;
 
             }
         }
 
-        private void CreateJLinesAganistMainREGLAcc(string RevenueExpenseGLAccountId, List<GLAccountAndMoreDTO> allRevenueExpenseCards, List<CurrencySum> totalBalance, JournalPM journal, string RevenueExpenseType,MyJournalActionTypeEnum journalActionTypeEnum)
+        private void CreateJLinesAganistMainREGLAcc(string RevenueExpenseGLAccountId, List<GLAccountAndMoreDTO> allRevenueExpenseCards, List<CurrencySum> totalBalance, JournalPM journal, string revenueExpenseType,MyJournalActionTypeEnum journalActionTypeEnum)
         {
-            var Type1Ids = allRevenueExpenseCards.Where(r => r.RevenueExpenseType == RevenueExpenseType).Select(r => r.Id).ToList();
+            var Type1Ids = allRevenueExpenseCards.Where(r => r.RevenueExpenseType == revenueExpenseType).Select(r => r.Id).ToList();
 
             var TypeJL
                 =
@@ -166,7 +170,7 @@ namespace Logitude.Accounting.BL.CoreBL
                      LocalAmountDebit = g.Sum(r => r.LocalAmountDebit),
 
                  }
-                 select GetJournalLine(journalActionTypeEnum, myCurrencySumGroup1, journal, "")
+                 select GetJournalLine(journalActionTypeEnum, myCurrencySumGroup1, journal, "", revenueExpenseType)
                  );
             //
             journal.JournalLines.AddRange(TypeJL);
@@ -179,7 +183,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId)
+        private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId, string revenueExpenseType)
         {
             int tenant = journal.Tenant;
             bool useLocal = true;
@@ -193,11 +197,18 @@ namespace Logitude.Accounting.BL.CoreBL
                 //DocumentDate = journal.do
                 LocalAmount = (myCurrencySum.LocalAmountDebit - myCurrencySum.LocalAmountCredit),
                 ForeignAmount = (myCurrencySum.ForeignAmountDebit - myCurrencySum.ForeignAmountCredit),
-                DocumentDate = journal.CreateDate,
-                DueDate = journal.CreateDate,
+//                DocumentDate = journal.CreateDate,
+                DocumentDate = _EndOfYearUserInput.AddDays(1),
+//                DueDate = journal.CreateDate,
+                DueDate = _EndOfYearUserInput.AddDays(1),
                 Notes = TranslateTextsClassTranslate("General.MC.ACC.YearTransfer", 0, useLocal),
 
             };
+            if (revenueExpenseType == RevenueType)
+            {
+                journalLine.LocalAmount = -journalLine.LocalAmount;
+                journalLine.ForeignAmount = -journalLine.ForeignAmount;
+            }
             switch (journalActionTypeEnum)
             {
                 

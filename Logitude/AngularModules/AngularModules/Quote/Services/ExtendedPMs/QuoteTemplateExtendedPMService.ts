@@ -87,10 +87,10 @@ export class QuoteTemplateExtendedPMService {
     }
 
     
-    GetQuoteTemplateLists(queryName: string, isCustomerCare: boolean , tenant: number) {
+    GetQuoteTemplateLists(queryName: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetQuoteTemplateLists/?' + 'queryName=' + queryName + '&isCustomerCare=' + isCustomerCare+ '&tenant=' + tenant, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/GetQuoteTemplateLists/?' + 'queryName=' + queryName , { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response.json();

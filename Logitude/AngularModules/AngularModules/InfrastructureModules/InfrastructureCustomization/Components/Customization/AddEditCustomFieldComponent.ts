@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {GeneralDomainService, FieldsTranslations} from '../../../../Infrastructure/Services/GeneralDomainService';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -40,7 +40,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     ContolFieldsList2: any[];
     CustomPickListsList: string[];
     loginService: LoginService;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.loginService = new LoginService();
@@ -57,7 +57,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             });
 
             //this.TenantCustomPickLists = response.Result;
-            //SessionLocator.CurrentSession.StopBusyIndicator();
+            //this.CurrentSession.StopBusyIndicator();
             //if (this.TenantCustomPickLists != null) {
             //    this.TenantCustomPickLists.forEach(p => {
             //        if (this.CustomPickLists.indexOf(p.Code) === - 1) {
@@ -219,7 +219,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     //                    this.pickListItem = temp[0].Code;
     //                }
     //                //this.TenantCustomPickLists = response.Result;
-    //                //SessionLocator.CurrentSession.StopBusyIndicator();
+    //                //this.CurrentSession.StopBusyIndicator();
     //                //if (this.TenantCustomPickLists != null) {
     //                //    this.TenantCustomPickLists.forEach(p => {
     //                //        if (this.CustomPickLists.indexOf(p.Code) === - 1) {
@@ -424,12 +424,12 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.ValidationErrorsList.push("LookUp table is Required");
         }
 
-        if ((this.objectField.DataTypeCode == "Text" || this.objectField.DataTypeCode == "nText") && this.objectField.MaxLength > 250) {
-            this.ValidationErrorsList.push("Maximum length of the text is 250");
+        if ((this.objectField.DataTypeCode == "Text" || this.objectField.DataTypeCode == "nText") && this.objectField.MaxLength > 2000) {
+            this.ValidationErrorsList.push("Maximum length of the text is 2000");
         }
 
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
             this.authHeader = new Headers();
             this.authHeader.append('Content-Type', 'application/json');
             this.authHeader.append('Accept', 'application/json');
@@ -438,7 +438,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             if (this.IsNew == true) {
                 this._ObjectFieldPMService.insert(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.ValidationErrorsList = Fieldresponse.ErrorsArray;
                     }
                     else {
@@ -450,13 +450,13 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                                 window.ObjectFields.splice(index, 1);
                             }
                             window.ObjectFields.push(item);
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            this.CurrentSession.CloseCurrentWindow();
                             //    this.loginService.GetObjectFields().subscribe(myResult => {
                             //        if (myResult != null) { 
                             //            window.ObjectFields = myResult;
-                            //            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            //            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            //            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            //            this.CurrentSession.CloseCurrentWindow();
                             //        }
                             //    });  
                             //});
@@ -467,7 +467,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             else {
                 this._ObjectFieldPMService.update(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
                         this.ValidationErrorsList = Fieldresponse.ErrorsArray;
                     }
                     else {
@@ -479,13 +479,13 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                                 window.ObjectFields.splice(index, 1);
                             }
                             window.ObjectFields.push(item);
-                            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            this.CurrentSession.CloseCurrentWindow();
                             //this.loginService.GetObjectFields().subscribe(myResult => {
                             //    if (myResult != null) {
                             //        window.ObjectFields = myResult;
-                            //        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            //        SessionLocator.CurrentSession.CloseCurrentWindow();
+                            //        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                            //        this.CurrentSession.CloseCurrentWindow();
                             //    }
                             //});
                         });
@@ -495,12 +495,12 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             }
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     EditPickListButtonClicked() {

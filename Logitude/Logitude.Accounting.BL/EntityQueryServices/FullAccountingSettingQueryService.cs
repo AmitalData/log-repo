@@ -19,15 +19,23 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
 
             TenantPM tenantpm = TenantQuery.GetSingleTenantPM(tenant, false);
-            FullAccountingSettingPM  fullAccountingSetting =  this.GetEntityPM(this.repository.GetSingleFullAccountingSetting(tenant));
-            if (fullAccountingSetting == null)
+            if (tenantpm != null)
+            {
+                FullAccountingSettingPM fullAccountingSetting = this.GetEntityPM(this.repository.GetSingleFullAccountingSetting(tenant));
+                if (fullAccountingSetting == null)
+                {
+                    return null;
+                    fullAccountingSetting = new FullAccountingSettingPM();
+                }
+                fullAccountingSetting.AccountingActivationDate = tenantpm.AccountingActivationDate;
+                fullAccountingSetting.AccountingActivated = tenantpm.AccountingActivated;
+                return fullAccountingSetting;
+            }
+            else
             {
                 return null;
-                fullAccountingSetting = new FullAccountingSettingPM();
             }
-            fullAccountingSetting.AccountingActivationDate = tenantpm.AccountingActivationDate;
-            fullAccountingSetting.AccountingActivated = tenantpm.AccountingActivated;
-            return fullAccountingSetting;
+
         }
         public static FullAccountingSettingPM Get(int tenant)
         {

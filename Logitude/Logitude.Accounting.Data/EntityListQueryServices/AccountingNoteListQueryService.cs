@@ -21,31 +21,46 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
 	    private IQueryable<AccountingNoteList> GetIqueryableList(IQueryable<AccountingNote> iQueryable)
         {
-		IQueryable<AccountingNoteList> query = (from a in iQueryable
-                                            select new AccountingNoteList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          CreateDate = a.CreateDate,
-					
-					                          CreatedByUserId = a.CreatedByUserId,
-					
-					                          UpdateDate = a.UpdateDate,
-					
-					                          UpdatedByUserId = a.UpdatedByUserId,
-					
-					                          CardId = a.CardId,
-					
-					                          Notes = a.Notes,
-					
-		                    	            });
+            IQueryable<AccountingNoteList> query = (from a in iQueryable.Include("User").Include("User.Contact")
+                                                    select new AccountingNoteList()
+                                                    {
+
+                                                        Id = a.Id,
+
+                                                        Tenant = a.Tenant,
+
+                                                        CreateDate = a.CreateDate,
+
+                                                        CreatedByUserId = a.CreatedByUserId,
+
+                                                        UpdateDate = a.UpdateDate,
+
+                                                        UpdatedByUserId = a.UpdatedByUserId,
+
+                                                        CardId = a.CardId,
+
+                                                        Notes = a.Notes,
+
+                                                        UpdatedByUserName = a.UpdatedByUser.Contact.LocalName ?? a.UpdatedByUser.Contact.EnglishName,
+
+                                                    });
             return query;
 		}
 
-		private IQueryable<AccountingNote> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AccountingNote> iQueryable, int tenant)
+        public List<AccountingNoteList> GetListByCard(string cardId, int tenant)
+        {
+            IQueryable<AccountingNote> AccountingNoteQuery = (from a in context.AccountingNotes
+                                                              where a.CardId == cardId && a.Tenant == tenant
+                                                              select a);
+
+
+            IQueryable<AccountingNoteList> _query = GetIqueryableList(AccountingNoteQuery);
+            List < AccountingNoteList> _list = _query.OrderByDescending(d=>d.CreateDate).ToList();
+            return _list;
+
+        }
+
+        private IQueryable<AccountingNote> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<AccountingNote> iQueryable, int tenant)
         {
 			throw new NotImplementedException();
 		}

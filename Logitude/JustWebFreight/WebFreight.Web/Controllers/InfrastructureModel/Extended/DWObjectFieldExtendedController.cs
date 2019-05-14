@@ -1,4 +1,4 @@
- using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -34,36 +34,36 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
-{ 
+{
 
-    
+
     public partial class DWObjectFieldsController : ApiController
     {
-	  
-       
+
+
         public HttpResponseMessage GetDWObjectFieldsByDWTableId(string DWOTId)
         {
-		  try
+            try
             {
-			    string logKey = PerformanceLogger.LogCurrentTime();
-			    string token = HttpContext.Current.Request.Headers["Token"];
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 //SecurityUtility.CheckContactFeature("DWObjectField", "READ", authToken.Tenant);
                 DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(authToken.Tenant);
-                List<DWObjectFieldPM> dWObjectFieldPM = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).ToList();
-                
-				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                List<DWObjectFieldPM> dWObjectFieldPM = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).OrderBy(a => a.Name).ToList();
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, dWObjectFieldPM);
-			 
-			}
+
+            }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-           
+
         }
 
         public HttpResponseMessage GetDWObjectFieldsByDWTableIdGroupedByCategory(string DWOTId)
@@ -77,83 +77,45 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                 //SecurityUtility.CheckContactFeature("DWObjectField", "READ", authToken.Tenant);
                 DWObjectFieldQuery dWObjectFieldQuery = new DWObjectFieldQuery(authToken.Tenant);
-                var Category1Group = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).GroupBy(a => a.Category1);
-                var Category2Group = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).GroupBy(a => a.Category2);
+                //var Category1Group = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).GroupBy(a => a.Category1);
+                //var Category2Group = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).GroupBy(a => a.Category2);
+                var CategoryGroup = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, DWOTId).GroupBy(a => a.Category);
+
+                ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(authToken.Tenant);
+                List<ObjectFieldPM> objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(authToken.Tenant, "Shipment");
+
 
                 List<DWFieldsGroup> MyGroups = new List<DWFieldsGroup>();
-                foreach (var item in Category1Group)
-                {
-                    var MyKey = MyGroups.Where(a => a.Key == item.Key).FirstOrDefault();
-                    if(MyKey == null)
-                    {
-                        var MyGroup = new DWFieldsGroup();
-                        MyGroup.Key = item.Key;
-                        if (item.Key == null)
-                        {
-                            MyGroup.FieldsList = item.Where(a => a.Category2 == null).ToList();
-                        }
-                        else
-                        { 
-                            MyGroup.FieldsList = item.Select(a => a).ToList();
-                        }
-                        if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
-                        {
-                            MyGroups.Add(MyGroup);
-                        }
-                        
-                    }
-                    else
-                    {
-                        //MyKey.FieldsList = MyKey.FieldsList.Concat(item.Select(a => a).ToList()).ToList();
-                        if (MyKey.Key == null)
-                        {
-                            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Where(a => a.Category2 == null && (MyKey.FieldsList.Where(b => b.Id != a.Id).FirstOrDefault() == null)).ToList()).ToList();
-                        }
-                        else
-                        {
-                            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Select(a => a).ToList()).ToList();
-                        }
-                    }
-                }
-                foreach (var item in Category2Group)
+                foreach (var item in CategoryGroup)
                 {
                     var MyKey = MyGroups.Where(a => a.Key == item.Key).FirstOrDefault();
                     if (MyKey == null)
                     {
                         var MyGroup = new DWFieldsGroup();
                         MyGroup.Key = item.Key;
-                        if (item.Key == null)
+                        var FirstItem = item.Select(a => a).FirstOrDefault();
+                        if (FirstItem != null)
                         {
-                            MyGroup.FieldsList = item.Where(a => a.Category1 == null).ToList();
+                            MyGroup.Index = FirstItem.CategoryIndex;
                         }
-                        else
-                        {
-                            MyGroup.FieldsList = item.Select(a => a).ToList();
-                        }
+                       
+                        MyGroup.FieldsList = item.Select(a => a).OrderBy(a => a.Name).ToList();
+
+
                         if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
                         {
+                            ResolveDWCustomObjectFields(objectFieldPMs , MyGroup , authToken.Tenant);
                             MyGroups.Add(MyGroup);
-                        }
-                    }
-                    else
-                    {
-                        if (MyKey.Key == null)
-                        {
-                            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Where(a => a.Category1 == null && (MyKey.FieldsList.Where(b => b.Id != a.Id).FirstOrDefault() == null)).ToList()).ToList(); 
-                        }
-                        else
-                        {
-                            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Select(a => a).ToList()).ToList();
-                        } 
-                    }
-                }
-                var NULLGroup = MyGroups.Where(a => a.Key == null).FirstOrDefault();
-                if (NULLGroup != null && NULLGroup.FieldsList.Count == 0)
-                {
-                    MyGroups.Remove(NULLGroup);
-                }
-                //List<DWObjectFieldPM> dWObjectFieldPM = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).ToList();
 
+                        }
+
+                    }
+                }
+                MyGroups = MyGroups.OrderBy(a => a.Index).ToList();
+
+
+
+   
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, MyGroups);
@@ -165,6 +127,27 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             }
 
         }
+
+        private void ResolveDWCustomObjectFields(List<ObjectFieldPM> objectFieldPMs, DWFieldsGroup MyGroup, int tenant)
+        {
+            foreach (var field in MyGroup.FieldsList.Where(d => d.IsCustom && d.DisplayInQueryBuilder).ToList())
+            {
+                ObjectFieldPM objectFieldPM = objectFieldPMs.Where(d => d.FieldName == field.Name).FirstOrDefault();
+                if (objectFieldPM != null)
+                {
+                    field.DisplayName = TranslateTextsClass.Translate(objectFieldPM.FullNameTextCodeCode, tenant);
+                    field.DataTypeCode = objectFieldPM.DataTypeCode;
+                    if (field.DataTypeCode == "Date" || field.DataTypeCode == "DateTime")
+                    {
+                        field.DataTypeCode = "Dimension";
+                        field.DimensionTableCode = "DIM_Dates";
+                    }
+                }
+                else field.DisplayInQueryBuilder = false;
+            }
+        }
+
+        
 
         public HttpResponseMessage getDWObjectFieldsWithChildrenByDWTableId(string DWOTId)
         {
@@ -198,7 +181,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
     public class DWFieldsGroup
     {
         public string Key { get; set; }
+        public int Index { get; set; }
         public List<DWObjectFieldPM> FieldsList { get; set; }
     }
 }
-	 

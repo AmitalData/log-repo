@@ -296,7 +296,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 
         }
-        public HttpResponseMessage PostQuoteAutomaticSubject(QuoteSubjectArgs args)
+        public HttpResponseMessage PostQuoteAutomaticSubject(QuotePM entityPM)
         {
             try
             {
@@ -308,152 +308,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Quote", "READ", tenant);
 
-                string mySubject = null;
-                bool isInlandDomestic = (args.DirectionId == "D" && args.TransportModeId == "I");
+                QuoteSubjectService iSubjectService = new QuoteSubjectService(entityPM);
+                string mySubject = iSubjectService.GetSubject();
 
-                AddressRepository addressRepository = new AddressRepository(tenant);
-
-                if (!string.IsNullOrEmpty(args.IncotermId))
-                {
-                    IncotermRepository incotermRepository = new IncotermRepository(tenant);
-                    Incoterm incoterm = incotermRepository.GetSingleIncoterm(args.IncotermId, tenant);
-                    if (incoterm != null)
-                    {
-                        mySubject = incoterm.Code;
-                    }
-                }
-
-                if (isInlandDomestic)
-                {
-                    #region
-                    if (!string.IsNullOrEmpty(args.FromPartnerAddressId))
-                    {
-                        Address myAddress = addressRepository.GetSingleAddress(args.FromPartnerAddressId, tenant);
-                        if (myAddress != null)
-                        {
-                            if (!string.IsNullOrEmpty(myAddress.City))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " " + myAddress.City;
-                            }
-
-                            else if (!string.IsNullOrEmpty(myAddress.ZipCode))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " " + myAddress.ZipCode;
-                            }
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(args.ToPartnerAddressId))
-                    {
-                        Address myAddress = addressRepository.GetSingleAddress(args.ToPartnerAddressId, tenant);
-                        if (myAddress != null)
-                        {
-                            if (!string.IsNullOrEmpty(myAddress.City))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " > " + myAddress.City;
-                            }
-
-                            else if (!string.IsNullOrEmpty(myAddress.ZipCode))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " > " + myAddress.ZipCode;
-                            }
-                        }
-                    }
-                    #endregion
-                }
-
-                else
-                {
-                    #region
-                    if (args.IncludePickUp)
-                    {
-                        if (!string.IsNullOrEmpty(args.PickUpAddressId))
-                        {
-                            Address myAddress = addressRepository.GetSingleAddress(args.PickUpAddressId, tenant);
-                            if (myAddress != null)
-                            {
-                                if (!string.IsNullOrEmpty(myAddress.City))
-                                {
-                                    mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " " + myAddress.City;
-                                }
-
-                                else if (!string.IsNullOrEmpty(myAddress.ZipCode))
-                                {
-                                    mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " " + myAddress.ZipCode;
-                                }
-                            }
-                        }
-
-                        else
-                        {
-                            if (!string.IsNullOrEmpty(args.FromAddressCity))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? args.FromAddressCity : mySubject + " " + args.FromAddressCity;
-                            }
-
-                            else if (!string.IsNullOrEmpty(args.FromAddressZipCode))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? args.FromAddressZipCode : mySubject + " " + args.FromAddressZipCode;
-                            }
-                        }
-                    }
-
-                    else if (!string.IsNullOrEmpty(args.FromPortId))
-                    {
-                        PortPM myPort = PortQuery.GetSinglePort(tenant, args.FromPortId, true);
-                        if (myPort != null)
-                        {
-                            mySubject = string.IsNullOrEmpty(mySubject) ? myPort.Code : mySubject + " " + myPort.Code;
-                        }
-                    }
-
-                    if (args.IncludeDelivery)
-                    {
-                        if (!string.IsNullOrEmpty(args.DeliveryAddressId))
-                        {
-                            Address myAddress = addressRepository.GetSingleAddress(args.DeliveryAddressId, tenant);
-                            if (myAddress != null)
-                            {
-                                if (!string.IsNullOrEmpty(myAddress.City))
-                                {
-                                    mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.City : mySubject + " > " + myAddress.City;
-                                }
-
-                                else if (!string.IsNullOrEmpty(myAddress.ZipCode))
-                                {
-                                    mySubject = string.IsNullOrEmpty(mySubject) ? myAddress.ZipCode : mySubject + " > " + myAddress.ZipCode;
-                                }
-                            }
-                        }
-
-                        else
-                        {
-                            if (!string.IsNullOrEmpty(args.ToAddressCity))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? args.ToAddressCity : mySubject + " > " + args.ToAddressCity;
-                            }
-
-                            else if (!string.IsNullOrEmpty(args.ToAddressZipCode))
-                            {
-                                mySubject = string.IsNullOrEmpty(mySubject) ? args.ToAddressZipCode : mySubject + " > " + args.ToAddressZipCode;
-                            }
-                        }
-                    }
-
-                    else if (!string.IsNullOrEmpty(args.ToPortId))
-                    {
-                        PortPM myPort = PortQuery.GetSinglePort(tenant, args.ToPortId, true);
-                        if (myPort != null)
-                        {
-                            mySubject = string.IsNullOrEmpty(mySubject) ? myPort.Code : mySubject + " > " + myPort.Code;
-                        }
-                    }
-
-                    #endregion
-                }
-
-                args.Subject = mySubject;
-                return Request.CreateResponse(HttpStatusCode.OK, args);
+                return Request.CreateResponse(HttpStatusCode.OK, mySubject);
             }
 
             catch (Exception ex)
@@ -632,7 +490,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return loggedUserId;
         }
 
-        public HttpResponseMessage GetQuoteConnectedEntities(string quoteId)
+        public HttpResponseMessage GetQuoteConnectedEntities(string quoteId, string opportunityId)
         {
             try
             {
@@ -661,8 +519,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         House = item.House,
                         Master = item.Master,
                         Customer = item.CustomerName,
-                        From = item.MainCarriageFromPortCode,
-                        To = item.MainCarriageFinalDestinationPortCode,
+                        From = item.ShipmentLevelCode == "H" ? item.FromPortCode : item.MainCarriageFromPortCode,
+                        To = item.ShipmentLevelCode == "H" ? item.ToPortCode : item.MainCarriageFinalDestinationPortCode,
                         GrossWeight = item.GrossWeight,
                         VolumeInKG = item.Volume,
                     });
@@ -683,6 +541,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         EntityNumber = item.TicketNumber,
                         EntityStatus = item.StageName,
                     });
+                }
+
+                if (!string.IsNullOrEmpty(opportunityId))
+                {
+                    OpportunityListQueryService opportunityListQueryService = new OpportunityListQueryService(crmContext);
+                    OpportunityList myOpportunity = opportunityListQueryService.GetSingleOpportunityByQuote(opportunityId, tenant);
+                    if (myOpportunity != null)
+                    {
+                        myResult.Add(new QuoteConnectedEntity()
+                        {
+                            EntityId = myOpportunity.Id,
+                            ObjectTable = "Opportunity",
+                            EntityStatus = myOpportunity.StageName,
+                            EntityOwner = myOpportunity.OwnerName,
+                            EntityClosingDate = myOpportunity.EstimatedClosingDate,
+                            EntityNumber = myOpportunity.Subject,
+                        });
+                    }
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -711,4 +587,6 @@ public class QuoteConnectedEntity
     public string To { get; set; }
     public Double? GrossWeight { get; set; }
     public Double? VolumeInKG { get; set; }
+    public string EntityOwner { get; set; }
+    public DateTime? EntityClosingDate { get; set; }
 }

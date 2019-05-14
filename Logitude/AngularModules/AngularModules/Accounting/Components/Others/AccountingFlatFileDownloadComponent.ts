@@ -45,7 +45,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
     _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
     _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     taxDeductionReportExtendedPMService: TaxDeductionReportExtendedPMService = new TaxDeductionReportExtendedPMService();
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -131,18 +131,18 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
             case "TaxDeductionReport":
                 {
                     //if (byButton || this.reportPM.NeedsRebulid) {
-                        this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.taxDeductionPM).subscribe(myResult => {
-                            var mm: ServiceResponse = myResult;
-                            var entity = mm.Result;
-                            this.btePM = entity;
+                        //this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.taxDeductionPM).subscribe(myResult => {
+                        //    var mm: ServiceResponse = myResult;
+                        //    var entity = mm.Result;
+                        //    this.btePM = entity;
 
-                            this.ChangeStatus("inprogress");
+                        //    this.ChangeStatus("inprogress");
 
-                            this.timer = setInterval(() => {
-                                this.GetBTE();
-                            }, this.timerInterval);
+                        //    this.timer = setInterval(() => {
+                        //        this.GetBTE();
+                        //    }, this.timerInterval);
 
-                        });
+                        //});
                     //} else {
                     //    //update status
                     //    this.ChangeStatus("ready");
@@ -241,7 +241,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
 
     //#region Buttons
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
 

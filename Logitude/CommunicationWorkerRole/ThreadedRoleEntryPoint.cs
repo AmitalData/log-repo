@@ -29,6 +29,17 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Utils;
 using Logitude.BL.Security;
 using System.Timers;
+using WebFreight.Web.AccountingModel;
+using Logitude.BL.Interfaces;
+using WebFreight.Web.Validators;
+using Logitude.BL.Helpers;
+using Microsoft.Practices.Unity;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Resolvers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace CommunicationWorkerRole
 {
@@ -122,12 +133,13 @@ namespace CommunicationWorkerRole
                     //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
                     LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
-                    LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
-                    {
-                        if (DateTime.Now > stopLogAt) return;
-                        Logger.LogMe(mess, err, suffix);
-                    });
+                    
                 }
+                LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
+                {
+                    if (DateTime.Now > stopLogAt) return;
+                    Logger.LogMe(mess, err, suffix);
+                });
                 LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
                 LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 LogitudeSettings.GetUserNameInject = AuthenticationUtil.ResolveUserIdentityName;
@@ -152,6 +164,19 @@ namespace CommunicationWorkerRole
 
             StartStatic();
             ContainerAccessor.InitContainer();
+            ContainerAccessor.RegisterTypeFactory<IRulesValidator, RulesValidator>("RulesValidator", new RulesValidator());
+            ContainerAccessor.RegisterTypeFactory<IQuoteTemplateReportHelper, QuoteTemplateReportHelper>("QuoteTemplateReportHelper", new QuoteTemplateReportHelper());
+
+            LoggedContactResolver.RegisterLoggedContactUtil();
+            DateTimeUtilResolver.RegisterDateTimeUtil();
+            TranslateTextsClassUtilResolver.RegisterTranslateTextsClassUtil();
+            IdCounterUtilResolver.RegisterIdCounterUtil();
+
+
+            AccountingRegistrations.Register();
+            
+
+
 
             if (LogitudeSettings.IsCostomsDeploy)
             {
@@ -160,7 +185,12 @@ namespace CommunicationWorkerRole
                 he.DateTimeFormat.ShortDatePattern = "dd-MM-yy";// ' "yyyy/MM/dd" '  ' "DD/MM/YYYY"
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
             }
-            //TestBatch();
+            bool toTest=false;
+            if (toTest)
+            {
+                TestBatch();
+            }
+            
             UpdateRunningWR();
             
             aTimer.Elapsed += new ElapsedEventHandler(OnSettingsCheckTimedEvent);
@@ -176,20 +206,35 @@ namespace CommunicationWorkerRole
 
         private void TestBatch()
         {
+            var myEmailsWorkerRole = new EmailsWorkerRole("EmailQueue","itzik");
+            var context = CommonDataContext.GetContext(989);
+            var communicationLogRep = new CommunicationLogRepository(context);
+            var cl = communicationLogRep.GetSingleCommunicationLog(id: "1-1075543", tenant: 989);
+
+            myEmailsWorkerRole.SendWaitingCommunicationLog(cl);
+            ///BatchAccountingLoadTestTask();
+        }
+
+        private static void BatchAccountingLoadTestTask()
+        {
             string s =
-                @"<?xml version=""1.0"" encoding=""utf-16""?>
-<BatchAccountingLoadArg xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
-  <Tenant>1051</Tenant>
-  <ActionType>CreateCustomers</ActionType>
-  <Amount>10</Amount>
-  <SleepEveryMinute>0</SleepEveryMinute>
+                            @"<?xml version=""1.0"" encoding=""utf-16""?><BatchAccountingLoadArg xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""><Tenant>1051</Tenant>";
+            //s+="<ActionType>CreateCustomers</ActionType>";
+            s += "<ActionType>CreateJournalEvery</ActionType>";
+            s += @"<Amount>10</Amount>
+  <SleepEveryMinute>1</SleepEveryMinute>
   <JournalYYYY>2018</JournalYYYY>
 </BatchAccountingLoadArg>";
-            var myBatchAccountingLoadTestTask = new Logitude.Accounting.BL.CoreBL.Batch.BatchAccountingLoadTestTask( new Logitude.Infrastructure.BL.EntityPMs.BatchTaskExecutionPM() {
-                 PrametersXml= s,
-                  Tenant= 0,
-            });
+
+            int tenant = 1051;
+            var MyContext = InfrastructureContext.GetContext(tenant);
+            var qsUpdateService = new BatchTaskExecutionQueryService(tenant);
+            var pm = qsUpdateService.GetSingle("1-2838", true, false);
+
+
+            var myBatchAccountingLoadTestTask = new Logitude.Accounting.BL.CoreBL.Batch.BatchAccountingLoadTestTask(pm);
             myBatchAccountingLoadTestTask.Execute();
+            //myBatchAccountingLoadTestTask.RunCode();
         }
 
         private void OnSettingsCheckTimedEvent(object source, ElapsedEventArgs e)
@@ -253,7 +298,7 @@ namespace CommunicationWorkerRole
             var tst = false;
             if (tst)
             {
-                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "SchedularWorkerRole").ToList();
+                BatchServicesDefinitions = BatchServicesDefinitions.Where(r => r.ClassName == "BatchTaskExecutionWR").ToList();
             }
             foreach (var Service in BatchServicesDefinitions)
             {

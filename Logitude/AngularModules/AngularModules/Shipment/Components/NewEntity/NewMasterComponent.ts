@@ -49,6 +49,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
     public IsResourcesReady: boolean = false;
     public OkButtonLabel: string;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.SessionIndex = SessionLocator.Index;
@@ -1407,9 +1408,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         }
     }
 
-
-
-
     private isCopyFlights: boolean = false;
     get IsCopyFlights() { return this.isCopyFlights; }
     set IsCopyFlights(value) {
@@ -1486,11 +1484,11 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
     // Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
 
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating...");
+        this.CurrentSession.StartBusyIndicator("Creating...");
 
         this.SetDataOnFinish();
 
@@ -1521,7 +1519,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         }
 
         else {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         }
     }
 
@@ -1535,11 +1533,12 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         this.SetPartnersOnFinish();
         this.SetCountryECOnFinish();
         this.SetOrderPackagesOnFinish();
+        this.SetPickupDeliveryOnFinish();
         this.SetInlandDomesticOnFinish();
     }
     SetPartnersOnFinish() {
-        if (this.IsCopyFromShipment) {
-            if (!AppTool.IsNullOrEmpty(this.AgentId)) {
+        if (!AppTool.IsNullOrEmpty(this.AgentId)) {
+            if (this.IsCopyFromShipment == false) {
                 if (this.DirectionId == "E") {
                     this.EntityPM.ConsigneeId = this.AgentId;
                     this.EntityPM.ConsigneeName = this.AgentName;
@@ -1560,6 +1559,34 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                     this.EntityPM.ShipperReference2 = this.AgentReference2;
                     this.EntityPM.ConsigneeId = SessionLocator.TenantPM.AgentId;
                     this.EntityPM.ConsigneeAddressId = SessionLocator.TenantPM.AddressId;
+                }
+            }
+
+            else {
+                if (this.DirectionId == "E") {
+                    if (this.EntityPM.ConsigneeId == null) {
+                        this.EntityPM.ConsigneeId = this.AgentId;
+                        this.EntityPM.ConsigneeName = this.AgentName;
+                        this.EntityPM.ConsigneeAddressId = this.AgentAddressId;
+                        this.EntityPM.ConsigneeContactId = this.AgentContactId;
+                        this.EntityPM.ConsigneeReference1 = this.AgentReference1;
+                        this.EntityPM.ConsigneeReference2 = this.AgentReference2;
+                        this.EntityPM.ShipperId = SessionLocator.TenantPM.AgentId;
+                        this.EntityPM.ShipperAddressId = SessionLocator.TenantPM.AddressId;
+                    }
+                }
+
+                else {
+                    if (this.EntityPM.ShipperId == null) {
+                        this.EntityPM.ShipperId = this.AgentId;
+                        this.EntityPM.ShipperName = this.AgentName;
+                        this.EntityPM.ShipperAddressId = this.AgentAddressId;
+                        this.EntityPM.ShipperContactId = this.AgentContactId;
+                        this.EntityPM.ShipperReference1 = this.AgentReference1;
+                        this.EntityPM.ShipperReference2 = this.AgentReference2;
+                        this.EntityPM.ConsigneeId = SessionLocator.TenantPM.AgentId;
+                        this.EntityPM.ConsigneeAddressId = SessionLocator.TenantPM.AddressId;
+                    }
                 }
             }
         }
@@ -1640,6 +1667,51 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
             }
         }
     }
+    SetPickupDeliveryOnFinish() {
+        //this.EntityPM.ShipmentPickUps = [];
+        //this.EntityPM.ShipmentDeliveries = [];
+
+        //if (this.IncludePickUp) {
+        //    var typeCode = "PART";
+        //    if (AppTool.IsNullOrEmpty(this.PickUpAddressId)) {
+        //        typeCode = "CASL";
+        //    }
+
+        //    var newPickUp = new ShipmentPickUpPM(this.EntityPM);
+        //    newPickUp.Tenant = SessionLocator.Tenant;
+        //    newPickUp.PickUpDeliveryTypeCode = "PICK";
+        //    newPickUp.PickUpDeliveryFromTypeCode = typeCode;
+        //    newPickUp.FromAddressCity = this.FromAddressCity;
+        //    newPickUp.FromAddressCountryId = this.FromAddressCountryId;
+        //    newPickUp.FromAddressZipCode = this.FromAddressZipCode;
+        //    newPickUp.FromPartnerCardId = this.ShipperId;
+        //    newPickUp.FromAddressId = this.PickUpAddressId;
+        //    newPickUp.PickUpDeliveryToTypeCode = "PORT";
+        //    newPickUp.ToPortId = this.MainCarriageFromPortId;
+        //    this.EntityPM.AddPickUp(newPickUp);
+        //}
+
+        //if (this.IncludeDelivery) {
+        //    var typeCode = "PART";
+        //    if (AppTool.IsNullOrEmpty(this.DeliveryAddressId)) {
+        //        typeCode = "CASL";
+        //    }
+
+        //    var newDelivery = new ShipmentDeliveryPM(this.EntityPM);
+        //    newDelivery.Tenant = SessionLocator.Tenant;
+        //    newDelivery.PickUpDeliveryTypeCode = "DELV";
+        //    newDelivery.PickUpDeliveryFromTypeCode = "PORT";
+        //    newDelivery.FromPortId = this.MainCarriageToPortId;
+        //    newDelivery.PickUpDeliveryToTypeCode = typeCode;
+        //    newDelivery.ToAddressCity = this.ToAddressCity;
+        //    newDelivery.ToAddressCountryId = this.ToAddressCountryId;
+        //    newDelivery.ToAddressZipCode = this.ToAddressZipCode;
+        //    newDelivery.ToPartnerCardId = this.ConsigneeId;
+        //    newDelivery.ToAddressId = this.DeliveryAddressId;
+        //    this.EntityPM.AddDelivery(newDelivery);
+        //}
+    }
+
     SetInlandDomesticOnFinish() {
         if (this.IsInlandDomestic) {
             this.MainCarriageFromPortId = null;
@@ -1669,7 +1741,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
                         if (myResponse.HasError) {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
-                            SessionLocator.CurrentSession.StopBusyIndicator();
+                            this.CurrentSession.StopBusyIndicator();
                         }
 
                         else {
@@ -1688,7 +1760,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                                 if (myStackPM.AirlineId == myAirlineId) {
                                     if (!AppTool.IsNullOrEmpty(myStackPM.AssignedToId) && myStackPM.AssignedToId != this.EntityPM.ShipperId) {
 
-                                        SessionLocator.CurrentSession.StopBusyIndicator();
+                                        this.CurrentSession.StopBusyIndicator();
 
                                         var messageWindow = new MessageWindow();
                                         messageWindow.Width = 450;
@@ -1715,7 +1787,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
                                             else {
                                                 this.Master = null;
-                                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                                this.CurrentSession.StopBusyIndicator();
                                             }
                                         });
                                     }
@@ -1755,7 +1827,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
 
         this.myShipmentPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse.HasError) {
                 this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -1771,7 +1843,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                     ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, activity);
                 }
 
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit('OK');
+                this.CurrentSession.CloseCurrentWindowEmit('OK');
 
                 if (this.IsBuildFromQuote || this.IsCopyFromShipment) {
 
@@ -1788,18 +1860,18 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
                         myBackSessionTextCode = "General.MH.Operations";
                     }
 
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: 'Shipment', BackButtonLabel: myBackButtonLabel });
 
-                            SessionLocator.CurrentSession.ChangeSessionHeader({ MenuTextCode: "General.MH.Operations" });
+                            this.CurrentSession.ChangeSessionHeader({ MenuTextCode: "General.MH.Operations" });
 
                             cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                                SessionLocator.CurrentSession.ChangeSessionHeader({ MenuTextCode: myBackSessionTextCode });
+                                this.CurrentSession.ChangeSessionHeader({ MenuTextCode: myBackSessionTextCode });
 
                                 if (this.IsBuildFromQuote) {
-                                    SessionLocator.CurrentSession.FireEvent("LoadConnectedShipments");
+                                    this.CurrentSession.FireEvent("LoadConnectedShipments");
                                 }
                             });
                         });

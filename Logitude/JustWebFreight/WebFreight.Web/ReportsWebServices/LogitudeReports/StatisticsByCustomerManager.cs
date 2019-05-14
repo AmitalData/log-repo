@@ -184,25 +184,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             if (!string.IsNullOrEmpty(CustomerId))
             {
-                Card customer = CardRepository.GetSingleCard(CustomerId, tenant, true);
+                shipments = shipments.Where(d => (d.ShipmentLevelCode == "C" && d.AgentId == CustomerId) || (d.ShipmentLevelCode != "C" && d.CustomerId == CustomerId));
 
+                Card customer = CardRepository.GetSingleCard(CustomerId, tenant, true);
                 if (customer != null)
                 {
                     myDataProvider.Customer = customer.EnglishName;
-
-                    switch (customer.PartnerTypeId)
-                    {
-                        case "CS":
-                            {
-                                shipments = shipments.Where(d => d.CustomerId == CustomerId);
-                                break;
-                            }
-                        case "AG":
-                            {
-                                shipments = shipments.Where(d => d.AgentId == CustomerId);
-                                break;
-                            }
-                    }
                 }
             }
             else

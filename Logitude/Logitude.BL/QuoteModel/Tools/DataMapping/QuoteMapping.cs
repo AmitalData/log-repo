@@ -75,6 +75,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.GrossWeightInKG = entityPM.GrossWeightInKG = GetWeightInKG(entityPM.GrossWeightUnitCode, entityPM.GrossWeight);
             entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
             entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
+            entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG;
             entityPoco.Ratio = entityPM.Ratio;
             entityPoco.DimFactor = entityPM.DimFactor;
             entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
@@ -178,8 +179,14 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.NotifyAddressId = entityPM.NotifyAddressId;
             entityPoco.NotifyContactId = entityPM.NotifyContactId;
             entityPoco.NumberOfFollowUps = entityPM.NumberOfFollowUps;
+            entityPoco.ShipmentTypeId = entityPM.ShipmentTypeId;
+            entityPoco.GrossWeightEdited = entityPM.GrossWeightEdited;
+            entityPoco.ChargeableWeightEdited = entityPM.ChargeableWeightEdited;
 
             BuildSearchField(entityPM, entityPoco);
+
+            entityPM.ConvertToLCL = false;
+            entityPM.ConvertToFCL = false;
         }
 
         private static void BuildSearchField(QuotePM entityPM, Quote entityPoco)

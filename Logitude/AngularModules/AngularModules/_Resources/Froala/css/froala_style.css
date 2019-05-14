@@ -27,8 +27,20 @@
   color: inherit;
 }
 
+
+
+.fr-view ul,
+.fr-view menu,
+.fr-view ol,
+.fr-view dir{
+
+    padding-inline-start: 40px;
+    margin-right:40px;
+}
+
 .fr-view strong {
   font-weight: 700;
+  
 }
 .fr-view table {
   border: none;

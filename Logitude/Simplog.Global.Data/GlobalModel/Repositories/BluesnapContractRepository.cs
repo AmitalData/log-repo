@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,16 +22,16 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             globalContext = context;
         }
 
-        public BluesnapContract GetSingleBluesnapContract(string code, int tenant)
+        public BluesnapContract GetSingleBluesnapContract(string Id, int tenant)
         {
-            return (from a in context.BluesnapContracts
-                    where a.Code == code
+            return (from a in context.BluesnapContracts.Include("BluesnapContractType")
+                    where a.Id == Id
                     select a).FirstOrDefault();
         }
 
         public IQueryable<BluesnapContract> GetBluesnapContracts(int tenant)
         {
-            return from a in context.BluesnapContracts
+            return from a in context.BluesnapContracts.Include("BluesnapContractType")
                    select a;
         }
 

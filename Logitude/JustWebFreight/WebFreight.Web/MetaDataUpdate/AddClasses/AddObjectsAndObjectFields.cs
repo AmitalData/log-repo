@@ -70,6 +70,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.AllowedForComputingPartners = objectTablesDetails.AllowedForComputingPartners;
                 objectTable.CodeField = objectTablesDetails.CodeField;
                 objectTable.NameField = objectTablesDetails.NameField;
+                objectTable.LovDisplayMemberPathLocal = objectTablesDetails.LovDisplayMemberPathLocal;
+                objectTable.LovDisplayMemberPath = objectTablesDetails.LovDisplayMemberPath;
+                objectTable.IsTabsHidden = objectTablesDetails.IsTabsHidden;
                 objectTableRepository.Add(objectTable);
 
                 TextCode objectSingular = null;
@@ -215,6 +218,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectTable.AllowedForComputingPartners = objectTablesDetails.AllowedForComputingPartners;
                 updatedObjectTable.CodeField = objectTablesDetails.CodeField;
                 updatedObjectTable.NameField = objectTablesDetails.NameField;
+                updatedObjectTable.LovDisplayMemberPath = objectTablesDetails.LovDisplayMemberPath;
+                updatedObjectTable.LovDisplayMemberPathLocal= objectTablesDetails.LovDisplayMemberPathLocal;
                 if (tenantZeroTextCodes.Keys.Contains(objectTablesDetails.ObjectTableName + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id))
                 {
                     TextCode updatedTextCode = tenantZeroTextCodes[objectTablesDetails.ObjectTableName + updatedObjectTable.Tenant.ToString() + updatedObjectTable.Id];
@@ -303,6 +308,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 }
 
                 updatedObjectTable.IsLookUp = (!string.IsNullOrEmpty(objectTablesDetails.LookUp1) && !objectTablesDetails.IsComposition);
+                updatedObjectTable.IsTabsHidden = objectTablesDetails.IsTabsHidden;
                 objectTableRepository.Update(updatedObjectTable);
                 return updatedObjectTable;
                 #endregion
@@ -586,6 +592,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.AllowedInCustomerFieldsSettings = objectFieldDetails.AllowedInCustomerFieldsSettings;
                 newObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 newObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
+                newObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
                 if (newObjectField.IsCustomFilter)
                 {
                     //newObjectField.CanFilter = true;
@@ -673,6 +680,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.DisplayInDocumentReferences = objectFieldDetails.DisplayInDocumentReferences;
                 updatedObjectField.Code = objectFieldDetails.Code;
                 updatedObjectField.AllowedInAirlineMessaging = objectFieldDetails.AllowedInAirlineMessaging;
+                updatedObjectField.EnableFullscreenTextBox = objectFieldDetails.EnableFullscreenTextBox;
                 if (string.IsNullOrEmpty(objectFieldDetails.Code))
                 {
                     updatedObjectField.Code = objectFieldDetails.FieldName;
@@ -681,18 +689,34 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     updatedObjectField.FieldName = objectFieldDetails.FieldName;
                 }
-                if (!tenantZeroTextCodes.ContainsKey(objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId))
-                {
+               
+                if (objectFieldDetails.ObjectTableName == "Address")
+                    return;
 
-                }
-               TextCode updatedFullNameTextCode = tenantZeroTextCodes[objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId];
-                if (!updatedFullNameTextCode.IsSpellChecked)
-                {
-                    updatedFullNameTextCode.DefaultText = objectFieldDetails.DefaultText;
-                    updatedFullNameTextCode.InActive = objectFieldDetails.InActive;
-                    updatedFullNameTextCode.LocalDefaultText = objectFieldDetails.FullLocalDefaultText;
-                    textCodeRepository.Update(updatedFullNameTextCode);
-                }
+				if (!tenantZeroTextCodes.ContainsKey(objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId))
+				{
+					TextCode objectFieldTextCode = new TextCode();
+					objectFieldTextCode.Code = objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable;
+					objectFieldTextCode.DefaultText = objectFieldDetails.DefaultText;
+					objectFieldTextCode.Id = IdCounter.GetNumber("TextCode", objectFieldDetails.Tenant).ToString();
+					objectFieldTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
+					objectFieldTextCode.Tenant = 0;
+					objectFieldTextCode.TextCodeTypeCode = "F";
+					objectFieldTextCode.InActive = objectFieldDetails.InActive;
+					objectFieldTextCode.LocalDefaultText = objectFieldDetails.FullLocalDefaultText;
+					textCodeRepository.Add(objectFieldTextCode);
+				}
+				else
+				{
+					TextCode updatedFullNameTextCode = tenantZeroTextCodes[objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable + objectFieldDetails.Tenant + objectFieldDetails.ObjectTableId];
+					if (!updatedFullNameTextCode.IsSpellChecked)
+					{
+						updatedFullNameTextCode.DefaultText = objectFieldDetails.DefaultText;
+						updatedFullNameTextCode.InActive = objectFieldDetails.InActive;
+						updatedFullNameTextCode.LocalDefaultText = objectFieldDetails.FullLocalDefaultText;
+						textCodeRepository.Update(updatedFullNameTextCode);
+					}
+				}
                 if (objectFieldDetails.ShortFieldLable != null)
                 {
 

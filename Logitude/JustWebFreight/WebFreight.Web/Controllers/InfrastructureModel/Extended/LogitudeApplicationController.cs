@@ -49,7 +49,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     response.Error = "Sorry! this user is not the last signed user!";
                     //throw new Exception("Sorry! this user is not the last signed user!");
                 }
-                bool isUpgrading;
+
+                bool isBlocking;
                 using (
                     TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                 {
@@ -58,8 +59,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     //if (connection.Contains("Main"))
                     //{ }
 
-                    isUpgrading = (from a in globalcontext.GlobalDBs
-                                   select a).FirstOrDefault().IsUpgrading;
+                    isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
                     GlobalContactRepository repository = new GlobalContactRepository(globalcontext);
                     GlobalContact contact = repository.GetGlobalContactByEmailAndTenant(authEmail, tenant);
                     if (contact != null && contact.InActive)
@@ -86,7 +86,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     isIpAuthenticated = false;
                 }
 
-                if (isUpgrading)
+                if (isBlocking)
                 {
                     if (!isIpAuthenticated)
                     {
@@ -144,39 +144,66 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             ServiceResponse serviceResponse = new ServiceResponse();
             try
             {
-                IGlobalContext globalcontext = GlobalContext.GetContext();
-                bool isUpgrading = (from a in globalcontext.GlobalDBs
-                                    select a).FirstOrDefault().IsUpgrading;
+                bool isBlocking = false;
+                string entityName = "SystemIsBlocked";
 
-                bool isIpAuthenticated = true;
-
-                string ipstring = LogitudeSettings.CustomerCareIP;
-                string[] authenticatedIPs = ipstring.Split(',');
-
-                string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                if (string.IsNullOrEmpty(currentIP))
+                if (CacheManager.CacheWrapper != null)
                 {
-                    currentIP = HttpContext.Current.Request.UserHostAddress;
-                }
-                if (!authenticatedIPs.Contains(currentIP))
-                {
-                    isIpAuthenticated = false;
-                }
-                
-                if (isIpAuthenticated)
-                {
-                    isUpgrading = false;
-                }
-              
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
+                        isBlocking = GetIsBlockingFromDB();
 
+                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                        {
+                            CacheManager.CacheWrapper.Insert(entityName, isBlocking, null, DateTime.UtcNow.AddMinutes(1), TimeSpan.Zero);
+                        }
 
-                return Request.CreateResponse(HttpStatusCode.OK, isUpgrading);
+                    }
+                    else
+                    {
+                        isBlocking = (bool)CacheManager.CacheWrapper.Get(entityName);
+                    }
+                }
+                else
+                {
+                    isBlocking = GetIsBlockingFromDB();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, isBlocking);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        private bool GetIsBlockingFromDB()
+        {
+            IGlobalContext globalcontext = GlobalContext.GetContext();
+            bool isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
+
+            bool isIpAuthenticated = true;
+
+            string ipstring = LogitudeSettings.CustomerCareIP;
+            string[] authenticatedIPs = ipstring.Split(',');
+
+            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+            if (string.IsNullOrEmpty(currentIP))
+            {
+                currentIP = HttpContext.Current.Request.UserHostAddress;
+            }
+            if (!authenticatedIPs.Contains(currentIP))
+            {
+                isIpAuthenticated = false;
+            }
+
+            if (isIpAuthenticated)
+            {
+                isBlocking = false;
+            }
+
+            return isBlocking;
         }
     }
 

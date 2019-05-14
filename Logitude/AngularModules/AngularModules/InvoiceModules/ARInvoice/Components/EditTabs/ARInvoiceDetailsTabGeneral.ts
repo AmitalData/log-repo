@@ -55,7 +55,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsCustomsInvoice: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");    
@@ -249,25 +249,18 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     SetUIProperties_ExchangeRate() {
         var isFieldtEnabled = false;
-        
+
         if (this.IsEditingEnabled) {
             if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
-                if (!AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                    isFieldtEnabled = true;
-                }
-
-                else if (SessionLocator.TenantPM.CurrencyId != null) {
-                    isFieldtEnabled = true;
-                }
-
-                else if (SessionLocator.TenantPM.CurrencyId != this.InvoiceCurrencyId) {
-                    isFieldtEnabled = true;
+                if (this.InvoiceCurrencyId) {
+                    if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                        isFieldtEnabled = true;
+                    }
                 }
             }
         }
 
-        //this.RateIsEnabled = isFieldtEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isFieldtEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_PrintNotes() {
@@ -633,24 +626,28 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
     VatTypeFilterClicked() {
+        if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
+            var vatType = this.VatTypeId;
 
-        var loadingDate = this.EntityPM.InvoiceDate;
-        if (loadingDate == null) {
-            loadingDate = DateTool.GetCurrentDateAsUtc();
-        }
-
-        this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.VatTypePercentagesList = myResponse.Result;
-
-                this.ItemsSource.forEach(item => {
-                    item.VatTypeId = this.VatTypeId;
-                });
-
-                this.VatTypeId = null;
-                this.SetGridColumnsWidth();
+            var loadingDate = this.EntityPM.InvoiceDate;
+            if (loadingDate == null) {
+                loadingDate = DateTool.GetCurrentDateAsUtc();
             }
-        });
+
+            this.VatTypeId = null;
+
+            this.myCommonDomainService.GetVatTypePercentagePMByDate(loadingDate).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    this.VatTypePercentagesList = myResponse.Result;
+
+                    this.ItemsSource.forEach(item => {
+                        item.VatTypeId = vatType;
+                    });
+                   
+                    this.SetGridColumnsWidth();
+                }
+            });
+        }
     }
 
     // Prepaid Collect Filter
@@ -713,7 +710,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     private myCurrencyRatesService: CurrencyRatesService;
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -737,17 +734,17 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
                     this.BuildInvoiceLines();
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
     UpdateData() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -774,12 +771,12 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         item.SetVatPercentage(this.GetVatTypePercentage(item.VatTypeId));
                     });
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -954,7 +951,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
     LoadEntityOpenReceivables() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         var myService = new ShipmentDomainService();
         myService.GetInvoiceOpenAmountReceivables(this.EntityPM.ARInvoiceTypeCode, this.EntityPM.MainEntityId).subscribe((myResponse: ServiceResponse) => {
@@ -1037,7 +1034,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             }
 
             this.SetGridColumnsWidth();
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -1304,7 +1301,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     EditJournal() {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.JournalId, ObjectTableName: 'Journal' });
@@ -1367,8 +1364,7 @@ export class ARInvoiceLineItem extends BaseComponent {
             }
         }
         
-        //this.IsRateEnabled = isFieldEnabled;
-        this.IsRateEnabled = true;
+        this.IsRateEnabled = isFieldEnabled;
         this.UIProperties.SetEnabled("ForiegnExchangeRate", this.ObjectTableName, isFieldEnabled);
     }
 

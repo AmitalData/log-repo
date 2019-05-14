@@ -2,7 +2,8 @@ import {EventEmitter, Output} from '@angular/core';
 import {TextCodeTranslator} from './Utilities/TextCodeTranslator';
 import {NumbersPipe} from './Pipes/NumbersPipe';
 import { forEach } from '@angular/router/src/utils/collection';
-
+import { DatePipe } from '@angular/common';
+import { SessionLocator } from './Utilities/SessionLocator';
 export class AppTool {
 
     public static GetCounterPrefixLength(prefix: string) {
@@ -35,15 +36,49 @@ export class AppTool {
             prefixLength += prefixWithoutVars.length;
         }
 
-        //DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
-        //string MM = date.ToString("MM");
-        //string YY = date.ToString("yy");
-        //string YYYY = date.ToString("yyyy");
-
-        //counterPrefix = counterPrefix.Replace("[MM]", MM).Replace("[YY]", YY).Replace("[YYYY]", YYYY);
-
+   
 
         return prefixLength;
+    }
+    public static GetCounterResolvedNumber(prefix: string, startNumber: number, suffix: string, counterSize: number) {
+        //[B]_[YYYY]_SH
+        let calculatedNumber: string = (startNumber ? startNumber.toString() : '');
+        let calculatedPrefix: string = (!AppTool.IsNullOrEmpty(prefix) ? prefix : '');
+        let calculatedSuffix: string = (!AppTool.IsNullOrEmpty(suffix) ? suffix : '');
+
+        let currentDate: Date = new Date();
+        var curr_date = currentDate.getDate();
+        let curr_month: string = (currentDate.getMonth() + 1).toString(); //Months are zero based
+        let mm = AppTool.PadLeft(curr_month, 2, '0');
+        let yyyy = currentDate.getFullYear().toString();
+        let yy = yyyy.substring(2, yyyy.length);
+
+        if (!AppTool.IsNullOrEmpty(prefix)) {
+            calculatedPrefix = calculatedPrefix.replace("[YYYY]", yyyy);
+            calculatedPrefix = calculatedPrefix.replace("[YY]", yy);
+            calculatedPrefix = calculatedPrefix.replace("[B]", 'BBBBB');
+            calculatedPrefix = calculatedPrefix.replace("[MM]", mm);
+        }
+
+        if (!AppTool.IsNullOrEmpty(suffix)) {
+            calculatedSuffix = calculatedSuffix.replace("[YYYY]", yyyy);
+            calculatedSuffix = calculatedSuffix.replace("[YY]", yy);
+            calculatedSuffix = calculatedSuffix.replace("[B]", 'BBBBB');
+            calculatedSuffix = calculatedSuffix.replace("[MM]", mm);
+        }
+
+        let totalNumberLength = calculatedNumber.length;
+        if (calculatedPrefix)
+            totalNumberLength += calculatedPrefix.length;
+        if (calculatedPrefix)
+            totalNumberLength += calculatedSuffix.length;
+
+        if (counterSize > totalNumberLength)
+            calculatedNumber = AppTool.PadLeft(calculatedNumber, ((counterSize - totalNumberLength) + calculatedNumber.length), '0');
+
+        calculatedNumber = calculatedPrefix + calculatedNumber + calculatedSuffix;
+
+        return calculatedNumber;
     }
 
     public static TenantPM: any;
@@ -940,7 +975,7 @@ export class AppTool {
                     myResult = "Contacts";
                     break;
                 }
-            case "General.Features.Social":
+            case "General.MH.Social":
                 {
                     myResult = "Social";
                     break;
@@ -997,6 +1032,11 @@ export class AppTool {
 
             case "General.MH.Depositions": {
                 myResult = "Deposition";
+                break;
+            }
+
+            case "General.MH.TariffModule": {
+                myResult = "Tariff";
                 break;
             }
                 
@@ -1433,6 +1473,7 @@ export class DateTool {
             myDateParts.DateObject = dateObject;
             myDateParts.Hours12 = myDateParts.Hours > 12 ? (myDateParts.Hours - 12) : myDateParts.Hours;
             myDateParts.DateTicks = myDateParts.DateObject.valueOf();
+            myDateParts.TotalMinutes = (myDateParts.Hours * 60) + myDateParts.Minutes;
         }
 
         return myDateParts;
@@ -1883,6 +1924,7 @@ export class FontTool {
     public static CellIsCheckedBackground: string = "rgba(208, 224, 234, 0.4)";
 }
 export class FormatTool {
+
     public static IsEmail(input: string): boolean {
         var myResult = true;
 
@@ -2055,6 +2097,161 @@ export class FormatTool {
         return myResult;
     }
     public static FormatNumber(myNumber: number, myFormat: string = 'N2') {
+
+            var first = ",";
+        var second = ".";
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+                        case "CD": {
+                            first = ",";
+                            second = ".";
+                            break;
+                        }
+
+                        case "DC": {
+                            first = ".";
+                            second = ",";
+                            break;
+                        }
+
+                        case "AD": {
+                            first = "'";
+                            second = ".";
+                            break;
+                        }
+
+                        default:
+                            {
+                                first = ",";
+                                second = ".";
+                                break;
+                            }
+                    }
+                
+            
+            var myResult: string = "";
+
+            if (!AppTool.IsNullOrEmpty(myNumber)) {
+
+                var isValid = true;
+
+                if (typeof (myNumber) == "string") {
+                    isValid = false;
+
+                    if (FormatTool.IsDecimal(myNumber + "")) {
+                        myNumber = +myNumber;
+                        isValid = true;
+                    }
+                }
+
+                if (isValid) {
+                    var myFractionDigits = 2;
+
+                    switch (myFormat.toString().toLowerCase()) {
+                        case "n0": { myFractionDigits = 0; break; }
+                        case "n1": { myFractionDigits = 1; break; }
+                        case "n2": { myFractionDigits = 2; break; }
+                        case "n3": { myFractionDigits = 3; break; }
+                        case "n4": { myFractionDigits = 4; break; }
+                        case "n5": { myFractionDigits = 5; break; }
+                        default: { myFractionDigits = 2; break; }
+                    }
+
+                    myNumber = AppTool.Round(myNumber, myFractionDigits);
+
+                    var myStringNumber = myNumber + "";
+                    var myStringNumber1 = myStringNumber.split('.')[0];
+                    var myStringNumber2 = myStringNumber.split('.')[1];
+
+                    myResult = myStringNumber1.replace(/\B(?=(\d{3})+(?!\d))/g, first);
+                    if (!AppTool.IsNullOrEmpty(myStringNumber2)) {
+                        myResult += second + myStringNumber2;
+                    }
+
+                    if (myFormat.toString().toLowerCase() != "n0") {
+                        var side1;
+                        var side2;
+                        if (first == "." && !myResult.toString().toLowerCase().includes(",")) {
+                            var arr = myResult.split('.');
+                            var firstRound: boolean = true;
+                            var zero = /^0+$/;
+
+                            if (arr.length == 2) {
+                                if (arr[1].match(zero)) {
+                                    side1 = arr[0];
+                                }
+                                else if(arr[0].match(zero)){
+                                    side1 = "0";                                    
+                                }
+
+                            }
+                            else if (arr.length == 1) {
+                                side1 = arr[0];
+                            }
+                            if (AppTool.IsNullOrEmpty(side1)) {
+                                arr.forEach(p => {
+                                    if (firstRound)
+                                        side1 = p;
+                                    else
+                                        side1 += "." + p;
+                                    firstRound = false;
+                                });
+                            }
+                            if (arr.length > 1)
+                                if (myResult.includes(second))
+                                side2 = myResult.split(second)[myResult.split(second).length-1];
+                        }
+                        else {
+                            if (myResult.toString().toLowerCase().includes(",") && first==".") {
+                                side1 = myResult.split(',')[0];
+                                side2 = myResult.split(',')[1];
+                            }
+                            else {
+                                side1 = myResult.split('.')[0];
+                                side2 = myResult.split('.')[1];
+                            }
+                        }
+                      
+                        myResult = side1 + second + AppTool.PadRight(side2, myFractionDigits, '0');
+                    }
+                }
+            }
+
+            return myResult;
+
+       
+    }
+    public static CustomFormatNumber(myNumber: number, myFormat: string = 'N2') {
+
+        var first = ",";
+        var second = ".";
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+            case "CD": {
+                first = ",";
+                second = ".";
+                break;
+            }
+
+            case "DC": {
+                first = ".";
+                second = ",";
+                break;
+            }
+
+            case "AD": {
+                first = "'";
+                second = ".";
+                break;
+            }
+
+            default:
+                {
+                    first = ",";
+                    second = ".";
+                    break;
+                }
+        }
+
+
         var myResult: string = "";
 
         if (!AppTool.IsNullOrEmpty(myNumber)) {
@@ -2089,21 +2286,24 @@ export class FormatTool {
                 var myStringNumber1 = myStringNumber.split('.')[0];
                 var myStringNumber2 = myStringNumber.split('.')[1];
 
-                myResult = myStringNumber1.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                myResult = myStringNumber1.replace(/\B(?=(\d{3})+(?!\d))/g, first);
                 if (!AppTool.IsNullOrEmpty(myStringNumber2)) {
-                    myResult += "." + myStringNumber2;
+                    myResult += second + myStringNumber2;
                 }
 
                 if (myFormat.toString().toLowerCase() != "n0") {
                     var side1 = myResult.split('.')[0];
                     var side2 = myResult.split('.')[1];
-                    myResult = side1 + '.' + AppTool.PadRight(side2, myFractionDigits, '0');
+                    myResult = side1 + second + AppTool.PadRight(side2, myFractionDigits, '0');
                 }
             }
         }
 
         return myResult;
+
+
     }
+
     public static Validate_IATACode(input: string): boolean {
         var myResult: boolean = false;
 
@@ -2871,6 +3071,7 @@ export class DateParts {
     public LocalYear: number = 0;
     public LocalMonth: number = 0;
     public LocalDay: number = 0;
+    public TotalMinutes: number = 0;
 }
 export class DateFormats {
     public AMPM: string;

@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
         public HttpResponseMessage GetSingle(int id)
         {
 		  try
-            {
+            { 
 			    string logKey = PerformanceLogger.LogCurrentTime();
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -60,6 +60,12 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                 if (!isAuthentication)
                 {
                     isAuthentication = SecurityUtility.CheckIsUserCustomerCare(authToken.Email);
+                    if (!isAuthentication)
+                    { 
+                        isAuthentication = SecurityUtility.CheckFeature("Customer", "TENANTMANAGEMENT", authToken.Tenant);
+                        if (!isAuthentication) isAuthentication = SecurityUtility.CheckFeature("Opportunity", "TenantManagement", authToken.Tenant);
+                    }
+
                 }
 
 

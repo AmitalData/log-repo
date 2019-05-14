@@ -246,6 +246,7 @@ export class DocsInDataViewModel extends BaseComponent{
     DocumentTypeName: string = "";
    
     public HasFollowUp: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(currentDocument: DocumentsFilingPM, docsInTabComponent: DocsInTabComponent, documentType: any, entityId: string, childEntityId: string, childReference: string, externalDocuments: DocumentsFilingPM[], objectTableId: string) {
         super();
         this.Key = Guid.newGuid();
@@ -444,10 +445,10 @@ export class DocsInDataViewModel extends BaseComponent{
         if (this.CurrentDocument) {
 
             if (messageLoading) {
-                SessionLocator.CurrentSession.StartBusyIndicator(messageLoading);
+                this.CurrentSession.StartBusyIndicator(messageLoading);
             }
             this.DocsInComponent.documentsFilingPMService.update(this.CurrentDocument).subscribe(res => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 var pmResponse: ServiceResponse = res;
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
@@ -636,10 +637,10 @@ export class DocsInDataViewModel extends BaseComponent{
 
     AdditionalButtonClicked() {
         //  Creating Document"
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating Document");
+        this.CurrentSession.StartBusyIndicator("Creating Document");
         this.DocsInComponent._documentsFilingExtendedPMService.CreateDocumentsFiling(this.CurrentDocument.DocumentTypeId, this.DocsInComponent.EntityId, this.DocsInComponent.ChildEntityId, this.DocsInComponent.ChildEntityReference, this.DocsInComponent.ObjectTableId, "I", this.DocsInComponent.Tenant).subscribe(res => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

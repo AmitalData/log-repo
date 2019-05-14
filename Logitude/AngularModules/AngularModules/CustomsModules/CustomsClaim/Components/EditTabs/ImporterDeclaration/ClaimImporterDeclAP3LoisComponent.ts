@@ -1,4 +1,4 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool, ArrayTool } from '../../../../../Infrastructure/Tools';
 import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
@@ -29,13 +29,13 @@ export class ClaimImporterDeclAP3LoisComponent extends BaseComponent {
     private isControlEnabled: boolean = true;
 
     ValidationErrors: string[] = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
 
         this.ValidationErrors = [];
         this.ClaimImporterDeclarsP3Loilist = new ObservableCollection([]);
-        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
         this.EntityResourceService.getEntityResourceByTableName("Customs.ClaimImporterDeclarsP3Loi").subscribe(response => { });
     }
@@ -50,7 +50,7 @@ export class ClaimImporterDeclAP3LoisComponent extends BaseComponent {
     }
 
     RefreshEntity() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     selectedTab: LogTab;
@@ -83,7 +83,7 @@ export class ClaimImporterDeclAP3LoisComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Cancel");
+        this.CurrentSession.CloseCurrentWindowEmit("Cancel");
     }
 
     OkButtonClicked() {
@@ -93,7 +93,7 @@ export class ClaimImporterDeclAP3LoisComponent extends BaseComponent {
                 listOfDeclarations = listOfDeclarations + "," + item.DeclarationNumber;
             }
         }
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit(listOfDeclarations);
+        this.CurrentSession.CloseCurrentWindowEmit(listOfDeclarations);
     }
 
     //#endregion

@@ -640,3 +640,34 @@ ON [dbo].[FailedTokenLogs]([GMTDateTime])
 	LogDateTime,
 	PartnerTypeId
 	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+
+CREATE NONCLUSTERED INDEX IX_Activities_Tenant_ActivityTypeCode_ShipmentId
+ON [dbo].[Activities] ([Tenant],[ActivityTypeCode],[ShipmentId])
+
+
+CREATE NONCLUSTERED INDEX IX_ShipmentCarrierStatuses_RecordHash
+ON [dbo].[ShipmentCarrierStatuses] ([RecordHash])
+
+GO
+CREATE NONCLUSTERED INDEX [ShipmentMasterDatas_Master_AirlinePrefix]
+ON [dbo].[ShipmentMasterDatas] ([Master],[AirlinePrefix])
+
+GO
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [DocumentsFilings_Tenant_ForwarderDocumentId]
+ON [dbo].[DocumentsFilings] ([Tenant],[ForwarderDocumentId])
+
+CREATE NONCLUSTERED INDEX [Shipments_SecurityKey_Tenant_IsCancelled]
+ON [dbo].[Shipments] ([SecurityKey],[Tenant],[IsCancelled])
+
+
+CREATE NONCLUSTERED INDEX [IX_ObjectTableId_EntityId_Tenant] ON [dbo].[TraceEvents]
+(
+	[ObjectTableId] ASC,
+	[Tenant] ASC,
+	[EntityId] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, DROP_EXISTING = OFF, ONLINE = OFF) ON [PRIMARY]

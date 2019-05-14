@@ -12473,7 +12473,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableName = ShipmentObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
-                DisplayInList = true,
+                DisplayInList = false,
                 ListFieldLable = "MainCarriageFromStateListLable",
                 ListLableDefaultText = "From State",
                 Operator = "Equals",
@@ -12495,7 +12495,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 ObjectTableName = ShipmentObject.Name,
                 Tenant = 0,
                 TextCodeType = "F",
-                DisplayInList = true,
+                DisplayInList = false,
                 ListFieldLable = "MainCarriageToStateListLable",
                 ListLableDefaultText = "To State",
                 Operator = "Equals",
@@ -22615,6 +22615,131 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
             {
+                DefaultText = "Make",
+                FullFieldLable = "Make",
+                FieldName = "Make",
+                FieldsDataType = "nText",
+                MaxLength = 100,
+                MinLength = 0,
+                ObjectTableId = ShipmentPickUpDeliveryPackagesObject.Id,
+                ObjectTableName = ShipmentPickUpDeliveryPackagesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListLableDefaultText = "Make",
+                Operator = "StartsWith",
+                ListPropertyPath = "Make",
+                PMPropertyPath = "Make"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Model",
+                FullFieldLable = "Model",
+                FieldName = "Model",
+                FieldsDataType = "nText",
+                MaxLength = 100,
+                MinLength = 0,
+                ObjectTableId = ShipmentPickUpDeliveryPackagesObject.Id,
+                ObjectTableName = ShipmentPickUpDeliveryPackagesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListLableDefaultText = "Model",
+                Operator = "StartsWith",
+                ListPropertyPath = "Model",
+                PMPropertyPath = "Model"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Color",
+                FullFieldLable = "Color",
+                FieldName = "Color",
+                FieldsDataType = "nText",
+                MaxLength = 100,
+                MinLength = 0,
+                ObjectTableId = ShipmentPickUpDeliveryPackagesObject.Id,
+                ObjectTableName = ShipmentPickUpDeliveryPackagesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListLableDefaultText = "Color",
+                Operator = "StartsWith",
+                ListPropertyPath = "Color",
+                PMPropertyPath = "Color"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Year",
+                FullFieldLable = "Year",
+                FieldName = "Year",
+                FieldsDataType = "nText",
+                MaxLength = 100,
+                MinLength = 0,
+                ObjectTableId = ShipmentPickUpDeliveryPackagesObject.Id,
+                ObjectTableName = ShipmentPickUpDeliveryPackagesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListLableDefaultText = "Year",
+                Operator = "StartsWith",
+                ListPropertyPath = "Year",
+                PMPropertyPath = "Year"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Chassis Number",
+                FullFieldLable = "ChassisNumber",
+                FieldName = "ChassisNumber",
+                FieldsDataType = "nText",
+                MaxLength = 100,
+                MinLength = 0,
+                ObjectTableId = ShipmentPickUpDeliveryPackagesObject.Id,
+                ObjectTableName = ShipmentPickUpDeliveryPackagesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListLableDefaultText = "ChassisNumber",
+                Operator = "StartsWith",
+                ListPropertyPath = "ChassisNumber",
+                PMPropertyPath = "ChassisNumber"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Registration Number",
+                FullFieldLable = "RegistrationNumber",
+                FieldName = "RegistrationNumber",
+                FieldsDataType = "nText",
+                MaxLength = 100,
+                MinLength = 0,
+                ObjectTableId = ShipmentPickUpDeliveryPackagesObject.Id,
+                ObjectTableName = ShipmentPickUpDeliveryPackagesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListLableDefaultText = "RegistrationNumber",
+                Operator = "StartsWith",
+                ListPropertyPath = "RegistrationNumber",
+                PMPropertyPath = "RegistrationNumber"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+                DefaultText = "Country of Manufacture",
+                FullFieldLable = "CountryId",
+                FieldName = "CountryId",
+                FieldsDataType = "LookUp",
+                LookUpTableId = CountriesObject.Id,
+                MaxLength = 15,
+                MinLength = 0,
+                ObjectTableId = ShipmentPackagesObject.Id,
+                ObjectTableName = ShipmentPackagesObject.Name,
+                Tenant = 0,
+                TextCodeType = "F",
+                ListPropertyPath = "CountryId",
+                PMPropertyPath = "CountryId",
+                Operator = "Equals"
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes);
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
                 DefaultText = "Package Type",
                 DisplayOnLookUp = false,
                 FullFieldLable = "PackageTypeId",
@@ -28999,7 +29124,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 DefaultText = "Shipper",
                 FullFieldLable = "ShipperName",
                 FieldName = "ShipperName",
-                ShortFieldLable = "ShipperName",
                 FieldsDataType = "Text",
                 MaxLength = 70,
                 MinLength = 0,
@@ -29019,7 +29143,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 DefaultText = "House",
                 FullFieldLable = "House",
                 FieldName = "House",
-                ShortFieldLable = "House",
                 FieldsDataType = "Text",
                 MaxLength = 20,
                 MinLength = 0,

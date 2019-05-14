@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
@@ -29,7 +29,7 @@ export class NewAirlineComponent extends BaseComponent implements OnInit {
     public IsNewEntityCall: boolean = true;
     RequestPage: string;
     public IsVisible: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.entityResourceService.getEntityResourceByTableName("Airline",0).subscribe((response: any) => {
@@ -168,7 +168,7 @@ export class NewAirlineComponent extends BaseComponent implements OnInit {
 
     //Commands
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -183,21 +183,27 @@ export class NewAirlineComponent extends BaseComponent implements OnInit {
     }
 
     SubmitCreatingAirline() {
+
+        this.CurrentSession.StartBusyIndicatorSaving();
+
         var myService: AirlinePMService = new AirlinePMService();
+
         myService.insert(this.AirlinePM).subscribe((response: ServiceResponse) => {
+
+            this.CurrentSession.StopBusyIndicator();
+
             if (response != null) {
                 if (!response.HasError) {
                     if (this.RequestPage == "SharedManifest") {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit(response.Result.Id);
+                        this.CurrentSession.CloseCurrentWindowEmit(response.Result.Id);
                     } else {
-                        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
                  
                 }
 
                 else {
                     this.ValidationErrorsList = response.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
                 }
             }
         });
@@ -379,9 +385,9 @@ export class NewAirlineComponent extends BaseComponent implements OnInit {
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 }

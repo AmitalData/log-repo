@@ -19,7 +19,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Description).IsRequired().HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.ChapterDescription).IsRequired().HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.SubChapterDescription).IsRequired().HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.SearchFields).IsRequired().HasMaxLength(1000).IsUnicode(true);
+            this.Property(t => t.SearchFields).IsRequired().HasMaxLength(4000).IsUnicode(true);
 
             this.ToTable("HarmonizeCodes");
             this.Property(t => t.Code).HasColumnName("Code");

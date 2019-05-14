@@ -38,6 +38,9 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.Helpers;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -46,6 +49,7 @@ namespace WebFreight.Web.InfrastructureModel
         static int tenant;
 
         #region Repository and Query Definitions
+        static TariffSettingRepository tariffSettingRepository;
         static AccountingSettingRepository accountingSettingsRepository;
         static SATInterfaceSettingRepository sATInterfaceSettingRepository;
         static CustomsInterfaceSettingRepository customsInterfaceSettingRepository;
@@ -189,6 +193,7 @@ namespace WebFreight.Web.InfrastructureModel
         public static void InitializeRepositories(int theTenant)
         {
             #region Repositories and Queries
+            tariffSettingRepository = new TariffSettingRepository(theTenant);
             sATInterfaceSettingRepository = new SATInterfaceSettingRepository(theTenant);
             accountingSettingsRepository = new AccountingSettingRepository(theTenant);
             customsInterfaceSettingRepository = new CustomsInterfaceSettingRepository(theTenant);
@@ -300,6 +305,7 @@ namespace WebFreight.Web.InfrastructureModel
                 //using (TransactionScope scope = TransactionFactory.GetTransaction())
                 //{
                 // globalTenantRepository = new GlobalTenantRepository();
+                TariffSetting zeroTariffSetting;
                 AccountingSetting zeroAccountingSettings;
                 SATInterfaceSetting tenantZeroSATInterfaceSetting;
                 CustomsInterfaceSetting zeroCustomsInterfaceSetting;
@@ -385,6 +391,10 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroPackageTypes = packageTypeQuery.GetPackageTypePMsByTenant(0).ToList();
                     tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
                     tenantZeroAccounts = accountRepository.GetAccountsByTenant(0).ToList();
+
+                    ITariffModuleContext iTariffContext= TariffModuleContext.GetContext(0);
+                    zeroTariffSetting = (from d in iTariffContext.TariffSettings where d.Tenant == 0 select d).FirstOrDefault();
+
                     zeroAccountingSettings = accountingSettingsRepository.GetSingleAccountSetting(0);
                     zeroCustomsInterfaceSetting = customsInterfaceSettingRepository.GetSingleCustomsInterfaceSetting(0, 0);
                     zeroSharedLogisticsSetting = sharedLogisticsSettingRepository.GetSingle("0", 0);
@@ -423,7 +433,8 @@ namespace WebFreight.Web.InfrastructureModel
 
                 tenant = CreateTenant(signUpInfo, tenantRepository, globalTenantRepository);
                 InitializeRepositories(tenant);
-                AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it
+                AddDefaultSATInterfaceSettings(tenant, sATInterfaceSettingRepository, tenantZeroSATInterfaceSetting);// Temporerly Commented By Rabaia So Create Tenant Continue until Islam Check it            
+                AddDefaultTariffSettings(tenant, tariffSettingRepository, zeroTariffSetting);
                 AddDefaultAccountingSettings(tenant, accountingSettingsRepository, zeroAccountingSettings);
                 AddDefaultCustomsInterfaceSettings(tenant, customsInterfaceSettingRepository, zeroCustomsInterfaceSetting);
                 AddDefaultSharedLogisticsSettings(tenant, sharedLogisticsSettingRepository, zeroSharedLogisticsSetting);
@@ -501,10 +512,11 @@ namespace WebFreight.Web.InfrastructureModel
 
                 AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
 
-                AddReport(tenant);
+                AddReportFromTenantZero(tenant);
 
                 AddTenantLoginPolicy(tenant);
 
+                AddAutomationFromTenantZero(tenant , tenantZeroDocumentTypes);
 
                 #endregion
                 scop.Complete();
@@ -568,7 +580,7 @@ namespace WebFreight.Web.InfrastructureModel
 
                                     if (!string.IsNullOrEmpty(countryCode))
                                     {
-                                        countryId = countryRepository.GetCountryIdByCode(countryCode, tenant);
+                                        countryId = countryRepository.GetCountryIdByCode(countryCode, tenant);                                        
                                     }
                                 }
                                 #endregion
@@ -614,6 +626,60 @@ namespace WebFreight.Web.InfrastructureModel
                                 tenantRepository.Update(tenantPoco);
                                 tenantRepository.SubmitChanges();
 
+                                if (countryCode == "IL")
+                                {
+                                    AccountingSetting iAccountingSetting = accountingSettingsRepository.GetSingleAccountSetting(tenant);
+                                    if (iAccountingSetting != null)
+                                    {
+                                        iAccountingSetting.AllowVoidAPI = false;
+                                        iAccountingSetting.AllowVoidAPP = false;
+                                        iAccountingSetting.AllowVoidARI = false;
+                                        iAccountingSetting.AllowVoidARP = false;
+                                        iAccountingSetting.AllowManualInvoiceNumber = false;
+                                        iAccountingSetting.IsARInvoiceChronologicalDates = true;
+                                        iAccountingSetting.IsARPaymentChronologicalDates = true;
+                                        iAccountingSetting.IsVatNumberMandatoryInAP = true;
+                                        iAccountingSetting.IsVatNumberMandatoryInAR = true;
+                                        accountingSettingsRepository.Update(iAccountingSetting);
+                                        accountingSettingsRepository.SubmitChanges();
+                                    }
+
+                                    List<string> iCodes = new List<string>();
+                                    iCodes.Add("999S");
+                                    iCodes.Add("999C");
+                                    iCodes.Add("999M");
+                                    iCodes.Add("999CI");
+                                    iCodes.Add("999MP");
+                                    iCodes.Add("999P");
+                                    List<DocumentType> iDocumentTypes = documentTypeRepository.GetDocumentTypesByCodeLists(iCodes, tenant);
+                                    if (iDocumentTypes.Count > 0)
+                                    {
+                                        foreach (DocumentType iDocumentType in iDocumentTypes)
+                                        {
+                                            List<DocumentTypeCopy> iDocumentTypeCopies = (from d in documentTypeRepository.context.DocumentTypeCopies
+                                                                                          where d.Tenant == tenant && d.DocumentTypeId == iDocumentType.Id
+                                                                                          select d).ToList();
+
+                                            if (iDocumentTypeCopies.Count > 0)
+                                            {
+                                                DocumentTypeCopy iDocumentTypeCopy = iDocumentTypeCopies.Where(d => d.Name.ToLower() == "original").FirstOrDefault();
+                                                if (iDocumentTypeCopy == null)
+                                                {
+                                                    iDocumentTypeCopy = iDocumentTypeCopies.Where(d => d.Code.ToLower() == iDocumentType.Code.ToLower()).FirstOrDefault();
+                                                }
+
+                                                if (iDocumentTypeCopy != null)
+                                                {
+                                                    iDocumentType.LimitedPrintCopyId = iDocumentTypeCopy.Id;
+                                                    iDocumentType.IsDocumentOneTimePrintLimited = true;
+                                                    documentTypeRepository.Update(iDocumentType);
+                                                }
+                                            }
+                                        }
+
+                                        documentTypeRepository.SubmitChanges();
+                                    }
+                                }
                             }                                                      
                         }
                         #endregion
@@ -650,6 +716,12 @@ namespace WebFreight.Web.InfrastructureModel
             }
 
             return password;
+        }
+
+        private static void AddAutomationFromTenantZero(int tenant, List<DocumentTypePM> tenantZeroDocumentTypes)
+        {
+            AutomationHelper automationHelper = new AutomationHelper();
+            automationHelper.CopyAutomationFromTenantZeroToMyTenant(tenant, tenantZeroDocumentTypes);
         }
 
         private static void ComputeInvoiceSectionFields(Tenant iTenant, Address iAddress, string iCountryCode, string iStateCode)
@@ -889,6 +961,22 @@ namespace WebFreight.Web.InfrastructureModel
             bankCodeRepository.SubmitChanges();
         }
 
+        private static void AddDefaultTariffSettings(int theTenant, TariffSettingRepository iRepository, TariffSetting zeroEntity)
+        {
+            if (zeroEntity != null)
+            {
+                TariffSetting settings = new TariffSetting()
+                {
+                    Id = IdCounter.GetNumber("TariffSetting", theTenant).ToString(),
+                    Tenant = theTenant,
+                    DefaultPriceSteps = zeroEntity.DefaultPriceSteps,
+                };
+
+                iRepository.Add(settings);
+                iRepository.SubmitChanges();
+            }
+        }
+
         private static void AddDefaultAccountingSettings(int theTenant, AccountingSettingRepository theAccountingSettingsRepository, AccountingSetting tenantZeroAccoutingSettings)
         {
             if (tenantZeroAccoutingSettings != null)
@@ -902,10 +990,9 @@ namespace WebFreight.Web.InfrastructureModel
                     AllowVoidAPP = tenantZeroAccoutingSettings.AllowVoidAPP,
                     AllowVoidARI = tenantZeroAccoutingSettings.AllowVoidARI,
                     AllowVoidARP = tenantZeroAccoutingSettings.AllowVoidARP,
-                    IsChronologicalDates = tenantZeroAccoutingSettings.IsChronologicalDates,
+                    IsARInvoiceChronologicalDates = tenantZeroAccoutingSettings.IsARInvoiceChronologicalDates,
                     IsVatNumberMandatoryInAP = tenantZeroAccoutingSettings.IsVatNumberMandatoryInAP,
                     IsVatNumberMandatoryInAR = tenantZeroAccoutingSettings.IsVatNumberMandatoryInAR,
-
                 };
 
                 theAccountingSettingsRepository.Add(settings);
@@ -1721,6 +1808,19 @@ namespace WebFreight.Web.InfrastructureModel
                     Tenant = newContact.Tenant,
                 };
                 contactTenantRolesRepository.Add(admincontactTenantRole);
+
+
+
+                RolePM BillingRole = roleQuery.GetSinglePMByName("Billing", 0);
+
+                ContactTenantRole billcontactTenantRole = new ContactTenantRole()
+                {
+                    ContactTenantId = newContactTenant.Id,
+                    Id = IdCounter.GetNumber("ContactTenantRole", newContact.Tenant).ToString(),
+                    RoleId = BillingRole.Id,
+                    Tenant = newContact.Tenant,
+                };
+                contactTenantRolesRepository.Add(billcontactTenantRole);
             }
             #endregion
 
@@ -2173,10 +2273,12 @@ namespace WebFreight.Web.InfrastructureModel
         {
             foreach (DocumentTypePM docType in tenantZeroDocumentTypes)
             {
-                if (!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers)
+                AutomationHelper automationHelper = new AutomationHelper();
+                List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
+
+                if ((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers )|| automationDocumentTypeIds.Contains(docType.Id))
                 {
                     ObjectTable tenantZeroObject = tenantZeroObjectTables.Where(d => d.Id == docType.ObjectTableId).FirstOrDefault();
-
 
                     List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
                     DocumentType newDocType = new DocumentType()
@@ -2258,7 +2360,10 @@ namespace WebFreight.Web.InfrastructureModel
             DocumentTypeTemplateQuery theDocumentTypeTemplateQuery = new DocumentTypeTemplateQuery(theDocumentTypeTemplateRepository);
             List<DocumentTypeTemplatePM> documentTypeTemplateList = theDocumentTypeTemplateQuery.GetDocumentTypeTemplatePMsByTenant(0).ToList();
 
-            documentTypeTemplateList = documentTypeTemplateList.Where(d => d.IsCopiedAtSignup && d.IsEnabledForCustomers).ToList();
+            AutomationHelper automationHelper = new AutomationHelper();
+            List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
+
+            documentTypeTemplateList = documentTypeTemplateList.Where(d => (d.IsCopiedAtSignup && d.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(d.Id)).ToList();
 
 
             #region Defult Template
@@ -2311,9 +2416,12 @@ namespace WebFreight.Web.InfrastructureModel
                         IsCopiedAtSignup = true,
                         CountryCode = a.CountryCode,
                         Language = a.Language,
-                        OriginalTemplateId = a.OriginalTemplateId,
+                        OriginalTemplateId = a.Id,
                         InternalRemarks = a.InternalRemarks,
                         Subject = a.Subject,
+                        From = a.From,
+                        CC = a.CC,
+                        ReplyTo =a.ReplyTo,
 
                     };
 
@@ -2576,7 +2684,11 @@ namespace WebFreight.Web.InfrastructureModel
                     AccountingVATSplit = a.AccountingVATSplit,
                     ReceivableCreditAccount = a.ReceivableCreditAccount,
                     PayableDebitAccount = a.PayableDebitAccount,
-
+                    IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
+                    IsExport = a.IsExport,
+                    IsImport = a.IsImport,
+                    IsDomestic = a.IsDomestic,
+                    IsDrop = a.IsDrop,
                 };
 
                 VatType vattype = tenantZeroVatTypes.Where(d => d.Id == a.VatTypeId).FirstOrDefault();
@@ -2585,9 +2697,10 @@ namespace WebFreight.Web.InfrastructureModel
                     VatType newVat = currentTenantVatTypes.Where(d => d.Code == vattype.Code && d.Tenant == theTenant).FirstOrDefault();
                     charge.VatTypeId = newVat.Id;
                 }
-                theChargesTypeRepository.Add(charge);
 
+                theChargesTypeRepository.Add(charge);
             }
+
             theChargesTypeRepository.SubmitChanges();
         }
         
@@ -3071,7 +3184,7 @@ namespace WebFreight.Web.InfrastructureModel
             incotermsRepository.SubmitChanges();
         }
 
-        public static void AddReport(int theTenant)
+        public static void AddReportFromTenantZero(int theTenant)
         {
             ReportHelper reportHelper = new ReportHelper();
             reportHelper.UpdateReports(theTenant);

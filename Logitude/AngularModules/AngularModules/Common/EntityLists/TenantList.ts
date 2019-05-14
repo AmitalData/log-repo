@@ -84,6 +84,7 @@ export class TenantList {
 		CustomerName: string;
 		IsCustomerTenantShare: boolean;
 		CustomerTenantShareImportFile: boolean;
+		CustomerTenantShareExportFile: boolean;
 		AllowAgentInCustomersLOV: boolean;
 		IsCorrespondenceRightToLeftEnabled: boolean;
 		IsNotesRightToLeftEnabled: boolean;
@@ -97,5 +98,6 @@ export class TenantList {
 		StorageEncryptionKey: string;
 		TemperatureUnitCode: string;
 		DefaultSLAId: string;
+		NumberFormatCode: string;
 	
 }

@@ -29,7 +29,7 @@
 	BEGIN
 
 	set @Key = (select Id from DIM_Currencies where Id = @Id)
-	if(@Key is  null) begin  insert into DIM_Currencies values(@Id,@Code , @EnglishName,@LocalName, @CurrencySign , @SourceTenant , @ParentTenant); end
+	if(@Key is  null) begin  insert into DIM_Currencies (Id,Code,Name,[Local Name],[Currency Sign],[Source Tenant],[Parent Tenant]) values(@Id,@Code , @EnglishName,@LocalName, @CurrencySign , @SourceTenant , @ParentTenant) end
 	else begin update   DIM_Currencies set Name =@EnglishName,  [Local Name] =@LocalName ,  Code = @Code , [Currency Sign] = @CurrencySign,   [Source Tenant] = @SourceTenant , [Parent Tenant] = @ParentTenant  Where Id = @Id; end
 
     

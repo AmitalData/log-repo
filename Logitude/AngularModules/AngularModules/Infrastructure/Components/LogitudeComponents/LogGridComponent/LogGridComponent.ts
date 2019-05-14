@@ -126,10 +126,11 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     IsGradiantSelectedColor: boolean = false;
     MouseUpSub: any;
     EnableMultiSelection: boolean = false;
-    @Output() SortInvoked= new EventEmitter();
+    @Output() SortInvoked = new EventEmitter();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _elementRef: ElementRef, private _renderer: Renderer, private cd: ChangeDetectorRef) {
         //setTimeout(() => this.cd.markForCheck(), 10); 
-        if (SessionLocator.CurrentSession == null) {
+        if (this.CurrentSession == null) {
             this.LogGridId = "LogGrid_-1_-1";
             this.LogGridRowsId = "LogGridRows_-1_-1";
             this.LogGridColumnsId = "LogGridColumns_-1_-1";
@@ -137,15 +138,15 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         }
 
         else {
-            this.LogGridId = "LogGrid_" + SessionLocator.CurrentSession.LogitudeGridHelper.GetLogGridIndexId();
-            this.LogGridRowsId = "LogGridRows_" + SessionLocator.CurrentSession.LogitudeGridHelper.GetLogGridRowsIndexId();
-            this.LogGridColumnsId = "LogGridColumns_" + SessionLocator.CurrentSession.LogitudeGridHelper.GetLogGridColumnsIndexId();
-            this.ColumnId = "ColumnId_" + SessionLocator.CurrentSession.LogitudeGridHelper.GetLogGridColumnsIndexId();
+            this.LogGridId = "LogGrid_" + this.CurrentSession.LogitudeGridHelper.GetLogGridIndexId();
+            this.LogGridRowsId = "LogGridRows_" + this.CurrentSession.LogitudeGridHelper.GetLogGridRowsIndexId();
+            this.LogGridColumnsId = "LogGridColumns_" + this.CurrentSession.LogitudeGridHelper.GetLogGridColumnsIndexId();
+            this.ColumnId = "ColumnId_" + this.CurrentSession.LogitudeGridHelper.GetLogGridColumnsIndexId();
         }
         this.controller = new VirtualRowController();
         this.canvasHeight = { height: '800px' };
         window.onresize = this.onWindowResized.bind(this);
-        this.MouseUpSub = SessionLocator.CurrentSession.MouseUpEvent.subscribe((res) => {
+        this.MouseUpSub = this.CurrentSession.MouseUpEvent.subscribe((res) => {
             this.OnMyMouseUp(res);
         });
         //document.onmouseup = (e) => {
@@ -266,7 +267,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         }
     }
     FireColumnReorderComplete() {
-        //SessionLocator.CurrentSession.StartBusyIndicator("Saving ...");
+        //this.CurrentSession.StartBusyIndicator("Saving ...");
         var ColIndexes = [];
         var ColumnsElements = document.getElementsByClassName("ag-header-cell");
         for (var i = 0; i < ColumnsElements.length; i++) {
@@ -934,7 +935,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         }
 
         var xx = this.rows;
-        this.FiltersChangedsubscription = SessionLocator.CurrentSession.PubSubFiltersChangeEventService.Stream.subscribe(change => this.filterChanged(change));
+        this.FiltersChangedsubscription = this.CurrentSession.PubSubFiltersChangeEventService.Stream.subscribe(change => this.filterChanged(change));
         if (this.pubSubAdvanceQueryFiltersServiceRecived) {
             this.pubSubAdvanceQueryFiltersSub = this.pubSubAdvanceQueryFiltersServiceRecived.Stream.subscribe(filters => this.processQueryFilter(filters));
         }
@@ -975,6 +976,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 //    });
                 //}
                 //this.Filters = res.Filters;
+                this.queryId = res.QueryId;
                 this.init(true);
             });
         }
@@ -1336,7 +1338,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     public MySelectedRowIndex: number = null;
     init(reload: boolean = false) {
         if (this.UseBusyIndecator)
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
 
         //this.rows = [];
         if (this.ObjectTable) {
@@ -1348,6 +1350,11 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                     this.cd.detectChanges();
 
                 }
+            }
+            else {
+                this.IsSpotLight = false;
+                this.SpotlightDataTemplate = null;
+
             }
         }
         this.rowsBuffer = [];
@@ -1454,7 +1461,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             if (this.MyScrollTop != 0) {
                 elem.scrollTop = this.MyScrollTop;
             }
-            //this.BackFromEditSub = SessionLocator.CurrentSession.BackFromEdit.subscribe((res) => {
+            //this.BackFromEditSub = this.CurrentSession.BackFromEdit.subscribe((res) => {
             //    this.BackFromEditSub.unsubscribe();
             //    this.BackFromEditSub = null; 
             //    this.MyScrollTop = (res.rowIndex * this.rowHeight) - this.rowHeight;
@@ -1644,7 +1651,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         this.rowsBuffer = [];
         this.DataLoaded.emit(this.rows);
         if (this.UseBusyIndecator)
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
         //console.log("this.rows.length :" + this.rows.length);
         //console.log("this.tripleViewport :" + this.tripleViewport);

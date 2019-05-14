@@ -46,7 +46,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     public IsAccountingActivated = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -132,20 +132,17 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         }
     }
     SetUIProperties_ExchangeRate() {
-        var isEnabled = true;
+        var isEnabled = false;
 
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "APInvoiceEditExchangeRate")) {
-            isEnabled = false;
-        }
-
-        else {
-            if (this.EntityPM.InvoiceCurrencyId == SessionLocator.TenantPM.CurrencyId || this.EntityPM.InvoiceCurrencyId == null || SessionLocator.TenantPM.CurrencyId == null) {
-                isEnabled = false;
+        if (FeatureLocator.HasFeaturePermession("APInvoice", "APInvoiceEditExchangeRate")) {
+            if (this.InvoiceCurrencyId) {
+                if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                    isEnabled = true;
+                }
             }
-        }
+        }      
 
-        //this.RateIsEnabled = isEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", "APInvoice", isEnabled);        
     }
 
@@ -154,7 +151,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     private VatTypePercentagesList: VatTypePercentagePM[] = [];
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         var myCurrencyRatesService = new CurrencyRatesService();
         var myCommonDomainService = new CommonDomainService();
@@ -174,12 +171,12 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
                         this.VatTypePercentagesList = myResponse2.Result;
                     }
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -579,7 +576,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -587,11 +584,11 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
-            errors.push(msg.replace("%FieldName", "Vendor"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VendorId")));
         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber)) {
-            errors.push(msg.replace("%FieldName", "Invoice Number"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceNumber")));
         }
 
         if (this.EntityPM.InvoiceExpectedAmount == null) {
@@ -599,12 +596,13 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.InvoiceCurrencyId)) {
-            errors.push(msg.replace("%FieldName", "Currency"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceCurrencyId")));
         }
 
         if (this.EntityPM.InvoiceDate == null) {
-            errors.push(msg.replace("%FieldName", "Invoice Date"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceDate")));
         }
+
 
         else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
             errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
@@ -618,18 +616,22 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
             errors.push(msg.replace("%FieldName", "Payment Term"));
         }
 
+        if (AppTool.IsNullOrEmpty(this.EntityPM.PaymentTermId)) {
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.PaymentTermId")));
+        }
+
         if (this.EntityPM.DueDate == null) {
-            errors.push(msg.replace("%FieldName", "Due Date"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.DueDate")));
         }
 
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.VATNumber)) {
-                errors.push(msg.replace("%FieldName", "Vat Number"));
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.VATNumber")));
             }
         }
 
         if (this.IsAccountingActivated && this.AccountingDate == null) {
-            errors.push(msg.replace("%FieldName", "Accounting Date"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.AccountingDate")));
         }
 
         this.ValidationErrorsList = errors;
@@ -653,9 +655,9 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     CompleteSubmission(errors) {
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
             this.InitializeProfitCurrency();
-            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+            this.CurrentSession.CloseCurrentWindowEmit("Ok");
         }
     }
 

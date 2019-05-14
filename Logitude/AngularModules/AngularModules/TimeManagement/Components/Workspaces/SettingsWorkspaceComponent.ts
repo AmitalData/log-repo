@@ -1,4 +1,4 @@
-﻿import {Component, QueryList} from '@angular/core';
+import {Component, QueryList} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
@@ -6,7 +6,8 @@ import {ListComponentArgs} from '../../../Infrastructure/Args';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ExcelExportService} from '../../../Common/Services/Others/ExcelExportService'
-import {ImageParameter} from '../../../Infrastructure/DataContracts/ImageParameter';
+import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 declare var UploadLogoFile, ArrayBufferToBase64;
 
 @Component({
@@ -17,7 +18,7 @@ declare var UploadLogoFile, ArrayBufferToBase64;
 })
 
 export class SettingsWorkspaceComponent {
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
 
     }
@@ -30,7 +31,7 @@ export class SettingsWorkspaceComponent {
 
         var file: any = UploadLogoFile(this.ClockTimeHtmlId);
         if (file && file.name && file.name.toLowerCase().indexOf("csv") != -1) {
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
             this.ArrayBufferToBase64(file, this);
         }
     }
@@ -53,8 +54,8 @@ export class SettingsWorkspaceComponent {
             };
 
             reader.onerror = function (e) {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                
                 var wind = new MessageWindow();
                 wind.Show("Error Importing file");
             };
@@ -67,7 +68,7 @@ export class SettingsWorkspaceComponent {
         var file: ImageParameter = new ImageParameter();
         file.Base64String = data;
         service.ImportClockTimeData(file).subscribe(res => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             var wind = new MessageWindow();
             wind.Show("Import completed successfully");
         });
@@ -82,29 +83,29 @@ export class SettingsWorkspaceComponent {
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Settings";
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         });
     }
 
     ProjectsClicked() {
-        var displayTitle = "All Projects";
-        var code = "All Projects";
+        var displayTitle = "Active Projects";
+        var code = "Active Projects";
         var listArgs = new ListComponentArgs();
         listArgs.QueryCode = code;
         listArgs.ObjectTableName = "TMProject";
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Settings";
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         });
     }
@@ -118,12 +119,36 @@ export class SettingsWorkspaceComponent {
         listArgs.DisplayTitle = displayTitle;
         listArgs.BackButtonTitle = "Settings";
         this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                 });
         });
+    }
+
+    BudgetClicked() {
+        var displayTitle = "All Budgets";
+        var code = "All Budgets";
+        var listArgs = new ListComponentArgs();
+        listArgs.QueryCode = code;
+        listArgs.ObjectTableName = "TMBudget";
+        listArgs.DisplayTitle = displayTitle;
+        listArgs.BackButtonTitle = "Settings";
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
+    }
+
+    GetProjectsClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Get Projects";
+        logWindow.Show('./TimeManagement/Components/NewEntity/NewGetProjectComponent');
     }
 }

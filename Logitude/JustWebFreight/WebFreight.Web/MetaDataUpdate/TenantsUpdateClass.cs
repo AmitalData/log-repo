@@ -11,11 +11,8 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure.Azure;
-using WebFreight.Web.GlobalModel;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.InfrastructureModel;
-using WebFreight.Web.Security;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel;
@@ -23,16 +20,10 @@ using Logitude.SystemLogs;
 using Simplog.Global.Data.GlobalModel;
 using WebFreight.Web.MetaDataUpdate.UpdateClasses;
 using Logitude.Server.Tools.Counters;
-using JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate;
-using Logitude.CRM.Data.EntityPOCOs;
-using Logitude.CRM.Data;
-using Logitude.CRM.Data.Repsitories;
 using Simplog.Server.Infrastructure;
-using JustWebFreight.WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
-using System.Collections;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate;
 using Logitude.BL.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
@@ -52,14 +43,12 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
-using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpdateClasses;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel;
-using Logitude.Accounting.BL.CoreBL;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -67,6 +56,7 @@ namespace WebFreight.Web.MetaDataUpdate
     {
         public static void UpdateDataForTenant(int tenant, string message)
         {
+            
             IWebFreightContext context = WebFreightContext.GetContext(tenant);
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
@@ -102,7 +92,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Dictionary<string, TranslationHeader> tenantZeroTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(0).ToDictionary(d => d.Description, a => a);
             Dictionary<string, TranslationHeader> currentTenantTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(tenant).ToDictionary(d => d.Description, a => a);
             Dictionary<string, Measurement> tenantZeroMeasurements = measurementsRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
-            ///Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EntityStatus> tenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EventType> tenantZeroEventTypes = null;
@@ -158,9 +148,14 @@ namespace WebFreight.Web.MetaDataUpdate
                       case "updatetenantzeronew":
                         {
                             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                            updateClass.LoadObjectTablesToTenantZero(context);
                             updateClass.UpgradeClosedTablesForTenantZero();
 
-                            ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
+							InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
+							inframodelUpdateClass.LoadObjectsTenantZero(context);
+
+
+							ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
 
                             QuoteModelUpdateClass quotemodelUpdateClass = new QuoteModelUpdateClass();
@@ -172,24 +167,26 @@ namespace WebFreight.Web.MetaDataUpdate
                             CommonDataModelUpdateClass commonmodelUpdateClass = new CommonDataModelUpdateClass();
                             commonmodelUpdateClass.LoadObjectsTenantZero(context);
 
-                            InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();
-                            inframodelUpdateClass.LoadObjectsTenantZero(context);
-
+                          
                             GlobalModelUpdateClass globalmodelUpdateClass = new GlobalModelUpdateClass();
                             globalmodelUpdateClass.LoadObjectsTenantZero(context);
 
+							InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
+							modelUpdateClass.LoadObjectsTenantZero(context);
 
-                            updateClass.LoadUpdateTenantZero(context, false);
+							updateClass.LoadUpdateTenantZero(context, false);
 
-                            updateClass.LoadOtherFields(context);
+                            //updateClass.LoadOtherFields(context);
                             updateClass.LoadTranslationHeaders();
                             updateClass.LoadMeasurements();
                             updateClass.LoadCreditCardTypes();
                             updateClass.LoadMoveTypes();
-                            //updateClass.loadQueries();
-                            //updateClass.loadScreens();
-                            //updateClass.LoadObjectTableTabs();
-                            updateClass.LoadRolesAndFeatures(0);
+							//updateClass.loadQueries();
+							//updateClass.loadScreens();
+							//updateClass.LoadObjectTableTabs();
+							context.SaveChanges();
+
+							updateClass.LoadRolesAndFeatures(0);
                             updateClass.LoadObjectTableHelperControls();
                             updateClass.LoadEntityStatus();
                             updateClass.LoadEventTypes();
@@ -392,7 +389,18 @@ namespace WebFreight.Web.MetaDataUpdate
                             //updateClass.loadScreens();
                             break;
                         }
-                        
+
+
+                    case "tariffmodule":
+                        {
+                            TariffModuleUpdateClass tariffModuleUpdateClass = new TariffModuleUpdateClass();
+                            tariffModuleUpdateClass.LoadObjectsTenantZero(context);
+
+                            TariffModuleUpdate updateClass = new TariffModuleUpdate();
+                            //updateClass.loadScreens();
+                            break;
+                        }
+
 
                     case "accounting":
                         {
@@ -405,7 +413,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             updateClass.LoadOtherFields(context);
                             //updateClass.loadQueries();
                             //updateClass.loadScreens();
-                            //updateClass.LoadObjectTableTabs();
+                            //updateClass.LoadObjectTableTabs(); 
                             updateClass.LoadObjectTableHelperControls();
                             updateClass.LoadMenustables();
                             //updateClass.LoadEventTypes();
@@ -420,6 +428,13 @@ namespace WebFreight.Web.MetaDataUpdate
                         {
                             ShipmentsModelUpdateClass shipmentModelUpdateClass = new ShipmentsModelUpdateClass();
                             shipmentModelUpdateClass.LoadObjectsTenantZero(context);
+
+                            if (!string.IsNullOrEmpty(LogitudeSettings.DeploymentStage) && LogitudeSettings.DeploymentStage.ToLower() == "logboxwe1")
+                            {
+                                MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
+                                updateClass.UpdateShipmentLogboxAuomationObjectFields(context);
+                            }
+
                             break;
                         }
                     case "quote":
@@ -619,6 +634,16 @@ namespace WebFreight.Web.MetaDataUpdate
                             TimeManagementUpdate timeManagementUpdate = new TimeManagementUpdate();
                             timeManagementUpdate.loadScreens();
 
+
+
+                            //Tariff Module
+
+                            TariffModuleUpdateClass tariffModuleUpdateClass = new TariffModuleUpdateClass();
+                            tariffModuleUpdateClass.LoadObjectsTenantZero(context);
+
+                            TariffModuleUpdate tariffModuleUpdate = new TariffModuleUpdate();
+                            tariffModuleUpdate.loadScreens();
+
                             // New Infrastructure 
                             InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
                             modelUpdateClass.LoadObjectsTenantZero(context);
@@ -668,7 +693,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     stopWatch.Start();
 
                     //UpdateTranslationHeaders(tenant, tenantZeroTranslationHeaders, currentTenantTranslationHeaders, translationHeadersRepository);
-                    //UpdateMeasurements(tenant, tenantZeroMeasurements, currentTenantMeasurements, measurementsRepository);
+                    UpdateMeasurements(tenant, tenantZeroMeasurements, currentTenantMeasurements, measurementsRepository);
 
                     //===========================
 
@@ -692,6 +717,9 @@ namespace WebFreight.Web.MetaDataUpdate
                     UpdateEmailAlertSettings(tenant, tenantZeroEmailAlertSettings, currentEmailAlertSettings, emailAlertSettingRepository);
                     ReportHelper reportHelper = new ReportHelper();
                     reportHelper.UpdateReports(tenant);
+
+                    AutomationHelper automationHelper = new AutomationHelper();
+                    automationHelper.CopyAutomationFromTenantZeroToMyTenant(tenant, tenantZeroDocumentTypes.Values.ToList());
 
                     if (!LogitudeSettings.IsCostomsDeploy)
                     // what do u think ?? ok i suppose
@@ -1406,8 +1434,9 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             foreach (DocumentTypePM docType in tenantZeroDocumentTypes.Values)
             {
-               
-                if (!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers)
+                AutomationHelper automationHelper = new AutomationHelper();
+                List<string> automationDocumentTypeIds = automationHelper.GetAutomationDocumentTypeIds(tenant);
+                if ((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id))
                 {
                     DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(documentTypeTemplateRepository);
 
@@ -1499,12 +1528,8 @@ namespace WebFreight.Web.MetaDataUpdate
                                                   select doc).Any();
 
 
-                                if (a.IsEnabledForCustomers && a.IsCopiedAtSignup)
+                                if ((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id))
                                 {
-
-
-
-
                                     DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
                                     {
                                         Id = IdCounter.GetNumber("DocumentTypeTemplate", tenant).ToString(),
@@ -1519,10 +1544,20 @@ namespace WebFreight.Web.MetaDataUpdate
                                         CountryCode = a.CountryCode,
                                         Subject = a.CountryCode,
                                         Language = a.Language,
-                                        OriginalTemplateId = a.OriginalTemplateId,
+                                        OriginalTemplateId = a.Id,
                                         VerticalShift = a.VerticalShift,
                                         InternalRemarks = a.InternalRemarks,
                                         IsEnabledForCustomers = true,
+                                        TemplateBodyHtml = a.TemplateBodyHtml,
+                                        TemplateFooterHtml = a.TemplateFooterHtml,
+                                        TemplateHeaderHtml = a.TemplateHeaderHtml,
+                                       TemplateFooterHeight = a.TemplateFooterHeight,
+                                       TemplateHeaderHeight = a.TemplateHeaderHeight,
+                                       CC  = a.CC,
+                                       From = a.From,
+                                       ReplyTo = a.ReplyTo,
+                                       
+                                       
 
                                     };
                                     if (isDefault)
@@ -1562,6 +1597,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 }
             }
         }
+
+       
 
         private static void UpdateTenantVersion(int tenant, TenantRepository tenantRepository)
         {

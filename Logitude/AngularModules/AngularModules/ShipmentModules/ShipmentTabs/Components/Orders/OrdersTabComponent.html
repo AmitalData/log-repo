@@ -1,55 +1,3 @@
-﻿
-<style type="text/css">
-    .RatioBox .NumericButtonDisabled {
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
-    .RatioBox .NumericButton:hover {
-        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
-        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
-        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
-        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
-    }
-
-    .RatioBox .NumericButton {
-        width: 15px;
-        height: 10px;
-        border: 1px solid #6A8299;
-        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
-        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
-        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
-        position: relative;
-    }
-
-    .RatioBoxDisabled {
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
-    .RatioBox {
-        height: 22px;
-        min-height: 22px;
-        max-height: 22px;
-        line-height: 21px;
-        width: 70px;
-        border: 1px solid #AAAAAA;
-        outline: none;
-        font-size: 11px;
-        color: #45494A;
-        background: white;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        -moz-box-shadow: inset 0 0 3px #AAAAAA;
-        -webkit-box-shadow: inset 0 0 3px #AAAAAA;
-        box-shadow: inset 0 0 3px #AAAAAA;
-        overflow: hidden;
-    }
-</style>
 
 <div class="TabHolder">
     <table *ngIf="IsResourcesReady">
@@ -143,6 +91,8 @@
                 <table>
                     <tr>
                         <td>
+
+                            <!-- GrossWeightUnitCode -->
                             <div style="width: 145px; display: block; float:left;">
                                 <LogLabel [HideColumns]="true" [ObjectFieldName]="'GrossWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 <LogLov [ObjectFieldName]="'GrossWeightUnitCode'"
@@ -154,6 +104,7 @@
                                 </LogLov>
                             </div>
 
+                            <!-- ChargeableWeightUnitCode -->
                             <div style="width: 170px; display: block; float:left; margin-left: 15px;">
                                 <LogLabel [HideColumns]="true" [ObjectFieldName]="'ChargeableWeightUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="ChargeableWeightUnitCodeLabel"></LogLabel>
                                 <LogLov [ObjectFieldName]="'ChargeableWeightUnitCode'"
@@ -165,6 +116,7 @@
                                 </LogLov>
                             </div>
 
+                            <!-- DimensionsUnitCode -->
                             <div style="width: 140px; display: block; float:left; margin-left: 15px;">
                                 <LogLabel [HideColumns]="true" [ObjectFieldName]="'DimensionsUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 <LogLov [ObjectFieldName]="'DimensionsUnitCode'"
@@ -174,11 +126,11 @@
                                         [LookUpTableName]="'DimensionsUnit'"
                                         [HideColumns]="true"
                                         [DependencyFilter1Value]="DimensionsDependencyProperty1"
-                                        [DependencyFilter1IsList]="DimensionsDependencyProperty1IsList"                                          
-                                        >
+                                        [DependencyFilter1IsList]="DimensionsDependencyProperty1IsList">
                                 </LogLov>
                             </div>
 
+                            <!-- VolumeUnitCode -->
                             <div style="width: 140px; display: block; float:left; margin-left: 15px;">
                                 <LogLabel [HideColumns]="true" [ObjectFieldName]="'VolumeUnitCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 <LogLov [ObjectFieldName]="'VolumeUnitCode'"
@@ -192,27 +144,7 @@
 
                             <div style="width: 70px; display: block; float:left; margin-left: 15px;">
                                 <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-
-                                <div class="RatioBox" [class.RatioBoxDisabled]="!IsEditingEnabled">
-                                    <table>
-                                        <tr>
-                                            <td style="width: 15px; font-size: 11px; padding-left: 3px;">1:</td>
-
-                                            <td style="font-size: 11px; padding-left: 2px;">
-                                                {{Ratio | NumbersPipe:'N2'}}
-                                            </td>
-
-                                            <td style="width: 15px;">
-                                                <div class="NumericButton" [class.NumericButtonDisabled]="!IsEditingEnabled" (mousedown)="NumericButtonClicked(true)">
-                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
-                                                </div>
-                                                <div class="NumericButton" [class.NumericButtonDisabled]="!IsEditingEnabled" (mousedown)="NumericButtonClicked(false)">
-                                                    <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled"></RatioBox>
                             </div>
 
                             <!--<div style="width: 110px; display: block; float:left; margin-left: 2px;">
@@ -635,8 +567,12 @@
                                                                 <LogLabel [ObjectFieldName]="'BookingNumberOfPackages'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                             </td>
 
-                                                            <td style="width: 100px;">
+                                                            <td style="width: 90px;">
                                                                 <LogTextBox [HideColumns]="true" [ObjectFieldName]="'BookingNumberOfPackages'" [Text]="BookingNumberOfPackages" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+
+                                                            <td style="width: 20px;">
+                                                                <div></div>
                                                             </td>
                                                         </tr>
 
@@ -645,8 +581,17 @@
                                                                 <LogLabel [ObjectFieldName]="'OrderGrossWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="BookingGrossWeightLabel"></LogLabel>
                                                             </td>
 
-                                                            <td style="width: 100px;">
-                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OrderGrossWeight'" [Text]="OrderGrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            <td>
+                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OrderGrossWeight'" [Text]="OrderGrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="GrossWeightLostFocus($event)"></LogTextBox>
+                                                            </td>
+
+                                                            <td>
+                                                                <div style="float: right;">
+
+                                                                    <Hyperlink *ngIf="EntityPM.OrderGrossWeightEdited" [IsEnabled]="IsEditingEnabled" (click)="ResetGrossWeightEdited()" title="{{'Shipment.M.ValueEditedByUser' | TextCodeTranslationPipe}}">
+                                                                        <img src="./Images/Buttons/Edit.png" />
+                                                                    </Hyperlink>
+                                                                </div>
                                                             </td>
                                                         </tr>
 
@@ -655,8 +600,12 @@
                                                                 <LogLabel [ObjectFieldName]="'BookingVolume'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="BookingVolumeLabel"></LogLabel>
                                                             </td>
 
-                                                            <td style="width: 100px;">
+                                                            <td>
                                                                 <LogTextBox [HideColumns]="true" [ObjectFieldName]="'BookingVolume'" [Text]="BookingVolume" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
                                                             </td>
                                                         </tr>
 
@@ -665,8 +614,17 @@
                                                                 <LogLabel [ObjectFieldName]="'OrderChargeableWeight'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="BookingChargeableWeightLabel"></LogLabel>
                                                             </td>
 
-                                                            <td style="width: 100px;">
-                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OrderChargeableWeight'" [Text]="OrderChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            <td>
+                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'OrderChargeableWeight'" [Text]="OrderChargeableWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="ChargeableWeightLostFocus($event)" [DontUseTimer]="'true'"></LogTextBox>
+                                                            </td>
+
+                                                            <td>
+                                                                <div style="float: right;">
+
+                                                                    <Hyperlink *ngIf="EntityPM.OrderChargeableWeightEdited" [IsEnabled]="IsEditingEnabled" (click)="ResetChargeableWeightEdited()" title="{{'Shipment.M.ValueEditedByUser' | TextCodeTranslationPipe}}">
+                                                                        <img src="./Images/Buttons/Edit.png" />
+                                                                    </Hyperlink>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -704,9 +662,9 @@
                                                             </td>
                                                         </tr>
 
-                                                        <tr class="FormFieldRow" style="height:auto;">
+                                                        <tr>
                                                             <td>
-                                                                <div class="FillParent">
+                                                                <div style="height: 100px;">
                                                                     <LogTextBox [HideColumns]="true" [ObjectFieldName]="'DescriptionOfGoods'" [Text]="DescriptionOfGoods" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
                                                                 </div>
                                                             </td>

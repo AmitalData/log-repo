@@ -1,6 +1,9 @@
-﻿using Simplog.Data.Helpers;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -9,25 +12,26 @@ namespace WebFreight.Web.Helpers
     public class DataWarehouseHelper
     {
 
-        public string ResolveWarehoueDateField(string fieldName, string operationCode, string fieldValue, int tenant)
+
+
+        public string ResolveWarehoueDateField(string fieldName, string operationCode, string fieldValue, int tenant, bool isSample = false)
         {
             string result = string.Empty;
 
 
-            if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant);
+            if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
             else
             {
                 if (ValidateFieldValue(operationCode, fieldValue))
                 {
                     DateTime currentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
                     var valuesArray = fieldValue.Split('^');
-                    if (operationCode == "Previous" && valuesArray.Length == 3) result = ResolvePreviousDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate);
-                    else if (operationCode == "Next" && valuesArray.Length == 3) result = ResolveNextDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate);
-                    else if (operationCode == "Current" && valuesArray.Length == 2) result = ResolveCurrentDateValue(fieldName, valuesArray[1], currentDate);
+                    if (operationCode == "Previous" && valuesArray.Length == 3) result = ResolvePreviousDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate,tenant, isSample);
+                    else if (operationCode == "Next" && valuesArray.Length == 3) result = ResolveNextDateValue(fieldName, valuesArray[1], valuesArray[2], currentDate, tenant, isSample);
+                    else if (operationCode == "Current" && valuesArray.Length == 2) result = ResolveCurrentDateValue(fieldName, valuesArray[1], currentDate, tenant, isSample);
 
                 }
-                
+
 
             }
 
@@ -37,7 +41,7 @@ namespace WebFreight.Web.Helpers
 
         }
 
-        private bool ValidateFieldValue(string operationCode, string fieldValue)
+        public bool ValidateFieldValue(string operationCode, string fieldValue)
         {
             bool isValid = true;
             string range = string.Empty;
@@ -53,7 +57,7 @@ namespace WebFreight.Web.Helpers
                         range = valuesArray[2];
                     }
 
-                    if (interval <= 0) isValid = false;
+                    //if (interval <= 0) isValid = false;
 
                 }
                 else
@@ -70,18 +74,40 @@ namespace WebFreight.Web.Helpers
         }
 
 
-
-        private string ResolveBeforeAfterDateValue(string fieldName , string operationCode, string fieldvalue, int tenant  )
+        private string FormatDate(DateTime DateToFormat, int tenant)
         {
-            string dateValue = fieldvalue;
-            if(operationCode == "After" && !string.IsNullOrEmpty(dateValue)) dateValue += " 23:59:59";
+            string DateTimeFormat = "{0:yyyy-MM-dd}";
+            string FormatedDate = "";
+            TenantQuery TenantQuery = new TenantQuery(tenant);
+            TenantPM tenantPm = TenantQuery.GetSingleTenantPM(tenant, true);
+            if (tenantPm.DateTimeFormat != null)
+            {
+                DateTimeFormat = tenantPm.DateTimeFormat;
+            }
+
+            FormatedDate = DateToFormat.ToString(DateTimeFormat, CultureInfo.CurrentCulture);
+            return FormatedDate;
+
+        }
+        private string ResolveBeforeAfterDateValue(string fieldName, string operationCode, string fieldValue, int tenant, bool isSample = false)
+        {
+            DateTime date = DateTime.Parse(fieldValue);
+
+            if (operationCode == "After" && !string.IsNullOrEmpty(fieldValue))
+            {
+                fieldValue = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(fieldValue).AddDays(1));
+            }
             string operationSimpol = operationCode == "After" ? " >'" : "<'";
-            string result = fieldName + operationSimpol +dateValue + "'";
+            string result = fieldName + operationSimpol + fieldValue + "'";
+            if (isSample)
+            {
+                result = operationSimpol.Replace("'", "") + " " + FormatDate(DateTime.Parse(fieldValue),tenant);
+            }
 
             return result;
         }
 
-        private string ResolveCurrentDateValue(string fieldName, string range, DateTime currentDate)
+        private string ResolveCurrentDateValue(string fieldName, string range, DateTime currentDate, int tenant, bool isSample = false)
         {
             DateTime? fromDate = null;
             DateTime? toDate = null;
@@ -123,39 +149,47 @@ namespace WebFreight.Web.Helpers
                     break;
             }
 
-            string result = BuildDateSql(fromDate, toDate, fieldName, "Current" , range);
+            string result = BuildDateSql(fromDate, toDate, fieldName, tenant,"Current", range, isSample);
 
             return result;
 
         }
 
-        private string ResolvePreviousDateValue(string fieldName, string interval, string range, DateTime currentDate)
+        private string ResolvePreviousDateValue(string fieldName, string interval, string range, DateTime currentDate, int tenant, bool isSample = false)
         {
-     
+
             DateTime? fromDate = null;
             DateTime? toDate = null;
 
             int intervalNumber = !string.IsNullOrEmpty(interval) ? Int32.Parse(interval) : 0;
             intervalNumber = intervalNumber * -1;
 
+            if (range == "Quarter")
+            {
+                intervalNumber = intervalNumber * 3;
+                range = "Month";
+            }
+
             switch (range)
             {
                 case "Day":
                     fromDate = currentDate.AddDays(intervalNumber);
                     toDate = currentDate;
-
                     break;
 
                 case "Week":
-                    fromDate = currentDate.AddDays(7 * intervalNumber);
-                    toDate = currentDate;
-                    fromDate = fromDate.Value.AddDays(-1);
+
+                    DateTime startOfWeekDate = StartOfWeek(currentDate, DayOfWeek.Monday);
+                    fromDate = startOfWeekDate.AddDays(7 * intervalNumber).AddDays(-1);
+                    toDate = startOfWeekDate;
+
                     break;
 
                 case "Month":
                     fromDate = currentDate.AddMonths(intervalNumber);
                     fromDate = new DateTime(fromDate.Value.Year, fromDate.Value.Month, 1);
                     toDate = DateTime.Parse(fromDate.ToString()).AddMonths(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
+
 
                     break;
 
@@ -165,17 +199,13 @@ namespace WebFreight.Web.Helpers
                     fromDate = new DateTime(fromDate.Value.Year, fromDate.Value.Month, 1);
                     toDate = DateTime.Parse(fromDate.ToString()).AddMonths(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
 
-                    //fromDate = AddQuarters(currentDate, intervalNumber);
-                    //fromDate = new DateTime(fromDate.Value.Year, fromDate.Value.Month, 1);
-                    //intervalNumber = intervalNumber * 3;
-
-                    //toDate = DateTime.Parse(fromDate.ToString()).AddMonths(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
                     break;
 
                 case "Year":
 
                     fromDate = new DateTime(currentDate.AddYears(intervalNumber).Year, 1, 1);
                     toDate = DateTime.Parse(fromDate.ToString()).AddYears(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
+
 
                     break;
                 default:
@@ -184,15 +214,15 @@ namespace WebFreight.Web.Helpers
                     break;
             }
 
-            string result = BuildDateSql(fromDate, toDate, fieldName);
+            string result = BuildDateSql(fromDate, toDate, fieldName,tenant, null, null, isSample);
 
             return result;
 
         }
 
-        private string ResolveNextDateValue(string fieldName, string interval, string range, DateTime currentDate)
+        private string ResolveNextDateValue(string fieldName, string interval, string range, DateTime currentDate, int tenant, bool isSample = false)
         {
-         
+
             DateTime? fromDate = null;
             DateTime? toDate = null;
 
@@ -203,11 +233,14 @@ namespace WebFreight.Web.Helpers
                 case "Day":
                     fromDate = currentDate.AddDays(1);
                     toDate = currentDate.AddDays((intervalNumber + 1));
+
                     break;
 
                 case "Week":
 
-                    toDate = currentDate.AddDays(7 * (intervalNumber + 1));
+
+                    DateTime startOfWeekDate = StartOfWeek(currentDate, DayOfWeek.Monday);
+                    toDate = startOfWeekDate.AddDays(7 * (intervalNumber + 1));
                     fromDate = DateTime.Parse(toDate.ToString()).AddDays(7 * (intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber)));
 
                     break;
@@ -219,6 +252,7 @@ namespace WebFreight.Web.Helpers
                     fromDate = DateTime.Parse(toDate.ToString()).AddMonths(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
 
 
+
                     break;
 
                 case "Quarter":
@@ -227,12 +261,14 @@ namespace WebFreight.Web.Helpers
                     toDate = new DateTime(toDate.Value.Year, toDate.Value.Month, 1);
                     fromDate = AddQuarters((DateTime)toDate, intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
 
+
                     break;
 
                 case "Year":
 
                     toDate = new DateTime(currentDate.AddYears(intervalNumber + 1).Year, 1, 1);
                     fromDate = DateTime.Parse(toDate.ToString()).AddYears(intervalNumber > 0 ? (intervalNumber * -1) : Math.Abs(intervalNumber));
+
 
                     break;
                 default:
@@ -241,11 +277,14 @@ namespace WebFreight.Web.Helpers
                     break;
             }
 
-            string result = BuildDateSql(fromDate, toDate, fieldName);
+            string result = BuildDateSql(fromDate, toDate, fieldName, tenant, null, null, isSample);
 
             return result;
 
         }
+
+
+
 
         private DateTime AddQuarters(DateTime originalDate, int quarters)
         {
@@ -258,19 +297,31 @@ namespace WebFreight.Web.Helpers
             return dt.AddDays(-1 * diff).Date;
         }
 
-        private string BuildDateSql(DateTime? fromDate, DateTime? toDate, string fieldName, string operatorCode=null, string range = null)
+        private string BuildDateSql(DateTime? fromDate, DateTime? toDate, string fieldName, int tenant, string operatorCode = null, string range = null, bool isSample = false)
         {
             string result = string.Empty;
+            string fromDateString = fromDate != null ? string.Format("{0:yyyy-MM-dd}", fromDate) : "";
+            string toDateString = toDate != null ? (string.Format("{0:yyyy-MM-dd}", toDate)) : "";
+
+
             if (range == "Day" && operatorCode == "Current")
             {
-                result = (fieldName + "= '" + (fromDate != null ? fromDate.Value.ToShortDateString():"") + "'");
+                result = (fieldName + "= '" + fromDateString + "'");
+                if (isSample)
+                {
+                    result = " = " + FormatDate(DateTime.Parse(fromDateString), tenant);
+                }
             }
             else
             {
-                result = (fieldName + " >= '" + (fromDate != null ? fromDate.Value.ToShortDateString() : "" ) + "' and " + fieldName + " < '" + (toDate != null ? toDate.Value.ToShortDateString() + " 23:59:59" : "") + "'");
+                result = (fieldName + " >= '" + fromDateString + "' and " + fieldName + " < '" + toDateString + "'");
+                if (isSample)
+                {
+                    result = FormatDate(DateTime.Parse(fromDateString), tenant) + " - " + FormatDate(DateTime.Parse(toDateString).AddDays(-1), tenant);
+                }
             }
 
-                
+
 
             return result;
 

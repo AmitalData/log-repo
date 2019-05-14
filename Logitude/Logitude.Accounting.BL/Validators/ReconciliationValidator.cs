@@ -10,17 +10,45 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.BL.Interfaces;
+using Microsoft.Practices.Unity;
+using Logitude.Server.Tools;
+using Logitude.BL.Helpers;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.Validators
 {
     public partial class ReconciliationValidator
     {
+        public const string M_YouShouldSelectTwoTransactions = "Journal.M.YouShouldSelectTwoTransactions";
+        public const string M_SaidnoMultiCurrencyReconcile = "Eyal Said no MultiCurrency Reconcile ";
+        public const string M_ReconciliationLinesHaveuseTransactionIdfewtimes = "ReconciliationLines Have use TransactionId few times ";
+        public const string M_DeletedReconciliationLinesisnotallowed = "init DeletedReconciliationLines is not allowed ";
+        public const string M_ReconciliationLinescanonlyinsert = "ReconciliationLines can only insert ";
+        public const string M_CantIncludeTwoOrMorePayment = "Accounting.O.CantIncludeTwoOrMorePayment";
+        public const string M_ReconciliationLinescanonlybeinsertmode = "ReconciliationLines can only be insert mode ";
+
+        public const string M_reconciliationLineTransactionIdIsnull = "String.IsNullOrWhiteSpace(reconciliationLine.TransactionId) line ";
+
+        public const string M_TransactionIdNotinDB = " TransactionId Not in DB";
+        public const string M_ledgerTransactionalreadyReconciled = " ledgerTransaction already Reconciled  ?? ? TransactionId=";
+        public const string M_OpenAmountCurrencyIdDiffreconciliationLineCurrencyId = "(ledgerTransactionPM.OpenAmountCurrencyId != reconciliationLine.CurrencyId)";
+        public const string M_InsertledgerTransactionbutIsnotReconciled = "Insert ledger Transaction but Is not Reconciled ";
+
+        public const string M_OpenAmountis0ReconcileNot = "Open Amount == 0 but (Reconciliation Amount not equal Open Amount of transaction) ";
+
+        public const string M_OpenAmountGreater0ReconcileNot0toOpenAmout = "Reconciliation Amount have to be greter than 0 and less than Open Amount of transaction ";
+        public const string M_OpenAmountLess0ReconcileNoOpenAmoutto0 = "ReconciliationAmount have to be Less than 0 and more than Open Amount of transaction ";
+        public const string M_sumofAmounttoreconcilemUST0 = "the sum of Amount to reconcile of all selected transactions is not zero ";
+
+
+
         public static ValidationResult IsReconciliationValid(ReconciliationPM myReconciliationPM, System.ComponentModel.DataAnnotations.ValidationContext context)
         {
             bool useLocal = true;
             var user = GetLoggedContact(myReconciliationPM.Tenant);
             if (user != null) useLocal = !(GetLoggedContact(myReconciliationPM.Tenant).DontShowLocal);
-            string txt_YouShouldSelectTwoTransactions = TranslateTextsClass.Translate("Journal.M.YouShouldSelectTwoTransactions", 0, useLocal);
+            string txt_YouShouldSelectTwoTransactions = TranslateMyTextCode(/*"Journal.M.YouShouldSelectTwoTransactions"*/M_YouShouldSelectTwoTransactions, 0, useLocal);
 
             // minimum rows
             List<string> errorsList = new List<string>();
@@ -37,20 +65,20 @@ namespace Logitude.Accounting.BL.Validators
             var listCurrency = myReconciliationPM.ReconciliationLines.Select(rec => rec.CurrencyId).Distinct().ToList();
             if (listCurrency.Count() > 1)
             {
-                AddError(errorsList,"Eyal Said no MultiCurrency Reconcile " + string.Join(",",listCurrency.ToArray()));
+                AddError(errorsList,/*"Eyal Said no MultiCurrency Reconcile "*/ M_SaidnoMultiCurrencyReconcile + string.Join(",", listCurrency.ToArray()));
             }
 
             // repeate transaction
             var repeating = myReconciliationPM.ReconciliationLines.GroupBy(r => r.TransactionId).Where(g => g.Count() > 1).ToList();
             if (repeating.Count > 0)
             {
-                AddError(errorsList,"ReconciliationLines Have use TransactionId few times " + repeating.First().First().TransactionId);
+                AddError(errorsList,/*"ReconciliationLines Have use TransactionId few times "*/M_ReconciliationLinesHaveuseTransactionIdfewtimes + repeating.First().First().TransactionId);
             }
 
             // deleted lines
             if (myReconciliationPM.DeletedReconciliationLines.Any())
             {
-                AddError(errorsList, "init DeletedReconciliationLines is not allowed ");
+                AddError(errorsList, /*"init DeletedReconciliationLines is not allowed "*/M_DeletedReconciliationLinesisnotallowed);
             }
 
             // updateed lines
@@ -58,25 +86,27 @@ namespace Logitude.Accounting.BL.Validators
             {
                 if (myReconciliationPM.ReconciliationLines.Any(r => r.ChangeSetOp != ChangeSetOperation.None))
                 {
-                    AddError(errorsList, "ReconciliationLines can only insert ");
+                    AddError(errorsList, /*"ReconciliationLines can only insert "*/M_ReconciliationLinescanonlyinsert);
                 }
             }
+            var myDataProvider = context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as IReconciliationValidatorContextDataProvider;
 
             // multiple payment check - TASK 44660
             int paymentsCount = 0;
-            LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(myReconciliationPM.Tenant);
+            //LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(myReconciliationPM.Tenant);
             List<string> transactionsId = myReconciliationPM.ReconciliationLines.Where(d => d.TransactionId != null).Select(a => a.TransactionId).ToList();
-            List<LedgerTransactionPM> transactionsPMList = transQuery.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
+            List<LedgerTransactionPM> transactionsPMList = //transQuery.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
+                myDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, myReconciliationPM.Tenant);
             paymentsCount = transactionsPMList.Count(d => (d.SourceTypeCode == "3" || d.SourceTypeCode == "5") && d.OriginalJournalId == null); // 3- ARPayment , or 5- APPayment , and not storno
             if (paymentsCount > 1)
             {
-                //Can’t include more than one payment in the same reconciliation” לא ניתן לכלול יותר מקבלה אחת באותה התאמה
-                AddError(errorsList, TextCodesTranslator.TranslateText("Accounting.O.CantIncludeTwoOrMorePayment",0,useLocal));
+                //Can’t include more than one payment in the same reconciliation” ?? ???? ????? ???? ????? ??? ????? ?????
+                AddError(errorsList, TranslateMyTextCode(/*"Accounting.O.CantIncludeTwoOrMorePayment"*/M_CantIncludeTwoOrMorePayment, 0, useLocal));
             }
 
             //
             // Check Lines
-            var myDataProvider = context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as IReconciliationValidatorContextDataProvider;
+
             var transactionIdList = myReconciliationPM.ReconciliationLines.Select(rec => rec.TransactionId).ToList();
             List<LedgerTransactionPM> ledgerTransactionPMs = null;
             GLAccountPM myGLAccount = null;
@@ -96,7 +126,8 @@ namespace Logitude.Accounting.BL.Validators
             }
             if (sum != 0)
             {
-                AddError(errorsList, "the sum of Amount to reconcile of all selected transactions is not zero ");
+
+                AddError(errorsList, M_sumofAmounttoreconcilemUST0);
             }
 
 
@@ -105,7 +136,7 @@ namespace Logitude.Accounting.BL.Validators
             //
             if (errorsList.Count == 0)
             {
-                if (ledgerTransactionPMs!= null)
+                if (ledgerTransactionPMs != null)
                 {
                     //myReconciliationPM.CurrentContextTag = ledgerTransactionPMs;
                 }
@@ -123,17 +154,18 @@ namespace Logitude.Accounting.BL.Validators
             }
         }
 
-        private static void CheckReconciliationLine(List<string> errorsList, List<LedgerTransactionPM> ledgerTransactionPMs, GLAccountPM myGLAccount,ref decimal sum, ReconciliationLinePM reconciliationLine)
+        private static void CheckReconciliationLine(List<string> errorsList, List<LedgerTransactionPM> ledgerTransactionPMs, GLAccountPM myGLAccount, ref decimal sum, ReconciliationLinePM reconciliationLine)
         {
             if (reconciliationLine.ChangeSetOp != ChangeSetOperation.Insert)
             {
-                AddError(errorsList, "ReconciliationLines can only be insert mode ");//i think so !!!????
+                AddError(errorsList, /*"ReconciliationLines can only be insert mode "*/M_ReconciliationLinescanonlybeinsertmode);//i think so !!!????
             }
             if (String.IsNullOrWhiteSpace(reconciliationLine.TransactionId))
             {
-                AddError(errorsList, "String.IsNullOrWhiteSpace(reconciliationLine.TransactionId) line " + reconciliationLine.Line);
+                AddError(errorsList,
+                    M_reconciliationLineTransactionIdIsnull/*"String.IsNullOrWhiteSpace(reconciliationLine.TransactionId) line "*/ + reconciliationLine.Line);
             }
-            
+
             if (String.IsNullOrWhiteSpace(reconciliationLine.TransactionId))
             {
                 AddError(errorsList, "String.IsNullOrWhiteSpace(reconciliationLine.TransactionId) line " + reconciliationLine.Line);
@@ -145,20 +177,20 @@ namespace Logitude.Accounting.BL.Validators
                     var ledgerTransactionPM = ledgerTransactionPMs.FirstOrDefault(rec => rec.Id == reconciliationLine.TransactionId);
                     if (ledgerTransactionPM == null)
                     {
-                        AddError(errorsList, " TransactionId Not in DB" + reconciliationLine.TransactionId);
+                        AddError(errorsList, /*" TransactionId Not in DB"*/M_TransactionIdNotinDB + reconciliationLine.TransactionId);
                     }
                     else
                     {
                         if (ledgerTransactionPM.IsReconciled)
                         {
-                            AddError(errorsList, " ledgerTransaction already Reconciled  ?? ? TransactionId=" + reconciliationLine.TransactionId);
+                            AddError(errorsList, M_ledgerTransactionalreadyReconciled /*" ledgerTransaction already Reconciled  ?? ? TransactionId="*/ + reconciliationLine.TransactionId);
                         }
                         if (ledgerTransactionPM.OpenAmountCurrencyId != reconciliationLine.CurrencyId)
                         {
-                            AddError(errorsList, " (ledgerTransactionPM.OpenAmountCurrencyId != reconciliationLine.CurrencyId)" + reconciliationLine.TransactionId);
+                            AddError(errorsList, M_OpenAmountCurrencyIdDiffreconciliationLineCurrencyId/*"(ledgerTransactionPM.OpenAmountCurrencyId != reconciliationLine.CurrencyId)" */+ reconciliationLine.TransactionId);
                         }
                         if (myGLAccount.ReconcileMethodCode ==
-                            //AccountingSettingResolver.ResolveLocalCurrency0ReconcileMethodCode()
+            //AccountingSettingResolver.ResolveLocalCurrency0ReconcileMethodCode()
             "0" //((int)Logitude.Accounting.BL.EntityPMs.ReconcileMethodPM.ReconcileMethodEnum.LocalCurrency).ToString()
             ) //Local Currency
                         {
@@ -175,28 +207,29 @@ namespace Logitude.Accounting.BL.Validators
                         {
                             if (!ledgerTransactionPM.IsReconciled)
                             {
-                                AddError(errorsList, "Insert ledger Transaction but Is not Reconciled " );
+                                AddError(errorsList, /*"Insert ledger Transaction but Is not Reconciled "*/M_InsertledgerTransactionbutIsnotReconciled);
                             }
                         }
                         if (ledgerTransactionPM.OpenAmount == 0)
                         {
                             if (reconciliationLine.ReconciliationAmount != ledgerTransactionPM.OpenAmount)
                             {
-                                AddError(errorsList, "Open Amount == 0 but (Reconciliation Amount not equal Open Amount of transaction) ");
+                                AddError(errorsList, M_OpenAmountis0ReconcileNot);
                             }
                         }
                         else if (ledgerTransactionPM.OpenAmount > 0)
                         {
                             if (reconciliationLine.ReconciliationAmount <= 0 || reconciliationLine.ReconciliationAmount > ledgerTransactionPM.OpenAmount)
                             {
-                                AddError(errorsList, "Reconciliation Amount have to be greter than 0 and less than Open Amount of transaction " );
+                                AddError(errorsList, M_OpenAmountGreater0ReconcileNot0toOpenAmout/*"Reconciliation Amount have to be greter than 0 and less than Open Amount of transaction "*/ );
                             }
                         }
                         else //if (ledgerTransactionPM.OpenAmount < 0)
                         {
                             if (reconciliationLine.ReconciliationAmount > 0 || reconciliationLine.ReconciliationAmount < ledgerTransactionPM.OpenAmount)
                             {
-                                AddError(errorsList, "ReconciliationAmount have to be Less than 0 and more than Open Amount of transaction " );
+
+                                AddError(errorsList, M_OpenAmountLess0ReconcileNoOpenAmoutto0 /*"ReconciliationAmount have to be Less than 0 and more than Open Amount of transaction " */);
                             }
                         }
 
@@ -212,7 +245,7 @@ namespace Logitude.Accounting.BL.Validators
             }
 
             sum += reconciliationLine.ReconciliationAmount;
-            
+
         }
 
         private static void AddError(List<string> errorsList, string mess)
@@ -223,23 +256,46 @@ namespace Logitude.Accounting.BL.Validators
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
 
-        private static ContactPM GetLoggedContact(int tenant)
-        {
 
+        public static ContactPM GetLoggedContact(int tenant)
+        {
             if (OverrideGetLoggedContactFunc != null)
             {
                 return OverrideGetLoggedContactFunc(tenant);
             }
-            ContactPM loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(
-                //SecurityUtility.GetAuthenticatedUser()
-                AuthenticationUtil.ResolveUserIdentityName(tenant)
-                , tenant);
-            if (loggedContact == null)
-            {
-                loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
-            }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
-            return loggedContact;
+
+            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
+
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
         }
+
+        public static ITextCodeTranslator OverrideITextCodeTranslator { get; set; }
+        static string TranslateMyTextCode(string textCodeCode, int tenant, bool useLocal)
+        {
+            string trans = "";
+            if (OverrideITextCodeTranslator != null)
+            {
+                trans = OverrideITextCodeTranslator.Translate(textCodeCode, tenant);
+            }
+            else
+            {
+
+
+                //bool useLocal = true;
+                //var user = GetLoggedContact(tenant);
+                //if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
+
+
+                trans = TranslateTextsClass.Translate(textCodeCode, tenant, useLocal);
+            }
+            if (string.IsNullOrWhiteSpace(trans))
+            {
+                trans = "$Text(" + textCodeCode + ")";//Our Version Of Uniface Convention
+            }
+            return trans;
+        }
+
     }
 }

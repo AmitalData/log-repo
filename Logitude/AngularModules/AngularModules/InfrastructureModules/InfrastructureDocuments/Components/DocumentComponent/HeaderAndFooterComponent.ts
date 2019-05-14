@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ChangeDetectorRef, EventEmitter }  from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef, EventEmitter }  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {Guid} from '../../../../Infrastructure/Utilities/Guid';
 import {ServiceArgs} from '../../../../Infrastructure/DataContracts/ServiceArgs';
@@ -50,6 +50,7 @@ export class HeaderAndFooterComponent implements OnInit {
     public documentTypeTemplatePM: DocumentTypeTemplatePM;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private documentTypeTemplatePMService: DocumentTypeTemplatePMService;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, private cd: ChangeDetectorRef, public _htmlEditorService: HtmlEditorService) {
         if (this.documentTypeTemplatePMService == null) {
             this.documentTypeTemplatePMService = new DocumentTypeTemplatePMService();
@@ -169,21 +170,21 @@ export class HeaderAndFooterComponent implements OnInit {
 
             }
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
 
     }
 
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
 
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
         this.HtmlString = this.froalaEditorSetting.froalaEditorComponent.getHtml();
 
         if (!this.documentTypeTemplatePM && this.OnHeaderAndFooterCompleteEvent) {
@@ -192,7 +193,7 @@ export class HeaderAndFooterComponent implements OnInit {
         }
 
         this.DestroyfroalaEditor();
-        SessionLocator.CurrentSession.CurrentWindow.Close("");
+        this.CurrentSession.CurrentWindow.Close("");
 
 
     }
@@ -249,14 +250,14 @@ export class HeaderAndFooterComponent implements OnInit {
 
             if (this.HeightValue < 1 && AppTool.IsNullOrEmpty(this.froalaEditorSetting.froalaEditorComponent.getHtml())) 
             {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.CloseButtonClicked();
             }
             else this.ValidationErrorsList.push("Height should be have value between 1 cm and 8 cm");
 
         }
         else {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.CloseButtonClicked();
 
         }

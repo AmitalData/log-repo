@@ -246,8 +246,7 @@ tenant);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 int tenant = authToken.Tenant;
-                if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+               
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -362,8 +361,7 @@ tenant);
                 #region filters
 
                 int tenant = authToken.Tenant;
-                if (filters.Tenant != null)
-                    tenant = filters.Tenant.Value;
+               
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -549,10 +547,36 @@ tenant);
             }
 
         }
+
+        public HttpResponseMessage GetByNumber(string number)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                int tenant = authToken.Tenant;
+
+                ReconciliationQueryService query = new ReconciliationQueryService(tenant);
+                ReconciliationPM reco = query.GetByNumber(number, tenant);
+
+
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, reco);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
     }
 
- 
-   
+
+
     public class OpenReconciliationAggregate
     {
         public GenericCallBack CallBack { get; set; }

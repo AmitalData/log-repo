@@ -3,6 +3,12 @@ import {FocusMeDirective} from './Utilities/FocusMeDirective';
 import {LocationDirective} from './Utilities/LocationDirective';
 import {FixedPositionDirective} from './Utilities/FixedPositionDirective';
 
+//rtl directives
+import {FloatStartDirective} from './Utilities/RTLDirectives/FloatStartDirective';
+import { FloatEndDirective } from './Utilities/RTLDirectives/FloatEndDirective';
+import { TextAlignStart } from './Utilities/RTLDirectives/TextAlignStart';
+import { TextAlignEnd } from './Utilities/RTLDirectives/TextAlignEnd';
+
 // Pipes
 import {DateTimeToColorPipe} from './Pipes/DateTimePipes/DateTimeToColorPipe';
 import {NumbersPipe} from './Pipes/NumbersPipe';
@@ -31,6 +37,7 @@ import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
 // Controls Components
 import {GeneralSendComponent} from './Components/LogitudeComponents/GeneralSendComponent';
 import {LogLabelComponent} from './Components/LogitudeComponents/LogLabelComponent';
+import {LogToolTipComponent} from './Components/LogitudeComponents/LogToolTip/LogToolTipComponent';
 import {LogTextBoxComponent} from './Components/LogitudeComponents/LogTextBoxComponent';
 import {MultilineTextBoxWindow} from './Components/LogitudeComponents/MultilineTextBoxWindow';
 import {LogTextBoxV2Component} from './Components/LogitudeComponents/LogTextBoxV2Component';
@@ -53,7 +60,9 @@ import {ListHeaderTemplateComponent} from './Components/LogitudeComponents/LogGr
 import {ListTemplateComponent} from './Components/LogitudeComponents/LogGridComponent/ListTemplateComponent';
 import {UsersQueryList} from './Components/CustomControls/UsersQueryList';
 import {ChooseDatesComponent} from './Components/CustomControls/ChooseDatesComponent';
-import {SearchBox} from './Components/CustomControls/SearchBox';
+import { SearchBox } from './Components/CustomControls/SearchBox';
+import { RatioBoxComponent } from './Components/CustomControls/RatioBoxComponent';
+
 import {LogCellTemplateComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
 import {LogColumnComponent} from './Components/LogitudeComponents/EditableLogGridComponent/LogColumnComponent';
 import {EditableLogGridComponent} from './Components/LogitudeComponents/EditableLogGridComponent/EditableLogGridComponent';
@@ -163,6 +172,11 @@ export const Directives =
         FocusMeDirective,
         LocationDirective,
         FixedPositionDirective,
+
+        FloatStartDirective,
+        FloatEndDirective,
+        TextAlignStart,
+        TextAlignEnd,
     ];
 export const Pipes =
     [
@@ -194,6 +208,7 @@ export const ControlsComponents =
     [
         GeneralSendComponent,
         LogLabelComponent,
+        LogToolTipComponent,
         LogTextBoxComponent,
         MultilineTextBoxWindow,
         LogTextBoxV2Component,
@@ -216,6 +231,7 @@ export const ControlsComponents =
         UsersQueryList,
         ChooseDatesComponent,
         SearchBox,
+        RatioBoxComponent,
         LogCellTemplateComponent,
         LogColumnComponent,
         EditableLogGridComponent,
@@ -372,7 +388,7 @@ export class ModuleDeclarations {
             case 'btnUpdateComponent': { myResult = btnUpdateComponent; break; }
             case 'ToComponent': { myResult = ToComponent; break; }
             case 'DWLogSearchAddFieldsComponent': { myResult = DWLogSearchAddFieldsComponent; break; }
-                
+
             case 'NewEntityComponent': { myResult = NewEntityComponent; break; }
             case 'LogSearchWindowComponent': { myResult = LogSearchWindowComponent; break; }
             case 'DWLogSearchWindowComponent': { myResult = DWLogSearchWindowComponent; break; }

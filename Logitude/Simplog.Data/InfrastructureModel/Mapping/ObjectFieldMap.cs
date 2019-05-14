@@ -53,7 +53,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.GeneratedComponentPath).HasMaxLength(250).IsUnicode(false);
             this.Property(t => t.DisplayInDocumentReferences);
             this.Property(t => t.Code).IsRequired().HasMaxLength(100).IsUnicode(false);
-            
+            this.Property(t => t.EnableFullscreenTextBox);
+
             // Table & Column Mappings
             this.ToTable("ObjectFields");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -127,6 +128,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.CopyToDW).HasColumnName("CopyToDW");
             this.Property(t => t.DisplayOnLookUpLocal).HasColumnName("DisplayOnLookUpLocal");
+            this.Property(t => t.EnableFullscreenTextBox).HasColumnName("EnableFullscreenTextBox");
 
 
 

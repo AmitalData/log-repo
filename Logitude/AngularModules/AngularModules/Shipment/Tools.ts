@@ -27,8 +27,10 @@ import {ServiceResponse} from '../Infrastructure/DataContracts/ServiceResponse';
 import {ShipmentPickUpPM} from './EntityPMs/ShipmentPickUpPM';
 import {ShipmentDeliveryPM} from './EntityPMs/ShipmentDeliveryPM';
 import {VatTypeList} from '../Common/EntityLists/VatTypeList';
+import { retry } from 'rxjs/operators';
 
 export class ShipmentTool {
+    private static CurrentSession = SessionLocator.SelectedSession;
     public static IsEditingEnabled(entityPM: ShipmentPM) {
         var myResult: boolean = true;
 
@@ -452,6 +454,8 @@ export class ShipmentTool {
             shipmentPM.OrderVolumetricWeight = oldShipment.OrderVolumetricWeight;
             shipmentPM.OrderGrossWeight = oldShipment.OrderGrossWeight;
             shipmentPM.OrderChargeableWeight = oldShipment.OrderChargeableWeight;
+            shipmentPM.OrderGrossWeightEdited = oldShipment.OrderGrossWeightEdited;
+            shipmentPM.OrderChargeableWeightEdited = oldShipment.OrderChargeableWeightEdited;
             shipmentPM.BookingNumberOfPackages = oldShipment.BookingNumberOfPackages;
             shipmentPM.OrderIsDangerouseGoods = oldShipment.OrderIsDangerouseGoods;
             shipmentPM.GrossWeight = oldShipment.GrossWeight;
@@ -1815,6 +1819,8 @@ export class ShipmentTool {
                                     case "GWTN": { myQuantity = entityPM.GrossWeightPerTon; break; }
                                     case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
                                     case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
+                                    case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
+                                    case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
                                     case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
                                     default: { break; }
                                 }
@@ -1847,6 +1853,8 @@ export class ShipmentTool {
                                     case "PRVL": { myQuantity = entityPM.ValueOfGoods; break; }
                                     case "PRFR": { myQuantity = ArrayTool.Sum(entityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
                                     case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
+                                    case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
+                                    case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
                                     default: { break; }
                                 }
 
@@ -1944,59 +1952,35 @@ export class ShipmentGenerator {
                             }
                     }
 
+                    switch (this.EntityPM.DirectionId) {
+                        case "E":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsExport);
+                                break;
+                            }
+
+                        case "I":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsImport);
+                                break;
+                            }
+
+                        case "D":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsDomestic);
+                                break;
+                            }
+
+                        case "R":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsDrop);
+                                break;
+                            }
+                    }
+
                     if (this.IsLCLEntity) {
                         allChargesTypes.sort((a, b) => { return a.ViewOrder - b.ViewOrder }).forEach((item) => {
-                            var newRecord: ShipmentPayablePM = new ShipmentPayablePM(this.EntityPM);
-                            newRecord.Tenant = SessionLocator.Tenant;
-                            newRecord.ShipmentId = this.EntityPM.Id;
-                            newRecord.ShipmentNumber = this.EntityPM.ShipmentNumber;
-                            newRecord.ShipmentPayableLineStatusCode = "EMPT";
-                            newRecord.ShipmentPayableAmountTypeCode = "ACCU";
-                            newRecord.ShipmentPayableAmountTypeName = "Accrual";
-                            newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
-                            newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
-                            newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
-                            newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
-                            newRecord.ChargesTypeId = item.Id;
-                            newRecord.ChargesTypeCode = item.Code;
-                            newRecord.ChargesTypeName = item.EnglishName;
-                            newRecord.MeasurementId = item.MeasurementId;
-                            newRecord.MeasurementCode = item.MeasurementCode;
-                            newRecord.MeasurementShortName = item.MeasurementShortName;
-                            newRecord.VatTypeId = item.VatTypeId;
-                            newRecord.ChargesGroupCode = item.ChargesGroupCode;
-                            newRecord.DueTypeCode = item.DueTypeCode;
-                            newRecord.DueTypeName = item.DueTypeName;
-                            newRecord.IATACodeId = item.IATACodeId;
-                            newRecord.ViewOrder = item.ViewOrder;
-                            newRecord.IsBackToBack = item.IsBackToBack;
-
-                            newRecord.PrepaidCollectId = item.ChargesGroupCode == "FRT" ? this.EntityPM.FreightPrepaidCollectId : this.EntityPM.OtherPrepaidCollectId;
-
-                            switch (item.MeasurementCode) {
-                                case "GRWT": { newRecord.Quantity = this.EntityPM.GrossWeight; break; }
-                                case "CHWT": { newRecord.Quantity = this.EntityPM.ChargeableWeight; break; }
-                                case "VOLU": { newRecord.Quantity = this.EntityPM.Volume; break; }
-                                case "BTEU": { newRecord.Quantity = this.EntityPM.TEU; break; }
-                                case "FIXD": { newRecord.Quantity = 1; break; }
-                                case "PRVL": { newRecord.Quantity = this.EntityPM.ValueOfGoods; break; }
-                                case "GWTN": { newRecord.Quantity = this.EntityPM.GrossWeightPerTon; break; }
-                                case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; break; }
-                                default: { break; }
-                            }
-
-                            if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH") {
-                                newRecord.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-                            }
-
-                            else {
-                                newRecord.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
-                            }
-
-                            this.GetCurrencyCode(newRecord);
-                            newRecord.Rate = this.GetCurrencyRate(newRecord.CurrencyId);
-                            newRecord.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
-                            this.EntityPM.AddPayable(newRecord);
+                            this.EntityPM.AddPayable(this.CreateNewPayableFromLCLChargesType(item));
                         });
 
                         this.EntityPM.ShipmentPayables.filter(f => f.MeasurementCode == "PRFR").forEach(item => {
@@ -2072,6 +2056,10 @@ export class ShipmentGenerator {
                                 });
                             });
                         }
+
+                        allChargesTypes.filter(f => AppTool.IsNullOrEmpty(f.ContainerMeasurementId)).sort((a, b) => { return a.ViewOrder - b.ViewOrder }).forEach(myChargeType => {
+                            this.EntityPM.AddPayable(this.CreateNewPayableFromLCLChargesType(myChargeType));
+                        });
                     }
                 }
             }
@@ -2126,6 +2114,8 @@ export class ShipmentGenerator {
                         case "PRVL":
                         case "PRFR":
                         case "GWTN":
+                        case "CWKG": 
+                        case "GWKG":
                         case "QTY":
                             {
                                 this.CreateNewPayableFromOriginShipment(item);
@@ -2190,6 +2180,8 @@ export class ShipmentGenerator {
                     case "PRVL":
                     case "PRFR":
                     case "GWTN":
+                    case "CWKG": 
+                    case "GWKG":
                     case "QTY":
                         {
                             break;
@@ -2284,6 +2276,8 @@ export class ShipmentGenerator {
                 case "FIXD":
                 case "PRVL":
                 case "GWTN":
+                case "CWKG": 
+                case "GWKG": 
                 case "QTY":
                     {
                         var itemCharge: QuoteChargePM = this.BaseQuote.QuoteCharges.filter(f => f.Id == item.QuoteChargeId)[0];
@@ -2317,6 +2311,8 @@ export class ShipmentGenerator {
             case "PRVL": { myQuantity = this.EntityPM.ValueOfGoods; break; }
             case "PRFR": { myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentPayables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentPayableParentId)), "ExpectedAmount"); break; }
             case "GWTN": { myQuantity = this.EntityPM.GrossWeightPerTon; break; }
+            case "CWKG": { myQuantity = this.EntityPM.ChargeableWeightInKG; break; }
+            case "GWKG": { myQuantity = this.EntityPM.GrossWeightInKG; break; }
             case "QTY": { myQuantity = this.EntityPM.NumberOfPackages; break; }
             default: { break; }
         }
@@ -2546,6 +2542,59 @@ export class ShipmentGenerator {
             }
         }
     }
+    private CreateNewPayableFromLCLChargesType(item: ChargesTypeList) {
+        var newRecord: ShipmentPayablePM = new ShipmentPayablePM(this.EntityPM);
+        newRecord.Tenant = SessionLocator.Tenant;
+        newRecord.ShipmentId = this.EntityPM.Id;
+        newRecord.ShipmentNumber = this.EntityPM.ShipmentNumber;
+        newRecord.ShipmentPayableLineStatusCode = "EMPT";
+        newRecord.ShipmentPayableAmountTypeCode = "ACCU";
+        newRecord.ShipmentPayableAmountTypeName = "Accrual";
+        newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
+        newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
+        newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
+        newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
+        newRecord.ChargesTypeId = item.Id;
+        newRecord.ChargesTypeCode = item.Code;
+        newRecord.ChargesTypeName = item.EnglishName;
+        newRecord.MeasurementId = item.MeasurementId;
+        newRecord.MeasurementCode = item.MeasurementCode;
+        newRecord.MeasurementShortName = item.MeasurementShortName;
+        newRecord.VatTypeId = item.VatTypeId;
+        newRecord.ChargesGroupCode = item.ChargesGroupCode;
+        newRecord.DueTypeCode = item.DueTypeCode;
+        newRecord.DueTypeName = item.DueTypeName;
+        newRecord.IATACodeId = item.IATACodeId;
+        newRecord.ViewOrder = item.ViewOrder;
+        newRecord.IsBackToBack = item.IsBackToBack;
+
+        newRecord.PrepaidCollectId = item.ChargesGroupCode == "FRT" ? this.EntityPM.FreightPrepaidCollectId : this.EntityPM.OtherPrepaidCollectId;
+
+        switch (item.MeasurementCode) {
+            case "GRWT": { newRecord.Quantity = this.EntityPM.GrossWeight; break; }
+            case "CHWT": { newRecord.Quantity = this.EntityPM.ChargeableWeight; break; }
+            case "VOLU": { newRecord.Quantity = this.EntityPM.Volume; break; }
+            case "BTEU": { newRecord.Quantity = this.EntityPM.TEU; break; }
+            case "FIXD": { newRecord.Quantity = 1; break; }
+            case "PRVL": { newRecord.Quantity = this.EntityPM.ValueOfGoods; break; }
+            case "GWTN": { newRecord.Quantity = this.EntityPM.GrossWeightPerTon; break; }
+            case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; break; }
+            default: { break; }
+        }
+
+        if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH") {
+            newRecord.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+        }
+
+        else {
+            newRecord.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+        }
+
+        this.GetCurrencyCode(newRecord);
+        newRecord.Rate = this.GetCurrencyRate(newRecord.CurrencyId);
+        newRecord.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
+        return newRecord;
+    }
 
     // Receivables
     public GenerateReceivablesAutoDisplay() {
@@ -2590,60 +2639,38 @@ export class ShipmentGenerator {
                             }
                     }
 
+                    switch (this.EntityPM.DirectionId) {
+                        case "E":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsExport);
+                                break;
+                            }
+
+                        case "I":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsImport);
+                                break;
+                            }
+
+                        case "D":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsDomestic);
+                                break;
+                            }
+
+                        case "R":
+                            {
+                                allChargesTypes = allChargesTypes.filter(r => r.IsDrop);
+                                break;
+                            }
+                    }
+
                     if (allChargesTypes.length > 0) {
                         if (this.IsLCLEntity) {
-                            allChargesTypes.sort((a, b) => { return a.ViewOrder - b.ViewOrder }).forEach((item) => {
 
-                                var newRecord: ShipmentReceivablePM = new ShipmentReceivablePM(this.EntityPM);
-                                newRecord.Tenant = SessionLocator.Tenant;
-                                newRecord.ShipmentId = this.EntityPM.Id;
-                                newRecord.ShipmentNumber = this.EntityPM.ShipmentNumber;
-                                newRecord.ShipmentReceivableLineStatusCode = "EMPT";
-                                newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
-                                newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
-                                newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
-                                newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
-                                newRecord.ChargesTypeId = item.Id;
-                                newRecord.ChargesTypeCode = item.Code;
-                                newRecord.ChargesTypeName = item.EnglishName;
-                                newRecord.MeasurementId = item.MeasurementId;
-                                newRecord.MeasurementCode = item.MeasurementCode;
-                                newRecord.MeasurementShortName = item.MeasurementShortName;
-                                newRecord.VatTypeId = item.VatTypeId;
-                                newRecord.ChargesGroupCode = item.ChargesGroupCode;
-                                newRecord.DueTypeCode = item.DueTypeCode;
-                                newRecord.DueTypeName = item.DueTypeName;
-                                newRecord.IATACodeId = item.IATACodeId;
-                                newRecord.ViewOrder = item.ViewOrder;
-                                newRecord.PrepaidCollectId = item.ChargesGroupCode == "FRT" ? this.EntityPM.FreightPrepaidCollectId : this.EntityPM.OtherPrepaidCollectId;
-                                newRecord.IsExpense = item.IsExpense;
-                                newRecord.IsBackToBack = item.IsBackToBack;
-
-                                switch (item.MeasurementCode) {
-                                    case "GRWT": { newRecord.Quantity = this.EntityPM.GrossWeight; break; }
-                                    case "CHWT": { newRecord.Quantity = this.EntityPM.ChargeableWeight; break; }
-                                    case "VOLU": { newRecord.Quantity = this.EntityPM.Volume; break; }
-                                    case "BTEU": { newRecord.Quantity = this.EntityPM.TEU; break; }
-                                    case "FIXD": { newRecord.Quantity = 1; break; }
-                                    case "PRVL": { newRecord.Quantity = this.EntityPM.ValueOfGoods; break; }
-                                    case "GWTN": { newRecord.Quantity = this.EntityPM.GrossWeightPerTon; }
-                                    case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; }
-                                    default: { break; }
-                                }
-
-                                if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH") {
-                                    newRecord.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-                                }
-
-                                else {
-                                    newRecord.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
-                                }
-
-                                this.GetCurrencyCode(newRecord);
-                                newRecord.Rate = this.GetCurrencyRate(newRecord.CurrencyId);
-                                newRecord.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
-                                this.EntityPM.AddReceivable(newRecord);
-                            })
+                            allChargesTypes.sort((a, b) => { return a.ViewOrder - b.ViewOrder }).forEach(item => {
+                                this.EntityPM.AddReceivable(this.CreateNewReceivableFromLCLChargesType(item));
+                            });
 
                             this.EntityPM.ShipmentReceivables.filter(f => f.MeasurementCode == "PRFR").forEach(item => {
                                 item.Quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount");
@@ -2722,6 +2749,10 @@ export class ShipmentGenerator {
                                     });
                                 });
                             }
+
+                            allChargesTypes.filter(f => AppTool.IsNullOrEmpty(f.ContainerMeasurementId)).sort((a, b) => { return a.ViewOrder - b.ViewOrder }).forEach(myChargeType => {
+                                this.EntityPM.AddReceivable(this.CreateNewReceivableFromLCLChargesType(myChargeType));
+                            });
                         }
                     }
                 }
@@ -2777,6 +2808,8 @@ export class ShipmentGenerator {
                         case "PRVL":
                         case "PRFR":
                         case "GWTN":
+                        case "CWKG": 
+                        case "GWKG": 
                         case "QTY":
                             {
                                 this.CreateNewReceivableFromOriginShipment(item);
@@ -2842,6 +2875,8 @@ export class ShipmentGenerator {
                     case "PRVL":
                     case "PRFR":
                     case "GWTN":
+                    case "CWKG": 
+                    case "GWKG": 
                     case "QTY":
                         {
                             break;
@@ -2930,6 +2965,8 @@ export class ShipmentGenerator {
                 case "FIXD":
                 case "PRVL":
                 case "GWTN":
+                case "CWKG": 
+                case "GWKG": 
                 case "QTY":
                     {
                         var itemCharge: QuoteChargePM = this.BaseQuote.QuoteCharges.filter(f => f.Id == item.QuoteChargeId)[0];
@@ -2963,6 +3000,8 @@ export class ShipmentGenerator {
             case "PRVL": { myQuantity = this.EntityPM.ValueOfGoods; break; }
             case "PRFR": { myQuantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
             case "GWTN": { myQuantity = this.EntityPM.GrossWeightPerTon; break; }
+            case "CWKG": { myQuantity = this.EntityPM.ChargeableWeightInKG; break; }
+            case "GWKG": { myQuantity = this.EntityPM.GrossWeightInKG; break; }
             case "QTY": { myQuantity = this.EntityPM.NumberOfPackages; break; }
             default: { break; }
         }
@@ -3214,6 +3253,59 @@ export class ShipmentGenerator {
                 }
             });
         }
+    }
+    private CreateNewReceivableFromLCLChargesType(item: ChargesTypeList) {
+
+        var newRecord: ShipmentReceivablePM = new ShipmentReceivablePM(this.EntityPM);
+        newRecord.Tenant = SessionLocator.Tenant;
+        newRecord.ShipmentId = this.EntityPM.Id;
+        newRecord.ShipmentNumber = this.EntityPM.ShipmentNumber;
+        newRecord.ShipmentReceivableLineStatusCode = "EMPT";
+        newRecord.CreatedByUserId = SessionLocator.LoggedUserId;
+        newRecord.UpdateByUserId = SessionLocator.LoggedUserId;
+        newRecord.CreateDate = DateTool.GetCurrentDateAsUtc();
+        newRecord.UpdateDate = DateTool.GetCurrentDateAsUtc();
+        newRecord.ChargesTypeId = item.Id;
+        newRecord.ChargesTypeCode = item.Code;
+        newRecord.ChargesTypeName = item.EnglishName;
+        newRecord.MeasurementId = item.MeasurementId;
+        newRecord.MeasurementCode = item.MeasurementCode;
+        newRecord.MeasurementShortName = item.MeasurementShortName;
+        newRecord.VatTypeId = item.VatTypeId;
+        newRecord.ChargesGroupCode = item.ChargesGroupCode;
+        newRecord.DueTypeCode = item.DueTypeCode;
+        newRecord.DueTypeName = item.DueTypeName;
+        newRecord.IATACodeId = item.IATACodeId;
+        newRecord.ViewOrder = item.ViewOrder;
+        newRecord.PrepaidCollectId = item.ChargesGroupCode == "FRT" ? this.EntityPM.FreightPrepaidCollectId : this.EntityPM.OtherPrepaidCollectId;
+        newRecord.IsExpense = item.IsExpense;
+        newRecord.IsBackToBack = item.IsBackToBack;
+
+        switch (item.MeasurementCode) {
+            case "GRWT": { newRecord.Quantity = this.EntityPM.GrossWeight; break; }
+            case "CHWT": { newRecord.Quantity = this.EntityPM.ChargeableWeight; break; }
+            case "VOLU": { newRecord.Quantity = this.EntityPM.Volume; break; }
+            case "BTEU": { newRecord.Quantity = this.EntityPM.TEU; break; }
+            case "FIXD": { newRecord.Quantity = 1; break; }
+            case "PRVL": { newRecord.Quantity = this.EntityPM.ValueOfGoods; break; }
+            case "GWTN": { newRecord.Quantity = this.EntityPM.GrossWeightPerTon; }
+            case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; }
+            default: { break; }
+        }
+
+        if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH") {
+            newRecord.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+        }
+
+        else {
+            newRecord.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+        }
+
+        this.GetCurrencyCode(newRecord);
+        newRecord.Rate = this.GetCurrencyRate(newRecord.CurrencyId);
+        newRecord.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
+
+        return newRecord;
     }
 }
 export class AWBHelper {
@@ -3471,6 +3563,7 @@ export class AWBCCSValidator {
     }
 }
 export class RoutingHelper {
+    private static CurrentSession = SessionLocator.SelectedSession;
     public static MainCarriageFromPortChanged(entityPM: ShipmentPM, list: PortList) {
         if (entityPM != null) {
             var myPortId: string = null;
@@ -4254,7 +4347,7 @@ export class RoutingHelper {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveOnCarriageLeg(entityPM: ShipmentPM) {
@@ -4337,7 +4430,7 @@ export class RoutingHelper {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveTransshipment1Leg(entityPM: ShipmentPM) {
@@ -4428,7 +4521,7 @@ export class RoutingHelper {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveTransshipment2Leg(entityPM: ShipmentPM) {
@@ -4519,7 +4612,7 @@ export class RoutingHelper {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
     public static RemoveTransshipment3Leg(entityPM: ShipmentPM) {
@@ -4610,7 +4703,7 @@ export class RoutingHelper {
                 entityPM.RemoveShipmentFollowUp(item);
             });
 
-            SessionLocator.CurrentSession.FireEvent("FollowupsChanged");
+            this.CurrentSession.FireEvent("FollowupsChanged");
         }
     }
 

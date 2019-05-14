@@ -53,6 +53,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
                         IsOld = a.IsOld,
                         IsCoreFeature = a.IsCoreFeature,
+                        ToggleCode = a.ToggleCode,
                     }).FirstOrDefault();
         }
 
@@ -73,6 +74,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
                         IsOld = a.IsOld,
                         IsCoreFeature = a.IsCoreFeature,
+                        ToggleCode = a.ToggleCode,
                     }).ToList();
         }
 
@@ -130,6 +132,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    ParentRoleId = myRole.ParentRoleId,
                                    IsCustomRole = myRole.IsCustomRole,
                                    ObjectTableName = a.ObjectTable == null ? "" : a.ObjectTable.Name,
+                                   ToggleCode = a.ToggleCode,
                                }).ToList();
                 #endregion
 
@@ -273,6 +276,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
                                             IsOld = a.IsOld,
                                             IsCoreFeature = a.IsCoreFeature,
+                                            ToggleCode = a.ToggleCode,
                                         }).ToList();
 
             List<FeaturePM> ffffff = features.Where(d => d.ObjectTableId == "1-1301").ToList();
@@ -412,6 +416,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
                                    IsOld = a.IsOld,
                                    IsCoreFeature = a.IsCoreFeature,
+                                   ToggleCode = a.ToggleCode,
                                }).ToList();
                 #endregion
 
@@ -555,6 +560,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
                                    IsOld = a.IsOld,
                                    IsCoreFeature = a.IsCoreFeature,
+                                   ToggleCode = a.ToggleCode,
                                });
                 #endregion
 

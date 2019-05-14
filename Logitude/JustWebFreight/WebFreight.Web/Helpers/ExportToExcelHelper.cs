@@ -358,7 +358,7 @@ namespace WebFreight.Web.Helpers
                     //The first worksheet object in the worksheets collection is accessed.
                     IWorksheet sheet = workbook.Worksheets[0];
                     //****************************** Creating excel from xml string *****************************
-
+          
                     //sheet.Range["A2:H2"].Merge();
                     //sheet.Range["A1:P1"].Merge();
                     //sheet.Range["A1:H2"].Merge();
@@ -556,32 +556,14 @@ namespace WebFreight.Web.Helpers
             return memory.ToArray();
         }
 
-        public byte[] ExportBIQueryToExcel(string queryId, string reportId, int tenant)
+        public byte[] ExportBIQueryToExcel(BIReportXMLData bIReportXMLData, int tenant)
         {
-            DWSubQueryRepository subQueryRep = new DWSubQueryRepository(tenant);
-            DWSubQuery dWSubQuery = subQueryRep.GetSingleDWSubQueryByDWQueryId(queryId, tenant);
-
             BIReportQueryService query = new BIReportQueryService(tenant);
-            BIReportPM biReportEntityPM = query.GetSingle(reportId, false, false);
-
-            DWSubQueryQuery dWSubQueryQuery = new DWSubQueryQuery(tenant);
-            DWSubQueryPM dWSubQueryPM = dWSubQueryQuery.GetSinglePMByQueryid(queryId, tenant);
-            DWQueryData DWQueryData = new DWQueryData();
-            DWQueryData.PageIndex = 0;
-            DWQueryData.PageSize = 0;
-
-            List<DWObjectFieldsDetails> Columns = null;
-            if (dWSubQueryPM != null)
-            {
-                Columns = LogitudeXmlSerializer.DeserializeObject<List<DWObjectFieldsDetails>>(dWSubQueryPM.ColumnsXML);
-                var Filters = LogitudeXmlSerializer.DeserializeObject<DWObjectFieldsDetails>(dWSubQueryPM.FiltersXML);
-                DWQueryData.SubQueryData = dWSubQueryPM;
-                DWQueryData.Columns = Columns;
-                DWQueryData.Filters = Filters;
-            }
+            BIReportPM biReportEntityPM = query.GetSingle(bIReportXMLData.BIReportId, false, false);
+            ///////////////////////////////////////////////////////////
 
             DWQueryBuilderHelper QBHelper = new DWQueryBuilderHelper(tenant);
-            string MySqlString = QBHelper.GetQuerySQL(DWQueryData);
+            string MySqlString = QBHelper.GetQuerySQL(bIReportXMLData.DWQueryData);
             DataTable dataTable = QBHelper.GetDWQueryData(MySqlString);
 
             var bITabularViewSettings = LogitudeXmlSerializer.DeserializeObject<BITabularViewSettings>(biReportEntityPM.AGGridOptionsXML);
@@ -591,15 +573,23 @@ namespace WebFreight.Web.Helpers
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet = workbook.Worksheets[0];
+            
+            int count = dataTable.Columns.Count;
+            List<DataColumn> deletedColumns = new List<DataColumn>();
 
-            // Data Table Format - Index  
-            for (var i = 0; i < dataTable.Columns.Count; i++)
+            var columnNames = bITabularViewSettings.Columns.OrderBy(a => a.Index).Select(d => d.Code).ToList();
+            int columnIndex = 0;
+            foreach (var columnName in columnNames)
             {
-                var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[i].ColumnName).FirstOrDefault();
-                if (agColumn != null)
-                {
-                    dataTable.Columns[i].SetOrdinal(agColumn.Index);
+                dataTable.Columns[columnName].SetOrdinal(columnIndex);
+                columnIndex++;
+            }
 
+            if (deletedColumns.Count > 0)
+            {
+                foreach (var item in deletedColumns)
+                {
+                    dataTable.Columns.Remove(item);
                 }
             }
             sheet.ImportDataTable(dataTable, true, 1, 1);
@@ -614,78 +604,48 @@ namespace WebFreight.Web.Helpers
                 }
             }
 
-            // sheet Format - Data Type 
-            int cellRow = 2;
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-            for (var i = 1; i < dataTable.Rows.Count; i++)
+            var rows = dataTable.Rows.Count;
+            for (int j = 1; j <= dataTable.Columns.Count; j++)
             {
-                int cellCol = 1;
-                for (var j = 0; j < dataTable.Columns.Count; j++)
+                var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j-1].ColumnName).FirstOrDefault();
+                if (agColumn != null)
                 {
-                    var agColumn = bITabularViewSettings.Columns.Where(a => a.Name == dataTable.Columns[j].ColumnName).FirstOrDefault();
-                    if (agColumn != null)
+
+                    var writeRange = sheet.Range[2,j, rows+1, j];
+                    switch (agColumn.DataTypeCode)
                     {
-                        switch (agColumn.DataTypeCode)
-                        {
-                            case "Text":
-                                sheet.Range[cellRow, cellCol].Text = sheet.Columns[j].Rows[i].Value.Trim();
-                                break;
-
-                            case "Boolean":
-                                Boolean b = false;
-                                Boolean.TryParse(sheet.Columns[j].Cells[i].Rows[i].Value.Trim(), out b);
-                                sheet.Range[cellRow, cellCol].Boolean = b;
-                                break;
-
-                            case "Constant":
-                                sheet.Range[cellRow, cellCol].Text = sheet.Columns[j].Cells[i].Rows[i].Value.Trim();
-                                break;
-
-                            case "DateTime":
-                                DateTime date;
-                                if (DateTime.TryParse(sheet.Columns[j].Rows[i].Value.Trim(), out date))
-                                {
-                                    sheet.Range[cellRow, cellCol].DateTime = date.Date;
-                                    string datetimeformat = @"dd\/MM\/yyyy";
-                                    if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
-                                    {
-                                        datetimeformat = CurTenant.DateTimeFormat;
-                                    }
-                                    sheet.Range[cellRow, cellCol].NumberFormat = datetimeformat;
-                                }
-                                else
-                                {
-                                    sheet.Range[cellRow, cellCol].Text = "";
-                                }
-                                break;
-                            case "Decimal":
-                                double dex = 0;
-                                double.TryParse(sheet.Columns[j].Rows[i].Value.Trim(), out dex);
-                                sheet.Range[cellRow, cellCol].Number = dex;
-                                break;
-                            case "Double":
-                                double d = 0;
-                                double.TryParse(sheet.Columns[j].Rows[i].Value.Trim(), out d);
-                                sheet.Range[cellRow, cellCol].Number = d;
-                                break;
-                            case "Integer":
-                                int x = 0;
-                                int.TryParse(sheet.Columns[j].Rows[i].Value.Trim(), out x);
-                                sheet.Range[cellRow, cellCol].Number = x;
-                                break;
-
-                            default:
-                                sheet.Range[cellRow, cellCol].Text = sheet.Columns[j].Rows[i].Value.Trim();
-                                break;
-                        }
+                        case "Constant":
+                        case "Text":
+                            writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                            break;
+                        case "DateTime":
+                            string datetimeformat = @"dd\/MM\/yyyy";
+                            if (!string.IsNullOrEmpty(CurTenant.DateTimeFormat))
+                            {
+                                datetimeformat = CurTenant.DateTimeFormat;
+                            }
+                            writeRange.NumberFormat = datetimeformat;
+                            break;
+                        case "Decimal":
+                        case "Double":
+                            writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
+                            writeRange.NumberFormat = "###,##0.00";
+                            break;
+                        case "Integer":
+                            writeRange.HorizontalAlignment = ExcelHAlign.HAlignRight;
+                            writeRange.NumberFormat = "###,##";
+                            break;
+                      
+                        default:
+                            writeRange.HorizontalAlignment = ExcelHAlign.HAlignLeft;
+                            break;
                     }
-                    cellCol++;
                 }
-                cellRow++;
             }
-
-            workbook.SaveAs(memory, ExcelSaveType.SaveAsXLS);
+            workbook.Version = ExcelVersion.Excel2007;
+            workbook.SaveAs(memory);
             return memory.ToArray();
         }
 

@@ -35,6 +35,10 @@ using Logitude.BL.Helpers;
 using Logitude.SystemLogs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Configuration;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.BL.Security;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -297,8 +301,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         {
                             ShipmentCompField.RequestedDocumentsCount++;
                         }
-                        shipmentComputedFieldsRepository.Update(ShipmentCompField);
-                        shipmentComputedFieldsRepository.SubmitChanges();
+                        
+
+                        ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
+                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+
+                        // shipmentComputedFieldsRepository.Update(ShipmentCompField);
+                        // shipmentComputedFieldsRepository.SubmitChanges();
                         try
                         {
                             if (!entityPM.DontAddToQueue && ((entityPM.IsSharedWithForwarder && !theEntityPm.IsSharedWithCustomer) || (entityPM.IsSharedWithCustomer && entityPM.IsDigitallySigned && OldIsSigned == false)))
@@ -520,8 +529,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         {
                             ShipmentCompField.RequestedDocumentsCount++;
                         }
-                        shipmentComputedFieldsRepository.Update(ShipmentCompField);
-                        shipmentComputedFieldsRepository.SubmitChanges();
+
+                        ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
+                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+                        // shipmentComputedFieldsRepository.Update(ShipmentCompField);
+                        //shipmentComputedFieldsRepository.SubmitChanges();
                         try
                         {
                             //if (!entityPM.DontAddToQueue)
@@ -722,8 +734,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         {
                             ShipmentCompField.RequestedDocumentsCount++;
                         }
-                        shipmentComputedFieldsRepository.Update(ShipmentCompField);
-                        shipmentComputedFieldsRepository.SubmitChanges();
+                        ShipmentComputedFieldsHelper shipmentComputedFieldsHelper = new ShipmentComputedFieldsHelper();
+                        shipmentComputedFieldsHelper.UpdateShipmentComputedFields(ShipmentCompField);
+                        //shipmentComputedFieldsRepository.Update(ShipmentCompField);
+                        // shipmentComputedFieldsRepository.SubmitChanges();
                         try
                         {
                             //if (!entityPM.DontAddToQueue)
@@ -1306,6 +1320,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         protected UniFileVerM MyUniFileVerM { get; set; }
         protected string MetaDataVersionValue { get; set; }
+
     }
     public class UniFileVerM
     {

@@ -32,7 +32,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
     public isRTL: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         // Set Entity
@@ -112,23 +112,23 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     Listen() {
 
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
 
             //
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
 
             //
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
                     }
                 });
@@ -136,7 +136,14 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
         }
     }
+    //DownloadButtonClicked() {
+    //    this._GLAccountExtendedListService.CalculateFututreCheques().subscribe(myResult => {
 
+
+
+
+    //    });
+    //}
     //#region Properties
     get IsMultiCurrency() { return this.EntityPM.IsMultiCurrency == null ? false : this.EntityPM.IsMultiCurrency; }
     set IsMultiCurrency(value: boolean) {
@@ -176,6 +183,16 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
   }
 
+    get IsVATExempt() { return this.EntityPM.IsVATExempt }
+    set IsVATExempt(value: boolean) {
+        if (this.EntityPM.IsVATExempt != value) {
+            this.EntityPM.IsVATExempt = value;
+
+        }
+    }
+
+
+
   get IsEquipmentVendor() { return this.EntityPM.IsEquipmentVendor }
   set IsEquipmentVendor(value: boolean) {
     if (this.EntityPM.IsEquipmentVendor != value) {
@@ -192,7 +209,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         }
     }
 
-
+    IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
     set ChartOfAccountsTypeCode(value: string) {
         if (this.EntityPM.ChartOfAccountsTypeCode != value) {
@@ -200,15 +217,29 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.ChartOfAccountsId = null;
 
             if (!AppTool.IsNullOrEmpty(value)) {
-                if (value == "1") { // 1-Revenues
-                    this.RevenueExpenseType = "1";
+
+                if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
+
+                    // disable fields
+                    this.IsMultiCurrency = true;
+                    this.CurrencyId = null;
+                    this.IsMultiCurrencyCheckboxEnabled = false;
+                    this.UIProperties.SetEnabled("IsMultiCurrency", this.ObjectTableName, false);
+                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+
+                    // disable fields
                     this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
-                } else if (value == "2") { // 2-Expenses
-                    this.RevenueExpenseType = "2";
-                    this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
+
+                    // set type
+                    this.RevenueExpenseType = value;
                 } else {
+                    // enable fields
+                    this.IsMultiCurrency = false;
+                    this.IsMultiCurrencyCheckboxEnabled = true;
+                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
                     this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
                 }
+
             } else {
                 this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
             }
@@ -333,6 +364,14 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     set RevenueExpenseType(value: string) {
         if (this.EntityPM.RevenueExpenseType != value) {
             this.EntityPM.RevenueExpenseType = value;
+            if (value == "3") {
+
+                this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, false);
+            }
+            else {
+                this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, true);
+            }
+
         }
     }
     //#endregion
@@ -353,6 +392,20 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
             this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
         }
 
+        if (this.EntityPM.RevenueExpenseType == "3") {
+
+
+            this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, true);
+        }
+
+        if (this.ChartOfAccountsTypeCode == "1" || this.ChartOfAccountsTypeCode == "2"){ // 1-Revenues, 2-Expenses
+            this.IsMultiCurrencyCheckboxEnabled = false;
+            this.UIProperties.SetEnabled("IsMultiCurrency", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+        }
     }
 
     SetFieldsEditablility(enable) {
@@ -372,6 +425,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("Category4Id", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("Category5Id", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, enable);
+
     }
 
 
@@ -392,6 +446,11 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
                 }
             }
         }
+    }
+
+    GetDisplayMemberPath(){
+        var showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        return showLocal ? "LocalName" : "EnglishName";
     }
 
 }

@@ -40,7 +40,7 @@
         border-left: 1px solid #dadada;
     }
     .small-tooltip{
-       
+
     }
     .small-tooltip-body{
         transition: 0.1s ease-out;
@@ -59,7 +59,7 @@
         box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.42);
         visibility: hidden;
 
-    } 
+    }
     .popup-arrow{
         background: url('./Images/LOV/popup-arrow.png') no-repeat center;
         height: 10px;
@@ -69,7 +69,7 @@
         bottom: -10px;
         left: 2px;
         z-index: 9999;
-        
+
         -ms-transform: rotate(180deg); /* IE 9 */
         -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
         transform: rotate(180deg);
@@ -94,7 +94,7 @@
                                 <div style="width: 60px; float: right;">
                                 </div>
                             </td>
-                            
+
                         </tr>
 
                         <!-- header -->
@@ -317,26 +317,26 @@
                                     </div>
                                 </div>
                             </td>-->
-                            
+
                             <td style="height: 100%;padding-bottom: 88px;">
                                 <div class="CellContent" style="bottom: 75px;" >
-                                    <logitude-edit-grid GridWidth="100%" 
-                                                        GridHeight="100%" 
-                                                        [ItemSource]="JournalLines" 
+                                    <logitude-edit-grid GridWidth="100%"
+                                                        GridHeight="100%"
+                                                        [ItemSource]="JournalLines"
                                                         [UseVirtuallization]="true"
-                                                        [IsReadOnly]="journalDisabled" 
+                                                        [IsReadOnly]="journalDisabled"
                                                         (RowEnded)="OnRowEnded($event)"
                                                         (Ondblclick)="OnFocus()">
 
                                     <!-- Line -->
                                     <log-column [header]="'JournalLine.F.Line' | TextCodeTranslationPipe" [width]="'50'" [Alignment]="isRTL ? 'right' : 'left'">
                                         <log-cell-template [IgnoreMods]="true" template="let item" [TabIndex]="-1" #logcelltemplate >
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="TextTrimming" text-start >
                                                 <span>{{item.Line}}</span>
-                                            </div> 
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
-                                    
+
                                     <!-- ActionCode -->
                                     <log-column [header]="'JournalLine.F.ActionName' | TextCodeTranslationPipe" [width]="'120'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'ActionCode'">
                                         <log-cell-template  template="let item" #logcelltemplate>
@@ -397,10 +397,10 @@
                                                     <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName"
                                                                    [DataContext]="item" [HideColumns]="true" [FocusOnMe]="'true'"></LogDatePicker>
 
-                                            </div> 
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
-                                    
+
                                     <!-- C. Account -->
                                     <log-column [header]="'JournalLine.F.CreditAccountName' | TextCodeTranslationPipe" [width]="'150'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CreditAccountId'">
                                         <log-cell-template template="let item" #logcelltemplate  [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
@@ -435,8 +435,8 @@
                                                     <span *ngIf="Approved" class="hyperlink" (click)="item.DebitAccountHyperlinkClicked()">{{item.DebitAccountName}}</span>
                                                     <span *ngIf="!Approved">{{item.DebitAccountName}}</span>
 
-                                                
-                                                
+
+
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogLov [ObjectFieldName]="'DebitAccountId'"
@@ -461,11 +461,11 @@
                                     <log-column [width]="'100'" [binding]="'btn'" [Alignment]="isRTL ? 'right' : 'left'" [header]="txt_Amount + ' (' + (Currency ? Currency.Code : '') + ')'">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
                                             <div style="width:100%;height:100%;">
-                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;">
+                                                <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
                                                     <span>{{item.LocalAmount | NumbersPipe:'N3'}}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalAmount'" [InputType]="'double'" [DataContext]="item"
+                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'LocalAmount'" [InputType]="'sigdouble'" [DataContext]="item"
                                                                 [Text]="item.LocalAmount" [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
                                                 </div>
                                             </div>
@@ -487,14 +487,14 @@
                                                     [HideColumns]="true"
                                                     [FocusOnMe]="true">
                                             </LogLov>
-                                            </div> 
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
                                     <!-- ForeignAmount -->
                                     <log-column [width]="'100'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'btn'" [header]="'JournalLine.F.ForeignAmount' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate [TabIndex]="item.ActionCode ? 0 : -1" [IsEnabled]="item.ActionCode ? true : false">
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align: right;direction: ltr !important;">
                                                 <div [attr.id]="'tooltip-' + item.Line" id="t" class="small-tooltip" (mouseover)="item.OnMouseOver()" (mouseleave)="item.OnMouseLeave()">
                                                     <span>{{item.ForeignAmount | NumbersPipe:'N3'}}</span>
                                                     <div *ngIf="item.currencyRate" [attr.id]="'tooltip-body-' + item.Line" class="small-tooltip-body">
@@ -513,7 +513,7 @@
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
 
-                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [InputType]="'double'" [DataContext]="item"
+                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'ForeignAmount'" [InputType]="'sigdouble'" [DataContext]="item"
                                                             [ObjectTableName]="'JournalLine'" [HideColumns]="true"></LogTextBox>
 
                                             </div>
@@ -572,7 +572,7 @@
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" [style.text-align]="isRTL ? 'right' : 'left'" >
                                                     <span>{{item.Notes}} </span>
                                                     <!--<span>Rate:{{item.currencyRate}}, Manual: {{item.isRateManualy}}</span>-->
-                                                    
+
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Notes'" [InputType]="'ntext'" [DataContext]="item"
@@ -587,7 +587,7 @@
                                     <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'" >
                                         <log-cell-template template="let item" [IgnoreMods]="true">
                                             <span class="CellSeparator"></span>
-                                            <IconButton  [style.float]="isRTL ? 'right' : 'left'" [Name]="'Delete'" [disabled]="journalDisabled" [IsSmall]="true" 
+                                            <IconButton  float-start [Name]="'Delete'" [disabled]="journalDisabled" [IsSmall]="true"
                                                         style="display: block; margin-left:3px; margin-top:4px;" (click)="RemoveLine(item)"></IconButton>
                                         </log-cell-template>
                                     </log-column>
@@ -623,7 +623,7 @@
                 <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Debit' | TextCodeTranslationPipe}}({{Currency ? Currency.Code : ''}})</div>
             </div>
         </div>
-        
+
     </div>
 </div>
 

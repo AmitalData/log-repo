@@ -6,6 +6,7 @@ using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -38,12 +39,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
-                bool exist = SecurityUtility.CheckFeature("General", "EXTERNALAPIS", tenant);
-                if (!exist)
-                {
-
-                }
+				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+ 
 
                 ARInvoiceQueryService Service = new ARInvoiceQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
@@ -83,7 +80,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = entity.Tenant;
 
-                        if (entity != null)
+						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+
+						if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
@@ -92,9 +91,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         ARInvoiceQueryService mappingService = new ARInvoiceQueryService(entity.Tenant);
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, entity.Tenant);
                         mappingService.SetInvoiceLinesEntityId(entityPM, entity.Tenant);
-
+                    
+                        entityPM.IsExternalEntity = true;
                         entityPM.IsExternalAPI = true;
                         entityPM.Tenant = entity.Tenant;
+                        entityPM.IsGeneralInvoice = true;
                         if (entity.IsDraft)
                         {
                             entityPM.SetApproved = false;
@@ -195,7 +196,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         #endregion
 
                         ARInvoiceService service = new ARInvoiceService(MyContext, entity.Tenant);
+
+                        ARInvoicePM invoice = mappingService.UpdateCreditInvoice(entityPM, tenant);
+
                         service.Create(entityPM);
+                        if (invoice != null)
+                        {
+                            service.Update(invoice, true);
+                        }
 
                         entity = mappingService.ARInvoiceDataMappingAndValidatin(entityPM, entity.Tenant);
                         APIHelper.AddCommunicationLog("D", oldEntity, entity, "ARInvoice", entityPM.Id, "ARInvoice API", entity.Tenant);
@@ -238,8 +246,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = authToken.Tenant;
-
-                        if (entity != null)
+						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+						if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
@@ -247,9 +255,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                         ARInvoiceQueryService mappingService = new ARInvoiceQueryService(tenant);
                         ARInvoicePM entityPM = mappingService.ARInvoiceDataMappingAndValidatin(entity, tenant);
-
+                      //  mappingService.UpdateCreditInvoice(entityPM, tenant);
                         entityPM.IsExternalAPI = true;
-                    
+                        entityPM.IsExternalEntity = true;
                         ARInvoiceService service = new ARInvoiceService(MyContext, tenant);
                         service.Update(entityPM, true);
 

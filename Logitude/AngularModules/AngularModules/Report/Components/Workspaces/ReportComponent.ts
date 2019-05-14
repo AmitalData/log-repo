@@ -22,7 +22,7 @@ export class ReportComponent {
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     IsViewReport: boolean = false;
     showLocal: boolean = false;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
         this.LoadData();
@@ -54,7 +54,7 @@ export class ReportComponent {
                             
                             myResult.forEach((item) => {
                                 if (item.Code == "AREX") {
-                                    if (SessionLocator.Tenant == 1212) {
+                                    if (SessionLocator.Tenant == 1212 || FeatureLocator.IsPackage_DVMT()) {
                                         if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                             this.reportList.push(item);
                                         }
@@ -62,7 +62,15 @@ export class ReportComponent {
                                 }
 
                                 else if (item.Code == "DSCA") {
-                                    if (SessionLocator.Tenant != 1212) {
+                                    if (SessionLocator.Tenant != 1212 || FeatureLocator.IsPackage_DVMT()) {
+                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                            this.reportList.push(item);
+                                        }
+                                    }
+                                }
+
+                                else if (item.Code == "VDK") {
+                                    if (SessionLocator.Tenant == 1495 || SessionLocator.TenantManagementJS.PackageCode =="DVMT") {
                                         if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
                                             this.reportList.push(item);
                                         }
@@ -70,7 +78,7 @@ export class ReportComponent {
                                 }
 
                                 else if (item.Code == "SHID") {
-                                    if (SessionLocator.Tenant == 1526 || SessionLocator.Tenant == 1525 || SessionLocator.Tenant == 1524 || SessionLocator.Tenant == 1523 || SessionLocator.Tenant == 1608 || SessionLocator.Tenant == 1609 || SessionLocator.Tenant == 1684 ) {
+                                    if (SessionLocator.Tenant == 1526 || SessionLocator.Tenant == 1525 || SessionLocator.Tenant == 1524 || SessionLocator.Tenant == 1523 || SessionLocator.Tenant == 1608 || SessionLocator.Tenant == 1609 || SessionLocator.Tenant == 1684 || SessionLocator.TenantManagementJS.PackageCode == "DVMT"  ) {
                                         this.reportList.push(item);
                                     }
 
@@ -186,7 +194,7 @@ export class ReportComponent {
     LoadComplete(groupList: ReportGroupList, reportList: ReportList) {
 
         if (!this.IsLoadSettingWorkerRoleRuning && !this.IsLoadReportsTemplateListRuning) {
-            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.ReportsPreview(groupList, reportList, this.ReportTemplates, this.ReportsRunUsingWR);

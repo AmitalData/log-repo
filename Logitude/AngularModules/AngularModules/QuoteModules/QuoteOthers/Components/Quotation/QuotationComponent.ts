@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../../Quote/EntityPMs/QuoteTemplatePM';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -68,35 +68,20 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     PreviewPdfId: string;
     IsShowPreviewPDF: boolean = true;
     IsReady: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
-        var _entityResourceService: EntityResourceService = new EntityResourceService();
-        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe(response => {
-            this.IsReady = true;
-            // SessionLocator.CurrentSession.StartBusyIndicator("Loading....");
-            this.PreviewPdfId = Guid.newGuid();
-            this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
+        this.Listen();
+        this.PreviewPdfId = Guid.newGuid();
+        this.UploadFileId = Guid.NewRandomString();
+        this.LoadService();
 
-            if (!FeatureLocator.HasFeaturePermession("QuoteTemplate", "UPDATE")) this.IsDisableEditQuoteTemplateButton = true;
-            if (FeatureLocator.HasFeaturePermession("QuoteTemplate", "FROMLIBRARY")) {
-                this.IsShowFromLibraryLink = true;
-            }
+        if (!FeatureLocator.HasFeaturePermession("QuoteTemplate", "UPDATE")) this.IsDisableEditQuoteTemplateButton = true;
+        if (FeatureLocator.HasFeaturePermession("QuoteTemplate", "FROMLIBRARY")) {
+            this.IsShowFromLibraryLink = true;
+        }
 
-
-            this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
-            this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
-
-            this.quoteTemplatePMService = new QuoteTemplatePMService();
-            this.myQuoteStageListService = new QuoteStageListService();
-            this.quotePMService = new QuotePMService();
-
-            this.UploadFileId = Guid.NewRandomString();
-            this.Listen();
-        });
-
-
-       
 
     }
 
@@ -108,10 +93,10 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     private SendToCustomerEvent: any = null;
     Listen() {
         if (!this.SendToCustomerEvent) {
-            this.SendToCustomerEvent = SessionLocator.CurrentSession.SessionEvent.subscribe(s => {
+            this.SendToCustomerEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "SendToCustomerCompleted") {
 
-                    SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+                    this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
                     this.currentDocumentVersion.IsSent = true;
                     this.currentDocumentVersion.SendDate = DateTool.GetCurrentDateTimeAsUtc();
 
@@ -123,11 +108,11 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                     if (this.QuotePM.StageId == myDraftStage.Id || this.QuotePM.StageId == myCreateStage.Id) {
                         this.QuotePM.ActionType = "SetAsSentToCustomer";
                     }
-                    //SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.ActionType = "SetAsSentToCustomer";
+                    //this.CurrentSession.CurrentEditComponent.EntityPM.ActionType = "SetAsSentToCustomer";
 
                     this.quotePMService.update(this.QuotePM).subscribe(response => {
 
-                        SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
       
 
@@ -144,7 +129,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                             this.BuildDocumentVersion();
                         }
 
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
                     });
               
@@ -159,23 +144,41 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
     }
 
+    LoadService() {
+
+        this.quoteTemplateExtendedPMService = new QuoteTemplateExtendedPMService();
+        this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
+        this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
+        this.quoteTemplatePMService = new QuoteTemplatePMService();
+        this.myQuoteStageListService = new QuoteStageListService();
+        this.quotePMService = new QuotePMService();
+
+    }
+
 
     public froalaEditorSetting: FroalaEditorSetting;
-
+    QuotationWindow: any;
+    QuotationTitle: string;
     SetWindowArgs(args: any) {
-        this.QuotePM = args.QuotePM;
 
+        var _entityResourceService: EntityResourceService = new EntityResourceService();
+        _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe(response => {
+            this.IsReady = true;
+ 
+        this.QuotePM = args.QuotePM;
+        this.QuotationWindow = args.QuotationWindow;
+        this.QuotationTitle = args.QuotationWindow ? args.QuotationWindow.Title : "";
         this.LoadQuoteCustomerEmail();
         this.froalaEditorSetting = new FroalaEditorSetting();
         this.froalaEditorSetting.Id = Guid.newGuid();
         this.froalaEditorSetting.IsDisableEdit = true;
         this.froalaEditorSetting.HtmlString = "";
-        this.froalaEditorSetting.Height = (SessionLocator.CurrentSession.CurrentWindow.Height - 100);
-        this.HeightPdf = (SessionLocator.CurrentSession.CurrentWindow.Height - 100);
+        this.froalaEditorSetting.Height = (this.CurrentSession.CurrentWindow.Height - 100);
+        this.HeightPdf = (this.CurrentSession.CurrentWindow.Height - 100);
 
         this.LoadData();
 
-
+        });
     }
 
     public IsQuoteSent: boolean = false;
@@ -265,7 +268,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     LoadData() {
         //this.QuotePM.StageId
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
 
         var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.GetAll = true;
@@ -305,7 +308,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     LoadTemplates(templateId:string = null) {
         this.quoteTemplateExtendedPMService.GetQuoteTemplateListsByQuoteTemplateTypeAndTenant(this.QuotePM.QuoteTypeCode, SessionLocator.Tenant).subscribe(response => {
 
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             if (!response.HasError) {
                 this.QuotationTemplates = response.Result;
 
@@ -407,6 +410,9 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     }
 
 
+
+
+     //this.SelectedQuoteTemplateList
     private selectedQuoteTemplateList: QuoteTemplateList;
     private selectedQuoteTemplatePM: QuoteTemplatePM;
 
@@ -414,6 +420,12 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     public set SelectedQuoteTemplateList(newValue: QuoteTemplateList) {
         if (this.selectedQuoteTemplateList != newValue) {
             this.selectedQuoteTemplateList = newValue;
+            var title = this.QuotationTitle + (" (" + this.SelectedQuoteTemplateList.Name + ")");
+           if (this.QuotationWindow && this.QuotationWindow.Title != title) {
+               this.QuotationWindow.Title = title;
+            }
+
+
             this.PreviewQuoteTemplatePdfReport();
         }
 
@@ -543,7 +555,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             }
 
             if (enableGenerate) {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
 
                 if (this.QuotePM.QuoteTemplateId != this.selectedQuoteTemplatePM.Id) {
                     this.QuotePM.QuoteTemplateId = this.selectedQuoteTemplatePM.Id;
@@ -564,7 +576,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
                 this.quoteTemplateExtendedPMService.GetUpdatedQuoteDocumentVersion(this.currentDocumentVersion.QuoteId, this.currentDocumentVersion.VersionNumber, this.selectedQuoteTemplatePM.Id, SessionLocator.LoggedUserId, this.currentDocumentVersion.Tenant, isGenerate).subscribe(response => {
                     var pmResponse: ServiceResponse = response;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                     if (!pmResponse.HasError && pmResponse.Result) {
 
                         var buffer = EntityResourceService.base64ToBufferConvertor(pmResponse.Result);
@@ -573,6 +585,8 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
 
                         this.IFrameURI = objectURL;
+
+                        this.IsQuoteTemplateSectionInCludedChange = false;
 
                         this.RefreshVersions();
 
@@ -584,7 +598,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
             }
             else {
-                SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+                this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
                 this.GetQuoteTemplatePdf();
             }
         }
@@ -594,7 +608,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     BuildDocumentVersion() {
 
         if (this.selectedQuoteTemplatePM != null) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
 
             var quoteDocumentVersion: QuoteDocumentVersionPM = new QuoteDocumentVersionPM(this.QuotePM);
 
@@ -633,7 +647,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
             this.quotePMService.update(this.QuotePM).subscribe(response => {
 
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
                 if (!response.HasError) {
                     this.ReportVersions = this.QuotePM.QuoteDocumentVersions.sort((a, b) => { return (a.VersionNumber === a.VersionNumber) ? 0 : (a.VersionNumber < a.VersionNumber) ? -1 : 1 });
@@ -648,15 +662,15 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                 }
                 else { }
 
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
 
-            //SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(response => {
+            //this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(response => {
 
             //});
-            //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            //this.CurrentSession.CurrentEditComponent.SaveChanges();
 
-            //SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            //this.CurrentSession.CurrentEditComponent.SaveChanges();
             //this.quotePMService.update(this.QuotePM).subscribe(response => {
             //    if (!response.HasError) {
             //        this.ReportVersions = this.QuotePM.QuoteDocumentVersions.sort((a, b) => { return (a.VersionNumber === a.VersionNumber) ? 0 : (a.VersionNumber < a.VersionNumber) ? -1 : 1 });
@@ -689,7 +703,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
 
     RefreshVersions() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         this.quoteTemplateExtendedPMService.GetQuoteDocumentVersionsByQuoteId(this.QuotePM.Id, SessionLocator.Tenant).subscribe(response => {
             var pmResponse: ServiceResponse = response;
             if (!pmResponse.HasError && pmResponse.Result) {
@@ -716,16 +730,17 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     }
 
     GetQuoteTemplatePdf() {
-        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this.quoteTemplateSectionExtendedPMService.GetQuoteTemplatePdfReport(this.QuotePM.Id, this.SelectedQuoteTemplateList.Id, SessionLocator.LoggedUserId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
 
                 var buffer = EntityResourceService.base64ToBufferConvertor(pmResponse.Result);
                 var blob = new Blob([buffer], { type: 'application/pdf' });
                 var objectURL = URL.createObjectURL(blob);
                 this.IFrameURI = objectURL;
+                this.IsQuoteTemplateSectionInCludedChange = false;
 
 
 
@@ -877,13 +892,13 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                     this.UploadFileToServer();
 
                 }
-                else { SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator(); }
+                else { this.CurrentSession.CurrentWindow.StopBusyIndicator(); }
 
-                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
 
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-            // SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+            // this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
     }
     UploadFileToServer() {
@@ -897,7 +912,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                 //txtMessage.Text = "File uploaded manually, no overview is available.";
                 //txtMessage.Visibility = Visibility.Visible;
                 this.IsFileUploadedManually = true;
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 this.RefreshVersions();
 
             }
@@ -936,7 +951,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     LoadQuoteCustomerEmail() {
         if (this.QuotePM) {
             this.quoteTemplateExtendedPMService.GetQuoteCustomerEmailByContactId(this.QuotePM.CustomerContactId).subscribe(response => {
-                SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
                 if (!response.HasError) {
                     this.QuoteCustomerEmail = response.Result;
                 }
@@ -1010,22 +1025,24 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         }
     }
 
+
+    IsQuoteTemplateSectionInCludedChange: boolean = false;
     ExcludeSection(sectionViewModel: QuoteTemplateSectionViewModel) {
 
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+       // this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         this.quoteTemplateSectionExtendedPMService.GetMakeQuoteTemplateSectionsExcluded(this.QuotePM.Id, this.selectedQuoteTemplateList.Id, sectionViewModel.Id, SessionLocator.Tenant).subscribe(response => {
-
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.PreviewQuoteTemplatePdfReport();
+            this.IsQuoteTemplateSectionInCludedChange = true;
+          //  this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            //this.PreviewQuoteTemplatePdfReport();
         });
 
     }
     IncludeSection(sectionViewModel: QuoteTemplateSectionViewModel) {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+       // this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         this.quoteTemplateSectionExtendedPMService.GetMakeQuoteTemplateSectionsIncluded(this.QuotePM.Id, this.selectedQuoteTemplateList.Id, sectionViewModel.Id, SessionLocator.Tenant).subscribe(response => {
-
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.PreviewQuoteTemplatePdfReport();
+            this.IsQuoteTemplateSectionInCludedChange = true;
+          //  this.CurrentSession.CurrentWindow.StopBusyIndicator();
+           // this.PreviewQuoteTemplatePdfReport();
         });
     }
     IsStartEditSession: boolean = false;

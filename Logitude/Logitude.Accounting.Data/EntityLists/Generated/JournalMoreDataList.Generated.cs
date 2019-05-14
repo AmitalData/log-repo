@@ -12,10 +12,18 @@ namespace Logitude.Accounting.Data.EntityLists
    [DataContract]
    public partial class JournalMoreDataList
    {
-          [DataMember]
-       public string TaxReportId  { get; set; }
+   
+       [Key]
        [DataMember]
-       public string TaxReportStatusCode  { get; set; }
+       public string JournalId  { get; set; }
+
+       [Key]
+       [DataMember]
+       public int Line  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string GeneralData  { get; set; }
    }
 
 }

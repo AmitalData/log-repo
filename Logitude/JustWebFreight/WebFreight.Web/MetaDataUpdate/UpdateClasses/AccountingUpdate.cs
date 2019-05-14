@@ -947,9 +947,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             objectTabelQuery = new ObjectTableQuery(objecttableRep);
 
             List<ObjectTablePM> objectTables = objectTabelQuery.GetObjectPMsByTenant(tenant).ToList();
-             
-        
+
+
             #region ObjectTables
+            ObjectTable objectTable = objectContext.ObjectTables.Where(f => f.Name == "General" && f.Tenant == 0).FirstOrDefault();
+
             ObjectTablePM journalActionTypeObjectTable = objectTables.Where(d => d.Name == "JournalActionType").FirstOrDefault();
             ObjectTablePM chartOfAccountObjectTable = objectTables.Where(d => d.Name == "ChartOfAccount").FirstOrDefault();
             ObjectTablePM journalObjectTable = objectTables.Where(d => d.Name == "Journal").FirstOrDefault();
@@ -974,6 +976,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             ObjectTablePM TaxReportObjectTable = objectTables.Where(d => d.Name == "TaxReport").FirstOrDefault();
             ObjectTablePM TaxDeductionReportObjectTable = objectTables.Where(d => d.Name == "TaxDeductionReport").FirstOrDefault();
             ObjectTablePM AccountingIntegrityCheckObjectTable = objectTables.Where(d => d.Name == "AccountingIntegrityCheck").FirstOrDefault();
+            ObjectTablePM OpenFormatReportObjectTable = objectTables.Where(d => d.Name == "OpenFormatReport").FirstOrDefault();
 
             #endregion
 
@@ -1207,7 +1210,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             #endregion
 
             Feature AccountingIntegrityCheckFeature_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AccountingIntegrityCheck.Features.Menu", Packagable = true, ObjectTableId = AccountingIntegrityCheckObjectTable.Id, Tenant = tenant, NameTextCodeCode = "AccountingIntegrityCheck.Features.Menu", NameTextCodeDefaultText = "Accounting Integrity Checks", FullLocalDefaultText = "", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            #region OpenFormatReport
+            Feature OpenFormatReportFeature1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TestingMode", Packagable = true, ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "OpenFormatReport.Features.TestingMode", NameTextCodeDefaultText = "Testing Mode", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            #endregion
 
+            #region FullAccountingTabs
+            Feature AccountingMainTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCMAIN", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Main", NameTextCodeDefaultText = "Main Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingReceivablesTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCReceivables", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Receivables", NameTextCodeDefaultText = "Receivables Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingPayablesTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCPayables", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Payables", NameTextCodeDefaultText = "Payables Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingBanksTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCBanks", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Banks", NameTextCodeDefaultText = "Banks Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingGLAccountsTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCGLAccounts", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.GLAccounts", NameTextCodeDefaultText = "GLAccounts Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature AccountingMiscTabFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACCMisc", Packagable = true, ObjectTableId = objectTable.Id, Tenant = tenant, NameTextCodeCode = "Accounting.Features.Misc", NameTextCodeDefaultText = "Misc Tab", FeatureTypeCode = "MENU" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
+            #endregion
             #endregion
 
             textCodeRep.SubmitChanges();
@@ -1325,7 +1341,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
             #region CashBook
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.Details", DefaultText = "Details", LocalDefaultText = "פרטים", ObjectTableId = CashBookTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.ManageDepo", DefaultText = "Manage Depo.", LocalDefaultText = "נהול הפקדה", ObjectTableId = CashBookTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.ManageDepo", DefaultText = "Manage Depo.", LocalDefaultText = "ניהול הפקדות", ObjectTableId = CashBookTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, textCodeRepository, textcodes);
             #endregion
 
             #region BankDeposit
@@ -1366,13 +1382,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.AutomaticReconcile", DefaultText = "AutomaticReconcile", LocalDefaultText = "התאמה אוטומטית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.View", DefaultText = "View", LocalDefaultText = "צפייה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.CancelReconciliation", DefaultText = "Cancel Reconciliation", LocalDefaultText = "בטל התאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.InvoiceNumber", DefaultText = "The Invoice Number", LocalDefaultText = "מספר חשבונית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O"  }, textCodeRepository, textcodes);
+             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.AlreadyExist", DefaultText = "already exist in another invoice", LocalDefaultText = " כבר קיים בחשבונית אחרת", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O" }, textCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.RefDate", DefaultText = "Ref. Date", LocalDefaultText = "תאריך אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.JournalNo", DefaultText = "Journal No.", LocalDefaultText = "מספר פקודה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TransactionNo", DefaultText = "Transaction No.", LocalDefaultText = "מספר תנועה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountingDate", DefaultText = "Accounting Date", LocalDefaultText = "תאריך חשבונאי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.DueDate", DefaultText = "Due Date", LocalDefaultText = "תאריך לתשלום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OriginalAmount", DefaultText = "Original Amount", LocalDefaultText = "סכום מקורי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OriginalAmount", DefaultText = "Original Amount", LocalDefaultText = "סכום מקורי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OpenAmount", DefaultText = "Open Amount", LocalDefaultText = "סכום פתוח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AmountToReconcile", DefaultText = "Amount to Reconcile", LocalDefaultText = "סכום להתאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ReconciliationAmount", DefaultText = "Reconciliation Amount", LocalDefaultText = "סכום התאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1559,7 +1576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LessThan", DefaultText = "Less Than", LocalDefaultText = "פחות מ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LessThanOrEqual", DefaultText = "Less Than Or Equal", LocalDefaultText = "פחות מ או שווה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.GreaterThanOrEqual", DefaultText = "Greater Than Or Equal", LocalDefaultText = "גדול או שווה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OriginalAmount", DefaultText = "Original Amount", LocalDefaultText = "מקורף סכום מקורי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OriginalAmount", DefaultText = "Original Amount", LocalDefaultText = "סכום מקורי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Reconciled", DefaultText = "Reconciled", LocalDefaultText = "התואם", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Reconciliation", DefaultText = "Reconciliation", LocalDefaultText = "התאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.wascreatedsuccessfully", DefaultText = "was created successfully", LocalDefaultText = "נוצרה בהצלחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1571,8 +1588,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.DifferentCurrencies", DefaultText = "The payment currency does not match to the pay to GL Account Currency ", LocalDefaultText = "המטבע של התשלום לא תואם למטבע כרטיס הנה”ח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentChequeExist", DefaultText = "There is a payment cheque with the same number", LocalDefaultText = "קיימת המחאה עם מספר זהה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NoChequeCounter", DefaultText = "The cheque counter did not defined for the chosen bank ", LocalDefaultText = "מונה המחאות לא הוגדר עבור חשבון הבנק הנבחר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentCheques", DefaultText = "Payment Cheques", LocalDefaultText = "המחאות תשלום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AllPaymentCheques", DefaultText =  "All Payment Cheques", LocalDefaultText = "כל המחאות התשלום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentCheques", DefaultText = "Payment Cheques", LocalDefaultText = "המחאות תשלום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AllPaymentCheques", DefaultText =  "All Payment Cheques", LocalDefaultText = "כל המחאות התשלום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Line", DefaultText = "in line", LocalDefaultText = "שורה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ManageReconciliation", DefaultText = "Manage reconciliations", LocalDefaultText = "ניהול התאמות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1661,6 +1678,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MustBeLess", DefaultText = "From date must be less than to date", LocalDefaultText = "מ-תאריך חייב להיות קטן מ-עד תאריך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MustBeLarger", DefaultText = "To date must be larger than from date", LocalDefaultText = "עד תאריך חייב להיות גדול מ-תאריך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxDeduction", DefaultText = "Tax deduction details", LocalDefaultText = "פירוט ניכויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.WithholdingBlocked", DefaultText = "The Vendor does not have a certificate according to the 1000 System", LocalDefaultText = "לספק לא קיים אישור על פי מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.WithholdingLineDisabled", DefaultText = "A new line was entered with the same date by the 1000 System", LocalDefaultText = "נקלטה שורה חדשה עם תאריך זהה על ידי מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
+
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ReferenceDateIsRequired", DefaultText = "Reference date is required", LocalDefaultText = "שדה תאריך הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.AmountIsRequired", DefaultText = "Amount is required", LocalDefaultText = "שדה סכום הוא חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.EditTaxPeriod", DefaultText = "Edit tax deduction period", LocalDefaultText = "עריכת תקופת ניכוי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1736,6 +1757,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MultiRecoCreated", DefaultText = "Reconciliations created successfully", LocalDefaultText = "התאמות בוצעו בהצלחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.RedeemedChequeMSG", DefaultText = "The cheque is redeemed and can’t be out of deposit, cancel the external reconcilaition in order to return the cheque to the cashbook", LocalDefaultText = "לא ניתן להוציא את ההמחאה מההפקדה משום שהיא בסטטוס נפרע, יש לבטל את ההתאמה החיצונית ע”מ להחזיר את ההמחאה לקופה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.IntegrityChecks", DefaultText = "Accounting Integrity Checks", LocalDefaultText = "Accounting Integrity Checks", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.CustomersNotes", DefaultText = "Customer's Notes", LocalDefaultText = "הערות לקוח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.NewAccountingNote", DefaultText = "New Accounting Note", LocalDefaultText = "הזן הערה חדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.CompletedReportExist", DefaultText = "Can’t create tax report for the the chosen month, there is no tax report for the previous month", LocalDefaultText = "לא ניתן להפיק דוח מעמ לחודש הנבחר משום שלא הופק דוח מעמ לחודש הקודם", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.NotCompletedReportExist", DefaultText = "Can’t create tax report for the chosen month, the report of the previous month is not completed", LocalDefaultText = "לא ניתן להפיק דוח לחודש הנבחר, הדוח של החודש הקודם לא הושלם", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.InvoiceNumber", DefaultText = "Invoice Number", LocalDefaultText = "מספר חשבונית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.InvoiceAmount", DefaultText = "Invoice Amount", LocalDefaultText = "סכום חשבונית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.Duedate", DefaultText = "Due date", LocalDefaultText = "תאריך ערך", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.Status", DefaultText = "Status", LocalDefaultText = "סטטוס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.ReconciliationNumber", DefaultText = "Reco. Number", LocalDefaultText = "מספר התאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.Open", DefaultText = "Open", LocalDefaultText = "פתוח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.Closed", DefaultText = "Closed", LocalDefaultText = "סגור", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.partiallyOpened", DefaultText = "Partially open", LocalDefaultText = "פתוח חלקית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.selectedinvoicesishigherthanpayamount", DefaultText = "The amount of the selected invoices is higher than the payment amount", LocalDefaultText = "סכום החשבוניות שנבחרו גבוה מסכום הקבלה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.ReconciledAmount", DefaultText = "Reconciled Amount", LocalDefaultText = "סכום שהותאם", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.invoiceAmount2reconcileMSG", DefaultText = "The amount to reconcile in the invoice is higher than the invoice open amount", LocalDefaultText = "הסכום להתאמה גדול מהסכום הפתוח בחשבונית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.paymentAmount2reconcileMSG", DefaultText = "The amount to reconcile in the invoices is higher than the payment open amount", LocalDefaultText = "הסכום להתאמה גדול מהסכום הפתוח בקבלה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.PaymentAmount", DefaultText = "Payment amount", LocalDefaultText = "סכום קבלה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.ReconciledAmount", DefaultText = "Reconciled amount", LocalDefaultText = "סכום שהותאם", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.Amount2Reconcile", DefaultText = "Amount to reconcile", LocalDefaultText = "סכום להתאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ARP.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.DocumentTypeNotFound", DefaultText = "Document type X not found", LocalDefaultText = "סוג מסמך X לא נמצא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.DeductionFileNumberNotFound", DefaultText = "Deduction file number not found", LocalDefaultText = "לא הוקלד מספר תיק ניכויים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Rebuild", DefaultText = "Rebuild", LocalDefaultText = "בניה מחדש", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Building", DefaultText = "Building...", LocalDefaultText = "...בניין", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AuthoritiesReports", DefaultText = "Authorities Reports", LocalDefaultText = "דוחות לרשויות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.856Report", DefaultText = "856 Report", LocalDefaultText = "דוח 856", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OpenFormat", DefaultText = "Open Format", LocalDefaultText = "דוח מבנה אחיד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
+
+            AddTextCodes.AddTextCode(new TextCodeDetails()
+            {
+                Code = "Accounting.General.O.Generate1000",
+                DefaultText = "Generate a vendor file for the system 1000",
+                LocalDefaultText = "הפקת קובץ ספקים למערכת 1000",
+                ObjectTableId = objectTable.Id,
+                Tenant = 0,
+                TextCodeTypeCode = "O",
+            }, textCodeRepository, textcodes);
+            
+            AddTextCodes.AddTextCode(new TextCodeDetails()
+            {
+                Code = "Accounting.General.O.Receiving1000",
+                DefaultText = "Receiving file withholding tax system 1000",
+                LocalDefaultText = "קליטת קובץ ניכוי מס מערכת 1000",
+                ObjectTableId = objectTable.Id,
+                Tenant = 0,
+                TextCodeTypeCode = "O",
+            }, textCodeRepository, textcodes);
+
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountingPeriods", DefaultText = "Accounting Periods", LocalDefaultText = "תקופות חשבונאיות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AccountingPeriodsDefinition", DefaultText = "Accounting Periods Definition", LocalDefaultText = "הגדרת תקופות חשבונאיות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Fix", DefaultText = "Fix", LocalDefaultText = "תקן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.GLAccounts", DefaultText = "GL Accounts", LocalDefaultText = "כרטיסים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ShipmentsAndMasters", DefaultText = "Shipments & Masters", LocalDefaultText = "תיקים וגו’בים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.xxxxxx", DefaultText = "xxxxxxxx", LocalDefaultText = "yyyyyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.YearTransfer", DefaultText = "Year Transfer", LocalDefaultText = "העברת שנה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.TaxReport", DefaultText = "Tax Report", LocalDefaultText = "דוח מעמ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.APPaymentDueDate", DefaultText = "Due Date", LocalDefaultText = "תאריך פרעון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             #region MainMenu
@@ -1789,7 +1874,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.GLAccounts", DefaultText = "General Ledger Accounts", LocalDefaultText = "חשבונות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Clients", DefaultText = "Client Accounts", LocalDefaultText = "לקוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.GLAccounts", DefaultText = "General Ledger Accounts", LocalDefaultText = "חשבונות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Clients", DefaultText = "All Customers", LocalDefaultText = "לקוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Clients", DefaultText = "All Customers", LocalDefaultText = "לקוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Multi", DefaultText = "Multi", LocalDefaultText = "רב מטבעי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Active", DefaultText = "Active", LocalDefaultText = "פעיל", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Inactive", DefaultText = "Inactive", LocalDefaultText = "חסום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
@@ -1889,13 +1974,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAccountIsControl", DefaultText = "This GL Account is defined as control account", LocalDefaultText = "כרטיס זה מוגדר ככרטיס מרכז", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RequiredFields", DefaultText = "Fill the required fields", LocalDefaultText = "נא למלא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AgingDetails", DefaultText = "Aging Details", LocalDefaultText = "נתוני גיול בש”ח", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", DefaultText = "The chart of account can’t be changed, the GL account have transactions", LocalDefaultText = "לא ניתן לעדכן קבוצת מאזן, ישנם תנועות על הכרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", DefaultText = "The chart of account can’t be changed, the GL account have transactions", LocalDefaultText = "לא ניתן לשנות את קבוצת המאזן לכרטיס שיש בו תנועות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAParentValidation1", DefaultText = "GLAccount and its parent must be same chart of account type", LocalDefaultText = "סוג קבוצת מאזן עבור הכרטיס וכרטיס האב שמקושר אליו חייב להיות זהה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAParentValidation2", DefaultText = "GLAccount and its parent must be same chart of account", LocalDefaultText = "קבוצת מאזן עבור הכרטיס ווכרטיס האב שמקושר אליו חייבת להיות זהה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileMethodcantUpdated", DefaultText = "The reconcile method can’t be updated, the GLAccount has transations", LocalDefaultText = "לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_accounting", DefaultText = "Accounting", LocalDefaultText = "חשבונאי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Reference", LocalDefaultText = "אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_due", DefaultText = "Due", LocalDefaultText = "לגביה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Document", LocalDefaultText = "אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_due", DefaultText = "Due", LocalDefaultText = "פרעון", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditDetails", DefaultText = "Credit Details", LocalDefaultText = "נתוני אשראי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditLimit", DefaultText = "Credit Limit", LocalDefaultText = "מסגרת אשראי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountingBalance", DefaultText = "Accounting Balance", LocalDefaultText = "יתרה חשבונאית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CardIndex", DefaultText = "Card Index", LocalDefaultText = "הצג את הכרטסת", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureChequesToday", DefaultText = "Total Open Cheques", LocalDefaultText = "המחאות שלא נפרעו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayChequelist", DefaultText = "Display Cheque list", LocalDefaultText = " הצג רשימת המחאות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheques", DefaultText = "Total Future Open Cheques", LocalDefaultText = "המחאות עתידיות שלא נפרעו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.TotalOpenShipments", DefaultText = "Total Open Shipments", LocalDefaultText = " תיקים פתוחים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.fromfieldrequired", DefaultText = "From date field is required", LocalDefaultText = "מתאריך שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.tofieldrequired", DefaultText = "To data field is required", LocalDefaultText = "עד תאריך שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             //AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.xxxx", DefaultText = "xxxxx", LocalDefaultText = "yyyyy", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
@@ -1908,7 +2003,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.OpenFiles", DefaultText = "Open Files", LocalDefaultText = "תקים פתוחים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.ClosedFiles", DefaultText = "Closed Files", LocalDefaultText = "תיקים סגורים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllFiles", DefaultText = "All Files", LocalDefaultText = "כל התיקים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllJobs", DefaultText = "All Jobs", LocalDefaultText = "כל הג’ובים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllJobs", DefaultText = "All Masters", LocalDefaultText = "כל הג’ובים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
 
             //  Customers query
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllCustomers", DefaultText = "All Customers", LocalDefaultText = "כל הלקוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
@@ -1953,9 +2048,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.FutureDate", DefaultText = "Future date", LocalDefaultText = "תאריך עתידי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
+            // GLAccount Transactions Report
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountNo", DefaultText = "GL Account No.", LocalDefaultText = "מספר כרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountZrequierd", DefaultText = "GL Account field is requierd", LocalDefaultText = "חובה למלא את השדה מספר כרטיס", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.WithClosedTransactions", DefaultText = "With Closed Transactions", LocalDefaultText = "כלול תנועות סגורות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
 
 
-            
+
+
+
 
             #region Screens
 
@@ -2013,6 +2114,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.F.Year", DefaultText = "Year", LocalDefaultText = "שנה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.F.YearLabel", DefaultText = "Year: ", LocalDefaultText = "שנה: ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.RevenueExpenseType", DefaultText = "A year transfer account is undefined or is not configured correctly.", LocalDefaultText = "חשבון להעברת שנה אינו מוגדר או אינו מוגדר תקין.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+        }
+        #endregion
+
+
+
+        #region LoadTextCodes_System1000
+        private void LoadTextCodes_System1000(Dictionary<string, TextCode> textcodes)
+        {
+            ObjectTable objectTable = objectContext.ObjectTables.Where(f => f.Name == "GLAccount" && f.Tenant == 0).FirstOrDefault();
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.System1000", DefaultText = "System 1000", LocalDefaultText = "מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.Q.System1000", DefaultText = "System 1000", LocalDefaultText = "מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DeductionFileNumber", DefaultText = "Deduction File Number is undefined.", LocalDefaultText = "מספר תיק ניכויים אינו מוגדר.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
         }
         #endregion
 
@@ -2082,11 +2195,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             #region Messages
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ForeignAmountNotZero", DefaultText = "Foreign amount is empty", LocalDefaultText ="סכום במטח הינו חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.LocalAmountNotZero", DefaultText = "Local amount is empty", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",
-                LocalDefaultText="סכום במטבע הנהח הינו חובה "
+                LocalDefaultText="סכום במטבע מקומי הינו חובה "
             }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldHaveOneLineAtLeast", DefaultText = "There must be at least one journal line", LocalDefaultText= "חובה להזין לפחות פקודת יומן אחת", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.CurrenyNotMatched", DefaultText = "Account Currncy does not equal to selected currecy code", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText ="מטבע כרטיס לא תואם את המבע הנבחר"}, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JournalAmountNotMatched", DefaultText = "Journal credit amount does not match the debit amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText = "סכום חובה שונה בסכום זכות "}, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldHaveOneLineAtLeast", DefaultText = "There must be at least one journal line", LocalDefaultText= "חובה להזין לפחות שורת פקודת יומן אחת", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.CurrenyNotMatched", DefaultText = "Account Currncy does not equal to selected currecy code", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText ="מטבע הכרטיס לא תואם את המטבע הנבחר"}, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JournalAmountNotMatched", DefaultText = "Journal credit amount does not match the debit amount", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText = "סכום חובה שונה מסכום זכות "}, textCodeRepository, textcodes);
           //  AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JournalLinesAmountNotZero", DefaultText = "Invoice line amount field must not be zero", ObjectTableId = objectTableId, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ExchangeRateEmpty", DefaultText = "Exchange rate is not defined", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",
                 LocalDefaultText="לא הוגדר שער המרה"
@@ -2095,31 +2208,34 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
                 LocalDefaultText ="נא לבחור כרטיס זכות"}, textCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JLAccountingDateMustWithinJournalMonth",
-                LocalDefaultText="תאריך בשורה חייב להיות בטווח של התאיך החשבונאי של פ היומן",
+                LocalDefaultText="תאריך בשורה חייב להיות בטווח של החודש החשבונאי של פ היומן",
                 DefaultText = "Jornal Line Accounting Date must be within Accounting month of Journal", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FutureDateForbidden", DefaultText = "Future date is not allowed", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText= "תאריך עתידי"}, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FutureDateForbidden", DefaultText = "Future date is not allowed", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText= "לא ניתן  להקליד תאריך עתידי "}, textCodeRepository, textcodes);
 
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.AccountIsBlocked", DefaultText = "GL Account (%name) is inactive", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", LocalDefaultText = "כרטיס (%name) חסום" }, textCodeRepository, textcodes);
             
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeDebit", DefaultText = "Please select a debit account", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeCreditAndCredit", DefaultText = "Please select a credit and a debit account", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeNotMatched", DefaultText = "Action Code does not Matched the account you picked", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCode", DefaultText = "Please Select Action Code", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DocumentDateBiggerDueDate", DefaultText = "Document date must be earlier then due date ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeDebit", DefaultText = "Please select a debit account", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText= "אנא בחר כרטיס חובה" }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeCreditAndCredit", DefaultText = "Please select a credit and a debit account", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="אנא בחר כרטיס זכות וכרטיס חובה" }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeNotMatched", DefaultText = "Action Code does not Matched the account you picked", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="שגיאה" }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCode", DefaultText = "Please Select Action Code", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="אנא בחר ציין את את סוג השורה  חובה/זכות" }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DocumentDateBiggerDueDate", DefaultText = "Document date must be earlier then due date ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="התאריך החשבונאי חייב להיות מוקדם מתאריך האסמכתא" }, textCodeRepository, textcodes);
 
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateMustgreaterthancurrent", DefaultText = "Due Date ,Must be greater than current date ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateMustgreaterthancurrent", DefaultText = "Due Date ,Must be Equal or greater than current date ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="תאריך הפרעון צריך להיות גדול או שווה מהתאריך הנוכחי" }, textCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Journal.currencydoesnotexist", DefaultText = "Currency does not exist", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Journal.currencydoesnotexist", DefaultText = "Currency does not exist", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="המטבע לא קיים" }, textCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsMust", DefaultText = "Account Which is not a card must Control Account definition", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
-
-
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsNotMatch", DefaultText = "Control Account Is Not Match", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsMust", DefaultText = "Account Which is not a card must Control Account definition", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="חשבון שאיננו כרטיס תפעולי חייב להיות כרטיס מרכז" }, textCodeRepository, textcodes);
 
 
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsNotMatch", DefaultText = "Control Account Is Not Match", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="חשבון מרכז איננו תואם" }, textCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateIsMust", DefaultText = "Due Date Is Must", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, textCodeRepository, textcodes);
+
+
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateIsMust", DefaultText = "Due Date Is Must", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M",LocalDefaultText="תאריך פרעון הינו חובה" }, textCodeRepository, textcodes);
 
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FAMltiExchangerateNELA",
@@ -2142,7 +2258,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
                 LocalDefaultText = "כל התאריכים חייבים אתחול"
             }, textCodeRepository, textcodes);
 
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldSelectTwoTransactions", DefaultText = "You should select at lease two transactions in order to create new reconcile", LocalDefaultText= "יש לבחור לפחות שתי תנועות ע''מ ליצור התאמה חדשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldSelectTwoTransactions", DefaultText = "You should select at lease two transactions in order to create new reconcile", LocalDefaultText= "יש לבחור לפחות שתי תנועות על מנת ליצור התאמה חדשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             #endregion
@@ -2460,7 +2576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             QueryGroup vendorGLAccountsGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "VNAC", Name = "VendorGLAccount" }, queryGroupRepository);
             QueryGroup automaticReconcileMethodGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "ARCM", Name = "AutomaticReconcileMethod" }, queryGroupRepository);
             QueryGroup yearTransferGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "YTRN", Name = "YearTransfer" }, queryGroupRepository);
-            QueryGroup bankDepositGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BNKD", Name = "BankDeposit" }, queryGroupRepository);
+            //QueryGroup bankDepositGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "BNKD", Name = "BankDeposit" }, queryGroupRepository);
 
 
 
@@ -2657,16 +2773,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             #region Customers Workspace
 
             #region All Customers
-            Query clientGLAccounts = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = objectContext.TextCodes.Where(d => d.Code == "GLAccounts.Q.Clients" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, Code = "All Customers", QueryGroupCode = gLAccountsGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = gLAccountObject.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = clientGLAccountFeature.Id, Perspective = "GLAccountRecievable" }, queriesRepository, tenantQueries);
+            //Query clientGLAccounts = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = objectContext.TextCodes.Where(d => d.Code == "GLAccounts.Q.Clients" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, Code = "All Customers", QueryGroupCode = gLAccountsGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = gLAccountObject.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = clientGLAccountFeature.Id, Perspective = "GLAccountRecievable" }, queriesRepository, tenantQueries);
 
-            QueryColumn clientGLAccounts1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 0, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn clientGLAccounts2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 1, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn clientGLAccounts3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 2, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn clientGLAccounts4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 3, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn clientGLAccounts5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 4, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn clientGLAccounts6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 5, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn clientGLAccounts7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 6, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter clientGLAccountPredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, PredefinedValue = "2", QueryId = clientGLAccounts.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+            //QueryColumn clientGLAccounts1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 0, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "DisplayNumber" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 73 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn clientGLAccounts2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 1, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn clientGLAccounts3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 2, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 160 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn clientGLAccounts4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 3, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "CurrencyCode" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn clientGLAccounts5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 4, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "RevenueExpenseName" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 90 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn clientGLAccounts6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 5, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "ChartOfAccountsName" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 140 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn clientGLAccounts7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = clientGLAccounts.Id, IndexOrder = 6, ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, ColumnWidth = 56 }, queryColumnsRepository, tenantQueryColumns);
+            //AdvancedQueryFilter clientGLAccountPredefinedFilter = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = gLAccountsObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == gLAccountObject.Id).FirstOrDefault().Id, PredefinedValue = "2", QueryId = clientGLAccounts.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
             #endregion
 
             #region collectors
@@ -2900,50 +3016,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
             #region Bank Deposit queries
 
-            #region Today Deposit
+           // #region Today Deposit
             //DateTime now = DateTime.Now;
             //DateTime startOfDay = now.Date;
             //DateTime endOfDay = startOfDay.AddDays(1);
 
             // filtering will be in client side
 
-            Query todayDeposit = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = objectContext.TextCodes.Where(d => d.Code == "BankDeposit.Q.Today" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, Code = "TodayDeposits", QueryGroupCode = bankDepositGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = bankdepositObject.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TodayBankDepositFeature.Id }, queriesRepository, tenantQueries);
+         ///*   Query todayDeposit = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = objectContext.TextCodes.Where(d => d.Code == "BankDeposit.Q.Today" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, Code = "TodayDeposits", QueryGroupCode = bankDepositGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = bankdepositObject.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TodayBankDepositFeature.Id }, queriesRepository, tenantQueries);
 
-            QueryColumn todayDeposit1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 0, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn todayDeposit2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 1, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn todayDeposit3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 2, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn todayDeposit4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 3, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn todayDeposit5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 4, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn todayDeposit6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 5, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn todayDeposit7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 6, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter todayDepositPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Between", ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, PredefinedValue = "#today", PredefinedValue2 = "#today", QueryId = todayDeposit.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
-            #endregion
+         //   QueryColumn todayDeposit1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 0, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn todayDeposit2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 1, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn todayDeposit3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 2, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn todayDeposit4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 3, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn todayDeposit5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 4, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn todayDeposit6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 5, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn todayDeposit7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = todayDeposit.Id, IndexOrder = 6, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+         //   AdvancedQueryFilter todayDepositPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Between", ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, PredefinedValue = "#today", PredefinedValue2 = "#today", QueryId = todayDeposit.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+         //   #endregion
 
-            #region Cash Deposit
-            Query cashDeposit = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = objectContext.TextCodes.Where(d => d.Code == "BankDeposit.Q.cash" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, Code = "cashDeposits", QueryGroupCode = bankDepositGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = bankdepositObject.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBankDepositFeature.Id }, queriesRepository, tenantQueries);
+         //   #region Cash Deposit
+         //   Query cashDeposit = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = objectContext.TextCodes.Where(d => d.Code == "BankDeposit.Q.cash" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, Code = "cashDeposits", QueryGroupCode = bankDepositGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = bankdepositObject.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = CashBankDepositFeature.Id }, queriesRepository, tenantQueries);*/
 
-            QueryColumn cashDeposit1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 0, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn cashDeposit2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 1, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn cashDeposit3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 2, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn cashDeposit4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 3, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn cashDeposit5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 4, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn cashDeposit7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 6, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn cashDeposit6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 7, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter cashDepositPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = cashDeposit.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
-            #endregion
+         //   QueryColumn cashDeposit1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 0, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn cashDeposit2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 1, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn cashDeposit3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 2, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn cashDeposit4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 3, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn cashDeposit5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 4, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn cashDeposit7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 6, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+         //   QueryColumn cashDeposit6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = cashDeposit.Id, IndexOrder = 7, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+         //   AdvancedQueryFilter cashDepositPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, PredefinedValue = "true", QueryId = cashDeposit.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+         //   #endregion
 
-            #region cheque Deposit
-            Query chequeDeposit = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = objectContext.TextCodes.Where(d => d.Code == "BankDeposit.Q.chequeDeposit" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, Code = "chequeDeposit", QueryGroupCode = bankDepositGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = bankdepositObject.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ChequeBankDepositFeature.Id }, queriesRepository, tenantQueries);
+            //#region cheque Deposit
+            //Query chequeDeposit = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = objectContext.TextCodes.Where(d => d.Code == "BankDeposit.Q.chequeDeposit" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, Code = "chequeDeposit", QueryGroupCode = bankDepositGroup.Code, IndexOrder = 0, Tenant = 0, ObjectTableId = bankdepositObject.Id, QuerySection = "BankDeposit", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ChequeBankDepositFeature.Id }, queriesRepository, tenantQueries);
 
-            QueryColumn chequeDeposit1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 0, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn chequeDeposit2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 1, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn chequeDeposit3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 2, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn chequeDeposit4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 3, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn chequeDeposit5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 4, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn chequeDeposit6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 5, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
-            QueryColumn chequeDeposit7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 6, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
-            AdvancedQueryFilter chequeDepositPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = chequeDeposit.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
-            #endregion
+            //QueryColumn chequeDeposit1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 0, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositNumber" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 130 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn chequeDeposit2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 1, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn chequeDeposit3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 2, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "LocalDepositAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn chequeDeposit4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 3, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "DepositCurrencyCode" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 120 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn chequeDeposit5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 4, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "ForeignAmount" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn chequeDeposit6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 5, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreatedByUserName" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 180 }, queryColumnsRepository, tenantQueryColumns);
+            //QueryColumn chequeDeposit7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = chequeDeposit.Id, IndexOrder = 6, ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "CreateDate" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, ColumnWidth = 150 }, queryColumnsRepository, tenantQueryColumns);
+            //AdvancedQueryFilter chequeDepositPredefinedFilter1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, Operator = "Equals", ObjectFieldId = bankdepositsObjectFields.Where(d => d.FieldName == "IsCashDeposit" && d.ObjectTableId == bankdepositObject.Id).FirstOrDefault().Id, PredefinedValue = "false", QueryId = chequeDeposit.Id, Tenant = 0 }, advancedQueryFiltersRepository, tenantAdvancedFilters);
+            //#endregion
 
             #endregion
 
@@ -3448,12 +3564,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTBA", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 10, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.BankAccounts", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "BankAccount").FirstOrDefault().Id, FeatureId = BankAccountMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
 
             //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTBD", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 11, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.BankDeposits", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "BankDeposit").FirstOrDefault().Id, FeatureId = BankDepositMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTRV", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 12, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.Revaluations", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Revaluation").FirstOrDefault().Id, FeatureId = RevaluationMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
+           // AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTRV", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 12, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.Revaluations", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Revaluation").FirstOrDefault().Id, FeatureId = RevaluationMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
 
             //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCSH", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 13, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.CashBooks", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "CashBook").FirstOrDefault().Id, FeatureId = CashBookMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTTX", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 14, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxWithholding", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxWithholdingAssessOffice").FirstOrDefault().Id, FeatureId = TaxWithholdingOfficesMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TXRP", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 15, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxReport", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxReport").FirstOrDefault().Id, FeatureId = TaxReportMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TXDR", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 16, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxDeductionReport", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxDeductionReport").FirstOrDefault().Id, FeatureId = TaxDeductionReportMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
+            //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TXRP", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 15, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxReport", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxReport").FirstOrDefault().Id, FeatureId = TaxReportMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
+            //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TXDR", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 16, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxDeductionReport", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxDeductionReport").FirstOrDefault().Id, FeatureId = TaxDeductionReportMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "AICH", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 17, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.IntegrityChecks", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "AccountingIntegrityCheck").FirstOrDefault().Id, FeatureId = AccountingIntegrityCheckMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
 
             #endregion
@@ -3777,6 +3893,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             }, eventTypesRepository, tenantEventTypes);
             #endregion
 
+            #region GLAccountWithholdingTax events
+            ObjectTablePM gLAccountWithholdingTax = ObjectTableQuery.GetObjectTableByCode("GLAccountWithholdingTax", 0);
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "WBLK",
+                EnglishName = "The Vendor does not have a certificate according to the 1000 System",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "לספק לא קיים אישור על פי מערכת 1000",
+                ObjectTableId = gLAccountWithholdingTax.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+            }, eventTypesRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "WLDA",
+                EnglishName = "A new line was entered with the same date by the 1000 System",
+                Tenant = 0,
+                AddedManually = false,
+                LocalName = "נקלטה שורה חדשה עם תאריך זהה על ידי מערכת 1000",
+                ObjectTableId = gLAccountWithholdingTax.Id,
+                ShortView = false,
+                EventTypeCategoryCode = "LOG",
+            }, eventTypesRepository, tenantEventTypes);
+
+
+            #endregion
+
+
             eventTypesRepository.SubmitChanges();
         }
 
@@ -3927,3 +4075,4 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         }
     }
 }
+ 

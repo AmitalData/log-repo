@@ -123,6 +123,7 @@ namespace WebFreight.Web.WebPages
                 ShipmentRepository rep = new ShipmentRepository(tenant);
                 Shipment shipment = rep.GetSingleShipment(entityId, tenant);
                 bool isAuothenticatedRequest=true;
+                bool CheckForTenantAvailability = true;
 
                 if (!string.IsNullOrEmpty(token))
                 {
@@ -140,20 +141,24 @@ namespace WebFreight.Web.WebPages
                 {
 
                     isAuothenticatedRequest = CheckSharedContactAuthenticationForShipment(shipment.AgentId, shipment.CustomerId, tenant);
+                    CheckForTenantAvailability = CheckAvailablityTenantsForEmail(email, tenant);
                 }
-                if (CheckAvailablityTenantsForEmail(email, tenant) && isAuothenticatedRequest)
+                if (CheckForTenantAvailability && isAuothenticatedRequest)
                 {
                     Uploader up = new Uploader();
                     List<DocumentsFilingPM> documents = up.GetDocumentByEntityAndTenant(entityId, tenant);
 
-                    if (partnerType == "AG")
+                    if (string.IsNullOrEmpty(token))
                     {
-                        documents = documents.Where(d => d.IsAgentView).ToList();
-                    }
+                        if (partnerType == "AG")
+                        {
+                            documents = documents.Where(d => d.IsAgentView).ToList();
+                        }
 
-                    else if (partnerType == "CS")
-                    {
-                        documents = documents.Where(d => d.IsCustomerView==true).ToList();
+                        else if (partnerType == "CS")
+                        {
+                            documents = documents.Where(d => d.IsCustomerView == true).ToList();
+                        }
                     }
 
                     Dictionary<string, byte[]> CompressedArray = new Dictionary<string, byte[]>();

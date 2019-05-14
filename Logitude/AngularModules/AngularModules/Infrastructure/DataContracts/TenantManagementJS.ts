@@ -28,6 +28,22 @@ export class TenantManagementJS {
     public SuspendDaysLeft: number;
     public NumberOfUsers: number;
     public BluesnapContractId: string;
+    public BluesnapCRMContractId: string;
+    public BluesnapEAWBContractId: string;
+    public BluesnapEAWBSContractId: string;
+    public BluesnapOneTimeContract: string;
+    public BluesnapInttraStockContractId: string;
+    public BluesnapContractQTY: number;
+    public BluesnapCRMContractQTY: number;
+    public BluesnapEAWBContractQTY: number;
+    public BluesnapEAWBSContractQTY: number;
+    public BluesnapOneTimeContractQTY: number;
+    public BluesnapInttraStockContractQTY: number;
+
+    public DoBlocking: boolean;
+    public BlockType: string;
+    public ExpirationDaysLeft: number;
+
     public BluesnapAccount: string;
     public ManagesRegisteredAgent: boolean;
     public IsINTTRAOnlyDemo: boolean;

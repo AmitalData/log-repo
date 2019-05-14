@@ -47,7 +47,20 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public void Create(ObjectTableRulePM theEntityPm)
         {
-            this.isNewEntity = true;
+
+			string ruleslistName = "objecttablerulestenant" + tenant;
+			if (CacheManager.CacheWrapper.Get(ruleslistName) != null)
+			{
+				CacheManager.CacheWrapper.Invalidate(ruleslistName);
+			}
+
+			string pmslistName = "objecttablerulepmstenant" + tenant;
+			if (CacheManager.CacheWrapper.Get(pmslistName) != null)
+			{
+				CacheManager.CacheWrapper.Invalidate(pmslistName);
+			}
+
+			this.isNewEntity = true;
             this.entityPM = theEntityPm;
          //   this.entityPM.Id = IdCounter.GetNumber("ObjectTableRule", tenant).ToString();
             this.Poco = new ObjectTableRule();
@@ -64,8 +77,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 this.Poco.RuleCode = this.Poco.Id;
             }
 
+			
 
-            ObjectTableRuleQuery objectTableRuleQuery = new ObjectTableRuleQuery(entityRepository);
+			ObjectTableRuleQuery objectTableRuleQuery = new ObjectTableRuleQuery(entityRepository);
 
             if (objectTableRuleQuery.GetObjectTableRulePMsByTenant(theEntityPm.Tenant).Where(r => r.RuleCode == this.Poco.RuleCode).FirstOrDefault() == null)
             {
@@ -92,11 +106,25 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 throw new Exception(msg);
             }
             ObjectContext.SaveChanges();
-        }
+
+			
+		}
 
         public void Update(ObjectTableRulePM theEntityPm , List<RuleConditionFieldPM> ruleCondetionFiledList)
         {
-            this.isNewEntity = false;
+
+			string ruleslistName = "objecttablerulestenant" + tenant;
+			if (CacheManager.CacheWrapper.Get(ruleslistName) != null)
+			{
+				CacheManager.CacheWrapper.Invalidate(ruleslistName);
+			}
+			string pmslistName = "objecttablerulepmstenant" + tenant;
+			if (CacheManager.CacheWrapper.Get(pmslistName) != null)
+			{
+				CacheManager.CacheWrapper.Invalidate(pmslistName);
+			}
+
+			this.isNewEntity = false;
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleObjectTableRule(theEntityPm.Id , theEntityPm.Tenant);
 

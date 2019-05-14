@@ -1,10 +1,11 @@
-﻿import { GLAccountPM } from '../EntityPMs/GLAccountPM';
+import { GLAccountPM } from '../EntityPMs/GLAccountPM';
 import { AppTool } from '../../Infrastructure/Tools';
 import {GLAccountExtendedListService} from '../Services/ExtendedLists/GLAccountExtendedListService';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
 
 export class GLAccountValidator {
+    private static CurrentSession = SessionLocator.SelectedSession;
     public static ValidateGLAccount(entityPM: any) {
 
 
@@ -13,7 +14,7 @@ export class GLAccountValidator {
 
     public static ValidateIsMultiCurrency(entityPM: GLAccountPM) {
 
-   
+
         //
         // [!] THE VALIDATION MOVED TO SERVER
         //
@@ -25,18 +26,18 @@ export class GLAccountValidator {
 
         //    ////if (entityPM.AccountTypeCode == "2") { // Customer
 
-        //    //    // Customer: LedgerTransactions check 
+        //    //    // Customer: LedgerTransactions check
         //    //    _GLAccountExtendedListService.CheckIfHasLedgerTransactions(entityPM.Id).subscribe((exist) => {
         //    //        if (!AppTool.IsNullOrEmpty(exist)) {
         //    //            if (exist) {
         //    //                errors.push(TextCodeTranslator.Translate("Accounting.General.O.ThereOpenTransaction")); // "There are open transactions for the GLAccount, can’t make it single currency GLAccount");
-        //    //                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-        //    //                SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = false;
+        //    //                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        //    //                this.CurrentSession.CurrentEditComponent.IsEditValid = false;
         //    //                return errors;
 
         //    //            } else {
-        //    //                SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = true;
-        //    //                SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        //    //                this.CurrentSession.CurrentEditComponent.IsEditValid = true;
+        //    //                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         //    //            }
         //    //        }
         //    //    });
@@ -49,13 +50,13 @@ export class GLAccountValidator {
         //            if (!AppTool.IsNullOrEmpty(splitted)) {
         //                if (splitted) {
         //                    errors.push("This GLAccount have splitted GLAccounts by currency, Deactivate these GLAccounts before doing these action");
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = false;
+        //                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        //                    this.CurrentSession.CurrentEditComponent.IsEditValid = false;
         //                    return errors;
 
         //                } else {
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = true;
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        //                    this.CurrentSession.CurrentEditComponent.IsEditValid = true;
+        //                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         //                }
         //            }
         //        });
@@ -75,13 +76,13 @@ export class GLAccountValidator {
         //            if (!AppTool.IsNullOrEmpty(splitted)) {
         //                if (splitted) {
         //                    errors.push("This GLAccount have splitted GLAccounts by currency, Deactivate these GLAccounts before doing these action");
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = false;
+        //                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        //                    this.CurrentSession.CurrentEditComponent.IsEditValid = false;
         //                    return errors;
 
         //                } else {
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = true;
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        //                    this.CurrentSession.CurrentEditComponent.IsEditValid = true;
+        //                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         //                }
         //            }
         //        });
@@ -91,7 +92,7 @@ export class GLAccountValidator {
 
 
     }
-   
+
     public static ValidateWithHoldingTaxLines(entityPM: GLAccountPM) {
         var FIELD_IS_REQUIERD: string = null;
         FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -111,9 +112,9 @@ export class GLAccountValidator {
             }
         }
 
-            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+            // this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
             return errors;
-        
+
     }
     public static ValidateCurrency(entityPM: GLAccountPM, oldCurrency: string) {
 
@@ -130,31 +131,31 @@ export class GLAccountValidator {
 
         //    if (oldCurrency != entityPM.CurrencyId) {
 
-        //        // Customer: LedgerTransactions check 
+        //        // Customer: LedgerTransactions check
         //        _GLAccountExtendedListService.CheckIfHasLedgerTransactions(entityPM.Id).subscribe((exist) => {
         //            if (!AppTool.IsNullOrEmpty(exist)) {
         //                if (exist) {
         //                    errors.push(TextCodeTranslator.Translate("Accounting.General.O.ThereTransactions4GLAwithexistingCurrency"));
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = false;
+        //                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        //                    this.CurrentSession.CurrentEditComponent.IsEditValid = false;
         //                    return errors;
 
         //                } else {
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = true;
-        //                    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        //                    this.CurrentSession.CurrentEditComponent.IsEditValid = true;
+        //                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         //                }
         //            }
         //        });
 
         //    } else {
-        //        SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = true;
-        //        SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        //        this.CurrentSession.CurrentEditComponent.IsEditValid = true;
+        //        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         //    }
         //} else {
-        //    SessionLocator.CurrentSession.CurrentEditComponent.IsEditValid = true;
-        //    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+        //    this.CurrentSession.CurrentEditComponent.IsEditValid = true;
+        //    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
         //}
-        
+
     }
 
 

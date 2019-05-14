@@ -259,5 +259,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         //              );
         //    return GetJournalLineLedgerDTO(null,null,qq);
         //}
+
+
+        public List<JournalLinePM> GetJournalLinesByJournalId(string JournalId, int tenant)
+        {
+           
+            List<JournalLine> journals = repository.GetJournalLines(JournalId, tenant);
+
+            return journals.Select(rec => this.GetEntityPM(rec)).ToList();
+        }
+
+        public JournalLinePM GetSingleJournalLine(string JournalId, int line, int tenant)
+        {
+            JournalLine poco = repository.GetSingleJournalLine(JournalId, line, tenant);
+            return GetEntityPM(poco);
+        }
     }
 }

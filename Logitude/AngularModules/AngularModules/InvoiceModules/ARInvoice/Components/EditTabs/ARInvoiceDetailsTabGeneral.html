@@ -247,7 +247,7 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td [style.float]="isRTL ? 'right' : 'left'" style="width: 57px">
+                                    <td float-start style="width: 57px">
                                         <IconButton [disabled]="!IsEditingEnabled" [Name]="'Add'" [IsSmall]="true" (click)="AddARInvoiceLineClicked()"></IconButton>
                                     </td>
 
@@ -438,7 +438,7 @@
 
                                                             <td class="LastChild" [ngStyle]="{background: item.CellBackground}" style="width: 25px; min-width: 25px; max-width: 25px;">
                                                                 <span class="CellSeparator"></span>
-                                                                <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Edit'" [IsSmall]="true" style="display: block;  margin-left:3px;" (click)="EditLineClicked(item)"></IconButton>
+                                                                <IconButton float-start [Name]="'Edit'" [IsSmall]="true" style="display: block;  margin-left:3px;" (click)="EditLineClicked(item)"></IconButton>
                                                             </td>
                                                         </tr>
                                                     </table>

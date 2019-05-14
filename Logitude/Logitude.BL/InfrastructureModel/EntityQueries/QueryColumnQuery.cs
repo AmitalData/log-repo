@@ -238,7 +238,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 if (!string.IsNullOrEmpty(myQuery.SharedByUserId) && myQuery.SharedByUserId != userId)
                 {
                     queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                              where a.Tenant == tenant && a.Query.UserId == myQuery.SharedByUserId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
+                              where a.Tenant == tenant && a.UserId == myQuery.SharedByUserId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
                               select new QueryColumnPM()
                               {
                                   ColumnWidth = a.ColumnWidth,
@@ -265,7 +265,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 else
                 {
                     queries = from a in repository.context.QueryColumns.Include("Query").Include("Query.ObjectTable").Include("ObjectField").Include("ObjectField.ListTextCode").Include("ObjectField.FullNameTextCode")
-                              where a.Tenant == tenant && a.Query.UserId == userId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
+                              where a.Tenant == tenant && a.UserId == userId && a.QueryId == queryId && a.ObjectField.DisplayInList == true
                               select new QueryColumnPM()
                               {
                                   ColumnWidth = a.ColumnWidth,
@@ -356,11 +356,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
 
             List<QueryColumnPM> Cols = new List<QueryColumnPM>();
-            foreach (var item in queries)
+
+            if (queries != null)
             {
-                if (!Cols.Contains(item))
+                foreach (var item in queries)
                 {
-                    Cols.Add(item);
+                    if (!Cols.Contains(item))
+                    {
+                        Cols.Add(item);
+                    }
                 }
             }
 
@@ -400,8 +404,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return queries;
         }
-
-
+        
         public IQueryable<QueryColumnPM> GetZeroQueryColumnsByQueryId(int tenant, string queryId)
         {
             IQueryable<QueryColumnPM> queries = null;

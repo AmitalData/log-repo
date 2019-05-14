@@ -31,6 +31,7 @@ export class UserWorkspaceComponent implements OnInit {
     filterAgrs: ApiQueryFilters;    
     private _entityResourceService: EntityResourceService;    
     SearchText: string = "Search names /positions";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _userExtendedPMService: UserExtendedPMService) {
         this._entityResourceService = new EntityResourceService();
     }
@@ -277,7 +278,9 @@ export class UserWorkspaceComponent implements OnInit {
         }
 
         if (FeatureLocator.HasFeaturePermession("User", "User.Query.ActiveNotLicensed")) {
-            this.ActiveNotLicensedQueryVisibility = true;
+            if (SessionLocator.TenantManagementJS.ManageLicencesPerUser) {
+                this.ActiveNotLicensedQueryVisibility = true;
+            }
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES")) {
@@ -341,11 +344,11 @@ export class UserWorkspaceComponent implements OnInit {
 
             var objectTablePM = window.ObjectTables.filter((d: any) => d.Name == "User")[0];
 
-            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/ListComponent/ListComponent", SessionLocator.CurrentSession.SessionMenuLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/ListComponent/ListComponent", this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    SessionLocator.CurrentSession.AddMenuReference(cmpRef);
+                    this.CurrentSession.AddMenuReference(cmpRef);
                     cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllData());
 
                 });
@@ -361,7 +364,7 @@ export class UserWorkspaceComponent implements OnInit {
 
     EditUser(selectedItem: any) {
         if (selectedItem) {
-            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditComponent", SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditComponent", this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
 
                     cmpRef.instance.ComponentRef = cmpRef;

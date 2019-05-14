@@ -349,6 +349,9 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.Field38).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field39).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field40).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.From).HasMaxLength(150).IsUnicode(false);
+            this.Property(t => t.To).HasMaxLength(150).IsUnicode(false);
+            this.Property(t => t.Origin).HasMaxLength(150).IsUnicode(false);
 
             //this.Property(t => t.LastModified)
             //    .IsRequired()
@@ -947,14 +950,13 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.INTTRASIStatusName).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.INTTRASIError).HasMaxLength(256).IsUnicode(false);
             this.Property(t => t.MainCarriageFromCity).HasMaxLength(25).IsUnicode(false);
-            this.Property(t => t.MainCarriageFromState).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.MainCarriageToCity).HasMaxLength(25).IsUnicode(false);
-            this.Property(t => t.MainCarriageToState).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.LastFinalDestination).HasMaxLength(150).IsUnicode(false);
             this.Property(t => t.Notify1Reference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Notify2Reference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ShipperNotExporterReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeNotImporterReference).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ARInvoices).HasMaxLength(1000).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentFollowUpDataView");
@@ -1387,14 +1389,13 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.LastSharedEventDate).HasColumnName("LastSharedEventDate");
             this.Property(t => t.GrossWeightPerTon).HasColumnName("GrossWeightPerTon");
             this.Property(t => t.FirstOperationalCloseDate).HasColumnName("FirstOperationalCloseDate");
+            this.Property(t => t.FirstAccountingCloseDate).HasColumnName("FirstAccountingCloseDate");
             this.Property(t => t.INTTRASIStatusCode).HasColumnName("INTTRASIStatusCode");
             this.Property(t => t.INTTRASIStatusName).HasColumnName("INTTRASIStatusName");
             this.Property(t => t.INTTRASIStatusDate).HasColumnName("INTTRASIStatusDate");
             this.Property(t => t.INTTRASIError).HasColumnName("INTTRASIError");
             this.Property(t => t.MainCarriageFromCity).HasColumnName("MainCarriageFromCity");
-            this.Property(t => t.MainCarriageFromState).HasColumnName("MainCarriageFromState");
             this.Property(t => t.MainCarriageToCity).HasColumnName("MainCarriageToCity");
-            this.Property(t => t.MainCarriageToState).HasColumnName("MainCarriageToState");
             this.Property(t => t.LastFinalDestination).HasColumnName("LastFinalDestination");
             this.Property(t => t.FirstPickupETA).HasColumnName("FirstPickupETA");
             this.Property(t => t.FirstPickupETD).HasColumnName("FirstPickupETD");
@@ -1406,6 +1407,12 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ShipperNotExporterReference).HasColumnName("ShipperNotExporterReference");
             this.Property(t => t.ConsigneeNotImporterReference).HasColumnName("ConsigneeNotImporterReference");
             this.Property(t => t.ContainerLastStatusDate).HasColumnName("ContainerLastStatusDate");
+            this.Property(t => t.From).HasColumnName("From");
+            this.Property(t => t.To).HasColumnName("To");
+            this.Property(t => t.Origin).HasColumnName("Origin");
+            this.Property(t => t.DeclarationDate).HasColumnName("DeclarationDate");
+            this.Property(t => t.DeclarationNumber).HasColumnName("DeclarationNumber");
+            this.Property(t => t.ARInvoices).HasColumnName("ARInvoices");
 
         }
     }

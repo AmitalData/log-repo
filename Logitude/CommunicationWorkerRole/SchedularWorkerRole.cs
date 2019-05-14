@@ -39,7 +39,8 @@ namespace CommunicationWorkerRole
         }
         public override void Run()
         {
-
+            
+           
             while (IsRunning)
             {
 
@@ -59,32 +60,42 @@ namespace CommunicationWorkerRole
                             {
                                 string Id = message.MessageValues["TaskId"].ToString();
                                 Tenant = int.Parse(message.MessageValues["Tenant"]);
+                                int Version = int.Parse(message.MessageValues.ContainsKey("Version") ? message.MessageValues["Version"].ToString() : "0");
                                 if (!string.IsNullOrEmpty(Id))
                                 {
-                                    TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(Tenant);
+                                    var objectContext = WebFreightContext.GetContext(Tenant);
+                                    TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
+                                    TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
                                     TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
                                     TasksSchedulerPM Task = TasksSchedulerQuery.GetSingleTasksSchedulerPM(Id);
 
                                     if (Task != null)
                                     {
-                                        List<object> args = new List<object>();
-                                        if (!string.IsNullOrEmpty(Task.Id))
+                                        if (Version >= Task.Version)
                                         {
-                                            args.Add(Task.Id);
+                                            List<object> args = new List<object>();
+                                            if (!string.IsNullOrEmpty(Task.Id))
+                                            {
+                                                args.Add(Task.Id);
+                                            }
+                                            args.Add(Task.Tenant);
+
+
+                                            object[] ArrArgs = args.ToArray();
+                                            var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ServiceClassName), ArrArgs) as TaskManagerBase;
+                                            Task.Status = "In progress";
+                                            WRItem.Task = Task;
+                                            Thread thread = new Thread(WRItem.Run);
+                                            //queueservice.Complete();
+                                            //Task.Status = "In progress";
+                                            service.Update(Task);
+                                            thread.Start();
+                                            //AddSchedulerQueue(Task);// need to be Moved
                                         }
-                                        args.Add(Task.Tenant);
-
-
-                                        object[] ArrArgs = args.ToArray();
-                                        var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ServiceClassName), ArrArgs) as TaskManagerBase;
-                                        WRItem.Task = Task;
-                                        Thread thread = new Thread(WRItem.Run);
-                                        //queueservice.Complete();
-                                        thread.Start();
 
                                     }
 
-                                    AddSchedulerQueue(Task);
+                                   
                                     //queueservice.Complete();
 
                                     // Add New Queue for the executed WR
@@ -122,9 +133,9 @@ namespace CommunicationWorkerRole
             {
                 case "D":
                     {
-                        if (task.RepeatInMinutes > 0)
+                        if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
                         {
-                            task.NextRunTime = task.NextRunTime.Value.AddMinutes(task.RepeatInMinutes + 0.0);
+                            task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
                         }
                         else
                         {

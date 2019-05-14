@@ -87,6 +87,16 @@ namespace DW_Editor_Tool.ViewModels
             set { isMeasurement = value; FirePropertyChanged("IsMeasurement"); }
         }
 
+        bool isCustom;
+        public bool IsCustom
+        {
+            get { return isCustom; }
+            set { isCustom = value; FirePropertyChanged("IsCustom"); }
+        }
+
+        
+
+
         string aggregationTypeCode;
         public string AggregationTypeCode
         {
@@ -114,11 +124,30 @@ namespace DW_Editor_Tool.ViewModels
             get { return lOVAdditionalFields; }
             set { lOVAdditionalFields = value; FirePropertyChanged("LOVAdditionalColumns"); }
         }
-        
 
+		bool hideTree;
+		public bool HideTree
+		{
+			get { return hideTree; }
+			set { hideTree = value; FirePropertyChanged("HideTree"); }
+		}
+
+        bool cannotFilter;
+        public bool CannotFilter
+        {
+            get { return cannotFilter; }
+            set { cannotFilter = value; FirePropertyChanged("CannotFilter"); }
+        }
+
+        string helpText;
+        public string HelpText
+        {
+            get { return helpText; }
+            set { helpText = value; FirePropertyChanged("HelpText"); }
+        }
         // is Measurement , Aggregation Type
 
-        public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension" }; } }
+        public List<string> DataTypesList { get { return new List<string>() { "Text", "nText", "Date", "DateTime", "Boolean", "Decimal", "Integer", "Dimension", "SqlVariant" }; } }
         public List<string> AggregationTypesList { get { return new List<string>() { "SUM", "COUNT" }; } }
 
         Visibility errorsVisibility = Visibility.Collapsed;

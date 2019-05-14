@@ -24,6 +24,7 @@ export class NotificationListTemplate {
     IsSeenByAssignee: boolean;
     ShowGreenTick: boolean = true;
     notificationExtendedListService: NotificationExtendedListService = new NotificationExtendedListService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
     }
 
@@ -99,7 +100,7 @@ export class NotificationListTemplate {
     datecolor: string;
     ClosedByAssignee: string = null;
     ClosedByAssigneeClicked() {
-        SessionLocator.CurrentSession.FireEvent({ Name: 'ClosedByAssigneeClicked', rowIndex: this.AdditionalData.rowIndex, gridId: this.AdditionalData.gridId });
+        this.CurrentSession.FireEvent({ Name: 'ClosedByAssigneeClicked', rowIndex: this.AdditionalData.rowIndex, gridId: this.AdditionalData.gridId });
         this.notificationExtendedListService.PutNotificationsStatus(this.rowData).subscribe(response => {
             if (response) {
                 if (!response.HasError) {
@@ -115,7 +116,7 @@ export class NotificationListTemplate {
     IsClosed: boolean = false;
 
     FirePreventSelect() {
-        SessionLocator.CurrentSession.PseventRowSelectEvent.emit("select");
+        this.CurrentSession.PseventRowSelectEvent.emit("select");
     }
 
 

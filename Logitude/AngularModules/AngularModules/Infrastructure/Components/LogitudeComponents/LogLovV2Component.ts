@@ -90,6 +90,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     public HideLastColumn: boolean = false;
     public SelectedValuePath: string;
     public DisplayMemberPath: string;
+    public DisplayMemberPathManuallySet:boolean=false;
     public DataContext: any;
     public DataList: any[];
     public IsFreeText: boolean = false;
@@ -223,7 +224,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     @Input() DisplayFieldsFromList: string;
     public isRTL: boolean = false;
     private LovPartnerTypes: Array<PartnerTypeList> = [];
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityListService: EntityListService, private entityPMService: EntityPMService,
         private _entityResourceService: EntityResourceService) {
         this.show = false;
@@ -374,7 +375,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             if (this.FocusOnMe) {
                 var element = document.getElementById(this.ElementId);
                 element.focus();
-                SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, OnBlurEvent: this.OnBlurEvent });
+                this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, OnBlurEvent: this.OnBlurEvent });
                 this.timerToken = setTimeout(() => {
                     Selection(element);
                 }, 1);
@@ -476,18 +477,18 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         this.SetControlIds(baseIdCombination);
 
         if (this.FocusOnMe) {// it means it is inside a grid.
-            this.CopyValueSubs = SessionLocator.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
+            this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
                 if (id == this.ElementId) {
-                    //SessionLocator.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
-                    this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
+                    //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
                     this.GetSingle(this.LookUpTable);
-                    SessionLocator.CurrentSession.CopiedCell = null;
+                    this.CurrentSession.CopiedCell = null;
                 }
             });
 
-            //if (SessionLocator.CurrentSession.CopiedCell) {
-            //    this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
-            //    SessionLocator.CurrentSession.CopiedCell = null;
+            //if (this.CurrentSession.CopiedCell) {
+            //    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+            //    this.CurrentSession.CopiedCell = null;
             //}
         }
 
@@ -546,14 +547,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             this.PlaceHolder = '';
         }
 
-        if (!this.DisplayMemberPath) {
-            if (this.LookUpTable.LookUp2) {
-                this.DisplayMemberPath = this.LookUpTable.LookUp2;
-            }
-            else {
-                this.DisplayMemberPath = this.LookUpTable.LookUp1;
-            }
-        }
+        
 
         if (!this.SelectedValuePath) {
             this.SelectedValuePath = this.LookUpTable.KeyPropertyPath;
@@ -616,6 +610,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             }
                             this.LanguageFilterValue=lang;
                             this.DrawColumns();
+                            if(!this.DisplayMemberPath){
+                              this.SetDisplayMemberPath();
+                            }
+                            else{
+                                this.DisplayMemberPathManuallySet=true;
+                            }
 
 
                             if (this.ObjectTable) {
@@ -898,6 +898,39 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                                 this.dataColumns.push({ Field: lookupFields[i].FieldName });
                             }
     }
+
+    SetDisplayMemberPath(){
+        if (!this.DisplayMemberPathManuallySet) {
+            /// this case we have to show the local display member path if available
+            if(this.LanguageFilterValue!='E'){ 
+                if(this.LookUpTable.LovDisplayMemberPathLocal){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPathLocal;
+                }
+                else if(this.LookUpTable.LovDisplayMemberPath){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPath;
+                }
+                else if (this.LookUpTable.LookUp2) {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp2;
+                }
+                else {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp1;
+                }
+            }
+            /// this case we have to show the display member path if available
+            else{
+                if(this.LookUpTable.LovDisplayMemberPath){
+                    this.DisplayMemberPath=this.LookUpTable.LovDisplayMemberPath;
+                }
+                else if (this.LookUpTable.LookUp2) {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp2;
+                }
+                else {
+                    this.DisplayMemberPath = this.LookUpTable.LookUp1;
+                }
+           }
+        }
+    }
+
     SetIsDisabled() {
         this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
         //console.log(this.uiProperty);
@@ -2116,7 +2149,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                             this.OnEditCompleted();
                     });
                 }
-                //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 //    .then(cmpRef => {
                 //        cmpRef.instance.ComponentRef = cmpRef;
                 //        cmpRef.instance.Run({ EntityId: currentEntity.Id, ObjectTableName: objectTableName });
@@ -2593,7 +2626,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null, false, this.LookUpTable.CacheOnClient, forceEnableAdd);
                 this.currentFilter = this.LookUp1;
             }
-            else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined) {
+            else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined && this.LookUp1 != this.LookUp2) {
                 this.callCount = 2;
                 var forceEnableAdd = false;
                 if (this.QueryFilterItems && this.QueryFilterItems.AdditionalFilters.length > 0) {
@@ -2779,7 +2812,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 filters.addAdditionalFilter(this.LookUp1, searchText, null, null, "StartsWith", false, false, false, null);
                 this.currentFilter = this.LookUp1;
             }
-            else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined) {
+            else if (this.currentFilter == this.LookUp1 && this.LookUp2 != null && this.LookUp2 != undefined && this.LookUp1 != this.LookUp2) {
                 this.callCount = 2;
                 if (this.LookUpTable.DependencyFilter1 != this.LookUp1 && this.LookUpTable.DependencyFilter2 != this.LookUp1 && this.LookUpTable.DependencyFilter3 != this.LookUp1) {
                     filters.removeAdditionalFilter(this.LookUp1);
@@ -2972,6 +3005,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     SwitchBetweenLocalAndEng(lang:string){
         this.LanguageFilterValue=lang;
         this.DrawColumns();
+        this.SetDisplayMemberPath();
     }
 }
 

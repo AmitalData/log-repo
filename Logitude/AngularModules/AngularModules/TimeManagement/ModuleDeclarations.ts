@@ -10,6 +10,8 @@ import {SettingsWorkspaceComponent} from './Components/Workspaces/SettingsWorksp
 import {ReportsWorkspaceComponent} from './Components/Workspaces/ReportsWorkspaceComponent';
 import {ProjectsWorkspaceComponent} from './Components/Workspaces/Projects/ProjectsWorkspaceComponent';
 import {ClockTimeComponent} from './Components/Workspaces/TimeSheet/ClockTimeComponent';
+import { VacationsComponent } from './Components/Workspaces/TimeSheet/VacationsComponent';
+
 
 //Helpers
 import {TMProjectHelperComponent} from './Components/Helpers/TMProjectHelperComponent';
@@ -26,6 +28,7 @@ import {NewProjectComponent} from  './Components/NewEntity/NewProjectComponent';
 import {NewOfficeHourComponent} from  './Components/NewEntity/NewOfficeHourComponent';
 import {NewSprintComponent} from  './Components/NewEntity/NewSprintComponent';
 import { NewProjectCategoryComponent } from './Components/NewEntity/NewProjectCategoryComponent';
+import { NewGetProjectComponent } from './Components/NewEntity/NewGetProjectComponent';
 
 export const Components =
     [
@@ -40,7 +43,7 @@ export const Components =
         ReportsWorkspaceComponent,
         ProjectsWorkspaceComponent,
         ClockTimeComponent,
-
+        VacationsComponent,
 
         //Helpers
         TMProjectHelperComponent,
@@ -55,6 +58,7 @@ export const Components =
         NewOfficeHourComponent,
         NewSprintComponent,
         NewProjectCategoryComponent,
+        NewGetProjectComponent,
     ];
 
 export class ModuleDeclarations {
@@ -74,25 +78,26 @@ export class ModuleDeclarations {
             case "ReportsWorkspaceComponent": { myResult = ReportsWorkspaceComponent; break; }
             case "ProjectsWorkspaceComponent": { myResult = ProjectsWorkspaceComponent; break; }
             case "ClockTimeComponent": { myResult = ClockTimeComponent; break; }
+            case "VacationsComponent": { myResult = VacationsComponent; break; }
+
 
             // Helpers
             case "TMProjectHelperComponent": { myResult = TMProjectHelperComponent; break; }
 
 
-          //Connections
+            //Connections
 
             case "ConnectToParentComponent": { myResult = ConnectToParentComponent; break; }
 
-                
 
-                
             // New Screens 
             case "NewLineComponent": { myResult = NewLineComponent; break; }
             case "NewProjectComponent": { myResult = NewProjectComponent; break; }
             case "NewOfficeHourComponent": { myResult = NewOfficeHourComponent; break; }
             case "NewSprintComponent": { myResult = NewSprintComponent; break; }
             case "NewProjectCategoryComponent": { myResult = NewProjectCategoryComponent; break; }
-                
+            case "NewGetProjectComponent": { myResult = NewGetProjectComponent; break; }
+
         }
 
         return myResult;

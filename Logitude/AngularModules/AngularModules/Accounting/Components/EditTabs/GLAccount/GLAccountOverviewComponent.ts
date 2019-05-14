@@ -1,3 +1,13 @@
+import { DateTool } from './../../../../Infrastructure/Tools';
+import { CardList } from './../../../../Common/EntityLists/CardList';
+import { CardListService } from './../../../../Common/Services/StandardLists/CardListService';
+import { CreditLimitSettingPM } from './../../../../Common/EntityPMs/CreditLimitSettingPM';
+import { AccountingNotePMService } from './../../../Services/StandardPMs/AccountingNotePMService';
+import { AccountingNotePM } from './../../../EntityPMs/AccountingNotePM';
+import { MessageWindow } from './../../../../Controls/Windows/MessageWindow';
+import { AccountingNoteExtendedListService } from './../../../Services/ExtendedLists/AccountingNoteExtendedListService';
+import { AccountingNoteList } from './../../../EntityLists/AccountingNoteList';
+import { RegionList } from './../../../../Common/EntityLists/RegionList';
 import { AccountingEntityHelper } from './../../../Utilities/AccountingEntityHelper';
 import { EntityResourceService } from './../../../../Infrastructure/Services/EntityResourceService';
 import { LedgerTransactionList } from './../../../EntityLists/LedgerTransactionList';
@@ -24,6 +34,7 @@ import { AgingReportParameters } from '../../../DataContracts/AgingReportParamet
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { GLAccountList } from '../../../EntityLists/GLAccountList';
 import { FullAccountingSettingList } from '../../../EntityLists/FullAccountingSettingList';
+import { AccountingNoteListService } from '../../../Services/StandardLists/AccountingNoteListService';
 declare var makeAmBarChart;
 
 @Component({
@@ -43,6 +54,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public AccountPM: GLAccountPM = null;
     public GLAccountMoreData: GLAccountMoreDataList = null;
     public isRTL: boolean = false;
+    public showLocal: boolean = false;
     public isUsedOutside: boolean = false; // when view tab inside customer ..
 
     //Services
@@ -50,12 +62,17 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _GLAccountMoreDataListService: GLAccountMoreDataListService = new GLAccountMoreDataListService();
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
-
+    _AccountingNoteExtendedListService: AccountingNoteExtendedListService = new AccountingNoteExtendedListService();
+    _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
+    _CardListService: CardListService = new CardListService();
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        if (SessionLocator.LoggedUserPM) this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
         //Resources
+        this._EntityResourceService.getEntityResourceByTableName("AccountingNote").subscribe((response: any) => { });
         this._EntityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => { });
         this._EntityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
 
@@ -70,7 +87,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             this.isUsedOutside = true;
         }
 
-        this.chartId = "CustomerOverview_" + SessionLocator.CurrentSession.GetChartId();
+        this.chartId = "CustomerOverview_" + this.CurrentSession.GetChartId();
         this.Listen();
     }
 
@@ -78,21 +95,21 @@ export class GLAccountOverviewComponent extends BaseComponent {
     private LoadCompletedEvent: any = null;
     private TabSelectedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadAllData();
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
                         this.LoadAllData();
                     }
@@ -102,9 +119,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
             //
             if (this.TabSelectedEvent == null) {
-                this.TabSelectedEvent = SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
+                this.TabSelectedEvent = this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (tabCode == "GAOV") {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.LoadAllData();
                     }
                 });
@@ -115,8 +132,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
     LoadAllData() {
         this.GetDefaultValues();
         this.GetLastTransactions();
+        this.GetAccountingNotes();
         this.LoadChartData();
         this.SetUIProperties();
+        this.LoadCreditDetailsData();
 
     }
 
@@ -128,18 +147,21 @@ export class GLAccountOverviewComponent extends BaseComponent {
     //    }
     //}
     //#endregion
-
+    TenantCurrency:string;
+    accountCardlist: CardList;
     GetDefaultValues() {
 
         // Get GLAccountMoreData
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._GLAccountMoreDataListService.getSingle(this.AccountPM.Id).subscribe(myResult => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             console.log("_GLAccountMoreDataListService.getSingle", myResult);
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.GLAccountMoreData = mm.Result;
+                this.LoadCreditDetailsData();
+
             }
             else {
             }
@@ -157,6 +179,25 @@ export class GLAccountOverviewComponent extends BaseComponent {
             }
         });
 
+        // Get connect card
+        this._CardListService.getSingle(this.AccountPM.CardId).subscribe(myResult => {
+            console.log("_CardListService.getSingle", myResult);
+            var result: ServiceResponse = myResult;
+            if (!result.HasError)
+            {
+                this.accountCardlist = result.Result;
+                this.LoadCreditDetailsData();
+
+            }
+            else {
+                console.log("[!] cannot get glaccount card");
+
+            }
+        });
+
+
+        // Get tenant currency
+        this.TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
 
     }
 
@@ -199,7 +240,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         }
         else
         {
-            SessionLocator.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("GATR");
+            this.CurrentSession.CurrentEditComponent.SetSelectedTabByCode("GATR");
         }
 
     }
@@ -208,11 +249,11 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     ReconcileButtonClicked()
     {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
         this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.AccountPM.Id).subscribe((serviceResponse: ServiceResponse) => {
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (serviceResponse.Result) {
                 var result = serviceResponse.Result;
@@ -248,19 +289,19 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     GetNonReconciledTransactionsCount() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._GLAccountExtendedListService.GetAccountReconcilesCount(this.AccountPM.Id).subscribe(myResult => {
 
 
             if (!AppTool.IsNullOrEmpty(myResult)) {
 
-                SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.ReconcilationCount = myResult;
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-                SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(($event) => {
+                this.CurrentSession.CurrentEditComponent.EntityPM.ReconcilationCount = myResult;
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe(($event) => {
                     if ($event == true) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
 
                 });
             }
@@ -295,6 +336,105 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     //#endregion
 
+    //#region Accounting Notes
+    accountingNotesList: AccountingNoteList[] = [];
+    isNotesLoading:boolean = false;
+
+    GetAccountingNotes(){
+        if(this.AccountPM.CardId){
+            this.accountingNotesList = [];
+            this.isNotesLoading = true;
+            // setTimeout(() => {
+
+            this._AccountingNoteExtendedListService.GetNotesByCard(this.AccountPM.CardId)
+                .subscribe((res:ServiceResponse) =>
+                {
+                        this.isNotesLoading = false;
+
+
+                    if(res.HasError){
+                        var msg = new MessageWindow();
+                        msg.Show("Get Accounting Note error: " + res.ErrorsArray[0]);
+                    }else{
+                        var notesList = res.Result;
+                        this.accountingNotesList = notesList;
+                    }
+                });
+            // }, 2000);
+
+        }
+
+    }
+    OpenAccountingNote(notePM: AccountingNotePM){
+
+        var windowArgs: any = {};
+        windowArgs.AccountPM = this.AccountPM;
+        windowArgs.AccountingNotePM = notePM;
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 450;
+        logitudeWindow.Height = 320;
+        logitudeWindow.Title = notePM ? '' : TextCodeTranslator.Translate("Accounting.O.NewAccountingNote");
+
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Accounting/Components/Others/AccountingNoteComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            this.GetAccountingNotes();
+        });
+
+    }
+    ItemEditButton(_noteList: AccountingNoteList){
+
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        this._AccountingNotePMService.get(_noteList.Id)
+            .subscribe(myResult => {
+
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    var _notePM = mm.Result;
+                    this.OpenAccountingNote(_notePM);
+                    this.CurrentSession.StopBusyIndicator();
+
+
+                }
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
+
+
+    }
+    ItemDeleteButton(item: AccountingNoteList){
+        this._AccountingNoteExtendedListService.DeleteNote(item.Id)
+            .subscribe(myResult => {
+
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    var res = mm.Result;
+                    this.CurrentSession.StopBusyIndicator();
+                    this.GetAccountingNotes();
+
+                }
+                else {
+                    var msg = new MessageWindow();
+                    msg.Show(mm.ErrorsArray[0]);
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
+    }
+    txt_updatedBy: string = TextCodeTranslator.Translate("AccountingNote.F.UpdatedByUserName");
+    GetNoteTitle(note:AccountingNoteList){
+        var result = "";
+        if(note){
+            var myFormats = DateTool.GetDateFormats(note.UpdateDate);
+            var formatedDate = myFormats.DateString + " " + myFormats.ShortTimeString;
+            result = this.txt_updatedBy + ' ' + note.UpdatedByUserName + ' (' + formatedDate + ') ';
+        }
+        return result;
+    }
+    //#endregion
+
     //#region Last 10 Transactions
     lastTransactionsList: LedgerTransactionList[];
     GetAmountLabel() {
@@ -310,15 +450,18 @@ export class GLAccountOverviewComponent extends BaseComponent {
         return iconTxt;
     }
     GetReferencesText(transaction: LedgerTransactionList) {
-        var txt="";
-        if (transaction.Reference1) txt += transaction.Reference1;
-        txt += txt ? " / " : "";
-        if (transaction.Reference2) txt += transaction.Reference2;
-        txt += txt ? " / " : "";
-        if (transaction.Reference3) txt += transaction.Reference3;
+        var reference="";
 
-        return txt;
+        reference = this.pushText(reference, transaction.Reference1);
+        reference = this.pushText(reference, transaction.Reference2);
+        reference = this.pushText(reference, transaction.Reference3);
+
+        return reference;
     }
+    pushText(txt: string, target: string) {
+        return (target ? (!target.includes(txt) ? (target += ' / ' + txt) : target) : txt);
+    }
+
     GetLastTransactions() {
         this._LedgerTransactionExtendedListService.getLast10TransactionsForAccount(this.AccountPM.Id).subscribe(myResult => {
 
@@ -410,7 +553,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -423,7 +566,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
@@ -465,6 +608,49 @@ export class GLAccountOverviewComponent extends BaseComponent {
             return showLocal ? 'סכום פתוח ' : 'Open transaction';
     }
 
+
+    //#endregion
+
+    //#region Credit limit
+    creditPercentage:number = 0;
+    LoadCreditDetailsData(){
+
+
+        console.log("LoadCreditDetailsData");
+
+        // Calculate credit percentage
+        var percentage = 0;
+        if (this.GLAccountMoreData && this.accountCardlist)
+        {
+            percentage =
+                (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
+            +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
+            +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0);
+            //+ (this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
+
+            if(this.accountCardlist.CreditLimitAmount && this.accountCardlist.CreditLimitAmount != 0)
+                percentage = percentage / (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0);
+            else
+                percentage = 0;
+        }
+
+        if (!percentage) percentage = 0;
+        if (percentage < 0) percentage = 0;
+
+        percentage = percentage * 100;
+
+        this.creditPercentage = percentage;
+
+
+    }
+
+    DisplayChequelistClicked(){
+
+    }
+    CardIndexClicked(){
+        this.DisplayTransactionsLinkClicked();
+    }
+    //
 
     //#endregion
 
@@ -540,10 +726,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
         args.IsCustomer = true;
         args.GroupByDate = this.DateFilterSelectedValue == "filter_Accounting" ? "AccountingDate" : "DueDate";
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
         this._GLAccountExtendedListService.GetAgingReport(args).subscribe((myResponse: ServiceResponse) => {
             console.log("GetAgingReport: ", periods);
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (!myResponse.HasError) {
                 var res = myResponse.Result;
@@ -611,7 +797,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             "gradientOrientation": "horizontal",
             "borderAlpha": 0,
             "lineColor": "#fff",
-            "fixedColumnWidth": 70,
+            "fixedColumnWidth": this.FilterSelectedValue == "9mo" ? 30 : 40,
 
 
         }]
@@ -626,8 +812,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
             this.barChartData[0].data[i] = value.toString();
 
             // Labels
-            var label = element.PeriodName.replace("b4", "Before"); // replace 'b4' with 'Before'
-            label = label.startsWith("Before") ? label.replace("/20", "/") : label; // minimize year in 'Before' Column
+            var label = element.PeriodName.replace("b4", this.showLocal ? "עד" : "Before"); // replace 'b4' with 'Before'
+            label = label.replace("/20", "/"); // minimize year in 'Before' Column
             this.barChartLabels[i] = label;
 
             // Data

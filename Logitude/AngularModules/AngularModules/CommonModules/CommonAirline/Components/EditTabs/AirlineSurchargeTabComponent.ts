@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {AirlinePM} from '../../../../Common/EntityPMs/AirlinePM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
@@ -40,6 +40,7 @@ export class AirlineSurchargeTabComponent extends BaseComponent implements OnIni
     public TarrifHeaderNotes: string = "";
     public ActiveTariff: string = "";
     public AllTariff: string = "";
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
         this._entityResourceService.getEntityResourceByTableName("TarrifHeader", 0).subscribe(response => {
@@ -49,13 +50,13 @@ export class AirlineSurchargeTabComponent extends BaseComponent implements OnIni
             this.ObsList = [];
             this.FillData();
 
-            if (SessionLocator.CurrentSession == null) {
+            if (this.CurrentSession == null) {
                 this.ActiveTariff = "Active_-1_-1";
                 this.AllTariff = "All_-1_-1";
             }
 
             else {
-                var idIndex = SessionLocator.CurrentSession.GetNewId("RadioButton");
+                var idIndex = this.CurrentSession.GetNewId("RadioButton");
 
                 this.ActiveTariff = "Active_" + idIndex;
                 this.AllTariff = "All_" + idIndex;

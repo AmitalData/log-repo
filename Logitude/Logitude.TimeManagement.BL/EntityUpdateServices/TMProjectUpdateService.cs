@@ -1,6 +1,8 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.TimeManagement.BL.EntityPMs;
+using Logitude.TimeManagement.BL.TraceEvents;
+using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -34,7 +36,12 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                 {
                     entityPM.ProjectNumber += "-" + GenerateNewId( entityPM);
                 }
+
+                TMProjectTracing.TraceNew(entityPM);
+
             }
+
+
         }
 
 
@@ -43,7 +50,7 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
 
             TMProjectRepository entityRepository = new TMProjectRepository(entityPM.Tenant);
             List<string> ProjectNumbers = entityRepository.GetInnerTMProjectByNumber(entityPM.ProjectNumber, entityPM.Tenant);
-            List<string> EditedProjectNumbers = new List<string>();
+            List<int> EditedProjectNumbers = new List<int>();
             int ProjectId ;
             if (ProjectNumbers.Count==0)
                 ProjectId = 1;
@@ -52,12 +59,12 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                 foreach(string item in ProjectNumbers)
                 {
                     string newitem = item.Replace(entityPM.ProjectNumber+"-", "");
-                    EditedProjectNumbers.Add(newitem.Split('-')[0]);
+                    EditedProjectNumbers.Add(int.Parse(newitem.Split('-')[0]));
                 }
 
-                string max = EditedProjectNumbers.Max();
-                string[] MaxArr = max.Split('-');
-                 ProjectId =int.Parse(MaxArr.Last())+1;
+                int max = EditedProjectNumbers.Max();
+               // string[] MaxArr = max.Split('-');
+                 ProjectId = max + 1;
             }
            
             return ProjectId+"";
@@ -98,6 +105,14 @@ namespace Logitude.TimeManagement.BL.EntityUpdateServices
                     entityPM.CreatedByUserId = myLoggedUserId;
                 }
             }
+
+            TMProjectRepository tMProjectRepository = new TMProjectRepository(entityPM.Tenant);
+            TMProject poco = tMProjectRepository.GetSingle(entityPM.Id, entityPM.Tenant);
+            if (poco != null)
+            {
+                TMProjectTracing.TraceUpdate(entityPM, poco);
+            }
+
         }
     }
 }

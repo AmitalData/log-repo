@@ -115,6 +115,41 @@ export class DWObjectFieldPM {
     public set LOVAdditionalColumns(newValue: string) { if (this.lOVAdditionalColumns != newValue) { this.lOVAdditionalColumns = newValue; this.MarkAsDirty("LOVAdditionalColumns"); } }
        
 	 
+    private category: string;
+    public get Category() { return this.category; }
+    public set Category(newValue: string) { if (this.category != newValue) { this.category = newValue; this.MarkAsDirty("Category"); } }
+       
+	 
+    private categoryIndex: number;
+    public get CategoryIndex() { return this.categoryIndex; }
+    public set CategoryIndex(newValue: number) { if (this.categoryIndex != newValue) { this.categoryIndex = newValue; this.MarkAsDirty("CategoryIndex"); } }
+       
+	 
+    private hideTree: boolean;
+    public get HideTree() { return this.hideTree; }
+    public set HideTree(newValue: boolean) { if (this.hideTree != newValue) { this.hideTree = newValue; this.MarkAsDirty("HideTree"); } }
+       
+	 
+    private dimensionTableDisplayName: string;
+    public get DimensionTableDisplayName() { return this.dimensionTableDisplayName; }
+    public set DimensionTableDisplayName(newValue: string) { if (this.dimensionTableDisplayName != newValue) { this.dimensionTableDisplayName = newValue; this.MarkAsDirty("DimensionTableDisplayName"); } }
+       
+	 
+    private cannotFilter: boolean;
+    public get CannotFilter() { return this.cannotFilter; }
+    public set CannotFilter(newValue: boolean) { if (this.cannotFilter != newValue) { this.cannotFilter = newValue; this.MarkAsDirty("CannotFilter"); } }
+       
+	 
+    private helpText: string;
+    public get HelpText() { return this.helpText; }
+    public set HelpText(newValue: string) { if (this.helpText != newValue) { this.helpText = newValue; this.MarkAsDirty("HelpText"); } }
+       
+	 
+    private isCustom: boolean;
+    public get IsCustom() { return this.isCustom; }
+    public set IsCustom(newValue: boolean) { if (this.isCustom != newValue) { this.isCustom = newValue; this.MarkAsDirty("IsCustom"); } }
+       
+	 
 
     public OldEntityPM: DWObjectFieldPM;
 		

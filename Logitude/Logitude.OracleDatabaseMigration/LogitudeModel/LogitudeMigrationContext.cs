@@ -369,6 +369,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
+
+        public IDbSet<NumberFormat> NumberFormats
+        {
+            get;
+            set;
+        }
         public IDbSet<DocumentTypeTemplate> DocumentTypeTemplates
         {
             get;
@@ -4148,6 +4154,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new AccountingPaymentMethodMap());
             modelBuilder.Configurations.Add(new ARPaymentMap());
             modelBuilder.Configurations.Add(new ARPaymentStatuMap());
+            modelBuilder.Configurations.Add(new ARInvoiceStocksStatusMap());
             modelBuilder.Configurations.Add(new ARInvoiceLineActionMap());
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());

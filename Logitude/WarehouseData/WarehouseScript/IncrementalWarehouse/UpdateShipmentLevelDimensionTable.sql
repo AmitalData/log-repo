@@ -24,7 +24,7 @@
 	BEGIN
 	
 	set @Key = (select Code from DIM_Levels where Code = @Code)
-	if(@Key is  null) begin  insert into DIM_Levels values(@Code,@Name); end
+	if(@Key is  null) begin  insert into DIM_Levels  (Code,Name) values(@Code,@Name); end
 	else begin update   DIM_Levels set Name =@Name Where Code = @Code; end
    
 

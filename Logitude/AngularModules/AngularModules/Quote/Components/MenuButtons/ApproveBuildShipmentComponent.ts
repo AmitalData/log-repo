@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 
 @Component({
@@ -7,6 +7,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 })
 
 export class ApproveBuildShipmentComponent {
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
@@ -19,11 +20,11 @@ export class ApproveBuildShipmentComponent {
 
     CancelButtonClicked() {
         this.Approving = false;
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+        this.CurrentSession.CloseCurrentWindowEmit("ok");
     }
 
     OkButtonClicked() {
         this.Approving = true;
-        SessionLocator.CurrentSession.CloseCurrentWindow();        
+        this.CurrentSession.CloseCurrentWindow();        
     }
 }

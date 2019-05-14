@@ -125,11 +125,14 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("Quote", tenant).ToString();
             this.entityPoco = new Quote() { Id = this.entityPM.Id };
 
-            QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(objectContext);
-            QuoteSetting iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(tenant);
-            if(iQuoteSetting != null)
+            if (!entityPM.IsCopy)
             {
-                this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;
+                QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(objectContext);
+                QuoteSetting iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(tenant);
+                if (iQuoteSetting != null)
+                {
+                    this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;
+                }
             }
 
             this.InitializeComponent();
@@ -475,6 +478,56 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             InitializeExpirationValues();
             InitializeAutomaticallyClose();
+
+            if (entityPM.ConvertToLCL || entityPM.ConvertToFCL)
+            {
+                entityPM.NumberOfPackages = null;
+                entityPM.PackageType1Id = null;
+                entityPM.PackageType1Quantity = null;
+                entityPM.PackageType2Id = null;
+                entityPM.PackageType2Quantity = null;
+                entityPM.PackageType3Id = null;
+                entityPM.PackageType3Quantity = null;
+                entityPM.PackageType4Id = null;
+                entityPM.PackageType4Quantity = null;
+                entityPM.PackageType5Id = null;
+                entityPM.PackageType5Quantity = null;
+                entityPM.TEU = null;
+                entityPM.NumberOfPackages = null;
+                entityPM.GrossWeight = null;
+                entityPM.ChargeableWeight = null;
+                entityPM.VolumetricWeight = null;
+                entityPM.Volume = null;
+
+                foreach (QuotePackagePM pm in entityPM.QuotePackages)
+                {
+                    this.DeleteQuotePackage(pm);
+                }
+
+                foreach (QuoteChargePM pm in entityPM.QuoteCharges)
+                {
+                    this.DeleteQuoteChargeUp(pm);
+                }
+
+                entityPM.QuotePackages.Clear();
+                entityPM.QuoteCharges.Clear();
+
+
+                if (entityPM.ConvertToFCL)
+                {
+                    this.isLCLQuote = false;
+                    entityPM.ShipmentTypeId = "FCLD";
+                }
+
+                else
+                {
+                    this.isLCLQuote = true;
+                    entityPM.ShipmentTypeId = "LCLD";
+                }
+
+                this.GenerateDefaultCharges();
+            }
+
         }
 
         private bool isEnableMultiPercentageVATTypes;
@@ -815,11 +868,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             if (isAutomaticUpdate)
             {
-                QuoteQuery entityQuery = new QuoteQuery(entityRepository);
-
-                string mySubject = entityQuery.GetQuoteAutomaticSubject(entityPM);
-
-                entityPM.Subject = mySubject;
+                QuoteSubjectService iSubjectService = new QuoteSubjectService(entityPM);
+                entityPM.Subject = iSubjectService.GetSubject(); ;                
             }
         }
         private void InitializeExpirationValues()
@@ -1251,8 +1301,14 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         }
         private void DeleteQuotePackage(QuotePackagePM itemPM)
         {
-            QuotePackage itemPoco = quotePackageRepository.GetSingleQuotePackage(itemPM.Id, tenant);
-            quotePackageRepository.Remove(itemPoco);
+            if (itemPM.Id != null)
+            {
+                QuotePackage itemPoco = quotePackageRepository.GetSingleQuotePackage(itemPM.Id, tenant);
+                if (itemPoco != null)
+                {
+                    quotePackageRepository.Remove(itemPoco);
+                }
+            }
         }
 
         public void CreateQuoteDocumentVersion(QuoteDocumentVersionPM itemPM)

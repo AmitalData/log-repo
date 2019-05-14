@@ -39,7 +39,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         {
                             throw new AutenticationException("Sorry! this user is not authorized!");
                         }
-                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+						SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                         DocumentsFilingQueryService mappingService = new DocumentsFilingQueryService(authToken.Tenant);
 

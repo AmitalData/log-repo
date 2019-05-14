@@ -28,6 +28,7 @@ export class SystemDefaultsComponent extends BaseComponent{
     public ObjectTableName: string = "Tenant";
     public TenantPm: TenantPM = new TenantPM();
     public IsVisibile: boolean = false;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(response => {
@@ -103,6 +104,7 @@ export class SystemDefaultsComponent extends BaseComponent{
         this.UIProperties.SetEnabled("CustomerId", "Tenant", false);
         this.UIProperties.SetEnabled("IsCustomerTenantShare", "Tenant", false);
         this.UIProperties.SetEnabled("CustomerTenantShareImportFile", "Tenant", false);
+        this.UIProperties.SetEnabled("CustomerTenantShareExportFile", "Tenant", false);
 
         this.UIProperties.SetEnabled("RegulatedAgentRegimeActivated", "Tenant", false);
         this.UIProperties.SetEnabled("RegulatedAgentNumber", "Tenant", false);
@@ -158,6 +160,8 @@ export class SystemDefaultsComponent extends BaseComponent{
             this.SetUIProperties();
             this.UIProperties.SetVisibility("IsCustomerTenantShare", "Tenant", FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES"));
             this.UIProperties.SetVisibility("CustomerTenantShareImportFile", "Tenant", FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES"));
+            this.UIProperties.SetVisibility("CustomerTenantShareExportFile", "Tenant", FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES"));
+
         });
     }
 
@@ -453,6 +457,13 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
     }
 
+    get CustomerTenantShareExportFile() { return this.TenantPm.CustomerTenantShareExportFile; }
+    set CustomerTenantShareExportFile(value: boolean) {
+        if (this.TenantPm.CustomerTenantShareExportFile != value) {
+            this.TenantPm.CustomerTenantShareExportFile = value;
+        }
+    }
+
     get IsQuoteSubjectEdited() { return this.TenantPm.IsQuoteSubjectEdited; }
     set IsQuoteSubjectEdited(value: boolean) {
         if (this.TenantPm.IsQuoteSubjectEdited != value) {
@@ -560,8 +571,20 @@ export class SystemDefaultsComponent extends BaseComponent{
         return result;
     }
 
+    get CustomerTenantShareExportFileVisible() {
+        var result = false;
+        //var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES")) {
+            result = true;
+        }
+
+        return result;
+    }
+
     get IsCustomerTenantShareVisible() {
         var result = false;
+       
+    
         if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES")) {
             result = true;
         }
@@ -571,7 +594,7 @@ export class SystemDefaultsComponent extends BaseComponent{
 
     //Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     public ValidationErrorsList: string[];
@@ -602,19 +625,19 @@ export class SystemDefaultsComponent extends BaseComponent{
     }
 
     SubmitTenantChanges() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Saving...");
+        this.CurrentSession.StartBusyIndicator("Saving...");
 
         var myService: TenantPMService = new TenantPMService();
         myService.update(this.TenantPm).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     InfraSettings.TenantPM = this.TenantPm;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
                 }
 
                 else {
                     this.ValidationErrorsList = myResponse.ErrorsArray;
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                 }
             }
         });

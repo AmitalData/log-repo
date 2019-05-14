@@ -9,8 +9,10 @@ declare var window: any;
 import { DocumentsFilingViewsExtService } from '../../../Common/Services/ExtendedLists/DocumentsFilingViewsExtService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
-
-
+import { DocumentTypePMExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
+import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 
 export class OpenFormatReportMenuButtonsHandler {
     public EntityPM: OpenFormatReportPM;
@@ -18,8 +20,13 @@ export class OpenFormatReportMenuButtonsHandler {
     public TenantPM: TenantPM;
     public ObjectTableName: string = "OpenFormatReport"
     _DocumentsFilingViewsExtService: DocumentsFilingViewsExtService = new DocumentsFilingViewsExtService();
-    docFilingPM: any;
- 
+    BMKDocFilingPM: any;
+    INIDocFilingPM: any;
+    DocumentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
+    BMKDocumentType: any;
+    INIDocumentType: any;
+    DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+    private CurrentSession = SessionLocator.SelectedSession;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -58,6 +65,29 @@ export class OpenFormatReportMenuButtonsHandler {
 
                                 break;
                             }
+                        //case "INIDL":
+                        //    {
+                        //        if (this.EntityPM.StatusTypeCode != "3") {
+                        //            button.IsDisabled = true;
+                        //        }
+                        //        else {
+                        //            button.IsDisabled = false;
+                        //        }
+
+                        //        break;
+                        //    }
+
+                        case "PDFD":
+                            {
+                                if (this.EntityPM.StatusTypeCode != "3") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+
+                                break;
+                            }
                     }
                 }
             }
@@ -72,45 +102,113 @@ export class OpenFormatReportMenuButtonsHandler {
           
             case "OPDL": // Download
                 {
-                    
+                    this.try = true;
+                    this.DocumentTypePMExtendedService.GetDocumentTypeByCode("BKMV", this.TenantPM.Id).subscribe(myResult => {
+                        console.log("[GetLastDocumentsFilingPM]", myResult);
+                        var mm: ServiceResponse = myResult;
+                        if (!mm.HasError) {
+                            this.BMKDocumentType = mm.Result;
+                            if (this.BMKDocumentType) {
 
-                    this.GetDocument();
+                                this.GetDocumentType("INI");
+                              
+                            }
+
+                        }
+                    });
                     break;
                 }
+            //case "INIDL": // Download
+            //    {
 
+            //        this.DocumentTypePMExtendedService.GetDocumentTypeByCode("INI", this.TenantPM.Id).subscribe(myResult => {
+            //            console.log("[GetLastDocumentsFilingPM]", myResult);
+            //            var mm: ServiceResponse = myResult;
+            //            if (!mm.HasError) {
+            //                this.documentType = mm.Result;
+            //                if (this.documentType) {
+            //                    this.GetDocument();
+            //                }
+
+            //            }
+            //        });
+                    
+            //        break;
+            //    }
+            case "PDFD":
+
+                {
+                    var myPrintHelper = new GeneralPrintHelper("OpenFormatReport", "OFDP", this.EntityPM.Id, null, this.EntityPM.ReportNumber, null);
+                    if (myPrintHelper.IsLoadPrintControl) {
+                        ServiceLocator.SendTotangoUserActivity("OpenFormatReport", "Print");
+                        myPrintHelper.ShowPrintControl();
+                    }
+                    break;
+
+
+            }
         }
 
 
 
     }
-
+    try: boolean = true;
 
     GetDocument() {
 
         var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
        
 
-
-        this._DocumentsFilingViewsExtService.GetLastDocumentsFilingPM(this.EntityPM.Id, objectTable.Id).subscribe(myResult => {
-                console.log("[GetLastDocumentsFilingPM]", myResult);
-                var mm: ServiceResponse = myResult;
+        this.DocumentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.BMKDocumentType.Id, objectTable.Id, this.EntityPM.Id, this.TenantPM.Id).subscribe(myResult => {
+            console.log("[GetLastDocumentsFilingPM]", myResult);
+            var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                this.docFilingPM = mm.Result;
-
-                DownloadManager.DownloadPage(null, this.docFilingPM.SecurityId);
+                this.BMKDocFilingPM = mm.Result;
+                this.DocumentsFilingExtendedPMService.GetDocumentsFilingByDocumentType(this.INIDocumentType.Id, objectTable.Id, this.EntityPM.Id, this.TenantPM.Id).subscribe(myResult => {
+                    console.log("[GetLastDocumentsFilingPM]", myResult);
+                    var mm: ServiceResponse = myResult;
+                    if (!mm.HasError) {
+                        this.INIDocFilingPM = mm.Result;
+                        this.GetDocumentType("INI");
+                        var securityIds = this.BMKDocFilingPM.SecurityId + "," + this.INIDocFilingPM.SecurityId;
+                        if (this.try) {
+                            DownloadManager.DownloadPage(null, securityIds);
+                            this.try = false;
+                        }
+                    }
+                });
+             
             }
-            });
+        });
         
     
     }
 
+    public GetDocumentType(code: string) {
+
+        this.DocumentTypePMExtendedService.GetDocumentTypeByCode(code, this.TenantPM.Id).subscribe(myResult => {
+            console.log("[GetLastDocumentsFilingPM]", myResult);
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                 if (code == "INI") {
+                    this.INIDocumentType = mm.Result;
+                    if (this.INIDocumentType) {
+
+                           this.GetDocument();
+                    }
+                }
+
+            }
+        });
+
+    }
 
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 }
 

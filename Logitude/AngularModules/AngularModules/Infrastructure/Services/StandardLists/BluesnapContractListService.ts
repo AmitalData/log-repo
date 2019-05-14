@@ -30,13 +30,13 @@ export class BluesnapContractListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/bluesnapcontractviews';  
     }
 
-    getSingle(code: string) {
+    getSingle(id: string) {
 	   
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
         return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, { headers: authHeader }).map(response => {
 
                 var list = response.json();
                     
@@ -51,7 +51,7 @@ export class BluesnapContractListService {
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
                 var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BluesnapContract", "GetSingleList", 'code=' + code); 
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BluesnapContract", "GetSingleList", 'id=' + id); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
@@ -154,16 +154,16 @@ export class BluesnapContractListService {
         });        
     }
 
-    getSingleFromCache(code: string) {
+    getSingleFromCache(id: string) {
 
 	        var callTime = new Date();
 		 if (!SessionLocator.UseCachedData) {
-            return this.getSingle(code);
+            return this.getSingle(id);
         }
 	    
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-		var exists = BluesnapContractListService.CachedData.filter(a => a.Code === code).length;
+		var exists = BluesnapContractListService.CachedData.filter(a => a.Id === id).length;
 
         var serviceResponse: ServiceResponse;
         serviceResponse = new ServiceResponse(); 
@@ -184,11 +184,11 @@ export class BluesnapContractListService {
                     BluesnapContractListService.CachedData = _mappedListsArray;
                     serviceResponse = new ServiceResponse();
                     
-                    var filteredData = BluesnapContractListService.CachedData.filter(a => a.Code === code)[0];
+                    var filteredData = BluesnapContractListService.CachedData.filter(a => a.Id === id)[0];
                     serviceResponse.Result = filteredData;
 					serviceResponse.CallTime = callTime;
  
-                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "BluesnapContract", "GetSingleListFromCache", 'code=' + code); 
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "BluesnapContract", "GetSingleListFromCache", 'id=' + id); 
 
 
                     return Observable.of(serviceResponse);
@@ -198,7 +198,7 @@ export class BluesnapContractListService {
 				else
 				{
 
-					return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, {
+					return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, {
 						headers: authHeader
 					}).map(response => {
 						var list = response.json();
@@ -212,7 +212,7 @@ export class BluesnapContractListService {
 					 serviceResponse.Result = entity;
 				     serviceResponse.CallTime = callTime;
                      var servertime = response.headers.get('ServerExecutionTime');
-                     PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BluesnapContract", "GetSingleList", 'code=' + code); 
+                     PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "BluesnapContract", "GetSingleList", 'id=' + id); 
                                       
 						return serviceResponse;
 					}).catch(ServiceHelper.HandleServiceError);
@@ -223,7 +223,7 @@ export class BluesnapContractListService {
 		}
 		else
 		{
-		   var filteredData = BluesnapContractListService.CachedData.filter(a => a.Code === code)[0];
+		   var filteredData = BluesnapContractListService.CachedData.filter(a => a.Id === id)[0];
 		    serviceResponse.Result = filteredData;
 			serviceResponse.CallTime = callTime;
 		   return Observable.of(serviceResponse);

@@ -13,6 +13,11 @@ using Logitude.BL.DataContracts;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -106,6 +111,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        CertPago = a.CertPago,
                                        SelloPago = a.SelloPago,
                                        SATApprovalDate = a.SATApprovalDate,
+                                       ApprovedDate = a.ApprovedDate,
+                                       ApprovedByUserId = a.ApprovedByUserId,
+                                       FirstApproveDate = a.FirstApproveDate,
+                                       IsFullAccounting = a.IsFullAccounting,
                                    }).FirstOrDefault();
 
 
@@ -114,12 +123,40 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             ARInvoicePaymentRepository entityRepository = new ARInvoicePaymentRepository(repository.context);
             ARInvoicePaymentQuery entityQuery = new ARInvoicePaymentQuery(entityRepository);
             payment.PaymentInvoices = entityQuery.GetARPaymentInvoicePMsForPayment(payment.Id, tenant);
-            
+
+            GetGLAccountFields(payment);
+
             ARPaymentPM securedPM = new ARPaymentPM();
             SecuredMapping.GetMappedPM(payment, securedPM, "ARPayment", tenant);
 
+
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
         }
+
+        void GetGLAccountFields(ARPaymentPM paymentPM)
+        {
+            GLAccountPM glaccount = getGLAccount(paymentPM.BillToId, paymentPM.Tenant);
+            if (glaccount != null)
+            {
+                paymentPM.GLAccountId = glaccount.Id;
+                paymentPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
+            }
+        }
+
+        private GLAccountPM getGLAccount(string billToId, int tenant)
+        {
+            GLAccountPM glaAccount = null;
+            CardRepository cardRep = new CardRepository(tenant);
+            Card card = cardRep.GetSingleCard(billToId, tenant);
+            if (card != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
+            }
+
+            return glaAccount;
+        }
+
 
 
         public ARPayment GetSingleARPayment(string id, int tenant)
@@ -131,6 +168,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return payment;
         }
 
+        public bool CheckARPaymentNumber(string number,string id, int tenant)
+        {
+            bool exist = (from a in repository.context.ARPayments.Include("LocalCurrency").Include("Status")
+                                 where a.PaymentNo == number &&a.Id != id && a.Tenant == tenant
+                                 select a).Any();
+
+            return exist;
+        }
 
 
         public ARPaymentPM GetSinglePaymentByPaymentNumber_00(string paymentNo, int tenant)
@@ -203,23 +248,30 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        CertPago = a.CertPago,
                                        SelloPago = a.SelloPago,
                                        SATApprovalDate = a.SATApprovalDate,
+                                       ApprovedDate = a.ApprovedDate,
+                                       ApprovedByUserId = a.ApprovedByUserId,
+                                       FirstApproveDate = a.FirstApproveDate,
+                                       IsFullAccounting = a.IsFullAccounting,
                                    }).FirstOrDefault();
+            if (payment != null)
+            {
 
-            Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
-            payment.PaymentCurrencyCode = currency != null ? currency.Code : null;
+                Currency currency = CurrencyRepository.GetSingleCurrency(payment.PaymentCurrencyId, payment.Tenant, true);
+                payment.PaymentCurrencyCode = currency != null ? currency.Code : null;
 
-            ARPaymentStatus status = arpaymentStatusRep.GetSingleARPaymentStatus(payment.StatusCode);
-            payment.StatusName = status != null ? status.Name : null;
+                ARPaymentStatus status = arpaymentStatusRep.GetSingleARPaymentStatus(payment.StatusCode);
+                payment.StatusName = status != null ? status.Name : null;
 
-            Contact createdByuser = ContactRepository.GetSingleContact(payment.CreatedByUserId, payment.Tenant, true);
-            payment.CreatedByUserName = createdByuser != null ? createdByuser.EnglishName : null;
+                Contact createdByuser = ContactRepository.GetSingleContact(payment.CreatedByUserId, payment.Tenant, true);
+                payment.CreatedByUserName = createdByuser != null ? createdByuser.EnglishName : null;
 
-            Card billto = CardRepository.GetSingleCard(payment.BillToId, payment.Tenant, true);
-            payment.BillToName = billto != null ? billto.EnglishName : null;
+                Card billto = CardRepository.GetSingleCard(payment.BillToId, payment.Tenant, true);
+                payment.BillToName = billto != null ? billto.EnglishName : null;
 
-            AccountingPaymentMethod method = paymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
-            payment.AccountingPaymentMethodName = method != null ? method.Name : null;
-            payment.AccountingPaymentMethodCode = method != null ? method.Code : null;
+                AccountingPaymentMethod method = paymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
+                payment.AccountingPaymentMethodName = method != null ? method.Name : null;
+                payment.AccountingPaymentMethodCode = method != null ? method.Code : null;
+            }
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), payment, tenant); ;
         }
@@ -298,6 +350,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    CertPago = entity.CertPago,
                                                    SelloPago = entity.SelloPago,
                                                    SATApprovalDate = entity.SATApprovalDate,
+                                                   ApprovedDate = entity.ApprovedDate,
+                                                   ApprovedByUserId = entity.ApprovedByUserId,
+                                                   FirstApproveDate = entity.FirstApproveDate,
+                                                   IsFullAccounting = entity.IsFullAccounting,
 
                                                };
             return query2;
@@ -376,7 +432,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             SelloPago = entity.SelloPago,
                             SATApprovalDate = entity.SATApprovalDate,
                             BankAccountName = entity.BankAccountLite != null ? entity.BankAccountLite.EnglishName : null,
-
+                            ApprovedDate = entity.ApprovedDate,
+                            ApprovedByUserId = entity.ApprovedByUserId,
+                            FirstApproveDate = entity.FirstApproveDate,
+                            IsFullAccounting = entity.IsFullAccounting,
                         };
 
             return query;
@@ -455,6 +514,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             SelloPago = entity.SelloPago,
                             SATApprovalDate = entity.SATApprovalDate,
                             BankAccountName = entity.BankAccountLite != null ? entity.BankAccountLite.EnglishName : null,
+                            ApprovedDate = entity.ApprovedDate,
+                            ApprovedByUserId = entity.ApprovedByUserId,
+                            FirstApproveDate = entity.FirstApproveDate,
+                            IsFullAccounting = entity.IsFullAccounting,
                         };
 
             return query;
@@ -519,7 +582,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          SelloPago = a.SelloPago,
                                          SATApprovalDate = a.SATApprovalDate,
                                          BankAccountName = a.BankAccountLite != null ? a.BankAccountLite.EnglishName : null,
-
+                                         ApprovedDate = a.ApprovedDate,
+                                         ApprovedByUserId = a.ApprovedByUserId,
+                                         FirstApproveDate = a.FirstApproveDate,
+                                         IsFullAccounting = a.IsFullAccounting,
                                      }).FirstOrDefault();
 
             return payment;

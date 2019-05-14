@@ -1,4 +1,4 @@
-﻿import {Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool, DateTool} from '../../../Infrastructure/Tools';
@@ -23,7 +23,7 @@ export class RatesMainTabComponent extends BaseComponent {
     public ItemsSource: RatesItem[] = [];
     public TenantPM: TenantPM;
     public DataContext: RatesMainTabComponent = this;
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -70,7 +70,7 @@ export class RatesMainTabComponent extends BaseComponent {
     }
 
     CloseButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     //public ViewHistoryIsEnabled: boolean = false;

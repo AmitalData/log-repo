@@ -61,5 +61,8 @@ namespace WebFreight.Web.DataProviders
         public DateTime? ValueDate { get; set; }
         public string PaymentMethod { get; set; }
         public string CustomerId { get; set; }
+        public string BillToVendor { get; set; }
+        public string HouseNumber { get; set; }
+        public string MasterNumber { get; set; }
     }
 }

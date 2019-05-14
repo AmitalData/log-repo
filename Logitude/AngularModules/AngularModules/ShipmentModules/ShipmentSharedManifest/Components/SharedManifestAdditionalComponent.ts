@@ -1,4 +1,4 @@
-﻿
+
 
 declare var window: any;
 import { Component, OnInit, ViewChildren, QueryList} from '@angular/core';
@@ -231,7 +231,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _sharedAgentManifestService: SharedAgentManifestService, public _agentSharedManifestPMService: AgentSharedManifestPMService, public entityPMService:EntityPMService) {
         super();
         this.myPackageTypeService = new PackageTypeListService();
@@ -1403,7 +1403,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
         if (this.ManifestSL && this.CurrentEntity) {
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
             this.RunComponent();
             this.FullShipmentProperites();
@@ -2831,7 +2831,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
     CreateButtonClicked() {
         this.OnCreate();
-        // SessionLocator.CurrentSession.CloseCurrentWindow();
+        // this.CurrentSession.CloseCurrentWindow();
     }
 
     //-------------------------------------------------------------------------------
@@ -3225,7 +3225,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
     OnCreate() {
 
         this.SetDataOnFinish();
-        SessionLocator.CurrentSession.StartBusyIndicator("Creating...");
+        this.CurrentSession.StartBusyIndicator("Creating...");
         var validator = new ShipmentValidator();
         this.ValidationErrorsList = validator.Validate(this.EntityPM);
 
@@ -3340,7 +3340,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
         if (this.ValidationErrorsList.length != 0) {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
             return;
         }
 
@@ -3523,7 +3523,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
          
 
                 this._agentSharedManifestPMService.update(this.CurrentEntity).subscribe(response => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.StopBusyIndicator();
                   
                     if (!response.HasError) {
                         
@@ -3533,7 +3533,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                             ServiceLocator.SendTotangoUserActivity("Agents Shared Logistics", "Accept Manifests");
                         }
 
-                        SessionLocator.CurrentSession.CurrentWindow.Close(shipResponse.Result.Id);
+                        this.CurrentSession.CurrentWindow.Close(shipResponse.Result.Id);
                         if (!this.HouseEntity) {
                             var messageWindow: MessageWindow = new MessageWindow();
                             messageWindow.Title = "Shipment Creation";
@@ -3543,12 +3543,12 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                     }
                     else {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
                     }
                 });
             }
             else {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 if (shipResponse.ErrorsArray && shipResponse.ErrorsArray.length > 0) {
                     shipResponse.ErrorsArray.forEach((item) => {
                         this.ValidationErrorsList.push(item);
@@ -3698,11 +3698,14 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
         }
     }
 
+
+    IsHaveFromPickUpTranslation: boolean = false;
+    IsHaveToPickUpTranslation: boolean = false;
+
+    IsHaveFromDeliveryTranslation: boolean = false;
+    IsHaveToDeliveryTranslation: boolean = false;
+
     BuildOurPickUpDeliverySide(pickUpDeliveryTypeCode:string) {
-
-
-      
-
 
        var isNoFound: boolean = false;
         if (this.ManifestSL && !this.IsHouseShipment) {
@@ -3733,7 +3736,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                             var fromPort: PortList = list.filter(d => d.Code == agentshipmentPickUpDelivery.FromPort.Code)[0];
                             if (fromPort) {
                                 ourSideShipmentPickUpDelivery.FromPortId = fromPort.Id;
-
+                                this.SetPickUpDeliveryAreaVisibility(pickUpDeliveryTypeCode);
                             }
                         }
                         if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
@@ -3753,13 +3756,15 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                             if (!pmResponse.HasError) {
                                 var myResult = pmResponse.Result;
                                 if (myResult) {
-
                                     ourSideShipmentPickUpDelivery.FromPartnerCardId = myResult;
-                                } else isNeedTranslations = true;
+                                    this.SetPickUpDeliveryAreaVisibility(pickUpDeliveryTypeCode);
+                                }
                             }
 
                             if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
                             else this.IsLoadedFromDeliveryTranslation = true;
+
+                   
 
                             this.StopBusyIndicator();
                         });
@@ -3769,8 +3774,6 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
                         if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
                         else this.IsLoadedFromDeliveryTranslation = true;
-
-                        isNeedTranslations = true;
                         this.StopBusyIndicator();
                     }
 
@@ -3802,6 +3805,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                 }
                 else if (agentshipmentPickUpDelivery.PickUpDeliveryFromTypeCode == "CASL") {
 
+                  
                     if (agentshipmentPickUpDelivery.FromAddressCountryCode) {
 
                         var shipmentPickUpFromCountryTranslation = this.CurrentEntity.SharedManifestTranslations.filter(f => f.AgentCode == agentshipmentPickUpDelivery.FromAddressCountryCode && f.ObjectTableName == "Shipment" + entityName + "FromCountry")[0];
@@ -3819,7 +3823,9 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                                         ourSideShipmentPickUpDelivery.FromAddressCountryName = CountryList.EnglishName;
                                         ourSideShipmentPickUpDelivery.FromAddressCountryCode = CountryList.Code;
 
-                                    } else isNeedTranslations = true;
+                                        if (!agentshipmentPickUpDelivery.FromAddressCity) this.SetPickUpDeliveryAreaVisibility(pickUpDeliveryTypeCode);
+
+                                    } 
                                 }
 
                                 if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
@@ -3831,13 +3837,10 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                         } else {
                             if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedFromPickUpTranslation = true;
                             else this.IsLoadedFromDeliveryTranslation = true;
-                            isNeedTranslations = true;
                             this.StopBusyIndicator();
                         }
 
                     }
-                    if (agentshipmentPickUpDelivery.FromAddressCity) isNeedTranslations = true;
-
                     ourSideShipmentPickUpDelivery.FromAddressZipCode = agentshipmentPickUpDelivery.FromAddressZipCode;
                     ourSideShipmentPickUpDelivery.FromAddressCity = agentshipmentPickUpDelivery.FromAddressCity;
 
@@ -3858,6 +3861,8 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                             var list: PortList[] = myResponse.Result;
                             var ToPort: PortList = list.filter(d => d.Code == agentshipmentPickUpDelivery.ToPort.Code)[0];
                             if (ToPort) {
+                                this.SetPickUpDeliveryAreaVisibility(pickUpDeliveryTypeCode,false);
+
                                 ourSideShipmentPickUpDelivery.ToPortId = ToPort.Id;
 
                             }
@@ -3881,7 +3886,8 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                                 if (myResult) {
 
                                     ourSideShipmentPickUpDelivery.ToPartnerCardId = myResult;
-                                } else isNeedTranslations = true;
+                                    this.SetPickUpDeliveryAreaVisibility(pickUpDeliveryTypeCode, false);
+                                } 
                             }
 
                             if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
@@ -3895,8 +3901,6 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
                         if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
                         else this.IsLoadedToDeliveryTranslation = true;
-
-                        isNeedTranslations = true;
                         this.StopBusyIndicator();
                     }
 
@@ -3927,6 +3931,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
                 }
                 else if (agentshipmentPickUpDelivery.PickUpDeliveryToTypeCode == "CASL") {
+                    if (agentshipmentPickUpDelivery.ToAddressCity) isNeedTranslations = true;
 
                     if (agentshipmentPickUpDelivery.ToAddressCountryCode) {
 
@@ -3944,8 +3949,10 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                                         ourSideShipmentPickUpDelivery.ToAddressCountryId = CountryList.Id;
                                         ourSideShipmentPickUpDelivery.ToAddressCountryName = CountryList.EnglishName;
                                         ourSideShipmentPickUpDelivery.ToAddressCountryCode = CountryList.Code;
+                 
+                                        if (!agentshipmentPickUpDelivery.ToAddressCity) this.SetPickUpDeliveryAreaVisibility(pickUpDeliveryTypeCode,false);
 
-                                    } else isNeedTranslations = true;
+                                    }
                                 }
 
                                 if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
@@ -3957,12 +3964,11 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                         } else {
                             if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
                             else this.IsLoadedToDeliveryTranslation = true;
-                            isNeedTranslations = true;
                             this.StopBusyIndicator();
                         }
 
                     }
-                    if (agentshipmentPickUpDelivery.ToAddressCity) isNeedTranslations = true;
+
 
                     ourSideShipmentPickUpDelivery.ToAddressZipCode = agentshipmentPickUpDelivery.ToAddressZipCode;
                     ourSideShipmentPickUpDelivery.ToAddressCity = agentshipmentPickUpDelivery.ToAddressCity;
@@ -3972,11 +3978,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
                     if (pickUpDeliveryTypeCode == "PICK") this.IsLoadedToPickUpTranslation = true;
                     else this.IsLoadedToDeliveryTranslation = true;
                 }
-        
-                if (!isNeedTranslations) {
-                    if (pickUpDeliveryTypeCode == "PICK") this.IsNoPickupDetailsFound = true;
-                    else this.IsNoDeliveryDetailsFound = true;
-                }
+
             }
             else isNoFound = true;
         }
@@ -4002,6 +4004,19 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
             else this.IsNoDeliveryDetailsFound = true;
 
             this.StopBusyIndicator();
+        }
+
+    }
+
+    SetPickUpDeliveryAreaVisibility(pickUpDeliveryTypeCode: string, isFrom: boolean = true) {
+
+        if (pickUpDeliveryTypeCode == "PICK") {
+            if (isFrom) this.IsHaveFromPickUpTranslation = true;
+            else this.IsHaveToPickUpTranslation = true;
+        }
+        else {
+            if (isFrom) this.IsHaveFromDeliveryTranslation = true;
+            else this.IsHaveToDeliveryTranslation = true;
         }
 
     }
@@ -4102,7 +4117,7 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
 
 
         if (this.IsLoadedCarrierTranslation && this.IsLoadedIncotermTranslation && this.IsLoadedShipperTranslation && this.IsLoadedConsigneeTranslation && this.IsLoadedShiperDefaultValues && this.IsLoadedConsigneeDefaultValues && this.IsLoadedTransshipment1CarrierTranslation && this.IsLoadedTransshipment2CarrierTranslation && this.IsLoadedTransshipment3CarrierTranslation && this.IsLoadedMainCarriageVesselTranslation && this.IsLoadedTransshipment1VesselTranslation && this.IsLoadedTransshipment2VesselTranslation && this.IsLoadedTransshipment3VesselTranslation && this.IsLoadedMainCarriageInterlineTranslation && this.IsLoadedNotify1IdTranslation && this.IsLoadedNotify1DefaultValuesTranslation && this.IsLoadedPortsTranslation && this.IsLoadedPackageTranslation && this.IsLoadedMoveTypeTranslation && this.IsLoadedValueOfGoodsCurrencyTranslation && this.IsLoadedFromPickUpTranslation && this.IsLoadedToPickUpTranslation && this.IsLoadedFromDeliveryTranslation && this.IsLoadedToDeliveryTranslation) {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
 
             if ((!AppTool.IsNullOrEmpty(this.IncotermId) || this.IsHideIncoterm) && (!AppTool.IsNullOrEmpty(this.MoveTypeId) || this.IsHideMoveType) && (!AppTool.IsNullOrEmpty(this.ValueOfGoodsCurrencyId) || this.IsHideValueOfGoodsCurrency)) {
                 this.HideGeneralDetailsArea = true;
@@ -4112,6 +4127,20 @@ export class SharedManifestAdditionalComponent extends BaseComponent implements 
             if ((!AppTool.IsNullOrEmpty(this.Transshipment1CarrierId) || this.IsHideTransshipment1Carrier) && (!AppTool.IsNullOrEmpty(this.Transshipment2CarrierId) || this.IsHideTransshipment2Carrier) && (!AppTool.IsNullOrEmpty(this.Transshipment3CarrierId) || this.IsHideTransshipment3Carrier) && (!AppTool.IsNullOrEmpty(this.Transshipment1VesselId) || this.IsHideTransshipment1Vessel) && (!AppTool.IsNullOrEmpty(this.Transshipment2VesselId) || this.IsHideTransshipment2Vessel) && (!AppTool.IsNullOrEmpty(this.Transshipment3VesselId) || this.IsHideTransshipment3Vessel)) {
                 this.HideTransShipmentsDetailsArea = true;
             }
+
+            if (this.IsLoadedFromPickUpTranslation && this.IsLoadedToPickUpTranslation) {
+                if (this.IsHaveFromPickUpTranslation && this.IsHaveToPickUpTranslation) {
+                    this.HidePickupDetailsArea = true;
+                }
+            }
+
+
+            if (this.IsLoadedFromDeliveryTranslation && this.IsLoadedToDeliveryTranslation) {
+                if (this.IsHaveFromDeliveryTranslation && this.IsHaveToDeliveryTranslation) {
+                    this.HideDeliveryDetailsArea = true;
+                }
+            }
+
 
         }
 

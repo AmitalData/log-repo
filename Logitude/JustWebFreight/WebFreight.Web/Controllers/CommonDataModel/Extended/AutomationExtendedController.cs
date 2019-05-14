@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
@@ -36,10 +37,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
-                Authentication();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Automation", "READ", authToken.Tenant);
 
-              AutomationQuery automationQuery = new AutomationQuery(tenant);
-              List<AutomationPM> myResult = automationQuery.GetAutomationPMsByObjectTableId(objectTableId,tenant, true);
+                AutomationQuery automationQuery = new AutomationQuery(tenant);
+                List<AutomationPM> myResult = automationQuery.GetAutomationPMsByObjectTableId(objectTableId, authToken.Tenant, true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -55,10 +59,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
-                Authentication();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("Automation", "READ", authToken.Tenant);
 
-                AutomationQuery automationQuery = new AutomationQuery(tenant);
-                string automationxmal = automationQuery.GetAutomationXmalById(automationId, tenant);
+                AutomationQuery automationQuery = new AutomationQuery(authToken.Tenant);
+                string automationxmal = automationQuery.GetAutomationXmalById(automationId, authToken.Tenant);
                 AutomatedBackup automatedDataBackup = new AutomatedBackup();
                 if (!string.IsNullOrEmpty(automationxmal))
                 {
@@ -87,16 +94,15 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Automation", "NEW", authToken.Tenant);
 
-                        EntityChangeAutomationHelper entityChangeAutomationHelper = new EntityChangeAutomationHelper();
-                        entityChangeAutomationHelper.AutomationLastUpdate(entityPM.ObjectTableId, entityPM.Tenant);
-
-
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         AutomationService service = new AutomationService(MyContext, entityPM.Tenant);
-                
+
+                        SaveAutomationXmal(entityPM);
+
                         service.Create(entityPM);
-         
-                     
+                        entityPM.AutomationXML = null;
+                        entityPM.AutomationResultEmailRecipientLists = null;
+
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
@@ -126,10 +132,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     SecurityUtility.CheckContactFeature("Automation", "UPDATE", authToken.Tenant);
 
-
-                    EntityChangeAutomationHelper entityChangeAutomationHelper = new EntityChangeAutomationHelper();
-                    entityChangeAutomationHelper.AutomationLastUpdate(entityPM.ObjectTableId, entityPM.Tenant);
-
                     string entityName = "Automation" + entityPM.Id + entityPM.Tenant;
                     string entityPmName = "AutomationPM" + entityPM.Id + entityPM.Tenant;
                     if (CacheManager.CacheWrapper.Get(entityName) != null)
@@ -144,43 +146,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                     AutomationService service = new AutomationService(MyContext, entityPM.Tenant);
 
-                    if (entityPM.IsChangeAutomationXaml && entityPM.AutomatedDataBackup != null)
-                    {
-                        System.Type type1 = typeof(AutomationCondition);
-                        System.Type type2 = typeof(AutomationSetValue);
-                        System.Type type3 = "string".GetType();
-                        System.Type type4 = typeof(AutomationFollowUp);
-                        System.Type type5 = typeof(FollowUpDocumentTypeList);
-                        System.Type type6 = typeof(AutomationSetSLAValue);
-                        System.Type type7 = typeof(AutomationQueuedTask);
-
-                        System.Type[] types = new System.Type[7];
-                        types[0] = type1;
-                        types[1] = type2;
-                        types[2] = type3;
-                        types[3] = type4;
-                        types[4] = type5;
-                        types[5] = type6;
-                        types[6] = type7;
-
-                        entityPM.AutomationXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.AutomatedDataBackup, types);
-
-                        AutomationHistoryService automationHistoryService = new AutomationHistoryService(MyContext, entityPM.Tenant);
-
-                        AutomationHistoryPM automationHistoryPM = new AutomationHistoryPM()
-                        {
-                            AutomationsId = entityPM.Id,
-                            Version = entityPM.Version,
-                            Tenant = entityPM.Tenant,
-                            CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant),
-                            AutomationXML = entityPM.AutomationXML,
-                        };
-
-                        automationHistoryService.Create(automationHistoryPM);
-                    }
-
+                    SaveAutomationXmal(entityPM);
+              
                     service.Update(entityPM);
 
+                    entityPM.AutomationXML = null;
+                    entityPM.AutomationResultEmailRecipientLists = null;
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                 }
@@ -192,8 +163,33 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
         }
 
+        private void SaveAutomationXmal(AutomationPM entityPM)
+        {
+            if (entityPM.AutomatedDataBackup != null)
+            {
+                System.Type type1 = typeof(AutomationCondition);
+                System.Type type2 = typeof(AutomationSetValue);
+                System.Type type3 = "string".GetType();
+                System.Type type4 = typeof(AutomationFollowUp);
+                System.Type type5 = typeof(FollowUpDocumentTypeList);
+                System.Type type6 = typeof(AutomationSetSLAValue);
+                System.Type type7 = typeof(AutomationQueuedTask);
 
-        public HttpResponseMessage PutAuomationList(List<AutomationPM> automationPMList)
+                System.Type[] types = new System.Type[7];
+                types[0] = type1;
+                types[1] = type2;
+                types[2] = type3;
+                types[3] = type4;
+                types[4] = type5;
+                types[5] = type6;
+                types[6] = type7;
+                entityPM.AutomationXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.AutomatedDataBackup, types);
+            }
+        }
+
+       
+
+        public HttpResponseMessage PutAuomationList(List<AutomationArgs> items)
         {
 
             try
@@ -204,7 +200,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     SecurityUtility.CheckContactFeature("Automation", "UPDATE", authToken.Tenant);
                     AutomationRepository entityRepository = new AutomationRepository(authToken.Tenant);
 
-                    foreach (AutomationPM entityPM in automationPMList)
+                    foreach (AutomationArgs entityPM in items)
                     {
                         string entityName = "Automation" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AutomationPM" + entityPM.Id + entityPM.Tenant;
@@ -286,7 +282,25 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         }
 
 
-      
+        public HttpResponseMessage GetDoesAutomationCodeExist(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                AutomationRepository automationRepository = new AutomationRepository(authToken.Tenant);
+                bool a = (automationRepository.GetAutomations(authToken.Tenant).Where(d => d.Code == code && d.Tenant == authToken.Tenant)).Any();
+                return Request.CreateResponse(HttpStatusCode.OK, a);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];

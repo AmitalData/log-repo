@@ -86,6 +86,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.GeneratedComponentPath = objectFieldPM.GeneratedComponentPath;
             objectField.DisplayInDocumentReferences = objectFieldPM.DisplayInDocumentReferences;
             objectField.CopyToDW = objectField.CopyToDW;
+            objectField.EnableFullscreenTextBox = objectField.EnableFullscreenTextBox;
 
             if (objectFieldModification != null)
             {

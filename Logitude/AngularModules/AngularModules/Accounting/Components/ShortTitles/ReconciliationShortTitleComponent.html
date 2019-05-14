@@ -3,11 +3,11 @@
         <td style="">
 
             <div>
-                <div [style.float]="isRTL ? 'right' : 'left'" style="padding-left: 5px;padding-right: 5px; font-size: 15px;    padding-top: 3px;">
+                <div float-start style="padding-left: 5px;padding-right: 5px; font-size: 15px;    padding-top: 3px;">
                     {{ 'Reconciliations.F.ReconciliationNumber' | TextCodeTranslationPipe }} {{EntityPM.Number}}
                 </div>
                 <!-- Cancelled -->
-                <div *ngIf="EntityPM.IsCancelled" class="ShortTitleControl" [style.float]="isRTL ? 'right' : 'left'" style="padding: 0px 5px;background: #e66464;"><span style="color: white;"> {{'Accounting.General.O.IsCancelled' | TextCodeTranslationPipe}}</span></div>
+                <div *ngIf="EntityPM.IsCancelled" class="ShortTitleControl" float-start style="padding: 0px 5px;background: #e66464;"><span style="color: white;"> {{'Accounting.General.O.IsCancelled' | TextCodeTranslationPipe}}</span></div>
             </div>
 
 

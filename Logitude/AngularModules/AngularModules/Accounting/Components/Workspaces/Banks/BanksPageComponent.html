@@ -53,7 +53,7 @@
                         <table>
                             <tr class="SectionHeader">
                                 <td>
-                                    <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.BanksQuery' | TextCodeTranslationPipe}}</label>
+                                    <label float-start style="margin-right: 10px;">{{'Accounting.General.O.BanksQuery' | TextCodeTranslationPipe}}</label>
                                 </td>
 
                             </tr>
@@ -98,7 +98,7 @@
                                                                             <p class="QueryLink" *ngIf="AllBankDepositsVisibility" (click)="ViewDepositQuery('AllBankDeposits')"> {{'Accounting.General.Q.AllDeposits' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
-                                                                  
+
                                                                 </table>
 
 
@@ -167,6 +167,12 @@
                                                                         </td>
                                                                     </tr>
 
+                                                                    <tr>
+                                                                        <td style="width:190px;">
+                                                                            <p class="QueryLink" (click)="LoadBankPagesFromFile()"> {{'Accounting.General.O.BankPagesFromFile' | TextCodeTranslationPipe}}  </p>
+                                                                        </td>
+                                                                    </tr>
+
                                                                 </table>
 
 
@@ -225,7 +231,7 @@
                                     <table>
                                         <tr class="SectionHeader">
                                             <td>
-                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{ RecentBankDepositCount }} {{'Accounting.General.O.RecentDeposits' | TextCodeTranslationPipe}}</label>
+                                                <label float-start style="margin-right: 10px;">{{ RecentBankDepositCount }} {{'Accounting.General.O.RecentDeposits' | TextCodeTranslationPipe}}</label>
                                             </td>
                                         </tr>
 
@@ -318,7 +324,7 @@
                                     <table style="table-layout: fixed;">
                                         <tr class="SectionHeader">
                                             <td colspan="2">
-                                                <label [style.float]="isRTL ? 'right' : 'left'" style="margin-right: 10px;">{{'Accounting.General.O.CashbookStatus' | TextCodeTranslationPipe}} ({{tenantCurrencyCode}})</label>
+                                                <label float-start style="margin-right: 10px;">{{'Accounting.General.O.CashbookStatus' | TextCodeTranslationPipe}} ({{tenantCurrencyCode}})</label>
                                             </td>
                                         </tr>
 

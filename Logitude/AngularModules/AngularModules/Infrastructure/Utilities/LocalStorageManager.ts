@@ -1,5 +1,12 @@
-﻿export class LocalStorageManager {
-    public static  SetItem(key: string, item: string):boolean {
+export class LocalStorageManager {
+    public static SetItem(key: string, item: string): boolean {
+
+        var isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;//MAC//WIN32
+        if (isMac) {
+            console.warn("============>This is a mac machine no caching is used!!!!");
+            return false;
+        }
+
         try {
             window.localStorage.setItem(key, item);
             return true;

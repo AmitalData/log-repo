@@ -331,8 +331,6 @@ export class LoginService {
             return response.json();
         });
     }
-
-
 }
 
 export class LoginParameters {

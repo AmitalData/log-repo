@@ -84,6 +84,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.CustomerId = entityPM.CustomerId;
             poco.IsCustomerTenantShare = entityPM.IsCustomerTenantShare;
             poco.CustomerTenantShareImportFile = entityPM.CustomerTenantShareImportFile;
+            poco.CustomerTenantShareExportFile = entityPM.CustomerTenantShareExportFile;
             poco.AllowAgentInCustomersLOV = entityPM.AllowAgentInCustomersLOV;
             poco.IsPotentialTelRequired = entityPM.IsPotentialTelRequired;
             poco.IsPotentialFaxRequired = entityPM.IsPotentialFaxRequired;
@@ -107,8 +108,12 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.TenantVATManagement = entityPM.TenantVATManagement;
             poco.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
             poco.TemperatureUnitCode = entityPM.TemperatureUnitCode;
+            poco.NumberFormatCode = entityPM.NumberFormatCode;
             poco.DefaultSLAId = entityPM.DefaultSLAId;
             poco.StockTypeCode = entityPM.StockTypeCode;
+            poco.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
+            poco.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
+
             // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
             BuildSearchFields(entityPM, poco);
         }

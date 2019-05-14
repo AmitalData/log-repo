@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUpdateClasses
 {
    public class TarrifChargeUpdateClass
@@ -161,7 +165,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "TarrifHeader",
-					  						DefaultText =  @"Tariff Header",
+					  						DefaultText =  "Tariff Header",
 					  						HelpTextCode =  "TarrifHeader",
 					  						Code =  "TarrifHeaderId",
 					  						DependencyFilter3IsList =  false,
@@ -219,7 +223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Currency",
-					  						DefaultText =  @"Currency",
+					  						DefaultText =  "Currency",
 					  						HelpTextCode =  "Currency",
 					  						Code =  "CurrencyId",
 					  						DependencyFilter3IsList =  false,
@@ -277,7 +281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "ChargesType",
-					  						DefaultText =  @"Charge Type",
+					  						DefaultText =  "Charge Type",
 					  						HelpTextCode =  "ChargesType",
 					  						Code =  "ChargesTypeId",
 					  						DependencyFilter3IsList =  false,
@@ -335,7 +339,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "Measurement",
-					  						DefaultText =  @"Measurement",
+					  						DefaultText =  "Measurement",
 					  						HelpTextCode =  "Measurement",
 					  						Code =  "MeasurementId",
 					  						DependencyFilter3IsList =  false,
@@ -392,7 +396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "MinPrice",
-					  						DefaultText =  @"Min",
+					  						DefaultText =  "Min",
 					  						HelpTextCode =  "MinPrice",
 					  						Code =  "MinPrice",
 					  						DependencyFilter3IsList =  false,
@@ -449,7 +453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "MaxPrice",
-					  						DefaultText =  @"Max",
+					  						DefaultText =  "Max",
 					  						HelpTextCode =  "MaxPrice",
 					  						Code =  "MaxPrice",
 					  						DependencyFilter3IsList =  false,
@@ -506,7 +510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CanAutomateSetValue =  false,
 					  						AllowedInAirlineMessaging =  false,
 					  						FullFieldLable =  "UnitPrice",
-					  						DefaultText =  @"Unit Price",
+					  						DefaultText =  "Unit Price",
 					  						HelpTextCode =  "UnitPrice",
 					  						Code =  "UnitPrice",
 					  						DependencyFilter3IsList =  false,

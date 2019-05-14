@@ -1,4 +1,4 @@
-﻿
+
 
 declare var window: any;
 declare var System: any;
@@ -147,16 +147,29 @@ export class DWDateComponent extends BaseComponent {
 
     }
 
+    GetDateFormats(myFormats:any) {
+        var result = "";
+        if (myFormats) {
+
+            var myDateParts = myFormats.DateParts;
+            var stringOfYear = AppTool.PadLeft("" + myDateParts.Year, 4, '0');
+            var stringOfMonth = AppTool.PadLeft("" + myDateParts.Month, 2, '0');
+            var stringOfDay = AppTool.PadLeft("" + myDateParts.Day, 2, '0');
+            result = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay;
+
+        }
+        return result;
+    }
+
 
     SetValue() {
-
         var selectedValue = "";
 
         if (this.Operation == "Before" || this.Operation == "After") {
             if (this.DateValue) {
                 var myFormats = DateTool.GetDateFormats(this.DateValue);
                 if (myFormats) {
-                    selectedValue = myFormats.ShortDateString;
+                    selectedValue =  this.GetDateFormats(myFormats);
                 }
             } 
             
@@ -195,15 +208,19 @@ export class DWDateComponent extends BaseComponent {
         }
 
         else if (this.Operation == "Previous" || this.Operation == "Next") {
-            var values: string[] = this.SelectedValue.toString().split('^');
-            if (values.length > 1) this.IntervalValue = Number(values[1]);
-            if (values.length > 2) this.SelectedRange = values[2];
+            if (this.SelectedValue) {
+                var values: string[] = this.SelectedValue.toString().split('^');
+                if (values.length > 1) this.IntervalValue = Number(values[1]);
+                if (values.length > 2) this.SelectedRange = values[2];
+            }
             
         }
 
         else if (this.Operation == "Current") {
-            var values: string[] = this.SelectedValue.toString().split('^');
-            if (values.length > 1) this.SelectedRange = values[1];
+            if (this.SelectedValue) {
+                var values: string[] = this.SelectedValue.toString().split('^');
+                if (values.length > 1) this.SelectedRange = values[1];
+            }
         
         }
 

@@ -1,24 +1,25 @@
+import { EntityResourceService } from './../../Services/EntityResourceService';
 
 import { LogitudeWindow } from './../../../Controls/Windows/LogitudeWindow';
 declare var window: any;
 declare var SelectingElement: any;
-import {Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, ApplicationRef, ViewChild} from '@angular/core';
-import {BaseComponent} from './BaseComponent';
-import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
-import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
-import {SessionLocator} from '../../Utilities/SessionLocator';
-import {AppTool} from '../../Tools';
-import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
-import {ControlsIdCounter} from '../../Utilities/ControlsIdCounter';
-import {FieldValidator} from '../../Validators/FieldValidator';
-import {Observable} from 'rxjs/Observable';
+import { Directive, ElementRef, Renderer, Input, Output, Component, OnInit, OnChanges, EventEmitter, AfterViewInit, OnDestroy, NgZone, ChangeDetectorRef, ApplicationRef, ViewChild } from '@angular/core';
+import { BaseComponent } from './BaseComponent';
+import { UIProperty, UIProperties, UIPropertyArgs } from './UIProperties';
+import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
+import { SessionLocator } from '../../Utilities/SessionLocator';
+import { AppTool } from '../../Tools';
+import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
+import { ControlsIdCounter } from '../../Utilities/ControlsIdCounter';
+import { FieldValidator } from '../../Validators/FieldValidator';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/observable/fromEvent';
-import {FormGroup} from '@angular/forms';
-import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
-import {ObjectsLocator} from '../../Locators/ObjectsLocator';
-declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
+import { FormGroup } from '@angular/forms';
+import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
+import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+declare var keyBoardWhich, keyBoardKey, selectionStart: any;
 
 @Component({
     moduleId: module.id,
@@ -26,7 +27,7 @@ declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
     selector: 'LogTextBox',
     templateUrl: "./LogTextBoxComponent.html",
     //directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, HelpIcon, FixedPositionDirective],
-    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', "IsMultiline", "InputType", "HideColumns", "HideLastColumn", "DigitsAfterPoint", "FocusOnMe", "IsFreeText", "IsAccumulative", "AllowPercentage", "UseArialFont", "DontAllowAutoSelect"],
+    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', "IsMultiline", "InputType", "HideColumns", "HideLastColumn", "DigitsAfterPoint", "FocusOnMe", "IsFreeText", "IsAccumulative", "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox'],
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -45,7 +46,13 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     public HideColumns: boolean = false;
     public HideLastColumn: boolean = false;
     public DigitsAfterPoint: number;
+    public IsRatioBox: boolean = false;
+    private firstDigit: string=",";
+    private secondDigit: string=".";
     CopyValueSubs: any;
+    public textboxHeight: string = '100%';
+
+
     @Output() KeyUp = new EventEmitter();
     @Output() ValueChanged = new EventEmitter();
     @Output() LostFocus = new EventEmitter();
@@ -66,7 +73,10 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() AddCommasToNumbers: boolean = true;
     @Input() Max: number;
     @Input() Min: number;
-    @Input() RowsCount: number = 2;
+    @Input() RowsCount: number;
+
+
+
 
     isFirstTime: boolean = true;
     private text: any;
@@ -104,6 +114,10 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     private textValue;
     public get TextValue() {
         return this.textValue;
+    }
+
+    private numberWithCommas(x, value) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, value);
     }
     public set TextValue(newValue: string) {
         if (this.TextValue == newValue) {
@@ -157,15 +171,17 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     @Input() DebounceTime: number;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private ngzone: NgZone, private cd: ChangeDetectorRef,
         private appref: ApplicationRef) {
         this.show = false;
+        this.setDigits();
         this.IdentityKey = AppTool.GetNewGuid();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
-        //SessionLocator.CurrentSession.isShiftClicked = false;
-        //SessionLocator.CurrentSession.isTabWithShiftClicked = false;
+        //this.CurrentSession.isShiftClicked = false;
+        //this.CurrentSession.isTabWithShiftClicked = false;
     }
     keydown: boolean;
     isCtrlKeyDown: boolean = false;
@@ -176,6 +192,35 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             return true;
         }
         return false;
+    }
+
+    private setDigits() {
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+            case "CD": {
+                this.firstDigit = ",";
+                this.secondDigit = ".";
+                break;
+            }
+
+            case "DC": {
+                this.firstDigit = ".";
+                this.secondDigit = ",";
+                break;
+            }
+
+            case "AD": {
+                this.firstDigit = "'";
+                this.secondDigit = ".";
+                break;
+            }
+
+            default:
+                {
+                    this.firstDigit = ",";
+                    this.secondDigit = ".";
+                    break;
+                }
+        }
     }
 
     SetControlIds(baseIdCombination: string) {
@@ -202,43 +247,43 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         this.ngzone.runOutsideAngular(() => {
             var input = document.getElementById(this.InputId);
             this._debounceTimeSub =
-            Observable.fromEvent(input, 'keydown')
-                .debounceTime(this.DebounceTime)
-                .subscribe(keyboardEvent => {
-                    var which = keyBoardWhich(keyboardEvent);
-                    var key = keyBoardKey(keyboardEvent);
-                    if (which == 53) {
-                        console.log("");
-                    }
-                    var result = this.CheckKey(which, key);
-                    if (result != null || which == 13 || key=='-') {
-                        var applyTextValue = true;
-                        this.ngzone.run(() => {
-                            if ((which == 9 || which == 13) && this.AllowPercentage) {
-                                applyTextValue = false;
-                            }
-                            if (applyTextValue) {
-                                this.TextValueChanges(this.TextValue);
-                            }
-                            if (which == 13) {
-                                //if (this.FocusOnMe) {
-                                //    var element = document.getElementById(this.InputId);
-                                //    if (element) {
-                                //        element.focus();
-                                //    }
-                                //    SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true });
-                                //}
-                            }
-                        });
-                        //this.TextValueChanges(this.TextValue);
-                        if (this.cd) {
-                            this.cd.detectChanges();
+                Observable.fromEvent(input, 'keydown')
+                    .debounceTime(this.DebounceTime)
+                    .subscribe(keyboardEvent => {
+                        var which = keyBoardWhich(keyboardEvent);
+                        var key = keyBoardKey(keyboardEvent);
+                        if (which == 53) {
+                            console.log("");
                         }
-                    }
-                    else {
-                        return;
-                    }
-                });
+                        var result = this.CheckKey(which, key);
+                        if (result != null || which == 13 || key == '-') {
+                            var applyTextValue = true;
+                            this.ngzone.run(() => {
+                                if ((which == 9 || which == 13) && this.AllowPercentage) {
+                                    applyTextValue = false;
+                                }
+                                if (applyTextValue) {
+                                    this.TextValueChanges(this.TextValue);
+                                }
+                                if (which == 13) {
+                                    //if (this.FocusOnMe) {
+                                    //    var element = document.getElementById(this.InputId);
+                                    //    if (element) {
+                                    //        element.focus();
+                                    //    }
+                                    //    this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true });
+                                    //}
+                                }
+                            });
+                            //this.TextValueChanges(this.TextValue);
+                            if (this.cd) {
+                                this.cd.detectChanges();
+                            }
+                        }
+                        else {
+                            return;
+                        }
+                    });
         });
 
         if (this.IsDisabled) {
@@ -252,15 +297,40 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             var element = document.getElementById(this.InputId);
             element.focus();
 
-            SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IdentityKey: this.IdentityKey });
-          this.timerToken = setTimeout(() => {
-            if (typeof (SelectingElement) === "undefined") {
-            } else {
-              SelectingElement(element);
-            }
+            this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IdentityKey: this.IdentityKey });
+            this.timerToken = setTimeout(() => {
+                if (typeof (SelectingElement) === "undefined") {
+                } else {
+                    SelectingElement(element);
+                }
             }, 1);
 
         }
+
+
+        //check rowscount
+        if(this.IsMultiline){
+            setTimeout(() => {
+
+                if(this.RowsCount){
+
+                    //calculate height: (rowcount * 18 row height) + 8 padding
+                    this.textboxHeight = ((this.RowsCount * 18) + 8)+'px';
+                }else{
+                    var _element = document.getElementById(this.InputId)
+                    var elHeight = _element.clientHeight;
+                    var calculatedRowsCount = (elHeight / 18);
+                    var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
+
+                    this.RowsCount = ___roundedCalculatedRowsCountHaha;
+                    this.textboxHeight = ((this.RowsCount * 18) + 8)+'px';
+
+                }
+
+            }, 100);
+        }
+
+
     }
 
     RunComponent() {
@@ -291,6 +361,11 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() {
 
+        if (this.IsRatioBox == true) {
+            this.DigitsAfterPoint = 1;
+            this.InputDivStyle = {};
+        }
+
         var objectFieldAvailable: boolean = true;
 
         this.counterId = null;
@@ -312,23 +387,24 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         this.SetControlIds(baseIdCombination);
 
         if (this.FocusOnMe) {// it means it is inside a grid.
-            this.CopyValueSubs= SessionLocator.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
+            this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
                 if (id == this.InputId) {
-                    //SessionLocator.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
-                    this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
-                    SessionLocator.CurrentSession.CopiedCell = null;
+                    //this.CurrentSession.CopiedCell = this.DataContext[this.ObjectFieldName];
+                    this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+                    this.CurrentSession.CopiedCell = null;
                 }
             });
 
-            if (SessionLocator.CurrentSession.CopiedCell) {
-                //this.DataContext[this.ObjectFieldName] = SessionLocator.CurrentSession.CopiedCell;
-                //SessionLocator.CurrentSession.CopiedCell = null;
+            if (this.CurrentSession.CopiedCell) {
+                //this.DataContext[this.ObjectFieldName] = this.CurrentSession.CopiedCell;
+                //this.CurrentSession.CopiedCell = null;
             }
         }
 
         var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
         if (table) {
             this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.ObjectFieldName)[0];
+
             if (!this.ObjectField) {
                 objectFieldAvailable = false;
             }
@@ -457,8 +533,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this._debounceTimeSub) {
             this._debounceTimeSub.unsubscribe();
         }
-        if (this.CopyValueSubs)
-        {
+        if (this.CopyValueSubs) {
             this.CopyValueSubs.unsubscribe();
             this.CopyValueSubs = null;
         }
@@ -470,7 +545,14 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         this.show = true;
         if (this.uiProperty.ValidValue) {
             this.timerToken = setTimeout(() => {
-                this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                if (this.IsRatioBox) {
+                    this.InputDivStyle = null;
+                }
+
+                else {
+                    this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                }
+
                 this.ShowErrorPopup = false;
             }, 300);
 
@@ -485,10 +567,10 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!this.DontAllowAutoSelect) {
             var input = document.getElementById(this.InputId);
 
-          if (typeof (SelectingElement) === "undefined") {
-          } else {
-            SelectingElement(input);
-          }
+            if (typeof (SelectingElement) === "undefined") {
+            } else {
+                SelectingElement(input);
+            }
         }
     }
 
@@ -503,7 +585,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         //this.DetectChanges();
         this.show = false;
 
-       // this.TextValue = this.DataContext[this.ObjectFieldName];
+        // this.TextValue = this.DataContext[this.ObjectFieldName];
         this.keydown = false;
         this.GetValueFormatted(this.TextValue);
         this.LostFocus.emit(this.TextValue);
@@ -514,8 +596,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         var CTRL = 17;
         var key = event.keyCode;
         //if (key == SHIFT) {
-        //    SessionLocator.CurrentSession.isShiftClicked = false;
-        //    SessionLocator.CurrentSession.isTabWithShiftClicked = false;
+        //    this.CurrentSession.isShiftClicked = false;
+        //    this.CurrentSession.isTabWithShiftClicked = false;
         //    console.log("isTabWithShiftClicked = false;")
         //}
         if (key == SHIFT) {
@@ -542,19 +624,19 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.FocusOnMe) {
                 //var element = document.getElementById(this.InputId);
                 //element.focus();
-                //SessionLocator.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true, IdentityKey: this.IdentityKey });
+                //this.CurrentSession.SessionEvent.emit({ IsCell: true, Id: element.id, IsEnterCLicked: true, IdentityKey: this.IdentityKey });
             }
         }
         //if (key == SHIFT) {
-        //    SessionLocator.CurrentSession.isShiftClicked = true;
+        //    this.CurrentSession.isShiftClicked = true;
         //}
         if (key == TAB) {
-            //if (SessionLocator.CurrentSession.isShiftClicked == true) {
-            //    SessionLocator.CurrentSession.isTabWithShiftClicked = true;
+            //if (this.CurrentSession.isShiftClicked == true) {
+            //    this.CurrentSession.isTabWithShiftClicked = true;
             //    //console.log("isTabWithShiftClicked = true;");
             //}
             //else {
-            //    SessionLocator.CurrentSession.AllowShiftTab = true;
+            //    this.CurrentSession.AllowShiftTab = true;
             //}
         }
         var result = this.CheckKey(key, keyChar);
@@ -1033,8 +1115,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                     }
                 default:
                     return key;
-                }
             }
+        }
 
         else {
             return key;
@@ -1049,149 +1131,236 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.TextValue) {
             this.OriginalText.emit(this.TextValue);
             if (this.InputType) {
-            switch (this.InputType.toLowerCase()) {
-                case 'double':
-                case 'sigdouble':
-                case 'decimal':
-                case 'unsdecimal':
-                    {
-                        var isSignOk: boolean = true;
-                        if (this.InputType == 'unsdecimal' || this.InputType == 'double') {
-                            var text = this.TextValue + "";
-                            if (text.indexOf('-') > -1) {
-                                isSignOk = false;
+                switch (this.InputType.toLowerCase()) {
+                    case 'double':
+                    case 'sigdouble':
+                    case 'decimal':
+                    case 'unsdecimal':
+                        {
+                            var ReadedText = false;
+                            if (this.firstDigit == ".") {
+                                if (this.TextValue.includes(',') && this.TextValue.includes('.')) {
+                                    ReadedText = true;
+                                }
                             }
-                        }
-                        var val: number;
-                        if (this.IsAccumulative && (this.TextValue + "").indexOf('+') > -1) {
-                            var accString: string[] = this.TextValue.split('+');
-                            var accumulativeAmount: number = 0;
-                            accString.forEach((accitem) => {
-                                var v = Number(accitem);
-                                accumulativeAmount = accumulativeAmount + v;
-                            });
-                            val = accumulativeAmount;
-                        }
-                        else if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1) {
-                            var txt = this.TextValue.replace('%', '');
-                            val = Number(txt) / 100;
-                            //val = val / 100;
+                            if (this.firstDigit == "." && !ReadedText) {
+                                var NewText = "";
+                                for (var i = 0; i < this.TextValue.length; i++) {
+                                    if (this.TextValue[i] == ",") {
+                                        NewText += ".";
+                                    }
 
-                        }
-                        else {
-                            if((this.TextValue + "").indexOf(',') == -1)
-                            {
-                                val = Number(this.TextValue);
+                                    else if (this.TextValue[i] == ".") {
+                                        NewText += ",";
+                                    }
+                                    else {
+                                        NewText += this.TextValue[i];
+                                    }
+                                }
+                                this.TextValue = NewText;
                             }
+
+                            var isSignOk: boolean = true;
+                            if (this.InputType == 'unsdecimal' || this.InputType == 'double') {
+                                var text = this.TextValue + "";
+                                if (text.indexOf('-') > -1) {
+                                    isSignOk = false;
+                                }
+                            }
+                            var val: number;
+                            if (this.IsAccumulative && (this.TextValue + "").indexOf('+') > -1) {
+                                var accString: string[] = this.TextValue.split('+');
+                                var accumulativeAmount: number = 0;
+                                accString.forEach((accitem) => {
+                                    var v = Number(accitem);
+                                    accumulativeAmount = accumulativeAmount + v;
+                                });
+                                val = accumulativeAmount;
+                            }
+                            else if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1) {
+                                var txt = this.TextValue.replace('%', '');
+                                val = Number(txt) / 100;
+                                //val = val / 100;
+
+                            }
+                            else {
+                                if ((this.TextValue + "").indexOf(',') == -1) {
+                                    val = Number(this.TextValue);
+                                }
+                                if (this.AddCommasToNumbers) {
+                                    if (((this.TextValue + "").indexOf(',') > -1)) {
+                                        if (this.firstDigit != ".") {
+                                            var txtval = this.TextValue.replace(/,/g, "");
+                                            val = Number(txtval);
+                                        }
+                                        else {
+                                            var txtval = this.TextValue.replace('.', "");
+                                            txtval = txtval.replace(',',".")
+                                            val = Number(txtval);
+
+                                        }
+                                    }
+                                }
+
+                            }
+
+
+                            if (isNaN(val) || !isSignOk) {
+                                this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));//"Invalid Input");
+                            }
+                            else {
+                                if (!this.DisableZeroPadding) {
+                                    if (AppTool.IsNullOrEmpty(this.DigitsAfterPoint)) {
+                                        this.DigitsAfterPoint = 3;
+                                    }
+                                    this.TextValue = val.toFixed(this.DigitsAfterPoint);
+                                }
+                            }
+
                             if (this.AddCommasToNumbers) {
-                               if ((this.TextValue + "").indexOf(',') > -1) {
-                                   var txtval = this.TextValue.replace(/,/g, "");
-                                   val = Number(txtval);
-                               }
-                            }
+                                var txtNum: number;
 
-                        }
-
-
-                        if (isNaN(val) || !isSignOk) {
-                            this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));//"Invalid Input");
-                        }
-                        else {
-                            if (!this.DisableZeroPadding) {
-                                if(AppTool.IsNullOrEmpty(this.DigitsAfterPoint)){
-                                    this.DigitsAfterPoint=3;
+                                if (((this.TextValue + "").indexOf(',') > -1 )) {
+                                    var txtval = this.TextValue.replace(/,/g,"" );
+                                    txtNum = Number(txtval);
                                 }
-                                this.TextValue = val.toFixed(this.DigitsAfterPoint);
-                            }
-                        }
-
-                        if (this.AddCommasToNumbers) {
-                            var txtNum:number;
-
-                            if ((this.TextValue + "").indexOf(',') > -1) {
-                                var txtval = this.TextValue.replace(/,/g, "");
-                                txtNum = Number(txtval);
-                            }
-                            else{
-                                txtNum = Number(this.TextValue);
-                            }
-
-                            if (this.DataContext[this.ObjectFieldName] != txtNum) {
-                                this.TextValueChanges(this.TextValue);
-                            }
-                            var textWithCommas: string = numberWithCommas(this.TextValue);
-                            if (textWithCommas.indexOf('.') > -1) {
-                                var textWithCommasArr: string[] = textWithCommas.split('.');
-                                var beforeDot: string = textWithCommasArr[0];
-                                var afterDot: string = textWithCommasArr[1];
-                                if (afterDot.indexOf(',') > -1) {
-                                    afterDot = afterDot.replace(',', "");
+                                else {
+                                    txtNum = Number(this.TextValue);
                                 }
-                                textWithCommas = beforeDot + '.' + afterDot;
+
+                                if (this.DataContext[this.ObjectFieldName] != txtNum) {
+                                    this.TextValueChanges(this.TextValue);
+                                }
+                                var isDot: boolean = false;
+                                if (this.firstDigit == "." && !ReadedText) {
+                                    this.TextValue = this.TextValue.replace(this.firstDigit, ",")
+                                    isDot = true;
+                                }
+                                var textWithCommas: string = this.numberWithCommas(this.TextValue, this.firstDigit);
+                                if ((textWithCommas.indexOf(this.firstDigit) > -1) && !isDot) {
+                                    var textWithCommasArr: string[] = textWithCommas.split(this.firstDigit);
+                                    var beforeDot;
+                                    var afterDot;
+                                    if (this.firstDigit == "." && !textWithCommas.toString().toLowerCase().includes(",")) {
+                                        var arr = textWithCommas.split('.');
+                                        var firstRound: boolean = true;
+                                        var zero  = /^0+$/;
+
+                                        if (arr.length > 1) {
+                                            if (arr[arr.length - 1].match(zero)) {
+                                                afterDot = arr[arr.length - 1];
+                                                arr = arr.slice(0, arr.length - 1);
+                                                beforeDot = arr.join('');
+                                                beforeDot = this.numberWithCommas(beforeDot, this.firstDigit)
+                                            }
+                                            else if (arr[0].match(zero)) {
+                                                beforeDot = "0";
+                                            }
+                                        }
+                                        else if (arr.length == 1) {
+                                            beforeDot = arr[0];
+                                        }
+                                        if (AppTool.IsNullOrEmpty(beforeDot)) {
+                                            arr.forEach(p => {
+                                                if (firstRound)
+                                                    beforeDot = p;
+                                                else
+                                                    beforeDot += this.secondDigit + p;
+                                                firstRound = false;
+                                            });
+                                        }
+                                        if (textWithCommasArr.length > 1)
+                                            if (textWithCommas.includes(this.secondDigit))
+                                            afterDot = textWithCommas.split(this.secondDigit)[textWithCommas.split(this.secondDigit).length - 1];
+                                    }
+                                    else {
+                                        if (textWithCommas.toString().toLowerCase().includes(",") && this.firstDigit == ".") {
+                                            beforeDot = textWithCommas.split(',')[0];
+                                          //  beforeDot = beforeDot.replace(this.firstDigit, "");
+                                            afterDot = textWithCommas.split(',')[1];
+                                        }
+                                        else {
+                                            beforeDot = textWithCommas.split('.')[0];
+                                           // beforeDot = beforeDot.replace(this.firstDigit, "");
+                                            afterDot = textWithCommas.split('.')[1];
+                                        }
+                                    }
+
+                                  //   beforeDot: string = textWithCommasArr[0];
+                                    //   afterDot: string = textWithCommasArr[1];
+                                    if (!AppTool.IsNullOrEmpty(afterDot))
+                                    if (afterDot.indexOf(',') > -1) {
+                                        afterDot = afterDot.replace(',', "");
+                                        }
+                                    !AppTool.IsNullOrEmpty(afterDot) ? textWithCommas = beforeDot + this.secondDigit + afterDot : textWithCommas = beforeDot;
+                                }
+
+
+                                textWithCommas.includes(this.secondDigit) ? this.TextValue = textWithCommas : this.TextValue = this.TextValue;
                             }
 
-                            this.TextValue = textWithCommas;
+                            break;
                         }
-
-                        break;
-                    }
-                case 'unsinteger':
-                case 'integer':
-                    {
-                        var isSignOk: boolean = true;
-                        if (this.InputType == 'unsinteger') {
-                            var text = this.TextValue + "";
-                            if (text.indexOf('-') > -1) {
-                                isSignOk = false;
+                    case 'unsinteger':
+                    case 'integer':
+                        {
+                            var isSignOk: boolean = true;
+                            if (this.InputType == 'unsinteger') {
+                                var text = this.TextValue + "";
+                                if (text.indexOf('-') > -1) {
+                                    isSignOk = false;
+                                }
                             }
+
+                            var val: number;
+                            val = Number(this.TextValue);
+                            //if (this.AddCommasToNumbers) {
+                            //    if ((this.TextValue + "").indexOf(',') > -1) {
+                            //        var txtval = this.TextValue.replace(',', "");
+                            //        val = Number(txtval);
+                            //    }
+                            //}
+
+
+                            if (isNaN(val) || !isSignOk) {
+                                this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));//"Invalid Input");
+                            }
+                            else {
+                                this.TextValue = val.toFixed(0);
+                            }
+                            //if (this.AddCommasToNumbers) { //for now it is just for decimal
+
+                            //    if (this.DataContext[this.ObjectFieldName] + "" != this.TextValue) {
+                            //        this.TextValueChanges(this.TextValue);
+                            //    }
+                            //    this.TextValue =  this.numberWithCommas(this.TextValue);
+                            //}
+                            break;
+                        }
+                    case "integertext": {
+                        if (isNaN(Number(this.TextValue))) {
+                            this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         }
 
-                        var val: number;
-                        val = Number(this.TextValue);
-                        //if (this.AddCommasToNumbers) {
-                        //    if ((this.TextValue + "").indexOf(',') > -1) {
-                        //        var txtval = this.TextValue.replace(',', "");
-                        //        val = Number(txtval);
-                        //    }
-                        //}
-
-
-                        if (isNaN(val) || !isSignOk) {
-                            this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));//"Invalid Input");
-                        }
-                        else {
-                            this.TextValue = val.toFixed(0);
-                        }
-                        //if (this.AddCommasToNumbers) { //for now it is just for decimal
-
-                        //    if (this.DataContext[this.ObjectFieldName] + "" != this.TextValue) {
-                        //        this.TextValueChanges(this.TextValue);
-                        //    }
-                        //    this.TextValue = numberWithCommas(this.TextValue);
-                        //}
                         break;
                     }
-                case "integertext": {
-                    if (isNaN(Number(this.TextValue))) {
-                        this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
-                    }
-
-                    break;
-                }
-                default:
-                    {
-                        break;
-                    }
+                    default:
+                        {
+                            break;
+                        }
 
                 }
 
-        }
+            }
         }
 
     }
 
+
+
+
     TextValueChanges(res: any) {
-        if (this.DataContext[this.ObjectFieldName]+"" != this.TextValue) {
+        if (this.DataContext[this.ObjectFieldName] + "" != this.TextValue) {
 
             if (this.TextValue) {
                 switch (this.InputType) {
@@ -1217,7 +1386,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 value = Number(txt) / 100;
                             }
                             else {
-                                 value = Number(this.TextValue);
+                                value = Number(this.TextValue);
                             }
                             if (!isNaN(value)) {
                                 var isok: boolean = true;
@@ -1384,7 +1553,13 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         else {
             this.ShowErrorPopup = false;
             if (this.show) {
-                this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                if (this.IsRatioBox) {
+                    this.InputDivStyle = null;
+                }
+
+                else {
+                    this.InputDivStyle = { 'border': '1px solid #3BB3E2' };
+                }
             }
             else {
                 this.InputDivStyle = null;
@@ -1403,6 +1578,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.add("TextAreaDisabled");
+                inputDiv.classList.add("InputDivDisabled");
             }
         }
     }
@@ -1416,6 +1592,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.remove("TextAreaDisabled");
+                inputDiv.classList.remove("InputDivDisabled");
             }
         }
     }
@@ -1430,17 +1607,17 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                         break;
                     }
                 default: {
-                    var val:number;
+                    var val: number;
 
-                    if((this.TextValue + "").indexOf(',') == -1) {
-                      val = Number(this.TextValue);
+                    if ((this.TextValue + "").indexOf(',') == -1) {
+                        val = Number(this.TextValue);
                     }
                     if (this.AddCommasToNumbers) {
                         if ((this.TextValue + "").indexOf(',') > -1) {
                             var txtval = this.TextValue.replace(/,/g, "");
                             val = Number(txtval);
                         }
-                     }
+                    }
 
                     if (isNaN(Number(val))) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
@@ -1505,7 +1682,13 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     OnMouseOver() {
         this.isMouseOver = true;
         if (this.IsDisabled) {
-            this.InputDivStyle = { 'border': '1px solid #AAAAAA' };
+            if (this.IsRatioBox) {
+                this.InputDivStyle = null;
+            }
+
+            else {
+                this.InputDivStyle = { 'border': '1px solid #AAAAAA' };
+            }
         }
     }
     OnMouseLeave() {
@@ -1514,42 +1697,25 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-    get multlineTextBoxLines(){
+    get multlineTextBoxLines() {
         var length = 0;
-        if(this.textValue) length = this.textValue.split(/\r*\n/).length;
-        return  length;
+        if (this.textValue) length = this.textValue.split(/\r*\n/).length;
+        return length;
     }
 
-    ExpandButtonClicked(){
+    ExpandButtonClicked() {
         console.log("[ExpandButtonClicked]");
 
         //this.isExpanded = !this.isExpanded;
 
-
-
-        // show window
-        var windowArgs: any = {};
-        windowArgs.ObjectTableName = this.ObjectTableName;
-        windowArgs.ObjectFieldName = this.ObjectFieldName;
-        windowArgs.TextValue = this.TextValue;
-
-        var wind = new LogitudeWindow();
-        // wind.IsFullScreen = true;
-        wind.Width = 960;
-        wind.Height = 570;
-        wind.WindowArgs = windowArgs;
-        wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText :  this.ObjectField.FullNameTextCodeDefaultText;
-        wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
-        wind.WindowClosed.subscribe(res=>{
-            console.log("Rsukt--",res);
-            if(res)
-                this.TextValue = res;
-                this.TextValueChanges(this.TextValue);
-        });
+        this.showMultiLineWindow();
 
 
 
-        // if(SessionLocator.CurrentSession.CurrentWindow){
+
+
+
+        // if(this.CurrentSession.CurrentWindow){
         //     var wd = document.getElementsByClassName("LogitudeWindow")[0];
         // }
 
@@ -1575,5 +1741,33 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
+    }
+
+    showMultiLineWindow() {
+        // show window
+        var windowArgs: any = {};
+        // windowArgs.ObjectTableName = this.ObjectTableName;
+        // windowArgs.ObjectFieldName = this.ObjectFieldName;
+        windowArgs.TextValue = this.TextValue;
+
+        var wind = new LogitudeWindow();
+        // wind.IsFullScreen = true;
+        wind.Width = 960;
+        wind.Height = 570;
+        wind.WindowArgs = windowArgs;
+
+        if (this.ObjectField)
+            wind.Title = this.showLocal ? this.ObjectField.FullNameTextCodeLocalDefaultText : this.ObjectField.FullNameTextCodeDefaultText;
+        else
+            wind.Title = "";
+
+        wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
+        wind.WindowClosed.subscribe(res => {
+            console.log("Rsukt--", res);
+            if (res != "<!#cancelled>") {
+                this.TextValue = res;
+                this.TextValueChanges(this.TextValue);
+            }
+        });
     }
 }

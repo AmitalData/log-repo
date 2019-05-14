@@ -73,6 +73,11 @@ export class QuotePM {
     public set LastVersionNumber(newValue: number) { if (this.lastVersionNumber != newValue) { this.lastVersionNumber = newValue; this.MarkAsDirty("LastVersionNumber"); } }
        
 	 
+    private quoteLevel: string;
+    public get QuoteLevel() { return this.quoteLevel; }
+    public set QuoteLevel(newValue: string) { if (this.quoteLevel != newValue) { this.quoteLevel = newValue; this.MarkAsDirty("QuoteLevel"); } }
+       
+	 
     private quoteNumber: string;
     public get QuoteNumber() { return this.quoteNumber; }
     public set QuoteNumber(newValue: string) { if (this.quoteNumber != newValue) { this.quoteNumber = newValue; this.MarkAsDirty("QuoteNumber"); } }
@@ -346,6 +351,11 @@ export class QuotePM {
     private chargeableWeight: number;
     public get ChargeableWeight() { return this.chargeableWeight; }
     public set ChargeableWeight(newValue: number) { if (this.chargeableWeight != newValue) { this.chargeableWeight = newValue; this.MarkAsDirty("ChargeableWeight"); } }
+       
+	 
+    private chargeableWeightInKG: number;
+    public get ChargeableWeightInKG() { return this.chargeableWeightInKG; }
+    public set ChargeableWeightInKG(newValue: number) { if (this.chargeableWeightInKG != newValue) { this.chargeableWeightInKG = newValue; this.MarkAsDirty("ChargeableWeightInKG"); } }
        
 	 
     private grossWeight: number;
@@ -958,6 +968,16 @@ export class QuotePM {
     public set ToCountryName(newValue: string) { if (this.toCountryName != newValue) { this.toCountryName = newValue; this.MarkAsDirty("ToCountryName"); } }
        
 	 
+    private convertToFCL: boolean;
+    public get ConvertToFCL() { return this.convertToFCL; }
+    public set ConvertToFCL(newValue: boolean) { if (this.convertToFCL != newValue) { this.convertToFCL = newValue; this.MarkAsDirty("ConvertToFCL"); } }
+       
+	 
+    private convertToLCL: boolean;
+    public get ConvertToLCL() { return this.convertToLCL; }
+    public set ConvertToLCL(newValue: boolean) { if (this.convertToLCL != newValue) { this.convertToLCL = newValue; this.MarkAsDirty("ConvertToLCL"); } }
+       
+	 
     private isQuoteDataExternal: boolean;
     public get IsQuoteDataExternal() { return this.isQuoteDataExternal; }
     public set IsQuoteDataExternal(newValue: boolean) { if (this.isQuoteDataExternal != newValue) { this.isQuoteDataExternal = newValue; this.MarkAsDirty("IsQuoteDataExternal"); } }
@@ -1166,6 +1186,16 @@ export class QuotePM {
     private sameOrFixed: string;
     public get SameOrFixed() { return this.sameOrFixed; }
     public set SameOrFixed(newValue: string) { if (this.sameOrFixed != newValue) { this.sameOrFixed = newValue; this.MarkAsDirty("SameOrFixed"); } }
+       
+	 
+    private grossWeightEdited: boolean;
+    public get GrossWeightEdited() { return this.grossWeightEdited; }
+    public set GrossWeightEdited(newValue: boolean) { if (this.grossWeightEdited != newValue) { this.grossWeightEdited = newValue; this.MarkAsDirty("GrossWeightEdited"); } }
+       
+	 
+    private chargeableWeightEdited: boolean;
+    public get ChargeableWeightEdited() { return this.chargeableWeightEdited; }
+    public set ChargeableWeightEdited(newValue: boolean) { if (this.chargeableWeightEdited != newValue) { this.chargeableWeightEdited = newValue; this.MarkAsDirty("ChargeableWeightEdited"); } }
        
 	 
     private numberOfFollowUps: number;

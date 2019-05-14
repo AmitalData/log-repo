@@ -24,6 +24,20 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.JournalId == journalKeys.Id
                     select a).ToList();
         }
+        public List<JournalLine> GetJournalLines(string JournalId, int tenant)
+        {
+            return (from a in context.JournalLines
+                    where a.JournalId == JournalId && a.Tenant == tenant
+                    select a).ToList();
+        }
+        public JournalLine GetSingleJournalLine(string journalId, int line, int tenant)
+        {
+            return (from a in context.JournalLines
+                    where a.JournalId == journalId && a.Line == line && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
+
         public IQueryable<JournalLine> GetQueryContainsAccId(IQueryable<string> GLAccountIDList, int tenant
              )
         {

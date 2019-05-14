@@ -6,43 +6,59 @@ export class MasterShipment {
   private Helper: FieldsHelper;
   private ShipmentModes:ShipmentHelper;
 
-
   constructor() {
     this.Helper = new FieldsHelper();
     this.ShipmentModes=new ShipmentHelper();
 
   }
 
-
   public CreateMasterShipment(ReferenceNumber: string,LogitudeShipType:string, Direction:any, TransportMode:any, ShipmentType:any) {
 
     var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
     this.Helper.WaitByIdAndClick('NEWMASTER');
-    this.ShipmentModes.SelectDicrctionTransportMode(LogitudeShipType, Direction,TransportMode, ShipmentType);
+    this.ShipmentModes.SelectDicrctionTransportMode( Direction,TransportMode, ShipmentType);
 
-    this.FillMasterShipmentFields(ReferenceNumber);
+    this.FillMasterShipmentFields(ReferenceNumber,TransportMode);
     this.Helper.WaitByIdAndClick('MasterCreatebtn');
 
   }
-
-
-  FillMasterShipmentFields(ShipperRef: string) {
-
-    this.Helper.WaitByIdAndFill('Master_AgentId', 'a');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 1);
-
-    this.Helper.WaitByIdAndFill('Master_AgentReference1_1', ShipperRef);// test random number randomWholeNum
-
-    this.Helper.WaitByIdAndFill('Master_MainCarriageFromPortId', 'amm');
+  FillMasterShipmentFields(ShipperRef: string,TransportMode:string) {
+    this.Helper.WaitByIdAndFill('Master_AgentId', 'TestAgentExport1');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    this.Helper.WaitByIdAndFill('Master_MainCarriageToPortId', 'abu');
+    this.Helper.WaitByIdAndFill('Master_AgentReference1_1', ShipperRef);
+
+    this.Helper.WaitByIdAndFill('Master_MainCarriageFromPortId', 'eze');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'a');
+    this.Helper.WaitByIdAndFill('Master_MainCarriageToPortId', 'mvd');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierNumber', '115')
+    // this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'TestAirlineL8');
+    // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+    // this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierNumber', '115')
+
+    if(TransportMode=='A')
+    {
+      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'TestAirlineL8');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+  
+      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierNumber', '115');  
+    }
+    else if(TransportMode=='O'){
+      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'SLPT');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+  
+      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierNumber', 'Voyage 1');  
+
+    }
+    else{
+      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'TestTruckerTP');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+  
+      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierNumber', 'Trucker # 1');  
+    }
 
     this.Helper.WaitByIdAndFill('Master_DescriptionOfGoods', 'Protractor testing - Create New Master ... ');
 

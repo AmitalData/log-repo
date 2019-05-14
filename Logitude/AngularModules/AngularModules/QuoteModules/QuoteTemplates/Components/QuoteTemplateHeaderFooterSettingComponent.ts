@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {QuoteTemplatePM} from '../../../Quote/EntityPMs/QuoteTemplatePM';
 import {QuoteTemplateSettingPM} from '../../../Quote/EntityPMs/QuoteTemplateSettingPM';
@@ -46,7 +46,8 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     BorderTypesSelected: BorderType;
     BorderTypes: BorderType[] = [];
 
-    AreaType: string[]; 
+    AreaType: string[];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
@@ -89,7 +90,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
             //}
         }
         
-        this.froalaEditorSetting.Height = ((SessionLocator.CurrentSession.CurrentWindow.Height / 2) -20);
+        this.froalaEditorSetting.Height = ((this.CurrentSession.CurrentWindow.Height / 2) -20);
 
 
         this.FullProperity();
@@ -339,10 +340,10 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
         if (this.QuoteTemplateSettingPM.IsDirty) {
             this.IsChangeSetting = true;
-            SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+            this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
             this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                 this.QuoteTemplateSettingPM.IsDirty = false;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.RefreshQuoteTemplateSectionBodyHtml();
             });
         }
@@ -350,10 +351,10 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     }
 
     RefreshQuoteTemplateSectionBodyHtml() {
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
+        this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Loading"));
         this.quoteTemplateSectionExtendedPMService.DownloadQuoteTemplateSectionPdfFile(this.QuoteTemplateSectionViewModel.QuoteTemplateSectionTypeCode, this.QuoteTemplateSectionViewModel.Id, this.QuoteTemplateSectionViewModel.EntityPM.QuoteTemplateId, this.QuoteTemplateSettingPM.Id, this.QuoteId, this.QuoteTemplatePM.CreatedByUserId, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
  
             if (!pmResponse.HasError && pmResponse.Result) {
                 this.QuoteTemplateSectionViewModel.HtmlBody = pmResponse.Result;
@@ -389,19 +390,19 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
 
            if (this.QuoteTemplateSettingPM.IsDirty) {
 
-               SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
+               this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
                this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe(res => {
                    this.QuoteTemplateSettingPM.IsDirty = false;
-                   SessionLocator.CurrentSession.StopBusyIndicator();
-                   SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
+                   this.CurrentSession.StopBusyIndicator();
+                   this.CurrentSession.CurrentWindow.Close("Refresh");
 
 
                });
            }
            else {
 
-               if (this.IsChangeSetting) SessionLocator.CurrentSession.CurrentWindow.Close("Refresh");
-              else SessionLocator.CurrentSession.CloseCurrentWindow();
+               if (this.IsChangeSetting) this.CurrentSession.CurrentWindow.Close("Refresh");
+              else this.CurrentSession.CloseCurrentWindow();
            }
             
 
@@ -463,7 +464,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     CloseButtonClicked() {
 
 
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 }
 

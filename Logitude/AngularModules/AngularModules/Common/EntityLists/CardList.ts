@@ -88,5 +88,7 @@ export class CardList {
 		StateName: string;
 		IsInternationalPartner: boolean;
 		IsAutonomy: boolean;
+		CalculatedLocalName: string;
+		CalculatedEnglishName: string;
 	
 }

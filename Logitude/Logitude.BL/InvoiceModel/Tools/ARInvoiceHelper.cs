@@ -47,8 +47,11 @@ namespace Logitude.BL.InvoiceModel.Tools
         private  int tenant { set; get; }
         private  string tenantName { set; get; }
         private  ICommonDataContext commonContext;
+        private IGlobalContext globalContext;
         private  DocumentRepository documentRepository;
         private  CommunicationLogRepository communicationLogRepository;
+
+        private TenantManagementRepository tenantManagementRepository;
         private  string ARInvoiceId;
         private  ARInvoicePM ARInvoice;
         private  string myObjectTableId;
@@ -66,9 +69,25 @@ namespace Logitude.BL.InvoiceModel.Tools
         private  Boolean IsSameHomeCurrency = false;
         private  string AccountingSystemCode;
         List<ARInvoiceLinePM> lines;
+        private bool isIndiaCountry=false;
+        private string IndiaExternalQBOStates = "";
         private void GetObjectTableData()
         {
+
             ObjectTableRepository myObjectTabelRepository = new ObjectTableRepository(tenant);
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                tenantManagementRepository = new TenantManagementRepository(this.globalContext);
+                TenantManagement tenantManagement = tenantManagementRepository.GetSingleTenantManagement(tenant);
+                if (tenantManagement != null)
+                {
+                    if (tenantManagement.CountryName == "India")
+                    {
+                        this.isIndiaCountry = true;
+                    }
+                }
+                scope.Complete();
+            }
             ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName("ARInvoice", 0, true);
             if (objectTable != null)
             {
@@ -80,6 +99,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             if (isSetVoided && entityPM.ARInvoiceTypeCode !="CD" && entityPM.ARInvoiceTypeCode != "CC")
             {
                 commonContext = CommonContext;
+                this.globalContext = GlobalContext.GetContext(tenant);
                 Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                 tenant = loggedTenant.Id;
                 tenantName = loggedTenant.Company;
@@ -119,6 +139,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 commonContext = CommonContext;
                 Tenant loggedTenant = (from a in commonContext.Tenants.Include("AccountingSetting") where a.Id == entityPM.Tenant select a).FirstOrDefault();
                 tenant = loggedTenant.Id;
+                this.globalContext = GlobalContext.GetContext(tenant);
                 tenantName = loggedTenant.Company;
                 AccountingSystemCode = loggedTenant.AccountingSetting.AccountingSystemCode;
                 AccountingSystemQuery query = new AccountingSystemQuery(tenant);
@@ -177,6 +198,31 @@ namespace Logitude.BL.InvoiceModel.Tools
                         {
                             isReady = false;
                             myError = ExternalCodeError;                            
+                        }
+
+
+                        if (this.isIndiaCountry)
+                        {
+                            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                            {
+                                Address address2 = commonContext.Addresses.Include("Country").Where(p => p.CardId == entityPM.BillToId && p.Id == entityPM.BillToAddressId && p.Country.Code == "IN" ).FirstOrDefault();
+                                if (address2!=null)
+                                {
+                                    State state = commonContext.States.Include("Country").Where(p => p.Id == address2.StateId && p.Tenant == tenant).FirstOrDefault();
+                                    if (state != null)
+                                    {
+                                        if (state.Country.EnglishName != "India")
+                                        {
+                                            this.IndiaExternalQBOStates = "97";
+                                        }
+                                        else
+                                        {
+                                            this.IndiaExternalQBOStates = state.QBOTransactionLocationCode;
+                                        }
+                                    }
+                                }
+                                scope.Complete();
+                            }
                         }
 
 
@@ -541,6 +587,8 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
                     string ExternalVatTypeCodeWhereIsNotZeroPercentage = "";
+                    if (this.isIndiaCountry)
+                        QBOInvoice.TransactionLocationType = IndiaExternalQBOStates;
                     bool IsMinus = true;
                     if (invoice.AmountInInvoiceCurrency > 0)
                         IsMinus = false;
@@ -627,6 +675,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                         notes = " , " + invoice.PrintNotes;
                     }
                     QBOInvoice.CustomerMemo = new MemoRef { Value = "Shipment Number : " + invoice.MainEntityReference + notes };
+                    if(this.isIndiaCountry)
+                    QBOInvoice.TransactionLocationType = IndiaExternalQBOStates;
                     if (PaymentTermExternalCode != null)
                         QBOInvoice.SalesTermRef = new ReferenceType { Value = PaymentTermExternalCode };
 

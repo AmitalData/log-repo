@@ -39,7 +39,7 @@ export class NewConsolidationComponent extends BaseComponent {
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
@@ -127,28 +127,17 @@ export class NewConsolidationComponent extends BaseComponent {
         }
     }
     SetUIProperties_ExchangeRate() {
-        var isFieldtEnabled = true;
+        var isFieldtEnabled = false;
 
-        if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ARInvoiceEditExchangeRate")) {
-            isFieldtEnabled = false;
-        }
-
-        else {
-            if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.LocalCurrencyId == null) {
-                isFieldtEnabled = false;
-            }
-
-            else if (SessionLocator.LocalCurrencyId == this.InvoiceCurrencyId) {
-                isFieldtEnabled = false;
+        if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
+            if (this.InvoiceCurrencyId) {
+                if (this.InvoiceCurrencyId != SessionLocator.TenantPM.CurrencyId) {
+                    isFieldtEnabled = true;
+                }
             }
         }
         
-        //this.RateIsEnabled = isFieldtEnabled;
-        this.RateIsEnabled = true;
+        this.RateIsEnabled = isFieldtEnabled;
         this.UIProperties.SetEnabled("InvoiceCurrencyExchangeRate", this.ObjectTableName, isFieldtEnabled);
     }
     SetUIProperties_DueDate() {
@@ -449,7 +438,7 @@ export class NewConsolidationComponent extends BaseComponent {
     private myCurrencyRatesService: CurrencyRatesService;
     LoadData() {
 
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         if (this.myCurrencyRatesService == null) {
             this.myCurrencyRatesService = new CurrencyRatesService();
@@ -466,7 +455,7 @@ export class NewConsolidationComponent extends BaseComponent {
                 this.SetCurrencyRateData();                
             }
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
         });
     }
     SetCurrencyRateData() {
@@ -552,18 +541,18 @@ export class NewConsolidationComponent extends BaseComponent {
 
     //Commands 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var errors: string[] = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         if (AppTool.IsNullOrEmpty(this.BillToPartnerTypeId)) {
-            errors.push(msg.replace("%FieldName", "Partner Type"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.PartnerType")));
         }
 
         if (AppTool.IsNullOrEmpty(this.BillToId)) {
-            errors.push(msg.replace("%FieldName", "Bill to"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.BillToId")));
         }
 
         //if (AppTool.IsNullOrEmpty(this.BillToAddressId)) {
@@ -571,47 +560,45 @@ export class NewConsolidationComponent extends BaseComponent {
         //}
 
         if (AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)) {
-            errors.push(msg.replace("%FieldName", "Currency"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceCurrencyId")));
         }
 
         if (this.InvoiceDate == null) {
-            errors.push(msg.replace("%FieldName", "Invoice Date"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate")));
         }
 
         else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtc().valueOf()) {
             errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));
         }
-        
+
         if (this.DueDate == null) {
-            errors.push(msg.replace("%FieldName", "Due Date"));
+            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.DueDate")));
         }
 
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAR) {
             if (AppTool.IsNullOrEmpty(this.VatNumber)) {
-                errors.push(msg.replace("%FieldName", "Vat Number"));
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.VatNumber")));
             }
         }
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
-                errors.push(msg.replace("%FieldName", "Forma Pago"));
-          }
-          if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
-            errors.push(msg.replace("%FieldName", "Metodo Pago"));
-          }
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
+            }
+            if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.MetodoPagoCode")));
+            }
 
-          if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
-            errors.push("Since the metodo pago was set as PUE, you can't select Por definir (99). Please choose another value for the forma Pago.");
-          }
+            if (this.MetodoPagoCode == "PUE" && this.SATPaymentMethodCode == "99") {
+                errors.push("Since the metodo pago was set as PUE, you can't select Por definir (99). Please choose another value for the forma Pago.");
+            }
         }
 
-        if (errors.length == 0) {
-            if (!this.EntityPM.IsBillToAllowConsolidation) {
-                errors.push(TextCodeTranslator.Translate("ARInvoice.M.NewConsolidationInvoiceErrorMsg1"));
-            }
-      }
-
-   
+        //if (errors.length == 0) {
+        //    if (!this.EntityPM.IsBillToAllowConsolidation) {
+        //        errors.push(TextCodeTranslator.Translate("ARInvoice.M.NewConsolidationInvoiceErrorMsg1"));
+        //    }
+        //}
 
         this.ValidationErrorsList = errors;
 
@@ -634,11 +621,11 @@ export class NewConsolidationComponent extends BaseComponent {
     }
 
     ValidateFullAccounting() {
-        SessionLocator.CurrentSession.StartBusyIndicator("Checking ...");
+        this.CurrentSession.StartBusyIndicator("Checking ...");
 
         this.myInvoiceDomainService.ValidateARInvoiceFullAccounting(this.EntityPM.InvoiceCurrencyId, this.EntityPM.BillToId, this.EntityPM.InvoiceDate).subscribe((myResponse: ServiceResponse) => {
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+            this.CurrentSession.StopBusyIndicator();
 
             if (myResponse != null) {
 
@@ -697,11 +684,11 @@ export class NewConsolidationComponent extends BaseComponent {
         }
 
         else {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             this.myInvoiceDomainService.GetCustomerCreditLimitActualAmount(this.BillToId).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     var errors: string[] = [];
@@ -767,7 +754,7 @@ export class NewConsolidationComponent extends BaseComponent {
         }
     }
     OnEntityValid() {
-        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+        this.CurrentSession.StartBusyIndicatorLoading();
 
         this.InitializeComponent();
     }
@@ -787,7 +774,7 @@ export class NewConsolidationComponent extends BaseComponent {
 
         ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
 
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+        this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 
     // CreditLimit

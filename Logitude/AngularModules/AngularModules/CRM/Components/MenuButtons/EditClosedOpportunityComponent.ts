@@ -1,4 +1,4 @@
-﻿import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnInit} from '@angular/core';
 import {OpportunityPM} from '../../EntityPMs/OpportunityPM';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -20,7 +20,7 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 })
 
 export class EditClosedOpportunityComponent extends BaseComponent implements OnInit{
-
+    private CurrentSession = SessionLocator.SelectedSession;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
     public EntityPM: OpportunityPM;
@@ -125,24 +125,24 @@ export class EditClosedOpportunityComponent extends BaseComponent implements OnI
 
     CancelButtonClicked() {
         this.SetUIProperties_GeneratedComponent(false);
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancle");
+        this.CurrentSession.CloseCurrentWindowEmit("cancle");
     }
     OkButtonClicked() {
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         this.myService = new OpportunityPMService();
         this.myService.update(this.EntityPM).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.SetUIProperties_GeneratedComponent(false);
-                SessionLocator.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);
+                this.CurrentSession.StopBusyIndicator();
 
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

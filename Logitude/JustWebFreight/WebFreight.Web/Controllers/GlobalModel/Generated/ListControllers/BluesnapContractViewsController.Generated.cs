@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(string code)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -62,7 +62,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 		    	IGlobalContext MyContext = GlobalContext.GetContext();
 				BluesnapContractRepository  bluesnapContractRepository = new BluesnapContractRepository(MyContext);
 				BluesnapContractList entityList = null;
-				BluesnapContract entityPoco = bluesnapContractRepository.GetSingleBluesnapContract(code , authToken.Tenant);
+				BluesnapContract entityPoco = bluesnapContractRepository.GetSingleBluesnapContract(id , authToken.Tenant);
 
 				if (entityPoco != null)
 				{
@@ -126,8 +126,6 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				int tenant = authToken.Tenant;
-				if(filters.Tenant != null)
-					tenant = filters.Tenant.Value;
 				                
 				SecurityUtility.CheckContactFeature("BluesnapContract", "READ", authToken.Tenant);
 	

@@ -198,6 +198,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddStates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddStates.Designer.cs">
+      <DependentUpon>AddStates.cs</DependentUpon>
+    </Compile>
     <Compile Include="CopyData.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -248,6 +254,9 @@
       <DependentUpon>CustomsBooModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="SqlFilesExecuter.cs" />
+    <EmbeddedResource Include="AddStates.resx">
+      <DependentUpon>AddStates.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CopyData.resx">
       <DependentUpon>CopyData.cs</DependentUpon>
     </EmbeddedResource>
@@ -269,6 +278,12 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="bin\Debug\JustWebFreightConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="bin\Debug\JustWebFreightappSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Logitude.Update.Sivug.CustomsBookEntities.datasource" />
     <None Include="Properties\Settings.settings">
@@ -377,7 +392,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\" />
     <Folder Include="Production\" />
     <Folder Include="ZipFiles\" />
   </ItemGroup>
@@ -394,11 +408,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)Logitude.Update\UpdateSettings.xml" "$(SolutionDir)Logitude.Update\bin\debug\" /Y /I
-
-
-
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

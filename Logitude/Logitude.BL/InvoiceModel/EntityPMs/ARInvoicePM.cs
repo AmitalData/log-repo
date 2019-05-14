@@ -331,11 +331,17 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsDraft { get; set; }
 
         public bool IsMultiCurrency { get; set; }
-
+        public string CreditARInvoice { get; set; }
         public Decimal? TotalAmountForTaxReport { get; set; }
         public Decimal? TotaVatableAmountForTaxReport { get; set; }
-        public Decimal? TotalVAT { get; set; }
+        public Decimal TotalVAT { get; set; }
 
+        public bool IsFullAccounting { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConcurrencyGUID { get; set; }
+        public string NewConcurrencyGUID { get; set; }
+        public string ARInvoiceStockId { get; set; }
+        public bool IsInvoiceNumberFromStock { get; set; }
     }
 }

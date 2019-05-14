@@ -23,6 +23,7 @@ export class NewTruckerComponent {
     public PartnerTamplate: NewPartnerTamplate;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
    
         this.EntityPM.Tenant = SessionLocator.Tenant;
@@ -90,7 +91,7 @@ export class NewTruckerComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     OkButtonClicked() {
@@ -110,7 +111,7 @@ export class NewTruckerComponent {
 
         if (errors.length == 0) {
 
-            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StartBusyIndicatorSaving();
 
             var args = new PartnerServicePM();
             args.Tenant = this.EntityPM.Tenant;
@@ -123,11 +124,11 @@ export class NewTruckerComponent {
 
             this.DomainService.PostPartnerAddress(args).subscribe((myResponse: ServiceResponse) => {
 
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
 
                 if (!myResponse.HasError) {
                     this.EntityPM = myResponse.Result.Trucker;
-                    SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
+                    this.CurrentSession.CloseCurrentWindowEmit(this.EntityPM.Id);
                 }
 
                 else {

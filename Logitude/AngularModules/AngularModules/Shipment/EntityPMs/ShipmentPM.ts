@@ -764,12 +764,18 @@ export class ShipmentPM {
     public get GrossWeightEdited() { return this.grossWeightEdited; }
     public set GrossWeightEdited(newValue: boolean) { if (this.grossWeightEdited != newValue) { this.grossWeightEdited = newValue; this.MarkAsDirty("GrossWeightEdited"); } }
        
-	 
+    private orderGrossWeightEdited: boolean;
+    public get OrderGrossWeightEdited() { return this.orderGrossWeightEdited; }
+    public set OrderGrossWeightEdited(newValue: boolean) { if (this.orderGrossWeightEdited != newValue) { this.orderGrossWeightEdited = newValue; this.MarkAsDirty("OrderGrossWeightEdited"); } }
+
     private chargeableWeightEdited: boolean;
     public get ChargeableWeightEdited() { return this.chargeableWeightEdited; }
     public set ChargeableWeightEdited(newValue: boolean) { if (this.chargeableWeightEdited != newValue) { this.chargeableWeightEdited = newValue; this.MarkAsDirty("ChargeableWeightEdited"); } }
        
-	 
+    private orderChargeableWeightEdited: boolean;
+    public get OrderChargeableWeightEdited() { return this.orderChargeableWeightEdited; }
+    public set OrderChargeableWeightEdited(newValue: boolean) { if (this.orderChargeableWeightEdited != newValue) { this.orderChargeableWeightEdited = newValue; this.MarkAsDirty("OrderChargeableWeightEdited"); } }
+
     private volumeUnitCode: string;
     public get VolumeUnitCode() { return this.volumeUnitCode; }
     public set VolumeUnitCode(newValue: string) { if (this.volumeUnitCode != newValue) { this.volumeUnitCode = newValue; this.MarkAsDirty("VolumeUnitCode"); } }
@@ -793,8 +799,11 @@ export class ShipmentPM {
     private statusLocation: string;
     public get StatusLocation() { return this.statusLocation; }
     public set StatusLocation(newValue: string) { if (this.statusLocation != newValue) { this.statusLocation = newValue; this.MarkAsDirty("StatusLocation"); } }
-       
-	 
+
+    private statusWeight: number;
+    public get StatusWeight() { return this.statusWeight; }
+    public set StatusWeight(newValue: number) { if (this.statusWeight != newValue) { this.statusWeight = newValue; this.MarkAsDirty("StatusWeight"); } }
+
     private quoteId: string;
     public get QuoteId() { return this.quoteId; }
     public set QuoteId(newValue: string) { if (this.quoteId != newValue) { this.quoteId = newValue; this.MarkAsDirty("QuoteId"); } }
@@ -3707,8 +3716,7 @@ export class ShipmentPM {
     private mAWBStackAirlineId: string;
     public get MAWBStackAirlineId() { return this.mAWBStackAirlineId; }
     public set MAWBStackAirlineId(newValue: string) { if (this.mAWBStackAirlineId != newValue) { this.mAWBStackAirlineId = newValue; this.MarkAsDirty("MAWBStackAirlineId"); } }
-       
-	 
+     	 
     private dontAddToImportersQueue: boolean;
     public get DontAddToImportersQueue() { return this.dontAddToImportersQueue; }
     public set DontAddToImportersQueue(newValue: boolean) { if (this.dontAddToImportersQueue != newValue) { this.dontAddToImportersQueue = newValue; this.MarkAsDirty("DontAddToImportersQueue"); } }
@@ -3732,27 +3740,27 @@ export class ShipmentPM {
     private firstOperationalCloseDate: Date;
     public get FirstOperationalCloseDate() { return this.firstOperationalCloseDate; }
     public set FirstOperationalCloseDate(newValue: Date) { if (this.firstOperationalCloseDate != newValue) { this.firstOperationalCloseDate = newValue; this.MarkAsDirty("FirstOperationalCloseDate"); } }
+    
+    private firstAccountingCloseDate: Date;
+    public get FirstAccountingCloseDate() { return this.firstAccountingCloseDate; }
+    public set FirstAccountingCloseDate(newValue: Date) { if (this.firstAccountingCloseDate != newValue) { this.firstAccountingCloseDate = newValue; this.MarkAsDirty("FirstAccountingCloseDate"); } }
 
     private accountingCloseDate: Date;
     public get AccountingCloseDate() { return this.accountingCloseDate; }
     public set AccountingCloseDate(newValue: Date) { if (this.accountingCloseDate != newValue) { this.accountingCloseDate = newValue; this.MarkAsDirty("AccountingCloseDate"); } }
-       
-	 
+      	 
     private fromCountryCode: string;
     public get FromCountryCode() { return this.fromCountryCode; }
     public set FromCountryCode(newValue: string) { if (this.fromCountryCode != newValue) { this.fromCountryCode = newValue; this.MarkAsDirty("FromCountryCode"); } }
-       
-	 
+     	 
     private toCountryCode: string;
     public get ToCountryCode() { return this.toCountryCode; }
     public set ToCountryCode(newValue: string) { if (this.toCountryCode != newValue) { this.toCountryCode = newValue; this.MarkAsDirty("ToCountryCode"); } }
-       
-	 
+     	 
     private convertToCustomFile: boolean;
     public get ConvertToCustomFile() { return this.convertToCustomFile; }
     public set ConvertToCustomFile(newValue: boolean) { if (this.convertToCustomFile != newValue) { this.convertToCustomFile = newValue; this.MarkAsDirty("ConvertToCustomFile"); } }
-       
-	 
+     	 
     private customerTenantNumber: number;
     public get CustomerTenantNumber() { return this.customerTenantNumber; }
     public set CustomerTenantNumber(newValue: number) { if (this.customerTenantNumber != newValue) { this.customerTenantNumber = newValue; this.MarkAsDirty("CustomerTenantNumber"); } }
@@ -4202,6 +4210,46 @@ export class ShipmentPM {
             this.MarkAsDirty("HasContainerException");
         }
     }
+
+
+    private originMainCarriageFromPortId: string;
+    public get OriginMainCarriageFromPortId() { return this.originMainCarriageFromPortId; }
+    public set OriginMainCarriageFromPortId(newValue: string) {
+        if (this.originMainCarriageFromPortId != newValue) {
+            this.originMainCarriageFromPortId = newValue;
+            this.MarkAsDirty("OriginMainCarriageFromPortId");
+        }
+    }
+
+    private originFinalDestinationPortId: string;
+    public get OriginFinalDestinationPortId() { return this.originFinalDestinationPortId; }
+    public set OriginFinalDestinationPortId(newValue: string) {
+        if (this.originFinalDestinationPortId != newValue) {
+            this.originFinalDestinationPortId = newValue;
+            this.MarkAsDirty("HasContainerException");
+        }
+    }
+
+    private aRInvoices: string;
+    public get ARInvoices() { return this.aRInvoices; }
+    public set ARInvoices(newValue: string) {
+        if (this.aRInvoices != newValue) {
+            this.aRInvoices = newValue;
+            this.MarkAsDirty("ARInvoices");
+        }
+    }
+
+    private convertShipmentToLCL: boolean;
+    public get ConvertShipmentToLCL() { return this.convertShipmentToLCL; }
+    public set ConvertShipmentToLCL(newValue: boolean) { if (this.convertShipmentToLCL != newValue) { this.convertShipmentToLCL = newValue; this.MarkAsDirty("ConvertShipmentToLCL"); } }
+    
+    private convertShipmentToFCL: boolean;
+    public get ConvertShipmentToFCL() { return this.convertShipmentToFCL; }
+    public set ConvertShipmentToFCL(newValue: boolean) { if (this.convertShipmentToFCL != newValue) { this.convertShipmentToFCL = newValue; this.MarkAsDirty("ConvertShipmentToFCL"); } }
+
+    private shipmentDirectionConverted: boolean;
+    public get ShipmentDirectionConverted() { return this.shipmentDirectionConverted; }
+    public set ShipmentDirectionConverted(newValue: boolean) { if (this.shipmentDirectionConverted != newValue) { this.shipmentDirectionConverted = newValue; this.MarkAsDirty("ShipmentDirectionConverted"); } }
 
     public OldEntityPM: ShipmentPM;
 

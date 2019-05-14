@@ -5,10 +5,11 @@ import 'rxjs/add/operator/catch';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
-import {SessionInfo} from '../../Infrastructure/Utilities/SessionInfo';
 import {TMOfficeHourPM} from '../EntityPMs/TMOfficeHourPM';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 import {TMEmployeeTimePM} from '../EntityPMs/TMEmployeeTimePM'; 
+
+@Injectable()
 
 export class TimeManagementDomainService {
     private _http: Http;
@@ -52,30 +53,6 @@ export class TimeManagementDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    GetTimeOfficeClock(employeeUserId: string, FromDate: Date, ToDate: Date) {
-        var authHeader = new Headers();
-        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url1 = ServiceHelper.GetLogitudeURL() + 'api/TimeOfficeHourDomain';
-
-        var url = url1 + '/GetTimeOfficeClock?employeeUserId=' + employeeUserId + "&FromDate=" + ServiceHelper.GetDateString(FromDate) + "&ToDate=" + ServiceHelper.GetDateString(ToDate);
-        return Observable.defer(() => {
-            return this._http.get(url, { headers: authHeader }).map(response => {
-
-               var list = response.json();                
-                var entity: Array<TMOfficeHourPM>=[];
-                if (list) {
-                    list.forEach(p => {
-                        entity.push(this.MapJsonToEntityPM(p));
-                    });
-                }
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = entity;                             
-                return serviceResponse;
-            }).catch(ServiceHelper.HandleServiceError);
-        });
-    }
-
     GetTMProjects(employeeUserId: string, locationCode: string, periodStartDate: Date) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -94,8 +71,19 @@ export class TimeManagementDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
-
+    GetTMProjectsByBatchTask(employeeUserId: string, fromDate: Date, toDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetTMProjectsByBatchTask?employeeUserId=' + employeeUserId + "&fromDate=" + ServiceHelper.GetDateString(fromDate) + "&toDate=" + ServiceHelper.GetDateString(toDate);
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
+                var myResponse = new ServiceResponse();
+                myResponse.Result = listJason;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 
     GetNewTMProjectConnect(MainId: string, ConnectedId: string) {
         var authHeader = new Headers();
@@ -112,49 +100,7 @@ export class TimeManagementDomainService {
         });
     }
 
-    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TMOfficeHourPM = null) {
-        if (!entityPM) {
-
-            entityPM = new TMOfficeHourPM();
-        }
-        var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
-            customFields.push("Field" + i);
-        }
-        var jsonPMKeys = Object.keys(jsonPM);
-
-        for (var key in jsonPMKeys) {
-            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
-
-                continue;
-            }
-            var property = jsonPMKeys[key];
-
-            if (customFields.indexOf(property) > -1) {
-                if (jsonPM[property]) {
-                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
-                    entityPM[property] = customFieldClass;
-                }
-            }
-            else {
-                entityPM[property] = jsonPM[property];
-            }
-
-        }
-        entityPM.IsDirty = false;
-
-        if (mapParent) {
-            entityPM.OldEntityPM = this.clone(entityPM);
-
-        }
-        else {
-
-            entityPM.OldEntityPM = null;
-        }
-
-        return entityPM;
-    }
-    public clone(jsonPM: any) {
+    clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
@@ -191,21 +137,6 @@ export class TimeManagementDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-    UpdateOfficeHourList(entityPMList: any[]) {
-        return Observable.defer(() => {
-            var authHeader = new Headers();
-            authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-            authHeader.append('Content-Type', 'application/json');
-            var url = ServiceHelper.GetLogitudeURL() + 'api/TimeOfficeHourDomain';
-
-            return this._http.post(url, JSON.stringify(entityPMList), { headers: authHeader }).map((res) => {
-                var myJsonResult = res.json();
-                var myResponse = new ServiceResponse();
-                myResponse.Result = myResponse;
-                return myResponse;
-            });
-        });
-    }
     GetProjectsCounts(loggedUserId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -218,6 +149,7 @@ export class TimeManagementDomainService {
             });
         });
     }
+
     DeleteTimeSheetItem(Id: string, employeeUserId: string, locationCode: string, periodStartDate: Date, exitDate:Date) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -231,6 +163,21 @@ export class TimeManagementDomainService {
                 return myResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
+    }
+
+    GetCalculationCompleteWork() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetCalculationCompleteWork?';
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
+                var myResponse = new ServiceResponse();
+                myResponse.Result = myJsonResult;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+
     }
     private MapJsonToTimeManagementAPIHelper(jsonPM: any, getCallMap: boolean = true, entityPM: TimeManagementAPIHelper = null) {
         if (!entityPM) {
@@ -246,8 +193,52 @@ export class TimeManagementDomainService {
         }
         return entityPM;
     }
-}
 
+
+    Prorate(EmployeeUserId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetProrate?EmployeeUserId=' + EmployeeUserId, { headers: authHeader }).map(response => {
+                var iResponse = response.json();
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = iResponse;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    GetVacationsSummary(Year: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetVacationsSummary?Year=' + Year;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
+                var myResponse = new ServiceResponse();
+                myResponse.Result = myJsonResult;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    GetVacationsDetails(Year: number, Type:string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetVacationsDetails?Year=' + Year + '&Type=' + Type;
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myJsonResult = response.json();
+                var myResponse = new ServiceResponse();
+                myResponse.Result = myJsonResult;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+}
 export class TimeManagementAPIHelper {
     public Id: number;
     public LocationCode: string;

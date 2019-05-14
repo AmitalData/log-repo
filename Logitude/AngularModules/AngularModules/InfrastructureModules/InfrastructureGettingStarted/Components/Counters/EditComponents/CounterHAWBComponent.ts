@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {AppTool} from '../../../../../Infrastructure/Tools';
 import {CounterPM} from '../../../../../Common/EntityPMs/CounterPM';
 import {CounterDefinitionPM} from '../../../../../Common/EntityPMs/CounterDefinitionPM';
@@ -33,6 +33,7 @@ export class CounterHAWBComponent extends BaseComponent {
     public HasAllTransportsFeature: boolean = false;
     public IsResourcesReady: boolean = false;
     public ValidationErrorsList: string[] = [];
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
 
@@ -45,7 +46,7 @@ export class CounterHAWBComponent extends BaseComponent {
         this.CounterId = args["CounterId"];
 
         if (this.CounterId) {
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            this.CurrentSession.StartBusyIndicatorLoading();
 
             var myService = new CountersDomainService();
             myService.GetCounterAPIHelper(this.CounterId).subscribe((myResponse: ServiceResponse) => {
@@ -65,7 +66,7 @@ export class CounterHAWBComponent extends BaseComponent {
                 }
 
                 this.IsResourcesReady = true;
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
@@ -263,7 +264,7 @@ export class CounterHAWBComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         var isDirty: boolean = false;
@@ -312,7 +313,7 @@ export class CounterHAWBComponent extends BaseComponent {
         }
 
         if (!isDirty) {
-            SessionLocator.CurrentSession.CloseCurrentWindow();
+            this.CurrentSession.CloseCurrentWindow();
         }
 
         else {
@@ -390,12 +391,12 @@ export class CounterHAWBComponent extends BaseComponent {
                 this.ValidationErrorsList = errors;
 
                 if (errors.length == 0) {
-                    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+                    this.CurrentSession.StartBusyIndicatorSaving();
 
                     var myService = new CountersDomainService();
                     myService.Post(this.CounterAPIHelper).subscribe((myResponse: ServiceResponse) => {
 
-                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        this.CurrentSession.StopBusyIndicator();
 
                         if (myResponse.HasError) {
                             this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -403,7 +404,7 @@ export class CounterHAWBComponent extends BaseComponent {
 
                         else {
                             SessionLocator.TenantSettings = this.CounterAPIHelper.TenantSettings;
-                            SessionLocator.CurrentSession.CloseCurrentWindowEmit("Ok");
+                            this.CurrentSession.CloseCurrentWindowEmit("Ok");
                         }
                     });
                 }

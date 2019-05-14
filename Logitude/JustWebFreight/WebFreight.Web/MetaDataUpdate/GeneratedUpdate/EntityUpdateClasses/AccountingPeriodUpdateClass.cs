@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class AccountingPeriodUpdateClass
@@ -161,11 +165,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Year",
-					  						DefaultText =  @"Year",
-					  						FullLocalDefaultText =  @"שנה",
+					  						DefaultText =  "Year",
+					  						FullLocalDefaultText =  "שנה",
 					  						ListFieldLable =  "YearListLable",
-					  						ListLableDefaultText =  @"Year",
-					  						ListLocalDefaultText =  @"שנה",
+					  						ListLableDefaultText =  "Year",
+					  						ListLocalDefaultText =  "שנה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -213,11 +217,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PeriodTypeCode",
-					  						DefaultText =  @"Type",
-					  						FullLocalDefaultText =  @"סוג תקופה",
+					  						DefaultText =  "Type",
+					  						FullLocalDefaultText =  "סוג תקופה",
 					  						ListFieldLable =  "PeriodTypeCodeListLable",
-					  						ListLableDefaultText =  @"Type",
-					  						ListLocalDefaultText =  @"סוג תקופה",
+					  						ListLableDefaultText =  "Type",
+					  						ListLocalDefaultText =  "סוג תקופה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -265,11 +269,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PeriodTypeName",
-					  						DefaultText =  @"Period Type",
-					  						FullLocalDefaultText =  @"סוג תקופה",
+					  						DefaultText =  "Period Type",
+					  						FullLocalDefaultText =  "סוג תקופה",
 					  						ListFieldLable =  "PeriodTypeNameListLable",
-					  						ListLableDefaultText =  @"Period Type",
-					  						ListLocalDefaultText =  @"סוג תקופה",
+					  						ListLableDefaultText =  "Period Type",
+					  						ListLocalDefaultText =  "סוג תקופה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -317,11 +321,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OpenMonth",
-					  						DefaultText =  @"Open Month",
-					  						FullLocalDefaultText =  @"חודש פתוח",
+					  						DefaultText =  "Open Month",
+					  						FullLocalDefaultText =  "חודש פתוח",
 					  						ListFieldLable =  "OpenMonthListLable",
-					  						ListLableDefaultText =  @"OpenMonth",
-					  						ListLocalDefaultText =  @"חודש פתוח",
+					  						ListLableDefaultText =  "OpenMonth",
+					  						ListLocalDefaultText =  "חודש פתוח",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -369,11 +373,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClosedMonth",
-					  						DefaultText =  @"Closed Month",
-					  						FullLocalDefaultText =  @"חודש סגור",
+					  						DefaultText =  "Closed Month",
+					  						FullLocalDefaultText =  "חודש סגור",
 					  						ListFieldLable =  "ClosedMonthListLable",
-					  						ListLableDefaultText =  @"Closed Month",
-					  						ListLocalDefaultText =  @"חודש סגור",
+					  						ListLableDefaultText =  "Closed Month",
+					  						ListLocalDefaultText =  "חודש סגור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -422,6 +426,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable AccountingPeriodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "AccountingPeriod" && d.Tenant == 0).FirstOrDefault(); 
+
 		   Feature AccountingPeriodFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature AccountingPeriodFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 		   Feature AccountingPeriodFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = AccountingPeriodObjectTable.Id, Tenant = 0, NameTextCodeCode = "AccountingPeriod.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);

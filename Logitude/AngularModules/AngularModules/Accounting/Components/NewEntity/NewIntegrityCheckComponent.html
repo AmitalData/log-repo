@@ -1,0 +1,110 @@
+﻿    <table>
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="width: 400px">
+                <table>
+                    <tr class="FormFieldRow">
+                        <td>
+                            <table>
+
+                                <tr style="height: 10px;"><td><div></div></td></tr>
+
+                                <!-- FromMonthInclusive -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 100px;">
+                                        <LogLabel [ObjectFieldName]="'FromMonthInclusive'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td style="width: 170px;">
+                                        <LogDatePicker [ObjectFieldName]="'FromMonthInclusive'" [ObjectTableName]="ObjectTableName"
+                                                       [DataContext]="DataContext" [HideColumns]="true"
+                                                       [SelectedDateValue]="FromMonthInclusive"></LogDatePicker>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+
+                                <!-- ToMonthInclusive -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'ToMonthInclusive'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'ToMonthInclusive'" [ObjectTableName]="ObjectTableName"
+                                                       [DataContext]="DataContext" [HideColumns]="true"
+                                                       [SelectedDateValue]="ToMonthInclusive"></LogDatePicker>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>
+
+                                <tr><td><div></div></td></tr>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td style="width: 80px;"><div></div></td>
+
+            <td>
+                <table>
+                    <tr class="FormFieldRow">
+                        <td>
+                            <table>
+
+                                <!-- InActive -->
+                                <!--<tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Inactive'" [ObjectTableName]="ObjectTableName"
+                                                  [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <CheckBox [IsChecked]="Inactive" (Checked)="Inactive = $event"></CheckBox>
+                                    </td>
+                                    <td><div></div></td>
+                                </tr>-->
+
+                                <tr><td><div></div></td></tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </td>
+        </tr>
+
+        <tr style="height: 32px;">
+            <td colspan="4" style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 57px;">
+                            <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>

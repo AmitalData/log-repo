@@ -27,6 +27,79 @@ namespace WebFreight.Web.Security
 {
     public class SecurityUtility
     {
+		public static void AuthenticateAPICall(int tenant)
+		{
+			if (LogitudeSettings.WorkEnvironment != "logbox" && LogitudeSettings.WorkEnvironment != "cloud")
+			{
+				bool exist = CheckUserTableFeature("General", "EXTERNALAPIS", tenant, true);
+				if (!exist)
+				{
+					throw new AutenticationException("API is not activated. Please contact your system administrator");
+				}
+			}
+		}
+
+		private static bool CheckUserTableFeature(string objectTableName, string featureCode, int tenant, bool forceAPIFeaturesCheck)
+		{
+			bool exists = false;
+
+			if (objectTableName.Contains("Customs."))
+			{
+
+			}
+			//if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+			//{
+
+			//}
+
+			string email = null;
+			if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+			{
+				/*string */
+				email = HttpContext.Current.User.Identity.Name;
+			}
+			else
+			{
+				email = AuthenticationUtil.ResolveLoggingUserId(tenant);
+			}
+			ContactInfo contactinfo = GetContactInfo(email, tenant, forceAPIFeaturesCheck);
+
+			if (contactinfo != null)
+			{
+				if (contactinfo.IsLogitudeAdmin)
+				{
+					exists = true;
+				}
+
+				else
+				{
+					ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
+					if (objectTable != null)
+					{
+						foreach (string myRoleId in contactinfo.RolesIds)
+						{
+							Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant, true);
+							if (features.Keys.Contains(featureCode + objectTable.Id))
+							{
+								FeaturePM feature = features[featureCode + objectTable.Id];
+								if (feature != null)
+								{
+									exists = true;
+								}
+							}
+						}
+					}
+				}
+			}
+			//}
+
+			if (!exists)
+			{
+				return false;
+			}
+			else return true;
+		}
+
         public static void AuthenticationOnTenant(int tenant)
         {
             if (HttpContext.Current != null)
@@ -117,22 +190,21 @@ namespace WebFreight.Web.Security
                     }
 
 
-                    bool isUpgrading;
+                    bool isBlocking;
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalcontext = GlobalContext.GetContext();
-                        isUpgrading = (from a in globalcontext.GlobalDBs
-                                       select a).FirstOrDefault().IsUpgrading;
+                        isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
 
-                        if (isUpgrading)
+                        if (isBlocking)
                         {
                             if (HttpContext.Current.Response.Headers["MobileUpgrading"] != null)
                             {
                                 HttpContext.Current.Response.Headers["MobileUpgrading"] = "Unifreight mobile is being updated, please try again later . Sorry for the inconvenience";
                             }
-                            else HttpContext.Current.Response.Headers.Add("MobileUpgrading", "Unifreight mobile is being updated, please try again later . Sorry for the inconvenience");
 
+                            else HttpContext.Current.Response.Headers.Add("MobileUpgrading", "Unifreight mobile is being updated, please try again later . Sorry for the inconvenience");
                         }
 
                         scope.Complete();
@@ -236,7 +308,7 @@ namespace WebFreight.Web.Security
             {
                 email = AuthenticationUtil.ResolveLoggingUserId(tenant);
             }
-            ContactInfo contactinfo = GetContactInfo(email, tenant);
+			ContactInfo contactinfo = GetContactInfo(email, tenant);
 
             if (contactinfo != null)
             {
@@ -276,7 +348,8 @@ namespace WebFreight.Web.Security
 
         }
 
-        public static bool CheckTableContactFeature(string objectTableName, string featureCode, int tenant)
+	 
+		public static bool CheckTableContactFeature(string objectTableName, string featureCode, int tenant)
         {
             bool exists = false;
 
@@ -433,7 +506,7 @@ namespace WebFreight.Web.Security
             return isAllowed;
         }
 
-        public static ContactInfo GetContactInfo(string email, int tenant)
+        public static ContactInfo GetContactInfo(string email, int tenant, bool forceAPIFeaturesCheck = false)
         {
             int loggedTenant = tenant;
 
@@ -451,12 +524,11 @@ namespace WebFreight.Web.Security
             //}
             string key = email + "_" + tenant + "_info";
 
-            if (CacheManager.CacheWrapper.Get(key) != null)
+            if (CacheManager.CacheWrapper.Get(key) != null && !forceAPIFeaturesCheck)
             {
                 myContactInfo = (ContactInfo)CacheManager.CacheWrapper.Get(key);
             }
-
-            else
+			else
             {
                 if (tenant == 0)
                 {
@@ -487,7 +559,7 @@ namespace WebFreight.Web.Security
                         authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     }
 
-                    if (authToken == null || !authToken.APIToken)
+                    if (authToken == null || !authToken.APIToken || forceAPIFeaturesCheck)
                     {
                         ContactRepository contactrep = new ContactRepository(tenant);
                         Contact contact = contactrep.GetSingleContactByEmail(email, tenant);
@@ -772,25 +844,25 @@ namespace WebFreight.Web.Security
             return myResult;
         }
 
-        private static Dictionary<string, FeaturePM> GetFeaturesForRole(string roleId, List<string> allowedPackages, int tenant)
-        {
-            Dictionary<string, FeaturePM> features = null;
+		private static Dictionary<string, FeaturePM> GetFeaturesForRole(string roleId, List<string> allowedPackages, int tenant, bool forceAPIFeaturesCheck = false)
+		{
+			Dictionary<string, FeaturePM> features = null;
 
-            if (CacheManager.CacheWrapper.Get(roleId) == null)
-            {
-                FeatureQuery featuresQuery = new FeatureQuery(tenant);
-                List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
-                features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
-                CacheManager.CacheWrapper.Insert(roleId, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-            }
+			if (CacheManager.CacheWrapper.Get(roleId) == null || forceAPIFeaturesCheck)
+			{
+				FeatureQuery featuresQuery = new FeatureQuery(tenant);
+				List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
+				features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
+				CacheManager.CacheWrapper.Insert(roleId, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+			}
 
-            else
-            {
-                features = (Dictionary<string, FeaturePM>)CacheManager.CacheWrapper.Get(roleId);
-            }
+			else
+			{
+				features = (Dictionary<string, FeaturePM>)CacheManager.CacheWrapper.Get(roleId);
+			}
 
-            return features;
-        }
+			return features;
+		}
         private static Dictionary<string, FeaturePM> GetFeaturesForRoleNotCached(string roleId, List<string> allowedPackages, int tenant)
         {
             Dictionary<string, FeaturePM> features = null;
@@ -951,7 +1023,7 @@ namespace WebFreight.Web.Security
             if (!string.IsNullOrEmpty(email))
             {
                 List<string> allowedPackages = new List<string>();
-                ContactInfo myContactInfo = GetContactInfo(email, tenant);
+                ContactInfo myContactInfo = GetContactInfo(email, tenant,true);
                 if (myContactInfo != null)
                 {
                     allowedPackages = myContactInfo.PackagesCodes;

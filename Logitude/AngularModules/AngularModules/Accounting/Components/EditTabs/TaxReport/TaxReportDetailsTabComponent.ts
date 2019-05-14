@@ -35,14 +35,15 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     private _TaxReportLineStatusListService: TaxReportLineStatusListService = new TaxReportLineStatusListService();
+    public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
 
     ReportLines: ObservableCollection;
     OriginalReportLines: ObservableCollection;
     isReady: boolean = false;
     ShowErrorMsg: boolean = false;
     errorsCount: number = 0;
-
-    constructor(private entityArgs: EntityArgs) {
+    private CurrentSession = SessionLocator.SelectedSession;
+    constructor(private entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
 
 
@@ -69,20 +70,20 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+        if (this.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.ReloadScreen();
                         console.log("Entity Reloaded");
                     }
@@ -100,11 +101,12 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
                             this.isReady = true;
 
 
-                            this.GetStatuses();
+                            // this.GetStatuses();
                             // this.FillGrids();
 
-                            this.BuildColumns();
-                            this.ReloadData();
+                            // this.BuildColumns();
+                            this.ReloadScreen();
+                            // this.ReloadData();
                         });
                     });
                 });
@@ -114,7 +116,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     ReloadScreen(){
+        this.BuildColumns();
         this.GetStatuses();
+        this.CD.detectChanges();
         // this.FillGrids();
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
@@ -231,6 +235,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
         // var filteredLines = [];
         // filteredLines = this.OriginalReportLines.Collection;
+        var filters = new ApiQueryFilters;
 
         //search
         if (!AppTool.IsNullOrEmpty(this.searchText))
@@ -245,7 +250,6 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         //this.InputsOtherCount = filteredLines.filter((d: ReportLineModel) => d.TaxReportLinePM.OutputOrInput == "I" && d.TaxReportLinePM.IsEquipment == false).length;
         //this.AllCount = filteredLines.length;
 
-        var filters = new ApiQueryFilters;
 
         //toggle filters
         switch (this.FilterSelectedValue) {
@@ -379,8 +383,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     public columns: any[] = null;
 
     ReloadData() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
     }
@@ -484,16 +488,16 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true
         });
         this.columns.push({
-            FieldName: 'Buttons',
+            FieldName: 'Buttons;' + this.EntityPM.StatusCode,
             DataTypeCode: 'String',
             Display: '',
             Styles: { width: '30px' },
             HtmlListComponentName: 'TaxReportListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
             ServerSideSortable: true,
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
         });
-
+        this.TaxReportColumnsReady.emit(this.columns);
         //this.CustomColumnsReady.emit(this.columns);
     }
 
@@ -565,7 +569,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     //#endregion
 
     RefreshButtonClicked() {
-        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         //this.ListFilters = new ApiQueryFilters();
         //this.FilterSelectedValue = 'All';
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });

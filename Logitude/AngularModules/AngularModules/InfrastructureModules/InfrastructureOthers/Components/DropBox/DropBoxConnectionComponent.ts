@@ -1,4 +1,4 @@
-﻿declare var System: any, window: any;
+declare var System: any, window: any;
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -28,12 +28,13 @@ export class DropBoxConnectionComponent implements OnInit, AfterViewInit {
     ShowTestButton: boolean = false;
     //Status: string = "Not Connected";
     //timer: any;
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(public CD: ChangeDetectorRef) {
         this.DropBoxWindowCLosed();
         if (FeatureLocator.HasFeaturePermession("General", "DROPBOXTESTFILE")) {
             this.ShowTestButton = true;
         }
-        SessionLocator.CurrentSession.SessionEvent.subscribe(res => {
+        this.CurrentSession.SessionEvent.subscribe(res => {
             if (res.Name == "DropBoxWindowCLosed") {
                 this.DropBoxWindowCLosed(res.Timer);
             }
@@ -55,7 +56,7 @@ export class DropBoxConnectionComponent implements OnInit, AfterViewInit {
             //var timer = setInterval(function () {
             //    if (new_window) {
             //        if (new_window.closed) {
-            //            SessionLocator.CurrentSession.SessionEvent.emit({ Name: "DropBoxWindowCLosed", Timer: timer });
+            //            this.CurrentSession.SessionEvent.emit({ Name: "DropBoxWindowCLosed", Timer: timer });
             //            console.log("Child window closed");
             //        }
             //    }
@@ -84,7 +85,7 @@ export class DropBoxConnectionComponent implements OnInit, AfterViewInit {
         var timer = setInterval(function () {
             if (new_window) {
                 if (new_window.closed) {
-                    SessionLocator.CurrentSession.SessionEvent.emit({ Name: "DropBoxWindowCLosed", Timer: timer });
+                    this.CurrentSession.SessionEvent.emit({ Name: "DropBoxWindowCLosed", Timer: timer });
                     console.log("Child window closed");
                 }
             }
@@ -138,9 +139,9 @@ export class DropBoxConnectionComponent implements OnInit, AfterViewInit {
 
     CheckConnection() {
         var myService: CommonDomainService = new CommonDomainService();
-        SessionLocator.CurrentSession.CurrentWindow.StartBusyIndicator("Testing ...");
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Testing ...");
         myService.GetDropBoxConnectionTest(SessionLocator.Tenant).subscribe((myResult) => {
-            SessionLocator.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.messageWindow.Width = 300;
             this.messageWindow.Height = 200;
             this.messageWindow.Title = "DropBox Connection Status";
@@ -160,7 +161,7 @@ export class DropBoxConnectionComponent implements OnInit, AfterViewInit {
     }
 
     CloseBtnClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
 
