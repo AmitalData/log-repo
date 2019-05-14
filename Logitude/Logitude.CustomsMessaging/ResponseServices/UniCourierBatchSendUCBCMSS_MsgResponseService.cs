@@ -195,7 +195,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         if (declarationPM.Consignments != null && declarationPM.Consignments.Count > 0)
                         {
-                            LogMessagingUtil.Instance.AppendLine("DeclarationUpdateService.Update for declaration: " + declarationPM.CustomFileNo + " declarationPM.ImporterName: " + declarationPM.ImporterName + "\n");
+                            LogMessagingUtil.Instance.AppendLine("DeclarationUpdateService.Update for declaration: " + declarationPM.CustomFileNo + "\n");
                             declarationPM.ChangeSetOp = ChangeSetOperation.Update;
                             declarationPM.Consignments.FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
                             declarationPM.Consignments.FirstOrDefault().UnloadPortCode = /*customResponse.*/StorageSiteCode;
