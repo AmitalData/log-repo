@@ -133,6 +133,7 @@ export class SystemCurrenciesComponent extends BaseComponent {
             logWindow.Show('./Common/Components/Maintenance/RatesMainTabComponent');
         });
     }
+
     EditCurrency() {
         if (this.IsEditingEnabled) {
             var windowTitle = "Edit Accounting Currency";
@@ -141,6 +142,15 @@ export class SystemCurrenciesComponent extends BaseComponent {
             logWindow.Width = 650;
             logWindow.Height = 450;
             logWindow.WindowArgs = { EntityPM: this.TenantPM, ShipmentsQuotesCount: this.ShipmentsQuotesCount };
+
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(s => {
+                    if (s) {
+                        this.TenantPM = comp.EntityPM;
+                    }
+                });
+            });
+
             logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/SystemCurrencies/CurrencyRatesComponent');
         }
     }
@@ -148,56 +158,44 @@ export class SystemCurrenciesComponent extends BaseComponent {
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+
     OkButtonClicked() {
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.TenantPM, this.ObjectTableName, errors);
-
-        if (AppTool.IsNullOrEmpty(this.CurrencyId)) {
-            errors.push("Accounting Currency Is Required");
+        if (!this.TenantPM.IsDirty) {
+            this.CurrentSession.CloseCurrentWindow();
         }
 
-        if (AppTool.IsNullOrEmpty(this.ProfitCurrencyId)) {
-            errors.push("Profit Currency Is Required");
-        }
+        else {
+            var errors: string[] = [];
+            Validator.TryValidateObject(this.TenantPM, this.ObjectTableName, errors);
 
-        this.ValidationErrorsList = errors;
+            if (AppTool.IsNullOrEmpty(this.CurrencyId)) {
+                errors.push("Accounting Currency Is Required");
+            }
 
-        if (this.ValidationErrorsList.length == 0) {
+            if (AppTool.IsNullOrEmpty(this.ProfitCurrencyId)) {
+                errors.push("Profit Currency Is Required");
+            }
 
-            this.CurrentSession.StartBusyIndicatorSaving();
+            this.ValidationErrorsList = errors;
 
-            this.entityPMService.update(this.TenantPM).subscribe((myResponse: ServiceResponse) => {
+            if (this.ValidationErrorsList.length == 0) {
 
-                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StartBusyIndicatorSaving();
 
-                if (!myResponse.HasError) {
-                    InfraSettings.TenantPM = this.TenantPM;
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-                }
+                this.entityPMService.update(this.TenantPM).subscribe((myResponse: ServiceResponse) => {
 
-                else {
-                    this.ValidationErrorsList = myResponse.ErrorsArray;                    
-                }
-            });
+                    this.CurrentSession.StopBusyIndicator();
+
+                    if (!myResponse.HasError) {
+                        InfraSettings.TenantPM = myResponse.Result;
+                        this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    }
+
+                    else {
+                        this.ValidationErrorsList = myResponse.ErrorsArray;
+                    }
+                });
+            }
         }
     }
-
-    //SubmitTenantChanges() {
-    //    this.CurrentSession.StartBusyIndicatorSaving();
-
-    //    var myService: TenantPMService = new TenantPMService();
-    //    myService.update(this.TenantPM).subscribe((myResponse: ServiceResponse) => {
-    //        if (myResponse != null) {
-    //            if (!myResponse.HasError) {
-    //                InfraSettings.TenantPM = this.TenantPM;
-    //                this.CurrentSession.CloseCurrentWindowEmit("ok");
-    //            }
-
-    //            else {
-    //                this.ValidationErrorsList = myResponse.ErrorsArray;
-    //                this.CurrentSession.StopBusyIndicator();
-    //            }
-    //        }
-    //    });
-    //}
 }
