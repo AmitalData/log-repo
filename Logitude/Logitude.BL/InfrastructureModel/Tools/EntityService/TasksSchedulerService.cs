@@ -119,9 +119,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             if (theEntityPm.StartDateTime != Poco.StartDateTime)
             {
                 theEntityPm.Version = theEntityPm.Version + 1;
+                theEntityPm.NextRunTime = theEntityPm.StartDateTime;
+                theEntityPm.NextRunTimeUTC = theEntityPm.StartDateTimeUTC;
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("SchedularQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", theEntityPm.Version.ToString() } }, null, null, null, Poco.NextRunTimeUTC);
+                queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", theEntityPm.Version.ToString() } }, null, null, null, theEntityPm.NextRunTimeUTC);
 
             }
             TasksSchedulerMapping.MapEntity(theEntityPm, Poco, isNewEntity);
