@@ -104,8 +104,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                         if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
                         {
-                            // ResolveCustomDWObjectFields(objectFieldPMs , MyGroup , authToken.Tenant);
-
+                            ResolveDWCustomObjectFields(objectFieldPMs , MyGroup , authToken.Tenant);
                             MyGroups.Add(MyGroup);
 
                         }
@@ -129,25 +128,22 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
         }
 
-        private  void ResolveCustomDWObjectFields( List<ObjectFieldPM> objectFieldPMs, DWFieldsGroup MyGroup , int tenant)
+        private void ResolveDWCustomObjectFields(List<ObjectFieldPM> objectFieldPMs, DWFieldsGroup MyGroup, int tenant)
         {
-            foreach (var field in MyGroup.FieldsList)
+            foreach (var field in MyGroup.FieldsList.Where(d => d.IsCustom && d.DisplayInQueryBuilder).ToList())
             {
-                if (field.Name.Contains("Field") && field.DisplayInQueryBuilder)
+                ObjectFieldPM objectFieldPM = objectFieldPMs.Where(d => d.FieldName == field.Name).FirstOrDefault();
+                if (objectFieldPM != null)
                 {
-                    ObjectFieldPM objectFieldPM = objectFieldPMs.Where(d => d.FieldName == field.Name).FirstOrDefault();
-                    if (objectFieldPM != null)
+                    field.DisplayName = TranslateTextsClass.Translate(objectFieldPM.FullNameTextCodeCode, tenant);
+                    field.DataTypeCode = objectFieldPM.DataTypeCode;
+                    if (field.DataTypeCode == "Date" || field.DataTypeCode == "DateTime")
                     {
-                        field.DisplayName = TranslateTextsClass.Translate(objectFieldPM.FullNameTextCodeCode, tenant);
-                        field.DataTypeCode = objectFieldPM.DataTypeCode;
-                        if (field.DataTypeCode == "Date" || field.DataTypeCode == "DateTime")
-                        {
-                            field.DataTypeCode = "Dimension";
-                            field.DimensionTableCode = "DIM_Dates";
-                        }
+                        field.DataTypeCode = "Dimension";
+                        field.DimensionTableCode = "DIM_Dates";
                     }
-                    else field.DisplayInQueryBuilder = false;
                 }
+                else field.DisplayInQueryBuilder = false;
             }
         }
 

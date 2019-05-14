@@ -76,9 +76,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         NextRunTimeUTC = a.NextRunTimeUTC,
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         LastRunTimeUTC = a.LastRunTimeUTC,
-                        Version = a.Version
+                        Version = a.Version,
+                        Status = a.Status
 
-                        
+
                     }).FirstOrDefault();
         }
 
@@ -117,7 +118,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         NextRunTimeUTC = a.NextRunTimeUTC,
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         LastRunTimeUTC = a.LastRunTimeUTC,
-                        Version = a.Version
+                        Version = a.Version,
+                        Status = a.Status
                     }).FirstOrDefault();
         }
 
@@ -156,7 +158,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         NextRunTimeUTC = a.NextRunTimeUTC,
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         LastRunTimeUTC = a.LastRunTimeUTC,
-                        Version = a.Version
+                        Version = a.Version,
+                        Status = a.Status
                     }).ToList();
         }
 
@@ -194,7 +197,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         NextRunTimeUTC = a.NextRunTimeUTC,
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         LastRunTimeUTC = a.LastRunTimeUTC,
-                        Version = a.Version
+                        Version = a.Version,
+                        Status = a.Status
                     }).ToList();
         }
 
@@ -232,7 +236,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                NextRunTimeUTC = a.NextRunTimeUTC,
                                                                StartDateTimeUTC = a.StartDateTimeUTC,
                                                                LastRunTimeUTC = a.LastRunTimeUTC,
-                                                               Version = a.Version
+                                                               Version = a.Version,
+                                                               Status = a.Status
                                                            };
             return result;
         }
@@ -272,7 +277,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         NextRunTimeUTC = a.NextRunTimeUTC,
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         LastRunTimeUTC = a.LastRunTimeUTC,
-                        Version = a.Version
+                        Version = a.Version,
+                        Status = a.Status
                     }).FirstOrDefault();
         }
     }

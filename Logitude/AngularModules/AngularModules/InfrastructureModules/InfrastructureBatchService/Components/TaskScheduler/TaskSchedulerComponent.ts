@@ -402,6 +402,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     get LastRunResult() { return this.EntityPM.LastRunResult; }
     get StartDate() { return this.EntityPM.StartDateTime; }
     get StartDateUTC() { return this.EntityPM.StartDateTimeUTC; }
+    get Status() { return this.EntityPM.Status; }
 
     get Name() { return this.EntityPM.Name; }
     set Name(newValue: string) {

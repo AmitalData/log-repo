@@ -329,6 +329,32 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
+                                    switch (itemPM.CostMeasurementCode)
+                                    {
+                                        case "GRWT": { itemPM.CostQuantity = entityPM.GrossWeight; break; }
+                                        case "CHWT": { itemPM.CostQuantity = entityPM.ChargeableWeight; break; }
+                                        case "VOLU": { itemPM.CostQuantity = entityPM.Volume; break; }
+                                        case "FIXD": { itemPM.CostQuantity = 1; break; }
+                                        case "BCNT": { itemPM.CostQuantity = null; break; }
+                                        case "BTEU": { itemPM.CostQuantity = entityPM.TEU; break; }
+                                        case "PRVL": { itemPM.CostQuantity = entityPM.ValueOfGoods; break; }
+                                        case "QTY": { itemPM.CostQuantity = entityPM.NumberOfPackages; break; }
+                                        default: { break; }
+                                    }
+
+                                    switch (itemPM.SaleMeasurementCode)
+                                    {
+                                        case "GRWT": { itemPM.SaleQuantity = entityPM.GrossWeight; break; }
+                                        case "CHWT": { itemPM.SaleQuantity = entityPM.ChargeableWeight; break; }
+                                        case "VOLU": { itemPM.SaleQuantity = entityPM.Volume; break; }
+                                        case "FIXD": { itemPM.SaleQuantity = 1; break; }
+                                        case "BCNT": { itemPM.SaleQuantity = null; break; }
+                                        case "BTEU": { itemPM.SaleQuantity = entityPM.TEU; break; }
+                                        case "PRVL": { itemPM.SaleQuantity = entityPM.ValueOfGoods; break; }
+                                        case "QTY": { itemPM.SaleQuantity = entityPM.NumberOfPackages; break; }
+                                        default: { break; }
+                                    }
+
                                     if (entityPM.IsChargesByVAT)
                                     {
                                         itemPM.VatTypeId = item.VatTypeId;

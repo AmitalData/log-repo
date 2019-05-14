@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
@@ -51,6 +52,8 @@ namespace CommunicationWorkerRole.Tasks
                     //TaskHistoryId = TaskSchedulerHistory.Id;
 
                     StartTask();
+                    Task.Status = null;
+                    AddSchedulerQueue(Task);
                     TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(TaskSchedulerHistoryRepository);
                     var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetSingleTaskSchedulerHistoryPM(TaskHistoryId);
                     if (TaskSchedulerHistory != null)
@@ -215,6 +218,122 @@ namespace CommunicationWorkerRole.Tasks
                 }
                 scope.Complete();
             }
+        }
+
+        private void AddSchedulerQueue(TasksSchedulerPM task)
+        {
+            var queueservice = new DbQueueService();
+            switch (task.TriggerType)
+            {
+                case "D":
+                    {
+                        if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
+                        {
+                            task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+                        }
+                        else
+                        {
+                            task.NextRunTime = task.NextRunTime.Value.AddDays(1);
+                        }
+                        queueservice.InitializeQueue("SchedularQueue", 0);
+                        queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
+                        break;
+                    }
+                case "W":
+                    {
+                        DateTime NextRunTime;
+                        var ToDay = DateTime.Now.DayOfWeek;
+                        var ToDayString = DateTime.Now.DayOfWeek.ToString();
+                        NextRunTime = Next(DateTime.Now, ToDay);
+                        task.NextRunTime = NextRunTime;
+                        if (task.Sunday)
+                        {
+                            NextRunTime = Next(DateTime.Now, DayOfWeek.Sunday);
+                            if (NextRunTime < task.NextRunTime)
+                            {
+                                task.NextRunTime = NextRunTime;
+                            }
+                        }
+                        if (task.Monday)
+                        {
+                            NextRunTime = Next(DateTime.Now, DayOfWeek.Monday);
+                            if (NextRunTime < task.NextRunTime)
+                            {
+                                task.NextRunTime = NextRunTime;
+                            }
+                        }
+                        if (task.Tuesday)
+                        {
+                            NextRunTime = Next(DateTime.Now, DayOfWeek.Tuesday);
+                            if (NextRunTime < task.NextRunTime)
+                            {
+                                task.NextRunTime = NextRunTime;
+                            }
+                        }
+                        if (task.Wednesday)
+                        {
+                            NextRunTime = Next(DateTime.Now, DayOfWeek.Wednesday);
+                            if (NextRunTime < task.NextRunTime)
+                            {
+                                task.NextRunTime = NextRunTime;
+                            }
+                        }
+                        if (task.Thursday)
+                        {
+                            NextRunTime = Next(DateTime.Now, DayOfWeek.Thursday);
+                            if (NextRunTime < task.NextRunTime)
+                            {
+                                task.NextRunTime = NextRunTime;
+                            }
+                        }
+                        if (task.Friday)
+                        {
+                            NextRunTime = Next(DateTime.Now, DayOfWeek.Friday);
+                            if (NextRunTime < task.NextRunTime)
+                            {
+                                task.NextRunTime = NextRunTime;
+                            }
+                        }
+                        if (task.Satarday)
+                        {
+                            NextRunTime = Next(DateTime.Now, DayOfWeek.Saturday);
+                            if (NextRunTime < task.NextRunTime)
+                            {
+                                task.NextRunTime = NextRunTime;
+                            }
+                        }
+                        queueservice.InitializeQueue("SchedularQueue", 0);
+                        queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
+                        break;
+                    }
+                case "M":
+                    {
+                        DateTime NextRunTime;
+                        task.NextRunTime = task.NextRunTime.Value.AddMonths(1);
+                        queueservice.InitializeQueue("SchedularQueue", 0);
+                        queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
+                        break;
+                    }
+                default: // Once
+                    {
+                        break;
+                    }
+
+            }
+            var objectContext = WebFreightContext.GetContext(task.Tenant);
+            TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
+            service.Update(task);
+
+            queueservice.Complete();
+        }
+
+        private DateTime Next(DateTime from, DayOfWeek dayOfWeek)
+        {
+            int start = (int)from.DayOfWeek;
+            int target = (int)dayOfWeek;
+            if (target <= start)
+                target += 7;
+            return from.AddDays(target - start);
         }
     }
 }
