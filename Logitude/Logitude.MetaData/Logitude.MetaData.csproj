@@ -550,10 +550,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\QuoteModel\QuoteClosingReason.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteCostCharge.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteCustomerType.lxml" />
     <None Include="EntityFiles\QuoteModel\QuotePackage.lxml" />
     <None Include="EntityFiles\QuoteModel\QuotePriceSteps.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteRating.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteSaleCharge.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteStage.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplate.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTotalVAT.lxml">
