@@ -171,7 +171,12 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 this.RequestParams = requestParams;
                 InitMessageDefinition();
                 SendRequestVIA requestVIA = _RequestParams.RequestVIA;
-                MessageController.BuildRealSteps(InterfaceTenantDefinitionManagement, ref requestVIA, _RequestParams.ForcePersonalSign);
+                bool avoidSign = AvoidSign(_RequestParams);
+                if (avoidSign && _RequestParams.ForcePersonalSign)
+                {
+                    _RequestParams.ForcePersonalSign = false;
+                }
+                MessageController.BuildRealSteps(InterfaceTenantDefinitionManagement, ref requestVIA, _RequestParams.ForcePersonalSign, avoidSign);
                 RequestParams.RequestVIA = requestVIA;
 
 
@@ -225,7 +230,39 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
         }
 
-        
+        private bool AvoidSign(TRequestParams requestParams)
+        {
+            try
+            {
+
+                if (!String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
+                {
+
+                    if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
+                    {
+                        var qs = new DeclarationQueryService(requestParams.Tenant);
+                        var declarationPm = qs.GetSingle(requestParams.LoggingEntityId, false, true);
+
+
+                        return declarationPm.IsCourierDeclaration;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
         private static void NoteClientNoRequestSheet4U(TRequestParams requestParams, string text)
         {
             Simplog.Server.Infrastructure.Helpers.CacheManager.CacheWrapper
