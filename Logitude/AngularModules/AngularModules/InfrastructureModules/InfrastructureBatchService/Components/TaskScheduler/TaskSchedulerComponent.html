@@ -53,7 +53,8 @@
                                 <td style="width: 110px; min-width: 110px; max-width: 110px;">Last Run Result</td>
                                 <td *ngIf="ShowUTCTimeEnabled == false" style="width: 160px; min-width: 160px; max-width: 160px;">Start Date</td>
                                 <td *ngIf="ShowUTCTimeEnabled == true" style="width: 160px; min-width: 160px; max-width: 160px;">Start Date UTC</td>
-                                <td style="width: 90px; min-width: 90px; max-width: 90px;">Is Active</td>
+                                <td style="width: 90px; min-width: 90px; max-width: 90px;">Status</td>
+                                <td style="width: 90px; min-width: 90px; max-width: 90px;">Is Active</td> 
                                 <td style="width: 30px; min-width: 30px; max-width: 30px;">
                                     <div></div>
                                 </td>
@@ -103,7 +104,9 @@
                                 <td *ngIf="ShowUTCTimeEnabled == true" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
                                     {{item.StartDateUTC | DateTimePipe:'DTL12'}}
                                 </td>
-
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;text-align:center;color: deepskyblue;">
+                                    {{item.Status}}
+                                </td>
                                 <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
                                     <img class="LeftCenter" src="./Images/GreenTick.png" *ngIf="!item.InActive" />
                                 </td>

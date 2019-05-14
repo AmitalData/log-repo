@@ -28,14 +28,17 @@ export class ChartOFAccountModule {
     }
 
     public CreateAndEditChartOfAccount() {
-        var chartOfAccountNo = this.GeneralFun.RandomNumAcc();
+    
+        var chartOfAccountNo = "A!" + this.GeneralFun.RandomNumAcc();
         this.addChart.CreateNewChartOFAccount(chartOfAccountNo);
        // this.GeneralFun.QuickSearchTextBox('SearchFieldsId_0_0',  chartOfAccountNo);
-        this.Helper.WaitByIdAndFill('SearchFieldsId_0_0',chartOfAccountNo )
+
+        this.Helper.WaitByIdAndFill('SearchFieldsId_0_0',chartOfAccountNo );
+        browser.driver.sleep(6000);
+
         //this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem',0)
         this.Helper.WaitByIdAndClick('row0col3');
         this.editChart.EditChartOfAccount(chartOfAccountNo);
-        browser.driver.sleep(6000);
 
     }
     

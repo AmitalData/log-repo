@@ -64,6 +64,46 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.ContractNumber).HasColumnName("ContractNumber");
 
             this.Property(t => t.TariffNumber).HasColumnName("TariffNumber").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.Surcharge1Id).HasColumnName("Surcharge1Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge2Id).HasColumnName("Surcharge2Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge3Id).HasColumnName("Surcharge3Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge4Id).HasColumnName("Surcharge4Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge5Id).HasColumnName("Surcharge5Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge6Id).HasColumnName("Surcharge6Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge7Id).HasColumnName("Surcharge7Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge8Id).HasColumnName("Surcharge8Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge9Id).HasColumnName("Surcharge9Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge10Id).HasColumnName("Surcharge10Id").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge1UOM).HasColumnName("Surcharge1UOM").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge2UOM).HasColumnName("Surcharge2UOM").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge3UOM).HasColumnName("Surcharge3UOM").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge4UOM).HasColumnName("Surcharge4UOM").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge5UOM).HasColumnName("Surcharge5UOM").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge6UOM).HasColumnName("Surcharge6UOM").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge7UOM).HasColumnName("Surcharge7UOM").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge8UOM).HasColumnName("Surcharge8UOM").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge9UOM).HasColumnName("Surcharge9UOM").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Surcharge10UOM).HasColumnName("Surcharge10UOM").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

@@ -112,6 +112,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.DefaultSLAId = entityPM.DefaultSLAId;
             poco.StockTypeCode = entityPM.StockTypeCode;
             poco.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
+            poco.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
+
             // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
             BuildSearchFields(entityPM, poco);
         }

@@ -630,6 +630,466 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string surcharge1Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge1Id  
+	   {
+	    
+	     get
+		{
+		   return surcharge1Id;
+		 }
+		 set
+		 {
+		   if(surcharge1Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge1Id",OldValue=surcharge1Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge1Id=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge2Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge2Id  
+	   {
+	    
+	     get
+		{
+		   return surcharge2Id;
+		 }
+		 set
+		 {
+		   if(surcharge2Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge2Id",OldValue=surcharge2Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge2Id=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge3Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge3Id  
+	   {
+	    
+	     get
+		{
+		   return surcharge3Id;
+		 }
+		 set
+		 {
+		   if(surcharge3Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge3Id",OldValue=surcharge3Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge3Id=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge4Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge4Id  
+	   {
+	    
+	     get
+		{
+		   return surcharge4Id;
+		 }
+		 set
+		 {
+		   if(surcharge4Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge4Id",OldValue=surcharge4Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge4Id=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge5Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge5Id  
+	   {
+	    
+	     get
+		{
+		   return surcharge5Id;
+		 }
+		 set
+		 {
+		   if(surcharge5Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge5Id",OldValue=surcharge5Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge5Id=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge6Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge6Id  
+	   {
+	    
+	     get
+		{
+		   return surcharge6Id;
+		 }
+		 set
+		 {
+		   if(surcharge6Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge6Id",OldValue=surcharge6Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge6Id=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge7Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge7Id  
+	   {
+	    
+	     get
+		{
+		   return surcharge7Id;
+		 }
+		 set
+		 {
+		   if(surcharge7Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge7Id",OldValue=surcharge7Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge7Id=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge8Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge8Id  
+	   {
+	    
+	     get
+		{
+		   return surcharge8Id;
+		 }
+		 set
+		 {
+		   if(surcharge8Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge8Id",OldValue=surcharge8Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge8Id=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge9Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge9Id  
+	   {
+	    
+	     get
+		{
+		   return surcharge9Id;
+		 }
+		 set
+		 {
+		   if(surcharge9Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge9Id",OldValue=surcharge9Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge9Id=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge10Id ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge10Id  
+	   {
+	    
+	     get
+		{
+		   return surcharge10Id;
+		 }
+		 set
+		 {
+		   if(surcharge10Id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge10Id",OldValue=surcharge10Id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge10Id=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge1UOM ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge1UOM  
+	   {
+	    
+	     get
+		{
+		   return surcharge1UOM;
+		 }
+		 set
+		 {
+		   if(surcharge1UOM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge1UOM",OldValue=surcharge1UOM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge1UOM=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge2UOM ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge2UOM  
+	   {
+	    
+	     get
+		{
+		   return surcharge2UOM;
+		 }
+		 set
+		 {
+		   if(surcharge2UOM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge2UOM",OldValue=surcharge2UOM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge2UOM=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge3UOM ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge3UOM  
+	   {
+	    
+	     get
+		{
+		   return surcharge3UOM;
+		 }
+		 set
+		 {
+		   if(surcharge3UOM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge3UOM",OldValue=surcharge3UOM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge3UOM=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge4UOM ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge4UOM  
+	   {
+	    
+	     get
+		{
+		   return surcharge4UOM;
+		 }
+		 set
+		 {
+		   if(surcharge4UOM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge4UOM",OldValue=surcharge4UOM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge4UOM=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge5UOM ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge5UOM  
+	   {
+	    
+	     get
+		{
+		   return surcharge5UOM;
+		 }
+		 set
+		 {
+		   if(surcharge5UOM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge5UOM",OldValue=surcharge5UOM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge5UOM=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge6UOM ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge6UOM  
+	   {
+	    
+	     get
+		{
+		   return surcharge6UOM;
+		 }
+		 set
+		 {
+		   if(surcharge6UOM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge6UOM",OldValue=surcharge6UOM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge6UOM=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge7UOM ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge7UOM  
+	   {
+	    
+	     get
+		{
+		   return surcharge7UOM;
+		 }
+		 set
+		 {
+		   if(surcharge7UOM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge7UOM",OldValue=surcharge7UOM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge7UOM=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge8UOM ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge8UOM  
+	   {
+	    
+	     get
+		{
+		   return surcharge8UOM;
+		 }
+		 set
+		 {
+		   if(surcharge8UOM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge8UOM",OldValue=surcharge8UOM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge8UOM=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge9UOM ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge9UOM  
+	   {
+	    
+	     get
+		{
+		   return surcharge9UOM;
+		 }
+		 set
+		 {
+		   if(surcharge9UOM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge9UOM",OldValue=surcharge9UOM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge9UOM=value;
+		   }
+			
+		 }
+	   }
+	  private string surcharge10UOM ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Surcharge10UOM  
+	   {
+	    
+	     get
+		{
+		   return surcharge10UOM;
+		 }
+		 set
+		 {
+		   if(surcharge10UOM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Surcharge10UOM",OldValue=surcharge10UOM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   surcharge10UOM=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

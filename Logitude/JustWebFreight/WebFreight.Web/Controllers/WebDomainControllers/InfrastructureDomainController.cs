@@ -1788,6 +1788,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             });
                         }
                         QueryData.BITabularViewSettings = bITabularViewSettings;
+                        var ColumnsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(QueryData.BITabularViewSettings);
+                        IInfrastructureContext objectContext = InfrastructureContext.GetContext(authToken.Tenant);
+                        BIReportRepository repository = new BIReportRepository(objectContext);
+                        var entityPOCO = repository.GetSingle(entityPM.Id, entityPM.Tenant);
+                        if (entityPM != null)
+                        {
+                            entityPOCO.AGGridOptionsXML = ColumnsXML;
+                            repository.Update(entityPOCO);
+                            repository.SubmitChanges();
+                        }
                     }
                 }
                 else
@@ -1806,7 +1816,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         });
                     }
                     QueryData.BITabularViewSettings = bITabularViewSettings;
-
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, QueryData);
             }

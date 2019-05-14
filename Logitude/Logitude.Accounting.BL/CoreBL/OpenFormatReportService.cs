@@ -1067,6 +1067,7 @@ namespace Logitude.Accounting.BL.CoreBL
             List<C100Data> APC100 = GetAPInvoiceC100Data(openFormatReportPM, tenant);
             List<C100Data> ARPAymentC100 = GetARPaymentC100Data(openFormatReportPM, tenant);
             List<C100Data> DepositC100 = GetDepositC100Data(openFormatReportPM, tenant);
+           
             ARInvoiceTotalVATQuery aRInvoiceTotalVATQuery = new ARInvoiceTotalVATQuery(tenant);
             List<string> ARInvoiceIDs = ARC100.Select(d => d.ARInvoiceId).ToList();
             List<ARInvoiceTotalVATPM> totalVats = aRInvoiceTotalVATQuery.GetTotalVATs(ARInvoiceIDs, tenant);
@@ -1561,8 +1562,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append('0', 9);
                     }
 
-                    myStringBuilder.Append("305");
-                    if(item.DocumentReference == "11111")
+                    myStringBuilder.Append(item.DocumentType);
+                    if (item.DocumentReference == "11111")
                     {
 
                     }
@@ -2154,20 +2155,20 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             myStringBuilder.Append(a);
-                            myStringBuilder.Append('0', 15);
+                            myStringBuilder.Append(' ', 15);
                         }
 
                     }
                     else
                     {
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                        myStringBuilder.Append(' ', 15);
                     }
                 }
                 else
                 {
                     myStringBuilder.Append(a);
-                    myStringBuilder.Append('0', 15);
+                    myStringBuilder.Append(' ', 15);
                 }
 
                 string DocumentAmountAndVATAmount = Format((decimal)item.DocumentAmountAndVATAmount); //item.DocumentAmountAndVATAmount.ToString();
@@ -2344,8 +2345,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     
 
                     myStringBuilder.Append(a);
-                 
-                    myStringBuilder.Append('0', 12);
+                    myStringBuilder.Append("+");
+                    myStringBuilder.Append('0', 11);
                     myStringBuilder.Append("10000");
                     if (line.LocalCurrencyAmount != null)
                     {
@@ -3065,12 +3066,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 myStringBuilder.Append('0', 8);
                             }
 
-                            /* string amount = Format(line.LocalAmount); 
-                             if (amount.Length > 15)
-                                 {
-                                     amount = amount.Substring(0, 15);
-                                 }
-                                 myStringBuilder.Append(a + amount.PadLeft(15, '0'));*/
+                           
 
                             string Localamount = Format((decimal)line.LocalAmount); //item.DocumentAmountAndVATAmount.ToString(); khawla 
 
@@ -3224,18 +3220,58 @@ namespace Logitude.Accounting.BL.CoreBL
               
                     
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 10);
+                        myStringBuilder.Append(' ', 10);
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 10);
+                        myStringBuilder.Append(' ', 10);
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 15);
+                        myStringBuilder.Append(' ', 15);
                         myStringBuilder.Append(a);
-                        myStringBuilder.Append('0', 10);
+                        myStringBuilder.Append(' ', 10);
+                        myStringBuilder.Append(a);
+                    var valueDate = String.Format("{0:yyyyMMdd}", item.ValueDate);
+                    if (valueDate != null)
+                    {
+                        myStringBuilder.Append(a + valueDate);
+                    }
+                    else
+                    {
                         myStringBuilder.Append(a);
                         myStringBuilder.Append('0', 8);
+                    }
+
+
+                    myStringBuilder.Append(a);
+                    string Localamount = Format((decimal)item.DocumentAmountAndVATAmount); //item.DocumentAmountAndVATAmount.ToString(); khawla 
+
+                    if (Localamount != null)
+                    {
+                        if (item.DocumentAmountAndVATAmount > 0)
+                        {
+                            myStringBuilder.Append(a);
+                            myStringBuilder.Append("+");
+                            if (Localamount.Length > 14) { Localamount = Localamount.Substring(0, 14); }
+                            myStringBuilder.Append(a + Localamount.PadLeft(14, '0'));
+                        }
+
+                        else if (item.DocumentAmountAndVATAmount < 0)
+                        {
+                            myStringBuilder.Append(a);
+                            myStringBuilder.Append("-");
+                            if (Localamount.Length > 14) { Localamount = Localamount.Substring(0, 14); }
+                            myStringBuilder.Append(a + Localamount.PadLeft(14, '0'));
+                        }
+                        else
+                        {
+                            myStringBuilder.Append(a);
+                            myStringBuilder.Append('0', 15);
+                        }
+                    }
+                    else
+                    {
                         myStringBuilder.Append(a);
                         myStringBuilder.Append('0', 15);
-                    
+                    }
+
 
                     myStringBuilder.Append(a);
                     myStringBuilder.Append('0', 1);
@@ -4146,7 +4182,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                     select new C100Data()
                                     {
                                         ARInvoiceId = a.Id,
-                                        DocumentType = "305",
+                                        DocumentType = a.ARInvoiceType.Code!= "CD" ? "305" :"330",
                                         DocumentReference = a.InvoiceNumber,
                                         DocumentCreateDate = a.CreateDate,
                                         CustomerVendorName = a.BillTo.LocalName != null ? a.BillTo.LocalName : a.BillTo.EnglishName,
@@ -4165,6 +4201,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                         CreatedbyUser= a.CreatedByUser.Code != null? a.CreatedByUser.Code : a.CreatedByUser.Contact.EnglishName,
                                         GLAccountId = a.BillTo.GLAccountId,
                                         IsCancelled = a.IsCancelled,
+
                                         
                                     }).ToList();
 
@@ -4172,6 +4209,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return c100s;
         }
 
+   
         public   List<C100Data> GetAPInvoiceC100Data(OpenFormatReportPM openFormatReportPM, int tenant)
         {
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);

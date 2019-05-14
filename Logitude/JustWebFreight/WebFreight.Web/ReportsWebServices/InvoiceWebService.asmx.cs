@@ -1707,7 +1707,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.ForeignAmount = String.Format("{0:#,0.00}", lineAmount_Foreign);
                         reportinvoiceline.LocalAmount_Double = lineAmount_Local;
                         reportinvoiceline.InvoiceAmount_Double = lineAmount_Invoice;
-
+                        reportinvoiceline.ForeignAmount_Double = lineAmount_Foreign;
                         reportinvoiceline.VatAmountIncludeMultiInInvoiceCurrency = this.GetVatAmountIncludeMultiInInvoiceCurrencyField(invoiceline.VatTypeId, invoiceline.InvoiceAmount, invoiceTypeCode, allVATTypes, allVatTypesPercentages, allVATTypesGroups);
 
                         if (!string.IsNullOrEmpty(invoiceline.VatTypeId))
@@ -1888,7 +1888,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.ForeignAmount = lineAmount_Foreign != null ? String.Format("{0:#,0.00}", lineAmount_Foreign.Value) : "";
                         reportinvoiceline.LocalAmount_Double = lineAmount_Local;
                         reportinvoiceline.InvoiceAmount_Double = lineAmount_Invoice;
-
+                        reportinvoiceline.ForeignAmount_Double = lineAmount_Foreign;
                         reportinvoiceline.VatAmountIncludeMultiInInvoiceCurrency = this.GetVatAmountIncludeMultiInInvoiceCurrencyField(invoiceline.VatTypeId, invoiceline.InvoiceCurrencyAmount, invoiceTypeCode, allVATTypes, allVatTypesPercentages, allVATTypesGroups);
 
                         #region VAT
@@ -2837,6 +2837,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.ForeignAmount = String.Format("{0:#,0.00}", lineAmount_Foreign);
                         reportinvoiceline.LocalAmount_Double = lineAmount_Local;
                         reportinvoiceline.InvoiceAmount_Double = lineAmount_Invoice;
+                        reportinvoiceline.ForeignAmount_Double = lineAmount_Foreign;
 
                         #region Vats
                         reportinvoiceline.VatAmountIncludeMultiInInvoiceCurrency = this.GetVatAmountIncludeMultiInInvoiceCurrencyField(invoiceline.VatTypeId, invoiceline.InvoiceAmount, entityPOCO.ARInvoiceTypeCode, allVATTypes, allVatTypesPercentages, allVATTypesGroups);
@@ -2990,6 +2991,7 @@ namespace WebFreight.Web.ReportsWebServices
                         reportinvoiceline.ForeignAmount = lineAmount_Foreign != null ? String.Format("{0:#,0.00}", lineAmount_Foreign.Value) : "";
                         reportinvoiceline.LocalAmount_Double = lineAmount_Local;
                         reportinvoiceline.InvoiceAmount_Double = lineAmount_Invoice;
+                        reportinvoiceline.ForeignAmount_Double = lineAmount_Foreign;
 
                         #region VAT
 

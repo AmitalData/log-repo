@@ -2339,7 +2339,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 queryOperations.QueryFilterItems.Add(item);
 
-                shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(queryOperations, shipments);
+                shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(shipmentsQueryOperations, shipments);
                 #endregion
             }
 
@@ -12719,6 +12719,29 @@ namespace WebFreight.Web.ReportsWebServices
                     ShipmentPackage firstShipmentPackage = ShipmentPackages.Where(d => d.ShipmentId == Item.Id).FirstOrDefault();
 
                     ShipmentDetals shipment = new ShipmentDetals();
+
+                    if(Item.DirectionId == "I")
+                    {
+                        if (!string.IsNullOrEmpty(Item.ConsigneeId))
+                        {
+                            Card consignee = commonContext.Cards.Where(d => d.Id == Item.ConsigneeId).FirstOrDefault();
+                            if (consignee != null)
+                            {
+                                shipment.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(Item.ShipperId))
+                        {
+                            Card shipper = commonContext.Cards.Where(d => d.Id == Item.ShipperId).FirstOrDefault();
+                            if (shipper != null)
+                            {
+                                shipment.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
+                            }
+                        }
+                    }
 
                     shipment.Openedby = Item.CreatedByUserName;
                     if (!string.IsNullOrEmpty(Item.OperationalClosedByUserId))
