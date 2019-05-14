@@ -1374,6 +1374,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PaymentProcessViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PaymentProtestTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PaymentTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PendingByKeywordViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PendingErrorPlaceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckOperationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckStatusMessageViewsController.Generated.cs" />
@@ -1504,6 +1505,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\NotificationDefinitionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\NotificationTenantDefinitionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PaymentOrderController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PendingByKeywordController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PhysicalCheckController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ProceduralFaultController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SupplierInvoiceController.Generated.cs" />
@@ -1834,6 +1836,7 @@
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitConsItem.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitConsPackDet.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitCon.cs" />
+    <Compile Include="CustomModel\DomainServices\CustomDomainService.PendingByKeyword.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.TreatmentWay.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.ActionCode.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.SplitOrMergeReason.cs" />
@@ -2505,6 +2508,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ManifestCargoStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MAWBTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PendingByKeywordUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PendingErrorPlaceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportUpdateClass.cs" />

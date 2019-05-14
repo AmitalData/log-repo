@@ -482,6 +482,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new PaymentTypeMap());
 	
+            modelBuilder.Configurations.Add(new PendingByKeywordMap());
+	
             modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckMap());
@@ -2316,6 +2318,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PaymentType> PaymentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PendingByKeyword> PendingByKeywords 
 	 {
 	      get; set;
 	 

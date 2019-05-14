@@ -606,6 +606,7 @@
     <Compile Include="EntityDataMappings\Generated\PaymentProcessDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PaymentProtestTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PaymentTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PendingByKeywordDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PendingErrorPlaceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckOperationDataMapping.Generated.cs" />
@@ -745,6 +746,7 @@
     <Compile Include="EntityDataMappings\PaymentProcessDataMapping.cs" />
     <Compile Include="EntityDataMappings\PaymentProtestTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PaymentTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PendingByKeywordDataMapping.cs" />
     <Compile Include="EntityDataMappings\PendingErrorPlaceDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckOperationDataMapping.cs" />
@@ -896,6 +898,7 @@
     <Compile Include="EntityQueryServices\Generated\MamanStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ManifestCargoStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\MAWBTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PendingByKeywordQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PendingErrorPlaceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PointerLevelQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RefundCustomerActivityTypeQueryService.Generated.cs" />
@@ -1302,6 +1305,7 @@
     <Compile Include="EntityUpdateServices\Generated\MamanStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ManifestCargoStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MAWBTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PendingByKeywordUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PendingErrorPlaceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PointerLevelUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RefundCustomerActivityTypeUpdateService.Generated.cs" />
@@ -1317,6 +1321,7 @@
     <Compile Include="EntityUpdateServices\Generated\UpdateCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LogChangesService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCargoSplitUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\PendingByKeywordUpdateService.cs" />
     <Compile Include="EntityUpdateServices\SupplierInvoiceItemVehicleAddUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBanksCardUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomBankUpdateService.cs" />

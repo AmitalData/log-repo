@@ -303,6 +303,7 @@
     <Compile Include="EntityPMs\Generated\PaymentProcessPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PaymentProtestTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PaymentTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PendingByKeywordPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PendingErrorPlacePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PhysicalCheckOperationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PhysicalCheckPM.Generated.cs" />

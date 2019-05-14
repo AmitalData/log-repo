@@ -910,6 +910,11 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<GatepassReturnCode> GatepassReturnCode { get; set; }
         public IDbSet<UpdateCode> UpdateCode { get; set; }
         public IDbSet<GatepassRequest> GatepassRequest { get; set; }
+        public IDbSet<PendingByKeyword> PendingByKeywords
+        {
+            get;
+            set;
+        }
 
         #endregion
 
@@ -4006,6 +4011,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new GatepassReturnCodeMap());
             modelBuilder.Configurations.Add(new UpdateCodeMap());
             modelBuilder.Configurations.Add(new GatepassRequestMap());
+            modelBuilder.Configurations.Add(new PendingByKeywordMap());
 
             #endregion
 
