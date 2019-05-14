@@ -165,12 +165,12 @@ namespace WarehouseDataService.Helper
                 {
                     reader.Read();
 
-                    var dbConnectionString = reader["SecondaryAzureDBConnection"];
+                    var dbConnectionString = reader["DBConnection"];
                     if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString())) result = dbConnectionString.ToString();
                     else
                     {
-                        dbConnectionString = reader["DBConnection"];
-                        if (dbConnectionString != null) result = dbConnectionString.ToString();
+                        dbConnectionString = reader["SecondaryAzureDBConnection"];
+                        if (dbConnectionString != null && !string.IsNullOrEmpty(dbConnectionString.ToString())) result = dbConnectionString.ToString();
                     }
 
                 }
@@ -185,7 +185,7 @@ namespace WarehouseDataService.Helper
 
 
 
-        public DateTime? GetWarehouseRunDate(DateTime todayDate)
+        public DateTime? CalculateDWNextRunTime(DateTime todayDate)
         {
 
 
