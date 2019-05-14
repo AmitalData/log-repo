@@ -16,9 +16,9 @@ export class RoutingTabComponent {
       this.AddPreCarriage(ShipmentType);
       this.AddOnCarriage(ShipmentType);
     }
-    this.EditMainCarriage(LogitudeShipType, ShipmentType);
-    // this.AddDelivery();
-    // this.Helper.WaitBusyIndicator();
+    // this.EditMainCarriage(LogitudeShipType, ShipmentType);
+    this.AddDelivery();
+    this.Helper.WaitBusyIndicator();
 
   }
 
@@ -31,7 +31,7 @@ export class RoutingTabComponent {
       if (ShipmentType == '') {
         // this.Helper.WaitBusyIndicator();
         // browser.driver.sleep(50000);
-      
+
         //------------------------- GET FROM STOCK ------------------------------
         //------------------------- GET FROM STOCK ------------------------------
         // this.Helper.WaitByIdAndClick('GetFromStockBtn');
@@ -166,29 +166,36 @@ export class RoutingTabComponent {
   private AddPickup() {
 
     this.Helper.WaitByIdAndClick('Add-PickUp');
-    this.Helper.WaitByIdAndClick('Port_FromRadio');
+
+    // From Port Details 
+    this.Helper.WaitByIdAndClick('ShipmentPickUpDelivery_CarrierId');
+    var fromPortBtn = element(by.id('Port_FromRadio'));
+    browser.executeScript("arguments[0].click();", fromPortBtn.getWebElement());
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_FromPortId', 'eze');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-
-    this.Helper.WaitByIdAndClick('Port_ToRadio');
+    //To Port Details 
+    browser.executeScript("arguments[0].click();", element(by.id('Port_ToRadio')).getWebElement());
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_ToPortId', 'mvd');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 't');
+    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 'TestTruckerTP');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierNumber', '777');
+    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierNumber', 'Truck Prot');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_Driver', 'Trucker Driver');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_TruckNumber', 'Transp Doc');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_TrailerNumber', 'Trail No.');
-    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_Notes', 'Adding Pickup ');
+    this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_Notes', 'Adding Pickup by protractor .. ');
 
+    // Pickup packages details 
     this.Helper.WaitByIdAndClick('ShipmentPickUpDelivery.TH.Packages');
     this.Helper.WaitByIdAndClick('Add');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDeliveryPackage_Quantity', '10');
     this.Helper.WaitByIdAndFill('ShipmentPickUpDeliveryPackage_Weight', '100');
     this.Helper.WaitByCssButtonClick('.RedButton', 'Ok');
+    // this.Helper.WaitByIdAndClick('AddPickupPackage');
+
 
 
     this.Helper.WaitByIdAndClick('SaveBtn');
@@ -314,7 +321,7 @@ export class RoutingTabComponent {
   private AddDelivery() {
     this.Helper.WaitByIdAndClick('Add-Delivery');
 
-    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 't');
+    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 'TestTruckerTP');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierNumber', '777');
