@@ -43,6 +43,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using System.Text;
 using System.IO;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -176,28 +177,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void GetLoggedContact()
         {
-
-            string email = SecurityUtility.GetAuthenticatedUser();
-           ContactQuery contactQuery = new ContactQuery(tenant);
-            this.loggedContact = contactQuery.GetContactByNameAndTenant(email, tenant, true);
-
-            if (this.loggedContact == null)
+            loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+            
+            if (loggedContact != null)
             {
-                loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
-                if (loggedContact != null)
-                {
-                    this.loggedContactId = loggedContact.Id;
-                    this.loggedContactName = loggedContact.EnglishName;
-                }
+                loggedContactId = loggedContact.Id;
+                loggedContactName = loggedContact.EnglishName;
             }
-            else
-            {
-                this.loggedContactId = loggedContact.Id;
-                this.loggedContactName = loggedContact.EnglishName;
-
-            }
-
-           
         }
 
         private bool isJournal;
