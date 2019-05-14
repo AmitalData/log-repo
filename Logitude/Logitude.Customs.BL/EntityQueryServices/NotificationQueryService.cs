@@ -176,7 +176,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                             DepartmentId = a.DepartmentId,
                                                             ResponseNotes = a.ResponseNotes,
                                                             DepartmentName = a.Department != null ? a.Department.LocalName : null,
-
+                                                            CustomerName = a.Customer != null ? a.Customer.Card.LocalName : null,
                                                         });
 
 
