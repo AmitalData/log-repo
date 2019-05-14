@@ -59,9 +59,9 @@ export class TariffTabsContentComponent implements OnDestroy {
         var header: string = "Version";
         var index: number = 0;
 
-        //var todayDate = DateTool.GetCurrentDateAsUtc();
+        var todayDate = DateTool.GetCurrentDateAsUtc();
         //.filter(d => DateTool.TruncateTime(d.ExpirationDate).valueOf() > todayDate.valueOf())
-        this.EntityPM.TariffVersions.sort((a, b) => { return (a.Version === b.Version) ? 0 : (a.Version > b.Version) ? -1 : 1 }).forEach(item => {
+        this.EntityPM.TariffVersions.filter(p => p.IsDraft || DateTool.TruncateTime(p.ExpirationDate).valueOf() > todayDate.valueOf()).sort((a, b) => { return (a.Version === b.Version) ? 0 : (a.Version > b.Version) ? -1 : 1 }).forEach(item => {
             from = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
             to = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
 
