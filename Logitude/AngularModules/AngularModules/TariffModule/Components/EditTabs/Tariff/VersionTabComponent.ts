@@ -17,7 +17,6 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { error } from '../../../../Customs/EntityPMs/Extended/AmendmentView';
 declare var ResultAsArray: any;
 
 @Component({
@@ -46,15 +45,14 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.FillTariffLines();
 
-                    if (this.isApproveButtonClicked) {                        
+                    if (this.isApproveButtonClicked) {
+                        this.isApproveButtonClicked = false;
                         this.DoApprove();
                     }
 
@@ -65,23 +63,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
                     if (this.isUploadExcelFinished) {
                         this.isUploadExcelFinished = false;
-                        this.FillTariffLines();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
-                }
-            });
-
-            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                if (isLoadSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    if (this.CurrentVersion != null) {
-                        this.IsDraftVersion = this.CurrentVersion.IsDraft;
-                    }
-
-                    if (this.isApproveButtonClicked) {
-                        this.isApproveButtonClicked = false;
-                    }
-
-                    this.SetUIProperties();
                 }
             });
         }
@@ -89,7 +72,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
-        AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
     
     Intialize(args: any) {
@@ -453,7 +435,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
     }
     private DoApprove() {
-        this.TariffDomainService.ApproveVersion(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+        this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
