@@ -14,6 +14,19 @@
                         <td>
                             <div></div>
                         </td>
+
+                        <td style="width:70px;">
+                            <div tabindex="0" class="ToggleButton">
+                                <label>Actions</label>
+                                <img src="./Images/ToggleIcon.png" />
+
+                                <div class="ToggleButtonMenu">
+                                    <button (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
+                                    <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
+                                    <button (click)="CopyVersionClicked()">Copy into new Version</button>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 </table>
             </td>

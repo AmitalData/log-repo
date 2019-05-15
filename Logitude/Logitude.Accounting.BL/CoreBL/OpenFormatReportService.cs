@@ -1069,11 +1069,13 @@ namespace Logitude.Accounting.BL.CoreBL
             List<C100Data> DepositC100 = GetDepositC100Data(openFormatReportPM, tenant);
            
             ARInvoiceTotalVATQuery aRInvoiceTotalVATQuery = new ARInvoiceTotalVATQuery(tenant);
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(tenant);
             List<string> ARInvoiceIDs = ARC100.Select(d => d.ARInvoiceId).ToList();
             List<ARInvoiceTotalVATPM> totalVats = aRInvoiceTotalVATQuery.GetTotalVATs(ARInvoiceIDs, tenant);
             List<string> depositIds = DepositC100.Select(d => d.DepositId).ToList();
             List<string> arpaymentIds = ARPAymentC100.Select(d => d.ARPaymentId).ToList();
 
+           
 
             C100 = ARC100.Concat(APC100).Concat(ARPAymentC100).ToList();
             List<string> vandorIDs = C100.Select(d => d.VendorId).ToList();
@@ -3353,6 +3355,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 myStringBuilder.Append(a + CreateDate.PadLeft(8, '0'));
                 if (CreateDateTime.Length > 4) { CreateDateTime.Substring(0, 4); }
                 myStringBuilder.Append(a + CreateDateTime.PadLeft(4, '0'));
+               
+                BankAccountPM bankAccountPM = bankAccountQueryService.GetSingle(item.CustomerVendorName, false, false);
+                if (bankAccountPM != null)
+                {
+                    item.CustomerVendorName = bankAccountPM.LocalName;
+
+                }
+                else item.CustomerVendorName = null;
 
                 if (item.CustomerVendorName != null)
                 {
@@ -4301,7 +4311,7 @@ namespace Logitude.Accounting.BL.CoreBL
                              DocumentType = "420",
                              DocumentReference = a.DepositNumber.ToString(),
                              DocumentCreateDate = a.CreateDate,
-                             CustomerVendorName = null,
+                             CustomerVendorName = a.DepositBankAccountId,
                              //AddressStreet = a.BillToAddress != null ? a.BillToAddress.Address1 : null,
                              //AddressCity = a.BillToAddress != null ? a.BillToAddress.City : null,
                              //AddressZIPCode = a.BillToAddress != null ? a.BillToAddress.ZipCode : null,
