@@ -6370,6 +6370,7 @@
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffSettingList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffTypeList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffVersionList.ts" />
+    <TypeScriptCompile Include="TariffModule\EntityPMInitServices\TariffPMInitService.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffLinePM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffPM.ts" />
     <TypeScriptCompile Include="TariffModule\EntityPMs\TariffSettingPM.ts" />
