@@ -302,6 +302,16 @@ export class TariffLinePM {
     public set ErrorText(newValue: string) { if (this.errorText != newValue) { this.errorText = newValue; this.MarkAsDirty("ErrorText"); } }
        
 	 
+    private lineUniqueKey: string;
+    public get LineUniqueKey() { return this.lineUniqueKey; }
+    public set LineUniqueKey(newValue: string) { if (this.lineUniqueKey != newValue) { this.lineUniqueKey = newValue; this.MarkAsDirty("LineUniqueKey"); } }
+       
+	 
+    private lineUniqueKeyText: string;
+    public get LineUniqueKeyText() { return this.lineUniqueKeyText; }
+    public set LineUniqueKeyText(newValue: string) { if (this.lineUniqueKeyText != newValue) { this.lineUniqueKeyText = newValue; this.MarkAsDirty("LineUniqueKeyText"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	
@@ -338,4 +348,4 @@ export class TariffLinePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
