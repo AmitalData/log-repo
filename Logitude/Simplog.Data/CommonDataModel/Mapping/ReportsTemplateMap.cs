@@ -54,10 +54,21 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ReplyTo)
                 .HasMaxLength(500)
                 .IsUnicode(true);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.CC)
+                .HasMaxLength(500)
+                .IsUnicode(true);
 
-            this.Property(t => t.CC)
+            }
+            else
+            {
+                this.Property(t => t.CC)
                 .HasMaxLength(4000)
                 .IsUnicode(true);
+
+            }
 
             this.Property(t => t.Subject)
                 .HasMaxLength(500)

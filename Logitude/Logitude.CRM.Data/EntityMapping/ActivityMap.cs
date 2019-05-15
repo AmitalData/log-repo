@@ -140,10 +140,24 @@ namespace Logitude.CRM.Data.EntityMapping
             this.Property(t => t.DescriptionRightToLeft).HasColumnName("DescriptionRightToLeft");
 
             this.Property(t => t.MeetingSummaryRightToLeft).HasColumnName("MeetingSummaryRightToLeft");
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                //573
+                this.Property(t => t.From).HasColumnName("FromC").HasMaxLength(500).IsUnicode(false);
 
-            this.Property(t => t.From).HasColumnName("From").HasMaxLength(500).IsUnicode(false);
+                this.Property(t => t.To).HasColumnName("ToC").HasMaxLength(500).IsUnicode(false);
 
-            this.Property(t => t.To).HasColumnName("To").HasMaxLength(4000).IsUnicode(false);
+            }
+            else
+            {
+                this.Property(t => t.From).HasColumnName("From").HasMaxLength(500).IsUnicode(false);
+
+                this.Property(t => t.To).HasColumnName("To").HasMaxLength(4000).IsUnicode(false);
+
+            }
+
+
 
             this.Property(t => t.Cc).HasColumnName("Cc").HasMaxLength(4000).IsUnicode(false);
 
