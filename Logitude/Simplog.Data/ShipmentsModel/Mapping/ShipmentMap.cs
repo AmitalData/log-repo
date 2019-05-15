@@ -702,7 +702,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.To).HasColumnName("To");
             this.Property(t => t.Origin).HasColumnName("Origin");
 
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
                 this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal");

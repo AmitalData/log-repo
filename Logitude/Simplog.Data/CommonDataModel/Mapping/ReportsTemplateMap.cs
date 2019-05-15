@@ -100,7 +100,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
 
 
             //#if ORACLE_DB
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
                 this.Property(t => t.From).HasColumnName("From1");
