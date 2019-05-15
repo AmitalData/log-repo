@@ -83,8 +83,6 @@ export class CurrencyRatesComponent extends BaseComponent{
             var errors: string[] = [];
             
             this.ItemsSource.forEach(item => {
-                Validator.TryValidateObject(item, "RatesTable", errors);
-
                 if (item.Rate == null) {
                     errors.push("Rate field for currency " + item.Code + " is required");
                 }
