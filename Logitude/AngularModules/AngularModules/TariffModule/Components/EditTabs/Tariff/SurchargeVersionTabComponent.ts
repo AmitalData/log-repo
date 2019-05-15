@@ -369,7 +369,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
     private DoApprove() {
-        this.TariffDomainService.ApproveVersion(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+        this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
