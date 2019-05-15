@@ -412,7 +412,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
 
     public ValidationErrorsList: string[] = [];
 
-    ValidateSurcharge(ValidationErrorsList:string[]) {
+    ValidateSurcharge() {
         var IdProps: string[] = [];
         var UOMProps: string[] = [];
         var IdPropsName: string[] = [];
@@ -425,34 +425,36 @@ export class NewAirFreightCostComponent extends BaseComponent {
             UOMPropsName.push("UOM " + index);
             if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                    ValidationErrorsList.push(IdPropsName[index - 1] + " is required");
+                    this.ValidationErrorsList.push(IdPropsName[index - 1] + " is required");
                 }
 
                 if (AppTool.IsNullOrEmpty(this[UOMProps[index - 1]])) {
-                    ValidationErrorsList.push(UOMPropsName[index - 1] + " is required");
+                    this.ValidationErrorsList.push(UOMPropsName[index - 1] + " is required");
                 }
             }
 
             else {
 
                 if (AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                    ValidationErrorsList.push(IdPropsName[index - 1] + " charge is filled without a UOM " + UOMPropsName[index - 1]);
+                    this.ValidationErrorsList.push(IdPropsName[index - 1] + " charge is filled without a UOM " + UOMPropsName[index - 1]);
                 }
 
                 if (index >= 3) {
                     if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
                         if (AppTool.IsNullOrEmpty(this[IdProps[index - 2]])) {
-                            ValidationErrorsList.push("no empty line between 2 charges in line "+index+ " and "+(index-2));
+                            this.ValidationErrorsList.push("no empty line between 2 charges in line "+index+ " and "+(index-2));
                         }
                     }
                 }
-                   
             }
-
         }
-        return ValidationErrorsList;
-
     }
+    ValidateAirFreightCost() {
+        if (AppTool.IsNullOrEmpty((this.EntityPM.PriceSteps))) {
+            this.ValidationErrorsList.push("At least one step is required");
+        }
+    }
+
     OkButtonClicked() {
         this.ValidationErrorsList = [];
         if (this.StartDate != null && this.ExpirationDate != null) {
@@ -461,7 +463,10 @@ export class NewAirFreightCostComponent extends BaseComponent {
             }
         }
         if (this.EntityPM.TypeCode == "ASC") {
-            this.ValidationErrorsList = this.ValidateSurcharge(this.ValidationErrorsList);
+           this.ValidateSurcharge();
+        }
+        else if (this.EntityPM.TypeCode == "AFC") {
+            this.ValidateAirFreightCost();
         }
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator("Creating...");
