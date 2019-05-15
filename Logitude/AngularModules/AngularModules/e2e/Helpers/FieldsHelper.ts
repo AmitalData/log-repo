@@ -24,9 +24,12 @@ export class FieldsHelper {
   ItemsVisibility(Id: string) {
     var EC = protractor.ExpectedConditions;
     browser.wait(EC.visibilityOf(element(by.id(Id))), 5000).then(a => function () {
-
     });
-
+  }
+  ItemsAvailability(Id: string) {
+    var EC = protractor.ExpectedConditions;
+    browser.wait(EC.elementToBeClickable(element(by.id(Id))), 5000).then(a => function () {
+    });
   }
   // WaitBusyIndicator(){
   //   var EC = protractor.ExpectedConditions;

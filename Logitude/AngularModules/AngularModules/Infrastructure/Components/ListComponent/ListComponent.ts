@@ -2541,6 +2541,30 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.WindowArgs = windowArgs;
                 }
 
+                if (this.ObjectTableName == "Tariff") {
+                    var QueryCodeOriginal = this.QueryCode;
+                    if (!AppTool.IsNullOrEmpty(this.SelectedQuery.OriginalQueryId)) {
+                        var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.Id == this.SelectedQuery.OriginalQueryId)[0];
+                        QueryCodeOriginal = query.Code;
+                    }
+
+                    var windowArgs: any = {};
+                    logWindow.Width = 850;
+                    logWindow.Height = 500;
+
+                    if (QueryCodeOriginal == "Air Freight Cost Tariffs") {
+                        logWindow.Title = "New Air Freight Cost";
+                        windowArgs.TypeCode = "AFC";
+                    }
+                    else {
+                        "Air Surcharges Cost Tariffs";
+                        logWindow.Title = "New Air Surcharges Cost";
+                        windowArgs.TypeCode = "ASC";
+                    }
+                 
+                    logWindow.WindowArgs = windowArgs;
+                }
+
                 if (this.ObjectTableName == "Questionnaire" || this.ObjectTableName == "CustomerFieldsUpdateSetting") {
                     var windowArgs: any = {};
                     windowArgs.IsNew = true;

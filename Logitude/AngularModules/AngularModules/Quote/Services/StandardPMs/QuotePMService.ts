@@ -1,5 +1,3 @@
-//file not found! child composition QuoteCostCharge
-//file not found! child composition QuoteSaleCharge
 //file not found! child composition QuoteSalesTotal
 //file not found! child composition QuoteVATsTotal
 //file not found! child composition QuoteFollowUp

@@ -1850,7 +1850,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             }
             #endregion
 
-            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant);           
+            entityPM.QuoteCharges = quoteChargeQuery.GetQuoteChargesPMsByQuoteId(entityId, tenant);
+
             entityPM.TotalVATs = myTotalVATQuery.GetTotalVATs(entityId, tenant);
 
             if (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "FTL")
@@ -1943,6 +1944,7 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         isCostChargeAddable = false;
                     }
                 }
+
                 else
                 {
                     if (item.CostUnitPrice == null
@@ -2008,6 +2010,13 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         CostMaxAmount = item.CostMaxAmount,
                         SaleMinAmount = item.SaleMinAmount,
                         SaleMaxAmount = item.SaleMaxAmount,
+
+                        MarkUpText = this.GetMarkUpText(item.MarkUpValue, item.MarkUpTypeCode),
+                        ContainerType1MarkUpText = this.GetMarkUpText(item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode),
+                        ContainerType2MarkUpText = this.GetMarkUpText(item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode),
+                        ContainerType3MarkUpText = this.GetMarkUpText(item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode),
+                        ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
+                        ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
                     };
 
                     entityPM.QuoteCostCharges.Add(costChargePM);
@@ -2127,7 +2136,15 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                         CostMaxAmount = item.CostMaxAmount,
                         SaleMinAmount = item.SaleMinAmount,
                         SaleMaxAmount = item.SaleMaxAmount,
+
+                        MarkUpText = this.GetMarkUpText(item.MarkUpValue, item.MarkUpTypeCode),
+                        ContainerType1MarkUpText = this.GetMarkUpText(item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode),
+                        ContainerType2MarkUpText = this.GetMarkUpText(item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode),
+                        ContainerType3MarkUpText = this.GetMarkUpText(item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode),
+                        ContainerType4MarkUpText = this.GetMarkUpText(item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode),
+                        ContainerType5MarkUpText = this.GetMarkUpText(item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode),
                     };
+
 
                     if (item.IsChargeBySteps)
                     {
@@ -2415,7 +2432,25 @@ namespace Logitude.BL.QuoteModel.EntityQueries
             return resultAddress;
         }
 
+        private string GetMarkUpText(double? value, string typeCode)
+        {
+            string myResult = null;
 
+            if (value != null)
+            {
+                if (value != 0)
+                {
+                    myResult = value.ToString();
+
+                    if (typeCode == "P")
+                    {
+                        myResult += " %";
+                    }
+                }
+            }
+
+            return myResult;
+        }
 
     }
 }
