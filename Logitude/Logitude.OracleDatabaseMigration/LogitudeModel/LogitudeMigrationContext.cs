@@ -4472,6 +4472,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new CustomerSalesNoteMap());
             modelBuilder.Configurations.Add(new QuoteTemplateDetailsFieldMap());
             modelBuilder.Configurations.Add(new QuoteTemplateHeaderFieldMap());
+            modelBuilder.Configurations.Add(new ShipmentComputedFieldsMap());
             modelBuilder.Configurations.Add(new AuthenticationTokenMap());
             modelBuilder.Configurations.Add(new CustomerStatusMap());
             modelBuilder.Configurations.Add(new ShipmentCommodityMap());

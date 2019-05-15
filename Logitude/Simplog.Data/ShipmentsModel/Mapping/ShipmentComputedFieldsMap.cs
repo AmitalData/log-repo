@@ -16,7 +16,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.MissingDocumentsCount);
             this.Property(t => t.MissingDocumentsNames).IsMaxLength();
             this.Property(t => t.IsDigitalSignRequired).IsRequired();
-            this.Property(t => t.ImporterDepositionRequestDetails).HasMaxLength(100).IsUnicode(false);
+            
     
             // Table & Column Mappings
             this.ToTable("ShipmentComputedFields");
@@ -32,7 +32,18 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.NumberOfHouses).HasColumnName("NumberOfHouses");
             this.Property(t => t.IsDigitalSignRequired).HasColumnName("IsDigitalSignRequired");
             this.Property(t => t.IsDepositionRequired).HasColumnName("IsDepositionRequired");
-            this.Property(t => t.ImporterDepositionRequestDetails).HasColumnName("ImporterDepositionRequestDetails");
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.ImporterDepositionRequestDetails).HasColumnName("ImporterDepositionRequestDet");
+
+            }
+            else
+            {
+                this.Property(t => t.ImporterDepositionRequestDetails).HasColumnName("ImporterDepositionRequestDetails");
+
+            }
+            this.Property(t => t.ImporterDepositionRequestDetails).HasMaxLength(100).IsUnicode(false);
 
             this.HasRequired(t => t.Shipment);
         }
