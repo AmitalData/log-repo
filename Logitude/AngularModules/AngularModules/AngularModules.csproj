@@ -711,6 +711,9 @@
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\NewEntity\NewChartOfAccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\New\NewGLAccount-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\New\NewGLAccount.ts" />
+    <TypeScriptCompile Include="e2e\Report\Report-spec.ts" />
+    <TypeScriptCompile Include="e2e\Report\ReportGenerator.ts" />
+    <TypeScriptCompile Include="e2e\Report\ReportSearch.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\ListTemplates\SchedulerDurationListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\ListTemplates\SchedulerDateListTemplate.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureBatchService\Components\TaskScheduler\MainSchedulerComponent.ts" />
