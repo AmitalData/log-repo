@@ -97,15 +97,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsNewWizard =  true,
 			      				    LookUp1 =  "Name",
 			      				    KeyPropertyPath =  "Id",
-			      				    AutoCompleteSearchWindow =  true,
+			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
-			      				    CacheOnClient =  true,
+			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
-			      				    IsAutoComplete =  true,
+			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
@@ -131,6 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  true,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
