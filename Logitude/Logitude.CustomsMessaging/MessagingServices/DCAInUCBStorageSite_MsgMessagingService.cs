@@ -29,7 +29,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         UniCourierBatchSendUCBCMSS_MsgResponseService, RequestHeader>
 
     {
-
+        
         public override string MainInterfaceCode
         {
             get { return "UCBCMSS"; }
@@ -38,6 +38,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBCMSSWithResponseContentHeader customsResponse)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+
+            
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
@@ -50,8 +52,22 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingEntityReference = customsResponse.HAWB,
 
                 LoggingUserId = customsResponse.LoggingUserId,
-                RequestName = $" שידור שינוי אתר איחסון לבלדר " + customsResponse.HAWB
+                RequestName = $" {customsResponse.HAWB} שידור שינוי אתר איחסון לבלדר ",
+                
             };
+            if (customsResponse.DeclarationIdList == null || (customsResponse.DeclarationIdList != null && customsResponse.DeclarationIdList.Count == 0))
+
+            {
+                genericRequestParams.RequestName += " ראשי - מפצל";
+                genericRequestParams.SplitterModeLetCreateMyType = false;
+
+            }
+            else
+            {
+                genericRequestParams.RequestName += " מפוצל";
+                genericRequestParams.SplitterModeLetCreateMyType = true;
+
+            }
             return genericRequestParams;
         }
 
@@ -162,5 +178,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string StorageSiteCode { get; set; }
         public string MyMoreParams { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        public List<string> DeclarationIdList { get; set; }
     }
 }
