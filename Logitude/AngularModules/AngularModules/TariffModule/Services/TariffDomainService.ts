@@ -228,4 +228,26 @@ export class ExcelTariffLines {
 
     HasErrors: boolean;
     ErrorText: string;
+
+    Surcharge1Price: number;
+    Surcharge2Price: number;
+    Surcharge3Price: number;
+    Surcharge4Price: number;
+    Surcharge5Price: number;
+    Surcharge6Price: number;
+    Surcharge7Price: number;
+    Surcharge8Price: number;
+    Surcharge9Price: number;
+    Surcharge10Price: number;
+
+    Surcharge1PriceText: string;
+    Surcharge2PriceText: string;
+    Surcharge3PriceText: string;
+    Surcharge4PriceText: string;
+    Surcharge5PriceText: string;
+    Surcharge6PriceText: string;
+    Surcharge7PriceText: string;
+    Surcharge8PriceText: string;
+    Surcharge9PriceText: string;
+    Surcharge10PriceText: string;
 }
