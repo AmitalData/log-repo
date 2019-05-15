@@ -124,6 +124,10 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.HasErrors).HasColumnName("HasErrors");
 
             this.Property(t => t.ErrorText).HasColumnName("ErrorText").HasMaxLength(500).IsUnicode(false);
+
+            this.Property(t => t.LineUniqueKey).HasColumnName("LineUniqueKey").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.LineUniqueKeyText).HasColumnName("LineUniqueKeyText").HasMaxLength(100).IsUnicode(true);
         }
     }
 }
