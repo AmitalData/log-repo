@@ -36,6 +36,8 @@ using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Helpers;
+using Logitude.TariffModule.BL.EntityUpdateServices;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -187,6 +189,42 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 table.Columns.Add(tariff.PriceSteps + " KG");
             }
 
+            string range = "A1:D1";
+            if (steps.Length == 2)
+            {
+                range = "A1:E1";
+            }
+
+            else if (steps.Length == 3)
+            {
+                range = "A1:F1";
+            }
+
+            else if(steps.Length == 4)
+            {
+                range = "A1:G1";
+            }
+
+            else if(steps.Length == 5)
+            {
+                range = "A1:H1";
+            }
+
+            else if(steps.Length == 6)
+            {
+                range = "A1:I1";
+            }
+
+            else if(steps.Length == 7)
+            {
+                range = "A1:J1";
+            }
+
+            else if(steps.Length == 8)
+            {
+                range = "A1:K1";
+            }
+
             if (tariffLines != null && tariffLines.Count > 0)
             {
                 foreach (var item in tariffLines)
@@ -196,41 +234,50 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     row[1] = item.DestinationPortCode ?? null;
                     row[2] = item.MinPrice ?? null;
                     row[3] = item.Step1Price ?? null;
+
                     if (item.Step2Price.HasValue)
                     {
-                        row[4] = item.Step2Price ?? null;
+                        row[4] = item.Step2Price ?? null;                       
                     }
+
                     if (item.Step3Price.HasValue)
                     {
-                        row[5] = item.Step3Price ?? null;
+                        row[5] = item.Step3Price ?? null;                        
                     }
+
                     if (item.Step4Price.HasValue)
                     {
-                        row[6] = item.Step4Price ?? null;
+                        row[6] = item.Step4Price ?? null;                        
                     }
+
                     if (item.Step5Price.HasValue)
                     {
-                        row[7] = item.Step5Price ?? null;
+                        row[7] = item.Step5Price ?? null;                        
                     }
+
                     if (item.Step6Price.HasValue)
                     {
                         row[8] = item.Step6Price ?? null;
                     }
+
                     if (item.Step7Price.HasValue)
                     {
                         row[9] = item.Step7Price ?? null;
                     }
+
                     if (item.Step8Price.HasValue)
                     {
                         row[10] = item.Step8Price ?? null;
                     }
+
                     table.Rows.Add(row);
                 }
             }
 
-            sheet1.Range["A1:H1"].CellStyle.Font.Color = ExcelKnownColors.White;
-            sheet1.Range["A1:H1"].CellStyle.Color = System.Drawing.Color.Gray;
-            sheet1.Range["A1:H1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+            sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
             sheet1.ImportDataTable(table, true, 1, 1);
             workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory);
@@ -403,16 +450,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     tariffLinesResult.Add(tariffLine);
                 }
-
+                
                 foreach(ExcelTariffLines item in tariffLinesResult)
                 {
                     this.SetErrors(item);
                 }
 
-                //List<TariffLine> tariffLines = new List<TariffLine>();
-                //if(tariffLinesResult != null && tariffLinesResult.Count > 0)
+                //if (tariffLinesResult != null && tariffLinesResult.Count > 0)
                 //{
-                //    tariffLines = this.MapExcelLinesToTariffLines(filter, tariffLinesResult);
+                //    this.CreateTariffLinesFromExcelLines(filter, tariffLinesResult);
                 //}
 
                 return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
@@ -423,7 +469,75 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        private void CreateTariffLinesFromExcelLines(TariffFilterParameter tariffFilter, List<ExcelTariffLines> tariffLinesResult)
+        {
+            List<TariffLinePM> tariffLines = new List<TariffLinePM>();
 
+            ITariffModuleContext context = TariffModuleContext.GetContext(tariffFilter.Tenant);
+            TariffUpdateService tariffUpdateService = new TariffUpdateService(context, new Dictionary<string, IContext>(), tariffFilter.Tenant);
+            TariffQueryService tariffQueryService = new TariffQueryService(context);
+            TariffPM tariff = tariffQueryService.GetSingle(tariffFilter.TariffId, true, false);
+
+            if (tariff != null)
+            {
+                TariffVersionPM tariffVersion = tariff.TariffVersions.Where(d => d.Version == tariffFilter.Version).FirstOrDefault();
+
+                if (tariffVersion != null)
+                {
+                    tariffVersion.TariffLines = new List<TariffLinePM>();
+
+                    foreach (ExcelTariffLines item in tariffLinesResult)
+                    {
+                        this.SetErrors(item);
+
+                        TariffLinePM newTariffLine = new TariffLinePM()
+                        {
+                            Id = IdCounter.GetNumber("TariffLine", tariffFilter.Tenant),
+                            ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                            TariffId = tariffFilter.TariffId,
+                            Version = tariffFilter.Version,
+                            StartDate = tariff.StartDate,
+                            ExpirationDate = tariff.ExpirationDate,
+                            Tenant = tariffFilter.Tenant,
+                            OriginPortId = item.FromPortId,
+                            DestinationPortId = item.ToPortId,
+                            MinPrice = item.MinPrice,
+                            Step1Price = item.Step1Price,
+                            Step2Price = item.Step2Price,
+                            Step3Price = item.Step3Price,
+                            Step4Price = item.Step4Price,
+                            Step5Price = item.Step5Price,
+                            Step6Price = item.Step6Price,
+                            Step7Price = item.Step7Price,
+                            Step8Price = item.Step8Price,
+                            OriginPortText = item.FromPortText,
+                            DestinationPortText = item.ToPortText,
+                            MinPriceText = item.MinPriceText,
+                            Step1PriceText = item.Step1PriceText,
+                            Step2PriceText = item.Step2PriceText,
+                            Step3PriceText = item.Step3PriceText,
+                            Step4PriceText = item.Step4PriceText,
+                            Step5PriceText = item.Step5PriceText,
+                            Step6PriceText = item.Step6PriceText,
+                            Step7PriceText = item.Step7PriceText,
+                            Step8PriceText = item.Step8PriceText,
+                            HasErrors = item.HasErrors,
+                            ErrorText = item.ErrorText,
+                        };
+
+                        tariffLines.Add(newTariffLine);
+                    }
+
+                    tariff.TariffLinesAdded = true;
+                    tariffVersion.TariffLines = tariffLines;
+
+                    tariffVersion.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    tariff.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    
+                    tariffUpdateService.Update(tariff, true);
+                }
+            }
+        }
         private void SetErrors(ExcelTariffLines item)
         {
             bool error = false;
@@ -598,58 +712,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             item.ErrorText = errorText;
         }
 
-        private List<TariffLine> MapExcelLinesToTariffLines(TariffFilterParameter tariffFilter, List<ExcelTariffLines> tariffLinesResult)
-        {
-            List<TariffLine> tariffLines = new List<TariffLine>();
-
-            ITariffModuleContext context = TariffModuleContext.GetContext(tariffFilter.Tenant);
-            TariffRepository tariffRepository = new TariffRepository(context);
-            TariffLineRepository tariffLineRepository = new TariffLineRepository(context);
-            Tariff tariff = tariffRepository.GetSingle(tariffFilter.TariffId, tariffFilter.Tenant);
-
-            foreach (ExcelTariffLines item in tariffLinesResult)
-            {
-                TariffLine newTariffLine = new TariffLine()
-                {
-                    Id = IdCounter.GetNumber("TariffLine", tariffFilter.Tenant),
-                    TariffId = tariffFilter.TariffId,
-                    Version = tariffFilter.Version,
-                    StartDate = tariff.StartDate,
-                    ExpirationDate = tariff.ExpirationDate,
-                    Tenant = tariffFilter.Tenant,
-                    OriginPortId = item.FromPortId,
-                    DestinationPortId = item.ToPortId,
-                    MinPrice = item.MinPrice,
-                    Step1Price = item.Step1Price,
-                    Step2Price = item.Step2Price,
-                    Step3Price = item.Step3Price,
-                    Step4Price = item.Step4Price,
-                    Step5Price = item.Step5Price,
-                    Step6Price = item.Step6Price,
-                    Step7Price = item.Step7Price,
-                    Step8Price = item.Step8Price,
-                    OriginPortText = item.FromPortText,
-                    DestinationPortText = item.ToPortText,
-                    MinPriceText = item.MinPriceText,
-                    Step1PriceText = item.Step1PriceText,
-                    Step2PriceText = item.Step2PriceText,
-                    Step3PriceText = item.Step3PriceText,
-                    Step4PriceText = item.Step4PriceText,
-                    Step5PriceText = item.Step5PriceText,
-                    Step6PriceText = item.Step6PriceText,
-                    Step7PriceText = item.Step7PriceText,
-                    Step8PriceText = item.Step8PriceText,
-                };
-
-                tariffLineRepository.Add(newTariffLine);
-                tariffLines.Add(newTariffLine);
-            }
-
-            tariffLineRepository.SubmitChanges();
-            return tariffLines;
-        }
-
-        public HttpResponseMessage GetApproveVersion(string tariffId)
+        public HttpResponseMessage GetApproveVersion(string tariffId, int version)
         {
             try
             {
@@ -668,35 +731,29 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     loggedContactId = loggedContact.Id;
                 }
-                
+
                 ITariffModuleContext context = TariffModuleContext.GetContext(tenant);
-                TariffRepository tariffRepository = new TariffRepository(context);
                 TariffVersionRepository tariffVersionRepository = new TariffVersionRepository(context);
-
-                Tariff tariff = tariffRepository.GetSingle(tariffId, tenant);
-
-                if (tariff != null)
+                
+                TariffVersion tariffVersion = tariffVersionRepository.GetSingle(tariffId, version, tenant);
+                if (tariffVersion != null)
                 {
-                    TariffVersion tariffVersion = tariffVersionRepository.GetSingle(tariffId, tariff.LastVersion, tenant);
-                    if(tariffVersion != null)
+                    tariffVersion.IsDraft = false;
+                    tariffVersion.ApprovedByUserId = loggedContactId;
+                    tariffVersion.ApproveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                    tariffVersionRepository.Update(tariffVersion);
+                    tariffVersionRepository.SubmitChanges();
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
-                        tariffVersion.IsDraft = false;
-                        tariffVersion.ApprovedByUserId = loggedContactId;
-                        tariffVersion.ApproveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-
-                        tariffVersionRepository.Update(tariffVersion);
-                        tariffVersionRepository.SubmitChanges();
-
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                        {
-                            Tenant = tenant,
-                            EventTypeCode = "VNAP",
-                            UserId = loggedContactId,
-                            EntityId = tariffId,
-                            ObjectTableName = "Tariff",
-                            Notes = "Version " + tariffVersion.Version + " approved",
-                        });
-                    }
+                        Tenant = tenant,
+                        EventTypeCode = "VNAP",
+                        UserId = loggedContactId,
+                        EntityId = tariffId,
+                        ObjectTableName = "Tariff",
+                        Notes = "Version " + tariffVersion.Version + " approved",
+                    });
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");

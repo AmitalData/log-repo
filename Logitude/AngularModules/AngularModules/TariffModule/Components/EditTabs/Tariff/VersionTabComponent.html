@@ -37,11 +37,23 @@
                             <div></div>
                         </td>
 
-                        <td style="width: 20px; padding: 3px;">
+                        <td style="width: 20px;">
                             <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Add'" [IsSmall]="true" (click)="AddTariffLine()"></IconButton>
                         </td>
 
                         <td style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
+                            <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
+                        </td>
+
+                        <td style="width: 1px">
+                            <button class="Button" (click)="testClicked()">test</button>
+                        </td>
+
+                        <td style="width:5px;" *ngIf="IsApproveVersionButtonVisible">
                             <div></div>
                         </td>
 
@@ -63,7 +75,6 @@
                                         </a>
                                     </div>
 
-                                    <button (click)="ApproveVersionClicked()" *ngIf="IsApproveVersionButtonVisible">Approve Version</button>
                                     <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
                                 </div>
                             </div>
@@ -110,13 +121,13 @@
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogLov [ObjectFieldName]="'OriginPortId'"
-                                                        [ObjectTableName]="'TarifflLine'"
+                                                        [ObjectTableName]="'TariffLine'"
                                                         [DataContext]="item"
                                                         [LookUpTableName]="'Port'"
                                                         [HideColumns]="true"
                                                         (SelectedItemChanged)="item.OriginPort = $event"
                                                         [DisplayMemberPath]="'Code'"
-                                                        [FocusOnMe]="true"
+                                                        [FocusOnMe]="'true'"
                                                         [SelectedValue]="item.OriginPortId">
                                                 </LogLov>
 
@@ -132,13 +143,13 @@
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogLov [ObjectFieldName]="'DestinationPortId'"
-                                                        [ObjectTableName]="'TarifflLine'"
+                                                        [ObjectTableName]="'TariffLine'"
                                                         [DataContext]="item"
                                                         [LookUpTableName]="'Port'"
                                                         [HideColumns]="true"
                                                         (SelectedItemChanged)="item.DestinationPort = $event"
                                                         [DisplayMemberPath]="'Code'"
-                                                        [FocusOnMe]="true"
+                                                        [FocusOnMe]="'true'"
                                                         [SelectedValue]="item.DestinationPortId">
                                                 </LogLov>
 
