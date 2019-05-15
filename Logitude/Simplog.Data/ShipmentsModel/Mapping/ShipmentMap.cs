@@ -168,7 +168,16 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentLevelCode).HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.SearchFields).HasMaxLength(2000).IsUnicode(true);
+            }
+            else
+            {
+                this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
+            }
+                
             this.Property(t => t.AWBComments).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.ChargeableWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
@@ -693,7 +702,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.To).HasColumnName("To");
             this.Property(t => t.Origin).HasColumnName("Origin");
 
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
                 this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal");
