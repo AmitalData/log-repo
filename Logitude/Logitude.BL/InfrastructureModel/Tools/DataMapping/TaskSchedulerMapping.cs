@@ -46,8 +46,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 
             TaskScheduler.Version = TaskSchedulerPM.Version;
             TaskScheduler.Status = TaskSchedulerPM.Status;
-
-
+            TaskScheduler.Retries = TaskSchedulerPM.Retries;
 
         }
     }
