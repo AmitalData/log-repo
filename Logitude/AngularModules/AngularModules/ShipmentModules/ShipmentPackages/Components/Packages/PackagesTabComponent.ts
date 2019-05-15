@@ -120,6 +120,18 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             });
         }
     }
+
+    private ChargeableWeightPasted: boolean = false;
+    ChargeableWeightPaste($event) {
+        this.ChargeableWeightPasted = true;
+    }
+
+
+    private GrossWeightPasted: boolean = false;
+    GrossWeightPaste($event) {
+        this.GrossWeightPasted = true;
+    }
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
@@ -635,7 +647,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         if (!AppTool.IsNullOrEmpty(input)) {
 
             if (this.firstDigit == ".") {
-                input = input.replace(/\./g, '');
+                if (!this.GrossWeightPasted) {
+                    input = input.replace(/\./g, '');
+                }
                 input = input.replace(/,/g, ".");
             }
 
@@ -666,7 +680,9 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         if (!AppTool.IsNullOrEmpty(input)) {
 
             if (this.firstDigit == ".") {
-                input = input.replace(/\./g, '');
+                if (!this.ChargeableWeightPasted) {
+                    input = input.replace(/\./g, '');
+                }
                 input = input.replace(/,/g, ".");
             }
 

@@ -314,7 +314,9 @@ export class PackagesTabComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(input)) {
             if (this.firstDigit == ".") {
-                input = input.replace(/\./g, '');
+                if (!this.GrossWeightPasted) {
+                    input = input.replace(/\./g, '');
+                }
                 input = input.replace(/,/g, ".");
             }
 
@@ -333,6 +335,22 @@ export class PackagesTabComponent extends BaseComponent {
         this.GrossWeight = valueInserted;
         this.ComputeTotals();
     }
+    private ChargeableWeightPasted: boolean = false;
+    ChargeableWeightPaste($event) {
+        this.ChargeableWeightPasted = true;
+    }
+
+
+    private GrossWeightPasted: boolean = false;
+    GrossWeightPaste($event) {
+        this.GrossWeightPasted = true;
+    }
+
+
+
+
+
+
 
     ChargeableWeightLostFocus(input: any) {
 
@@ -343,7 +361,9 @@ export class PackagesTabComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(input)) {
             if (this.firstDigit == ".") {
-                input = input.replace(/\./g, '');
+                if (!this.ChargeableWeightPasted) {
+                    input = input.replace(/\./g, '');
+                }
                 input = input.replace(/,/g, ".");
             }
 

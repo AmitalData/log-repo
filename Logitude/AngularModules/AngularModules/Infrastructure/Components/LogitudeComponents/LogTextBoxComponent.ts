@@ -83,9 +83,9 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() public get Text() {
         return this.text;
     }
+    private DisabledZeroPaddingSameText: boolean = false;
     public set Text(newValue: any) {
         if (this.text != newValue) {
-
             this.text = newValue;
             if (!this.keydown) {
                 if (!this.uiProperty) {
@@ -113,6 +113,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     private timerToken: any;
 
     private textValue;
+    private CameFromSettingText: boolean = false;
     public get TextValue() {
         return this.textValue;
     }
@@ -124,6 +125,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.TextValue == newValue) {
             return;
         }
+        this.CameFromSettingText = true;
+        this.DisabledZeroPaddingSameText = false;
         if (this.firstDigit == "." && this.IsPasted && newValue != null && newValue != undefined && this.textValue != null) {
             var firstString = this.textValue.replace(',', "")
             var secondString = newValue.replace('.', "")
@@ -131,6 +134,19 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             if (firstString == secondString) {
                 return;
             }
+        }
+
+        if (this.firstDigit == "." && this.DisableZeroPadding && newValue != null && newValue != undefined && this.textValue != null) {
+            if (!this.TextValue.includes(",")) {
+
+                if ((this.TextValue.split('.').length != newValue.split('.').length) && newValue.includes(".") && this.TextValue.includes(".")) {
+                    this.DisabledZeroPaddingSameText = true;
+                }
+                else if ((this.TextValue.split('.')[this.TextValue.split('.').length - 1] == "" && newValue.split('.')[newValue.split('.').length - 1] != "") && newValue.includes(".") && this.TextValue.includes(".")) {
+                    this.DisabledZeroPaddingSameText = true;
+                }           
+            }           
+
         }
 
         if ((this.textValue == "" || this.textValue == null || this.textValue == undefined) && newValue) {
@@ -1268,25 +1284,64 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                             }
 
                             if (this.AddCommasToNumbers) {
+                                var isDot: boolean = false;
+                                if (this.firstDigit == ".") {
+                                    isDot = true;
+                                }
+
                                 var txtNum: number;
 
-                                if (((this.TextValue + "").indexOf(',') > -1)) {
+                                if (((this.TextValue + "").indexOf(',') > -1) && !this.DisableZeroPadding) {
                                     var txtval = this.TextValue.replace(/,/g, "");
                                     txtNum = Number(txtval);
                                 }
                                 else {
+                                    if (((this.TextValue + "").indexOf(',') > -1) && (this.DisableZeroPadding && this.CameFromSettingText && this.DisabledZeroPaddingSameText) && !this.IsPasted) {
+                                        this.TextValue = this.TextValue.replace(/\./g, '');
+                                        this.TextValue = this.TextValue.replace(/,/g, ".");
+                                    }
                                     txtNum = Number(this.TextValue);
                                 }
 
                                 if (this.DataContext[this.ObjectFieldName] != txtNum) {
                                     this.TextValueChanges(this.TextValue);
                                 }
-                                var isDot: boolean = false;
-                                if (this.firstDigit == ".") {
-                                    isDot = true;
-                                }
-                                if (isDot && !this.DisableZeroPadding) {
-                                    this.TextValue = this.TextValue.replace(this.firstDigit, ",")
+                               
+                                if (isDot) {
+                                    if (!this.DisableZeroPadding) {
+                                        var NewText = "";
+                                        if (this.TextValue.includes(".")) {
+                                            var TextValueSplitted = this.TextValue.split('.');
+
+                                            for (var i = 0; i < TextValueSplitted.length; i++) {
+                                                if (TextValueSplitted.length == i + 1) {
+                                                    NewText = NewText.slice(0, -1);
+                                                    NewText += "," + TextValueSplitted[i];
+                                                }
+                                                else {
+                                                    NewText += TextValueSplitted[i] + ".";
+
+                                                }
+                                            }
+                                            this.TextValue = NewText;
+                                        }
+                                    }
+                                    if (this.DisabledZeroPaddingSameText && this.CameFromSettingText) {
+                                        var NewText = "";
+                                        var TextValueSplitted = this.TextValue.split('.');
+
+                                        for (var i = 0; i < TextValueSplitted.length; i++) {
+                                            if (TextValueSplitted.length == i + 1) {
+                                                NewText = NewText.slice(0, -1);
+                                                NewText += ","+TextValueSplitted[i] ;
+                                            }
+                                            else {
+                                                NewText += TextValueSplitted[i] + ".";
+
+                                            }
+                                        }
+                                        this.TextValue = NewText;
+                                    }
                                 }
                    
                                 var textWithCommas: string = this.numberWithCommas(this.TextValue, this.firstDigit);
@@ -1377,7 +1432,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 }
 
 
-                                textWithCommas.includes(this.secondDigit) || this.DisableZeroPadding ? this.TextValue = textWithCommas : this.TextValue = this.TextValue;
+                                textWithCommas.includes(this.secondDigit) || this.DisableZeroPadding ? this.TextValue = textWithCommas : this.TextValue = textWithCommas;
                             }
 
                             break;
@@ -1468,6 +1523,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
 
             }
+            this.CameFromSettingText = false;
         }
 
     }

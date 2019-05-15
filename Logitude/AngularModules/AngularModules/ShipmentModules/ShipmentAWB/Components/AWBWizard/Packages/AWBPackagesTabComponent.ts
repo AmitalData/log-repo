@@ -80,6 +80,17 @@ export class AWBPackagesTabComponent extends BaseComponent {
         }
     }
 
+    private ChargeableWeightPasted: boolean = false;
+    ChargeableWeightPaste($event) {
+        this.ChargeableWeightPasted = true;
+    }
+
+    private GrossWeightPasted: boolean = false;
+    GrossWeightPaste($event) {
+        this.GrossWeightPasted = true;
+    }
+
+
     // SetUIProperties
     public IsEditingEnabled: boolean = false;
     public IsTotalsFieldEnabled: boolean = false;
@@ -586,6 +597,8 @@ export class AWBPackagesTabComponent extends BaseComponent {
         }
     }
 
+
+
     GrossWeightLostFocus(input: any) {
 
         var valueComputed: number = 0;
@@ -599,7 +612,9 @@ export class AWBPackagesTabComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(input)) {
             if (this.firstDigit == ".") {
-                input = input.replace(/\./g, '');
+                if (!this.GrossWeightPasted) {
+                    input = input.replace(/\./g, '');
+                }
                 input = input.replace(/,/g, ".");
             }
 
@@ -627,7 +642,9 @@ export class AWBPackagesTabComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(input)) {
             if (this.firstDigit == ".") {
-                input = input.replace(/\./g, '');
+                if (!this.ChargeableWeightPasted) {
+                    input = input.replace(/\./g, '');
+                }
                 input = input.replace(/,/g, ".");
             }
 
