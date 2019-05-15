@@ -63,6 +63,13 @@ namespace Logitude.Accounting.Data.Repositories
           
         }
 
+        public IQueryable<TaxReport> GetFutureReports(DateTime dateTime, int tenant)
+        {
+            return (from a in context.TaxReports
+                    where a.CreateDate > dateTime && a.Tenant == tenant
+                    select a);
+        }
+
     }
 
 }
