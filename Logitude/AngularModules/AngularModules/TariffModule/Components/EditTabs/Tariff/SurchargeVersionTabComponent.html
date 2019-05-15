@@ -37,11 +37,19 @@
                             <div></div>
                         </td>
 
-                        <td style="width: 20px; padding: 3px;">
+                        <td style="width: 20px;">
                             <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Add'" [IsSmall]="true" (click)="AddTariffLine()"></IconButton>
                         </td>
 
                         <td style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
+                            <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
+                        </td>
+
+                        <td style="width:5px;" *ngIf="IsApproveVersionButtonVisible">
                             <div></div>
                         </td>
 
@@ -63,7 +71,6 @@
                                         </a>
                                     </div>
 
-                                    <button (click)="ApproveVersionClicked()" *ngIf="IsApproveVersionButtonVisible">Approve Version</button>
                                     <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
                                 </div>
                             </div>

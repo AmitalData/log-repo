@@ -465,9 +465,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.TypeCode == "ASC") {
            this.ValidateSurcharge();
         }
-        else if (this.EntityPM.TypeCode == "AFC") {
-            this.ValidateAirFreightCost();
-        }
+        //else if (this.EntityPM.TypeCode == "AFC") {
+        //    this.ValidateAirFreightCost();
+        //}
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator("Creating...");
             var myService: TariffPMService = new TariffPMService();

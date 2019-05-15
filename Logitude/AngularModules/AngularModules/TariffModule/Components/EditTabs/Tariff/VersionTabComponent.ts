@@ -45,13 +45,11 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
-                    this.FillTariffLines();
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
                     if (this.isApproveButtonClicked) {
                         this.isApproveButtonClicked = false;
@@ -74,7 +72,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
-        AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
     
     Intialize(args: any) {
@@ -443,11 +440,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
         });
-    }
-    testClicked() {
-        var test = this.EntityPM.TariffVersions;
-
-
     }
 
     CopyVersionClicked() {
