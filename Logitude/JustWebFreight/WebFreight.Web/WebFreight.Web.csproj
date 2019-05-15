@@ -1145,6 +1145,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\LogitudeMessagesTransmissionLogController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplateController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplatesVersionController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TarrifChargeController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantLoginPolicyController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TwoFactorAuthenticationDeviceController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\PortViewsController.cs" />
@@ -1820,6 +1821,7 @@
     <Compile Include="Controllers\WebDomainControllers\ContainersFUDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\CountersDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\CRMDomainController.cs" />
+    <Compile Include="Controllers\WebDomainControllers\CurrencyRatesController.cs" />
     <Compile Include="Controllers\WebDomainControllers\DefaultTranslationController.cs" />
     <Compile Include="Controllers\WebDomainControllers\GeneralDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\InfrastructureDomainController.cs" />
@@ -3392,7 +3394,6 @@
     <Content Include="App_Code\AngularJS_App_Code\MyValuesController.cs" />
     <Content Include="App_Code\ImporterShipmentsCancleController.cs" />
     <Content Include="App_Code\ImporterShipmentDocumentsCancleController.cs" />
-    <Content Include="App_Code\AngularJS_App_Code\CurrencyRatesController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Shipment\ShipmentViewsController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentExtendedController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCustomFieldController.cs" />

@@ -310,7 +310,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         if (newValue != null && newValue != "") {
             //var myAll = this.AllGroupsDataSource;
             this.AllGroupsDataSource.forEach((Group) => {
-                var temp = Group.FieldsList.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
+                var temp = Group.FieldsList.filter(a => a.Name.toLowerCase().indexOf(newValue.toLowerCase()) > -1 || a.DisplayName.toLowerCase().indexOf(newValue.toLowerCase()) > -1);
                 this.DataSource.filter(a => a.Key == Group.Key)[0].FieldsList = temp;
 
                 if (temp.length == 0) {

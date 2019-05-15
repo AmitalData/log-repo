@@ -1,27 +1,32 @@
-﻿using Logitude.BL.DataContracts;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Transactions;
 using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
+using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.InfrastructureModel.DomainServices;
 using WebFreight.Web.Security;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code
+namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class CurrencyRatesController : ApiController
     {
@@ -142,32 +147,44 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetInsertListOfRatesTable(List<LastRate> ratesTables)
+        public HttpResponseMessage Put(AccountingCurrencyHelper args)
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                WebFreightDomainService domain = new WebFreightDomainService();
-
-                if (ratesTables != null && ratesTables.Count() > 0)
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
-                    foreach (var item in ratesTables)
-                    {
-                        RatesTablePM entityPM = new RatesTablePM();
-                        entityPM.Tenant = item.Tenant;
-                        entityPM.BaseCurrencyId = item.BaseCurrencyId;
-                        entityPM.ForeignCurrencyId = item.ForeignCurrencyId;
-                        entityPM.LogDateTime = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
-                        entityPM.ValueDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
-                        entityPM.Rate = item.Rate;
-                        domain.InsertRatesTable(entityPM);
-                    }
-                }
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
 
-                return Request.CreateResponse(HttpStatusCode.OK, "OK");
+                    if (args.TenantPM != null)
+                    {
+                        WebFreightDomainService webFreightDomain = new WebFreightDomainService();
+                        CommonDataDomainService commonDataDomain = new CommonDataDomainService();
+
+                        commonDataDomain.UpdateTenantPM(args.TenantPM);
+
+                        foreach (LastRate item in args.LastRates)
+                        {
+                            RatesTablePM entityPM = new RatesTablePM();
+                            entityPM.Tenant = item.Tenant;
+                            entityPM.BaseCurrencyId = item.BaseCurrencyId;
+                            entityPM.ForeignCurrencyId = item.ForeignCurrencyId;
+                            entityPM.LogDateTime = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                            entityPM.ValueDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                            entityPM.Rate = item.Rate;
+                            webFreightDomain.InsertRatesTable(entityPM);
+                        }
+
+                        TenantQuery tenantQuery = new TenantQuery(tenant);
+                        TenantPM tenantPM = tenantQuery.GetTenantFromDB(tenant);
+                        args.TenantPM = tenantPM;
+                    }
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, args.TenantPM);
+                }
             }
 
             catch (Exception ex)
@@ -175,5 +192,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+    }
+
+    public class AccountingCurrencyHelper
+    {
+        public TenantPM TenantPM { get; set; }
+        public List<LastRate> LastRates { get; set; }
     }
 }
