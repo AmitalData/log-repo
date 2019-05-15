@@ -83,6 +83,8 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
 
 
         public string UnifreightListOnServerOnly { get; set; }
+
+        public bool SplitterModeLetCreateMyType { get; set; }
     }
 
     public class TestCase
