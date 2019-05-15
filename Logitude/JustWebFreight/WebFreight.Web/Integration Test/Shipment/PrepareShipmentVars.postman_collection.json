@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "28ba22a2-dde8-4ffc-a738-1b2d17516c03",
+		"_postman_id": "928e0687-e113-4f5f-90a5-53494168827b",
 		"name": "PrepareShipmentVars",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -61,18 +61,14 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"ahmadb@fnarsoft.com\",\"Password\":\"ahmed13!A15\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1}\n"
+					"raw": "{\n\t\"Email\":\"{{MyEmail}}\",\n\t\"Password\":\"{{MyPass}}\",\n\t\"GetToken\":true\n\t\n}\n"
 				},
 				"url": {
-					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1",
-					"protocol": "http",
+					"raw": "{{LogitudeURL}}/api/authentication?tenant=1",
 					"host": [
-						"test",
-						"logitudeworld",
-						"com"
+						"{{LogitudeURL}}"
 					],
 					"path": [
-						"test",
 						"api",
 						"authentication"
 					],

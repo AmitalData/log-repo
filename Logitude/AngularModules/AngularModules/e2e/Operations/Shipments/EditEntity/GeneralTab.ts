@@ -8,7 +8,7 @@ export class GeneralTabComponent {
   constructor() {
     this.Helper = new FieldsHelper();
 
-  }
+  } 
   GeneralTab(LogitudeShipType: string) {
     this.Helper.WaitByIdAndClick('Shipment.TH.General');
     if (LogitudeShipType == 'D' || LogitudeShipType == 'H') {

@@ -430,11 +430,13 @@ export class TariffLineData extends BaseComponent {
     public DataContext: TariffLineData = this;
     private ObjectTableName = "TariffLine";
     public IsNewEntity: boolean = false;
-
+    public IsEditEnabled: boolean = false;
     constructor(entity: TariffLinePM, public FatherComponent: SurchargeVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
+        this.IsEditEnabled = FatherComponent.IsDraftVersion;
+
         this.SetUIProperties();
 
         this.CheckIfLineHasError();

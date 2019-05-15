@@ -993,6 +993,10 @@
     <Compile Include="Migrations\201905121459016_AddParentVersionIdToTariffVersion_Maheera.Designer.cs">
       <DependentUpon>201905121459016_AddParentVersionIdToTariffVersion_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.cs" />
+    <Compile Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.Designer.cs">
+      <DependentUpon>201905130634391_AbedAddFieldIsCustomToDWObjectField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201905130719046_AddErrorFieldsToTariffLine_Samar.cs" />
     <Compile Include="Migrations\201905130719046_AddErrorFieldsToTariffLine_Samar.Designer.cs">
       <DependentUpon>201905130719046_AddErrorFieldsToTariffLine_Samar.cs</DependentUpon>
@@ -1004,10 +1008,6 @@
     <Compile Include="Migrations\201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.cs" />
     <Compile Include="Migrations\201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.Designer.cs">
       <DependentUpon>201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.cs" />
-    <Compile Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.Designer.cs">
-      <DependentUpon>201905130634391_AbedAddFieldIsCustomToDWObjectField.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201905121058310_AddVesrionToTaskScheduler_Rabaia.cs" />
     <Compile Include="Migrations\201905121058310_AddVesrionToTaskScheduler_Rabaia.Designer.cs">
@@ -1694,9 +1694,6 @@
     <EmbeddedResource Include="Migrations\201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.resx">
       <DependentUpon>201905091134399_AddingEcommerceSupportEmailToTenantTable_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.resx">
-      <DependentUpon>201905130634391_AbedAddFieldIsCustomToDWObjectField.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905121058310_AddVesrionToTaskScheduler_Rabaia.resx">
       <DependentUpon>201905121058310_AddVesrionToTaskScheduler_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
@@ -1720,6 +1717,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905121459016_AddParentVersionIdToTariffVersion_Maheera.resx">
       <DependentUpon>201905121459016_AddParentVersionIdToTariffVersion_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905130634391_AbedAddFieldIsCustomToDWObjectField.resx">
+      <DependentUpon>201905130634391_AbedAddFieldIsCustomToDWObjectField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905130635577_ChangeParentVersionTypeInTariffVersionTable_Maheera.resx">
       <DependentUpon>201905130635577_ChangeParentVersionTypeInTariffVersionTable_Maheera.cs</DependentUpon>
