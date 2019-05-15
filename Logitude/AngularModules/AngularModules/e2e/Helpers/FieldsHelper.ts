@@ -99,5 +99,18 @@ export class FieldsHelper {
       console.log("Button Clicked");
     });
   }
+  WaitByNameAndFill = (name: string, value: string) => {
+
+    var EC = protractor.ExpectedConditions;
+    browser.wait(EC.elementToBeClickable(element(by.name(name))), 100000000).then(() => {
+        var input = element(by.name(name));
+        input.clear();
+        browser.wait(EC.textToBePresentInElementValue(element(by.name(name)), ''), 10000000).then(a => { });
+        input.clear();
+        input.sendKeys(value);
+  
+    });
+  
+  }
 }
 
