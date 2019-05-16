@@ -45,8 +45,6 @@ export class WorkDaysPerProjectFilterComponent extends BaseComponent {
     }
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
-        this.EmployeeUserId = SessionLocator.LoggedUserId;
-
         var month = new Date().getMonth();
         var Year = new Date().getFullYear();
         var daysofmonth = this.daysInMonth(new Date());

@@ -310,7 +310,30 @@ namespace Logitude.TariffModule.BL.EntityPMs
               }
              set {  deletedTariffLines = value; }
 	    }
-	     }
+	  	  private int parentVersionNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int ParentVersionNumber  
+	   {
+	    
+	     get
+		{
+		   return parentVersionNumber;
+		 }
+		 set
+		 {
+		   if(parentVersionNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ParentVersionNumber",OldValue=parentVersionNumber,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   parentVersionNumber=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

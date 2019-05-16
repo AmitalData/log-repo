@@ -17,6 +17,9 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { DatePipe } from '@angular/common';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+
 declare var ResultAsArray: any;
 
 @Component({
@@ -37,6 +40,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsComparToChecked = false;
+    public WarningPercentage: number;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -45,43 +51,28 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.CurrentVersion.Version)[0];
                     this.FillTariffLines();
 
-                    if (this.isApproveButtonClicked) {                        
+                    if (this.isApproveButtonClicked) {
+                        this.isApproveButtonClicked = false;
                         this.DoApprove();
                     }
 
                     if (this.isCopyButtonClicked) {
                         this.isCopyButtonClicked = false;
-                        this.CurrentSession.FireEvent("NewVersionAdded");
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
                     if (this.isUploadExcelFinished) {
                         this.isUploadExcelFinished = false;
-                        this.FillTariffLines();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
-                }
-            });
-
-            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                if (isLoadSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    if (this.CurrentVersion != null) {
-                        this.IsDraftVersion = this.CurrentVersion.IsDraft;
-                    }
-
-                    if (this.isApproveButtonClicked) {
-                        this.isApproveButtonClicked = false;
-                        this.CurrentSession.FireEvent("VersionApproved");
-                    }
-
-                    this.SetUIProperties();
                 }
             });
         }
@@ -89,7 +80,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
-        AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
     
     Intialize(args: any) {
@@ -97,12 +87,18 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.EntityPM = this.EntityArgs.EntityPM;
         this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.TariffDomainService = new TariffDomainService();
-
+      
         this.CurrentVersion = args['CurrentVersion'];
 
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
+
+        if (this.IsDraftVersion) {
+            this.IsComparToChecked = true;
+        }
+
+        this.BuildVersionsList();
 
         this.SetUIProperties();
         this.SetStepsLabelsAndVisibility();
@@ -347,6 +343,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             filter.PriceSteps = context.PriceSteps;
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
+            filter.TariffType = context.EntityPM.TypeCode;
 
             context.SendExcelToServer(filter);
         };
@@ -404,9 +401,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.Step7PriceText = item.Step7PriceText;
             tariffLine.Step8PriceText = item.Step8PriceText;
 
+            tariffLine.HasErrors = item.HasErrors;
+            tariffLine.ErrorText = item.ErrorText;
+
             this.CurrentVersion.AddTariffLine(tariffLine);
         });
-
+        
         this.EntityPM.TariffLinesAdded = true;
         this.isUploadExcelFinished = true;
         this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
@@ -429,18 +429,38 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     private isApproveButtonClicked: boolean = false;
     ApproveVersionClicked() {
-        this.isApproveButtonClicked = true;
+        var errors: string[] = [];
 
-        if (this.EntityPM.IsDirty) {
-            this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
+        if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
+            errors.push("Invalid Tariff Lines");
         }
 
-        else {
-            this.DoApprove();
+        this.CurrentVersion.TariffLines.forEach(item => {
+            if (AppTool.IsNullOrEmpty(item.OriginPortId)) {
+                errors.push("Missing Origin Port");
+            }
+
+            if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
+                errors.push("Missing Destination Port");
+            }
+        });
+        
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+
+        if (errors.length == 0) {
+            this.isApproveButtonClicked = true;
+
+            if (this.EntityPM.IsDirty) {
+                this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
+            }
+
+            else {
+                this.DoApprove();
+            }
         }
     }
     private DoApprove() {
-        this.TariffDomainService.ApproveVersion(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+        this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
@@ -473,6 +493,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         copiedVersion.IsDraft = true;
         copiedVersion.StartDate = this.CurrentVersion.StartDate;
         copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
+        copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
 
         this.EntityPM.AddTariffVersion(copiedVersion);
 
@@ -503,6 +524,39 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
     }
+    
+    public VersionsList: VersionClass[];
+    private BuildVersionsList() {
+        this.VersionsList = [];
+        var datePipe: DatePipe = new DatePipe("en-US");
+
+        this.EntityPM.TariffVersions.forEach(item => {
+            var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
+            var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+
+            var newVersion: VersionClass = new VersionClass();
+            newVersion.Version = item.Version;
+            newVersion.ParentVersionNumber = item.ParentVersionNumber;
+            newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+            newVersion.Id = item.TariffId; 
+            this.VersionsList.push(newVersion);
+        });
+        this.SelectedVersion = this.VersionsList.filter(a => a.ParentVersionNumber == this.CurrentVersion.Version)[0];
+    }
+
+    private selectedVersion: VersionClass;
+    get SelectedVersion() { return this.selectedVersion; }
+    set SelectedVersion(value: VersionClass) {
+        if (this.selectedVersion != value) {
+            this.selectedVersion = value;
+            if (this.IsDraftVersion) {
+                this.IsComparToChecked = true;
+            }
+            else {
+                this.IsComparToChecked = false;
+            }
+        }
+    }
 }
 
 export class TariffLineData extends BaseComponent {
@@ -510,85 +564,174 @@ export class TariffLineData extends BaseComponent {
     public DataContext: TariffLineData = this;
     private ObjectTableName = "TariffLine";
     public IsNewEntity: boolean = false;
-
+    public IsEditEnabled: boolean = false;
     constructor(entity: TariffLinePM, public FatherComponent: VersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
+        this.IsEditEnabled = FatherComponent.IsDraftVersion;
         this.SetUIProperties();
-
-        this.CheckIfLineHasError();
     }
 
-    public HasError: boolean = false;
-    private CheckIfLineHasError() {
-        var error: boolean = false;
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
-            error = true;
+    get HasErrors() {
+        return this.EntityPM.HasErrors;
+    }
+    set HasErrors(value: boolean) {
+        if (this.EntityPM.HasErrors != value) {
+            this.EntityPM.HasErrors = value;
         }
+    }
 
-        if (!error) {
+    get ErrorText() {
+        return this.EntityPM.ErrorText;
+    }
+    set ErrorText(value: string) {
+        if (this.EntityPM.ErrorText != value) {
+            this.EntityPM.ErrorText = value;
+        }
+    }
+    
+    private CheckIfLineHasError() {
+
+        if (this.ErrorText != 'Line is a duplicate') {
+            var error: boolean = false;
+            var errorText: string;
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Port with code " + this.EntityPM.OriginPortText + " not found";
+                }
+
+                else {
+                    errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
                 error = true;
-            }
-        }
 
-        if (!error) {
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Port with code " + this.EntityPM.DestinationPortText + " not found";
+                }
+
+                else {
+                    errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.EntityPM.MinPriceText) && AppTool.IsNullOrZero(this.EntityPM.MinPrice)) {
                 error = true;
-            }
-        }
 
-        if (!error) {
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Min price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Min price format is invalid"
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Step1PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step1Price)) {
                 error = true;
-            }
-        }
 
-        if (!error) {
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 1 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 1 price format is invalid"
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Step2PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step2Price)) {
                 error = true;
-            }
-        }
 
-        if (!error) {
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 2 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 2 price format is invalid"
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Step3PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step3Price)) {
                 error = true;
-            }
-        }
 
-        if (!error) {
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 3 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 3 price format is invalid"
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Step4PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step4Price)) {
                 error = true;
-            }
-        }
 
-        if (!error) {
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 4 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 4 price format is invalid"
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Step5PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step5Price)) {
                 error = true;
-            }
-        }
 
-        if (!error) {
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 5 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 5 price format is invalid"
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Step6PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step6Price)) {
                 error = true;
-            }
-        }
 
-        if (!error) {
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 6 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 6 price format is invalid"
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Step7PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step7Price)) {
                 error = true;
-            }
-        }
 
-        if (!error) {
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 7 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 7 price format is invalid"
+                }
+            }
+
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Step8PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step8Price)) {
                 error = true;
-            }
-        }
 
-        this.HasError = error;
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 8 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 8 price format is invalid"
+                }
+            }
+
+            this.HasErrors = error;
+            this.ErrorText = errorText;
+        }
     }
 
     private SetUIProperties() {
@@ -982,5 +1125,14 @@ export class TariffLineData extends BaseComponent {
             return FontTool.Red;
         }
     }
+}
+
+export class VersionClass {
+    public Code: number;
+    public Name: string;
+    public Id: string;
+    public Version: number;
+    public ParentVersionNumber: number;
+
 }
 

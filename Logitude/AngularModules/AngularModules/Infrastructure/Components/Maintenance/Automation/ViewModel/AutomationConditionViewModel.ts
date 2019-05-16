@@ -61,7 +61,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
       
 
         if (this.ObjectFieldPM) {
-            this.ChosenOperatorList(this.ObjectFieldPM.DataTypeCode, false);
+            this.ChosenOperatorList(this.ObjectFieldPM.DataTypeCode, false, this.ObjectFieldPM);
             this.ObjectFieldId = this.ObjectFieldPM.Id;
  
 
@@ -195,7 +195,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         this.AddEditAutomationsViewModel.IsChangeCondition = true;
     }
    
-    ChosenOperatorList(dataTypeCode: string, isChangeOperator: boolean) {
+    ChosenOperatorList(dataTypeCode: string, isChangeOperator: boolean, objectFieldPM: ObjectFieldPM = null) {
         this.OperatorList = [];
 
         if (dataTypeCode == "DateTime" || dataTypeCode == "Date" || dataTypeCode == "Integer" || dataTypeCode == "Decimal" || dataTypeCode == "Double") {
@@ -214,7 +214,19 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         }
 
         else if (dataTypeCode == "Boolean") this.OperatorList.push(new Operator("Equals", "="));
+        else if (dataTypeCode == "LookUp") {
+            this.OperatorList.push(new Operator("Equals", "="));
+            this.OperatorList.push(new Operator("Does Not Equal", "<>"));
+            this.OperatorList.push(new Operator("Equal [Field]", "=F"));
+            this.OperatorList.push(new Operator("Does Not Equal [Field]", "<>F"));
 
+            if (objectFieldPM != null) {
+                if (objectFieldPM.ObjectTable_LookUpTableName == "User" || objectFieldPM.ObjectTable_LookUpTableName == "Contact") {
+                    this.OperatorList.push(new Operator("Equal [System Variable]", "EqualSystemVariable"));
+                }
+            }
+
+        }
         else {
 
             this.OperatorList.push(new Operator("Equals", "="));
@@ -226,30 +238,26 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
             this.OperatorList.push(new Operator("Does Not Equal [Field]", "<>F"));
             this.OperatorList.push(new Operator("Contains [Field]", "CONTAINSF"));
             this.OperatorList.push(new Operator("Does Not Contain [Field]", "!CONTAINSF"));
-
-
         }
 
-       if (this.CurrentEntityType != "OnCreate") {
+
+
+
+
+        if (this.CurrentEntityType != "OnCreate") {
             this.OperatorList.push(new Operator("Changed to", "CHANGEDTO"));
             this.OperatorList.push(new Operator("Changed", "CHANGED"));
-
-      }
-
-
-      if (dataTypeCode == "DateTime" || dataTypeCode == "Date") {
-
-        if (!this.OperatorList.filter(d => d.Code == "CHANGED")[0]) {
-          this.OperatorList.push(new Operator("Changed", "CHANGED"));
         }
 
 
-        this.OperatorList.push(new Operator("Is Empty", "ISEMPTY"));
-        this.OperatorList.push(new Operator("Is not Empty", "ISNOTEMPTY"));
+        if (dataTypeCode == "DateTime" || dataTypeCode == "Date") {
 
-
-      
-      }
+            if (!this.OperatorList.filter(d => d.Code == "CHANGED")[0]) {
+                this.OperatorList.push(new Operator("Changed", "CHANGED"));
+            }
+            this.OperatorList.push(new Operator("Is Empty", "ISEMPTY"));
+            this.OperatorList.push(new Operator("Is not Empty", "ISNOTEMPTY"));
+        }
 
 
         if (isChangeOperator) {
@@ -294,7 +302,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                         this.UIProperties.SetRequired(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, false);
 
                         this.CurrentEntityPM.ObjectFieldId = this.SelectedCustomField.Id;
-                        this.ChosenOperatorList(this.SelectedCustomField.DataTypeCode, true);
+                        this.ChosenOperatorList(this.SelectedCustomField.DataTypeCode, true, this.SelectedCustomField);
                         this.SelectedOperator = this.OperatorList[0];
                      
                     }
@@ -350,7 +358,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
     HideGeneralControl(operatorCode: string) {
         var result: boolean = false;
-        if (operatorCode == "CHANGED" || operatorCode == "ISEMPTY" || operatorCode == "ISNOTEMPTY") {
+        if (operatorCode == "CHANGED" || operatorCode == "ISEMPTY" || operatorCode == "ISNOTEMPTY" || operatorCode == "EqualSystemVariable") {
             result = true;
         }
 

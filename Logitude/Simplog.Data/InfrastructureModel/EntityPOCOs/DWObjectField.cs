@@ -31,7 +31,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool HideTree { get; set; }
         public bool CannotFilter { get; set; }
         public string HelpText { get; set; }
-
+        public bool IsCustom { get; set; }
+        
 
         [ForeignKey("DWObjectTableCode")]
         public virtual DWObjectTable DWObjectTable { get; set; }

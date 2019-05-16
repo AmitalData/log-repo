@@ -32,13 +32,13 @@ ELSE if(@DataTypeCode = ''Integer'' or @DataTypeCode = ''UnsInteger'') begin SET
 ELSE if(@DataTypeCode = ''Decimal'' or @DataTypeCode = ''UnsDecimal'') 
 begin 
 if(len(@FieldValue)>=15)begin  set @FieldValue = STUFF(@FieldValue, len(@FieldValue)-2, 0, ''.'') end
-SET @MyValueOut = CAST(@FieldValue AS DECIMAL(16, 3));
+SET @MyValueOut = CAST(@FieldValue AS DECIMAL(38, 3));
 end
 
 ELSE if(@DataTypeCode = ''Double'' or @DataTypeCode = ''SigDouble'') 
 begin 
 if(len(@FieldValue)>=15)begin  set @FieldValue = STUFF(@FieldValue, len(@FieldValue)-2, 0, ''.'') end
-SET @MyValueOut = CONVERT(NUMERIC(16,3), @FieldValue)
+SET @MyValueOut = CONVERT(NUMERIC(38,3), @FieldValue)
 end
 
 

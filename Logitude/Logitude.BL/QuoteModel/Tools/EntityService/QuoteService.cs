@@ -125,11 +125,14 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             this.entityPM.Id = IdCounter.GetNumber("Quote", tenant).ToString();
             this.entityPoco = new Quote() { Id = this.entityPM.Id };
 
-            QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(objectContext);
-            QuoteSetting iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(tenant);
-            if(iQuoteSetting != null)
+            if (!entityPM.IsCopy)
             {
-                this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;
+                QuoteSettingRepository iQuoteSettingRepository = new QuoteSettingRepository(objectContext);
+                QuoteSetting iQuoteSetting = iQuoteSettingRepository.GetSingleQuoteSetting(tenant);
+                if (iQuoteSetting != null)
+                {
+                    this.entityPM.IsSaleCurrencySameAsCost = iQuoteSetting.IsSaleAsCostCurrency;
+                }
             }
 
             this.InitializeComponent();
@@ -865,11 +868,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             if (isAutomaticUpdate)
             {
-                QuoteQuery entityQuery = new QuoteQuery(entityRepository);
-
-                string mySubject = entityQuery.GetQuoteAutomaticSubject(entityPM);
-
-                entityPM.Subject = mySubject;
+                QuoteSubjectService iSubjectService = new QuoteSubjectService(entityPM);
+                entityPM.Subject = iSubjectService.GetSubject(); ;                
             }
         }
         private void InitializeExpirationValues()

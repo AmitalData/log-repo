@@ -1105,7 +1105,7 @@ export class MaintenanceComponent {
                     this._entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe(response => {
 
                         var logWindow = new LogitudeWindow();
-                        logWindow.Width = 1100;
+                        logWindow.Width = 1200;
                         logWindow.Height = 1000;
                         if (!FeatureLocator.HasFeaturePermession("TasksScheduler", "READ") || (!FeatureLocator.HasFeaturePermession("TasksScheduler", "TASK") && !FeatureLocator.HasFeaturePermession("TasksScheduler", "FTP"))) {
                             logWindow.Width =800;

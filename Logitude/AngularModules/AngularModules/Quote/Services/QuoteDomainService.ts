@@ -8,6 +8,7 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 import {QuotePM} from '../EntityPMs/QuotePM';
 import {QuoteSettingPM} from '../EntityPMs/QuoteSettingPM';
 import {QuoteStageList} from '../EntityLists/QuoteStageList';
+import { QuotePMService } from './StandardPMs/QuotePMService';
 
 export class QuoteDomainService {
     private _http: Http;
@@ -188,34 +189,15 @@ export class QuoteDomainService {
             var authHeader = new Headers();
             authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
             authHeader.append('Content-Type', 'application/json');
-            
-            var args = new QuoteSubjectArgs();
-            args.EntityId = entityPM.Id;
-            args.DirectionId = entityPM.DirectionId;
-            args.TransportModeId = entityPM.TransportModeId;
-            args.IncotermId = entityPM.IncotermId;
-            args.FromPartnerAddressId = entityPM.FromPartnerAddressId;
-            args.ToPartnerAddressId = entityPM.ToPartnerAddressId;
-            args.IncludePickUp = entityPM.IncludePickUp;
-            args.PickUpAddressId = entityPM.PickUpAddressId;
-            args.FromAddressCity = entityPM.FromAddressCity;
-            args.FromAddressZipCode = entityPM.FromAddressZipCode;
-            args.FromPortId = entityPM.FromPortId;
-            args.IncludeDelivery = entityPM.IncludeDelivery;
-            args.DeliveryAddressId = entityPM.DeliveryAddressId;
-            args.ToAddressCity = entityPM.ToAddressCity;
-            args.ToAddressZipCode = entityPM.ToAddressZipCode;
-            args.ToPortId = entityPM.ToPortId;
-           
-            var mappedEntity: QuoteSubjectArgs = this.MapJsonToQuoteSubjectArgs(args, false);
+
+            var iService = new QuotePMService();
+            var mappedEntity: QuotePM = iService.MapJsonToEntityPM(entityPM, false);
 
             return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), { headers: authHeader }).map((res) => {
                 var myJsonResult = res.json();
 
-                var mappedResult: QuoteSubjectArgs = this.MapJsonToQuoteSubjectArgs(myJsonResult, true, args);
-
                 var myResponse = new ServiceResponse();
-                myResponse.Result = mappedResult;
+                myResponse.Result = myJsonResult;
                 return myResponse;
 
             }).catch(ServiceHelper.HandleServiceError);
@@ -320,28 +302,6 @@ export class QuoteDomainService {
         return entityPM;
     }
 
-    MapJsonToQuoteSubjectArgs(jsonPM: any, getCallMap: boolean = true, entity: QuoteSubjectArgs = null) {
-        if (!entity) {
-            entity = new QuoteSubjectArgs();
-        }
-
-        var jsonPMKeys = Object.keys(jsonPM);
-
-        for (var key in jsonPMKeys) {
-            var property = jsonPMKeys[key];
-
-            if (property === "UIProperties") {
-                continue;
-            }
-
-            else {
-                entity[property] = jsonPM[property];
-            }
-        }
-
-        return entity;
-    }
-
     GetQuoteConnectedEntities(quoteId: string, opportunityId: string ) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -393,25 +353,7 @@ export class CRMSummary {
     public Quotes_AllFollowups: number;
     public Quotes_MyFollowups: number;
 }
-export class QuoteSubjectArgs {
-    public EntityId: string;
-    public DirectionId: string;
-    public TransportModeId: string;
-    public IncotermId: string;
-    public FromPartnerAddressId: string;
-    public ToPartnerAddressId: string;
-    public IncludePickUp: boolean;
-    public PickUpAddressId: string;
-    public FromAddressCity: string;
-    public FromAddressZipCode: string;
-    public FromPortId: string;
-    public IncludeDelivery: boolean;
-    public DeliveryAddressId: string;
-    public ToAddressCity: string;
-    public ToAddressZipCode: string;
-    public ToPortId: string;
-    public Subject: string;
-}
+
 export class QuoteConnectedEntity {
     public EntityId: string;
     public EntityNumber: string;

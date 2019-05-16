@@ -145,7 +145,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             try
             {
                 bool isBlocking = false;
-                string entityName = "SystemIsBlocked" ;
+                string entityName = "SystemIsBlocked";
 
                 if (CacheManager.CacheWrapper != null)
                 {
@@ -178,7 +178,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
         }
 
-        private  bool GetIsBlockingFromDB()
+        private bool GetIsBlockingFromDB()
         {
             IGlobalContext globalcontext = GlobalContext.GetContext();
             bool isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;

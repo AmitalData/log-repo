@@ -75,9 +75,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         SchedulerDetailsXML = a.SchedulerDetailsXML,
                         NextRunTimeUTC = a.NextRunTimeUTC,
                         StartDateTimeUTC = a.StartDateTimeUTC,
-                        LastRunTimeUTC = a.LastRunTimeUTC
+                        LastRunTimeUTC = a.LastRunTimeUTC,
+                        Version = a.Version,
+                        Status = a.Status,
+                        Retries = a.Retries
 
-                        
+
                     }).FirstOrDefault();
         }
 
@@ -115,7 +118,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         SchedulerDetailsXML = a.SchedulerDetailsXML,
                         NextRunTimeUTC = a.NextRunTimeUTC,
                         StartDateTimeUTC = a.StartDateTimeUTC,
-                        LastRunTimeUTC = a.LastRunTimeUTC
+                        LastRunTimeUTC = a.LastRunTimeUTC,
+                        Version = a.Version,
+                        Status = a.Status,
+                        Retries = a.Retries
                     }).FirstOrDefault();
         }
 
@@ -153,8 +159,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Type = a.Type,
                         NextRunTimeUTC = a.NextRunTimeUTC,
                         StartDateTimeUTC = a.StartDateTimeUTC,
-                        LastRunTimeUTC = a.LastRunTimeUTC
-
+                        LastRunTimeUTC = a.LastRunTimeUTC,
+                        Version = a.Version,
+                        Status = a.Status,
+                        Retries = a.Retries
                     }).ToList();
         }
 
@@ -191,8 +199,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         Type = a.Type,
                         NextRunTimeUTC = a.NextRunTimeUTC,
                         StartDateTimeUTC = a.StartDateTimeUTC,
-                        LastRunTimeUTC = a.LastRunTimeUTC
-
+                        LastRunTimeUTC = a.LastRunTimeUTC,
+                        Version = a.Version,
+                        Status = a.Status,
+                        Retries = a.Retries
                     }).ToList();
         }
 
@@ -229,7 +239,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                Type = a.Type,
                                                                NextRunTimeUTC = a.NextRunTimeUTC,
                                                                StartDateTimeUTC = a.StartDateTimeUTC,
-                                                               LastRunTimeUTC = a.LastRunTimeUTC
+                                                               LastRunTimeUTC = a.LastRunTimeUTC,
+                                                               Version = a.Version,
+                                                               Status = a.Status,
+                                                               Retries = a.Retries
                                                            };
             return result;
         }
@@ -268,7 +281,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         SchedulerDetailsXML = a.SchedulerDetailsXML,
                         NextRunTimeUTC = a.NextRunTimeUTC,
                         StartDateTimeUTC = a.StartDateTimeUTC,
-                        LastRunTimeUTC = a.LastRunTimeUTC
+                        LastRunTimeUTC = a.LastRunTimeUTC,
+                        Version = a.Version,
+                        Status = a.Status,
+                        Retries = a.Retries
                     }).FirstOrDefault();
         }
     }

@@ -123,6 +123,14 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string Surcharge9PriceText { get; set; }
         [Column("Surcharge10PriceText")]
 	    public string Surcharge10PriceText { get; set; }
+        [Column("HasErrors")]
+	    public bool HasErrors { get; set; }
+        [Column("ErrorText")]
+	    public string ErrorText { get; set; }
+        [Column("LineUniqueKey")]
+	    public string LineUniqueKey { get; set; }
+        [Column("LineUniqueKeyText")]
+	    public string LineUniqueKeyText { get; set; }
     }
 }
 	 

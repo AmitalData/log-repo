@@ -108,7 +108,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         //{
                            //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
                         //}
-                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Tariff");
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -147,7 +146,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 						service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
-                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Tariff");
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
                         //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Tariff", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
