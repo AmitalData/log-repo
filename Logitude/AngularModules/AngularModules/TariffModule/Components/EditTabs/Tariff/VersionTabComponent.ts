@@ -17,7 +17,8 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
-import { error } from '../../../../Customs/EntityPMs/Extended/AmendmentView';
+import { DatePipe } from '@angular/common';
+
 declare var ResultAsArray: any;
 
 @Component({
