@@ -70,8 +70,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                              DepartmentId = a.DepartmentId,
                                                              ResponseNotes = a.ResponseNotes,
                                                              DepartmentName = a.Department != null? a.Department.LocalName : null,
-
-                                                         }).ToList();
+                                                             CustomerId = a.CustomerId,
+                                                             CustomerName = a.Customer != null ? a.Customer.Card.LocalName : null,
+                                                    }).ToList();
 
 
             return notifications;
@@ -196,7 +197,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
             List<NotificationPM> notifications = (from a in allNotifications
 
-                                                    select new NotificationPM()
+                                                  select new NotificationPM()
                                                     {
                                                         Id = a.Id,
                                                         AssigneToId = a.AssigneToId,
@@ -225,7 +226,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                         DepartmentId = a.DepartmentId,
                                                         ResponseNotes = a.ResponseNotes,
                                                         DepartmentName = a.Department != null ? a.Department.LocalName : null,
-
+                                                        CustomerId = a.CustomerId,
+                                                        CustomerName = a.Customer != null ? a.Customer.Card.LocalName : null,
                                                     }).ToList();
 
 
@@ -272,7 +274,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                       DepartmentId = a.DepartmentId,
                                                       ResponseNotes = a.ResponseNotes,
                                                       DepartmentName = a.Department != null ? a.Department.LocalName : null,
-
+                                                      CustomerName = a.Customer != null ? a.Customer.Card.LocalName : null,
                                                   }).ToList();
 
 
