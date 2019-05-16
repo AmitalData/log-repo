@@ -86,7 +86,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.EntityPM = this.EntityArgs.EntityPM;
         this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.TariffDomainService = new TariffDomainService();
-        this.BuildVersionsList();
+      
         this.CurrentVersion = args['CurrentVersion'];
 
         if (this.CurrentVersion != null) {
@@ -96,6 +96,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         if (this.IsDraftVersion) {
             this.IsComparToChecked = true;
         }
+
+        this.BuildVersionsList();
 
         this.SetUIProperties();
         this.SetStepsLabelsAndVisibility();
@@ -516,6 +518,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     private BuildVersionsList() {
         this.VersionsList = [];
         var datePipe: DatePipe = new DatePipe("en-US");
+
         this.EntityPM.TariffVersions.forEach(item => {
             var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
             var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
@@ -527,7 +530,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             newVersion.Id = item.TariffId; 
             this.VersionsList.push(newVersion);
         });
-
         this.SelectedVersion = this.VersionsList.filter(a => a.ParentVersionNumber == this.CurrentVersion.Version)[0];
     }
 
