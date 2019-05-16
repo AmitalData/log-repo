@@ -102,7 +102,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.FreelancerId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FreelancerContactId).HasMaxLength(15).IsUnicode(false);
             this.Property(d => d.BusinessUnitId).HasMaxLength(50).IsUnicode(false);
-            this.Property(t => t.Subject).HasMaxLength(60).IsUnicode(true);
+            this.Property(t => t.Subject).HasMaxLength(200).IsUnicode(true);
             this.Property(d => d.StageId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(d => d.RatingCode).IsRequired().HasMaxLength(1).IsUnicode(false);
             this.Property(d => d.LastActivityTypeCode).HasMaxLength(2).IsUnicode(false);

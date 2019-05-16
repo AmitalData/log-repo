@@ -19,6 +19,7 @@ namespace CommunicationWorkerRole.Tasks
     public class TaskManagerBase
     {
         public TasksSchedulerPM Task { get; set; }
+        public DbQueueService queueservice { get; set; }
         private StringBuilder Infos { get; set; }
         private StringBuilder Warnings { get; set; }
         private StringBuilder Exceptions { get; set; }
@@ -56,6 +57,7 @@ namespace CommunicationWorkerRole.Tasks
                     
 
                     Task.Status = null;
+                    queueservice.Complete();
                     AddSchedulerQueue(Task);
                     SubmitLogsData();
 
@@ -70,18 +72,22 @@ namespace CommunicationWorkerRole.Tasks
                 {
                     if (Task.Retries <= 1)
                     {
-                        Task.Retries++;
-                        ReScheduleFaildTask(Task,5);
+                        queueservice.Delay(new TimeSpan(0, 0, 0, 30));
+                        //Task.Retries++;
+                        //ReScheduleFaildTask(Task,5);
                     }
 
                     if (Task.Retries > 1 && Task.Retries <= 2)
                     {
-                        Task.Retries++;
-                        ReScheduleFaildTask(Task, 10);
+                        queueservice.Delay(new TimeSpan(0, 0, 1,0));
+                        //Task.Retries++;
+                        //ReScheduleFaildTask(Task, 10);
                     }
                     if (Task.Retries >= 3)
                     {
-                        Task.Retries = 0;
+                        //Task.Retries = 0;
+                        //Task.Status = null;
+                        queueservice.CompleteAsFailed();
                         AddSchedulerQueue(Task);
                         ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "", null);
                     }
