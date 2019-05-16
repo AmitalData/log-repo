@@ -77,7 +77,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         LastRunTimeUTC = a.LastRunTimeUTC,
                         Version = a.Version,
-                        Status = a.Status
+                        Status = a.Status,
+                        Retries = a.Retries
 
 
                     }).FirstOrDefault();
@@ -119,7 +120,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         LastRunTimeUTC = a.LastRunTimeUTC,
                         Version = a.Version,
-                        Status = a.Status
+                        Status = a.Status,
+                        Retries = a.Retries
                     }).FirstOrDefault();
         }
 
@@ -159,7 +161,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         LastRunTimeUTC = a.LastRunTimeUTC,
                         Version = a.Version,
-                        Status = a.Status
+                        Status = a.Status,
+                        Retries = a.Retries
                     }).ToList();
         }
 
@@ -198,7 +201,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         LastRunTimeUTC = a.LastRunTimeUTC,
                         Version = a.Version,
-                        Status = a.Status
+                        Status = a.Status,
+                        Retries = a.Retries
                     }).ToList();
         }
 
@@ -237,7 +241,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                StartDateTimeUTC = a.StartDateTimeUTC,
                                                                LastRunTimeUTC = a.LastRunTimeUTC,
                                                                Version = a.Version,
-                                                               Status = a.Status
+                                                               Status = a.Status,
+                                                               Retries = a.Retries
                                                            };
             return result;
         }
@@ -278,7 +283,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         LastRunTimeUTC = a.LastRunTimeUTC,
                         Version = a.Version,
-                        Status = a.Status
+                        Status = a.Status,
+                        Retries = a.Retries
                     }).FirstOrDefault();
         }
     }

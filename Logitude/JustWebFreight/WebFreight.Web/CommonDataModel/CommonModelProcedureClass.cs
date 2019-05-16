@@ -106,7 +106,7 @@ namespace WebFreight.Web.CommonDataModel
         }
 
 
-        public static void InsertCustomerActualDataHistory(int tenant, DateTime? startDateTime, DateTime? endDateTime)
+        public static void InsertCustomerActualDataHistory(int tenant, DateTime? startDateTime, DateTime? endDateTime, bool hasException, string exceptionMessage)
         {
             string strConnString = GetConnection(tenant);
 
@@ -116,11 +116,13 @@ namespace WebFreight.Web.CommonDataModel
                 {
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = @"insert into CustomerActualDataHistory(Tenant, StartDateTime, EndDateTime) VALUES(@Tenant, @StartDateTime, @EndDateTime)";
+                    cmd.CommandText = @"insert into CustomerActualDataHistory(Tenant, StartDateTime, EndDateTime, HasException, ExceptionMessage) VALUES(@Tenant, @StartDateTime, @EndDateTime, @HasException, @ExceptionMessage)";
 
                     cmd.Parameters.AddWithValue("@Tenant", tenant);
                     cmd.Parameters.AddWithValue("@StartDateTime", startDateTime);
                     cmd.Parameters.AddWithValue("@EndDateTime", endDateTime);
+                    cmd.Parameters.AddWithValue("@HasException", hasException);
+                    cmd.Parameters.AddWithValue("@ExceptionMessage", exceptionMessage);
 
                     conn.Open();
                     cmd.ExecuteNonQuery();

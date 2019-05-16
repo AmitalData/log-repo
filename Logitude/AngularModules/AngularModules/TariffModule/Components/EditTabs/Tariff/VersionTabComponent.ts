@@ -17,6 +17,8 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { DatePipe } from '@angular/common';
+
 declare var ResultAsArray: any;
 
 @Component({
@@ -37,6 +39,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsComparToChecked = false;
+    public WarningPercentage: number;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -50,6 +55,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.CurrentVersion.Version)[0];
+                    this.FillTariffLines();
 
                     if (this.isApproveButtonClicked) {
                         this.isApproveButtonClicked = false;
@@ -79,12 +86,18 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.EntityPM = this.EntityArgs.EntityPM;
         this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.TariffDomainService = new TariffDomainService();
-
+      
         this.CurrentVersion = args['CurrentVersion'];
 
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
+
+        if (this.IsDraftVersion) {
+            this.IsComparToChecked = true;
+        }
+
+        this.BuildVersionsList();
 
         this.SetUIProperties();
         this.SetStepsLabelsAndVisibility();
@@ -500,6 +513,40 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
     }
+
+
+    public VersionsList: VersionClass[];
+    private BuildVersionsList() {
+        this.VersionsList = [];
+        var datePipe: DatePipe = new DatePipe("en-US");
+
+        this.EntityPM.TariffVersions.forEach(item => {
+            var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
+            var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+
+            var newVersion: VersionClass = new VersionClass();
+            newVersion.Version = item.Version;
+            newVersion.ParentVersionNumber = item.ParentVersionNumber;
+            newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+            newVersion.Id = item.TariffId; 
+            this.VersionsList.push(newVersion);
+        });
+        this.SelectedVersion = this.VersionsList.filter(a => a.ParentVersionNumber == this.CurrentVersion.Version)[0];
+    }
+
+    private selectedVersion: VersionClass;
+    get SelectedVersion() { return this.selectedVersion; }
+    set SelectedVersion(value: VersionClass) {
+        if (this.selectedVersion != value) {
+            this.selectedVersion = value;
+            if (this.IsDraftVersion) {
+                this.IsComparToChecked = true;
+            }
+            else {
+                this.IsComparToChecked = false;
+            }
+        }
+    }
 }
 
 export class TariffLineData extends BaseComponent {
@@ -513,7 +560,6 @@ export class TariffLineData extends BaseComponent {
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
-
         this.SetUIProperties();
     }
 
@@ -536,143 +582,146 @@ export class TariffLineData extends BaseComponent {
     }
     
     private CheckIfLineHasError() {
-        var error: boolean = false;
-        var errorText: string;
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
-            error = true;
+        if (this.ErrorText != 'Line is a duplicate') {
+            var error: boolean = false;
+            var errorText: string;
 
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Port with code " + this.EntityPM.OriginPortText + " not found";
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Port with code " + this.EntityPM.OriginPortText + " not found";
+                }
+
+                else {
+                    errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
+                }
             }
 
-            else {
-                errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
-            } 
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Port with code " + this.EntityPM.DestinationPortText + " not found";
+                }
+
+                else {
+                    errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.MinPriceText) && AppTool.IsNullOrZero(this.EntityPM.MinPrice)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Min price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Min price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step1PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step1Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 1 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 1 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step2PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step2Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 2 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 2 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step3PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step3Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 3 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 3 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step4PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step4Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 4 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 4 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step5PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step5Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 5 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 5 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step6PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step6Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 6 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 6 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step7PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step7Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 7 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 7 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step8PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step8Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Step 8 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Step 8 price format is invalid"
+                }
+            }
+
+            this.HasErrors = error;
+            this.ErrorText = errorText;
         }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Port with code " + this.EntityPM.DestinationPortText + " not found";
-            }
-
-            else {
-                errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
-            }            
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.MinPriceText) && AppTool.IsNullOrZero(this.EntityPM.MinPrice)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Min price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Min price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Step1PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step1Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Step 1 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Step 1 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Step2PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step2Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Step 2 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Step 2 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Step3PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step3Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Step 3 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Step 3 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Step4PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step4Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Step 4 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Step 4 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Step5PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step5Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Step 5 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Step 5 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Step6PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step6Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Step 6 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Step 6 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Step7PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step7Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Step 7 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Step 7 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Step8PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step8Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Step 8 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Step 8 price format is invalid"
-            }
-        }
-
-        this.HasErrors = error;
-        this.ErrorText = errorText;
     }
 
     private SetUIProperties() {
@@ -1066,5 +1115,14 @@ export class TariffLineData extends BaseComponent {
             return FontTool.Red;
         }
     }
+}
+
+export class VersionClass {
+    public Code: number;
+    public Name: string;
+    public Id: string;
+    public Version: number;
+    public ParentVersionNumber: number;
+
 }
 
