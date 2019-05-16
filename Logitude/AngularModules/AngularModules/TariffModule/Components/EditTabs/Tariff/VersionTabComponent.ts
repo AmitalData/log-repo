@@ -18,6 +18,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { DatePipe } from '@angular/common';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 declare var ResultAsArray: any;
 
@@ -434,6 +435,16 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             errors.push("Invalid Tariff Lines");
         }
 
+        this.CurrentVersion.TariffLines.forEach(item => {
+            if (AppTool.IsNullOrEmpty(item.OriginPortId)) {
+                errors.push("Missing Origin Port");
+            }
+
+            if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
+                errors.push("Missing Destination Port");
+            }
+        });
+        
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
@@ -513,8 +524,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
     }
-
-
+    
     public VersionsList: VersionClass[];
     private BuildVersionsList() {
         this.VersionsList = [];
