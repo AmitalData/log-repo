@@ -55,7 +55,7 @@ export class DirectShipment {
     this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'mvd');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    if(TransportMode=='A')
+   /* if(TransportMode=='A')
     {
       this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'TestAirlineL8');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
@@ -85,10 +85,10 @@ export class DirectShipment {
       this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveTypeIDInlandMTI1');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
   
-    }
+    }*/
    
-    this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'TestIncoterm');
-    this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    //this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'TestIncoterm');
+   // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
    
     // this.Helper.WaitByIdAndClick('Shipment_OrderIsDangerouseGoods');

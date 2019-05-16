@@ -59,7 +59,7 @@ export class EditTabsComponent {
     // this.RoutingTabScenario.RoutingTab(LogitudeShipType,ShipmentType);
     // this.PayablesTabScenario.PayablesTab(shipperRef1);
     // this.ReceivablesTabScenario.RecievablesTab(LogitudeShipType);
-    this.DocsOutTabScenario.DocsOutTab();
+    //this.DocsOutTabScenario.DocsOutTab();
     if(LogitudeShipType=='M'){
       this.ShipmentsTabScenario.ShipmentsTab();
     }

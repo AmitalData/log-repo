@@ -112,5 +112,12 @@ export class FieldsHelper {
     });
   
   }
+  
+  waitByCss(className: string) {
+    var EC = protractor.ExpectedConditions;
+    browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000000).then(a => {
+      return true;
+    });
+  }
 }
 
