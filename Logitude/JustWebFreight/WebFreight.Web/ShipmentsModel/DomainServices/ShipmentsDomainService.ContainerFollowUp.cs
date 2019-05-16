@@ -112,7 +112,12 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
                                                                  ShipmentNotes = myShipment.Notes,
                                                                  VesselName = myShipment.ShipmentMasterData == null ? null : (myShipment.ShipmentMasterData.MainCarriageVessel == null ? null : myShipment.ShipmentMasterData.MainCarriageVessel.EnglishName),
-
+                                                                 IsCancelled = myShipment.IsCancelled,
+                                                                 ShipmentTypeId = myShipment.ShipmentTypeId,
+                                                                 DeliveryTransportModeCode = f.DeliveryTransportModeCode,
+                                                                 DeliveryTransportModeName = f.DeliveryTransportMode != null ? f.DeliveryTransportMode.Name : "",
+                                                                 ECRTransportModeCode = f.ECRTransportModeCode,
+                                                                 ECRTransportModeName = f.ECRTransportMode != null ? f.ECRTransportMode.Name : ""
                                                              });
 
             ContainerFollowUpCustomFilter customfilters = new ContainerFollowUpCustomFilter(tenant);
@@ -268,7 +273,12 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
 
                                                             ShipmentNotes = myShipment.Notes,
                                                             VesselName = myShipment.ShipmentMasterData == null ? null : (myShipment.ShipmentMasterData.MainCarriageVessel == null ? null : myShipment.ShipmentMasterData.MainCarriageVessel.EnglishName),
-
+                                                            IsCancelled = myShipment.IsCancelled,
+                                                            ShipmentTypeId = myShipment.ShipmentTypeId,
+                                                            DeliveryTransportModeCode = f.DeliveryTransportModeCode,
+                                                            DeliveryTransportModeName = f.DeliveryTransportMode != null ? f.DeliveryTransportMode.Name : "",
+                                                            ECRTransportModeCode = f.ECRTransportModeCode,
+                                                            ECRTransportModeName = f.ECRTransportMode != null ? f.ECRTransportMode.Name : ""
                                                         });
 
             ContainerFollowUpCustomFilter customfilters = new ContainerFollowUpCustomFilter(tenant);
