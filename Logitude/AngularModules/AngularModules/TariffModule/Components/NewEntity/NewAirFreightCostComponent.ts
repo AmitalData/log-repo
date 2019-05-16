@@ -449,11 +449,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
             }
         }
     }
-    ValidateAirFreightCost() {
-        if (AppTool.IsNullOrEmpty((this.EntityPM.PriceSteps))) {
-            this.ValidationErrorsList.push("At least one step is required");
-        }
-    }
+  
 
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -465,9 +461,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.TypeCode == "ASC") {
            this.ValidateSurcharge();
         }
-        //else if (this.EntityPM.TypeCode == "AFC") {
-        //    this.ValidateAirFreightCost();
-        //}
+      
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator("Creating...");
             var myService: TariffPMService = new TariffPMService();

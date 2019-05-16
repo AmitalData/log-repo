@@ -33,6 +33,28 @@
                             {{ExpirationDate | DateTimeToDatePipe}}
                         </td>
 
+                        <td style="float:left;width:460px;">
+                            <table>
+                                <tr>
+                                    <td style="width:70px;">
+                                        <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'IsComparToChecked'" [Text]="'Compare to'" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                    <td style="width:190px;">
+                                        <ComboBox [ItemsSource]="VersionsList" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
+                                    </td>
+                                    <td style="width:130px;">
+                                        Warning Percentage
+                                    </td>
+                                    <td style="width:30px;">
+                                        <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'WarningPercentage'" [Text]="WarningPercentage" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
                         <td>
                             <div></div>
                         </td>
