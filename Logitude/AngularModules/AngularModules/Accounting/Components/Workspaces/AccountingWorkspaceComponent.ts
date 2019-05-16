@@ -17,8 +17,8 @@ export class AccountingWorkspaceComponent {
 
     public isRTL: boolean = false;
     public IsMainTabVisibile: boolean = false;
-    public IsReceivablesTabVisibile: boolean = false;
-    public IsPayablesTabVisibile: boolean = false;
+    public IsCustomersTabVisibile: boolean = false;
+    public IsVendorsTabVisibile: boolean = false;
     public IsBanksTabVisibile: boolean = false;
     public IsJournalTabVisibile: boolean = false;
     public IsGLAccountsTabVisibile: boolean = false;
@@ -52,13 +52,13 @@ export class AccountingWorkspaceComponent {
         if (mainTabFeature) {
             this.IsMainTabVisibile = true;
         }
-        var ReceivablesTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCReceivables") && f.ObjectTableId == table.Id)[0];
-        if (ReceivablesTabFeature) {
-            this.IsReceivablesTabVisibile = true;
+        var CustomersTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCCustomers") && f.ObjectTableId == table.Id)[0];
+        if (CustomersTabFeature) {
+            this.IsCustomersTabVisibile = true;
         }
-        var PayablesTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCPayables") && f.ObjectTableId == table.Id)[0];
-        if (PayablesTabFeature) {
-            this.IsPayablesTabVisibile = true;
+        var VendorsTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCVendors") && f.ObjectTableId == table.Id)[0];
+        if (VendorsTabFeature) {
+            this.IsVendorsTabVisibile = true;
         }
         var BanksTabFeature = FeatureLocator.Features.filter(f => (f.Code == "ACCBanks") && f.ObjectTableId == table.Id)[0];
         if (BanksTabFeature) {
@@ -105,12 +105,12 @@ export class AccountingWorkspaceComponent {
         //     this.SelectedItem = "Main";
         // }
         // else
-        if (this.IsReceivablesTabVisibile) {
-            this.SelectedItem = "RCV";
+        if (this.IsCustomersTabVisibile) {
+            this.SelectedItem = "CS";
 
         }
-        else if (this.IsPayablesTabVisibile) {
-            this.SelectedItem = "PAY";
+        else if (this.IsVendorsTabVisibile) {
+            this.SelectedItem = "VND";
 
         }
         else if (this.IsBanksTabVisibile) {
@@ -192,7 +192,7 @@ export class AccountingWorkspaceComponent {
                             }
                             break;
                         }
-                        case "RCV": {
+                        case "CS": {
                             if (this.Page_Receivable == null) {
                                 this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {
                                     this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {
@@ -207,7 +207,7 @@ export class AccountingWorkspaceComponent {
                             }
                             break;
                         }
-                        case "PAY": {
+                        case "VND": {
                             if (this.Page_Payable == null) {
                                 this._entityResourceService.getEntityResourceByTableName("APInvoice", 0).subscribe((response: any) => {
                                 SessionLocator.DynamicLoader.Load("./Accounting/Components/Workspaces/Payable/PayablePageComponent", myLocation.viewContainerRef)

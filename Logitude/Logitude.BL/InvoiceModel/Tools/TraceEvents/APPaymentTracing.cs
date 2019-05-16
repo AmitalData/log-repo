@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -13,7 +14,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
         {
             string myEntityName = "APPayment";
 
-            ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant);
 
             if (isNewState)
             {

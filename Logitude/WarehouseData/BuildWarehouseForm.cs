@@ -239,9 +239,11 @@ namespace WarehouseData
 
                             #region Create and Build Dimensions Table
 
-            
 
+                            stepName = "BuildDateDimensionsTable";
                             warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
+
+                            stepName = "RunSqlFunctions";
                             warehouseHelper.RunSqlFunctions(destinationConnectionString);
 
 
@@ -313,14 +315,16 @@ namespace WarehouseData
 
                             foreach (TableClass table in tableNameLists.Where(d => d.DispayInScreen))
                             {
+                                stepName = "DW table count";
                                 GetCount(table, "DW", destinationConnectionString);
                             }
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
                             {
+                                stepName = "DIM table count";
                                 GetCount(table, "DIM", destinationConnectionString);
                             }
 
-
+                            stepName = "Fact table count";
                             GetCount(tableNameLists.Where(d => d.DBTableName == "Shipments").FirstOrDefault(), "Fact", destinationConnectionString);
 
                             #endregion

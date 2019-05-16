@@ -1025,6 +1025,22 @@
     <Compile Include="Migrations\201905130832117_FixSchedulerNewFields_Rabaia.Designer.cs">
       <DependentUpon>201905130832117_FixSchedulerNewFields_Rabaia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905150747023_AddTarifflineUniqueKey.cs" />
+    <Compile Include="Migrations\201905150747023_AddTarifflineUniqueKey.Designer.cs">
+      <DependentUpon>201905150747023_AddTarifflineUniqueKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905150930257_RenameTarifflineUniqueKey.cs" />
+    <Compile Include="Migrations\201905150930257_RenameTarifflineUniqueKey.Designer.cs">
+      <DependentUpon>201905150930257_RenameTarifflineUniqueKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905150730520_AddingRetriesToScheduler_Rabaia.cs" />
+    <Compile Include="Migrations\201905150730520_AddingRetriesToScheduler_Rabaia.Designer.cs">
+      <DependentUpon>201905150730520_AddingRetriesToScheduler_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.cs" />
+    <Compile Include="Migrations\201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.Designer.cs">
+      <DependentUpon>201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1735,6 +1751,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905130832117_FixSchedulerNewFields_Rabaia.resx">
       <DependentUpon>201905130832117_FixSchedulerNewFields_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905150747023_AddTarifflineUniqueKey.resx">
+      <DependentUpon>201905150747023_AddTarifflineUniqueKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905150930257_RenameTarifflineUniqueKey.resx">
+      <DependentUpon>201905150930257_RenameTarifflineUniqueKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905150730520_AddingRetriesToScheduler_Rabaia.resx">
+      <DependentUpon>201905150730520_AddingRetriesToScheduler_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.resx">
+      <DependentUpon>201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
