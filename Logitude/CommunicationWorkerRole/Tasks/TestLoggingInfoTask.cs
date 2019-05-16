@@ -20,7 +20,14 @@ namespace CommunicationWorkerRole.Tasks
             for (int i = 0; i <= 2; i++)
             {
                 Thread.Sleep(new TimeSpan(0,0,30));
-                LogInfo("Log Info # " + i + " , # is Event");
+                if (i != 2)
+                {
+                    LogInfo("Log Info # " + i + " , # is Event");
+                }
+                else
+                {
+                    LogException("Log Exception # " + i + " , # Oh Yea");
+                }
             }
 
         }
