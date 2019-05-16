@@ -1702,17 +1702,18 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                 else {
                                     view.ParentDataTypeCode = DWObjectField.DataTypeCode;
                                 }
+                                var dwObjectFieldName: string = DWObjectField.IsCustom ? DWObjectField.DisplayName : DWObjectField.Name;
 
                                 if (!AppTool.IsNullOrEmpty(DWObjectField.Code)) {
-                                    view.DisplayName = '[' + (DWObjectField.Name.replace('[', '').replace(']', '') + ' ' + view.Name.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
+                                    view.DisplayName = '[' + (dwObjectFieldName.replace('[', '').replace(']', '') + ' ' + view.Name.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
                                     view.DimensionTableDisplayName = DWObjectField.Name.replace('[', '').replace(']', '');
                                 }
                                 else if (!AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) {
-                                    view.DisplayName = DWObjectField.Name;
+                                    view.DisplayName = dwObjectFieldName;
                                     view.DimensionTableDisplayName = DWObjectField.Name;
                                 }
                                 else {
-                                    view.DisplayName = '[' + (DWObjectField.Name + ' ' + view.Name.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
+                                    view.DisplayName = '[' + (dwObjectFieldName + ' ' + view.Name.replace('[', '').replace(']', '')) + ']';//.replace('[', '').replace('[', '').replace(']', '').replace(']', '');
                                     view.DimensionTableDisplayName = DWObjectField.Name;
 
                                 }
