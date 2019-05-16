@@ -195,6 +195,7 @@ export class TariffFilterParameter {
     PriceSteps: string;
     TariffId: string;
     Version: number;
+    TariffType: string
 }
 
 export class ExcelTariffLines {

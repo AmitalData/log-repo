@@ -19,6 +19,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 declare var ResultAsArray: any;
 
@@ -55,6 +56,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.CurrentVersion.Version)[0];
+                    this.FillTariffLines();
 
                     if (this.isApproveButtonClicked) {
                         this.isApproveButtonClicked = false;
@@ -294,6 +297,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             filter.PriceSteps = context.PriceSteps;
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
+            filter.TariffType = context.EntityPM.TypeCode;
 
             context.SendExcelToServer(filter);
         };
@@ -341,6 +345,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge9Price = item.Surcharge9Price;
             tariffLine.Surcharge10Price = item.Surcharge10Price;
 
+            tariffLine.OriginPortText = item.FromPortText;
+            tariffLine.DestinationPortText = item.ToPortText;
             tariffLine.Surcharge1PriceText = item.Surcharge1PriceText;
             tariffLine.Surcharge2PriceText = item.Surcharge2PriceText;
             tariffLine.Surcharge3PriceText = item.Surcharge3PriceText;
@@ -385,6 +391,18 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
             errors.push("Invalid Tariff Lines");
         }
+
+        this.CurrentVersion.TariffLines.forEach(item => {
+            this.CurrentVersion.TariffLines.forEach(item => {
+                if (AppTool.IsNullOrEmpty(item.OriginPortId)) {
+                    errors.push("Missing Origin Port");
+                }
+
+                if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
+                    errors.push("Missing Destination Port");
+                }
+            });
+        });
 
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
