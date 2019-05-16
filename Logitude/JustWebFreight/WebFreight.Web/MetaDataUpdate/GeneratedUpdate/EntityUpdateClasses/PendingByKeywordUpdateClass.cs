@@ -80,34 +80,38 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
-			      				    IsNewWizard =  false,
+			      				    IsNewWizard =  true,
+			      				    LookUp1 =  "CourierPendingReasonCode",
+			      				    LookUp2 =  "CourierPendingReasonName",
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
-			      				    EnableAddFromLOV =  false,
+			      				    EnableAddFromLOV =  true,
 			      				    IsRestrictable =  false,
 			      				    IsMain =  true,
-			      				    IsAutoComplete =  false,
+			      				    IsAutoComplete =  true,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "Id",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
+			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
 			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "AddEditPendingByKeywordComponent",
 			      				    LocalDefaultText =  "Pending לפי מילות מפתח",
 			      				    DefaultText =  "Pending By Keywords",
-			      				    Code =  "e50c",
+			      				    Code =  "bacf",
 			      				    Name =  "Customs.Notification Query Group",
-			      				    GenerateDomainService =  false,
+			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
+			      				    NewWizardComponentPath =  "./CustomsModules/CustomsCourier/Components/PendingByKeyword/AddEditPendingByKeywordComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -330,11 +334,47 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters)
-	    {  	   
+	    {  
+	        FeatureRepository featureRepository = new FeatureRepository(0); 
+            List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+            IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+	        QueryGroup PendingByKeywordQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "bacf", Name = "Customs.Notification Query Group" }, queryGroupRepository);
+	        queryGroupRepository.SubmitChanges();
+
+	        ObjectTable PendingByKeywordObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.PendingByKeyword" && d.Tenant == 0).FirstOrDefault();
+	        List<ObjectField> PendingByKeywordObjectFields = objectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PendingByKeyword").ToList();   
+
+			   TextCode PendingByKeywordTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "PendingByKeyword.Q.AllPendingByKeywords", DefaultText = "All Pending By Keywords",LocalDefaultText = "מילות מפתח לקודי עיכוב", ObjectTableId = PendingByKeywordObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, TextCodeRepository, textCodes);
+			   Feature PendingByKeywordFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PendingByKeyword.Q.AllPendingByKeywords", ObjectTableId = PendingByKeywordObjectTable.Id, Tenant = 0, NameTextCodeCode = "PendingByKeyword.Features.AllPendingByKeywords", NameTextCodeDefaultText = "AllPendingByKeywords", FeatureTypeCode = "QUER", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+
+	        TextCodeRepository.SubmitChanges();
+	        FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query AllPendingByKeywordsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = PendingByKeywordTextCode_0.Id, Code = "AllPendingByKeywords",  QueryGroupCode = "bacf", IndexOrder = 0, Tenant = 0, ObjectTableId = PendingByKeywordObjectTable.Id, QuerySection = "Customs.PendingByKeyword", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = PendingByKeywordFeature_0.Id, DefaultSortName = "CourierPendingReasonName", DefaultSortDirection = "Ascending" }, queriesRepository, tenantQueries);
+	
+			 QueryColumn AllPendingByKeywordsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id, IndexOrder = 0, ObjectFieldId = PendingByKeywordObjectFields.Where(d => d.FieldName == "KeywordsList" && d.ObjectTableId == PendingByKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 350 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn AllPendingByKeywordsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllPendingByKeywordsQuery.Id, IndexOrder = 1, ObjectFieldId = PendingByKeywordObjectFields.Where(d => d.FieldName == "CourierPendingReasonCode" && d.ObjectTableId == PendingByKeywordObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 200 }, queryColumnsRepository, tenantQueryColumns);
+	   
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable PendingByKeywordObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PendingByKeyword" && d.Tenant == 0).FirstOrDefault();
+		   List<ObjectField> PendingByKeywordObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.PendingByKeyword").ToList();
+		       
+	      
+
+	         Screen PendingByKeywordCustomsPendingByKeywordHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PendingByKeyword.Customs.PendingByKeywordHeaderScreen", Name = "Customs.PendingByKeywordHeaderScreen", ObjectTableId = PendingByKeywordObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+            ScreenField PendingByKeywordCustomsPendingByKeywordHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ObjectFieldId = PendingByKeywordObjectFields.Where(d => d.FieldName == "KeywordsList").FirstOrDefault().Id, ScreenId = PendingByKeywordCustomsPendingByKeywordHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         
+            ScreenField PendingByKeywordCustomsPendingByKeywordHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ObjectFieldId = PendingByKeywordObjectFields.Where(d => d.FieldName == "CourierPendingReasonCode").FirstOrDefault().Id, ScreenId = PendingByKeywordCustomsPendingByKeywordHeaderScreenScreen0.Id, Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+         	
+		    PendingByKeywordObjectTable.HeaderScreenId = PendingByKeywordCustomsPendingByKeywordHeaderScreenScreen0.Id;
+	   		  
 
 	    }
 
