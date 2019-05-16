@@ -115,10 +115,21 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Category3Name = a.Category3.EnglishName,
                                                         Category4Name = a.Category4.EnglishName,
                                                         Category5Name = a.Category5.EnglishName,
+
+                                                        // Created & Updated
+                                                        CreateDate = a.CreateDate,
+                                                        CreatedByLocalName =    a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
+                                                        CreatedByUserName =     a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                                                        UpdateDate = a.UpdateDate,
+                                                        UpdatedByLocalName =    a.UpdatedByUser != null ? a.UpdatedByUser.Contact.LocalName : null,
+                                                        UpdatedByUserName =     a.UpdatedByUser != null ? a.UpdatedByUser.Contact.EnglishName : null,
+
+
                                                });
             return query;
         }
 
+        
 		private IQueryable<GLAccount> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<GLAccount> iQueryable,int tenant)
         {
             GLAccountCustomFilter filters = new GLAccountCustomFilter(tenant);

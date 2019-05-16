@@ -17,6 +17,9 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { DatePipe } from '@angular/common';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+
 declare var ResultAsArray: any;
 
 @Component({
@@ -37,6 +40,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public IsDraftVersion: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsComparToChecked = false;
+    public WarningPercentage: number;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -81,12 +87,18 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.EntityPM = this.EntityArgs.EntityPM;
         this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.TariffDomainService = new TariffDomainService();
-
+      
         this.CurrentVersion = args['CurrentVersion'];
 
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
+
+        if (this.IsDraftVersion) {
+            this.IsComparToChecked = true;
+        }
+
+        this.BuildVersionsList();
 
         this.SetUIProperties();
         this.SetStepsLabelsAndVisibility();
@@ -331,6 +343,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             filter.PriceSteps = context.PriceSteps;
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
+            filter.TariffType = context.EntityPM.TypeCode;
 
             context.SendExcelToServer(filter);
         };
@@ -422,6 +435,16 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             errors.push("Invalid Tariff Lines");
         }
 
+        this.CurrentVersion.TariffLines.forEach(item => {
+            if (AppTool.IsNullOrEmpty(item.OriginPortId)) {
+                errors.push("Missing Origin Port");
+            }
+
+            if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
+                errors.push("Missing Destination Port");
+            }
+        });
+        
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
@@ -501,6 +524,39 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
     }
+    
+    public VersionsList: VersionClass[];
+    private BuildVersionsList() {
+        this.VersionsList = [];
+        var datePipe: DatePipe = new DatePipe("en-US");
+
+        this.EntityPM.TariffVersions.forEach(item => {
+            var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
+            var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+
+            var newVersion: VersionClass = new VersionClass();
+            newVersion.Version = item.Version;
+            newVersion.ParentVersionNumber = item.ParentVersionNumber;
+            newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+            newVersion.Id = item.TariffId; 
+            this.VersionsList.push(newVersion);
+        });
+        this.SelectedVersion = this.VersionsList.filter(a => a.ParentVersionNumber == this.CurrentVersion.Version)[0];
+    }
+
+    private selectedVersion: VersionClass;
+    get SelectedVersion() { return this.selectedVersion; }
+    set SelectedVersion(value: VersionClass) {
+        if (this.selectedVersion != value) {
+            this.selectedVersion = value;
+            if (this.IsDraftVersion) {
+                this.IsComparToChecked = true;
+            }
+            else {
+                this.IsComparToChecked = false;
+            }
+        }
+    }
 }
 
 export class TariffLineData extends BaseComponent {
@@ -514,7 +570,6 @@ export class TariffLineData extends BaseComponent {
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
-
         this.SetUIProperties();
     }
 
@@ -1070,5 +1125,14 @@ export class TariffLineData extends BaseComponent {
             return FontTool.Red;
         }
     }
+}
+
+export class VersionClass {
+    public Code: number;
+    public Name: string;
+    public Id: string;
+    public Version: number;
+    public ParentVersionNumber: number;
+
 }
 
