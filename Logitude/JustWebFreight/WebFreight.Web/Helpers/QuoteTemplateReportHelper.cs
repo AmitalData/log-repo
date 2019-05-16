@@ -2875,6 +2875,7 @@ namespace Logitude.BL.Helpers
                                 {
                                     value = (double)chargePM.SaleContainerType1UnitPrice;
                                     AA = value.ToString("N"); // 1,234.512
+                     
                                 }
                                 HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
                             }
@@ -2963,7 +2964,7 @@ namespace Logitude.BL.Helpers
                             AA = value.ToString("N"); // 1,234.512
                         }
 
-                        string SaleTotalAmount = AA + " " + chargePM.CurrencyCode;
+                        string SaleTotalAmount = AA + " " + (quotePM.IsSaleCurrencySameAsCost ? chargePM.CurrencyCode : quotePM.SaleCurrencyCode);
                         HtmlTemplate.Append(BuildTableColumn(SaleTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
                     }
 
