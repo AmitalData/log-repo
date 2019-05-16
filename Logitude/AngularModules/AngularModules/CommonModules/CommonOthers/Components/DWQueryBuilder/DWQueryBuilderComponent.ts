@@ -1279,6 +1279,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
+            this.IsCustom = DWObjectField.IsCustom;
+            
+
 
             if (DWObjectField.FilterType) {
                 this.FilterType = DWObjectField.FilterType;
@@ -1335,6 +1338,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
     private category1: string;
     public get Category1() { return this.category1; }
     public set Category1(newValue: string) { this.category1 = newValue; }
+
+
+    private isCustom: boolean = false;
+    public get IsCustom() { return this.isCustom; }
+    public set IsCustom(newValue: boolean) { this.isCustom = newValue; }
 
 
     private category2: string;
@@ -1796,6 +1804,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
         this.IsPrimaryKey = DWObjectField.IsPrimaryKey;
         this.IsMeasurement = DWObjectField.IsMeasurement;
+        this.IsCustom = DWObjectField.IsCustom;
+
+
         this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
         this.LOVAdditionalColumns = DWObjectField.LOVAdditionalColumns;
         if (this.DWObjectTableCode.indexOf("DIM_") != -1) {
