@@ -151,6 +151,11 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     reqSheetDetails.CustomFileNo);
                     if (listRequestInProgress != null)
                     {
+                        if (requestParams.SplitterModeLetCreateMyType)
+                        {
+                            listRequestInProgress = listRequestInProgress.Where(r => r.InterfaceTypeCode != requestParams.InterfaceTypeCode).ToList();
+                        }
+
                         if (listRequestInProgress.Count > 0)
                         {
                             var RequestInProgressInterfaceTypeName = listRequestInProgress.First().InterfaceTypeName;
