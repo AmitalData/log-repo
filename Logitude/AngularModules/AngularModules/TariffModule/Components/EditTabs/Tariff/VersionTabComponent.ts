@@ -329,6 +329,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             filter.PriceSteps = context.PriceSteps;
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
+            filter.TariffType = context.EntityPM.TypeCode;
 
             context.SendExcelToServer(filter);
         };

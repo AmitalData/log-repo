@@ -294,6 +294,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             filter.PriceSteps = context.PriceSteps;
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
+            filter.TariffType = context.EntityPM.TypeCode;
 
             context.SendExcelToServer(filter);
         };
@@ -341,6 +342,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge9Price = item.Surcharge9Price;
             tariffLine.Surcharge10Price = item.Surcharge10Price;
 
+            tariffLine.OriginPortText = item.FromPortText;
+            tariffLine.DestinationPortText = item.ToPortText;
             tariffLine.Surcharge1PriceText = item.Surcharge1PriceText;
             tariffLine.Surcharge2PriceText = item.Surcharge2PriceText;
             tariffLine.Surcharge3PriceText = item.Surcharge3PriceText;
