@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -27,7 +27,7 @@ declare var ResultAsArray: any;
     templateUrl: './SurchargeVersionTabComponent.html',
 })
 
-export class SurchargeVersionTabComponent extends BaseComponent implements OnDestroy, OnInit {
+export class SurchargeVersionTabComponent extends BaseComponent implements OnDestroy {
     public EntityPM: TariffPM;
     public ObjectTableName: string = "Tariff";
     public TariffsLinesSource: ObservableCollection;
@@ -50,55 +50,35 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     }
 
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.FillTariffLines();
 
                     if (this.isApproveButtonClicked) {
+                        this.isApproveButtonClicked = false;
                         this.DoApprove();
                     }
 
                     if (this.isCopyButtonClicked) {
                         this.isCopyButtonClicked = false;
-                        this.CurrentSession.FireEvent("NewVersionAdded");
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
                     if (this.isUploadExcelFinished) {
                         this.isUploadExcelFinished = false;
-                        this.FillTariffLines();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 }
-            });
-
-            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
-                if (isLoadSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    if (this.CurrentVersion != null) {
-                        this.IsDraftVersion = this.CurrentVersion.IsDraft;
-                    }
-
-                    if (this.isApproveButtonClicked) {
-                        this.isApproveButtonClicked = false;
-                        this.CurrentSession.FireEvent("VersionApproved");
-                    }
-
-                    this.SetUIProperties();
-                }
-            });
+            });            
         }
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
-        AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
-    ngOnInit() {
-       
-    }
+    
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.EntityPM = this.EntityArgs.EntityPM;
@@ -137,24 +117,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 }
             }
         });
-    }
-
-    get StartDate() {
-        return this.CurrentVersion.StartDate;
-    }
-    set StartDate(value: Date) {
-        if (this.CurrentVersion.StartDate != value) {
-            this.CurrentVersion.StartDate = value;
-        }
-    }
-
-    get ExpirationDate() {
-        return this.CurrentVersion.ExpirationDate;
-    }
-    set ExpirationDate(value: Date) {
-        if (this.CurrentVersion.ExpirationDate != value) {
-            this.CurrentVersion.ExpirationDate = value;
-        }
     }
 
     public Surcharge1PriceLabel: string;
@@ -232,6 +194,24 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
 
+    get StartDate() {
+        return this.CurrentVersion.StartDate;
+    }
+    set StartDate(value: Date) {
+        if (this.CurrentVersion.StartDate != value) {
+            this.CurrentVersion.StartDate = value;
+        }
+    }
+
+    get ExpirationDate() {
+        return this.CurrentVersion.ExpirationDate;
+    }
+    set ExpirationDate(value: Date) {
+        if (this.CurrentVersion.ExpirationDate != value) {
+            this.CurrentVersion.ExpirationDate = value;
+        }
+    }
+    
     FillTariffLines() {
         this.TariffsLinesSource.Clear();
         var itemsCollection: TariffLineData[] = [];
@@ -337,8 +317,50 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     private isUploadExcelFinished: boolean = false;
     private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
+        tariffLines.forEach(item => {
+            var tariffLine = new TariffLinePM(null);
+            tariffLine.StartDate = this.StartDate;
+            tariffLine.ExpirationDate = this.ExpirationDate;
+            tariffLine.Tenant = SessionLocator.Tenant;
+            tariffLine.Version = this.CurrentVersion.Version;
+            tariffLine.OriginPortId = item.FromPortId;
+            tariffLine.OriginPortCode = item.FromPortCode;
+            tariffLine.OriginPortName = item.FromPortName;
+            tariffLine.DestinationPortId = item.ToPortId;
+            tariffLine.DestinationPortCode = item.ToPortCode;
+            tariffLine.DestinationPortName = item.ToPortName;
 
+            tariffLine.Surcharge1Price = item.Surcharge1Price;
+            tariffLine.Surcharge2Price = item.Surcharge2Price;
+            tariffLine.Surcharge3Price = item.Surcharge3Price;
+            tariffLine.Surcharge4Price = item.Surcharge4Price;
+            tariffLine.Surcharge5Price = item.Surcharge5Price;
+            tariffLine.Surcharge6Price = item.Surcharge6Price;
+            tariffLine.Surcharge7Price = item.Surcharge7Price;
+            tariffLine.Surcharge8Price = item.Surcharge8Price;
+            tariffLine.Surcharge9Price = item.Surcharge9Price;
+            tariffLine.Surcharge10Price = item.Surcharge10Price;
 
+            tariffLine.Surcharge1PriceText = item.Surcharge1PriceText;
+            tariffLine.Surcharge2PriceText = item.Surcharge2PriceText;
+            tariffLine.Surcharge3PriceText = item.Surcharge3PriceText;
+            tariffLine.Surcharge4PriceText = item.Surcharge4PriceText;
+            tariffLine.Surcharge5PriceText = item.Surcharge5PriceText;
+            tariffLine.Surcharge6PriceText = item.Surcharge6PriceText;
+            tariffLine.Surcharge7PriceText = item.Surcharge7PriceText;
+            tariffLine.Surcharge8PriceText = item.Surcharge8PriceText;
+            tariffLine.Surcharge9PriceText = item.Surcharge9PriceText;
+            tariffLine.Surcharge10PriceText = item.Surcharge10PriceText;
+
+            tariffLine.HasErrors = item.HasErrors;
+            tariffLine.ErrorText = item.ErrorText;
+
+            this.CurrentVersion.AddTariffLine(tariffLine);
+        });
+
+        this.EntityPM.TariffLinesAdded = true;
+        this.isUploadExcelFinished = true;
+        this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
     }
 
     // Download Excel 
@@ -358,18 +380,28 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     private isApproveButtonClicked: boolean = false;
     ApproveVersionClicked() {
-        this.isApproveButtonClicked = true;
+        var errors: string[] = [];
 
-        if (this.EntityPM.IsDirty) {
-            this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
+        if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
+            errors.push("Invalid Tariff Lines");
         }
 
-        else {
-            this.DoApprove();
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+
+        if (errors.length == 0) {
+            this.isApproveButtonClicked = true;
+
+            if (this.EntityPM.IsDirty) {
+                this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
+            }
+
+            else {
+                this.DoApprove();
+            }
         }
     }
     private DoApprove() {
-        this.TariffDomainService.ApproveVersion(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+        this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             }
@@ -418,6 +450,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.DestinationPortId = item.DestinationPortId;
             tariffLine.DestinationPortCode = item.DestinationPortCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
+            tariffLine.Surcharge1Price = item.Surcharge1Price;
+            tariffLine.Surcharge2Price = item.Surcharge2Price;
+            tariffLine.Surcharge3Price = item.Surcharge3Price;
+            tariffLine.Surcharge4Price = item.Surcharge4Price;
+            tariffLine.Surcharge5Price = item.Surcharge5Price;
+            tariffLine.Surcharge6Price = item.Surcharge6Price;
+            tariffLine.Surcharge7Price = item.Surcharge7Price;
+            tariffLine.Surcharge8Price = item.Surcharge8Price;
+            tariffLine.Surcharge9Price = item.Surcharge9Price;
+            tariffLine.Surcharge10Price = item.Surcharge10Price;
+
             this.CurrentVersion.AddTariffLine(tariffLine);
         });
 
@@ -438,84 +481,181 @@ export class TariffLineData extends BaseComponent {
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
 
         this.SetUIProperties();
-
-        this.CheckIfLineHasError();
     }
-
-    public HasError: boolean = false;
+    
     private CheckIfLineHasError() {
         var error: boolean = false;
+        var errorText: string;
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
             error = true;
-        }
 
-        if (!error) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
-                error = true;
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Port with code " + this.EntityPM.OriginPortText + " not found";
+            }
+
+            else {
+                errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
             }
         }
 
-        if (!error) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.MinPriceText) && AppTool.IsNullOrZero(this.EntityPM.MinPrice)) {
-                error = true;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Port with code " + this.EntityPM.DestinationPortText + " not found";
+            }
+
+            else {
+                errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
             }
         }
 
-        if (!error) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step1PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step1Price)) {
-                error = true;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Surcharge 1 price format is invalid";
+            }
+
+            else {
+                errorText = errorText + ", Surcharge 1 price format is invalid"
+            }
+        }
+        
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge2Price)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Surcharge 2 price format is invalid";
+            }
+
+            else {
+                errorText = errorText + ", Surcharge 2 price format is invalid"
             }
         }
 
-        if (!error) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step2PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step2Price)) {
-                error = true;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge3Price)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Surcharge 3 price format is invalid";
+            }
+
+            else {
+                errorText = errorText + ", Surcharge 3 price format is invalid"
             }
         }
 
-        if (!error) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step3PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step3Price)) {
-                error = true;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge4Price)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Surcharge 4 price format is invalid";
+            }
+
+            else {
+                errorText = errorText + ", Surcharge 4 price format is invalid"
             }
         }
 
-        if (!error) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step4PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step4Price)) {
-                error = true;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge5Price)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Surcharge 5 price format is invalid";
+            }
+
+            else {
+                errorText = errorText + ", Surcharge 5 price format is invalid"
             }
         }
 
-        if (!error) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step5PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step5Price)) {
-                error = true;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge6PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge6Price)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Surcharge 6 price format is invalid";
+            }
+
+            else {
+                errorText = errorText + ", Surcharge 6 price format is invalid"
             }
         }
 
-        if (!error) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step6PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step6Price)) {
-                error = true;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge7PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge7Price)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Surcharge 7 price format is invalid";
+            }
+
+            else {
+                errorText = errorText + ", Surcharge 7 price format is invalid"
             }
         }
 
-        if (!error) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step7PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step7Price)) {
-                error = true;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge8PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge8Price)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Surcharge 8 price format is invalid";
+            }
+
+            else {
+                errorText = errorText + ", Surcharge 8 price format is invalid"
             }
         }
 
-        if (!error) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.Step8PriceText) && AppTool.IsNullOrZero(this.EntityPM.Step8Price)) {
-                error = true;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge9PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge9Price)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Surcharge 9 price format is invalid";
+            }
+
+            else {
+                errorText = errorText + ", Surcharge 9 price format is invalid"
             }
         }
 
-        this.HasError = error;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge10PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge10Price)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Surcharge 10 price format is invalid";
+            }
+
+            else {
+                errorText = errorText + ", Surcharge 10 price format is invalid"
+            }
+        }
+
+        this.HasErrors = error;
+        this.ErrorText = errorText;
     }
 
     private SetUIProperties() {
         this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
         this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
+    }
+
+    get HasErrors() {
+        return this.EntityPM.HasErrors;
+    }
+    set HasErrors(value: boolean) {
+        if (this.EntityPM.HasErrors != value) {
+            this.EntityPM.HasErrors = value;
+        }
+    }
+
+    get ErrorText() {
+        return this.EntityPM.ErrorText;
+    }
+    set ErrorText(value: string) {
+        if (this.EntityPM.ErrorText != value) {
+            this.EntityPM.ErrorText = value;
+        }
     }
 
     // Origin Port
@@ -625,8 +765,7 @@ export class TariffLineData extends BaseComponent {
             return FontTool.Red;
         }
     }
-
-
+    
     // Surcharge 1
     get Surcharge1Price() {
         return this.EntityPM.Surcharge1Price;
@@ -936,7 +1075,5 @@ export class TariffLineData extends BaseComponent {
             return FontTool.Red;
         }
     }
-
-
 }
 

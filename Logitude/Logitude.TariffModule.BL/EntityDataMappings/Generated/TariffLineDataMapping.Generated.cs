@@ -72,7 +72,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge9PriceText, 
 	         Surcharge10PriceText, 
 	         HasErrors, 
-	         ErrorText,
+	         ErrorText, 
+	         LineUniqueKey, 
+	         LineUniqueKeyText,
 	      }
 
 
@@ -133,7 +135,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge9PriceText, 
 	         Surcharge10PriceText, 
 	         HasErrors, 
-	         ErrorText,
+	         ErrorText, 
+	         LineUniqueKey, 
+	         LineUniqueKeyText,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -390,6 +394,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ErrorText))
             {
 				entityPOCO.ErrorText = entityPM.ErrorText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineUniqueKey))
+            {
+				entityPOCO.LineUniqueKey = entityPM.LineUniqueKey;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineUniqueKeyText))
+            {
+				entityPOCO.LineUniqueKeyText = entityPM.LineUniqueKeyText;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -653,6 +667,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.ErrorText = entityPOCO.ErrorText;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LineUniqueKey))
+            {
+					entityPM.LineUniqueKey = entityPOCO.LineUniqueKey;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LineUniqueKeyText))
+            {
+					entityPM.LineUniqueKeyText = entityPOCO.LineUniqueKeyText;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -909,6 +933,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
                 oldEntityPM.ErrorText = entityPM.ErrorText;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineUniqueKey))
+            {
+                oldEntityPM.LineUniqueKey = entityPM.LineUniqueKey;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineUniqueKeyText))
+            {
+                oldEntityPM.LineUniqueKeyText = entityPM.LineUniqueKeyText;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(TariffLinePM entityPM)
@@ -921,6 +955,14 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LineUniqueKey)) //T4 find type == nText 
+            {
+                entityPM.LineUniqueKey = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LineUniqueKey));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.LineUniqueKeyText)) //T4 find type == nText 
+            {
+                entityPM.LineUniqueKeyText = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LineUniqueKeyText));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
