@@ -1047,6 +1047,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                     }
                     else
                     {
+                        SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM();
                         SupplierInvoiceFreightAmountPM.ChangeSetOp = ChangeSetOperation.Insert;
                         SupplierInvoiceFreightAmountPM.DeclarationId = supplierInvoicePM.DeclarationId;
                         SupplierInvoiceFreightAmountPM.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey;
