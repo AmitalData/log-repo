@@ -1046,10 +1046,31 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                         if (String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.FreightCurrencyTypeCode)) this._MySupplierInvoicePM.FreightCurrencyTypeCode = SupplierInvoiceFreightAmountPM.CurrencyTypeCode;
 
                     }
-                    SupplierInvoiceFreightAmountPM.DeclarationId = supplierInvoicePM.DeclarationId;
-                    SupplierInvoiceFreightAmountPM.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey;
-                    SupplierInvoiceFreightAmountPM.Tenant = ResolvedTenant();
-                    SupplierInvoiceFreightAmountPM.ChangeSetOp = ChangeSetOperation.Insert;
+                    string tempFreightCurrencyCode = SupplierInvoiceFreightAmountPM.CurrencyTypeCode;
+                    var myQueryService = new SupplierInvoiceFreightAmountQueryService(_context);
+                    SupplierInvoiceFreightAmountPM = myQueryService.GetSingle(supplierInvoicePM.DeclarationId, supplierInvoicePM.InvoiceCounterKey, tempFreightCurrencyCode, true, false);
+                    if(SupplierInvoiceFreightAmountPM != null && SupplierInvoiceFreightAmountPM.InvoiceCounterKey == supplierInvoicePM.InvoiceCounterKey)
+                    {
+                        SupplierInvoiceFreightAmountPM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                    else
+                    {
+                        SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM();
+                        SupplierInvoiceFreightAmountPM.ChangeSetOp = ChangeSetOperation.Insert;
+                        SupplierInvoiceFreightAmountPM.DeclarationId = supplierInvoicePM.DeclarationId;
+                        SupplierInvoiceFreightAmountPM.InvoiceCounterKey = supplierInvoicePM.InvoiceCounterKey;
+                        SupplierInvoiceFreightAmountPM.Tenant = ResolvedTenant();
+                    }
+                    SupplierInvoiceFreightAmountPM.CurrencyTypeCode = tempFreightCurrencyCode;
+                    decimal decimal1;
+                    if (decimal.TryParse(transpValItem.TRANSP_VALUE_L, out decimal1))
+                    {
+                        SupplierInvoiceFreightAmountPM.Amount = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing TRANSP_VALUE_L (" + transpValItem.TRANSP_VALUE_L + ") into integer");
+                    }
 
                     SupplierInvoiceFreightAmountPMList.Add(SupplierInvoiceFreightAmountPM);
 
