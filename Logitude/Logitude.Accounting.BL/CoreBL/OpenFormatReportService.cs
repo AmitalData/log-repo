@@ -4007,8 +4007,8 @@ namespace Logitude.Accounting.BL.CoreBL
             DepositTotalRecords = DepositC100.Count();
             APinvoiceTotalRecords = APC100.Count();
 
+            
 
-          
 
 
             DocumentsFilingPM docOut = CreateDocumnetFiling(myStringBuilder, openFormatReportPM);
