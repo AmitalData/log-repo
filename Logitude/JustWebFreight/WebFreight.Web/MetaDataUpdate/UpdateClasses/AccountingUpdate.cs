@@ -1937,6 +1937,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Collecting", DefaultText = "Collecting", LocalDefaultText = "גביה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Accounting", DefaultText = "Accounting", LocalDefaultText = "חשבונאית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MustBeMultiCurrency", DefaultText = "Parent GLAccount must be multi currency", LocalDefaultText = "כרטיס אב חייב להיות רב מטבעי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CheckInvoiceDate", DefaultText = "Invoice Date can't be bigger the the Accounting Date", LocalDefaultText = "לא ניתן להקליד תאריך אסמכתא מאוחר מהתאריך החשבונאי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
 
