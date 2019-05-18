@@ -4533,7 +4533,48 @@ namespace Logitude.Accounting.BL.CoreBL
             stringBuilder.Append(' ',46);
 
              stringBuilder.AppendLine();
-            
+            stringBuilder.Append("A100");
+            stringBuilder.Append('0', 14);
+            stringBuilder.Append("1");
+
+
+            stringBuilder.AppendLine();
+            stringBuilder.Append("C100");
+            if (C100Count.ToString().Length > 15)
+            {
+                C100Count.ToString().Substring(0, 15);
+                stringBuilder.Append(a + C100Count.ToString().PadLeft(15, '0'));
+            }
+            else
+            {
+                stringBuilder.Append(a + C100Count.ToString().PadLeft(15, '0'));
+            }
+            stringBuilder.AppendLine();
+
+            stringBuilder.Append("D110");
+            if (D110Count.ToString().Length > 15)
+            {
+                D110Count.ToString().Substring(0, 15);
+                stringBuilder.Append(a + D110Count.ToString().PadLeft(15, '0'));
+            }
+            else
+            {
+                stringBuilder.Append(a + D110Count.ToString().PadLeft(15, '0'));
+            }
+
+            stringBuilder.AppendLine();
+
+            stringBuilder.Append("D120");
+            if (D120Count.ToString().Length > 15)
+            {
+                D120Count.ToString().Substring(0, 15);
+                stringBuilder.Append(a + D120Count.ToString().PadLeft(15, '0'));
+            }
+            else
+            {
+                stringBuilder.Append(a + D120Count.ToString().PadLeft(15, '0'));
+            }
+            stringBuilder.AppendLine();
             stringBuilder.Append("B100");
             if (B100Count.ToString().Length >15)
             {
@@ -4556,50 +4597,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 stringBuilder.Append(a + B110Count.ToString().PadLeft(15, '0'));
             }
              stringBuilder.AppendLine();
-            stringBuilder.Append("C100");
-            if (C100Count.ToString().Length > 15)
-            {
-                C100Count.ToString().Substring(0, 15);
-                stringBuilder.Append(a + C100Count.ToString().PadLeft(15, '0'));
-            }
-            else
-            {
-                stringBuilder.Append(a + C100Count.ToString().PadLeft(15, '0'));
-            }
-            stringBuilder.AppendLine();
-            stringBuilder.Append("D110");
-            if (D110Count.ToString().Length > 15)
-            {
-                D110Count.ToString().Substring(0, 15);
-                stringBuilder.Append(a + D110Count.ToString().PadLeft(15, '0'));
-            }
-            else
-            {
-                stringBuilder.Append(a + D110Count.ToString().PadLeft(15, '0'));
-            }
-
-             stringBuilder.AppendLine();
-            stringBuilder.Append("D120");
-            if (D120Count.ToString().Length > 15)
-            {
-                D120Count.ToString().Substring(0, 15);
-                stringBuilder.Append(a + D120Count.ToString().PadLeft(15, '0'));
-            }
-            else
-            {
-                stringBuilder.Append(a + D120Count.ToString().PadLeft(15, '0'));
-            }
-            stringBuilder.AppendLine();
+            
+            
+            
             stringBuilder.Append("M100");
             stringBuilder.Append('0', 15);
 
             stringBuilder.AppendLine();
-            stringBuilder.Append("A100");
-            stringBuilder.Append('0', 14);
-            stringBuilder.Append("1");
-         
-
-            stringBuilder.AppendLine();
+           
             stringBuilder.Append("Z900");
             stringBuilder.Append('0', 14);
             stringBuilder.Append("1");
@@ -4721,37 +4726,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
             });
 
-            if (B100Count > 0)
-            {
-
-                pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
-                {
-                    RecordCode = "B100",
-                    RecordDescreption = "תנועות בהנהלת חשבונות",
-                    RecordTotal = B100Count,
-
-
-                });
-            }
-
-
-
-
-
-            if (B110Count > 0)
-            {
-                pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
-                {
-                    RecordCode = "B110",
-                    RecordDescreption = "רשומה פתיחה",
-                    RecordTotal = B110Count,
-
-
-                });
-            }
-
-
-
             if (C100Count > 0)
             {
                 pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
@@ -4792,6 +4766,45 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
+
+            if (B100Count > 0)
+            {
+
+                pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
+                {
+                    RecordCode = "B100",
+                    RecordDescreption = "תנועות בהנהלת חשבונות",
+                    RecordTotal = B100Count,
+
+
+                });
+            }
+
+
+
+
+
+            if (B110Count > 0)
+            {
+                pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
+                {
+                    RecordCode = "B110",
+                    RecordDescreption = "רשומה פתיחה",
+                    RecordTotal = B110Count,
+
+
+                });
+            }
+
+
+            pDFRerportXMLData.OpenFormatTotalRecords.Add(new OpenFormatTotalRecord()
+            {
+                RecordCode = "M100",
+                RecordDescreption = "פריט במלאי",
+                RecordTotal = 0,
+
+
+            });
 
 
 
