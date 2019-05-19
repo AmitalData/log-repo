@@ -1019,15 +1019,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 if (!string.IsNullOrWhiteSpace(transpValItem.TRANSP_VALUE_L) && transpValItem.TRANSP_VALUE_L != "0")
                 {
                     var SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM();
-                    decimal decimal1;
-                    if (decimal.TryParse(transpValItem.TRANSP_VALUE_L, out decimal1))
-                    {
-                        SupplierInvoiceFreightAmountPM.Amount = decimal1;
-                    }
-                    else
-                    {
-                        throw new BusinessErrorException("Error in parsing TRANSP_VALUE_L (" + transpValItem.TRANSP_VALUE_L + ") into integer");
-                    }
+                    
                     if (!String.IsNullOrWhiteSpace(transpValItem.TRANSP_VALUE_CURR_L))
                     {
                         var freightCurrency = new CurrencyTypeRepository(ResolvedTenant());
