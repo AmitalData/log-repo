@@ -133,7 +133,7 @@
 
                                     <!-- DestinationPortId -->
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.DestinationPortColor}">{{item.DestinationPortValue}}</span>
                                             </div>

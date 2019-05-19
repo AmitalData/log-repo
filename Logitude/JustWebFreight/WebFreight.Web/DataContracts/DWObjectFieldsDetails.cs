@@ -41,6 +41,7 @@ namespace WebFreight.Web.DataContracts
         public string DimensionTableDisplayName { get; set; }
         public string LOVAdditionalColumns { get; set; }
         public bool HideTree { get; set; }
+        public bool IsCustom { get; set; }
 
 
 

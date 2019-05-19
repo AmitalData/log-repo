@@ -143,8 +143,8 @@ export class MiscPageComponent implements AfterViewInit {
     Receiving1000() {
         this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Width = 500;
-            logitudeWindow.Height = 300;
+            logitudeWindow.Width = 650;
+            logitudeWindow.Height = 350;
             logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Receiving1000");
             logitudeWindow.Show('./Accounting/Components/Maintenance/Receiving1000Component');
         });
