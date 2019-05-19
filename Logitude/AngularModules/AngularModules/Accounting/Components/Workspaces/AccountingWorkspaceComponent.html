@@ -5,8 +5,8 @@
         <td>
             <ul class="PagesMenu">
                 <!-- <li id="{{'FAMain' | IdGeneratorPipe}}" *ngIf="IsMainTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'Main'" (click)="SelectedItem = 'Main'">{{ 'Accounting.General.O.Main' | TextCodeTranslationPipe }}</li> -->
-                <li id="{{'FARCV' | IdGeneratorPipe}}"  *ngIf="IsReceivablesTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'RCV'" (click)="SelectedItem = 'RCV'">{{ 'Accounting.General.O.Receivables' | TextCodeTranslationPipe }}</li>
-                <li id="{{'FAPAY' | IdGeneratorPipe}}"  *ngIf="IsPayablesTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'PAY'" (click)="SelectedItem = 'PAY'">{{ 'Accounting.General.O.Payables' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FACS' | IdGeneratorPipe}}" *ngIf="IsCustomersTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'CS'" (click)="SelectedItem = 'CS'">{{ 'Accounting.General.O.Customers' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FAVND' | IdGeneratorPipe}}" *ngIf="IsVendorsTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'VND'" (click)="SelectedItem = 'VND'">{{ 'Accounting.General.O.Vendors' | TextCodeTranslationPipe }}</li>
                 <li id="{{'FABNKS' | IdGeneratorPipe}}" *ngIf="IsBanksTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'BNKS'" (click)="SelectedItem = 'BNKS'">{{ 'Accounting.General.O.Banks' | TextCodeTranslationPipe }}</li>
                 <li float-start                         *ngIf="IsJournalTabVisibile" [class.SelectedPageMenu]="SelectedItem == 'JORN'" (click)="SelectedItem = 'JORN'">{{ 'Accounting.O.Journals' | TextCodeTranslationPipe }}</li>
                 <li id="{{'FAGLAccouts' | IdGeneratorPipe}}" *ngIf="IsGLAccountsTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'GLAccounts'" (click)="SelectedItem = 'GLAccounts'">{{ 'Accounting.O.GLAccounts' | TextCodeTranslationPipe }}</li>
@@ -30,11 +30,11 @@
             <div class="CellContent" [hidden]="SelectedItem != 'JORN'">
                 <div LocationDirective Code="JORN"></div>
             </div>
-            <div class="CellContent" [hidden]="SelectedItem != 'RCV'">
-                <div LocationDirective Code="RCV"></div>
+            <div class="CellContent" [hidden]="SelectedItem != 'CS'">
+                <div LocationDirective Code="CS"></div>
             </div>
-            <div class="CellContent" [hidden]="SelectedItem != 'PAY'">
-                <div LocationDirective Code="PAY"></div>
+            <div class="CellContent" [hidden]="SelectedItem != 'VND'">
+                <div LocationDirective Code="VND"></div>
             </div>
             <div class="CellContent" [hidden]="SelectedItem != 'BNKS'">
                 <div LocationDirective Code="BNKS"></div>

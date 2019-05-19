@@ -22,7 +22,7 @@ namespace CommunicationWorkerRole
 {
     class SchedularWorkerRole : WorkerEntryPoint
     {
-        IQueueService queueservice;
+        DbQueueService queueservice;
         int Tenant;
         public SchedularWorkerRole()
         {
@@ -86,6 +86,8 @@ namespace CommunicationWorkerRole
                                             var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ServiceClassName), ArrArgs) as TaskManagerBase;
                                             Task.Status = "In progress";
                                             WRItem.Task = Task;
+                                            WRItem.queueservice = queueservice;
+                                            WRItem.RetryNumber = message.RetryNumber;
                                             Thread thread = new Thread(WRItem.Run);
                                             //queueservice.Complete();
                                             //Task.Status = "In progress";
@@ -102,7 +104,7 @@ namespace CommunicationWorkerRole
                                     // Add New Queue for the executed WR
                                 }
 
-                                queueservice.Complete();
+                                //queueservice.Complete();
                                 LogDoneItemInMemory();
                             }
                             catch (Exception ex)

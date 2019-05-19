@@ -91,6 +91,8 @@ namespace CommunicationWorkerRole
                             string CustomerId = null;
                             DateTime? StartDateTime = null;
                             DateTime? EndDateTime = null;
+                            bool iHasException = false;
+                            string iExceptionMessage = null;
 
                             foreach (int iTenant in AllTenants)
                             {
@@ -112,6 +114,8 @@ namespace CommunicationWorkerRole
 
                                 catch (Exception ex)
                                 {
+                                    iHasException = true;
+                                    iExceptionMessage = ex.Message;
                                     EndDateTime = DateTime.Now;
                                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Customer actual data worker role start, Tenant: " + iTenant, null, null);
                                     Thread.Sleep(10000);
@@ -121,7 +125,7 @@ namespace CommunicationWorkerRole
                                 {
                                     if (StartDateTime != null && EndDateTime != null)
                                     {
-                                        CommonModelProcedureClass.InsertCustomerActualDataHistory(iTenant, StartDateTime, EndDateTime);
+                                        CommonModelProcedureClass.InsertCustomerActualDataHistory(iTenant, StartDateTime, EndDateTime, iHasException, iExceptionMessage);
                                     }
                                 }
                             }

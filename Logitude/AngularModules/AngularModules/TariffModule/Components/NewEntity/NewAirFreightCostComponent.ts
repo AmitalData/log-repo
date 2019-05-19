@@ -7,6 +7,9 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {DateTool} from '../../../Infrastructure/Tools';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
+import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator'
 @Component({
     selector: 'NewAirFreightCostComponent',
     moduleId: module.id,
@@ -22,15 +25,27 @@ export class NewAirFreightCostComponent extends BaseComponent {
     public SelectedLocationFilter: any;
     public VisibileSurchargesArea: boolean = false;
     public ChargeTypesQueryFilters: ApiQueryFilters;
+    private chargesTypePMService: ChargesTypeListService;
+    private IdProps: string[] = [];
+    private UOMProps: string[] = [];
 
     constructor() {
         super();
+        this.chargesTypePMService = new ChargesTypeListService();
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
         this.EntityPM = new TariffPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        this.FillChargesIDsAndUOMS();
 
+    }
+
+    FillChargesIDsAndUOMS() {
+        for (var index = 1; index <= 10; index++) {
+            this.IdProps.push("Surcharge" + index + "Id");
+            this.UOMProps.push("Surcharge" + index + "UOM");
+        }
     }
 
     BuildQueryFilters() {
@@ -43,46 +58,66 @@ export class NewAirFreightCostComponent extends BaseComponent {
 
 
     Validate(initial: boolean=false) {
-        var IdProps: string[] = [];
-        var UOMProps: string[] = [];
-        for (var index = 1; index <= 10; index++) {
-            IdProps.push("Surcharge" + index + "Id");
-            UOMProps.push("Surcharge" + index + "UOM");
+        for (var index = 1; index <= 10; index++) {          
             if (initial) {
                 if (index != 1) {
-                    this.UIProperties.SetEnabled(IdProps[index - 1], this.ObjectTableName, false);
-                    this.UIProperties.SetEnabled(UOMProps[index - 1], this.ObjectTableName, false);
+                    this.UIProperties.SetEnabled(this.IdProps[index - 1], this.ObjectTableName, false);
+                    this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, false);
                 }
                 else {
-                    this.UIProperties.SetEnabled(IdProps[index - 1], this.ObjectTableName, true);
-                    this.UIProperties.SetEnabled(UOMProps[index - 1], this.ObjectTableName, false);
-
+                    this.UIProperties.SetEnabled(this.IdProps[index - 1], this.ObjectTableName, true);
+                    this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, false);
+                    this.UIProperties.SetRequired(this.IdProps[index - 1], this.ObjectTableName, true);
+                    this.UIProperties.SetRequired(this.UOMProps[index - 1], this.ObjectTableName, true);
                 }
             }
             if (!initial) {
-                if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                    this[UOMProps[index - 1]] = null;
+                if (AppTool.IsNullOrEmpty(this[this.IdProps[index - 1]])) {
+                    this[this.UOMProps[index - 1]] = null;
                     
-                    this.UIProperties.SetEnabled(UOMProps[index - 1], this.ObjectTableName, false);
+                    this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, false);
                     if (index > 1) {
-                        if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 2]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 2]])) {
-                            this.UIProperties.SetEnabled(IdProps[index -1], this.ObjectTableName, true);
-                            this.UIProperties.SetEnabled(UOMProps[index-1], this.ObjectTableName, false);
+                        if (!AppTool.IsNullOrEmpty(this[this.UOMProps[index - 2]]) && !AppTool.IsNullOrEmpty(this[this.IdProps[index - 2]])) {
+                            this.UIProperties.SetEnabled(this.IdProps[index - 1], this.ObjectTableName, true);
+                            this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, false);
+                        }
+                    }
+                    else {
+                        this.UIProperties.SetRequired(this.IdProps[index - 1], this.ObjectTableName, true);
+                        this.UIProperties.SetRequired(this.UOMProps[index - 1], this.ObjectTableName, true);
+                    }
+
+
+
+                }
+                else {
+                    this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, true);
+                    if (index == 1) {
+                        this.UIProperties.SetRequired(this.IdProps[index - 1], this.ObjectTableName, false);
+                        if (AppTool.IsNullOrEmpty(this[this.UOMProps[index - 1]])) {
+                            this.UIProperties.SetRequired(this.UOMProps[index - 1], this.ObjectTableName, true);
+                        }
+                        else {
+                            this.UIProperties.SetRequired(this.UOMProps[index - 1], this.ObjectTableName, false);
                         }
                     }
                 }
-                else {
-                    this.UIProperties.SetEnabled(UOMProps[index - 1], this.ObjectTableName, true);
-                   
-                }
             }
            
-        }
-
-
-       
+        }       
     }
-    
+
+
+    SetDefaultUOM(index:number) {
+            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe(res => {
+                if (!res.HasError) {
+                    if (res.Result) {
+                        var ChargesType: ChargesTypeList = res.Result;
+                        this[this.UOMProps[index]] = ChargesType.MeasurementId;
+                    }
+                }
+            });        
+    }
 
 
 
@@ -134,6 +169,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge1Id != value) {            
             this.EntityPM.Surcharge1Id = value;
             this.Validate();
+            if (value != null) {
+                this.SetDefaultUOM(0);
+            }
         }
     }
 
@@ -145,7 +183,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge2Id != value) {
             this.EntityPM.Surcharge2Id = value;
             this.Validate();
-
+            if (value != null) {
+                this.SetDefaultUOM(1);
+            }
         }
     }
 
@@ -157,7 +197,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge3Id != value) {
             this.EntityPM.Surcharge3Id = value;
             this.Validate();
-
+            if (value != null) {
+                this.SetDefaultUOM(2);
+            }
         }
     }
 
@@ -170,7 +212,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge4Id != value) {
             this.EntityPM.Surcharge4Id = value;
             this.Validate();
-
+            if (value != null) {
+                this.SetDefaultUOM(3);
+            }
         }
     }
 
@@ -183,7 +227,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge5Id != value) {
             this.EntityPM.Surcharge5Id = value;
             this.Validate();
-
+            if (value != null) {
+                this.SetDefaultUOM(4);
+            }
         }
     }
 
@@ -195,7 +241,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge6Id != value) {
             this.EntityPM.Surcharge6Id = value;
             this.Validate();
-
+            if (value != null) {
+                this.SetDefaultUOM(5);
+            }
         }
     }
 
@@ -207,7 +255,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge7Id != value) {
             this.EntityPM.Surcharge7Id = value;
             this.Validate();
-
+            if (value != null) {
+                this.SetDefaultUOM(6);
+            }
         }
     }
 
@@ -219,7 +269,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge8Id != value) {
             this.EntityPM.Surcharge8Id = value;
             this.Validate();
-
+            if (value != null) {
+                this.SetDefaultUOM(7);
+            }
         }
     }
 
@@ -231,7 +283,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge9Id != value) {
             this.EntityPM.Surcharge9Id = value;
             this.Validate();
-
+            if (value != null) {
+                this.SetDefaultUOM(8);
+            }
         }
     }
 
@@ -243,6 +297,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge10Id != value) {
             this.EntityPM.Surcharge10Id = value;
             this.Validate();
+            if (value != null) {
+                this.SetDefaultUOM(9);
+            }
         }
     }
 
@@ -255,6 +312,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge1UOM != value) {
             this.EntityPM.Surcharge1UOM = value;
             this.Validate();
+
 
         }
     }
@@ -302,7 +360,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
         if (this.EntityPM.Surcharge5UOM != value) {
             this.EntityPM.Surcharge5UOM = value;
             this.Validate();
-
+    
         }
     }
 
@@ -417,11 +475,12 @@ export class NewAirFreightCostComponent extends BaseComponent {
         var UOMProps: string[] = [];
         var IdPropsName: string[] = [];
         var UOMPropsName: string[] = [];
+        var EmptyIndex = 1;
         for (var index = 1; index <= 10; index++) {
             IdProps.push("Surcharge" + index + "Id");
             UOMProps.push("Surcharge" + index + "UOM");
 
-            IdPropsName.push("Charge " + index );
+            IdPropsName.push("Charge Type " + index );
             UOMPropsName.push("UOM " + index);
             if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
@@ -434,26 +493,31 @@ export class NewAirFreightCostComponent extends BaseComponent {
             }
 
             else {
+                if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
+                    if (EmptyIndex == 1) {
+                        EmptyIndex = index;
+                    }
+                }
 
                 if (AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                    this.ValidationErrorsList.push(IdPropsName[index - 1] + " charge is filled without a UOM " + UOMPropsName[index - 1]);
+                    this.ValidationErrorsList.push(IdPropsName[index - 1] + "is filled without a UOM");
                 }
 
                 if (index >= 3) {
                     if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
+                        if (EmptyIndex != 1) {
+                            this.ValidationErrorsList.push("no empty charge lines between line " + (EmptyIndex - 1) + " and line " + index);
+                            EmptyIndex = 1;
+                        }
                         if (AppTool.IsNullOrEmpty(this[IdProps[index - 2]])) {
-                            this.ValidationErrorsList.push("no empty line between 2 charges in line "+index+ " and "+(index-2));
+                         //   this.ValidationErrorsList.push("no empty line between 2 charges in line "+index+ " and "+(index-2));
                         }
                     }
                 }
             }
         }
     }
-    ValidateAirFreightCost() {
-        if (AppTool.IsNullOrEmpty((this.EntityPM.PriceSteps))) {
-            this.ValidationErrorsList.push("At least one step is required");
-        }
-    }
+  
 
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -463,11 +527,15 @@ export class NewAirFreightCostComponent extends BaseComponent {
             }
         }
         if (this.EntityPM.TypeCode == "ASC") {
+            var validator: ClassLevelValidator;
+
+            validator = new ClassLevelValidator();
+
+            var errorsArray = validator.Validate("Tariff", this.EntityPM);
+            this.ValidationErrorsList = errorsArray;
            this.ValidateSurcharge();
         }
-        //else if (this.EntityPM.TypeCode == "AFC") {
-        //    this.ValidateAirFreightCost();
-        //}
+      
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator("Creating...");
             var myService: TariffPMService = new TariffPMService();

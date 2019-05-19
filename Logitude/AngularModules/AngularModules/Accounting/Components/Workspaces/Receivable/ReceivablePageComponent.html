@@ -95,18 +95,18 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="activeCustomersGLAVisibility" (click)="ViewCustomerQuery('ActiveCustomersGLAccounts')"> {{'GLAccounts.Q.ActiveCustomers' | TextCodeTranslationPipe}} ({{glAccountSummary.ActiveCustomersCount}})</p>
+                                                                            <p class="QueryLink" *ngIf="activeCustomersGLAVisibility" (click)="ViewCustomerQuery('ActiveCustomersGLAccounts')"> {{'GLAccounts.Q.ActiveCustomers' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="inactiveCustomersGlaVisibility" (click)="ViewCustomerQuery('InactiveCustomersGLAccount')"> {{'GLAccounts.Q.InactiveCustomers' | TextCodeTranslationPipe}} ({{glAccountSummary.InactiveCustomersCount}})</p>
+                                                                            <p class="QueryLink" *ngIf="inactiveCustomersGlaVisibility" (click)="ViewCustomerQuery('InactiveCustomersGLAccount')"> {{'GLAccounts.Q.InactiveCustomers' | TextCodeTranslationPipe}}</p>
                                                                         </td>
                                                                     </tr>
 
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="CLIENTGLACCOUNTSGlaVisibility" (click)="ViewCustomerQuery('All Customers')"> {{'GLAccounts.Q.AllCustomers' | TextCodeTranslationPipe}} ({{glAccountSummary.AllCustomersCount}})</p>
+                                                                            <p class="QueryLink" *ngIf="CLIENTGLACCOUNTSGlaVisibility" (click)="ViewCustomerQuery('All Customers')"> {{'GLAccounts.Q.AllCustomers' | TextCodeTranslationPipe}}</p>
                                                                         </td>
                                                                     </tr>
 
@@ -165,7 +165,7 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                          <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Open Payments')"> {{'Accounting.General.O.OpenPayments' | TextCodeTranslationPipe}} ({{ARPaymentsOpenedCount}})</p>
+                                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Open Payments')"> {{'Accounting.General.O.ApprovedPayments' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>

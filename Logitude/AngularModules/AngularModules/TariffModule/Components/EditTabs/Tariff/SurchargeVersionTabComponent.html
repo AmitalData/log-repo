@@ -133,7 +133,7 @@
 
                                     <!-- DestinationPortId -->
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="true">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.DestinationPortColor}">{{item.DestinationPortValue}}</span>
                                             </div>
@@ -261,7 +261,7 @@
                                     <log-column *ngIf="Surcharge9PriceVisibility" [header]="Surcharge9PriceLabel" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span [ngStyle]="{color: item.Surcharge8PriceColor}">{{item.Surcharge8PriceValue}}</span>
+                                                <span [ngStyle]="{color: item.Surcharge9PriceColor}">{{item.Surcharge9PriceValue}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge9Price'" [InputType]="'double'" [DataContext]="item"
@@ -270,11 +270,11 @@
                                         </log-cell-template>
                                     </log-column>
 
-                                    <!-- Surcharge8Price -->
+                                    <!-- Surcharge10Price -->
                                     <log-column *ngIf="Surcharge10PriceVisibility" [header]="Surcharge10PriceLabel" [width]="'70'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                <span [ngStyle]="{color: item.Surcharge10PriceColor}">{{item.Surcharge8PriceValue}}</span>
+                                                <span [ngStyle]="{color: item.Surcharge10PriceColor}">{{item.Surcharge10PriceValue}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Surcharge10Price'" [InputType]="'double'" [DataContext]="item"

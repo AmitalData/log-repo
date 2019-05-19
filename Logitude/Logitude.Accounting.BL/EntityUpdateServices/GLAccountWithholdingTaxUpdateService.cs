@@ -14,8 +14,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 {
   public partial  class GLAccountWithholdingTaxUpdateService
     {
-        public bool RaiseEventWBLK { get; internal set; }
-        public bool RaiseEventWLDA { get; internal set; }
+  //      public bool RaiseEventWBLK { get; internal set; }
+  //      public bool RaiseEventWLDA { get; internal set; }
+        public const string RaiseEventWBLKConst = "RaiseEventWBLK";
+        public const string RaiseEventWLDAConst = "RaiseEventWLDA";
+
 
         protected override void OnCreating(GLAccountWithholdingTaxPM entityPM, GLAccountPM entityParentPM)
         {
@@ -41,10 +44,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(GLAccountWithholdingTaxPM entityPM)
         {
-
-            if (RaiseEventWBLK)
-            {
-                ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+            var currentContextTag = entityPM.CurrentContextTag ?? "";
+            //if (RaiseEventWBLK)
+            if (currentContextTag.ToString() == RaiseEventWBLKConst)
+                {
+                    ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
                 string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
                 Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
                 String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingBlocked", entityPM.Tenant);
@@ -58,9 +62,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     EventTypeCode = "WBLK",
                     Notes = notes,
                 });
-                RaiseEventWBLK = false;
+       //         RaiseEventWBLK = false;
             }
-            if (RaiseEventWLDA)
+            if (currentContextTag.ToString() == RaiseEventWLDAConst)
+//                if (RaiseEventWLDA)
             {
                 ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
                 string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
@@ -76,7 +81,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     EventTypeCode = "WLDA",
                     Notes = notes,
                 });
-                RaiseEventWLDA = false;
+     //           RaiseEventWLDA = false;
             }
             base.OnUpdating(entityPM);
         }
