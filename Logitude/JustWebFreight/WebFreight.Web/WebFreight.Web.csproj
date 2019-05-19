@@ -1845,6 +1845,7 @@
     <Compile Include="CustomModel\DomainServices\CustomDomainService.FreightPaymentMethod.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.PointerLevel.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.StorageStatus.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\PendingByKeywordDomainService.Generated.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\ExchangeRateExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\GuaranteeExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\GuaranteeRequestProvider.cs" />

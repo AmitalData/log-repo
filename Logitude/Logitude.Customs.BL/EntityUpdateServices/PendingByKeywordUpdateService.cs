@@ -21,5 +21,26 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             entityPM.Id = IdCounter.GetNumber("Customs.PendingByKeyword", entityPM.Tenant);
         }
+
+        protected override void OnUpdating(PendingByKeywordPM entityPM)
+        {
+            if (!String.IsNullOrWhiteSpace(entityPM.KeywordsList))
+            {
+                entityPM.KeywordsList = NormalyzekeyWordsList(entityPM.KeywordsList);
+            }
+        }
+
+        public string NormalyzekeyWordsList(string keyWordsList)
+        {
+            
+            keyWordsList = keyWordsList.Replace(" ", ",");
+            keyWordsList = "," + keyWordsList + ",";
+            while (keyWordsList.Contains(",,"))
+            {
+                keyWordsList = keyWordsList.Replace(",,", ",");
+            }
+
+            return keyWordsList;
+        }
     }
 }

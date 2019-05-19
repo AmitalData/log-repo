@@ -28,6 +28,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
+            entityPM.SearchFields = entityPM.CourierPendingReasonCode + "," + entityPM.CourierPendingReasonName + "," + entityPM.KeywordsList;
         }
 
         public void CustomPOCOToPM(PendingByKeywordPM entityPM, PendingByKeyword entityPOCO)

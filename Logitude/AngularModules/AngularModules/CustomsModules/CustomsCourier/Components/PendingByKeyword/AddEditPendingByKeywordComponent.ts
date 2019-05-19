@@ -10,10 +10,8 @@ import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { PendingByKeywordPM } from '../../../../Customs/EntityPMs/PendingByKeywordPM';
 import { PendingByKeywordPMService } from '../../../../Customs/Services/StandardPMs/PendingByKeywordPMService';
-//import { PendingByKeywordExtendedListService } from '../../../../Customs/Services/ExtendedLists/PendingByKeywordExtendedListService';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-
-
+import { PendingByKeywordListService } from '../../../../Customs/Services/StandardLists/PendingByKeywordListService';
 
 
 
@@ -34,12 +32,11 @@ export class AddEditPendingByKeywordComponent
     public EntityPM: PendingByKeywordPM;
     isWindowMode: boolean = false;
     isNewRecord: boolean = false;
-    isFromUnifreight: boolean = false;
     ValidationErrorsList: any[] = [];
     private _EntityResourceService: EntityResourceService = new EntityResourceService();
 
     _PendingByKeywordPMService: PendingByKeywordPMService = new PendingByKeywordPMService();
-    //_PendingByKeywordExtendedListService: PendingByKeywordExtendedListService = new PendingByKeywordExtendedListService();
+    private _PendingByKeywordListService: PendingByKeywordListService = new PendingByKeywordListService();
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -56,9 +53,8 @@ export class AddEditPendingByKeywordComponent
 
             } else {
                 this.EntityPM = this.entityArgs.EntityPM;
-                //this.UnifreightStatusCode = this.EntityPM.UnifreightStatusCode;
             }
-            this.UIProperties.SetEnabled("UnifreightStatusCode", this.ObjectTableName, false);
+            this.WarningMessage = "יש להזין רשימת מילות מפתח מופרדות בפסיק, ואת קוד העיכוב שיש להרים עבורן. (למשל: medicine, drug, תרופה) ניתן להזין את אותו קוד עיכוב מספר פעמים.";
         });
     }
 
@@ -74,26 +70,10 @@ export class AddEditPendingByKeywordComponent
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.isWindowMode = true;
-            this.isFromUnifreight = true;
+            this.isNewRecord = true;
+            this.EntityPM = new PendingByKeywordPM();
+            this.EntityPM.Tenant = SessionLocator.Tenant;
 
-            if (args.FromUnifreight && !AppTool.IsNullOrEmpty(args.UnifreightStatusCode)) {
-                this.isNewRecord = true;
-                this.EntityPM = new PendingByKeywordPM();
-                this.EntityPM.Tenant = SessionLocator.Tenant;
-                //this.UnifreightStatusCode = args.UnifreightStatusCode;
-                this.UIProperties.SetEnabled("UnifreightStatusCode", this.ObjectTableName, false);
-
-                /*this._PendingByKeywordExtendedListService.GetPendingByKeywordByUnifreightStatus(this.UnifreightStatusCode).subscribe(response => {
-                    var PendingByKeywordResult: PendingByKeywordPM[] = response.Result;
-                    if (PendingByKeywordResult != null && PendingByKeywordResult.length > 0) {
-                        this.isNewRecord = false;
-                        this.EntityPM = PendingByKeywordResult[0];
-                        if (PendingByKeywordResult.length > 1) {
-                            this.WarningMessage = "סטטוס " + this.UnifreightStatusCode + " מקושר למספר קודים. מוצגת הרשומה הראשונה בלבד";
-                        }
-                    }
-                });*/
-            }
         }
     }
 
@@ -109,54 +89,6 @@ export class AddEditPendingByKeywordComponent
     public set CourierPendingReasonCode(newValue: string) {
         this.EntityPM.CourierPendingReasonCode = newValue;
     }
-    /*
-    public get PendingCode() { return this.EntityPM.Code; }
-    public set PendingCode(newValue: string) {
-        if (this.isFromUnifreight) {
-            if (this.EntityPM != null && !AppTool.IsNullOrEmpty(this.EntityPM.Code)) {
-                this.EntityPM.UnifreightStatusCode = null;
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-                this._PendingByKeywordPMService.update(this.EntityPM).subscribe(myResult => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    if (myResult.HasError) {
-                        this.ValidationErrorsList = [];
-                        this.ValidationErrorsList.push(myResult.ErrorsArray[0]);
-                        return;
-                    }
-                    this.EntityPM = new PendingByKeywordPM();
-                });
-            }
-            if (newValue) {
-                SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-                this._PendingByKeywordPMService.get(newValue).subscribe(response => {
-                    if (!response.HasError && response.Result != null) {
-                        SessionLocator.CurrentSession.StopBusyIndicator();
-                        if (!AppTool.IsNullOrEmpty(response.Result.UnifreightStatusCode) && response.Result.UnifreightStatusCode != this.UnifreightStatusCode) {
-                            var confirm = new ConfirmWindow();
-                            confirm.Width = 350;
-                            confirm.Height = 200;
-                            confirm.Title = "קישור Pending לסטטוס";
-                            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
-                            confirm.ShowNoButton = true;
-                            confirm.Show("לקוד זה כבר קושר סטטוס " + response.Result.UnifreightStatusCode + " האם להחליף לסטטוס " + this.UnifreightStatusCode + "?");
-                            confirm.WindowClosed.subscribe((event: any) => {
-                                if (confirm.No) {
-                                    confirm.Close();
-                                    this.EntityPM = new PendingByKeywordPM();
-                                    return;
-                                }
-                                confirm.Close();
-                            });
-                        }
-                        this.isNewRecord = false;
-                        this.EntityPM = response.Result;
-                        this.EntityPM.UnifreightStatusCode = this.UnifreightStatusCode;
-                    }
-                });
-            }
-        }
-    }
-    */
 
     public get CourierPendingReasonName() { return this.EntityPM.CourierPendingReasonName; }
     public set CourierPendingReasonName(newValue: string) {
@@ -167,7 +99,6 @@ export class AddEditPendingByKeywordComponent
     public set KeywordsList(newValue: string) {
         this.EntityPM.KeywordsList = newValue;
     }
-    
 
     //#endregion\
 

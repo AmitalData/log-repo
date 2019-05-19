@@ -292,6 +292,10 @@
     <Compile Include="Migrations\201905131153039_AddPendingByKeywordsTable.Designer.cs">
       <DependentUpon>201905131153039_AddPendingByKeywordsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905191424434_AddSearchFieldsToPendingByKeyword.cs" />
+    <Compile Include="Migrations\201905191424434_AddSearchFieldsToPendingByKeyword.Designer.cs">
+      <DependentUpon>201905191424434_AddSearchFieldsToPendingByKeyword.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -497,6 +501,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905131153039_AddPendingByKeywordsTable.resx">
       <DependentUpon>201905131153039_AddPendingByKeywordsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905191424434_AddSearchFieldsToPendingByKeyword.resx">
+      <DependentUpon>201905191424434_AddSearchFieldsToPendingByKeyword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
