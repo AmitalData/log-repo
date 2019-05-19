@@ -9,6 +9,7 @@ using Simplog.Server.Infrastructure;
 using System;
 using Simplog.Data.Helpers;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
 {
@@ -628,12 +629,22 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             IShipmentDataViewContext shipmentdataviewcontext = ShipmentDataViewContext.GetContext(tenant);
 
-            List<ShipmentDataView> shipments = (from a in shipmentdataviewcontext.ShipmentDataViews
-                                                where a.Tenant == tenant && ids.Contains(a.Id)
-                                                select a).ToList();
+            //List<ShipmentDataView> shipments = (from a in shipmentdataviewcontext.ShipmentDataViews
+            //                                    where a.Tenant == tenant && ids.Contains(a.Id)
+            //                                    select a).ToList();
 
+			var values = new StringBuilder();
+			values.AppendFormat("{0}", "'" + ids[0] + "'");
+			for (int i = 1; i < ids.Count; i++)
+				values.AppendFormat(", {0}", "'" + ids[i] + "'");
 
-            return shipments;
+			var sql = string.Format(
+				"SELECT * FROM ShipmentDataView WHERE id IN ({0})",
+				values);
+
+			List<ShipmentDataView> shipments = shipmentdataviewcontext.GetActiveDbContext().Database.SqlQuery<ShipmentDataView>(sql).ToList();
+
+			return shipments;
         }
 
         public IQueryable<Shipment> GetShipmentsForUnpaidInvoicesReport(List<string> shipmentIds)
