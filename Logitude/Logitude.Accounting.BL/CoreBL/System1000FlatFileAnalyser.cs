@@ -113,7 +113,7 @@ namespace Logitude.Accounting.BL.CoreBL
             GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
 
             GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(oneVendor.Id, oneVendor.Tenant);
-            if (gLAccountPM is null)
+            if (gLAccountPM == null)
             {
                 MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"Vendor Number {vendorLineDTO.VendorCode} - GLAccount not found ");
                 return;
