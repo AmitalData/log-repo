@@ -30,24 +30,24 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.VendorId = entityPM.VendorId;
                 entityPOCO.CustomerId = entityPM.CustomerId;
                 entityPOCO.Tenant = entityPM.Tenant;
-                entityPOCO.ModificationsTypeCode = entityPM.ModificationsTypeCode;
+                //entityPOCO.ModificationsTypeCode = entityPM.ModificationsTypeCode;
             }
         }
 
         public void CustomPOCOToPM(VendorCommissionPM entityPM, VendorCommission entityPOCO)
         {
-            this.CustomMappedPMProperties.Add(PMPropertyNames.ModificationsTypeName);
+            //this.CustomMappedPMProperties.Add(PMPropertyNames.ModificationsTypeName);
 
-            if (entityPOCO.ModificationsTypeCode != null)
-            {
-                ModificationAndDiscountTypeQueryService modificationAndDiscountTypeQueryService = new ModificationAndDiscountTypeQueryService(entityPOCO.Tenant);
-                ModificationAndDiscountTypePM modificationAndDiscountTypePM = modificationAndDiscountTypeQueryService.GetSingle(entityPOCO.ModificationsTypeCode, false, true);
-                if (modificationAndDiscountTypePM != null)
-                {
-                    entityPM.ModificationsTypeName = modificationAndDiscountTypePM.Code;
-                }
+            //if (entityPOCO.ModificationsTypeCode != null)
+            //{
+            //    ModificationAndDiscountTypeQueryService modificationAndDiscountTypeQueryService = new ModificationAndDiscountTypeQueryService(entityPOCO.Tenant);
+            //    ModificationAndDiscountTypePM modificationAndDiscountTypePM = modificationAndDiscountTypeQueryService.GetSingle(entityPOCO.ModificationsTypeCode, false, true);
+            //    if (modificationAndDiscountTypePM != null)
+            //    {
+            //        entityPM.ModificationsTypeName = modificationAndDiscountTypePM.Code;
+            //    }
 
-            }
+            //}
         }
    }
 

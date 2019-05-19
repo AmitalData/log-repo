@@ -184,8 +184,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
             var declarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             declarationUpdateService.Update(_DeclarationPM, true);
-
-            if(_DeclarationPM.PaymentDate != null && _DeclarationPM.TotalTax == 0)
+            LogMessagingUtil.Instance.AppendLine("Declaration Payment Date " + _DeclarationPM.PaymentDate + " Declaration Total Tax " + _DeclarationPM.TotalTax);
+            if (_DeclarationPM.PaymentDate.HasValue && (_DeclarationPM.TotalTax == null || _DeclarationPM.TotalTax == 0))
             {
                 var declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(_CommunicationLog.Tenant);
                 var currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(theDecId, false, false);
@@ -195,6 +195,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
                 currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                 declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                LogMessagingUtil.Instance.AppendLine("Update Declaration Courier Status CourierPaymentStatusCode=" + currentDeclarationCourierStatusPM.CourierPaymentStatusCode);
             }
 
         }
