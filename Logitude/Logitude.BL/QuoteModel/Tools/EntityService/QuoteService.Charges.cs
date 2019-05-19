@@ -120,13 +120,20 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     IsBackToBack = chargesType.IsBackToBack,
                                 };
 
-                                if (chargesType.Measurement != null)
+                                if (chargesType.MeasurementId != null)
                                 {
-                                    quoteChargePM.CostMeasurementCode = chargesType.Measurement.Code;
-                                    quoteChargePM.SaleMeasurementCode = chargesType.Measurement.Code;
-                                    quoteChargePM.CostMeasurementShortName = chargesType.Measurement.ShortName;
-                                    quoteChargePM.SaleMeasurementShortName = chargesType.Measurement.ShortName;
-                                }
+                                    quoteChargePM.CostMeasurementId = chargesType.MeasurementId;
+                                    quoteChargePM.SaleMeasurementId = chargesType.MeasurementId;
+                                    Measurement iMeasurement = (from d in myCommonContext.Measurements where d.Id == chargesType.MeasurementId select d).FirstOrDefault();
+
+                                    if (iMeasurement != null)
+                                    {
+                                        quoteChargePM.CostMeasurementCode = iMeasurement.Code;
+                                        quoteChargePM.SaleMeasurementCode = iMeasurement.Code;
+                                        quoteChargePM.CostMeasurementShortName = iMeasurement.ShortName;
+                                        quoteChargePM.SaleMeasurementShortName = iMeasurement.ShortName;
+                                    }
+                                }                                
 
                                 if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
                                 {
