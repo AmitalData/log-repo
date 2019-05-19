@@ -13,6 +13,8 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
+import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
 
 @Component({
     moduleId: module.id,
@@ -30,9 +32,30 @@ export class VersionHistoryTabComponent implements OnDestroy {
         this.VersionLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
 
-        this.SetStepsLabelsAndVisibility();
+        if (this.EntityPM.TypeCode == "AFC") {
+            this.SetStepsLabelsAndVisibility();
+        }
+
+        else if (this.EntityPM.TypeCode == "ASC") {
+            this.GetAllChargesTypes();
+        }
+        
         this.BuildVersionsList();
         this.Listen();
+    }
+
+    private AllChargesTypes: ChargesTypeList[];
+    private GetAllChargesTypes() {
+        var chargesTypeListService = new ChargesTypeListService();
+        chargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllChargesTypes = myResponse.Result;
+                if (this.AllChargesTypes != null) {
+                    this.AllChargesTypes = this.AllChargesTypes.filter(d => d.InActive == false);
+                    this.SetSurchargesLabelsAndVisibility();
+                }
+            }
+        });
     }
 
     private SaveCompletedEvent: any = null;
@@ -173,7 +196,82 @@ export class VersionHistoryTabComponent implements OnDestroy {
             }
         }
     }
-    
+
+    public Surcharge1PriceLabel: string;
+    public Surcharge2PriceLabel: string;
+    public Surcharge3PriceLabel: string;
+    public Surcharge4PriceLabel: string;
+    public Surcharge5PriceLabel: string;
+    public Surcharge6PriceLabel: string;
+    public Surcharge7PriceLabel: string;
+    public Surcharge8PriceLabel: string;
+    public Surcharge9PriceLabel: string;
+    public Surcharge10PriceLabel: string;
+
+    public Surcharge1PriceVisibility: boolean;
+    public Surcharge2PriceVisibility: boolean;
+    public Surcharge3PriceVisibility: boolean;
+    public Surcharge4PriceVisibility: boolean;
+    public Surcharge5PriceVisibility: boolean;
+    public Surcharge6PriceVisibility: boolean;
+    public Surcharge7PriceVisibility: boolean;
+    public Surcharge8PriceVisibility: boolean;
+    public Surcharge9PriceVisibility: boolean;
+    public Surcharge10PriceVisibility: boolean;
+
+    SetSurchargesLabelsAndVisibility() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge1Id)[0];
+            this.Surcharge1PriceLabel = chargeType.Code;
+            this.Surcharge1PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge2Id)[0];
+            this.Surcharge2PriceLabel = chargeType.Code;
+            this.Surcharge2PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge3Id)[0];
+            this.Surcharge3PriceLabel = chargeType.Code;
+            this.Surcharge3PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge4Id)[0];
+            this.Surcharge4PriceLabel = chargeType.Code;
+            this.Surcharge4PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge5Id)[0];
+            this.Surcharge5PriceLabel = chargeType.Code;
+            this.Surcharge5PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge6Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge6Id)[0];
+            this.Surcharge6PriceLabel = chargeType.Code;
+            this.Surcharge6PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge7Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge7Id)[0];
+            this.Surcharge7PriceLabel = chargeType.Code;
+            this.Surcharge7PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge8Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge8Id)[0];
+            this.Surcharge8PriceLabel = chargeType.Code;
+            this.Surcharge8PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge9Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge9Id)[0];
+            this.Surcharge9PriceLabel = chargeType.Code;
+            this.Surcharge9PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge10Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge10Id)[0];
+            this.Surcharge10PriceLabel = chargeType.Code;
+            this.Surcharge10PriceVisibility = true;
+        }
+    }
+
     public VersionsList: CodeNameClass[];
     private BuildVersionsList() {
         this.VersionsList = [];

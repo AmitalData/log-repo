@@ -354,33 +354,60 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.DestinationPortId = item.ToPortId;
             tariffLine.DestinationPortCode = item.ToPortCode;
             tariffLine.DestinationPortName = item.ToPortName;
-
-            tariffLine.Surcharge1Price = item.Surcharge1Price;
-            tariffLine.Surcharge2Price = item.Surcharge2Price;
-            tariffLine.Surcharge3Price = item.Surcharge3Price;
-            tariffLine.Surcharge4Price = item.Surcharge4Price;
-            tariffLine.Surcharge5Price = item.Surcharge5Price;
-            tariffLine.Surcharge6Price = item.Surcharge6Price;
-            tariffLine.Surcharge7Price = item.Surcharge7Price;
-            tariffLine.Surcharge8Price = item.Surcharge8Price;
-            tariffLine.Surcharge9Price = item.Surcharge9Price;
-            tariffLine.Surcharge10Price = item.Surcharge10Price;
-
             tariffLine.OriginPortText = item.FromPortText;
             tariffLine.DestinationPortText = item.ToPortText;
-            tariffLine.Surcharge1PriceText = item.Surcharge1PriceText;
-            tariffLine.Surcharge2PriceText = item.Surcharge2PriceText;
-            tariffLine.Surcharge3PriceText = item.Surcharge3PriceText;
-            tariffLine.Surcharge4PriceText = item.Surcharge4PriceText;
-            tariffLine.Surcharge5PriceText = item.Surcharge5PriceText;
-            tariffLine.Surcharge6PriceText = item.Surcharge6PriceText;
-            tariffLine.Surcharge7PriceText = item.Surcharge7PriceText;
-            tariffLine.Surcharge8PriceText = item.Surcharge8PriceText;
-            tariffLine.Surcharge9PriceText = item.Surcharge9PriceText;
-            tariffLine.Surcharge10PriceText = item.Surcharge10PriceText;
-
             tariffLine.HasErrors = item.HasErrors;
             tariffLine.ErrorText = item.ErrorText;
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
+                tariffLine.Surcharge1Price = item.Surcharge1Price;
+                tariffLine.Surcharge1PriceText = item.Surcharge1PriceText;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2Id)) {
+                tariffLine.Surcharge2Price = item.Surcharge2Price;
+                tariffLine.Surcharge2PriceText = item.Surcharge2PriceText;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3Id)) {
+                tariffLine.Surcharge3Price = item.Surcharge3Price;
+                tariffLine.Surcharge3PriceText = item.Surcharge3PriceText;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4Id)) {
+                tariffLine.Surcharge4Price = item.Surcharge4Price;
+                tariffLine.Surcharge4PriceText = item.Surcharge4PriceText;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5Id)) {
+                tariffLine.Surcharge5Price = item.Surcharge5Price;
+                tariffLine.Surcharge5PriceText = item.Surcharge5PriceText;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge6Id)) {
+                tariffLine.Surcharge6Price = item.Surcharge6Price;
+                tariffLine.Surcharge6PriceText = item.Surcharge6PriceText;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge7Id)) {
+                tariffLine.Surcharge7Price = item.Surcharge7Price;
+                tariffLine.Surcharge7PriceText = item.Surcharge7PriceText;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge8Id)) {
+                tariffLine.Surcharge8Price = item.Surcharge8Price;
+                tariffLine.Surcharge8PriceText = item.Surcharge8PriceText;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge9Id)) {
+                tariffLine.Surcharge9Price = item.Surcharge9Price;
+                tariffLine.Surcharge9PriceText = item.Surcharge9PriceText;
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge10Id)) {
+                tariffLine.Surcharge10Price = item.Surcharge10Price;
+                tariffLine.Surcharge10PriceText = item.Surcharge10PriceText;
+            }
 
             this.CurrentVersion.AddTariffLine(tariffLine);
         });
