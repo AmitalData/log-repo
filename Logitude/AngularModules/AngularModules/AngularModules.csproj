@@ -403,6 +403,7 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\AccountingIntegrityCheckPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\JournalAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
+    <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\Depositions\EditTab\CustomsShipperGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
