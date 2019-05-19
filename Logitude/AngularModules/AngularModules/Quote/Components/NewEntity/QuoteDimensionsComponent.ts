@@ -119,7 +119,79 @@ export class QuoteDimensionsComponent {
     set GrossWeight(newValue: number) {
         if (this.EntityPM.GrossWeight != newValue) {
             this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);
+            this.ComputeGrossWeigh_Kg_Ton();
         }
+    }
+
+    get GrossWeightUnitCode() { return this.EntityPM.GrossWeightUnitCode; }
+    set GrossWeightUnitCode(newValue: string) {
+        if (this.EntityPM.GrossWeightUnitCode != newValue) {
+            this.EntityPM.GrossWeightUnitCode = newValue;
+            this.ComputeGrossWeigh_Kg_Ton();
+        }
+    }
+
+    get ChargeableWeightUnitCode() { return this.EntityPM.ChargeableWeightUnitCode; }
+    set ChargeableWeightUnitCode(newValue: string) {
+        if (this.EntityPM.ChargeableWeightUnitCode != newValue) {
+            this.EntityPM.ChargeableWeightUnitCode = newValue;
+            this.ComputeChargeableWeight_Kg();
+        }
+    }
+
+    private ComputeGrossWeigh_Kg_Ton() {
+        var weigh_Kg: number = null;
+        var weigh_Ton: number = null;
+
+        if (this.GrossWeight != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.GrossWeightUnitCode)) {
+                switch (this.GrossWeightUnitCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.GrossWeight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+
+            weigh_Ton = weigh_Kg / 1000;
+        }
+
+        if (weigh_Ton != null) {
+            weigh_Ton = AppTool.Round(weigh_Ton, 3);
+        }
+
+        this.EntityPM.GrossWeightInKG = weigh_Kg;
+        this.EntityPM.GrossWeightPerTon = weigh_Ton;
+    }
+    private ComputeChargeableWeight_Kg() {
+        var weigh_Kg: number = null;
+        var weigh_Ton: number = null;
+
+        if (this.ChargeableWeight != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.ChargeableWeightUnitCode)) {
+                switch (this.ChargeableWeightUnitCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.ChargeableWeight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+        }
+        this.EntityPM.ChargeableWeightInKG = weigh_Kg;
     }
 
     get Volume() { return AppTool.IsNullOrZero(this.EntityPM.Volume) ? 0 : this.EntityPM.Volume; }
@@ -140,6 +212,7 @@ export class QuoteDimensionsComponent {
     set ChargeableWeight(newValue: number) {
         if (this.EntityPM.ChargeableWeight != newValue) {
             this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 2);
+            this.ComputeChargeableWeight_Kg();
         }
     }
     
