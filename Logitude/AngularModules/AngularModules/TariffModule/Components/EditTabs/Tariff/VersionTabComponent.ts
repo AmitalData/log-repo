@@ -120,6 +120,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     set StartDate(value: Date) {
         if (this.CurrentVersion.StartDate != value) {
             this.CurrentVersion.StartDate = value;
+            
+            this.UpdateDates("start", value);
         }
     }
 
@@ -129,6 +131,26 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     set ExpirationDate(value: Date) {
         if (this.CurrentVersion.ExpirationDate != value) {
             this.CurrentVersion.ExpirationDate = value;
+            
+            this.UpdateDates("expire", value);
+        }
+    }
+
+    private UpdateDates(dateType: string, date: Date) {
+        if (dateType == "start") {
+            this.EntityPM.LastStartDate = date;
+
+            this.CurrentVersion.TariffLines.forEach(item => {
+                item.StartDate = date;
+            });
+        }
+
+        else if (dateType == "expire") {
+            this.EntityPM.LastExpirationDate = date;
+
+            this.CurrentVersion.TariffLines.forEach(item => {
+                item.ExpirationDate = date;
+            });
         }
     }
 
@@ -342,6 +364,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             filter.PriceSteps = context.PriceSteps;
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
+            filter.TariffType = context.EntityPM.TypeCode;
 
             context.SendExcelToServer(filter);
         };
@@ -433,6 +456,16 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             errors.push("Invalid Tariff Lines");
         }
 
+        this.CurrentVersion.TariffLines.forEach(item => {
+            if (AppTool.IsNullOrEmpty(item.OriginPortId)) {
+                errors.push("Missing Origin Port");
+            }
+
+            if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
+                errors.push("Missing Destination Port");
+            }
+        });
+        
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
@@ -512,8 +545,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
     }
-
-
+    
     public VersionsList: VersionClass[];
     private BuildVersionsList() {
         this.VersionsList = [];

@@ -102,7 +102,7 @@ namespace CommunicationWorkerRole
                                     // Add New Queue for the executed WR
                                 }
 
-                                queueservice.Complete();
+                                //queueservice.Complete();
                                 LogDoneItemInMemory();
                             }
                             catch (Exception ex)
