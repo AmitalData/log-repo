@@ -58,6 +58,7 @@
 							"    var id1exist = idvalue1 !== null;",
 							"    pm.expect(id1exist);",
 							"    pm.environment.set(\"TestShipperExport1\",idvalue1);",
+							"    postman.setNextRequest(\"CreateConsigneeIdTestConsigneeExport1\");  ",
 							"",
 							"});"
 						],
@@ -74,10 +75,6 @@
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "{{LogitudeURL}}/api/customerviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=TestShipperExport1&GetCount=true&PageIndex=0&PageSize=23&SortBy=LastShipmentDate&SortDirection=Descending",
 					"host": [
@@ -195,6 +192,8 @@
 							"    var test=value1 !==null;",
 							"    pm.expect(test);",
 							"    pm.environment.set(\"TestConsigneeExport1\",value1);",
+							"    postman.setNextRequest(\"CreateAgentIdTestExport1\");  ",
+							"",
 							"})"
 						],
 						"type": "text/javascript"
@@ -334,6 +333,7 @@
 							"    ",
 							"    pm.environment.set(\"AgentIdTestExport1\",value1);",
 							"    pm.environment.set(\"AgentNameTestExport1\",value2);",
+							"    postman.setNextRequest(\"CreateIssuingCarrierAgentIdExport1\");",
 							"})"
 						],
 						"type": "text/javascript"
@@ -452,27 +452,114 @@
 			"response": []
 		},
 		{
-			"name": "CreateIssuingCarrierAgentIdExport1",
+			"name": "GetIssuingCarrierAgentIdExport1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "29e3693f-52dc-4d23-8bc0-c19a60e9bca2",
+						"exec": [
+							"pm.test(\"CreateIssuingCarrierAgentIdExport1\",function(){",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"    var value1=pm.response.json().Result.filter(a=>a.EnglishName=='TestIssuingCarrierAgentExport1')[0].Id;",
+							"   ",
+							"    var test=value1 !==null;",
+							"   ",
+							"    pm.expect(test);",
+							"    ",
+							"    ",
+							"    pm.environment.set(\"IssuingCarrierAgentExport1\",value1);",
+							"    postman.setNextRequest(\"CreateCustomsAgentIdTestExport1\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
 						"key": "token",
-						"value": "{{Token}}",
-						"type": "text"
+						"type": "text",
+						"value": "{{Token}}"
 					},
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"ContactId\": null,\n\n  \"PartnerTypeId\": \"AG\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Id\": \"1-598034\",\n    \"Tenant\": 1,\n    \"Description\": \"Main Address\",\n    \"City\": \"TEST\",\n    \"StateId\": \"1-144544\",\n    \"ZipCode\": null,\n    \"FaxNumber\": null,\n    \"PhoneNumber\": null,\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": null,\n    \"Address2\": null,\n    \"Name\": \"TestAgentExport1\",\n    \"CountryId\": \"1-138278\",\n    \"CarrierId\": null,\n    \"CardId\": \"1-566458\",\n    \"CountryCode\": \"1 \",\n    \"CountryName\": \"palestine\",\n    \"CountryEnglishName\": \"palestine\",\n    \"StateEnglishName\": \"test\",\n    \"StateCode\": \"12121\",\n    \"SearchFields\": \"TestAgentExport1,TEST,palestine\",\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": null,\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": null,\n    \"ContactName\": null,\n    \"ContactPosition\": null,\n    \"ContactBusinessPhone\": null,\n    \"ContactMobile\": null,\n    \"ContactFax\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": null,\n  \"Agent\": {\n    \"$id\": \"3\",\n    \n    \"Tenant\": 1,\n    \"IsSecured\": false,\n    \"IsHybrid\": false,\n    \"BankName\": null,\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"EnglishName\": \"TestIssuingCarrierAgentExport1\",\n    \"Website\": null,\n    \"VatNumber\": null,\n    \"LocalName\": \"TestAgentExport1\",\n    \"InActive\": false,\n    \"PaymentTermId\": null,\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"Notes\": null,\n    \"CreateDate\": \"2019-05-06T11:25:07.2559364Z\",\n    \"UpdateDate\": \"2019-05-06T11:25:07.2559364Z\",\n    \"CreatedByUserId\": \"1-96018\",\n    \"UpdatedByUserId\": \"1-96018\",\n    \"Code\": \"11116\",\n    \"InvoiceCurrencyId\": null,\n    \"VatTypeId\": null,\n    \"TenantAddressId\": null,\n    \"FieldsChanged\": false,\n    \"CardPMId\": null,\n    \"ExistedContactId\": null,\n    \"ComputedLocalName\": null,\n    \"PartnerTypeId\": \"AG\",\n    \"SearchFields\": \"11116,TestAgentExport1,TestAgentExport1,TEST,palestine\",\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"LastLoginDate\": null,\n    \"IsExternal\": false,\n    \"PrimaryContactId\": null,\n    \"IsFirstContactToAdd\": false,\n    \"EnableConsolidationInvoices\": false,\n    \"CityName\": \"TEST\",\n    \"CountryId\": \"1-138278\",\n    \"CountryCode\": \"1 \",\n    \"CountryName\": \"palestine\",\n    \"CASSCode\": null,\n    \"IATACode\": null,\n    \"RegulatedAgentCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"AgentSharedLogisticsKey\": null,\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CardExternalCodeByCurrencies\": [],\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"IsCreditLimitEnabled\": false,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null\n  },\n  \"Customer\": null,\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
 				},
-				"url": "{{LogitudeURL}}/api/PartnersDomain"
+				"url": {
+					"raw": "{{LogitudeURL}}/api/agentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=TestAgentExport1&GetCount=true&PageIndex=0&PageSize=14&SortBy=Code&SortDirection=Descending",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"agentviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "TestAgentExport1"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "14"
+						},
+						{
+							"key": "SortBy",
+							"value": "Code"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -497,7 +584,179 @@
 					"mode": "raw",
 					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": 1,\n  \"AddressId\": \"1-598040\",\n  \"ContactId\": null,\n  \n  \"PartnerTypeId\": \"CG\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Id\": \"1-598040\",\n    \"Tenant\": 1,\n    \"Description\": \"Main Address\",\n    \"City\": \"TEST\",\n    \"StateId\": \"1-144544\",\n    \"ZipCode\": null,\n    \"FaxNumber\": null,\n    \"PhoneNumber\": null,\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": null,\n    \"Address2\": null,\n    \"Name\": \"Customs agent\",\n    \"CountryId\": \"1-138278\",\n    \"CarrierId\": null,\n    \"CardId\": \"1-566464\",\n    \"CountryCode\": \"1 \",\n    \"CountryName\": \"palestine\",\n    \"CountryEnglishName\": \"palestine\",\n    \"StateEnglishName\": \"test\",\n    \"StateCode\": \"12121\",\n    \"SearchFields\": \"Customs agent,TEST,palestine\",\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": null,\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": null,\n    \"ContactName\": null,\n    \"ContactPosition\": null,\n    \"ContactBusinessPhone\": null,\n    \"ContactMobile\": null,\n    \"ContactFax\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": null,\n  \"Agent\": null,\n  \"Customer\": null,\n  \"CustomAgent\": {\n    \"$id\": \"3\",\n    \n    \"Tenant\": 1,\n    \"IsSecured\": false,\n    \"IsHybrid\": false,\n    \"BankName\": null,\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"Code\": \"21011\",\n    \"EnglishName\": \"TestCustomsAgentExport1\",\n    \"LocalName\": \"Customs agent\",\n    \"Website\": null,\n    \"InActive\": false,\n    \"Notes\": null,\n    \"VatNumber\": null,\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"VatTypeId\": null,\n    \"FieldsChanged\": false,\n    \"ComputedLocalName\": null,\n    \"PartnerTypeId\": \"CG\",\n    \"CreateDate\": \"2019-05-06T12:13:26.9184922Z\",\n    \"UpdateDate\": \"2019-05-06T12:13:26.9184922Z\",\n    \"CreatedByUserId\": \"1-96018\",\n    \"UpdatedByUserId\": \"1-96018\",\n    \"CardPMId\": null,\n    \"CityName\": \"TEST\",\n    \"CountryId\": \"1-138278\",\n    \"CountryCode\": \"1 \",\n    \"CountryName\": \"palestine\",\n    \"ExistedContactId\": null,\n    \"SearchFields\": \"21011,Customs agent,Customs agent,TEST,palestine\",\n    \"IsExternal\": false,\n    \"PrimaryContactId\": null,\n    \"IsFirstContactToAdd\": false,\n    \"EnableConsolidationInvoices\": false,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null\n  },\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
 				},
-				"url": "{{LogitudeURL}}/api/PartnersDomain"
+				"url": {
+					"raw": "{{LogitudeURL}}/api/agentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=CreateCustomsAgentIdTestExport1&GetCount=true&PageIndex=0&PageSize=14&SortBy=Code&SortDirection=Descending",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"agentviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "CreateCustomsAgentIdTestExport1"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "14"
+						},
+						{
+							"key": "SortBy",
+							"value": "Code"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCustomsAgentIdTestExport1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "748e80f0-5c46-472c-b19d-410260e51065",
+						"exec": [
+							"pm.test(\"CreateCustomsAgentIdTestExport1\",function(){",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"    var value1=pm.response.json().Result.filter(a=>a.EnglishName=='TestCustomsAgentExport1')[0].Id;",
+							"   ",
+							"    var test=value1 !==null;",
+							"   ",
+							"    pm.expect(test);",
+							"    ",
+							"    ",
+							"    pm.environment.set(\"CustomsAgentExport1\",value1);",
+							"    postman.setNextRequest(\"CreateCustomsAgentsIdTestImport1\");",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": 1,\n  \"AddressId\": \"1-598040\",\n  \"ContactId\": null,\n  \n  \"PartnerTypeId\": \"CG\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Id\": \"1-598040\",\n    \"Tenant\": 1,\n    \"Description\": \"Main Address\",\n    \"City\": \"TEST\",\n    \"StateId\": \"1-144544\",\n    \"ZipCode\": null,\n    \"FaxNumber\": null,\n    \"PhoneNumber\": null,\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": null,\n    \"Address2\": null,\n    \"Name\": \"Customs agent\",\n    \"CountryId\": \"1-138278\",\n    \"CarrierId\": null,\n    \"CardId\": \"1-566464\",\n    \"CountryCode\": \"1 \",\n    \"CountryName\": \"palestine\",\n    \"CountryEnglishName\": \"palestine\",\n    \"StateEnglishName\": \"test\",\n    \"StateCode\": \"12121\",\n    \"SearchFields\": \"Customs agent,TEST,palestine\",\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": null,\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": null,\n    \"ContactName\": null,\n    \"ContactPosition\": null,\n    \"ContactBusinessPhone\": null,\n    \"ContactMobile\": null,\n    \"ContactFax\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": null,\n  \"Agent\": null,\n  \"Customer\": null,\n  \"CustomAgent\": {\n    \"$id\": \"3\",\n    \n    \"Tenant\": 1,\n    \"IsSecured\": false,\n    \"IsHybrid\": false,\n    \"BankName\": null,\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"Code\": \"21011\",\n    \"EnglishName\": \"TestCustomsAgentExport1\",\n    \"LocalName\": \"Customs agent\",\n    \"Website\": null,\n    \"InActive\": false,\n    \"Notes\": null,\n    \"VatNumber\": null,\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"VatTypeId\": null,\n    \"FieldsChanged\": false,\n    \"ComputedLocalName\": null,\n    \"PartnerTypeId\": \"CG\",\n    \"CreateDate\": \"2019-05-06T12:13:26.9184922Z\",\n    \"UpdateDate\": \"2019-05-06T12:13:26.9184922Z\",\n    \"CreatedByUserId\": \"1-96018\",\n    \"UpdatedByUserId\": \"1-96018\",\n    \"CardPMId\": null,\n    \"CityName\": \"TEST\",\n    \"CountryId\": \"1-138278\",\n    \"CountryCode\": \"1 \",\n    \"CountryName\": \"palestine\",\n    \"ExistedContactId\": null,\n    \"SearchFields\": \"21011,Customs agent,Customs agent,TEST,palestine\",\n    \"IsExternal\": false,\n    \"PrimaryContactId\": null,\n    \"IsFirstContactToAdd\": false,\n    \"EnableConsolidationInvoices\": false,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null\n  },\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/customagentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=TestCustomsAgentExport1&GetCount=true&PageIndex=0&PageSize=14&SortBy=Code&SortDirection=Descending",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"customagentviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "TestCustomsAgentExport1"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "14"
+						},
+						{
+							"key": "SortBy",
+							"value": "Code"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -735,6 +994,91 @@
 						{
 							"key": "",
 							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCustomsAgentIdTestExport1 Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": 1,\n  \"AddressId\": \"1-598040\",\n  \"ContactId\": null,\n  \n  \"PartnerTypeId\": \"CG\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n    \"$id\": \"2\",\n    \"Id\": \"1-598040\",\n    \"Tenant\": 1,\n    \"Description\": \"Main Address\",\n    \"City\": \"TEST\",\n    \"StateId\": \"1-144544\",\n    \"ZipCode\": null,\n    \"FaxNumber\": null,\n    \"PhoneNumber\": null,\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": null,\n    \"Address2\": null,\n    \"Name\": \"Customs agent\",\n    \"CountryId\": \"1-138278\",\n    \"CarrierId\": null,\n    \"CardId\": \"1-566464\",\n    \"CountryCode\": \"1 \",\n    \"CountryName\": \"palestine\",\n    \"CountryEnglishName\": \"palestine\",\n    \"StateEnglishName\": \"test\",\n    \"StateCode\": \"12121\",\n    \"SearchFields\": \"Customs agent,TEST,palestine\",\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": null,\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": null,\n    \"ContactName\": null,\n    \"ContactPosition\": null,\n    \"ContactBusinessPhone\": null,\n    \"ContactMobile\": null,\n    \"ContactFax\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": null,\n  \"Agent\": null,\n  \"Customer\": null,\n  \"CustomAgent\": {\n    \"$id\": \"3\",\n    \n    \"Tenant\": 1,\n    \"IsSecured\": false,\n    \"IsHybrid\": false,\n    \"BankName\": null,\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"Code\": \"21011\",\n    \"EnglishName\": \"TestCustomsAgentExport1\",\n    \"LocalName\": \"Customs agent\",\n    \"Website\": null,\n    \"InActive\": false,\n    \"Notes\": null,\n    \"VatNumber\": null,\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"VatTypeId\": null,\n    \"FieldsChanged\": false,\n    \"ComputedLocalName\": null,\n    \"PartnerTypeId\": \"CG\",\n    \"CreateDate\": \"2019-05-06T12:13:26.9184922Z\",\n    \"UpdateDate\": \"2019-05-06T12:13:26.9184922Z\",\n    \"CreatedByUserId\": \"1-96018\",\n    \"UpdatedByUserId\": \"1-96018\",\n    \"CardPMId\": null,\n    \"CityName\": \"TEST\",\n    \"CountryId\": \"1-138278\",\n    \"CountryCode\": \"1 \",\n    \"CountryName\": \"palestine\",\n    \"ExistedContactId\": null,\n    \"SearchFields\": \"21011,Customs agent,Customs agent,TEST,palestine\",\n    \"IsExternal\": false,\n    \"PrimaryContactId\": null,\n    \"IsFirstContactToAdd\": false,\n    \"EnableConsolidationInvoices\": false,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null\n  },\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/agentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=CreateCustomsAgentIdTestExport1&GetCount=true&PageIndex=0&PageSize=14&SortBy=Code&SortDirection=Descending",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"agentviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "CreateCustomsAgentIdTestExport1"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "14"
+						},
+						{
+							"key": "SortBy",
+							"value": "Code"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
 						}
 					]
 				}
