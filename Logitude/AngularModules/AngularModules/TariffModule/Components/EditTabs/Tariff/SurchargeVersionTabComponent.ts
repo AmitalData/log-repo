@@ -19,7 +19,6 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
-import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 declare var ResultAsArray: any;
 
@@ -203,6 +202,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     set StartDate(value: Date) {
         if (this.CurrentVersion.StartDate != value) {
             this.CurrentVersion.StartDate = value;
+
+            this.UpdateDates("start", value);
         }
     }
 
@@ -212,9 +213,29 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     set ExpirationDate(value: Date) {
         if (this.CurrentVersion.ExpirationDate != value) {
             this.CurrentVersion.ExpirationDate = value;
+
+            this.UpdateDates("expire", value);
         }
     }
-    
+
+    private UpdateDates(dateType: string, date: Date) {
+        if (dateType == "start") {
+            this.EntityPM.LastStartDate = date;
+
+            this.CurrentVersion.TariffLines.forEach(item => {
+                item.StartDate = date;
+            });
+        }
+
+        else if (dateType == "expire") {
+            this.EntityPM.LastExpirationDate = date;
+
+            this.CurrentVersion.TariffLines.forEach(item => {
+                item.ExpirationDate = date;
+            });
+        }
+    }
+
     FillTariffLines() {
         this.TariffsLinesSource.Clear();
         var itemsCollection: TariffLineData[] = [];
