@@ -340,6 +340,10 @@ public CargoIdentifiersList: ObservableCollection;
 
     SetWindowArgs(winArg: any) {
         this.EntityPM = winArg.CurrentEntity;
+        if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
+            this.CustomFileNo = winArg.CustomFileNo;
+            this.CustomFileNoTextChanged("");
+        }
         this.Init();
         if (AppTool.IsNullOrEmpty(this.ImporterCode)) {
             if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {

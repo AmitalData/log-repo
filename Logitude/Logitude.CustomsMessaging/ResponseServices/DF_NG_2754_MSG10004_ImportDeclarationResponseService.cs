@@ -755,7 +755,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (!_IsSubmitDeclarationResponse && _MyDeclarationPM.IsCourierDeclaration) //Task 48913
             {
-                LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה  ומופעל בדיקה האם להגדיר גבייה = 900");
+                LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
                 var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
                 var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", _MyDeclarationPM.CustomerCode, false, true);
                 bool isCollectActive = def.DEFDATA == "Y";

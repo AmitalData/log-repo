@@ -226,4 +226,43 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
 
         });
     }
+
+    AddDeclarationCargoSplitCommand() {
+
+        //var errors: string[] = [];
+        //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+        //if (errors.length > 0) {
+        //    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        //    return;
+        //}
+        var newDeclarationCargoSplitPM = new DeclarationCargoSplitPM();
+        newDeclarationCargoSplitPM.Tenant = this.EntityPM.Tenant;
+        //this.DeclarationCargoSplitList.Insert(newDeclarationCargoSplitPM);
+
+        this.NewDeclarationCargoSplit(newDeclarationCargoSplitPM);
+    }
+
+    NewDeclarationCargoSplit(item: DeclarationCargoSplitPM) {
+        SessionLocator.CurrentSession.StartBusyIndicator("");
+
+        var windowArgs: any = {};
+        windowArgs.CurrentEntity = item;
+        windowArgs.IsNewEntity = true;
+        windowArgs.CustomFileNo = this.EntityPM.CustomFileNo;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 770;
+        logWindow.Height = 750;
+        //windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Claim.O.NewClaimsRelatedEntity");
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe((event: any) => {
+            this.LoadDeclarationCargoSplits();
+        });
+
+        logWindow.IsHideHeader = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent');
+        SessionLocator.CurrentSession.StopBusyIndicator();
+
+    }
 }
