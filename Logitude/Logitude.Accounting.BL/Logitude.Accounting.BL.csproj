@@ -547,6 +547,7 @@
     <Compile Include="Utils\AccountingLogger.cs" />
     <Compile Include="Utils\FutureOpenChequesBatch.cs" />
     <Compile Include="Utils\PostDatedChequesRedemptionBatch.cs" />
+    <Compile Include="Utils\ReconciliationAfterConversionBatch.cs" />
     <Compile Include="Validators\AccountingPeriodValidator.cs" />
     <Compile Include="Validators\AutomaticReconcileMethodValidator.cs" />
     <Compile Include="Validators\ChartOfAccountValidator.cs" />

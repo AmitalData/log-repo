@@ -1,4 +1,5 @@
 ﻿using Logitude.TariffModule.BL.EntityPMs;
+using Logitude.TariffModule.Data.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,22 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     entityParentPM.LastVersion = entityPM.Version;
                 }
             }
+        }
+
+        protected override void OnUpdating(TariffVersionPM entityPM, TariffVersion entityPOCO)
+        {
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
+            {  
+                //if(entityPM.StartDate != entityPOCO.StartDate)
+                //{
+
+                //}
+
+                //if (entityPM.ExpirationDate != entityPOCO.ExpirationDate)
+                //{
+
+                //}
+            }            
         }
 
         protected override void UpdateComposition(TariffVersionPM entityPM)

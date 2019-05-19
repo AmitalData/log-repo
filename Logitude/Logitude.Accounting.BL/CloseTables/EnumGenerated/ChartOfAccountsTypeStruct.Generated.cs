@@ -15,8 +15,8 @@ namespace Logitude.Accounting.BL.CloseTables
        public const string Customers = "3";  
        public const string Vendors = "4";  
        public const string Banks = "5";  
-       public const string Workers = "6";  
        public const string DebtorsAndCreditors = "7";  
+       public const string Works = "6";  
     }
 }
 

@@ -1533,6 +1533,10 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         }
 
 
+
+
+
+
         protected void _ButtonSysCheckTotalSumIsZero_Click(object sender, EventArgs e)
         {
 
