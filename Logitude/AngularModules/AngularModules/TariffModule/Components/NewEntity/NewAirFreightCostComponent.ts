@@ -500,13 +500,13 @@ export class NewAirFreightCostComponent extends BaseComponent {
                 }
 
                 if (AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                    this.ValidationErrorsList.push(IdPropsName[index - 1] + "is filled without a UOM");
+                    this.ValidationErrorsList.push(IdPropsName[index - 1] + " is filled without a UOM");
                 }
 
                 if (index >= 3) {
                     if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
                         if (EmptyIndex != 1) {
-                            this.ValidationErrorsList.push("no empty charge lines between line " + (EmptyIndex - 1) + " and line " + index);
+                            this.ValidationErrorsList.push("No empty charge lines between line " + (EmptyIndex - 1) + " and line " + index);
                             EmptyIndex = 1;
                         }
                         if (AppTool.IsNullOrEmpty(this[IdProps[index - 2]])) {
