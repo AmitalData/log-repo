@@ -120,13 +120,20 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     IsBackToBack = chargesType.IsBackToBack,
                                 };
 
-                                if (chargesType.Measurement != null)
+                                if (chargesType.MeasurementId != null)
                                 {
-                                    quoteChargePM.CostMeasurementCode = chargesType.Measurement.Code;
-                                    quoteChargePM.SaleMeasurementCode = chargesType.Measurement.Code;
-                                    quoteChargePM.CostMeasurementShortName = chargesType.Measurement.ShortName;
-                                    quoteChargePM.SaleMeasurementShortName = chargesType.Measurement.ShortName;
-                                }
+                                    quoteChargePM.CostMeasurementId = chargesType.MeasurementId;
+                                    quoteChargePM.SaleMeasurementId = chargesType.MeasurementId;
+                                    Measurement iMeasurement = (from d in myCommonContext.Measurements where d.Id == chargesType.MeasurementId select d).FirstOrDefault();
+
+                                    if (iMeasurement != null)
+                                    {
+                                        quoteChargePM.CostMeasurementCode = iMeasurement.Code;
+                                        quoteChargePM.SaleMeasurementCode = iMeasurement.Code;
+                                        quoteChargePM.CostMeasurementShortName = iMeasurement.ShortName;
+                                        quoteChargePM.SaleMeasurementShortName = iMeasurement.ShortName;
+                                    }
+                                }                                                             
 
                                 if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
                                 {
@@ -180,6 +187,9 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "BTEU": { quoteChargePM.CostQuantity = entityPM.TEU; break; }
                                         case "PRVL": { quoteChargePM.CostQuantity = entityPM.ValueOfGoods; break; }
                                         case "QTY": { quoteChargePM.CostQuantity = entityPM.NumberOfPackages; break; }
+                                        case "CWKG": { quoteChargePM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
+                                        case "GWKG": { quoteChargePM.CostQuantity = entityPM.GrossWeightInKG; break; }
+
                                         default: { break; }
                                     }
 
@@ -193,6 +203,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "BTEU": { quoteChargePM.SaleQuantity = entityPM.TEU; break; }
                                         case "PRVL": { quoteChargePM.SaleQuantity = entityPM.ValueOfGoods; break; }
                                         case "QTY": { quoteChargePM.SaleQuantity = entityPM.NumberOfPackages; break; }
+                                        case "CWKG": { quoteChargePM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
+                                        case "GWKG": { quoteChargePM.SaleQuantity = entityPM.GrossWeightInKG; break; }
                                         default: { break; }
                                     }
 
@@ -339,6 +351,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "BTEU": { itemPM.CostQuantity = entityPM.TEU; break; }
                                         case "PRVL": { itemPM.CostQuantity = entityPM.ValueOfGoods; break; }
                                         case "QTY": { itemPM.CostQuantity = entityPM.NumberOfPackages; break; }
+                                        case "CWKG": { itemPM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
+                                        case "GWKG": { itemPM.CostQuantity = entityPM.GrossWeightInKG; break; }
                                         default: { break; }
                                     }
 
@@ -352,6 +366,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "BTEU": { itemPM.SaleQuantity = entityPM.TEU; break; }
                                         case "PRVL": { itemPM.SaleQuantity = entityPM.ValueOfGoods; break; }
                                         case "QTY": { itemPM.SaleQuantity = entityPM.NumberOfPackages; break; }
+                                        case "CWKG": { itemPM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
+                                        case "GWKG": { itemPM.SaleQuantity = entityPM.GrossWeightInKG; break; }
                                         default: { break; }
                                     }
 
@@ -444,7 +460,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "PRVL": { myResult = entityPM.ValueOfGoods; break; }
                     case "PRFR": { myResult = entityPM.QuoteCharges.Where(d => d.ChargesGroupCode == "FRT").Sum(s => s.CostTotalAmount); break; }
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
-
+                    case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
+                    case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
                     default:
                         {
                             if (this.isFCLQuote)
@@ -490,7 +507,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "PRVL": { myResult = entityPM.ValueOfGoods; break; }
                     case "PRFR": { myResult = entityPM.QuoteCharges.Where(d => d.ChargesGroupCode == "FRT").Sum(s => s.SaleTotalAmount); break; }
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
-
+                    case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
+                    case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
                     default:
                         {
                             if (this.isFCLQuote)

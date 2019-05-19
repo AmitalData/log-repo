@@ -1305,6 +1305,16 @@ export class MaintenanceComponent {
     }
     DoJoker(text: string) {
         switch (text) {
+            case "jokeraccfunctionaltest": {
+
+
+                var logitudeWindow = new LogitudeWindow();
+                logitudeWindow.Width = 400;
+                logitudeWindow.Height = 300;
+                logitudeWindow.Title = "Accounting Load Test";
+                logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingFunctionalTestComponent');
+
+            } break;
             case "jokeraccloadtest": {
 
 
