@@ -878,6 +878,7 @@
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequeDataProvider.cs" />
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequePrintService.cs" />
     <Compile Include="AccountingModel\Reports\TaxDeductionReport\TaxDeductionReportPrintService.cs" />
+    <Compile Include="AccountingModel\WebInjection\XLSMappingFunctionalTest.cs" />
     <Compile Include="AccountingWebServices\Testers\TrailReport.aspx.cs">
       <DependentUpon>TrailReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -984,6 +985,7 @@
     <Compile Include="Controllers\AccountingModel\ARPaymentChequeOpController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconcileExternalPageController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationController.cs" />
+    <Compile Include="Controllers\AccountingModel\ReconciliationAfterConversionController.cs" />
     <Compile Include="Controllers\AccountingModel\RevaluationOpController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxDeductionReportFileController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxReportOpController.cs" />
@@ -1146,6 +1148,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\LogitudeMessagesTransmissionLogController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplateController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplatesVersionController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TarrifChargeController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantLoginPolicyController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TwoFactorAuthenticationDeviceController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\PortViewsController.cs" />
@@ -1818,6 +1821,7 @@
     <Compile Include="Controllers\WebDomainControllers\ContainersFUDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\CountersDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\CRMDomainController.cs" />
+    <Compile Include="Controllers\WebDomainControllers\CurrencyRatesController.cs" />
     <Compile Include="Controllers\WebDomainControllers\DefaultTranslationController.cs" />
     <Compile Include="Controllers\WebDomainControllers\GeneralDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\InfrastructureDomainController.cs" />
@@ -3396,7 +3400,6 @@
     <Content Include="App_Code\AngularJS_App_Code\MyValuesController.cs" />
     <Content Include="App_Code\ImporterShipmentsCancleController.cs" />
     <Content Include="App_Code\ImporterShipmentDocumentsCancleController.cs" />
-    <Content Include="App_Code\AngularJS_App_Code\CurrencyRatesController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Shipment\ShipmentViewsController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentExtendedController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCustomFieldController.cs" />

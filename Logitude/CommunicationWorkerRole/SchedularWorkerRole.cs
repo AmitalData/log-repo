@@ -22,7 +22,7 @@ namespace CommunicationWorkerRole
 {
     class SchedularWorkerRole : WorkerEntryPoint
     {
-        IQueueService queueservice;
+        DbQueueService queueservice;
         int Tenant;
         public SchedularWorkerRole()
         {
@@ -61,6 +61,7 @@ namespace CommunicationWorkerRole
                                 string Id = message.MessageValues["TaskId"].ToString();
                                 Tenant = int.Parse(message.MessageValues["Tenant"]);
                                 int Version = int.Parse(message.MessageValues.ContainsKey("Version") ? message.MessageValues["Version"].ToString() : "0");
+                                int Retries = int.Parse(message.MessageValues.ContainsKey("Retries") ? message.MessageValues["Retries"].ToString() : "0");
                                 if (!string.IsNullOrEmpty(Id))
                                 {
                                     var objectContext = WebFreightContext.GetContext(Tenant);
@@ -68,7 +69,7 @@ namespace CommunicationWorkerRole
                                     TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
                                     TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
                                     TasksSchedulerPM Task = TasksSchedulerQuery.GetSingleTasksSchedulerPM(Id);
-
+                                    Task.Retries = Retries;
                                     if (Task != null)
                                     {
                                         if (Version >= Task.Version)
@@ -85,6 +86,8 @@ namespace CommunicationWorkerRole
                                             var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ServiceClassName), ArrArgs) as TaskManagerBase;
                                             Task.Status = "In progress";
                                             WRItem.Task = Task;
+                                            WRItem.queueservice = queueservice;
+                                            WRItem.RetryNumber = message.RetryNumber;
                                             Thread thread = new Thread(WRItem.Run);
                                             //queueservice.Complete();
                                             //Task.Status = "In progress";
@@ -101,7 +104,7 @@ namespace CommunicationWorkerRole
                                     // Add New Queue for the executed WR
                                 }
 
-                                queueservice.Complete();
+                                //queueservice.Complete();
                                 LogDoneItemInMemory();
                             }
                             catch (Exception ex)

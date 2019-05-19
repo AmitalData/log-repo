@@ -163,6 +163,8 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         private void CreateTariffVersion(TariffPM entityPM)
         {
             entityPM.LastVersion += 1;
+            entityPM.LastStartDate = entityPM.StartDate;
+            entityPM.LastExpirationDate = entityPM.ExpirationDate;
 
             TariffVersionPM tariffVersionPM = new TariffVersionPM()
             {
@@ -171,7 +173,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 CreateDate = entityPM.CreateDate,
                 CreatedByUserId = entityPM.CreatedByUserId,
                 StartDate = entityPM.StartDate,
-                ExpirationDate = entityPM.ExpirationDate,
+                ExpirationDate = entityPM.ExpirationDate,                
                 Version = entityPM.LastVersion,
                 SearchFields = entityPM.LastVersion.ToString(),
                 ChangeSetOp = ChangeSetOperation.Insert,

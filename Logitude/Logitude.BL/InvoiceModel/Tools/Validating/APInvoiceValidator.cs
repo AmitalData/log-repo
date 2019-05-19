@@ -56,6 +56,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 throw new ApplicationException(msg);
             }
 
+            if (entityPM.InvoiceDate > entityPM.AccountingDate)
+            {
+                string msg = TranslateTextsClass.Translate("APInvoice.O.CheckInvoiceDate", entityPM.Tenant, !(GetLoggedContact(entityPM.Tenant).DontShowLocal));//.t "nvoice Date cant be bigger the the Accounting Date"; // TranslateTextsClass.Translate("APInvoice.M.CantReceiveFutureDateInvoice", entityPM.Tenant);
+                throw new ApplicationException(msg);
+            }
+
             if (isVatNumberMandatoryInAP)
             {
                 if (string.IsNullOrEmpty(entityPM.VATNumber))
@@ -313,7 +319,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 loggedContact = new ContactQuery(tenant).GetContactByEmailOnly("system@tenant" + tenant + ".com", tenant);
             }
-            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() { DontShowLocal = true };
+            loggedContact = loggedContact ?? new Logitude.BL.CommonDataModel.EntityPMs.ContactPM() {  };
             return loggedContact;
         }
         private static void ValidateOnVoid(APInvoicePM entityPM)

@@ -75,20 +75,22 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
                 {
                     byte[] dosBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
-                    string decodedString = Encoding.UTF8.GetString(dosBytes);
-                    if (false)
-                    {
-                        var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
-                        var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
-                        string dosS = dosEnc.GetString(dosBytes);
+                    //string decodedString = Encoding.UTF8.GetString(dosBytes);
 
-                        var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dosBytes);
-                        string winHebrewString = winHebrewEncoding.GetString(hebBytes);
-                    }
+                    var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
+                    var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
+                    string dosS = dosEnc.GetString(dosBytes);
+
+                    var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dosBytes);
+                    string winHebrewString = winHebrewEncoding.GetString(hebBytes);
+
+
                     var response = new ServiceResponse();
                     //response.Result = bankAccountPageAnalyzer.MyResultLoadBankPage;
-
-                    return Request.CreateResponse(HttpStatusCode.OK, response);
+                    var system1000FlatFileAnalyser = new System1000FlatFileAnalyser();
+                    system1000FlatFileAnalyser.Analyse(authToken.Tenant, winHebrewString);
+                    
+                    return Request.CreateResponse(HttpStatusCode.OK, new { Message = "Done" });
                 }
                 else
                 {

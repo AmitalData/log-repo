@@ -1487,7 +1487,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
 
 
-        protected void _ButtonLoadSystem1000_Click(object sender, EventArgs e)
+        protected void ButtonLoadSystem1000_Click(object sender, EventArgs e)
         {
 
             string param = "";
@@ -1530,6 +1530,10 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 _LabelLog.Text = LogMessagingUtil.Instance.ToString();
             }
         }
+
+
+
+
 
 
         protected void _ButtonSysCheckTotalSumIsZero_Click(object sender, EventArgs e)
