@@ -2950,6 +2950,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (!this.Parent.IsReadOnly) {
             var deletedItemPrice: number = this.entityPM.ItemPrice;
             if (this.Parent.EntityPM.SupplierInvoiceItems.includes(this.entityPM)) {
+                if (this.ShowValidatioIcon == true) {
+                    this.Parent.Parent.tariffErrorItems -= 1;
+                }
                 this.Parent.EntityPM.RemoveSupplierInvoiceItem(this.entityPM);
                 var sequence;
                 if (this.Parent.ItemsSource.Collection[0].SequenceNumeric == this.entityPM.SequenceNumeric) {
