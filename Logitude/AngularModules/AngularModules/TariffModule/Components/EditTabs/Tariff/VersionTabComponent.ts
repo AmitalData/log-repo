@@ -442,31 +442,133 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.DestinationPortId = item.ToPortId;
             tariffLine.DestinationPortCode = item.ToPortCode;
             tariffLine.DestinationPortName = item.ToPortName;
-            tariffLine.MinPrice = item.MinPrice;
-            tariffLine.Step1Price = item.Step1Price;
-            tariffLine.Step2Price = item.Step2Price;
-            tariffLine.Step3Price = item.Step3Price;
-            tariffLine.Step4Price = item.Step4Price;
-            tariffLine.Step5Price = item.Step5Price;
-            tariffLine.Step6Price = item.Step6Price;
-            tariffLine.Step7Price = item.Step7Price;
-            tariffLine.Step8Price = item.Step8Price;
-
             tariffLine.OriginPortText = item.FromPortText;
             tariffLine.DestinationPortText = item.ToPortText;
-            tariffLine.MinPriceText = item.MinPriceText;
-            tariffLine.Step1PriceText = item.Step1PriceText;
-            tariffLine.Step2PriceText = item.Step2PriceText;
-            tariffLine.Step3PriceText = item.Step3PriceText;
-            tariffLine.Step4PriceText = item.Step4PriceText;
-            tariffLine.Step5PriceText = item.Step5PriceText;
-            tariffLine.Step6PriceText = item.Step6PriceText;
-            tariffLine.Step7PriceText = item.Step7PriceText;
-            tariffLine.Step8PriceText = item.Step8PriceText;
-
             tariffLine.HasErrors = item.HasErrors;
             tariffLine.ErrorText = item.ErrorText;
 
+            if (this.PriceSteps.indexOf(',') > -1) {
+                var steps: string[] = this.PriceSteps.split(",");
+                var count = steps.length;
+                if (count == 1) {
+                    tariffLine.MinPrice = item.MinPrice;
+                    tariffLine.Step1Price = item.Step1Price;
+
+                    tariffLine.MinPriceText = item.MinPriceText;
+                    tariffLine.Step1PriceText = item.Step1PriceText;
+                }
+                else if (count == 2) {
+                    tariffLine.MinPrice = item.MinPrice;
+                    tariffLine.Step1Price = item.Step1Price;
+                    tariffLine.Step2Price = item.Step2Price;
+
+                    tariffLine.MinPriceText = item.MinPriceText;
+                    tariffLine.Step1PriceText = item.Step1PriceText;
+                    tariffLine.Step2PriceText = item.Step2PriceText;
+                }
+                else if (count == 3) {
+                    tariffLine.MinPrice = item.MinPrice;
+                    tariffLine.Step1Price = item.Step1Price;
+                    tariffLine.Step2Price = item.Step2Price;
+                    tariffLine.Step3Price = item.Step3Price;
+
+                    tariffLine.MinPriceText = item.MinPriceText;
+                    tariffLine.Step1PriceText = item.Step1PriceText;
+                    tariffLine.Step2PriceText = item.Step2PriceText;
+                    tariffLine.Step3PriceText = item.Step3PriceText;
+                }
+                else if (count == 4) {
+                    tariffLine.MinPrice = item.MinPrice;
+                    tariffLine.Step1Price = item.Step1Price;
+                    tariffLine.Step2Price = item.Step2Price;
+                    tariffLine.Step3Price = item.Step3Price;
+                    tariffLine.Step4Price = item.Step4Price;
+
+                    tariffLine.MinPriceText = item.MinPriceText;
+                    tariffLine.Step1PriceText = item.Step1PriceText;
+                    tariffLine.Step2PriceText = item.Step2PriceText;
+                    tariffLine.Step3PriceText = item.Step3PriceText;
+                    tariffLine.Step4PriceText = item.Step4PriceText;
+                }
+                else if (count == 5) {
+                    tariffLine.MinPrice = item.MinPrice;
+                    tariffLine.Step1Price = item.Step1Price;
+                    tariffLine.Step2Price = item.Step2Price;
+                    tariffLine.Step3Price = item.Step3Price;
+                    tariffLine.Step4Price = item.Step4Price;
+                    tariffLine.Step5Price = item.Step5Price;
+
+                    tariffLine.MinPriceText = item.MinPriceText;
+                    tariffLine.Step1PriceText = item.Step1PriceText;
+                    tariffLine.Step2PriceText = item.Step2PriceText;
+                    tariffLine.Step3PriceText = item.Step3PriceText;
+                    tariffLine.Step4PriceText = item.Step4PriceText;
+                    tariffLine.Step5PriceText = item.Step5PriceText;
+                }
+                else if (count == 6) {
+                    tariffLine.MinPrice = item.MinPrice;
+                    tariffLine.Step1Price = item.Step1Price;
+                    tariffLine.Step2Price = item.Step2Price;
+                    tariffLine.Step3Price = item.Step3Price;
+                    tariffLine.Step4Price = item.Step4Price;
+                    tariffLine.Step5Price = item.Step5Price;
+                    tariffLine.Step6Price = item.Step6Price;
+
+                    tariffLine.MinPriceText = item.MinPriceText;
+                    tariffLine.Step1PriceText = item.Step1PriceText;
+                    tariffLine.Step2PriceText = item.Step2PriceText;
+                    tariffLine.Step3PriceText = item.Step3PriceText;
+                    tariffLine.Step4PriceText = item.Step4PriceText;
+                    tariffLine.Step5PriceText = item.Step5PriceText;
+                    tariffLine.Step6PriceText = item.Step6PriceText;
+                }
+                else if (count == 7) {
+                    tariffLine.MinPrice = item.MinPrice;
+                    tariffLine.Step1Price = item.Step1Price;
+                    tariffLine.Step2Price = item.Step2Price;
+                    tariffLine.Step3Price = item.Step3Price;
+                    tariffLine.Step4Price = item.Step4Price;
+                    tariffLine.Step5Price = item.Step5Price;
+                    tariffLine.Step6Price = item.Step6Price;
+                    tariffLine.Step7Price = item.Step7Price;
+
+                    tariffLine.MinPriceText = item.MinPriceText;
+                    tariffLine.Step1PriceText = item.Step1PriceText;
+                    tariffLine.Step2PriceText = item.Step2PriceText;
+                    tariffLine.Step3PriceText = item.Step3PriceText;
+                    tariffLine.Step4PriceText = item.Step4PriceText;
+                    tariffLine.Step5PriceText = item.Step5PriceText;
+                    tariffLine.Step6PriceText = item.Step6PriceText;
+                    tariffLine.Step7PriceText = item.Step7PriceText;
+                }
+                else if (count == 8) {
+                    tariffLine.MinPrice = item.MinPrice;
+                    tariffLine.Step1Price = item.Step1Price;
+                    tariffLine.Step2Price = item.Step2Price;
+                    tariffLine.Step3Price = item.Step3Price;
+                    tariffLine.Step4Price = item.Step4Price;
+                    tariffLine.Step5Price = item.Step5Price;
+                    tariffLine.Step6Price = item.Step6Price;
+                    tariffLine.Step7Price = item.Step7Price;
+                    tariffLine.Step8Price = item.Step8Price;
+
+                    tariffLine.MinPriceText = item.MinPriceText;
+                    tariffLine.Step1PriceText = item.Step1PriceText;
+                    tariffLine.Step2PriceText = item.Step2PriceText;
+                    tariffLine.Step3PriceText = item.Step3PriceText;
+                    tariffLine.Step4PriceText = item.Step4PriceText;
+                    tariffLine.Step5PriceText = item.Step5PriceText;
+                    tariffLine.Step6PriceText = item.Step6PriceText;
+                    tariffLine.Step7PriceText = item.Step7PriceText;
+                    tariffLine.Step8PriceText = item.Step8PriceText;
+                }
+            }
+
+            else {
+                tariffLine.MinPrice = item.MinPrice;
+                tariffLine.MinPriceText = item.MinPriceText;
+            }
+            
             this.CurrentVersion.AddTariffLine(tariffLine);
         });
         

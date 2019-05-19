@@ -86,11 +86,12 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         protected void Page_Load(object sender, EventArgs e)
         {
             LogMessagingUtil.Instance.Clear();
+            var testIt = new AccountingModel.WebInjection.XLSUtil();
+            testIt.GetDataTableFromWorkSheet(null,"");
+
 
             try
             {
-
-
 
 
                 //AuthenticationUtil.Impersonate(1, 
@@ -1530,6 +1531,10 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 _LabelLog.Text = LogMessagingUtil.Instance.ToString();
             }
         }
+
+
+
+
 
 
         protected void _ButtonSysCheckTotalSumIsZero_Click(object sender, EventArgs e)

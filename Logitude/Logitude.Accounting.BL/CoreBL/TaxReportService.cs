@@ -191,6 +191,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
 
+                if(a.JournalId == "1-808875")
+                {
+
+                }
                     if (a.AccountingEntity == "4")
                     {
 

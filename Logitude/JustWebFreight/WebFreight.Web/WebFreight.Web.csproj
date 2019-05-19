@@ -878,7 +878,7 @@
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequeDataProvider.cs" />
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequePrintService.cs" />
     <Compile Include="AccountingModel\Reports\TaxDeductionReport\TaxDeductionReportPrintService.cs" />
-    <Compile Include="AccountingModel\WebInjection\XLSMappingFunctionalTest.cs" />
+    <Compile Include="AccountingModel\WebInjection\XLSUtil.cs" />
     <Compile Include="AccountingWebServices\Testers\TrailReport.aspx.cs">
       <DependentUpon>TrailReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -985,6 +985,7 @@
     <Compile Include="Controllers\AccountingModel\ARPaymentChequeOpController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconcileExternalPageController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationController.cs" />
+    <Compile Include="Controllers\AccountingModel\ReconciliationAfterConversionController.cs" />
     <Compile Include="Controllers\AccountingModel\RevaluationOpController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxDeductionReportFileController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxReportOpController.cs" />
@@ -2775,6 +2776,7 @@
     <Content Include="Integration Test\Shipment\CreateShipment.postman_collection.json" />
     <Content Include="Integration Test\Reports\Reports.postman_collection.json" />
     <Content Include="Integration Test\Maintenance\Partners .postman_collection.json" />
+    <Content Include="Integration Test\Shipment\CreateUpdateShipment.postman_collection" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
