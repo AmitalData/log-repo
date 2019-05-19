@@ -189,6 +189,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SelectedStatusValue = mySendALLCorrectRequestParams.SelectedStatusValue,
                 SelectedTotalInvoiceValue = mySendALLCorrectRequestParams.SelectedTotalInvoiceValue,
                 SelectedFastIndividualProcessValue = mySendALLCorrectRequestParams.SelectedFastIndividualProcessValue,
+                SelectedCustomStatusValue = mySendALLCorrectRequestParams.SelectedCustomStatusValue,
 
                 tenant = tenant,
                 MyMoreParams = "",
@@ -293,6 +294,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string SelectedAvailableValue { get; set; }
         public string SelectedTotalInvoiceValue { get; set; }
         public string SelectedFastIndividualProcessValue { get; set; }
+        public string SelectedCustomStatusValue { get; set; }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }

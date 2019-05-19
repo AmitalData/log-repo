@@ -47,11 +47,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 listPM = qs.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
                     customResponse.SelectedBOLValue,
-                    customResponse.SelectedStatusValue, customResponse.SelectedTotalInvoiceValue, customResponse.SelectedFastIndividualProcessValue);
+                    customResponse.SelectedStatusValue, 
+                    customResponse.SelectedTotalInvoiceValue, 
+                    customResponse.SelectedFastIndividualProcessValue,
+                    customResponse.SelectedCustomStatusValue);
                 if (customResponse.CourierDeclarationStatusCode == "RV")
                 {
                     var listPM2 = qs.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
-                    customResponse.SelectedStatusValue, customResponse.SelectedTotalInvoiceValue, customResponse.SelectedFastIndividualProcessValue);
+                    customResponse.SelectedStatusValue, 
+                    customResponse.SelectedTotalInvoiceValue, 
+                    customResponse.SelectedFastIndividualProcessValue,
+                    customResponse.SelectedCustomStatusValue);
                     listPM = listPM.Concat(listPM2).ToList();
                 }
             }

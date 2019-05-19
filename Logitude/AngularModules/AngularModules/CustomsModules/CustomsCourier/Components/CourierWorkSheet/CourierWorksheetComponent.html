@@ -531,7 +531,7 @@
                                                                     </div>
 
                                                                     <div dir="RTL" class="class-dropdownfilter-content">
-                                                                        <div style="width:240px;height:280px">
+                                                                        <div style="width:240px;height:320px">
                                                                             <table>
                                                                                 <tr class="FormFieldRow" style="height:20px">
                                                                                     <td style="width: 240px"></td>
@@ -648,7 +648,30 @@
                                                                                     </td>
                                                                                 </tr>
 
-                                                                                <tr class="FormFieldRow" style="height:20px">
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px">
+                                                                                        <LogLabel [ObjectFieldName]="'CourierCustomStatus'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationCourierStatus.F.CourierCustomStatusName'"> </LogLabel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px; height:20px">
+                                                                                        <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                                                                            <li (click)="SelectedCustomStatusValueClick('S')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'S'">
+                                                                                                <!--Suspended-->
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.Suspended' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedCustomStatusValueClick('H')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'H'">
+                                                                                                <!--Hatara-->
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.Hatara' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedCustomStatusValueClick('A')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'A'">
+                                                                                                {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow" style="height:15px">
                                                                                     <td style="width: 240px"></td>
                                                                                 </tr>
                                                                                 <tr class="FormFieldRow" style="height:22px">

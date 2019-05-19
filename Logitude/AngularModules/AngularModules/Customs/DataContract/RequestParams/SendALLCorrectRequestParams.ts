@@ -12,4 +12,5 @@ export class SendALLCorrectRequestParams extends GenericRequestParams {
     public SelectedAvailableValue: string;
     public SelectedTotalInvoiceValue: string;
     public SelectedFastIndividualProcessValue: string;
+    public SelectedCustomStatusValue: string;
 }
