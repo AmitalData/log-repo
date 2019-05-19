@@ -984,6 +984,7 @@
     <Compile Include="Controllers\AccountingModel\ARPaymentChequeOpController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconcileExternalPageController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationController.cs" />
+    <Compile Include="Controllers\AccountingModel\ReconciliationAfterConversionController.cs" />
     <Compile Include="Controllers\AccountingModel\RevaluationOpController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxDeductionReportFileController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxReportOpController.cs" />
