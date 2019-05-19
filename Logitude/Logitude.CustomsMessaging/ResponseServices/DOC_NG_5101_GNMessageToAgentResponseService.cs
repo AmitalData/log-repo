@@ -30,6 +30,8 @@ using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Customs.Def.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {  // moran 6.10.14 - Task 8066 -->
@@ -105,13 +107,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             importerVAT = message[0];
                         }
                         string[] messageSplit = customResponse.MessageToAgent.msgString.Split(new[] { "הספק: " }, StringSplitOptions.None);
+                        string customsVendorCode = null;
                         if (msgString != null)
                         {
                             string[] message = messageSplit[1].Split(" ".ToCharArray());
-                            string customsVendorCode = message[0];
+                            customsVendorCode = message[0];
                             customsVendorId = CheckIfCustomsVendorCodeExist(customsVendorCode, requestParams.Tenant);
                         }
-                        if(!string.IsNullOrWhiteSpace(customsVendorId))
+                        if (string.IsNullOrWhiteSpace(customsVendorId))
+                        {
+                            LogMessagingUtil.Instance.AppendLine("בדיקת דיפולט - שליפת ספק בהודעה על תצהיר");
+                            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
+                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_RET_VEND", "NON", _MyDeclarationPM.CustomerCode, false, true);
+                            bool isRetrieveVendorActive = def.DEFDATA == "Y";
+                            if (isRetrieveVendorActive)
+                            {
+                                SendVendorSearchByCustomsAgentRequest(requestParams, importerVAT, customsVendorCode);
+                            }
+                        }
+                        if (!string.IsNullOrWhiteSpace(customsVendorId))
                         {
                             SendImporterDeclarationRequest(requestParams, importerVAT, customsVendorId);
                         }
@@ -573,14 +587,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 RequestVIA = SendRequestVIA.WebServiceBatch
             };
 
-            var service = new VE_8326_ImporterDeclarationMessagingService();
-            var responseData = service.Send(newImporterDeclarationRequestParams);
-            if (!responseData.Succeeded)
+            //var service = new VE_8326_ImporterDeclarationMessagingService();
+            //var responseData = service.Send(newImporterDeclarationRequestParams);
+            //if (!responseData.Succeeded)
+            //{
+            //    LogMessagingUtil.Instance.AppendLine("Request Failed " + responseData.CustomsRequestsSheetId + ", Message: " + responseData.UserMessage);
+            //    return;
+            //}
+            try
             {
-                LogMessagingUtil.Instance.AppendLine("Request Failed " + responseData.CustomsRequestsSheetId + ", Message: " + responseData.UserMessage);
+                SBQMessageService.CreateSheetSBQMessage<ImporterDeclarationRequestParams>(newImporterDeclarationRequestParams, false, DateTime.Now.AddMinutes(2));
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    LogMessagingUtil.Instance.AppendLine("8326- ImporterDeclaration RequestInProgress stop create a new one !! ");
+                }
                 return;
             }
-            LogMessagingUtil.Instance.AppendLine("Request Succeeded " + responseData.CustomsRequestsSheetId);
+            LogMessagingUtil.Instance.AppendLine("8326 - ImporterDeclaration Request Succeeded");
+
         }
 
         string CheckIfCustomsVendorCodeExist(string vendorNumber, int tenant)
@@ -600,6 +627,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             return null;
+        }
+
+        void SendVendorSearchByCustomsAgentRequest(GenericRequestParams requestParams, string importerNumber, string vendorCode)
+        {
+            int vendorNumber;
+            int.TryParse(vendorCode, out vendorNumber);
+            var req = new VE_MSG051_VendorSearchByCustomsAgentRequestParams()
+            {
+                Tenant = requestParams.Tenant,
+                RecallSuppliersFromFileRequest = true,
+                VendorNumber = vendorNumber,
+                RequestVIA = SendRequestVIA.WebServiceInteractive
+            };
+
+            var vendorSearchByCustomsAgentMessagingService = new VE_MSG051_VendorSearchByCustomsAgentMessagingService();
+            var responseData = vendorSearchByCustomsAgentMessagingService.Send(req);
+            if (!responseData.Succeeded)
+            {
+                LogMessagingUtil.Instance.AppendLine("Request 3650-VendorSearchByCustomsAgent Failed " + responseData.CustomsRequestsSheetId + ", Message: " + responseData.UserMessage);
+                return;
+            }
+            LogMessagingUtil.Instance.AppendLine("3650 - VendorSearchByCustomsAgent Request Succeeded");
+            SendImporterDeclarationRequest(requestParams, importerNumber, vendorCode);
+
         }
     }
 }

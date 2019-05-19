@@ -82,10 +82,22 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ReplyTo)
            .HasMaxLength(500)
            .IsUnicode(true);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
-            this.Property(t => t.CC)
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.CC)
+                .HasMaxLength(500)
+                .IsUnicode(true);
+
+            }
+            else
+            {
+                this.Property(t => t.CC)
                 .HasMaxLength(4000)
                 .IsUnicode(true);
+
+            }
             //OriginalTemplateId 
 
             // Table & Column Mappings
@@ -129,7 +141,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CC).HasColumnName("CC");
 
 
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            //string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
             if (dbms == "oracle")
             {

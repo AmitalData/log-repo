@@ -28,8 +28,17 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
 
             this.Property(t => t.AccountId).HasColumnName("AccountId").IsRequired().HasMaxLength(15).IsUnicode(false);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
 
-            this.Property(t => t.Number).HasColumnName("Number").HasMaxLength(15).IsUnicode(false);
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.Number).HasColumnName("RNumber").HasMaxLength(15).IsUnicode(false);
+            }
+            else
+            {
+                this.Property(t => t.Number).HasColumnName("Number").HasMaxLength(15).IsUnicode(false);
+            }
+                
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
 

@@ -168,7 +168,16 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FromPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToPortId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentLevelCode).HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.SearchFields).HasMaxLength(2000).IsUnicode(true);
+            }
+            else
+            {
+                this.Property(t => t.SearchFields).HasMaxLength(4000).IsUnicode(true);
+            }
+                
             this.Property(t => t.AWBComments).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.ChargeableWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.ConcurrencyGUID).IsRequired().HasMaxLength(40).IsUnicode(false);
@@ -278,7 +287,16 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.WarehouseLegReference).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.LastSharedEventId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LastSharedEventLocation).HasMaxLength(40).IsUnicode(true);
-            this.Property(t => t.LastSharedEventNotes).HasMaxLength(4000).IsUnicode(true);
+
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.LastSharedEventNotes).HasMaxLength(2000).IsUnicode(true);
+            }
+            else
+            {
+                this.Property(t => t.LastSharedEventNotes).HasMaxLength(4000).IsUnicode(true);
+            }
+
             this.Property(t => t.AWBPrintingComments).IsMaxLength().IsUnicode(true);
             this.Property(t => t.LocalCustomsSentByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.UpdatedByPartner).HasMaxLength(60).IsUnicode(false);
@@ -689,11 +707,23 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.FreightPayerAddressId).HasColumnName("FreightPayerAddressId");
             this.Property(t => t.FBLIsFromStock).HasColumnName("FBLIsFromStock");
             this.Property(t => t.HasContainerException).HasColumnName("HasContainerException");
-            this.Property(t => t.From).HasColumnName("From");
-            this.Property(t => t.To).HasColumnName("To");
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+                this.Property(t => t.From).HasColumnName("FromC");
+                this.Property(t => t.To).HasColumnName("ToC");
+
+            }
+            else
+            {
+                this.Property(t => t.From).HasColumnName("From");
+                this.Property(t => t.To).HasColumnName("To");
+
+            }
+
             this.Property(t => t.Origin).HasColumnName("Origin");
 
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            
             if (dbms == "oracle")
             {
                 this.Property(t => t.AccountedReceivablesInLocalCurrency).HasColumnName("AccountedReceivablesInLocal");
