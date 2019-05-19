@@ -2578,6 +2578,8 @@ export class ShipmentGenerator {
             case "FIXD": { newRecord.Quantity = 1; break; }
             case "PRVL": { newRecord.Quantity = this.EntityPM.ValueOfGoods; break; }
             case "GWTN": { newRecord.Quantity = this.EntityPM.GrossWeightPerTon; break; }
+            case "CWKG": { newRecord.Quantity = this.EntityPM.ChargeableWeightInKG; break; }
+            case "GWKG": { newRecord.Quantity = this.EntityPM.GrossWeightInKG; break; }
             case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; break; }
             default: { break; }
         }
@@ -3290,6 +3292,8 @@ export class ShipmentGenerator {
             case "PRVL": { newRecord.Quantity = this.EntityPM.ValueOfGoods; break; }
             case "GWTN": { newRecord.Quantity = this.EntityPM.GrossWeightPerTon; }
             case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; }
+            case "CWKG": { newRecord.Quantity = this.EntityPM.ChargeableWeightInKG; break; }
+            case "GWKG": { newRecord.Quantity = this.EntityPM.GrossWeightInKG; break; }
             default: { break; }
         }
 

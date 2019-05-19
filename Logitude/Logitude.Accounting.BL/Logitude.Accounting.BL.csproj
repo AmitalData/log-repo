@@ -189,6 +189,7 @@
     <Compile Include="CoreBL\BuildTenant\IFullAccountingGenerator.cs" />
     <Compile Include="CoreBL\CreateJournalReconcileService.cs" />
     <Compile Include="CoreBL\CashbookService.cs" />
+    <Compile Include="CoreBL\FunctionalTests\JournalToGLAccountMoreData.cs" />
     <Compile Include="CoreBL\ISystem1000Service.cs" />
     <Compile Include="CoreBL\OpenFormatReportService.cs" />
     <Compile Include="CoreBL\Reconcile\AutoReconcileARPaymentService.cs" />

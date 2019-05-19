@@ -73,7 +73,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"id": "5fc544a4-b4d2-487b-9b0f-57982f6ba406",
 						"exec": [
 							"pm.test(\"GetLoogedUserData\",function(){",
 							"    pm.response.to.have.status(200);",
@@ -94,7 +94,6 @@
 							"    pm.environment.set(\"BranchId\",BranchId);",
 							"    pm.environment.set(\"CreatedByUserId\",CreatedByUserId);",
 							"    ",
-							"    CreatedByUserId",
 							"})"
 						],
 						"type": "text/javascript"
@@ -103,7 +102,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"id": "8b5fcb0c-4a04-4594-82b6-1ca710183bdb",
 						"exec": [
 							""
 						],
@@ -853,7 +852,7 @@
 			"response": []
 		},
 		{
-			"name": "GetPortIdJFK",
+			"name": "GetPortIdAirJFK",
 			"event": [
 				{
 					"listen": "test",
@@ -867,7 +866,7 @@
 							"    var idvalue = (pm.response.json().Result[0].Id);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
-							"    pm.environment.set(\"PortIdJFK\",idvalue);",
+							"    pm.environment.set(\"PortIdAirJFK\",idvalue);",
 							"     //console.log(jsonData.Result[0].Code);",
 							"    if (idexist)  {",
 							"    postman.setNextRequest(\"GetPortIdSOU\"); ",
@@ -949,7 +948,7 @@
 			"response": []
 		},
 		{
-			"name": "GetPortIdJFKFromTenant0",
+			"name": "GetPortIdAirJFKFromTenant0",
 			"event": [
 				{
 					"listen": "test",
@@ -1042,7 +1041,7 @@
 			"response": []
 		},
 		{
-			"name": "GetPortIdJFKToTenant1",
+			"name": "GetPortIdAirJFKToTenant1",
 			"event": [
 				{
 					"listen": "test",
@@ -1127,7 +1126,7 @@
 			"response": []
 		},
 		{
-			"name": "GetPortIdSOU",
+			"name": "GetPortIdOceanSOU",
 			"event": [
 				{
 					"listen": "test",
@@ -1141,7 +1140,7 @@
 							"    var idvalue = (pm.response.json().Result[0].Id);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
-							"    pm.environment.set(\"PortIdSOU\",idvalue);",
+							"    pm.environment.set(\"PortIdOceanSOU\",idvalue);",
 							"     //console.log(jsonData.Result[0].Code);",
 							"   ",
 							"    if (idexist)  {",
@@ -1224,7 +1223,7 @@
 			"response": []
 		},
 		{
-			"name": "GetPortIdSOUFromTenant0",
+			"name": "GetPortIdOceanSOUFromTenant0",
 			"event": [
 				{
 					"listen": "test",
@@ -1238,7 +1237,7 @@
 							"    var idvalue = (pm.response.json().Result.filter(a => a.EnglishName == 'Southampton')[0].Id);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
-							"    pm.environment.set(\"PortIdSOU\",idvalue);",
+							"    pm.environment.set(\"PortIdOceanSOU\",idvalue);",
 							"    ",
 							" if (idexist)  {",
 							"    postman.setNextRequest(\"CopyPortIdSOUToTenant1\");  ",
@@ -1317,7 +1316,7 @@
 			"response": []
 		},
 		{
-			"name": "CopyPortIdSOUToTenant1",
+			"name": "GetPortIdOceanSOUToTenant1",
 			"event": [
 				{
 					"listen": "test",
@@ -1331,7 +1330,7 @@
 							"    var idvalue = (pm.response.json().Id);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
-							"    pm.environment.set(\"PortIdSOU\",idvalue);",
+							"    pm.environment.set(\"PortIdOceanSOU\",idvalue);",
 							"",
 							"   ",
 							"  ",
@@ -1402,7 +1401,7 @@
 			"response": []
 		},
 		{
-			"name": "GetPortIdNYC",
+			"name": "GetPortIdInlandNYC",
 			"event": [
 				{
 					"listen": "test",
@@ -1416,7 +1415,7 @@
 							"    var idvalue = (pm.response.json().Result[0].Id);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
-							"    pm.environment.set(\"PortIdNYC\",idvalue);",
+							"    pm.environment.set(\"PortIdInlandNYC\",idvalue);",
 							"     //console.log(jsonData.Result[0].Code);",
 							"   ",
 							"    if (idexist)  {",
@@ -1499,7 +1498,7 @@
 			"response": []
 		},
 		{
-			"name": "GetPortIdNYCFromTenant0",
+			"name": "GetPortIdInlandNYCFromTenant0",
 			"event": [
 				{
 					"listen": "test",
@@ -1513,7 +1512,7 @@
 							"    var idvalue = (pm.response.json().Result.filter(a => a.EnglishName == 'New York')[0].Id);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
-							"    pm.environment.set(\"PortIdNYC\",idvalue);",
+							"    pm.environment.set(\"PortIdInlandNYC\",idvalue);",
 							"    ",
 							" if (idexist)  {",
 							"    postman.setNextRequest(\"CopyPortIdNYCToTenant1\");  ",
@@ -1592,7 +1591,7 @@
 			"response": []
 		},
 		{
-			"name": "CopyPortIdNYCToTenant1",
+			"name": "GetPortIdInlandNYCNYCToTenant1",
 			"event": [
 				{
 					"listen": "test",
@@ -1606,7 +1605,7 @@
 							"    var idvalue = (pm.response.json().Id);",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
-							"    pm.environment.set(\"PortIdNYC\",idvalue);",
+							"    pm.environment.set(\"PortIdInlandNYC\",idvalue);",
 							"",
 							"   ",
 							"  ",
@@ -2846,7 +2845,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"PartnerTypeId\": \"CS\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n  \"$id\": \"2\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"New York\",\n    \"StateId\": \"1-89\",\n    \"ZipCode\": \"+001\",\n    \"FaxNumber\": \"2325881\",\n    \"PhoneNumber\": \"+1598137715\",\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": \"18 West 48th Street\",\n    \"Address2\": \"#5B, New York\",\n    \"Name\": \"TestConsigneeExport1Address\",\n    \"CountryId\": \"1-397\",\n    \"CarrierId\": null,\n    \"CountryName\": \"United States of America\",\n    \"CountryEnglishName\": \"United States of America\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": \"TestConsignee1Unique\",\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": \"ahmadb@logitudeworld.com\",\n    \"ContactName\": \"Ahmad\",\n    \"ContactPosition\": \"QA\",\n    \"ContactBusinessPhone\": \"+001598137715\",\n    \"ContactMobile\": \"+001598137715\",\n    \"ContactFax\": \"325236351\",\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": {\n    \"$id\": \"3\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"InActive\": false,\n    \"FacebookId\": null,\n    \"EnglishName\": \"Ahmad\",\n    \"ImageDetailId\": null,\n    \"LocalName\": \"Ahmad\",\n    \"ComputedLocalName\": null,\n    \"Email\": \"ahmadb@logitudeworld.com\",\n    \"HasPassword\": false,\n    \"Password\": null,\n    \"BusinessPhone\": \"236437347\",\n    \"Mobile\": \"754745747\",\n    \"Fax\": \"325236\",\n    \"Birthday\": null,\n    \"Anniversary\": null,\n    \"Notes\": null,\n    \"IsUser\": false,\n    \"SignupRole\": false,\n    \"Signature\": null,\n    \"SignatureHtml\": null,\n    \"DisplayGettingStarted\": false,\n    \"ExternalId\": null,\n    \"IsHybrid\": false,\n    \"DontShowLocal\": false,\n    \"MustChangePassword\": false,\n    \"IsLocked\": false,\n    \"NumberOfRetries\": 0,\n    \"DisconectFromCard\": false,\n    \"FieldsChanged\": false,\n    \"SetAsPrimaryForCard\": true,\n    \"BirthdayReminder\": false,\n    \"AnniversaryReminder\": false,\n    \"DoneDate\": null,\n    \"BirthDayOfYear\": null,\n    \"ContactDoneMethodCode\": null,\n    \"ContactDoneMethodName\": null,\n    \"Position\": \"QA\",\n    \"IsAirExport\": false,\n    \"IsAirImport\": false,\n    \"IsOceanExport\": false,\n    \"IsOceanImport\": false,\n    \"IsInlandExport\": false,\n    \"IsInlandImport\": false,\n    \"IsAll\": false,\n    \"HasCardContact\": false,\n    \"IsCustomsImport\": false,\n    \"IsInlandDomestic\": false,\n    \"IndexColor\": null,\n    \"IsChangeSignatur\": false,\n    \"CustomerId\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CreateDate\": null\n  },\n  \"Agent\": null,\n  \"Customer\": {\n    \"$id\": \"4\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"BankName\": null,\n    \"CompetitorFields\": \"\",\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"StartWorkingDate\": null,\n    \"Notes\": \"TestConsignee\",\n    \"SupportNotes\": null,\n    \"EnglishName\": \"TestConsigneeExport1\",\n    \"LocalName\": \"TestConsigneeExport1\",\n    \"AccountManagerUserId\": null,\n    \"SalesmanUserId\": null,\n    \"SalesmanUserEnglishName\": null,\n    \"SalesmanBusinessUnitId\": null,\n    \"Website\": null,\n    \"InActive\": false,\n    \"BillToId\": null,\n    \"BillToName\": null,\n    \"VatNumber\": \"TestConsignee1Unique\",\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"RankId\": \"1-4\",\n    \"VatTypeId\": null,\n    \"ComputedLocalName\": null,\n    \"FieldsChanged\": false,\n    \"PartnerTypeId\": \"CS\",\n    \"CreatedByUserId\": \"1-40924\",\n    \"UpdatedByUserId\": null,\n    \"CardPMId\": null,\n    \"ExistedContactId\": \"1-40924\",\n    \"StartWorkingManuallySet\": false,\n    \"CityName\": \"New York\",\n    \"CountryId\": \"1-397\",\n    \"CountryName\": \"United States of America\",\n    \"ATTN\": null,\n    \"AccountManagerUserEnglishName\": null,\n    \"RankName\": null,\n    \"RankCode\": null,\n    \"PhoneNumber\": null,\n    \"FaxNumber\": null,\n    \"CityWithCountry\": null,\n    \"ImageDetailId\": null,\n    \"Field1\": {\n      \"$id\": \"5\",\n      \"Value\": null,\n      \"FieldName\": \"Field1\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field2\": {\n      \"$id\": \"6\",\n      \"Value\": null,\n      \"FieldName\": \"Field2\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field3\": {\n      \"$id\": \"7\",\n      \"Value\": null,\n      \"FieldName\": \"Field3\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field4\": {\n      \"$id\": \"8\",\n      \"Value\": null,\n      \"FieldName\": \"Field4\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field5\": {\n      \"$id\": \"9\",\n      \"Value\": null,\n      \"FieldName\": \"Field5\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field6\": {\n      \"$id\": \"10\",\n      \"Value\": null,\n      \"FieldName\": \"Field6\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field7\": {\n      \"$id\": \"11\",\n      \"Value\": null,\n      \"FieldName\": \"Field7\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field8\": null,\n    \"Field9\": null,\n    \"Field10\": null,\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"IsActiveForMobile\": false,\n    \"LastLoginDate\": null,\n    \"InvitationDate\": null,\n    \"IsHybrid\": false,\n    \"FreelancerId\": null,\n    \"ForwarderId\": null,\n    \"CustomsAgentId\": null,\n    \"MediatorId\": null,\n    \"FreelancerName\": null,\n    \"ForwarderName\": null,\n    \"CustomsAgentName\": null,\n    \"MediatorName\": null,\n    \"GoogleAddressString\": null,\n    \"IsExternal\": false,\n    \"IsCustomer\": false,\n    \"CustomerStatusCode\": \"ACT\",\n    \"BeforeDeactiveStatusCode\": null,\n    \"ActivationDate\": null,\n    \"InactiveDate\": null,\n    \"ActivationRequestDate\": null,\n    \"ActivatedByUserId\": null,\n    \"SetAsInactiveByUserId\": null,\n    \"ActivationRequestedByUserId\": null,\n    \"SetReActivated\": false,\n    \"SetInActive\": false,\n    \"SetReady\": false,\n    \"SetActivated\": false,\n    \"EventNote\": null,\n    \"Address1_Potential\": null,\n    \"Address2_Potential\": null,\n    \"City_Potential\": null,\n    \"CountryId_Potential\": null,\n    \"ZipCode_Potential\": null,\n    \"StateId_Potential\": null,\n    \"PhoneNumber_Potential\": null,\n    \"FaxNumber_Potential\": null,\n    \"ATTN_Potential\": null,\n    \"IsLocalLanguage\": false,\n    \"CodeMyCustomer\": \"new\",\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CustomerStatusName\": null,\n    \"PrimaryContactId\": \"1-40924\",\n    \"ReadyForActivationDate\": null,\n    \"IsFirstContactToAdd\": false,\n    \"SavedForActivation\": false,\n    \"QueueMessageLockToken\": \"00000000-0000-0000-0000-000000000000\",\n    \"QuestionnaireAnsewrsHtmlString\": null,\n    \"SetAsPotential\": false,\n    \"UpdatedByUserCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"RequestedAirlines\": null,\n    \"RegisteredAirlines\": null,\n    \"PendingAirlines\": null,\n    \"IsCustomerAllowed\": false,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [\n      {\n        \"$ref\": \"3\"\n      }\n    ],\n    \"SharedLogisticContacts\": [],\n    \"IndustryId\": null,\n    \"LeadSourceId\": null,\n    \"CollectorId\": null,\n    \"ClassifierId\": null,\n    \"IndustryName\": null,\n    \"LeadSourceName\": null,\n    \"CollectorName\": null,\n    \"ClassifierName\": null,\n    \"CreditLimit\": null,\n    \"LeadDescription\": null,\n    \"RegionId\": null,\n    \"RegionName\": null,\n    \"CustomerSizeId\": null,\n    \"LastCallDate\": null,\n    \"LastMeetingDate\": null,\n    \"LastOpportunityDate\": null,\n    \"FirstInvoiceDate\": null,\n    \"FirstShipmentDate\": null,\n    \"LastShipmentDate\": null,\n    \"LastQuoteDate\": null,\n    \"LastInteractionDate\": null,\n    \"EnableConsolidationInvoices\": false,\n    \"ActivityWatch\": false,\n    \"KnownConsignor\": null,\n    \"KCExpirationDate\": null,\n    \"LogBoxActivated\": false,\n    \"CustomerProducts\": [],\n    \"CustomerCompetitors\": [],\n    \"CustomerAdditionalServices\": [],\n    \"SalesNotes\": [],\n    \"CustomerSalesmanByProducts\": [],\n    \"CustomerAccountManagerByProducts\": [],\n    \"CustomerCustomsAgentByProducts\": [],\n    \"CustomerForwarderByProducts\": [],\n    \"CustomerMediatorByProducts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"IsLogBox\": false,\n    \"IsPrivateLabelCustomer\": false,\n    \"IsCreditLimitEnabled\": false,\n    \"CreditLimitAmount\": null,\n    \"CreditLimitOpenBalance\": null,\n    \"CreditLimitWarningPercentage\": null,\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null,\n    \"CustomerTenant\": 0\n  },\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"PartnerTypeId\": \"CS\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n  \"Address\": {\n  \"$id\": \"2\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"New York\",\n    \"StateId\": \"1-89\",\n    \"ZipCode\": \"+001\",\n    \"FaxNumber\": \"2325881\",\n    \"PhoneNumber\": \"+1598137715\",\n    \"ATTN\": null,\n    \"AddressTypeId\": \"M\",\n    \"Address1\": \"18 West 48th Street\",\n    \"Address2\": \"#5B, New York\",\n    \"Name\": \"TestConsigneeExport1Address\",\n    \"CountryId\": \"1-397\",\n    \"CarrierId\": null,\n    \"CountryName\": \"United States of America\",\n    \"CountryEnglishName\": \"United States of America\",\n    \"StateEnglishName\": null,\n    \"StateCode\": null,\n    \"ExternalId\": null,\n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n    \"VatNumber\": \"TestConsignee1Unique\",\n    \"SalesmanUserId\": null,\n    \"Signature\": null,\n    \"CityCode\": null,\n    \"CardCode\": \"new\",\n    \"ContactEmail\": \"ahmadb@logitudeworld.com\",\n    \"ContactName\": \"Ahmad\",\n    \"ContactPosition\": \"QA\",\n    \"ContactBusinessPhone\": \"+001598137715\",\n    \"ContactMobile\": \"+001598137715\",\n    \"ContactFax\": \"325236351\",\n    \"IsCreatedWithPartner\": true,\n    \"CardEnglishName\": null,\n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Contact\": {\n    \"$id\": \"3\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"InActive\": false,\n    \"FacebookId\": null,\n    \"EnglishName\": \"Ahmad\",\n    \"ImageDetailId\": null,\n    \"LocalName\": \"Ahmad\",\n    \"ComputedLocalName\": null,\n    \"Email\": \"ahmadb@logitudeworld.com\",\n    \"HasPassword\": false,\n    \"Password\": null,\n    \"BusinessPhone\": \"236437347\",\n    \"Mobile\": \"754745747\",\n    \"Fax\": \"325236\",\n    \"Birthday\": null,\n    \"Anniversary\": null,\n    \"Notes\": null,\n    \"IsUser\": false,\n    \"SignupRole\": false,\n    \"Signature\": null,\n    \"SignatureHtml\": null,\n    \"DisplayGettingStarted\": false,\n    \"ExternalId\": null,\n    \"IsHybrid\": false,\n    \"DontShowLocal\": false,\n    \"MustChangePassword\": false,\n    \"IsLocked\": false,\n    \"NumberOfRetries\": 0,\n    \"DisconectFromCard\": false,\n    \"FieldsChanged\": false,\n    \"SetAsPrimaryForCard\": true,\n    \"BirthdayReminder\": false,\n    \"AnniversaryReminder\": false,\n    \"DoneDate\": null,\n    \"BirthDayOfYear\": null,\n    \"ContactDoneMethodCode\": null,\n    \"ContactDoneMethodName\": null,\n    \"Position\": \"QA\",\n    \"IsAirExport\": false,\n    \"IsAirImport\": false,\n    \"IsOceanExport\": false,\n    \"IsOceanImport\": false,\n    \"IsInlandExport\": false,\n    \"IsInlandImport\": false,\n    \"IsAll\": false,\n    \"HasCardContact\": false,\n    \"IsCustomsImport\": false,\n    \"IsInlandDomestic\": false,\n    \"IndexColor\": null,\n    \"IsChangeSignatur\": false,\n    \"CustomerId\": null,\n    \"IsCreatedWithPartner\": true,\n    \"CreateDate\": null\n  },\n  \"Agent\": null,\n  \"Customer\": {\n    \"$id\": \"4\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n    \"BankName\": null,\n    \"CompetitorFields\": \"\",\n    \"BankAddress\": null,\n    \"Swift\": null,\n    \"AccountNumber\": null,\n    \"IBANNumber\": null,\n    \"StartWorkingDate\": null,\n    \"Notes\": \"TestConsignee\",\n    \"SupportNotes\": null,\n    \"EnglishName\": \"TestConsigneeExport1\",\n    \"LocalName\": \"TestConsigneeExport1\",\n    \"AccountManagerUserId\": null,\n    \"SalesmanUserId\": null,\n    \"SalesmanUserEnglishName\": null,\n    \"SalesmanBusinessUnitId\": null,\n    \"Website\": null,\n    \"InActive\": false,\n    \"BillToId\": null,\n    \"BillToName\": null,\n    \"VatNumber\": \"TestConsignee1Unique\",\n    \"ReceivablesAccountingCard\": null,\n    \"PayablesAccountingCard\": null,\n    \"InvoiceCurrencyId\": null,\n    \"PaymentTermId\": null,\n    \"RankId\": \"1-4\",\n    \"VatTypeId\": null,\n    \"ComputedLocalName\": null,\n    \"FieldsChanged\": false,\n    \"PartnerTypeId\": \"CS\",\n    \"CreatedByUserId\": \"1-40924\",\n    \"UpdatedByUserId\": null,\n    \"CardPMId\": null,\n    \"ExistedContactId\": \"1-40924\",\n    \"StartWorkingManuallySet\": false,\n    \"CityName\": \"New York\",\n    \"CountryId\": \"1-397\",\n    \"CountryName\": \"United States of America\",\n    \"ATTN\": null,\n    \"AccountManagerUserEnglishName\": null,\n    \"RankName\": null,\n    \"RankCode\": null,\n    \"PhoneNumber\": null,\n    \"FaxNumber\": null,\n    \"CityWithCountry\": null,\n    \"ImageDetailId\": null,\n    \"Field1\": {\n      \"$id\": \"5\",\n      \"Value\": null,\n      \"FieldName\": \"Field1\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field2\": {\n      \"$id\": \"6\",\n      \"Value\": null,\n      \"FieldName\": \"Field2\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field3\": {\n      \"$id\": \"7\",\n      \"Value\": null,\n      \"FieldName\": \"Field3\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field4\": {\n      \"$id\": \"8\",\n      \"Value\": null,\n      \"FieldName\": \"Field4\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field5\": {\n      \"$id\": \"9\",\n      \"Value\": null,\n      \"FieldName\": \"Field5\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field6\": {\n      \"$id\": \"10\",\n      \"Value\": null,\n      \"FieldName\": \"Field6\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field7\": {\n      \"$id\": \"11\",\n      \"Value\": null,\n      \"FieldName\": \"Field7\",\n      \"TableName\": \"Customer\"\n    },\n    \"Field8\": null,\n    \"Field9\": null,\n    \"Field10\": null,\n    \"SharedLogisticsInvitationStatusName\": null,\n    \"IsActiveForMobile\": false,\n    \"LastLoginDate\": null,\n    \"InvitationDate\": null,\n    \"IsHybrid\": false,\n    \"FreelancerId\": null,\n    \"ForwarderId\": null,\n    \"CustomsAgentId\": null,\n    \"MediatorId\": null,\n    \"FreelancerName\": null,\n    \"ForwarderName\": null,\n    \"CustomsAgentName\": null,\n    \"MediatorName\": null,\n    \"GoogleAddressString\": null,\n    \"IsExternal\": false,\n    \"IsCustomer\": true,\n    \"CustomerStatusCode\": \"ACT\",\n    \"BeforeDeactiveStatusCode\": null,\n    \"ActivationDate\": null,\n    \"InactiveDate\": null,\n    \"ActivationRequestDate\": null,\n    \"ActivatedByUserId\": null,\n    \"SetAsInactiveByUserId\": null,\n    \"ActivationRequestedByUserId\": null,\n    \"SetReActivated\": false,\n    \"SetInActive\": false,\n    \"SetReady\": false,\n    \"SetActivated\": false,\n    \"EventNote\": null,\n    \"Address1_Potential\": null,\n    \"Address2_Potential\": null,\n    \"City_Potential\": null,\n    \"CountryId_Potential\": null,\n    \"ZipCode_Potential\": null,\n    \"StateId_Potential\": null,\n    \"PhoneNumber_Potential\": null,\n    \"FaxNumber_Potential\": null,\n    \"ATTN_Potential\": null,\n    \"IsLocalLanguage\": false,\n    \"CodeMyCustomer\": \"new\",\n    \"PrimaryContactName\": null,\n    \"PrimaryContactEmail\": null,\n    \"PrimaryContactPhone\": null,\n    \"CustomerStatusName\": null,\n    \"PrimaryContactId\": \"1-40924\",\n    \"ReadyForActivationDate\": null,\n    \"IsFirstContactToAdd\": false,\n    \"SavedForActivation\": false,\n    \"QueueMessageLockToken\": \"00000000-0000-0000-0000-000000000000\",\n    \"QuestionnaireAnsewrsHtmlString\": null,\n    \"SetAsPotential\": false,\n    \"UpdatedByUserCode\": null,\n    \"IRSPlace\": null,\n    \"IRSNumber\": null,\n    \"RequestedAirlines\": null,\n    \"RegisteredAirlines\": null,\n    \"PendingAirlines\": null,\n    \"IsCustomerAllowed\": false,\n    \"Card\": null,\n    \"Addresses\": [\n      {\n        \"$ref\": \"2\"\n      }\n    ],\n    \"Contacts\": [\n      {\n        \"$ref\": \"3\"\n      }\n    ],\n    \"SharedLogisticContacts\": [],\n    \"IndustryId\": null,\n    \"LeadSourceId\": null,\n    \"CollectorId\": null,\n    \"ClassifierId\": null,\n    \"IndustryName\": null,\n    \"LeadSourceName\": null,\n    \"CollectorName\": null,\n    \"ClassifierName\": null,\n    \"CreditLimit\": null,\n    \"LeadDescription\": null,\n    \"RegionId\": null,\n    \"RegionName\": null,\n    \"CustomerSizeId\": null,\n    \"LastCallDate\": null,\n    \"LastMeetingDate\": null,\n    \"LastOpportunityDate\": null,\n    \"FirstInvoiceDate\": null,\n    \"FirstShipmentDate\": null,\n    \"LastShipmentDate\": null,\n    \"LastQuoteDate\": null,\n    \"LastInteractionDate\": null,\n    \"EnableConsolidationInvoices\": false,\n    \"ActivityWatch\": false,\n    \"KnownConsignor\": null,\n    \"KCExpirationDate\": null,\n    \"LogBoxActivated\": false,\n    \"CustomerProducts\": [],\n    \"CustomerCompetitors\": [],\n    \"CustomerAdditionalServices\": [],\n    \"SalesNotes\": [],\n    \"CustomerSalesmanByProducts\": [],\n    \"CustomerAccountManagerByProducts\": [],\n    \"CustomerCustomsAgentByProducts\": [],\n    \"CustomerForwarderByProducts\": [],\n    \"CustomerMediatorByProducts\": [],\n    \"CardExternalCodeByCurrencies\": [],\n    \"IsLogBox\": false,\n    \"IsPrivateLabelCustomer\": false,\n    \"IsCreditLimitEnabled\": false,\n    \"CreditLimitAmount\": null,\n    \"CreditLimitOpenBalance\": null,\n    \"CreditLimitWarningPercentage\": null,\n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"BlockNewInvoiceCreation\": false,\n    \"BlockNewShipmentCreation\": false,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null,\n    \"CustomerTenant\": 0\n  },\n  \"CustomAgent\": null,\n  \"ShippingAgent\": null,\n  \"Vendor\": null,\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
 				},
 				"url": "{{LogitudeURL}}/api/PartnersDomain"
 			},
