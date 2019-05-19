@@ -2456,8 +2456,8 @@ export class ShipmentReceivableItem extends BaseComponent {
             case "PRFR": { result = ArrayTool.Sum(this.ShipmentPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount"); break; }
             case "GWTN": { result = this.ShipmentPM.GrossWeightPerTon; break; }
             case "QTY": { result = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
-            case "CWKG": { this.Quantity = this.ShipmentPM.ChargeableWeightInKG; break; }
-            case "GWKG": { this.Quantity = this.ShipmentPM.GrossWeightInKG; break; }
+            case "CWKG": { result = this.ShipmentPM.ChargeableWeightInKG; break; }
+            case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
             case "BCNT": {
                 break;
             }

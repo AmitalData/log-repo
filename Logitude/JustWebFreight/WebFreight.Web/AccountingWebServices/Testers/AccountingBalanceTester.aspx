@@ -266,6 +266,7 @@
         var JournalOpUrl = urlBase + '/api/JournalOp';
         
         var _ReconciliationUrl = urlBase + '/api/ReconciliationOp';
+        var _ReconciliationAfterConversionUrl = urlBase + '/api/ReconciliationAfterConversion';
         var _RevaluationUrl = urlBase + '/api/RevaluationOp';
 
         var _ARPaymentChequeUrl = urlBase + '/api/ARPaymentChequeOp';
@@ -480,6 +481,70 @@
             return false;
         }
   
+
+
+
+        
+        function OnClickButtonReconcileAfterConversion() {
+
+            var defaultParam = new Object();
+            defaultParam.Tenant = 1;
+
+            if (!_ResponseToken) {
+                getToken();
+            }
+            try {
+                var myJson = $(".classTextBoxParam").val();
+
+                var objToCheck = JSON.parse(myJson);
+            } catch (e) {
+
+                var str = JSON.stringify(defaultParam);
+                $(".classTextBoxParam").val(str);
+                return false;
+            }
+            var objToCheck1 = JSON.parse(myJson);
+
+            var myUrl = _ReconciliationAfterConversionUrl + "?tenant=" + objToCheck1.Tenant;
+            //alert(myUrl);
+
+
+            $(".class_LabelLog").val("OnClickButtonReconcileAfterConversion ..." + _ResponseToken);
+            $.ajax({
+                url: myUrl,
+                type: 'GET',
+                dataType: 'json',
+                headers: { 'Token': _ResponseToken },
+                contentType: 'application/json; charset=UTF-8', // This is the money shot
+                data: myJson,
+                success: function (response, textStatus, xhr) {
+                    //handle success 
+                    //alert("success ");;
+                    $(".class_LabelLog").val(JSON.stringify(response));
+                    DrawTableReconciliation(response,arryColumns);
+                    
+                    var obj = JSON.parse(myJson);
+                    obj.CallBack = response;
+                    var str = JSON.stringify(obj);
+                    $(".classTextBoxParam").val(str);
+                    //response.Token = response.Token;
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    if (textStatus != 'abort') {
+                        //handle error
+
+                        alert("error" + textStatus + errorThrown);
+
+                        $(".class_LabelLog").val(xhr.responseText);
+                    }
+                }
+            });
+
+
+            return false;
+        }
+  
+
 
         function OnClickButtonRevaluationsBatch() {
 
@@ -928,7 +993,7 @@ div#two {
                     <button id="ButtonAutomaticReconcile" onclick="javascript:return OnClickButtonAutomaticReconcile();" >AutomaticReconcile</button>
                     <a href="Reconcile.aspx">Reconcile.aspx</a>
                     <a href="TrailReport.aspx">TrailReport.aspx</a>
-
+                    <button id="ButtonReconcileAfterConversion"  onclick="javascript:return OnClickButtonReconcileAfterConversion();">Reconcile After Conversion</button>        
                 </li>
                 <li>
                     <button id="ButtonRevaluationsBatch" onclick="javascript:return OnClickButtonRevaluationsBatch();" >RevaluationsBatch</button>
@@ -938,7 +1003,7 @@ div#two {
                 <li>
                     <button id="ButtonPostDatedChequeRedemptionBatch" onclick="javascript:return OnClickButtonPostDatedChequeRedemptionBatch();" >PostDatedChequeRedemptionBatch</button>
                     <%--<button id="ButtonCardIndex" onclick="javascript:return OnClickButtonLedgerTransactionCardIndex();" >CardIndex</button>--%>
-                    <asp:Button id="ButtonPostDatedChequeRedemption" runat="server" Text="Card Index" OnClick="_ButtonLedgerTransactionCardIndex_Click" />
+                    <%--<asp:Button id="ButtonPostDatedChequeRedemption" runat="server" Text="Card Index" OnClick="_ButtonLedgerTransactionCardIndex_Click" />--%>
                 </li>
             
             <li>
@@ -950,7 +1015,6 @@ div#two {
                     
             <asp:Button ID="ButtonYearTransfer" runat="server" Text="YearTransfer(LastY)" OnClick="ButtonYearTransfer_Click" />        
             <asp:Button ID="ButtonGetSystem1000" runat="server" Text="Get System 1000(Tenant)" OnClick="ButtonGetSystem1000_Click" />        
-            <%--<asp:Button ID="ButtonLoadSystem1000" runat="server" Text="Load System 1000(Tenant)" OnClick="ButtonLoadSystem1000_Click" />        --%>
             <asp:Button ID="ButtonLoadSystem1000" runat="server" Text="Load System 1000(Tenant)" OnClick="ButtonLoadSystem1000_Click" />        
                 </li>
             </ul>

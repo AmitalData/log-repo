@@ -463,7 +463,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 range = "A1:L1";
             }
             #endregion
-            
+
             if (type == "Data")
             {
                 if (tariffLines != null && tariffLines.Count > 0)
@@ -474,85 +474,56 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         row[0] = item.OriginPortCode ?? null;
                         row[1] = item.DestinationPortCode ?? null;
 
-                        if (count == 1)
+                        if (item.Surcharge1Price.HasValue)
                         {
-                            if (item.Surcharge1Price.HasValue)
-                            {
-                                row[2] = item.Surcharge1Price ?? null;
-                            }
+                            row[2] = item.Surcharge1Price ?? null;
                         }
 
-                        else if (count == 2)
+                        if (item.Surcharge2Price.HasValue)
                         {
-                            if (item.Surcharge2Price.HasValue)
-                            {
-                                row[3] = item.Surcharge2Price ?? null;
-                            }
+                            row[3] = item.Surcharge2Price ?? null;
                         }
 
-                        else if (count == 3)
+                        if (item.Surcharge3Price.HasValue)
                         {
-                            if (item.Surcharge3Price.HasValue)
-                            {
-                                row[4] = item.Surcharge3Price ?? null;
-                            }
+                            row[4] = item.Surcharge3Price ?? null;
                         }
 
-                        else if (count == 4)
+                        if (item.Surcharge4Price.HasValue)
                         {
-                            if (item.Surcharge4Price.HasValue)
-                            {
-                                row[5] = item.Surcharge4Price ?? null;
-                            }
+                            row[5] = item.Surcharge4Price ?? null;
                         }
 
-                        else if (count == 5)
+                        if (item.Surcharge5Price.HasValue)
                         {
-                            if (item.Surcharge5Price.HasValue)
-                            {
-                                row[6] = item.Surcharge5Price ?? null;
-                            }
+                            row[6] = item.Surcharge5Price ?? null;
                         }
 
-                        else if (count == 6)
+
+                        if (item.Surcharge6Price.HasValue)
                         {
-                            if (item.Surcharge6Price.HasValue)
-                            {
-                                row[7] = item.Surcharge6Price ?? null;
-                            }
+                            row[7] = item.Surcharge6Price ?? null;
                         }
 
-                        else if (count == 7)
+                        if (item.Surcharge7Price.HasValue)
                         {
-                            if (item.Surcharge7Price.HasValue)
-                            {
-                                row[8] = item.Surcharge7Price ?? null;
-                            }
+                            row[8] = item.Surcharge7Price ?? null;
                         }
 
-                        else if (count == 8)
+                        if (item.Surcharge8Price.HasValue)
                         {
-                            if (item.Surcharge8Price.HasValue)
-                            {
-                                row[9] = item.Surcharge8Price ?? null;
-                            }
+                            row[9] = item.Surcharge8Price ?? null;
                         }
 
-                        else if (count == 9)
+                        if (item.Surcharge9Price.HasValue)
                         {
-                            if (item.Surcharge9Price.HasValue)
-                            {
-                                row[10] = item.Surcharge9Price ?? null;
-                            }
+                            row[10] = item.Surcharge9Price ?? null;
                         }
 
-                        else if (count == 10)
+                        if (item.Surcharge10Price.HasValue)
                         {
-                            if (item.Surcharge10Price.HasValue)
-                            {
-                                row[11] = item.Surcharge10Price ?? null;
-                            }
-                        } 
+                            row[11] = item.Surcharge10Price ?? null;
+                        }
 
                         table.Rows.Add(row);
                     }
