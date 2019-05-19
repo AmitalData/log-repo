@@ -50,6 +50,9 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         public string Status { get; set; }
 
+        public int Retries { get; set; }
+
+
 
 
     }

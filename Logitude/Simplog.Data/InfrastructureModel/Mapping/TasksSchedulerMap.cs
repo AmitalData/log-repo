@@ -105,6 +105,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.StartDateTimeUTC).HasColumnName("StartDateTimeUTC");
             this.Property(t => t.Version).HasColumnName("Version");
             this.Property(t => t.Status).HasColumnName("Status");
+            this.Property(t => t.Retries).HasColumnName("Retries");
+
 
         }
     }
