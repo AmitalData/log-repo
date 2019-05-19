@@ -18,7 +18,6 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { DatePipe } from '@angular/common';
-import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 declare var ResultAsArray: any;
 
@@ -121,6 +120,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     set StartDate(value: Date) {
         if (this.CurrentVersion.StartDate != value) {
             this.CurrentVersion.StartDate = value;
+            
+            this.UpdateDates("start", value);
         }
     }
 
@@ -130,6 +131,26 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     set ExpirationDate(value: Date) {
         if (this.CurrentVersion.ExpirationDate != value) {
             this.CurrentVersion.ExpirationDate = value;
+            
+            this.UpdateDates("expire", value);
+        }
+    }
+
+    private UpdateDates(dateType: string, date: Date) {
+        if (dateType == "start") {
+            this.EntityPM.LastStartDate = date;
+
+            this.CurrentVersion.TariffLines.forEach(item => {
+                item.StartDate = date;
+            });
+        }
+
+        else if (dateType == "expire") {
+            this.EntityPM.LastExpirationDate = date;
+
+            this.CurrentVersion.TariffLines.forEach(item => {
+                item.ExpirationDate = date;
+            });
         }
     }
 
