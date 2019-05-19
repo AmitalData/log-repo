@@ -23,8 +23,9 @@ describe('DocsOut', () => {
   it('Send Docs Out of Shipment To A User', function () {
     NewDirectShipment.DoOperations();
     docsOutTab.DocsOutTab();
-    docsOutTab.QuickSearchDocOut('BRCL-S-DocsOut');
+    docsOutTab.QuickSearchDocOut('BRCL-S-DocsOut', 'BRCL-L-DocsOut');
     sendMailPopup.sendEmailToFirstUser();
     // TODO We need to check if email is delivered to the destination
+    browser.driver.sleep(5000);
   });
 });

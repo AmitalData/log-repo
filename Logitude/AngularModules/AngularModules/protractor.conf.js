@@ -39,9 +39,9 @@ exports.config = {
 
     // ********************* FullAccounting **********************************
       //  NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
-//Reports: 'e2e/Report/**/Report-spec.ts',
+Reports: 'e2e/Report/**/Report-spec.ts',
 	//DocsOu: 'e2e/**/DocsOut.e2e-spec.ts',
-     DocsOut: 'e2e/Operations/Shipments/DocsOut.e2e-spec.ts',
+   //  DocsOut: 'e2e/Operations/Shipments/DocsOut.e2e-spec.ts',
 
 
   },

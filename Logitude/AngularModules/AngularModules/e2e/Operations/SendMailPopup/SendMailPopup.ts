@@ -13,8 +13,13 @@ export class SendMailPopup {
         this.helper.WaitBusyIndicator();
         browser.driver.sleep(3000);
         this.helper.WaitByIdAndClick('SendMessageTobtn');
-        this.helper.waitByCss('tocomponent');
+        this.helper.waitByCss('#SearchFieldsId_0_0');
         // We are currently executing javascript code on the element because it is intractable
+        
+        this.helper.WaitByCssStringAndClick('.DefaultMenuItem', 'All');
+        this.helper.WaitByIdAndFill('SearchFieldsId_0_1','raghad@logitudeworld.com');
+        browser.driver.sleep(2000);
+        //to check the first box
         browser.executeScript('arguments[0].click();', element(by.id('SendMessageToCheckBox')).getWebElement());
         this.helper.WaitByIdAndClick('SaveSendMessageTobtn');
         this.helper.WaitByIdAndClick('SendMessagebtn');
