@@ -86,8 +86,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         protected void Page_Load(object sender, EventArgs e)
         {
             LogMessagingUtil.Instance.Clear();
-            var testIt = new AccountingModel.WebInjection.XLSUtil();
-            testIt.GetDataTableFromWorkSheet(null,"");
+            //var testIt = new AccountingModel.WebInjection.XLSUtil();
+            //testIt.GetDataTableFromWorkSheet(null,"");
 
 
             try
