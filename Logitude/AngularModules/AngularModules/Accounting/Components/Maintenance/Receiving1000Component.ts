@@ -89,11 +89,11 @@ export class Receiving1000Component extends BaseComponent {
                     this.CurrentSession.StopBusyIndicator();
                     if (myServiceResponse.HasError) {
                         this.ValidationErrorsList = myServiceResponse.ErrorsArray;
-                        this.ShowMessage(response);
+                        //this.ShowMessage(response);
                     } else {
 
                         if (!AppTool.IsNullOrEmpty(response)) {
-                            this.ShowMessage(JSON.stringify(response.Result));
+                            this.ShowMessage(response.Message);
                             this.CancelButtonClicked();
                         }
 
