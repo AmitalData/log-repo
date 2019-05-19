@@ -224,7 +224,9 @@ export class EditComponent implements OnDestroy {
                         this.OnFirstTimeAfterSingleDataLoaded.emit(".EditComponentController.OnFirstTimeAfterSingleDataLoaded");
                         if (this.EditComponentController.ToCancell) {
                             this.Close();
-                        } else {
+                        }
+
+                        else {
 
                             this._SubEditComponentDefaultController =
                                 this.SaveCompleted.subscribe(isSaved => {
@@ -476,6 +478,14 @@ export class EditComponent implements OnDestroy {
                         this.SavedWidthOfHeader = widthOfHeader;
                     }
 
+                    if (widthOfHeader == 0) {
+                        var ApplicationSession = document.getElementById("ApplicationSession");
+                        if (ApplicationSession) {
+                            var appWidth = ApplicationSession.clientWidth;
+                            widthOfHeader = appWidth - 42;
+                        }
+                    }
+
                     var widthOfSeparator = (HeaderScreen.NumberOfColumns - 1) * 20;
                     widthOfColumn = (widthOfHeader - widthOfSeparator) / HeaderScreen.NumberOfColumns;
                 }
@@ -493,10 +503,7 @@ export class EditComponent implements OnDestroy {
                             if (myObjectField != null) {
 
                                 myRow.Label = TextCodeTranslator.Translate(myObjectField.FullNameTextCodeCode);
-                                myRow.ObjectField = myObjectField;
-                                //if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "ARPayment") && myObjectField.FieldName == "SATTransferStatusName" && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
-                                //    myRow.HideField = true;
-                                //}
+                                myRow.ObjectField = myObjectField;                                
 
                                 if (!AppTool.IsNullOrEmpty(myRow.Label)) {
                                     myRow.Label += ":";
