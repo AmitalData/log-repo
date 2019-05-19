@@ -144,7 +144,11 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
                 else if ((this.TextValue.split('.')[this.TextValue.split('.').length - 1] == "" && newValue.split('.')[newValue.split('.').length - 1] != "") && newValue.includes(".") && this.TextValue.includes(".")) {
                     this.DisabledZeroPaddingSameText = true;
-                }           
+                }
+
+                else if ((this.TextValue.split('.')[0] == newValue.split('.')[0] ) && newValue.includes(".") && this.TextValue.includes(".")) {
+                    this.DisabledZeroPaddingSameText = true;
+                }   
             }           
 
         }
@@ -1291,9 +1295,17 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
                                 var txtNum: number;
 
-                                if (((this.TextValue + "").indexOf(',') > -1) && !this.DisableZeroPadding) {
-                                    var txtval = this.TextValue.replace(/,/g, "");
-                                    txtNum = Number(txtval);
+                                if (((this.TextValue + "").indexOf(',') > -1)) {
+                                    if (!this.DisableZeroPadding) {
+                                        var txtval = this.TextValue.replace(/,/g, "");
+                                        txtNum = Number(txtval);
+                                    }
+                                    else {
+                                        if (this.IsPasted) {
+                                            var txtval = this.TextValue.replace(/,/g, "");
+                                            txtNum = Number(txtval);
+                                        }
+                                    }
                                 }
                                 else {
                                     if (((this.TextValue + "").indexOf(',') > -1) && (this.DisableZeroPadding && this.CameFromSettingText && this.DisabledZeroPaddingSameText) && !this.IsPasted) {
@@ -1323,10 +1335,13 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
                                                 }
                                             }
+                                            if (NewText[0] == ",") {
+                                                NewText = NewText.substring(1);
+                                            }
                                             this.TextValue = NewText;
                                         }
                                     }
-                                    if (this.DisabledZeroPaddingSameText && this.CameFromSettingText) {
+                                    if ((this.DisabledZeroPaddingSameText && this.CameFromSettingText) || (this.DisableZeroPadding && this.IsPasted)) {
                                         var NewText = "";
                                         var TextValueSplitted = this.TextValue.split('.');
 
@@ -1339,6 +1354,9 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                                 NewText += TextValueSplitted[i] + ".";
 
                                             }
+                                        }
+                                        if (NewText[0] == ",") {
+                                            NewText = NewText.substring(1);
                                         }
                                         this.TextValue = NewText;
                                     }

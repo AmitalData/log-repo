@@ -641,7 +641,7 @@
                                     </td>
 
                                     <td style="width: 100px;">
-                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'GrossWeight'" [Text]="GrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (LostFocus)="GrossWeightLostFocus($event)"></LogTextBox>
+                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'GrossWeight'" [Text]="GrossWeight" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (paste)="GrossWeightPaste($event)" (LostFocus)="GrossWeightLostFocus($event)"></LogTextBox>
                                     </td>
 
                                     <td style="width: 20px;">
