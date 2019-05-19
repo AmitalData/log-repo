@@ -137,7 +137,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 {
                     if (objectFieldPM.DataTypeCode != "PickList" && objectFieldPM.DataTypeCode != "LookUp")
                     {
-                        field.DisplayName = TranslateTextsClass.Translate(objectFieldPM.FullNameTextCodeCode, tenant);
+                        field.DisplayName = objectFieldPM.FullNameTextCodeDefaultText;//TranslateTextsClass.Translate(objectFieldPM.FullNameTextCodeCode, tenant);
                         field.DataTypeCode = objectFieldPM.DataTypeCode;
                         if (field.DataTypeCode == "Date" || field.DataTypeCode == "DateTime")
                         {
