@@ -143,13 +143,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                //TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
 
             }
-            //if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            //{
-            //    List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
-            //    TaxReportService.CalculateReportTotals(entityPM, lines);
-            //    entityPM.ChangeSetOp = ChangeSetOperation.Update;
-            //    taxReportUpdateService.Update(entityPM, true);
-            //}
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
+                TaxReportService.CalculateReportTotals(entityPM, lines);
+                entityPM.ChangeSetOp = ChangeSetOperation.Update;
+                //taxReportUpdateService.Update(entityPM, true);
+            }
 
             UpdateReportStatus(entityPM);
 

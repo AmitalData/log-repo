@@ -2395,7 +2395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             #endregion
 
             // BankDeposit
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.Today", DefaultText = "Today Deposits", LocalDefaultText = "הפקדות מהיום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.Today", DefaultText = "Today's Deposits", LocalDefaultText = "הפקדות מהיום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.cash", DefaultText = "Cash Deposit", LocalDefaultText = "הפקדות מזומן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankDeposit.Q.chequeDeposit", DefaultText = "Cheque Deposit", LocalDefaultText = "הפקדות המחאות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
 
