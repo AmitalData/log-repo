@@ -348,4 +348,4 @@ export class TariffLinePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

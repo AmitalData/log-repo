@@ -208,24 +208,24 @@ export class RoutingTabComponent {
     this.Helper.WaitByIdAndClick('RoutingToggle');
     this.Helper.WaitByIdAndClick('PreCarriage');
     if (ShipmentType == '') {
-      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'a');
+      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'air');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'a');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'istanb');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'is');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'ams');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'sa');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'aerolin');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierNumber', '985');
       this.Helper.WaitByIdAndClick('PreCarriageOKBtn');
     }
     else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
-      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'o');
+      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'ocean');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
@@ -242,7 +242,7 @@ export class RoutingTabComponent {
       this.Helper.WaitByIdAndClick('PreCarriageOKBtn');
     }
     else if (ShipmentType == 'FTL' || ShipmentType == 'LTL') {
-      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'I');
+      var preCarriageTransportMode = this.Helper.WaitByIdAndFill('Shipment_PreCarriageTransportModeId', 'Inland');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 

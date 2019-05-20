@@ -80,7 +80,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="TodayDepositsVisibility" (click)="ViewDepositQuery('TodayDeposits')"> {{'BankDeposit.Q.Today' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" *ngIf="TodayDepositsVisibility" (click)="ViewDepositQuery('TodayDeposits')"> {{'BankDeposit.Q.Today' | TextCodeTranslationPipe}} ({{bankDepositSummary.TodaysDepositCount}})</p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -124,17 +124,17 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCash')"> {{'Accounting.General.O.Cash' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCash')"> {{'Accounting.General.O.Cash' | TextCodeTranslationPipe}} ({{cashBookSummary.CashCashbookCount}})</p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCheque')"> {{'Accounting.General.O.Cheque' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashbookCheque')"> {{'Accounting.General.O.Cheque' | TextCodeTranslationPipe}} ({{cashBookSummary.ChequeCashbookCount}})</p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashBooks')"> {{'Accounting.General.O.AllCashbook' | TextCodeTranslationPipe}} </p>
+                                                                            <p class="QueryLink" (click)="ViewCashbookQuery('CashBooks')"> {{'Accounting.General.O.AllCashbook' | TextCodeTranslationPipe}} ({{cashBookSummary.AllCashbookCount}})</p>
                                                                         </td>
                                                                     </tr>
 
@@ -196,7 +196,7 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewPaymentChequesQuery('AllPaymentCheques')"> {{'Accounting.General.O.AllPaymentCheques' | TextCodeTranslationPipe}} ({{paymentChequeSummary.AllPaymenChequesCount}})</p>
+                                                                            <p class="QueryLink" (click)="ViewPaymentChequesQuery('AllPaymentCheques')"> {{'Accounting.General.O.AllPaymentCheques' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
 
