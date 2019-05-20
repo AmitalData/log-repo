@@ -89,7 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomContextExt.cs" />
+    <Compile Include="CustomContext.SharedTables.cs" />
     <Compile Include="CustomFilters\ClientCustomFilters.cs" />
     <Compile Include="CustomFilters\FreightPaymentMethodCustomFilters.cs" />
     <Compile Include="DataContracts\CertificateConnectedItems.cs" />

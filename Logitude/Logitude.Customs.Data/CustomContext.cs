@@ -23,7 +23,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.Data
 {
-   public class CustomContext: DbContextBase, ICustomContext
+   public partial class CustomContext: DbContextBase, ICustomContext
     {
         public CustomContext()
         {
