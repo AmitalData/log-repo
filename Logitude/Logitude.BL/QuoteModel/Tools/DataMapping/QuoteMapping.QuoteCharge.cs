@@ -91,7 +91,6 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.SaleUnitPrice4InSaleCurrency = itemPM.SaleUnitPrice4InSaleCurrency;
             itemPoco.SaleUnitPrice5InSaleCurrency = itemPM.SaleUnitPrice5InSaleCurrency;
             itemPoco.SaleAmountInSaleCurrency = itemPM.SaleAmountInSaleCurrency;
-
         }
     }
 }
