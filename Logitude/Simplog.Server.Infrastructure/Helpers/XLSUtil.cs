@@ -21,8 +21,8 @@ namespace Simplog.Server.Infrastructure.Helpers
 
         public DataTable GetDataTableFromWorkSheet(byte[] byteArrayXLS, string WorksheetName)
         {
-            byteArrayXLS = byteArrayXLS ?? Convert.FromBase64String(MyXLS());
-            WorksheetName = WorksheetName ?? "Journals";
+            //byteArrayXLS = byteArrayXLS ?? Convert.FromBase64String(MyXLS());
+            //WorksheetName = WorksheetName ?? "Journals";
             //Creates a new instance for ExcelEngine
             var excelEngine = new ExcelEngine();
             //byte[] byteArray = Encoding.ASCII.GetBytes(test);
