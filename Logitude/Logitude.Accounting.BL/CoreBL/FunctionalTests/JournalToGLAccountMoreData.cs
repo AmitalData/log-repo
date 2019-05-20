@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.APIDataContract.ApiV1;
+﻿
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -11,14 +12,15 @@ using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 {
-    class JournalToGLAccountMoreData
+    public class JournalToGLAccountMoreData
     {
         private int _Tenant;
 
-        public void XX()
+        public void BuildJournals(int tenant ,byte[] byteArrayXLS, string WorksheetName)
         {
+            _Tenant = tenant;
             var util = new XLSUtil();
-            DataTable XLSTable = util.GetDataTableFromWorkSheet(null, "");
+            DataTable XLSTable = util.GetDataTableFromWorkSheet(byteArrayXLS, "Journals");
 
             
             List<DataRow> list = XLSTable.Rows.Cast<DataRow>().ToList();
@@ -83,7 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
                 return null;
             }
             var qs = new GLAccountQueryService(_Tenant);
-            var glAccountPM = qs.GetGLAccountByDisplayNumber(v2, _Tenant); ;
+            var glAccountPM = qs.GetSinglePMByDisplayNumber(v2, _Tenant); ;
             if (glAccountPM == null)
             {
                 throw new Exception($"GetGLAccountByDisplayNumber({v2}, {_Tenant}) return null");
@@ -98,7 +100,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
                 return null;
             }
             var qs = new GLAccountQueryService(_Tenant);
-            var glAccountPM = qs.GetGLAccountByDisplayNumber(v2, _Tenant); ;
+            var glAccountPM = qs.GetSinglePMByDisplayNumber(v2, _Tenant); ;
             if (glAccountPM == null)
             {
                 throw new Exception($"GetGLAccountByDisplayNumber({v2}, {_Tenant}) return null");
