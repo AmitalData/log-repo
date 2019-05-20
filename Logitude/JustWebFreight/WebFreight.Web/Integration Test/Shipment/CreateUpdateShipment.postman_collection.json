@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "3db49648-036c-40a9-86df-5e83612e1814",
-		"name": "CreateShipment",
+		"name": "CreateUpdateShipment",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
@@ -199,6 +199,117 @@
 					"raw": "{\n  \"$id\": \"1\",\n  \"Id\": \"{{ShipmentId}}\",\n  \"IsHybrid\": false,\n\n  \"ConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\n  \"CASSCode\": \"0025\",\n \n  \"CountryForStatisticsId\": \"1-469927\",\n \n  \"IsFSRSent\": false,\n \n  \"PPCC\": \"PP\",\n\n  \"IsFlightDateActual\": false,\n  \"ConnectedShipments\": 0,\n  \"ComputedShipmentNumber\": \"{{ShipmentNumber}}\",\n \n  \"Tenant\": \"{{Tenant}}\",\n  \n  \"ShipmentNumber\": \"{{ShipmentNumber}}\",\n  \"DirectionId\": \"{{DirectionId}}\",\n  \n  \"TransportModeId\": \"{{TransportModeId}}\",\n  \n  \"ShipmentTypeId\": null,\n \n  \"CreateDateTime\": \"2019-05-19T13:18:24.047\",\n  \"MAWBTakenFromStack\": false,\n  \"MAWBReturnedToStack\": false,\n  \"BranchId\": \"{{BranchId}}\",\n  \n  \"Routing\": \"AAA , 222\",\n  \"SalesmanUserId\": \"1-96018\",\n  \"SalesmanUserName\": \"Razan Salesman \",\n  \"CreatedByUserId\": \"1-96018\",\n  \"DepartmentId\": \"{{DepartmentId}}\",\n  \"Notes\": \"update shipment\",\n  \n  \"IsOperationalClosed\": false,\n  \n  \"IsSecured\": true,\n\n  \"ShipmentTypeViewField\": \"Direct\",\n  \n  \"FreightPrepaidCollectId\": \"P\",\n  \"OtherPrepaidCollectId\": \"P\",\n  \"GrossWeightUnitCode\": \"KG\",\n  \"ChargeableWeightUnitCode\": \"KG\",\n  \"DimensionsUnitCode\": \"Cm\",\n  \"RateClassCode\": \"Q\",\n\n  \"Ratio\": 6,\n  \"DimFactor\": 6000,\n\n  \"GrossWeightEdited\": false,\n  \"ChargeableWeightEdited\": false,\n  \"VolumeUnitCode\": \"CBM\",\n  \"StatusId\": \"1-14\",\n  \"StatusName\": \"Order\",\n  \"StatusDate\": \"2019-05-19T13:18:24.147\",\n \n  \"StatusWeight\": 0,\n\n  \"TotalContainers\": \"\",\n  \"ShipmentType\": \"Direct\",\n\n  \"ShipmentPMId\": \"1-1539941\",\n  \"LastUpdate\": \"0001-01-01T00:00:00\",\n \n  \"IsAnyConversation\": false,\n  \"NumberOfShipments\": 0,\n  \"MainCarriageFinalDestinationPortId\": \"1-268512\",\n  \"OriginFinalDestinationPortId\": \"1-268512\",\n  \"MainCarriageFinalDestinationPortCode\": \"222\",\n  \"MainCarriageFinalDestinationPortName\": \"Brandscheid/Westerwald\",\n  \"MainCarriageFinalDestinationPortCountryCode\": \"XK\",\n  \"MainCarriageFinalDestinationPortCountryName\": \"Kosovo\",\n\n  \"IsDangerous\": true,\n\n \n  \"LTCWEdited\": false,\n  \"ShipmentPickUpIndex\": 0,\n  \"ShipmentDeliveryIndex\": 0,\n  \"ShipmentContainerReturnIndex\": 0,\n  \"ShipmentPayableStatusCode\": \"NOPA\",\n  \"ShipmentReceivableStatusCode\": \"NORE\",\n  \"ShipmentReceivableStatusName\": \"No Receivables\",\n  \"ShipmentPayableStatusName\": \"No Payables\",\n  \"IsCancelled\": false,\n  \n  \"IsAccountingClosed\": false,\n  \"AccessDate\": \"0001-01-01T00:00:00\",\n  \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\n  \"LastUpdateDate\": \"2019-05-19T14:19:13.6653783Z\",\n  \"ProfitCurrencyId\": \"1-7\",\n  \"ProfitCurrencyCode\": \"USD\",\n  \"ProfitExchangeRate\": 3.6,\n \n  \"NextLegCode\": \"MAL1\",\n  \"NextLegName\": \"Main Carriage Leg1\",\n  \n  \"ShipmentLevelCode\": \"D\",\n  \"ShipmentLevelName\": \"Direct\",\n  \"MasterShipmentDataId\": \"1-1539941\",\n  \"NumberOfFollowUps\": 1,\n \n  \"ShipmentCustomerTypeCode\": \"SHI\",\n  \"ConsigneeAddressOneTime\": false,\n  \"ShipperAddressOneTime\": false,\n \"CustomerId\": \"{{ShipperIdTestShipperExport1}}\",\n  \n \n  \"IssuingCarrierAgentId\": \"{{AgentIdTest}}\",\n\n  \"ShipperId\": \"{{ShipperIdTestShipperExport1}}\",\n  \n  \"ConsigneeId\": \"{{ConsigneeIdTestConsigneeExport1}}\",\n  \n  \"AgentId\": \"{{AgentIdTest}}\",\n  \"NoFreightFile\": false,\n  \"IsExceptionResolved\": false,\n  \"IsRefreshFollowUp\": false,\n\n  \"FromPortId\": \"{{PortIdLHR}}\",\n  \"ToPortId\": \"{{PortIdAirJFK}}\",\n  \n  \"MainCarriageFromPortId\": \"1-3826\",\n  \"MainCarriageToPortId\": \"1-268512\",\n  \"OriginMainCarriageFromPortId\": \"1-3826\",\n\n  \"MainCarriageFromPortCountryEC\": true,\n  \"MainCarriageToPortCountryEC\": false,\n \n  \"MainCarriageIsFromStack\": false,\n  \n  \"FinalDistenationPortId\": \"1-268512\",\n\n\n  \"OrderGrossWeightEdited\": false,\n  \"OrderChargeableWeightEdited\": false,\n  \n  \"OrderIsDangerouseGoods\": false,\n \n \n  \"AWBPrint\": false,\n  \"FWBStatusCode\": \"NSEN\",\n \n  \"FHLStatusCode\": \"NSEN\",\n\n  \"AWBCurrencyId\": \"1-8\",\n  \"AWBCurrencyCode\": \"EUR\",\n \n  \"AWBDeclaredValueForCarriage\": \"NVD\",\n  \"AWBDeclaredValueForCustoms\": \"NCV\",\n \n  \"AWBInsurrenceValue\": \"XXX\",\n  \"AWBHandlingInformation\": \"RA-UNK\",\n\n  \"AWBSignature\": \"22\",\n  \"AWBPlace\": \"Anaa TestCountry\",\n  \"AWBChargesCodeCode\": \"PP\",\n \n  \"TenantZeroAirlineChampFWB\": false,\n  \"TenantZeroAirlineChampFHL\": false,\n  \"TenantZeroAirlineChampFSU\": false,\n  \"TenantZeroAirlineChampFSRFSA\": false,\n  \"TenantZeroAirlineChampFVRFVA\": false,\n  \"CarrierIsChampRegistered\": false,\n  \"TenantZeroAirlineChampNeedsRegistration\": false,\n  \"TenantZeroAirlineGLSHKFWB\": false,\n  \"TenantZeroAirlineGLSHKFHL\": false,\n  \"TenantZeroAirlineGLSHKFSU\": false,\n  \"TenantZeroAirlineGLSHKFSRFSA\": false,\n  \"TenantZeroAirlineGLSHKFVRFVA\": false,\n  \"CarrierIsGLSHKRegistered\": false,\n  \"TenantZeroAirlineGLSHKNeedsRegistration\": false,\n  \"CarrierIsCheckDigit\": false,\n  \"CarrierIsLimitedLength\": false,\n  \"LocalCustomsTransmissionsStatusCode\": \"NSEN\",\n  \"LocalCustomsTransmissionsStatusName\": \"Not sent\",\n \n  \"IncludesCustoms\": false,\n  \"IsUpdateByAutomation\": false,\n\n  \"MasterShipmentNumber\": \"AE0211081950\",\n  \"ProductCode\": \"AE\",\n  \"SecurityKey\": \"f1ea7d3692944e369f2ebb2f7e653c46\",\n\n  \"DontCreateConvertEvent\": false,\n  \"ConvertFromHouseToDirect\": false,\n  \"ConvertFromDirectToHouse\": false,\n  \"IsRefreshShipmentFollowUps\": false,\n  \"CustomerRankName\": \"Silver\",\n \n  \"ForeignPartnerCountryCode\": \"US\",\n  \"LastStatusLogDate\": \"2019-05-19T13:18:24.147\",\n  \"MainCarriageFullCarrierNumber\": \"\",\n  \"Transshipment1FullCarrierNumber\": \"\",\n  \"Transshipment2FullCarrierNumber\": \"\",\n  \"Transshipment3FullCarrierNumber\": \"\",\n  \n  \"IsManifestSentToAgent\": false,\n \n\n\n  \"IsCreatedFromAgentSharedManifest\": false,\n \n  \"IsMultipleCommodities\": false,\n \n  \"ValueOfGoodsCurrencyId\": \"1-8\",\n  \"OperationalDate\": \"2019-05-19T13:18:24.047\",\n  \"FBLIsFromStock\": false,\n  \"FBLReturnedToStock\": false,\n  \"FBLTakenFromStock\": false,\n\n  \"FBLReturnedToStockWithCancel\": false,\n \n  \"OnCarriageAdditionalTransportModeCode\": \"BYTR\",\n\n  \"AsAgreedFreight\": false,\n  \"AsAgreedOtherCharges\": false,\n  \"ARInvoiceIssued\": false,\n  \"CreditNoteIssued\": false,\n\n  \"CargonautFHLStatusCode\": \"NSEN\",\n  \"CargonautFHLStatusName\": \"Not Sent\",\n  \"CargonautFHLStatusDate\": null,\n  \"CargonautFWBStatusCode\": \"NSEN\",\n  \"CargonautFWBStatusName\": \"Not Sent\",\n  \"CargonautFWBStatusDate\": null,\n  \"MarkFollowUpsAsDone\": false,\n  \"CalculateProfit\": false,\n  \"CalculateStatus\": true,\n  \"ComputedStatusId\": \"1-14\",\n  \"ComputedStatusDate\": \"2019-05-19T13:18:24.147\",\n  \"ComputedStatusName\": \"Order\",\n\n  \"CalculatePayables\": false,\n  \"CalculateReceivables\": false,\n  \"IsAddingStackEvents\": false,\n  \"IsRemovingStackEvents\": false,\n \n  \"IsSendFSRCreatingShipment\": false,\n  \"ToCountryId\": \"1-469927\",\n  \"FromCountryId\": \"1-83574\",\n  \"ToCountryIsEC\": false,\n  \"FromCountryIsEC\": true,\n \n  \"IsCopyFromShipment\": false,\n  \"IsBuildFromQuote\": false,\n  \"IsBuildFromBooking\": false,\n\n  \"HasPreCarriage\": false,\n  \"HasOnCarriage\": false,\n  \"IncludePickUp\": false,\n \n  \"CustomConnectToShipment\": false,\n  \"IncludeDelivery\": false,\n \n  \"NewConcurrencyGUID\": \"{{c99f3ab5-766b-40a0-bd39-d50a7e7a8d70}}\",\n  \"ConnectedShipmentsPayablesCount\": 0,\n  \"ConnectedShipmentsReceivablesCount\": 0,\n  \"NumberOfInsidePackages\": 0,\n  \"NumberOfInsidePackagesDetails\": \"\",\n  \"AccountManagerUserId\": \"1-96018\",\n  \"AccountManagerUserName\": \"Razan Salesman \",\n  \"ManifestReason\": null,\n  \"ManifestStatusCode\": \"NSEN\",\n  \"IsKnownCargo\": false,\n  \"RegulatedAgentRANumber\": \"10101\",\n \n  \"AdditionalHandlingInfo\": \"RA-UNK\",\n  \"AWBPrintingSecurityStatusEdited\": false,\n  \"AWBPrintingRANumberEdited\": false,\n  \"AdditionalHandlingInfoEdited\": false,\n  \"ViaColoader\": false,\n  \"IssuingCarrierReference1\": null,\n  \"IsMissingDocument\": false,\n \n  \"MAWBReturnedToStackWithCancel\": false,\n \n  \"DontAddToImportersQueue\": false,\n  \"DontAddToForwarderQueue\": false,\n \n  \"ConvertToCustomFile\": false,\n\n  \"IsImporterShipment\": false,\n  \"IsUpdatedByChampAnalyzer\": false,\n  \"IsUpdatedByGLSHKAnalyzer\": false,\n  \"IsUpdatedByINTTRAAnalyzer\": false,\n  \"IsCreatedFromCustomerOverview\": false,\n  \"DeclarationXMLData\": null,\n  \"IsImporterApprovalRequired\": false,\n  \"SendUpdatesToAgentEnabled\": false,\n  \"UpdateSendUpdatesToAgentEnabledField\": false,\n  \"DocsSentToAgent\": false,\n \n  \"IsNewARInvoiceBlocked\": false,\n  \"ShipmentAddtionalDataXML\": null,\n\n  \"ProrateReceivables\": false,\n  \"ReleasesPackagesAddedOnTheShipment\": false,\n\n  \"OldStatusValue\": \"1-14\",\n\n  \"UpdatedByPartner\": \"Razan Salesman \",\n  \n  \"INTTRASIStatusCode\": \"NSEN\",\n  \n  \"SIHasAttachList\": false,\n  \"INTTRAIsFreighted\": false,\n \n  \"SplitOnCarriage\": false,\n \n  \"IsPaymentRequired\": false,\n \n  \"IsSharedLogisticsMoneyTabEnabled\": false,\n  \"IsSharedLogisticsMainCarrierVisible\": false,\n  \"IsSharedLogisticsPickDelvCarrierVisible\": false,\n  \"IsSharedLogisticsAgentVisible\": false,\n  \"IsSharedLogisticsShipperVisible\": false,\n  \"IsSharedLogisticsConsigneeVisible\": false,\n  \n  \"ShipmentContanisDangerousGoods\": false,\n  \"BasicFreightId\": \"P\",\n  \"DestinationPortChargesId\": \"P\",\n  \"DestinationHaulageChargesId\": \"P\",\n  \"AdditionalChargesId\": \"P\",\n  \"FreightPayerId\": \"1-577381\",\n  \"FreightPayerAddressId\": \"1-610125\",\n  \"HasContainerException\": false,\n  \"IsMissingDocuments\": false,\n \n  \"MissingDocumentsCount\": 0,\n \n  \"IsRequestedDocuments\": false,\n  \"RequestedDocumentsCount\": 0,\n  \"NumberOfHouses\": 0,\n  \"IsDigitalSignRequired\": false,\n  \"IsDepositionRequired\": false,\n  \n  \"IsShipmentComputedFieldChange\": false,\n  \n  \"ConvertShipmentToLCL\": false,\n  \"ConvertShipmentToFCL\": false,\n  \"ShipmentDirectionConverted\": false\n}"
 				},
 				"url": "{{LogitudeURL}}/api/shipment"
+			},
+			"response": []
+		},
+		{
+			"name": "GetUpdatedShipmentDirectExportAir",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e39ad530-21cc-4ccf-abbf-ac8b5e843400",
+						"exec": [
+							"pm.test(\"UpdateShipment\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().Result[0].Notes);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    ",
+							"    if(pm.variables.get(\"ShipmentNotes\") == idvalue)",
+							"    {",
+							"        console.log(\"Updated Successfully\");",
+							"    }",
+							"",
+							"",
+							"",
+							"",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Id\": \"{{ShipmentId}}\",\n  \"IsHybrid\": false,\n\n  \"ConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\n  \"CASSCode\": \"0025\",\n \n  \"CountryForStatisticsId\": \"1-469927\",\n \n  \"IsFSRSent\": false,\n \n  \"PPCC\": \"PP\",\n\n  \"IsFlightDateActual\": false,\n  \"ConnectedShipments\": 0,\n  \"ComputedShipmentNumber\": \"{{ShipmentNumber}}\",\n \n  \"Tenant\": \"{{Tenant}}\",\n  \n  \"ShipmentNumber\": \"{{ShipmentNumber}}\",\n  \"DirectionId\": \"{{DirectionId}}\",\n  \n  \"TransportModeId\": \"{{TransportModeId}}\",\n  \n  \"ShipmentTypeId\": null,\n \n  \"CreateDateTime\": \"2019-05-19T13:18:24.047\",\n  \"MAWBTakenFromStack\": false,\n  \"MAWBReturnedToStack\": false,\n  \"BranchId\": \"{{BranchId}}\",\n  \n  \"Routing\": \"AAA , 222\",\n  \"SalesmanUserId\": \"1-96018\",\n  \"SalesmanUserName\": \"Razan Salesman \",\n  \"CreatedByUserId\": \"1-96018\",\n  \"DepartmentId\": \"{{DepartmentId}}\",\n  \"Notes\": \"update shipment\",\n  \n  \"IsOperationalClosed\": false,\n  \n  \"IsSecured\": true,\n\n  \"ShipmentTypeViewField\": \"Direct\",\n  \n  \"FreightPrepaidCollectId\": \"P\",\n  \"OtherPrepaidCollectId\": \"P\",\n  \"GrossWeightUnitCode\": \"KG\",\n  \"ChargeableWeightUnitCode\": \"KG\",\n  \"DimensionsUnitCode\": \"Cm\",\n  \"RateClassCode\": \"Q\",\n\n  \"Ratio\": 6,\n  \"DimFactor\": 6000,\n\n  \"GrossWeightEdited\": false,\n  \"ChargeableWeightEdited\": false,\n  \"VolumeUnitCode\": \"CBM\",\n  \"StatusId\": \"1-14\",\n  \"StatusName\": \"Order\",\n  \"StatusDate\": \"2019-05-19T13:18:24.147\",\n \n  \"StatusWeight\": 0,\n\n  \"TotalContainers\": \"\",\n  \"ShipmentType\": \"Direct\",\n\n  \"ShipmentPMId\": \"1-1539941\",\n  \"LastUpdate\": \"0001-01-01T00:00:00\",\n \n  \"IsAnyConversation\": false,\n  \"NumberOfShipments\": 0,\n  \"MainCarriageFinalDestinationPortId\": \"1-268512\",\n  \"OriginFinalDestinationPortId\": \"1-268512\",\n  \"MainCarriageFinalDestinationPortCode\": \"222\",\n  \"MainCarriageFinalDestinationPortName\": \"Brandscheid/Westerwald\",\n  \"MainCarriageFinalDestinationPortCountryCode\": \"XK\",\n  \"MainCarriageFinalDestinationPortCountryName\": \"Kosovo\",\n\n  \"IsDangerous\": true,\n\n \n  \"LTCWEdited\": false,\n  \"ShipmentPickUpIndex\": 0,\n  \"ShipmentDeliveryIndex\": 0,\n  \"ShipmentContainerReturnIndex\": 0,\n  \"ShipmentPayableStatusCode\": \"NOPA\",\n  \"ShipmentReceivableStatusCode\": \"NORE\",\n  \"ShipmentReceivableStatusName\": \"No Receivables\",\n  \"ShipmentPayableStatusName\": \"No Payables\",\n  \"IsCancelled\": false,\n  \n  \"IsAccountingClosed\": false,\n  \"AccessDate\": \"0001-01-01T00:00:00\",\n  \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\n  \"LastUpdateDate\": \"2019-05-19T14:19:13.6653783Z\",\n  \"ProfitCurrencyId\": \"1-7\",\n  \"ProfitCurrencyCode\": \"USD\",\n  \"ProfitExchangeRate\": 3.6,\n \n  \"NextLegCode\": \"MAL1\",\n  \"NextLegName\": \"Main Carriage Leg1\",\n  \n  \"ShipmentLevelCode\": \"D\",\n  \"ShipmentLevelName\": \"Direct\",\n  \"MasterShipmentDataId\": \"1-1539941\",\n  \"NumberOfFollowUps\": 1,\n \n  \"ShipmentCustomerTypeCode\": \"SHI\",\n  \"ConsigneeAddressOneTime\": false,\n  \"ShipperAddressOneTime\": false,\n \"CustomerId\": \"{{ShipperIdTestShipperExport1}}\",\n  \n \n  \"IssuingCarrierAgentId\": \"{{AgentIdTest}}\",\n\n  \"ShipperId\": \"{{ShipperIdTestShipperExport1}}\",\n  \n  \"ConsigneeId\": \"{{ConsigneeIdTestConsigneeExport1}}\",\n  \n  \"AgentId\": \"{{AgentIdTest}}\",\n  \"NoFreightFile\": false,\n  \"IsExceptionResolved\": false,\n  \"IsRefreshFollowUp\": false,\n\n  \"FromPortId\": \"{{PortIdLHR}}\",\n  \"ToPortId\": \"{{PortIdAirJFK}}\",\n  \n  \"MainCarriageFromPortId\": \"1-3826\",\n  \"MainCarriageToPortId\": \"1-268512\",\n  \"OriginMainCarriageFromPortId\": \"1-3826\",\n\n  \"MainCarriageFromPortCountryEC\": true,\n  \"MainCarriageToPortCountryEC\": false,\n \n  \"MainCarriageIsFromStack\": false,\n  \n  \"FinalDistenationPortId\": \"1-268512\",\n\n\n  \"OrderGrossWeightEdited\": false,\n  \"OrderChargeableWeightEdited\": false,\n  \n  \"OrderIsDangerouseGoods\": false,\n \n \n  \"AWBPrint\": false,\n  \"FWBStatusCode\": \"NSEN\",\n \n  \"FHLStatusCode\": \"NSEN\",\n\n  \"AWBCurrencyId\": \"1-8\",\n  \"AWBCurrencyCode\": \"EUR\",\n \n  \"AWBDeclaredValueForCarriage\": \"NVD\",\n  \"AWBDeclaredValueForCustoms\": \"NCV\",\n \n  \"AWBInsurrenceValue\": \"XXX\",\n  \"AWBHandlingInformation\": \"RA-UNK\",\n\n  \"AWBSignature\": \"22\",\n  \"AWBPlace\": \"Anaa TestCountry\",\n  \"AWBChargesCodeCode\": \"PP\",\n \n  \"TenantZeroAirlineChampFWB\": false,\n  \"TenantZeroAirlineChampFHL\": false,\n  \"TenantZeroAirlineChampFSU\": false,\n  \"TenantZeroAirlineChampFSRFSA\": false,\n  \"TenantZeroAirlineChampFVRFVA\": false,\n  \"CarrierIsChampRegistered\": false,\n  \"TenantZeroAirlineChampNeedsRegistration\": false,\n  \"TenantZeroAirlineGLSHKFWB\": false,\n  \"TenantZeroAirlineGLSHKFHL\": false,\n  \"TenantZeroAirlineGLSHKFSU\": false,\n  \"TenantZeroAirlineGLSHKFSRFSA\": false,\n  \"TenantZeroAirlineGLSHKFVRFVA\": false,\n  \"CarrierIsGLSHKRegistered\": false,\n  \"TenantZeroAirlineGLSHKNeedsRegistration\": false,\n  \"CarrierIsCheckDigit\": false,\n  \"CarrierIsLimitedLength\": false,\n  \"LocalCustomsTransmissionsStatusCode\": \"NSEN\",\n  \"LocalCustomsTransmissionsStatusName\": \"Not sent\",\n \n  \"IncludesCustoms\": false,\n  \"IsUpdateByAutomation\": false,\n\n  \"MasterShipmentNumber\": \"AE0211081950\",\n  \"ProductCode\": \"AE\",\n  \"SecurityKey\": \"f1ea7d3692944e369f2ebb2f7e653c46\",\n\n  \"DontCreateConvertEvent\": false,\n  \"ConvertFromHouseToDirect\": false,\n  \"ConvertFromDirectToHouse\": false,\n  \"IsRefreshShipmentFollowUps\": false,\n  \"CustomerRankName\": \"Silver\",\n \n  \"ForeignPartnerCountryCode\": \"US\",\n  \"LastStatusLogDate\": \"2019-05-19T13:18:24.147\",\n  \"MainCarriageFullCarrierNumber\": \"\",\n  \"Transshipment1FullCarrierNumber\": \"\",\n  \"Transshipment2FullCarrierNumber\": \"\",\n  \"Transshipment3FullCarrierNumber\": \"\",\n  \n  \"IsManifestSentToAgent\": false,\n \n\n\n  \"IsCreatedFromAgentSharedManifest\": false,\n \n  \"IsMultipleCommodities\": false,\n \n  \"ValueOfGoodsCurrencyId\": \"1-8\",\n  \"OperationalDate\": \"2019-05-19T13:18:24.047\",\n  \"FBLIsFromStock\": false,\n  \"FBLReturnedToStock\": false,\n  \"FBLTakenFromStock\": false,\n\n  \"FBLReturnedToStockWithCancel\": false,\n \n  \"OnCarriageAdditionalTransportModeCode\": \"BYTR\",\n\n  \"AsAgreedFreight\": false,\n  \"AsAgreedOtherCharges\": false,\n  \"ARInvoiceIssued\": false,\n  \"CreditNoteIssued\": false,\n\n  \"CargonautFHLStatusCode\": \"NSEN\",\n  \"CargonautFHLStatusName\": \"Not Sent\",\n  \"CargonautFHLStatusDate\": null,\n  \"CargonautFWBStatusCode\": \"NSEN\",\n  \"CargonautFWBStatusName\": \"Not Sent\",\n  \"CargonautFWBStatusDate\": null,\n  \"MarkFollowUpsAsDone\": false,\n  \"CalculateProfit\": false,\n  \"CalculateStatus\": true,\n  \"ComputedStatusId\": \"1-14\",\n  \"ComputedStatusDate\": \"2019-05-19T13:18:24.147\",\n  \"ComputedStatusName\": \"Order\",\n\n  \"CalculatePayables\": false,\n  \"CalculateReceivables\": false,\n  \"IsAddingStackEvents\": false,\n  \"IsRemovingStackEvents\": false,\n \n  \"IsSendFSRCreatingShipment\": false,\n  \"ToCountryId\": \"1-469927\",\n  \"FromCountryId\": \"1-83574\",\n  \"ToCountryIsEC\": false,\n  \"FromCountryIsEC\": true,\n \n  \"IsCopyFromShipment\": false,\n  \"IsBuildFromQuote\": false,\n  \"IsBuildFromBooking\": false,\n\n  \"HasPreCarriage\": false,\n  \"HasOnCarriage\": false,\n  \"IncludePickUp\": false,\n \n  \"CustomConnectToShipment\": false,\n  \"IncludeDelivery\": false,\n \n  \"NewConcurrencyGUID\": \"{{c99f3ab5-766b-40a0-bd39-d50a7e7a8d70}}\",\n  \"ConnectedShipmentsPayablesCount\": 0,\n  \"ConnectedShipmentsReceivablesCount\": 0,\n  \"NumberOfInsidePackages\": 0,\n  \"NumberOfInsidePackagesDetails\": \"\",\n  \"AccountManagerUserId\": \"1-96018\",\n  \"AccountManagerUserName\": \"Razan Salesman \",\n  \"ManifestReason\": null,\n  \"ManifestStatusCode\": \"NSEN\",\n  \"IsKnownCargo\": false,\n  \"RegulatedAgentRANumber\": \"10101\",\n \n  \"AdditionalHandlingInfo\": \"RA-UNK\",\n  \"AWBPrintingSecurityStatusEdited\": false,\n  \"AWBPrintingRANumberEdited\": false,\n  \"AdditionalHandlingInfoEdited\": false,\n  \"ViaColoader\": false,\n  \"IssuingCarrierReference1\": null,\n  \"IsMissingDocument\": false,\n \n  \"MAWBReturnedToStackWithCancel\": false,\n \n  \"DontAddToImportersQueue\": false,\n  \"DontAddToForwarderQueue\": false,\n \n  \"ConvertToCustomFile\": false,\n\n  \"IsImporterShipment\": false,\n  \"IsUpdatedByChampAnalyzer\": false,\n  \"IsUpdatedByGLSHKAnalyzer\": false,\n  \"IsUpdatedByINTTRAAnalyzer\": false,\n  \"IsCreatedFromCustomerOverview\": false,\n  \"DeclarationXMLData\": null,\n  \"IsImporterApprovalRequired\": false,\n  \"SendUpdatesToAgentEnabled\": false,\n  \"UpdateSendUpdatesToAgentEnabledField\": false,\n  \"DocsSentToAgent\": false,\n \n  \"IsNewARInvoiceBlocked\": false,\n  \"ShipmentAddtionalDataXML\": null,\n\n  \"ProrateReceivables\": false,\n  \"ReleasesPackagesAddedOnTheShipment\": false,\n\n  \"OldStatusValue\": \"1-14\",\n\n  \"UpdatedByPartner\": \"Razan Salesman \",\n  \n  \"INTTRASIStatusCode\": \"NSEN\",\n  \n  \"SIHasAttachList\": false,\n  \"INTTRAIsFreighted\": false,\n \n  \"SplitOnCarriage\": false,\n \n  \"IsPaymentRequired\": false,\n \n  \"IsSharedLogisticsMoneyTabEnabled\": false,\n  \"IsSharedLogisticsMainCarrierVisible\": false,\n  \"IsSharedLogisticsPickDelvCarrierVisible\": false,\n  \"IsSharedLogisticsAgentVisible\": false,\n  \"IsSharedLogisticsShipperVisible\": false,\n  \"IsSharedLogisticsConsigneeVisible\": false,\n  \n  \"ShipmentContanisDangerousGoods\": false,\n  \"BasicFreightId\": \"P\",\n  \"DestinationPortChargesId\": \"P\",\n  \"DestinationHaulageChargesId\": \"P\",\n  \"AdditionalChargesId\": \"P\",\n  \"FreightPayerId\": \"1-577381\",\n  \"FreightPayerAddressId\": \"1-610125\",\n  \"HasContainerException\": false,\n  \"IsMissingDocuments\": false,\n \n  \"MissingDocumentsCount\": 0,\n \n  \"IsRequestedDocuments\": false,\n  \"RequestedDocumentsCount\": 0,\n  \"NumberOfHouses\": 0,\n  \"IsDigitalSignRequired\": false,\n  \"IsDepositionRequired\": false,\n  \n  \"IsShipmentComputedFieldChange\": false,\n  \n  \"ConvertShipmentToLCL\": false,\n  \"ConvertShipmentToFCL\": false,\n  \"ShipmentDirectionConverted\": false\n}"
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/shipmentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{ShipmentNumber}}&GetCount=true&PageIndex=0&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"shipmentviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{ShipmentNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
 			},
 			"response": []
 		}
