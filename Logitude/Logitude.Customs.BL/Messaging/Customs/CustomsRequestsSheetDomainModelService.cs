@@ -176,6 +176,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 this.RequestParams = requestParams;
                 InitMessageDefinition();
                 SendRequestVIA requestVIA = _RequestParams.RequestVIA;
+
                 bool avoidSign = AvoidSign(_RequestParams);
                 if (avoidSign && _RequestParams.ForcePersonalSign)
                 {
