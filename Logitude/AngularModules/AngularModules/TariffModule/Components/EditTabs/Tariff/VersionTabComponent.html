@@ -191,8 +191,8 @@
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <table>
                                                     <tr>
-                                                        <td [ngStyle]="{color: item.MinPriceComparingTextColor}" *ngIf="item.MinPriceComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.MinPriceComparingText}} %
+                                                        <td [ngStyle]="{color: item.MinPriceComparingTextColor}" *ngIf="item.MinPriceComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.MinPriceComparingPrice| NumbersPipe:'N2'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -218,8 +218,8 @@
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                  <table>
                                                     <tr>
-                                                        <td [ngStyle]="{color: item.Step1ComparingTextColor}" *ngIf="item.Step1ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step1ComparingText}} %
+                                                        <td [ngStyle]="{color: item.Step1ComparingTextColor}" *ngIf="item.Step1ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step1ComparingPrice| NumbersPipe:'N2'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -246,8 +246,8 @@
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <table>
                                                     <tr>
-                                                        <td [ngStyle]="{color: item.Step2ComparingTextColor}" *ngIf="item.Step2ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step2ComparingText}} %
+                                                        <td [ngStyle]="{color: item.Step2ComparingTextColor}" *ngIf="item.Step2ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step2ComparingPrice| NumbersPipe:'N2'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -274,8 +274,8 @@
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <table>
                                                     <tr>
-                                                        <td [ngStyle]="{color: item.Step3ComparingTextColor}" *ngIf="item.Step3ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step3ComparingText}} %
+                                                        <td [ngStyle]="{color: item.Step3ComparingTextColor}" *ngIf="item.Step3ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step3ComparingPrice| NumbersPipe:'N2'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -302,8 +302,8 @@
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                  <table>
                                                     <tr>
-                                                        <td [ngStyle]="{color: item.Step4ComparingTextColor}" *ngIf="item.Step4ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step4ComparingText}} %
+                                                        <td [ngStyle]="{color: item.Step4ComparingTextColor}" *ngIf="item.Step4ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step4ComparingPrice| NumbersPipe:'N2'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -329,8 +329,8 @@
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                  <table>
                                                     <tr>
-                                                        <td [ngStyle]="{color: item.Step8ComparingTextColor}" *ngIf="item.Step8ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step8ComparingText}} %
+                                                        <td [ngStyle]="{color: item.Step5ComparingTextColor}" *ngIf="item.Step5ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step5ComparingPrice| NumbersPipe:'N2'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -356,8 +356,8 @@
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                  <table>
                                                     <tr>
-                                                        <td [ngStyle]="{color: item.Step6ComparingTextColor}" *ngIf="item.Step6ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step6ComparingText}} %
+                                                        <td [ngStyle]="{color: item.Step6ComparingTextColor}" *ngIf="item.Step6ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step6ComparingPrice| NumbersPipe:'N2'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -383,8 +383,8 @@
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <table>
                                                     <tr>
-                                                        <td [ngStyle]="{color: item.Step7ComparingTextColor}" *ngIf="item.Step7ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step7ComparingText}} %
+                                                        <td [ngStyle]="{color: item.Step7ComparingTextColor}" *ngIf="item.Step7ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step7ComparingPrice| NumbersPipe:'N2'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -411,8 +411,8 @@
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                  <table>
                                                     <tr>
-                                                        <td [ngStyle]="{color: item.Step8ComparingTextColor}" *ngIf="item.Step8ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step8ComparingText}} %
+                                                        <td [ngStyle]="{color: item.Step8ComparingTextColor}" *ngIf="item.Step8ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step8ComparingPrice| NumbersPipe:'N2'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
