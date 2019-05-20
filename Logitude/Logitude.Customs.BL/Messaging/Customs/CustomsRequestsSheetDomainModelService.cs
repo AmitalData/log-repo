@@ -177,11 +177,17 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 InitMessageDefinition();
                 SendRequestVIA requestVIA = _RequestParams.RequestVIA;
 
-                bool avoidSign = AvoidSign(_RequestParams);
-                if (avoidSign && _RequestParams.ForcePersonalSign)
+                bool avoidSign = false;
+                bool notApprovedYet = true;
+                if (!notApprovedYet)
                 {
-                    _RequestParams.ForcePersonalSign = false;
+                    avoidSign = AvoidSign(_RequestParams);
+                    if (avoidSign && _RequestParams.ForcePersonalSign)
+                    {
+                        _RequestParams.ForcePersonalSign = false;
+                    }
                 }
+
                 MessageController.BuildRealSteps(InterfaceTenantDefinitionManagement, ref requestVIA, _RequestParams.ForcePersonalSign, avoidSign);
                 RequestParams.RequestVIA = requestVIA;
 
