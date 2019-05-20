@@ -917,6 +917,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string integratorCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IntegratorCode  
+	   {
+	    
+	     get
+		{
+		   return integratorCode;
+		 }
+		 set
+		 {
+		   if(integratorCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IntegratorCode",OldValue=integratorCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   integratorCode=value;
+		   }
+			
+		 }
+	   }
+	  private string integratorName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IntegratorName  
+	   {
+	    
+	     get
+		{
+		   return integratorName;
+		 }
+		 set
+		 {
+		   if(integratorName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IntegratorName",OldValue=integratorName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   integratorName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
