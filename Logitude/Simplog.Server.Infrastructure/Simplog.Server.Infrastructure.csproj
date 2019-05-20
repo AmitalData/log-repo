@@ -126,6 +126,18 @@
       <HintPath>..\packages\StackExchange.Redis.1.2.5\lib\net45\StackExchange.Redis.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Syncfusion.Calculate.Base, Version=10.104.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.Calculate.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Compression.Base, Version=10.104.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.Compression.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Core, Version=10.104.0.44, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Web, Version=10.104.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.XlsIO.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -205,6 +217,7 @@
     <Compile Include="Helpers\ServiceBusQueueHelper.cs" />
     <Compile Include="Helpers\SettingUtil.cs" />
     <Compile Include="Helpers\TransactionFactory.cs" />
+    <Compile Include="Helpers\XLSUtil.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="Interfaces\IDateTimeUtil.cs" />
     <Compile Include="IRepository.cs" />

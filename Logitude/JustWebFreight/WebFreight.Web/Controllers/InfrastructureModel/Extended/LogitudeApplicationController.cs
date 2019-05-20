@@ -149,20 +149,24 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 
                 if (CacheManager.CacheWrapper != null)
                 {
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
-                    {
-                        isBlocking = GetIsBlockingFromDB();
+					if (CacheManager.CacheWrapper.Get(entityName) == null)
+					{
+						isBlocking = GetIsBlockingFromDB();
 
-                        if (CacheManager.CacheWrapper.Get(entityName) == null)
-                        {
-                            CacheManager.CacheWrapper.Insert(entityName, isBlocking, null, DateTime.UtcNow.AddMinutes(1), TimeSpan.Zero);
-                        }
+						if (CacheManager.CacheWrapper.Get(entityName) == null)
+						{
+							CacheManager.CacheWrapper.Insert(entityName, isBlocking, null, DateTime.UtcNow.AddMinutes(1), TimeSpan.Zero);
+						}
 
-                    }
-                    else
-                    {
-                        isBlocking = (bool)CacheManager.CacheWrapper.Get(entityName);
-                    }
+					}
+					else
+					{
+						var cachedEntity = CacheManager.CacheWrapper.Get(entityName);
+						if (cachedEntity != null)
+							isBlocking = (bool)cachedEntity;
+						else
+							isBlocking = GetIsBlockingFromDB();
+					}
                 }
                 else
                 {

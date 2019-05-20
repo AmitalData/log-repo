@@ -125,16 +125,16 @@
                                             </div>
 
                                             <!-- Manual Journals -->
-                                            <div *ngIf="isScreenLoaded" class="QueriesSection" style="color: #58B8FF;padding-top: 30px;">
+                                            <div *ngIf="isScreenLoaded" class="QueriesSection" style="color: #58B8FF;margin-top: 30px;">
                                                 <div>{{'Journal.O.Revelations' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <!-- <button class="Button" (click)="RunNewJournalWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button> -->
+                                                    <button class="Button" (click)="NewRevaluation()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>
                                                         <tr>
-                                                            <td>
-
+                                                            <td style="width:190px;">
+                                                                <p class="QueryLink" (click)="ViewRevaluationQuery()">{{'Revaluation.Q.AllRevaluations' | TextCodeTranslationPipe}}</p>
                                                             </td>
                                                         </tr>
 
