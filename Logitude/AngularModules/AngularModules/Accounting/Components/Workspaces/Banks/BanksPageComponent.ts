@@ -26,6 +26,8 @@ import {BankAccountSummary} from '../../../DataContracts/AccountingSummery';
 import {PaymentChequeSummary} from '../../../DataContracts/AccountingSummery';
 import {PaymentChequeExtendedListService} from '../../../Services/ExtendedLists/PaymentChequeExtendedListService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { BankDepositSummary } from '../../../DataContracts/AccountingSummery';
+import { CashBookSummary } from '../../../DataContracts/AccountingSummery';
 
 
 @Component({
@@ -45,6 +47,8 @@ export class BanksPageComponent {
     public RecentBankDepositCount: number = 0;
     _BankAccountSummary: BankAccountSummary = new BankAccountSummary();
     paymentChequeSummary: PaymentChequeSummary = new PaymentChequeSummary();
+    bankDepositSummary: BankDepositSummary = new BankDepositSummary();
+    cashBookSummary: CashBookSummary = new CashBookSummary();
     screenHeight: number = 0;
     get ScreenHeight() { return this.screenHeight; }
     set ScreenHeight(value: number) {
@@ -118,6 +122,24 @@ export class BanksPageComponent {
         this.paymentChequeExtendedListService.GetPymentChequesSummary().subscribe(myResult => {
             if (myResult != null) {
                 this.paymentChequeSummary.AllPaymenChequesCount = myResult.AllPaymentChequesCount > 1000 ? "1000+" : myResult.AllPaymentChequesCount.toString();
+            }
+        });
+
+        this.myBankDepositService.GetBankDepositsSummary().subscribe(myResult => {
+            if (myResult != null) {
+                this.bankDepositSummary.TodaysDepositCount = myResult.TodaysDepositCount > 1000 ? "1000+" : myResult.TodaysDepositCount.toString();
+            }
+        });
+
+        this.myCashBookExtendedListService.GetCashBookSummary().subscribe(myResult => {
+            if (myResult != null) {
+                this.cashBookSummary.AllCashbookCount = myResult.AllCashbookCount > 1000 ? "1000+" : myResult.AllCashbookCount.toString();
+                this.cashBookSummary.CashCashbookCount = myResult.CashCashbookCount > 1000 ? "1000+" : myResult.CashCashbookCount.toString();
+
+                this.cashBookSummary.ChequeCashbookCount = myResult.ChequeCashbookCount > 1000 ? "1000+" : myResult.ChequeCashbookCount.toString();
+
+            
+
             }
         });
     }
