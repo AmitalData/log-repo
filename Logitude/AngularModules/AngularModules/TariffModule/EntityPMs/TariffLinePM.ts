@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {TariffPM} from './TariffPM';
+import {TariffVersionPM} from './TariffVersionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -107,6 +107,56 @@ export class TariffLinePM {
     public set Step8Price(newValue: number) { if (this.step8Price != newValue) { this.step8Price = newValue; this.MarkAsDirty("Step8Price"); } }
        
 	 
+    private surcharge1Price: number;
+    public get Surcharge1Price() { return this.surcharge1Price; }
+    public set Surcharge1Price(newValue: number) { if (this.surcharge1Price != newValue) { this.surcharge1Price = newValue; this.MarkAsDirty("Surcharge1Price"); } }
+       
+	 
+    private surcharge2Price: number;
+    public get Surcharge2Price() { return this.surcharge2Price; }
+    public set Surcharge2Price(newValue: number) { if (this.surcharge2Price != newValue) { this.surcharge2Price = newValue; this.MarkAsDirty("Surcharge2Price"); } }
+       
+	 
+    private surcharge3Price: number;
+    public get Surcharge3Price() { return this.surcharge3Price; }
+    public set Surcharge3Price(newValue: number) { if (this.surcharge3Price != newValue) { this.surcharge3Price = newValue; this.MarkAsDirty("Surcharge3Price"); } }
+       
+	 
+    private surcharge4Price: number;
+    public get Surcharge4Price() { return this.surcharge4Price; }
+    public set Surcharge4Price(newValue: number) { if (this.surcharge4Price != newValue) { this.surcharge4Price = newValue; this.MarkAsDirty("Surcharge4Price"); } }
+       
+	 
+    private surcharge5Price: number;
+    public get Surcharge5Price() { return this.surcharge5Price; }
+    public set Surcharge5Price(newValue: number) { if (this.surcharge5Price != newValue) { this.surcharge5Price = newValue; this.MarkAsDirty("Surcharge5Price"); } }
+       
+	 
+    private surcharge6Price: number;
+    public get Surcharge6Price() { return this.surcharge6Price; }
+    public set Surcharge6Price(newValue: number) { if (this.surcharge6Price != newValue) { this.surcharge6Price = newValue; this.MarkAsDirty("Surcharge6Price"); } }
+       
+	 
+    private surcharge7Price: number;
+    public get Surcharge7Price() { return this.surcharge7Price; }
+    public set Surcharge7Price(newValue: number) { if (this.surcharge7Price != newValue) { this.surcharge7Price = newValue; this.MarkAsDirty("Surcharge7Price"); } }
+       
+	 
+    private surcharge8Price: number;
+    public get Surcharge8Price() { return this.surcharge8Price; }
+    public set Surcharge8Price(newValue: number) { if (this.surcharge8Price != newValue) { this.surcharge8Price = newValue; this.MarkAsDirty("Surcharge8Price"); } }
+       
+	 
+    private surcharge9Price: number;
+    public get Surcharge9Price() { return this.surcharge9Price; }
+    public set Surcharge9Price(newValue: number) { if (this.surcharge9Price != newValue) { this.surcharge9Price = newValue; this.MarkAsDirty("Surcharge9Price"); } }
+       
+	 
+    private surcharge10Price: number;
+    public get Surcharge10Price() { return this.surcharge10Price; }
+    public set Surcharge10Price(newValue: number) { if (this.surcharge10Price != newValue) { this.surcharge10Price = newValue; this.MarkAsDirty("Surcharge10Price"); } }
+       
+	 
     private originPortId: string;
     public get OriginPortId() { return this.originPortId; }
     public set OriginPortId(newValue: string) { if (this.originPortId != newValue) { this.originPortId = newValue; this.MarkAsDirty("OriginPortId"); } }
@@ -190,6 +240,76 @@ export class TariffLinePM {
     private step8PriceText: string;
     public get Step8PriceText() { return this.step8PriceText; }
     public set Step8PriceText(newValue: string) { if (this.step8PriceText != newValue) { this.step8PriceText = newValue; this.MarkAsDirty("Step8PriceText"); } }
+       
+	 
+    private surcharge1PriceText: string;
+    public get Surcharge1PriceText() { return this.surcharge1PriceText; }
+    public set Surcharge1PriceText(newValue: string) { if (this.surcharge1PriceText != newValue) { this.surcharge1PriceText = newValue; this.MarkAsDirty("Surcharge1PriceText"); } }
+       
+	 
+    private surcharge2PriceText: string;
+    public get Surcharge2PriceText() { return this.surcharge2PriceText; }
+    public set Surcharge2PriceText(newValue: string) { if (this.surcharge2PriceText != newValue) { this.surcharge2PriceText = newValue; this.MarkAsDirty("Surcharge2PriceText"); } }
+       
+	 
+    private surcharge3PriceText: string;
+    public get Surcharge3PriceText() { return this.surcharge3PriceText; }
+    public set Surcharge3PriceText(newValue: string) { if (this.surcharge3PriceText != newValue) { this.surcharge3PriceText = newValue; this.MarkAsDirty("Surcharge3PriceText"); } }
+       
+	 
+    private surcharge4PriceText: string;
+    public get Surcharge4PriceText() { return this.surcharge4PriceText; }
+    public set Surcharge4PriceText(newValue: string) { if (this.surcharge4PriceText != newValue) { this.surcharge4PriceText = newValue; this.MarkAsDirty("Surcharge4PriceText"); } }
+       
+	 
+    private surcharge5PriceText: string;
+    public get Surcharge5PriceText() { return this.surcharge5PriceText; }
+    public set Surcharge5PriceText(newValue: string) { if (this.surcharge5PriceText != newValue) { this.surcharge5PriceText = newValue; this.MarkAsDirty("Surcharge5PriceText"); } }
+       
+	 
+    private surcharge6PriceText: string;
+    public get Surcharge6PriceText() { return this.surcharge6PriceText; }
+    public set Surcharge6PriceText(newValue: string) { if (this.surcharge6PriceText != newValue) { this.surcharge6PriceText = newValue; this.MarkAsDirty("Surcharge6PriceText"); } }
+       
+	 
+    private surcharge7PriceText: string;
+    public get Surcharge7PriceText() { return this.surcharge7PriceText; }
+    public set Surcharge7PriceText(newValue: string) { if (this.surcharge7PriceText != newValue) { this.surcharge7PriceText = newValue; this.MarkAsDirty("Surcharge7PriceText"); } }
+       
+	 
+    private surcharge8PriceText: string;
+    public get Surcharge8PriceText() { return this.surcharge8PriceText; }
+    public set Surcharge8PriceText(newValue: string) { if (this.surcharge8PriceText != newValue) { this.surcharge8PriceText = newValue; this.MarkAsDirty("Surcharge8PriceText"); } }
+       
+	 
+    private surcharge9PriceText: string;
+    public get Surcharge9PriceText() { return this.surcharge9PriceText; }
+    public set Surcharge9PriceText(newValue: string) { if (this.surcharge9PriceText != newValue) { this.surcharge9PriceText = newValue; this.MarkAsDirty("Surcharge9PriceText"); } }
+       
+	 
+    private surcharge10PriceText: string;
+    public get Surcharge10PriceText() { return this.surcharge10PriceText; }
+    public set Surcharge10PriceText(newValue: string) { if (this.surcharge10PriceText != newValue) { this.surcharge10PriceText = newValue; this.MarkAsDirty("Surcharge10PriceText"); } }
+       
+	 
+    private hasErrors: boolean;
+    public get HasErrors() { return this.hasErrors; }
+    public set HasErrors(newValue: boolean) { if (this.hasErrors != newValue) { this.hasErrors = newValue; this.MarkAsDirty("HasErrors"); } }
+       
+	 
+    private errorText: string;
+    public get ErrorText() { return this.errorText; }
+    public set ErrorText(newValue: string) { if (this.errorText != newValue) { this.errorText = newValue; this.MarkAsDirty("ErrorText"); } }
+       
+	 
+    private lineUniqueKey: string;
+    public get LineUniqueKey() { return this.lineUniqueKey; }
+    public set LineUniqueKey(newValue: string) { if (this.lineUniqueKey != newValue) { this.lineUniqueKey = newValue; this.MarkAsDirty("LineUniqueKey"); } }
+       
+	 
+    private lineUniqueKeyText: string;
+    public get LineUniqueKeyText() { return this.lineUniqueKeyText; }
+    public set LineUniqueKeyText(newValue: string) { if (this.lineUniqueKeyText != newValue) { this.lineUniqueKeyText = newValue; this.MarkAsDirty("LineUniqueKeyText"); } }
        
 	 
 

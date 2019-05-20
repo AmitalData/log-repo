@@ -82,7 +82,7 @@ namespace CommunicationWorkerRole
 
         private bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
         {
-            if (loggedTenant.CustomerTenantShareExportFile == true && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id))
+            if (loggedTenant.CustomerTenantShareExportFile == true)// && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id)
             {
                 return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
             }
@@ -91,7 +91,17 @@ namespace CommunicationWorkerRole
                 return false;
             }
         }
-
+        private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
+        {
+            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public override async void AsyncRun()
         {
             try
@@ -215,47 +225,55 @@ namespace CommunicationWorkerRole
                                         if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.IsCustomerTenantShare)// && (tenantPM.CustomerTenantShareImportFile ? ForwarderShipment.DirectionId.ToUpper() == "I" || ForwarderShipment.DirectionId.ToUpper() == "C" : ForwarderShipment.DirectionId.ToUpper() == "C"))
                                         {
                                             importerTenant = customerTenantAccessInfo.CustomerTenant;
-
+                                            
                                             ShipmentPM ImporterShipment = null;
 
                                             string EntityNumber = "";
                                             if (ForwarderShipment != null)
                                             {
-                                                LogPM.Tenant = ForwarderShipment.Tenant;
-                                                LogPM.Subject = "Send New Document To Importer By ImporterShipmentDocuments Controller";
-                                                LogPM.Refrence = DocumentFilingPM.Code;
-                                                if (IsNewLog)
+                                                if (!IsImporterTenantHasExportFeatureForExportShipments(importerTenant, ForwarderShipment))
                                                 {
-                                                    apiLogsService = new APILogsService(webFreightContext, tenant);
-                                                    LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
-                                                    LogPM.QueueType = "Document";
-                                                    apiLogsService.Create(LogPM);
-                                                    IsNewLog = false;
+                                                    queueservice.Complete(); 
                                                 }
-                                                var msg = "Start Checking Parent Entity Direction" + DateTime.Now;
-                                                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
-
-                                                if (ForwarderShipment.DirectionId.ToUpper() == "I" && !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
+                                                else
                                                 {
-
-                                                    var CustomsShipmentPM = shipmentQuery.GetSingleShipmentPM(ForwarderShipment.CustomFileId, tenant); // todo: I Should Ask About this
-                                                    msg = "Getting Custom shipment Id for current import shipment ( " + ForwarderShipment.CustomFileId + " )" + DateTime.Now;
-                                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
-
-                                                    if (CustomsShipmentPM != null && !string.IsNullOrEmpty(CustomsShipmentPM.CustomerShipmentNumber))
+                                                    LogPM.Tenant = ForwarderShipment.Tenant;
+                                                    LogPM.Subject = "Send New Document To Importer By ImporterShipmentDocuments Controller";
+                                                    LogPM.Refrence = DocumentFilingPM.Code;
+                                                    if (IsNewLog)
                                                     {
-                                                        EntityNumber = CustomsShipmentPM.CustomerShipmentNumber;
+                                                        apiLogsService = new APILogsService(webFreightContext, tenant);
+                                                        LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+                                                        LogPM.QueueType = "Document";
+                                                        apiLogsService.Create(LogPM);
+                                                        IsNewLog = false;
                                                     }
-
-                                                }
-                                                else if (ForwarderShipment.DirectionId.ToUpper() == "C" || (IsExportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment)))//&& !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
-                                                {
-                                                    //ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(ForwarderShipment.CustomerShipmentNumber, importerTenant);
-                                                    msg = "Getting Custom shipment number" + DateTime.Now;
+                                                    var msg = "Start Checking Parent Entity Direction" + DateTime.Now;
                                                     APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
 
-                                                    EntityNumber = ForwarderShipment.CustomerShipmentNumber;// ImporterShipment.ShipmentNumber;
+                                                    if (ForwarderShipment.DirectionId.ToUpper() == "I" && !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
+                                                    {
+
+                                                        var CustomsShipmentPM = shipmentQuery.GetSingleShipmentPM(ForwarderShipment.CustomFileId, tenant); // todo: I Should Ask About this
+                                                        msg = "Getting Custom shipment Id for current import shipment ( " + ForwarderShipment.CustomFileId + " )" + DateTime.Now;
+                                                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
+
+                                                        if (CustomsShipmentPM != null && !string.IsNullOrEmpty(CustomsShipmentPM.CustomerShipmentNumber))
+                                                        {
+                                                            EntityNumber = CustomsShipmentPM.CustomerShipmentNumber;
+                                                        }
+
+                                                    }
+                                                    else if (ForwarderShipment.DirectionId.ToUpper() == "C" || (IsExportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment)))//&& !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
+                                                    {
+                                                        //ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(ForwarderShipment.CustomerShipmentNumber, importerTenant);
+                                                        msg = "Getting Custom shipment number" + DateTime.Now;
+                                                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(DocumentFilingPM), null, null, "");
+
+                                                        EntityNumber = ForwarderShipment.CustomerShipmentNumber;// ImporterShipment.ShipmentNumber;
+                                                    }
                                                 }
+                                                
                                             }
                                             if (!string.IsNullOrEmpty(EntityNumber))
                                             {
@@ -749,19 +767,19 @@ namespace CommunicationWorkerRole
                                         else
                                         {
                                             //throw new Exception("Customer Has No Access To send Document");
-                                            queueservice.CompleteAsFailed();
-                                            var Failmsg = "There is no Customer tenant to send this document to";
-                                            if (IsNewLog)
-                                            {
-                                                LogPM.Subject = "Send New Document To Importer By ImporterShipmentDocuments Controller";
-                                                LogPM.Tenant = tenant;
-                                                apiLogsService = new APILogsService(webFreightContext, tenant);
-                                                LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
-                                                LogPM.QueueType = "Document";
-                                                apiLogsService.Create(LogPM);
-                                                IsNewLog = false;
-                                            }
-                                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, null, Failmsg, Failmsg);
+                                            queueservice.Complete();
+                                            //var Failmsg = "There is no Customer tenant to send this document to";
+                                            //if (IsNewLog)
+                                            //{
+                                            //    LogPM.Subject = "Send New Document To Importer By ImporterShipmentDocuments Controller";
+                                            //    LogPM.Tenant = tenant;
+                                            //    apiLogsService = new APILogsService(webFreightContext, tenant);
+                                            //    LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string, string>)response.MessageValues);
+                                            //    LogPM.QueueType = "Document";
+                                            //    apiLogsService.Create(LogPM);
+                                            //    IsNewLog = false;
+                                            //}
+                                            //APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, null, Failmsg, Failmsg);
                                         }
 
                                     }

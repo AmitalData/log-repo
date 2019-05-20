@@ -1,14 +1,18 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Utils;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -25,7 +29,9 @@ namespace Logitude.Accounting.BL.CoreBL
         private IAccountingContext accountingContext;
         public ResultLoadFlatFile MyResultLoadFlatFile = new ResultLoadFlatFile();
         private IQueryable<CardGLAccountDataView> _AllVendorGLAccountCards;
-
+        private ContactRepository _contactRep; 
+        private string _resolveLoggingUserId; 
+        private Contact _contact; 
 
 
         public void Analyse(int? ptenant, string FileContent)
@@ -44,33 +50,37 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     throw new Exception("unable to find tenantFromPage4Tester ");
                 }
-                accountingContext = AccountingContext.GetContext(ptenant.Value);
-                _FullAccountingSettingPM = GetDeductionFileNumberFromAccSetting(accountingContext, ptenant.Value);
+                int tenant = ptenant.Value;
+                _contactRep = new ContactRepository(tenant);
+                _resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                _contact = _contactRep.GetSingleContactByEmail(_resolveLoggingUserId, tenant);
+                accountingContext = AccountingContext.GetContext(tenant);
+                _FullAccountingSettingPM = GetDeductionFileNumberFromAccSetting(accountingContext, tenant);
                 ValidateFlatFile();
 
+                _AllVendorGLAccountCards = GetQAllVendorGLAccountCards(accountingContext, tenant);
+
+                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(25)))
+                {
+                    foreach (VendorLineDTO vendorLineDTO in _VendorLinesDTO)
+                    {
+                        {
+                            AnalyseOneVendor(tenant, vendorLineDTO);
+
+                        }
+                    }
+                    scope.Complete();
+
+
+                }
             }
             catch (Exception e)
             {
 
                 throw new Exception("LoadSystem1000FromFile(FileContent) failed while performing CreateVendorLinesDTOFromFile ", e);
             }
-            int tenant = ptenant.Value;
 
 
-            //TenantBankPagesFilter(tenant, _BankPagesDTO);
-            _AllVendorGLAccountCards = GetQAllVendorGLAccountCards(accountingContext, tenant);
-
-            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
-            {
-                foreach (VendorLineDTO vendorLineDTO in _VendorLinesDTO)
-                {
-                    { 
-                        AnalyseOneVendor(tenant, vendorLineDTO);
-
-                    }
-                }
-                scope.Complete();
-            }
         }
 
         private IQueryable<CardGLAccountDataView> GetQAllVendorGLAccountCards(IAccountingContext accountingContext, int tenant)
@@ -84,13 +94,119 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void AnalyseOneVendor(int tenant, VendorLineDTO vendorLineDTO)
         {
-            CardGLAccountDataView oneVendor = _AllVendorGLAccountCards.Where(p => p.DisplayNumber.Replace(" ", "").PadLeft(15, '0').Substring(0, 15) == vendorLineDTO.VendorCode && (p.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9) == vendorLineDTO.SentVATNum || p.VatNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9) == vendorLineDTO.LocatedVATNum)).FirstOrDefault();
+            GLAccountWithholdingTaxQueryService gLAccountWithholdingTaxQueryService = new GLAccountWithholdingTaxQueryService(tenant);
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+     //       GLAccountWithholdingTaxUpdateService gLAccountWithholdingTaxUpdateService = new GLAccountWithholdingTaxUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
+            string vendorStripped = vendorLineDTO.VendorCode.TrimStart('0');
+            string sentVatStripped = vendorLineDTO.SentVATNum.TrimStart('0');
+            string locatedVatStripped = vendorLineDTO.LocatedVATNum.TrimStart('0');
+            CardGLAccountDataView oneVendor = _AllVendorGLAccountCards.Where(p => p.DisplayNumber.Replace(" ", "").EndsWith(vendorStripped) 
+                    && (p.VatNumber.Replace(" ", "").EndsWith(sentVatStripped) || p.VatNumber.Replace(" ", "").EndsWith(locatedVatStripped))).FirstOrDefault();
             if (oneVendor == null)
             {
-                MyResultLoadFlatFile.ValidateVendorLineAgaintDBErrors.Add($"Vendor Number {vendorLineDTO.VendorCode} not found ");
+                MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"Vendor Number {vendorLineDTO.VendorCode} not found ");
                 return;
             }
-      
+
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(MyContext);
+            GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+
+            GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePM(oneVendor.Id, oneVendor.Tenant);
+            if (gLAccountPM == null)
+            {
+                MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"Vendor Number {vendorLineDTO.VendorCode} - GLAccount not found ");
+                return;
+            }
+
+            gLAccountQueryService.GetComposition(new GLAccountKeys() { Id = oneVendor.Id }, gLAccountPM);
+
+
+            if (vendorLineDTO.DeductionPercentage == 100m) // 100m = no deduction  
+            {
+                // Cancel all current and future lines 
+                DateTime date = DateTime.Today;
+                gLAccountPM.GLAccountWithholdingTaxes.ForEach(taxLine => 
+                {
+                     if (!taxLine.Inactive && ((taxLine.FromDate < date && (taxLine.ToDate > date || taxLine.ToDate == date)) || taxLine.FromDate == date || taxLine.FromDate > date))
+                     {
+                        taxLine.Inactive = true;
+                        taxLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        taxLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventWBLKConst;
+                        this.AddSuccessUpdateVendorLine(taxLine, vendorLineDTO);
+                     }
+                });
+                gLAccountUpdateService.Update(gLAccountPM, true);
+           }
+            else
+            {
+                // If there is a row with the same data in with the same values, do not create a new line.
+                  GLAccountWithholdingTaxPM existingLine = gLAccountPM.GLAccountWithholdingTaxes.Where(a => !a.Inactive && (vendorLineDTO.StartDate.HasValue && a.FromDate == vendorLineDTO.StartDate.Value)
+                                                && (vendorLineDTO.EndDate.HasValue && a.ToDate == vendorLineDTO.EndDate.Value)).FirstOrDefault();
+                if (existingLine != null && existingLine.Percentage == vendorLineDTO.DeductionPercentage)
+                {
+                    // do nothing;
+                }
+                else
+                {
+                    if (existingLine != null)
+                    {
+                        // If there is a row with different data on the same period as in the new line, the existing row should be marked inactive, and create a new line (C)
+                        existingLine.Inactive = true;
+                        existingLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        existingLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventWLDAConst;
+                        this.AddSuccessUpdateVendorLine(existingLine, vendorLineDTO);
+                    }
+
+                    gLAccountPM.GLAccountWithholdingTaxes.ForEach(overLine =>
+                    {
+                        if (!overLine.Inactive && !(vendorLineDTO.StartDate.HasValue && overLine.ToDate < vendorLineDTO.StartDate) && !(vendorLineDTO.EndDate.HasValue && overLine.FromDate > vendorLineDTO.EndDate))
+                        {
+                            overLine.Inactive = true;
+                            overLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                            overLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventWLDAConst;
+                            this.AddSuccessUpdateVendorLine(overLine, vendorLineDTO);
+                        }
+                    });
+
+
+
+
+                    GLAccountWithholdingTaxPM newLine = CreateNewLineFromDTO(vendorLineDTO, oneVendor); 
+                    newLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                    gLAccountPM.GLAccountWithholdingTaxes.Add(newLine);
+                    gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    this.AddSuccessInsertVendorLine(newLine, vendorLineDTO);
+                    gLAccountUpdateService.Update(gLAccountPM, true);
+               }
+            }
+        }
+
+
+        private GLAccountWithholdingTaxPM CreateNewLineFromDTO(VendorLineDTO vendorLineDTO, CardGLAccountDataView oneVendor) 
+        {
+            GLAccountWithholdingTaxPM newLine = new GLAccountWithholdingTaxPM();
+
+            newLine.GLAccountId = oneVendor.Id;
+            newLine.Tenant = oneVendor.Tenant;
+            newLine.CreateDate = DateTime.Now;
+            newLine.CreatedByUserId = _contact.Id;
+            newLine.Inactive = false;
+            newLine.FromDate = vendorLineDTO.StartDate.Value;
+            newLine.ToDate = vendorLineDTO.EndDate.Value;
+            newLine.Percentage = Convert.ToInt32(vendorLineDTO.DeductionPercentage);
+            if (newLine.Percentage < 0)
+            {
+                newLine.Percentage = 0;
+            }
+            if (newLine.Percentage > 100)
+            {
+                newLine.Percentage = 100;
+            }
+          //  newLine.LineNumber = nextLine;
+
+
+            return newLine;
         }
 
         public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
@@ -146,7 +262,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 throw new Exception($"Finishing Row totals are not summing up together {FinishingLine.TotalInvalidRecords} + {FinishingLine.TotalValidRecords} != {FinishingLine.TotalVendorNumber} ");
             }
 
-            if (FinishingLine.TotalVendorNumber != _VendorLinesDTO.Count)
+            if (FinishingLine.TotalValidRecords != _VendorLinesDTO.Count)
             {
                 throw new Exception($"Finishing Row Total Vendor Number {FinishingLine.TotalVendorNumber} differs from count of Vendor Rows ");
             }
@@ -177,11 +293,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     this.AddErrorRow($"{vendorLine.RawLine} Vendor Line #{count} End Date is empty ");
                 }
-                if (vendorLine.DeductionPercentage != 0m && vendorLine.StartDateString == VendorLineDTO._EmptyDate)
+                if (vendorLine.DeductionPercentage != 100m && vendorLine.StartDateString == VendorLineDTO._EmptyDate) // 100m = no deduction  
                 {
                     this.AddErrorRow($"{vendorLine.RawLine} Vendor Line #{count}  Start Date is empty ");
                 }
-                if (vendorLine.DeductionPercentage != 0m && vendorLine.EndDateString == VendorLineDTO._EmptyDate)
+                if (vendorLine.DeductionPercentage != 100m && vendorLine.EndDateString == VendorLineDTO._EmptyDate) // 100m = no deduction  
                 {
                     this.AddErrorRow($"{vendorLine.RawLine} Vendor Line #{count}  End Date is empty ");
                 }
@@ -189,7 +305,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 count++;
             }
-            throw new NotImplementedException();
+
         }
 
         static string ConvertFromDosHebrewToWinHebrew(string FileContent862)
@@ -248,9 +364,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-        private void AddSuccessInsertVendorLine(ReconcileExternalPagePM entityPM, VendorLineDTO newVendorLine)
+        private void AddSuccessInsertVendorLine(GLAccountWithholdingTaxPM entityPM, VendorLineDTO newVendorLine)
         {
-            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBPageNo:{entityPM.PageNo}  ");
+            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
+        }
+
+        private void AddSuccessUpdateVendorLine(GLAccountWithholdingTaxPM entityPM, VendorLineDTO newVendorLine)
+        {
+            this.MyResultLoadFlatFile.SuccessVendorList.Add($"Success insert Vendor Number:{newVendorLine.VendorCode} / Rate {newVendorLine.DeductionPercentage} / From {newVendorLine.StartDate} / To {newVendorLine.EndDate} =new DbId:{entityPM.Id}/DBFromDate:{entityPM.FromDate}  ");
         }
 
         private List<VendorLineDTO> CreateVendorLinesDTOFromFile(string FileContent, out int? tenant)
@@ -332,7 +453,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public List<string> SuccessVendorList = new List<string>();
         public List<string> ExceptionVendorList = new List<string>();
         public List<string> ErrorRowList = new List<string>();
-        public List<string> ValidateVendorLineAgaintDBErrors = new List<string>();
+        public List<string> ValidateVendorLineAgainstDBErrors = new List<string>();
     }
 
 
@@ -381,9 +502,9 @@ namespace Logitude.Accounting.BL.CoreBL
         {
 
             rawLine = rawLine ?? "";
-            if (!rawLine.EndsWith(RowType))
+            if (!rawLine.StartsWith(RowType))
             {
-                throw new Exception($"{rawLine} does not End with a Line Row Type {RowType} ");
+                throw new Exception($"{rawLine} does not start with a Line Row Type {RowType} ");
             }
 
             var rec = new FinishingLineDTO();
@@ -419,9 +540,10 @@ namespace Logitude.Accounting.BL.CoreBL
         public decimal DeductionPercentage { get; private set; }
         public string StartDateString { get; private set; }
         public string EndDateString { get; private set; }
+        public string ConfirmationCreateDateString { get; private set; }
 
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
+        public DateTime? StartDate { get; private set; }
+        public DateTime? EndDate { get; private set; }
         public DateTime ConfirmationCreateDate { get; private set; }
 
         public string ValidFor { get; private set; }
@@ -454,7 +576,15 @@ namespace Logitude.Accounting.BL.CoreBL
             rec.VendorName = rawLine.Substring(53 - 1, 22);
             rec.Confirmation = rawLine.Substring(75 - 1, 1);
 
-            rec.DeductionPercentage = decimal.Parse(rawLine.Substring(76 - 1, 10));
+            rec.DeductionPercentage = decimal.Parse(rawLine.Substring(76 - 1, 2)); ////** only first 2-pos (out of 10) count; 99 is 0%, 00 is "no deduction" *** 
+            if (rec.DeductionPercentage == 0m)
+            {
+                rec.DeductionPercentage = 100m;  // 100m = no deduction 
+            }
+            if (rec.DeductionPercentage == 99m)
+            {
+                rec.DeductionPercentage = 0m;
+            }
 
             string txtDateTime = rawLine.Substring(86 - 1, 8);
             string fieldname = "";
@@ -480,10 +610,14 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             txtDateTime = rawLine.Substring(102 - 1, 8);
-            fieldname = "ConfirmationCreateDate";
-            pos = "102 - 1, 8";
-            date = System1000FlatFileAnalyser.TryGetDateTime(rawLine, txtDateTime, fieldname, pos, format: "yyyyMMdd");
-            rec.ConfirmationCreateDate = date;
+            rec.ConfirmationCreateDateString = txtDateTime;
+            if (rec.EndDateString != _EmptyDate)
+            {
+                fieldname = "ConfirmationCreateDate";
+                pos = "102 - 1, 8";
+                date = System1000FlatFileAnalyser.TryGetDateTime(rawLine, txtDateTime, fieldname, pos, format: "yyyyMMdd");
+                rec.ConfirmationCreateDate = date;
+            }
 
             rec.ValidFor = rawLine.Substring(110 - 1, 3);
             rec.ValidForDeductionFile = rawLine.Substring(113 - 1, 9);

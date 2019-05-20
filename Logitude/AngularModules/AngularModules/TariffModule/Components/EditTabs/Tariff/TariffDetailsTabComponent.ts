@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, OnDestroy } from '@angular/core';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
 
 @Component({
     moduleId: module.id,
@@ -12,12 +12,11 @@ import { LocationDirective } from '../../../../Infrastructure/Utilities/Location
 
 export class TariffDetailsTabComponent implements OnInit, OnDestroy {
     public EntityPM: TariffPM;
-    public Tabs: TariffDetailsTab[] = [];
+    @ViewChild("Child", { read: ViewContainerRef }) location: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
-    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         this.EntityPM = entityArgs.EntityPM;
-        this.Tabs = [];
+
         this.Listen();
     }
 
@@ -28,139 +27,45 @@ export class TariffDetailsTabComponent implements OnInit, OnDestroy {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.CurrentSession.FireEvent("LoadEventTabData");
                 }
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.CurrentSession.FireEvent("LoadEventTabData");
+                    this.RunComponent();
                 }
             });
         }
     }
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
+
+    private isComponentInited: boolean = false;
     ngOnInit() {
-        this.BuildTabs();
-        this.RunComponent();        
+        this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            this.isComponentInited = true;
+            this.RunComponent();
+        });
     }
 
-    BuildTabs() {
-        this.Tabs = [];
-        this.Tabs.push(new TariffDetailsTab(0, "VR"));
-        this.Tabs.push(new TariffDetailsTab(1, "GN"));
-        this.Tabs.push(new TariffDetailsTab(2, "VH"));
-        this.Tabs.push(new TariffDetailsTab(3, "EV"));
-    }
-
-    private Retries: number = 0;
-    private timerToken: any;
     RunComponent() {
-        if (this.AllLocations) {
+        if (this.isComponentInited) {
+            this.ClearLocation();
 
-            if (this.AllLocations.length == 0) {
-                this.RunComponentTimer();
-            }
-
-            else {                
-                this.SelectionChanged(this.Tabs[0]);
-            }
-        }
-
-        else {
-            this.RunComponentTimer();
-        }
-    }
-    RunComponentTimer() {
-        this.Retries++;
-
-        if (this.timerToken) {
-            clearTimeout(this.timerToken);
-        }
-
-        if (this.Retries < 3) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
-        }
-    }
-
-
-
-    public SelectedTabItem: TariffDetailsTab;
-    SelectionChanged(clickdTab: TariffDetailsTab) {
-        if (clickdTab != null) {
-            if (this.SelectedTabItem != clickdTab) {
-                this.SelectedTabItem = clickdTab;
-
-                this.Tabs.forEach((item) => {
-                    item.IsSelected = false;
+            SessionLocator.DynamicLoader.Load("./TariffModule/Components/EditTabs/Tariff/TariffTabsContentComponent", this.location)
+                .then(cmpRef => {
+                    cmpRef.instance.Run({ EntityPM: this.EntityPM, });
                 });
-
-                this.SelectedTabItem.IsSelected = true;
-            }
-
-            if (this.SelectedTabItem.IsTabLoaded) {
-                
-            }
-
-            else {
-                let locs = this.AllLocations.toArray().filter(f => f.Code == 'TariffTabLocation');
-                let location: LocationDirective = locs.filter(f => f.Index == this.SelectedTabItem.Index)[0];
-
-                if (location) {
-                    if (this.SelectedTabItem.IsTabLoaded) {
-
-                    }
-
-                    else if (this.SelectedTabItem.ComponentPath) {
-                        SessionLocator.DynamicLoader.Load(this.SelectedTabItem.ComponentPath, location.viewContainerRef).then(cmpRef => {
-                            this.SelectedTabItem.IsTabLoaded = true;
-                        });
-                    }
-                }
-            }
         }
     }
-}
 
-class TariffDetailsTab {
-    public Code: string;
-    public Index: number;
-    public Header: string = null;
-    public ComponentPath: string;
-    public IsSelected: boolean = false;
-    public IsTabLoaded: boolean = false;
-    constructor(index: number, code: string) {
-        this.Index = index;
-        this.Code = code;
-
-        switch (this.Code) {
-            case "VR": {
-                this.Header = "Version";
-                this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/VersionTabComponent";
-                break;
-            }
-
-            case "GN": {
-                this.Header = "General";
-                this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/TariffGeneralTabComponent";
-                break;
-            }
-
-            case "VH": {
-                this.Header = "Version History";
-                this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/VersionHistoryTabComponent";
-                break;
-            }
-
-            case "EV": {
-                this.Header = "Events";
-                this.ComponentPath = "./Common/Components/Events/EventsTabComponent";
-                break;                    
-            }
+    private ClearLocation() {
+        if (this.location) {
+            this.location.clear();
         }
     }
 }

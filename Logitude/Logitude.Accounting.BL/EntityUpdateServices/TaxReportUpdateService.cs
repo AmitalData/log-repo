@@ -143,13 +143,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                //TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
 
             }
-            //if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            //{
-            //    List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
-            //    TaxReportService.CalculateReportTotals(entityPM, lines);
-            //    entityPM.ChangeSetOp = ChangeSetOperation.Update;
-            //    taxReportUpdateService.Update(entityPM, true);
-            //}
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
+                TaxReportService.CalculateReportTotals(entityPM, lines);
+                entityPM.ChangeSetOp = ChangeSetOperation.Update;
+                //taxReportUpdateService.Update(entityPM, true);
+            }
 
             UpdateReportStatus(entityPM);
 
@@ -247,16 +247,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void CancelTaxReport(TaxReportPM entityPM)
         {
+            CheckLaterReports(entityPM);
+
+            entityPM.StatusCode = "C"; // C- Cancelled מבוטל
+
+            UpdateJournalsForLines(entityPM);
+
+        }
+
+        private void UpdateJournalsForLines(TaxReportPM entityPM)
+        {
+
             IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            JournalQueryService journalQuery = new JournalQueryService(EntityPM.Tenant);
-            TaxReportLineQueryService reportLineQuery = new TaxReportLineQueryService(entityPM.Tenant);
+            JournalQueryService journalQuery = new JournalQueryService(entityPM.Tenant);
             TaxReportQueryService reportQuery = new TaxReportQueryService(entityPM.Tenant);
             JournalAdditionalDataQueryService additionalDataQueryService = new JournalAdditionalDataQueryService(entityPM.Tenant);
             JournalAdditionalDataUpdateService journalAdditionalDataUpdateService = new JournalAdditionalDataUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-
-
-            // set status calcelled
-            entityPM.StatusCode = "C"; // C- Cancelled מבוטל
 
 
             // Update lines Journals
@@ -278,7 +284,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
+        }
 
+        private void CheckLaterReports(TaxReportPM entityPM)
+        {
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+            
+
+            TaxReportQueryService reportQuery = new TaxReportQueryService(entityPM.Tenant);
+            List<TaxReport> futureReports = reportQuery.GetFutureActiveReports(entityPM.CreateDate, entityPM.Tenant);
+            if (futureReports.Any())
+                throw new ApplicationException(TextCodesTranslator.TranslateText("TaxReport.O.CancelLaterReports", entityPM.Tenant, showLocal));
         }
 
         protected override void Trace(TaxReportPM entityPM, TaxReport entityPOCO, string changesXml)

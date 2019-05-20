@@ -216,7 +216,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (this.loggedContact != null)
             {
                 this.entityPm.UpdatedByUserId = this.loggedContact.Id;
-                this.entityPm.CreatedByUserId = this.loggedContact.Id;
             }
 
             this.Poco = entityRepository.GetSingleAutomation(entityPM.Id, entityPm.Tenant);

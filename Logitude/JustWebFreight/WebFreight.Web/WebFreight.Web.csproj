@@ -878,6 +878,7 @@
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequeDataProvider.cs" />
     <Compile Include="AccountingModel\Reports\PaymentCheque\PaymentChequePrintService.cs" />
     <Compile Include="AccountingModel\Reports\TaxDeductionReport\TaxDeductionReportPrintService.cs" />
+    <Compile Include="AccountingModel\WebInjection\XLSUtil.cs" />
     <Compile Include="AccountingWebServices\Testers\TrailReport.aspx.cs">
       <DependentUpon>TrailReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -984,6 +985,7 @@
     <Compile Include="Controllers\AccountingModel\ARPaymentChequeOpController.cs" />
     <Compile Include="Controllers\AccountingModel\ReconcileExternalPageController.cs" />
     <Compile Include="Controllers\AccountingModel\ExternalReconciliationController.cs" />
+    <Compile Include="Controllers\AccountingModel\ReconciliationAfterConversionController.cs" />
     <Compile Include="Controllers\AccountingModel\RevaluationOpController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxDeductionReportFileController.cs" />
     <Compile Include="Controllers\AccountingModel\TaxReportOpController.cs" />
@@ -1146,6 +1148,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\LogitudeMessagesTransmissionLogController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplateController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ReportsTemplatesVersionController.Generated.cs" />
+    <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TarrifChargeController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TenantLoginPolicyController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\TwoFactorAuthenticationDeviceController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\PortViewsController.cs" />
@@ -1773,14 +1776,11 @@
     <Compile Include="Controllers\SystemLogsModel\ErrorLogViewsController.cs" />
     <Compile Include="Controllers\SystemLogsModel\Extended\FileLoggerController.cs" />
     <Compile Include="Controllers\SystemLogsModel\PerformanceLogsController.cs" />
-    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffLineViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffSettingViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffTypeViewsController.Generated.cs" />
-    <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffSettingController.Generated.cs" />
-    <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\SprintViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMBudgetViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMEmployeeTimeViewsController.Generated.cs" />
@@ -1821,6 +1821,7 @@
     <Compile Include="Controllers\WebDomainControllers\ContainersFUDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\CountersDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\CRMDomainController.cs" />
+    <Compile Include="Controllers\WebDomainControllers\CurrencyRatesController.cs" />
     <Compile Include="Controllers\WebDomainControllers\DefaultTranslationController.cs" />
     <Compile Include="Controllers\WebDomainControllers\GeneralDomainController.cs" />
     <Compile Include="Controllers\WebDomainControllers\InfrastructureDomainController.cs" />
@@ -2222,7 +2223,6 @@
     <Compile Include="Helpers\APIHelpers\PartnerServicePM.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Global\QueriesController.cs" />
     <Compile Include="DataContracts\GeneralEntitiesArgs.cs" />
-    <Compile Include="Helpers\APIHelpers\QuoteSubjectArgs.cs" />
     <Compile Include="Helpers\APIHelpers\FeaturesUpdateHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TraceEventsServiceArgs.cs" />
     <Compile Include="Helpers\APIHelpers\UserLicenseUpdateHelper.cs" />
@@ -2686,10 +2686,12 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\MarkUpTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteClosingReasonUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteCostChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteCustomerTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuotePackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuotePriceStepsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteRatingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteSaleChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteStageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\QuoteModel\EntityUpdateClasses\QuoteTemplateUpdateClass.cs" />
@@ -2773,6 +2775,8 @@
     <Content Include="Integration Test\Shipment\PrepareShipmentVars.postman_collection.json" />
     <Content Include="Integration Test\Shipment\CreateShipment.postman_collection.json" />
     <Content Include="Integration Test\Reports\Reports.postman_collection.json" />
+    <Content Include="Integration Test\Maintenance\Partners .postman_collection.json" />
+    <Content Include="Integration Test\Shipment\CreateUpdateShipment.postman_collection" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
@@ -3397,7 +3401,6 @@
     <Content Include="App_Code\AngularJS_App_Code\MyValuesController.cs" />
     <Content Include="App_Code\ImporterShipmentsCancleController.cs" />
     <Content Include="App_Code\ImporterShipmentDocumentsCancleController.cs" />
-    <Content Include="App_Code\AngularJS_App_Code\CurrencyRatesController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\Shipment\ShipmentViewsController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentExtendedController.cs" />
     <Content Include="App_Code\AngularJS_App_Code\DocumentTypeCustomFieldController.cs" />

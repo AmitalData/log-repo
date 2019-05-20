@@ -53,7 +53,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LOVAdditionalColumns = a.LOVAdditionalColumns,
                         HideTree = a.HideTree,
                         CannotFilter = a.CannotFilter,
-                        HelpText = a.HelpText
+                        HelpText = a.HelpText,
+                        IsCustom = a.IsCustom,
                     }).FirstOrDefault();
         }
 
@@ -83,7 +84,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LOVAdditionalColumns = a.LOVAdditionalColumns,
                         HideTree = a.HideTree,
                         CannotFilter = a.CannotFilter,
-                        HelpText = a.HelpText
+                        HelpText = a.HelpText,
+                        IsCustom = a.IsCustom,
                     }
                   );
         }
@@ -113,7 +115,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LOVAdditionalColumns = a.LOVAdditionalColumns,
                         HideTree = a.HideTree,
                         CannotFilter = a.CannotFilter,
-                        HelpText = a.HelpText
+                        HelpText = a.HelpText,
+                        IsCustom = a.IsCustom,
                     }
                   );
         }
@@ -144,7 +147,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 LOVAdditionalColumns = a.LOVAdditionalColumns,
                                 HideTree = a.HideTree,
                                 CannotFilter = a.CannotFilter,
-                                HelpText = a.HelpText
+                                HelpText = a.HelpText,
+                                IsCustom = a.IsCustom,
 
                             }
                   );
@@ -177,7 +181,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          LOVAdditionalColumns = a.LOVAdditionalColumns,
                                          HideTree = a.HideTree,
                                          CannotFilter = a.CannotFilter,
-                                         HelpText = a.HelpText
+                                         HelpText = a.HelpText,
+                                         IsCustom = a.IsCustom,
                                      }
                   ).ToList();
                 FinalList = FinalList.Concat(TempInnerList).ToList();
@@ -208,7 +213,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LOVAdditionalColumns = a.LOVAdditionalColumns,
                         HideTree = a.HideTree,
                         CannotFilter = a.CannotFilter,
-                        HelpText = a.HelpText
+                        HelpText = a.HelpText,
+                        IsCustom = a.IsCustom,
                     }).FirstOrDefault();
         }
 
@@ -237,7 +243,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LOVAdditionalColumns = a.LOVAdditionalColumns,
                         HideTree = a.HideTree,
                         CannotFilter = a.CannotFilter,
-                        HelpText = a.HelpText
+                        HelpText = a.HelpText,
+                        IsCustom = a.IsCustom,
                     });
         }
 
@@ -264,7 +271,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        LOVAdditionalColumns = a.LOVAdditionalColumns,
                                                        HideTree = a.HideTree,
                                                        CannotFilter = a.CannotFilter,
-                                                       HelpText = a.HelpText
+                                                       HelpText = a.HelpText,
+                                                       IsCustom = a.IsCustom,
                                                    };
 
             return result;
@@ -302,7 +310,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LOVAdditionalColumns = a.LOVAdditionalColumns,
                         HideTree = a.HideTree,
                         CannotFilter = a.CannotFilter,
-                        HelpText = a.HelpText
+                        HelpText = a.HelpText,
+                        IsCustom = a.IsCustom
                     }).FirstOrDefault();
         }
 
@@ -343,7 +352,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         LOVAdditionalColumns = a.LOVAdditionalColumns,
                         HideTree = a.HideTree,
                         CannotFilter = a.CannotFilter,
-                        HelpText = a.HelpText
+                        HelpText = a.HelpText,
+                        IsCustom = a.IsCustom
                     }).FirstOrDefault();
         }
 
@@ -376,7 +386,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         CategoryIndex = b.Index,
                         HideTree = a.HideTree,
                         CannotFilter = a.CannotFilter,
-                        HelpText = a.HelpText
+                        HelpText = a.HelpText,
+                        IsCustom = a.IsCustom
                     }
                   );
         }

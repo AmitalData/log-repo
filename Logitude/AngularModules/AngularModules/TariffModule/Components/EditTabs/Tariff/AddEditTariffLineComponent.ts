@@ -12,6 +12,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 })
 
 export class AddEditTariffLineComponent  {
+    public TariffType: string;
     public EntityPM: TariffLinePM;
     public DataContext: TariffLineData;
     public ObjectTableName: string = "TariffLine";
@@ -25,6 +26,7 @@ export class AddEditTariffLineComponent  {
     SetDataContext(dataContext: TariffLineData) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
+        this.TariffType = dataContext.FatherComponent.EntityPM.TypeCode;
         this.Clone();
     }
 
@@ -39,6 +41,17 @@ export class AddEditTariffLineComponent  {
     get Step6PriceText() { return this.EntityPM.Step6PriceText; }
     get Step7PriceText() { return this.EntityPM.Step7PriceText; }
     get Step8PriceText() { return this.EntityPM.Step8PriceText; }
+
+    get Surcharge1PriceText() { return this.EntityPM.Surcharge1PriceText; }
+    get Surcharge2PriceText() { return this.EntityPM.Surcharge2PriceText; }
+    get Surcharge3PriceText() { return this.EntityPM.Surcharge3PriceText; }
+    get Surcharge4PriceText() { return this.EntityPM.Surcharge4PriceText; }
+    get Surcharge5PriceText() { return this.EntityPM.Surcharge5PriceText; }
+    get Surcharge6PriceText() { return this.EntityPM.Surcharge6PriceText; }
+    get Surcharge7PriceText() { return this.EntityPM.Surcharge7PriceText; }
+    get Surcharge8PriceText() { return this.EntityPM.Surcharge8PriceText; }
+    get Surcharge9PriceText() { return this.EntityPM.Surcharge9PriceText; }
+    get Surcharge10PriceText() { return this.EntityPM.Surcharge10PriceText; }
 
     CancelButtonClicked() {
         this.RejectChanges();
@@ -62,12 +75,13 @@ export class AddEditTariffLineComponent  {
 
                 this.DataContext.IsNewEntity = false;
 
-                if (this.DataContext.FatherComponent.EntityPM.TariffLines.indexOf(this.EntityPM) == -1) {
-                    this.DataContext.FatherComponent.EntityPM.AddTariffLine(this.EntityPM);
+                if (this.DataContext.FatherComponent.CurrentVersion.TariffLines.indexOf(this.EntityPM) == -1) {
+                    this.DataContext.FatherComponent.CurrentVersion.AddTariffLine(this.EntityPM);
+                    this.DataContext.FatherComponent.EntityPM.TariffLinesAdded = true;
                 }
             }
 
-            this.DataContext.FatherComponent.LoadTariffLines();
+            this.DataContext.FatherComponent.FillTariffLines();
             this.CurrentSession.CloseCurrentWindow();
         }
     }

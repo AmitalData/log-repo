@@ -423,6 +423,11 @@ namespace MeatadataGeneratorTool.Helpers
                 field.CopyToDW = false;
             }
 
+            if (fieldNode.Attributes["ModelName"] != null)
+            {
+                field.ModelName = GetAttributeStringValue(fieldNode.Attributes["ModelName"]);
+            }
+
             return field;
 
         }
@@ -1085,6 +1090,16 @@ namespace MeatadataGeneratorTool.Helpers
                     objectTable.SearchFields = GetAttributeStringValue(entity.Attributes["SearchFields"]);
 
                 }
+
+                if (entity.Attributes["IsTabsHidden"] != null)
+                {
+                    objectTable.IsTabsHidden = GetAttributeBoolValue(entity.Attributes["IsTabsHidden"]);
+                }
+                else
+                {
+                    objectTable.IsTabsHidden = false;
+                }
+
 
             }
             return objectTable;

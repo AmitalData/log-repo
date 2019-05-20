@@ -115,7 +115,58 @@ namespace WebFreight.Web.AccountingModel.DomainServices
 
             return result;
         }
+
+
+
+        public BankDepositSummary GetBankDepositSummary(int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+
+            BankDepositSummary result = new BankDepositSummary();
+
+            if (SecurityUtility.CheckTableContactFeature("BankDeposit", "READ", tenant))
+            {
+
+                BankDepositRepository bankDepositRepository = new BankDepositRepository(tenant);
+                IQueryable<BankDeposit> iQueryable_Data = bankDepositRepository.GetAll(tenant);
+
+                
+                result.TodaysDepositCount = iQueryable_Data.Where(d=> d.DepositDate == DateTime.Today).Count();
+
+
+            }
+
+            return result;
+        }
+
+
+        public CashBookSummary GetCashbookSummary(int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+
+            CashBookSummary result = new CashBookSummary();
+
+            if (SecurityUtility.CheckTableContactFeature("Cashbook", "READ", tenant))
+            {
+
+                CashBookRepository cashBookRepository = new CashBookRepository(tenant);
+                IQueryable<CashBook> iQueryable_Data = cashBookRepository.GetAll(tenant);
+
+
+                result.AllCashbookCount = iQueryable_Data.Count();
+                result.CashCashbookCount = iQueryable_Data.Where(d=> d.CashBookTypeCode == "1").Count();
+                result.ChequeCashbookCount = iQueryable_Data.Where(d => d.CashBookTypeCode == "2").Count();
+              
+            }
+
+            return result;
+        }
+
+      
     }
+  
 }
 
 

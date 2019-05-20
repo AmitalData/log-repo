@@ -594,6 +594,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 					&& p.Name != "FullNameTextCodeId"
 					&& p.Name != "HelpTextCodeId"
 					&& p.Name != "ListTextCodeId" && p.Name != "LookUpTableId"
+                 && p.Name != "ModelName"
 					
 
 )

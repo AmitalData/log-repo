@@ -176,8 +176,6 @@ export class QuoteUtilities {
         entityPM.BranchId = copiedEntityPM.BranchId;
         entityPM.DepartmentId = copiedEntityPM.DepartmentId;
         entityPM.QuoteTypeCode = copiedEntityPM.QuoteTypeCode;
-        entityPM.SaleCurrencyId = copiedEntityPM.SaleCurrencyId;
-        entityPM.ExchangeRate = copiedEntityPM.ExchangeRate;
         entityPM.IncotermId = copiedEntityPM.IncotermId;
         entityPM.MoveTypeId = copiedEntityPM.MoveTypeId;
         entityPM.IsByKG = copiedEntityPM.IsByKG;
@@ -189,6 +187,7 @@ export class QuoteUtilities {
         entityPM.VolumeUnitCode = copiedEntityPM.VolumeUnitCode;
         entityPM.DimensionsUnitCode = copiedEntityPM.DimensionsUnitCode;
         entityPM.GrossWeightUnitCode = copiedEntityPM.GrossWeightUnitCode;
+        entityPM.ChargeableWeightInKG = copiedEntityPM.ChargeableWeightInKG;
         entityPM.ChargeableWeightUnitCode = copiedEntityPM.ChargeableWeightUnitCode;
         entityPM.Ratio = copiedEntityPM.Ratio;
         entityPM.DimFactor = copiedEntityPM.DimFactor;
@@ -217,6 +216,11 @@ export class QuoteUtilities {
         entityPM.IsChargesByVAT = copiedEntityPM.IsChargesByVAT;
         entityPM.GrossWeightEdited = copiedEntityPM.GrossWeightEdited;
         entityPM.ChargeableWeightEdited = copiedEntityPM.ChargeableWeightEdited;
+
+        entityPM.IsSaleCurrencySameAsCost = copiedEntityPM.IsSaleCurrencySameAsCost;
+        entityPM.SaleCurrencyId = copiedEntityPM.SaleCurrencyId;
+        entityPM.ExchangeRate = copiedEntityPM.ExchangeRate;
+        entityPM.IsFixedPrice = copiedEntityPM.IsFixedPrice;
 
         //entityPM.ShipperId = copiedEntityPM.ShipperId;
         //entityPM.ShipperContactId = copiedEntityPM.ShipperContactId;
@@ -553,6 +557,7 @@ export class QuoteUtilities {
         shipmentPM.VolumeUnitCode = entityPM.VolumeUnitCode;
         shipmentPM.DimensionsUnitCode = entityPM.DimensionsUnitCode;
         shipmentPM.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
+        shipmentPM.ChargeableWeightInKG = entityPM.ChargeableWeightInKG;
         shipmentPM.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
         shipmentPM.BookingVolume = entityPM.Volume;
         shipmentPM.OrderVolumetricWeight = entityPM.VolumetricWeight;

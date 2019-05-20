@@ -129,16 +129,16 @@ namespace WebFreight.Web.Helpers
                                         }
                                     }
                                 }
-                                else
-                                {
-                                    throw new ApplicationException("No Parent WI");
-                                }
+                             //   else
+                             //   {
+                                   // throw new ApplicationException("No Parent WI");
+                             //   }
                             }
                         }
-                        else
-                        {
-                            throw new ApplicationException("WI Has No Relations");
-                        }
+                      //  else
+                      //  {
+                           // throw new ApplicationException("WI Has No Relations");
+                      //  }
 
                     }
                 }

@@ -95,10 +95,7 @@ namespace DW_Editor_Tool.Helpers
 				SetAttribute("HideTree", fieldViewModel.HideTree.ToString().ToLower(), fieldElement);
                 SetAttribute("CannotFilter", fieldViewModel.CannotFilter.ToString().ToLower(), fieldElement);
                 SetAttribute("HelpText", GetStringValue(fieldViewModel.HelpText), fieldElement);
-
-
-
-
+                SetAttribute("IsCustom", fieldViewModel.IsCustom.ToString().ToLower(), fieldElement);
 
 
             }
@@ -190,8 +187,7 @@ namespace DW_Editor_Tool.Helpers
 			fieldViewModel.HideTree = GetAttributeBoolValue(fieldNode.Attributes["HideTree"]);
             fieldViewModel.CannotFilter = GetAttributeBoolValue(fieldNode.Attributes["CannotFilter"]);
             fieldViewModel.HelpText = GetAttributeStringValue(fieldNode.Attributes["HelpText"]);
-
-
+            fieldViewModel.IsCustom = GetAttributeBoolValue(fieldNode.Attributes["IsCustom"]);
 
 
             return fieldViewModel;

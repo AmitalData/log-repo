@@ -48,9 +48,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.HideTree).HasColumnName("HideTree");
             this.Property(t => t.HelpText).HasColumnName("HelpText");
             this.Property(t => t.CannotFilter).HasColumnName("CannotFilter");
+            this.Property(t => t.IsCustom).HasColumnName("IsCustom");
 
             this.HasRequired(t => t.DWObjectTable).WithMany().HasForeignKey(d => d.DWObjectTableCode);
             this.HasOptional(t => t.DimensionTable).WithMany().HasForeignKey(d => d.DimensionTableCode);
+
 
         }
     }

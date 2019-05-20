@@ -191,7 +191,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM.GLAccountId) {
             console.log(">>> Getting transactions for Account: ", this.EntityPM.GLAccountId);
             this.TransactionsList.Clear();
-            this.EntityPM.InvoicesTransactions = [];
+            this.EntityPM.InvoicesLedgerTransactions = [];
 
             this._loading = true;
 
@@ -303,7 +303,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.amount2reconcileTotal = _linesAmount2reco;
         this.paymentReconciledAmountTotal = _linespaymentReconciledAmount;
 
-        if(this.EntityPM.InvoicesTransactions.length == 0){
+        if(this.EntityPM.InvoicesLedgerTransactions.length == 0){
             // this.EntityPM.OpenAmount = this.originalPaymentOpenAmount;
             this.EntityPM.IsDirty = false;
         }else{
@@ -378,19 +378,19 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
     PushTransaction(trans: LedgerTransactionPM) {
         if (trans != null) {
-            var index = this.EntityPM.InvoicesTransactions.indexOf(trans);
+            var index = this.EntityPM.InvoicesLedgerTransactions.indexOf(trans);
             if (index == -1) {
                  this.EntityPM.IsDirty = true;
-                this.EntityPM.InvoicesTransactions.push(trans);
+                this.EntityPM.InvoicesLedgerTransactions.push(trans);
             }
         }
     }
     PopTransaction(trans: LedgerTransactionPM) {
         if (trans != null) {
-            var index = this.EntityPM.InvoicesTransactions.indexOf(trans);
+            var index = this.EntityPM.InvoicesLedgerTransactions.indexOf(trans);
             if (index > -1) {
                 // this.EntityPM.IsDirty = true;
-                this.EntityPM.InvoicesTransactions.splice(index, 1);
+                this.EntityPM.InvoicesLedgerTransactions.splice(index, 1);
             }
 
         }
@@ -1813,7 +1813,7 @@ export class TransactionLineModel extends BaseComponent {
             this.AmountToReconcile = 0;
 
             this.parent.PopTransaction(this.ledgerTransaction);
-                if(this.EntityPM.InvoicesTransactions.length == 0){
+                if(this.EntityPM.InvoicesLedgerTransactions.length == 0){
                     this.EntityPM.IsDirty = false;
                 }
         }

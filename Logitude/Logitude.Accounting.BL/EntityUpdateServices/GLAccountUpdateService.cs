@@ -33,6 +33,7 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -67,6 +68,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             AddAcitivityLog(entityPM, "N");
             entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName;
+
+            ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
+            entityPM.CreatedByUserId = loggedUser?.Id;
+
+            entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
 
             if (!String.IsNullOrWhiteSpace(entityPM.ChartOfAccountsId) && (entityPM.ChartOfAccountsId.ToLower() == "bla" || entityPM.ChartOfAccountsId.ToLower() == "get")) entityPM.ChartOfAccountsId = null;
@@ -342,8 +349,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
+
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             bool useLocal = !((bool)loggedUser?.DontShowLocal);
+
+            entityPM.UpdatedByUserId = loggedUser?.Id;
+            entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+
 
             entityPM.IsControlAccount = entityPM.IsControlAccount ?? false;//Task 47485: GLAccount - Update Service - Set Null fields as 0 (False)
             entityPM.IsMultiCurrency = entityPM.IsMultiCurrency ?? false;//Task 47485: GLAccount - Update Service - Set Null fields as 0 (False)

@@ -55,6 +55,26 @@ namespace Logitude.TariffModule.Data.EntityMapping
 
             this.Property(t => t.Step8Price).HasColumnName("Step8Price").HasPrecision(18, 3);
 
+            this.Property(t => t.Surcharge1Price).HasColumnName("Surcharge1Price").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge2Price).HasColumnName("Surcharge2Price").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge3Price).HasColumnName("Surcharge3Price").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge4Price).HasColumnName("Surcharge4Price").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge5Price).HasColumnName("Surcharge5Price").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge6Price).HasColumnName("Surcharge6Price").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge7Price).HasColumnName("Surcharge7Price").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge8Price).HasColumnName("Surcharge8Price").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge9Price).HasColumnName("Surcharge9Price").HasPrecision(18, 3);
+
+            this.Property(t => t.Surcharge10Price).HasColumnName("Surcharge10Price").HasPrecision(18, 3);
+
             this.Property(t => t.OriginPortId).HasColumnName("OriginPortId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.DestinationPortId).HasColumnName("DestinationPortId").HasMaxLength(15).IsUnicode(false);
@@ -80,6 +100,34 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.Step7PriceText).HasColumnName("Step7PriceText").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.Step8PriceText).HasColumnName("Step8PriceText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.Surcharge1PriceText).HasColumnName("Surcharge1PriceText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.Surcharge2PriceText).HasColumnName("Surcharge2PriceText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.Surcharge3PriceText).HasColumnName("Surcharge3PriceText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.Surcharge4PriceText).HasColumnName("Surcharge4PriceText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.Surcharge5PriceText).HasColumnName("Surcharge5PriceText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.Surcharge6PriceText).HasColumnName("Surcharge6PriceText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.Surcharge7PriceText).HasColumnName("Surcharge7PriceText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.Surcharge8PriceText).HasColumnName("Surcharge8PriceText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.Surcharge9PriceText).HasColumnName("Surcharge9PriceText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.Surcharge10PriceText).HasColumnName("Surcharge10PriceText").HasMaxLength(20).IsUnicode(false);
+
+            this.Property(t => t.HasErrors).HasColumnName("HasErrors");
+
+            this.Property(t => t.ErrorText).HasColumnName("ErrorText").HasMaxLength(500).IsUnicode(false);
+
+            this.Property(t => t.LineUniqueKey).HasColumnName("LineUniqueKey").HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.LineUniqueKeyText).HasColumnName("LineUniqueKeyText").HasMaxLength(100).IsUnicode(true);
         }
     }
 }

@@ -104,8 +104,16 @@ namespace CommunicationWorkerRole
                     try
                     {
                         int tenant = 0;
+                        queueservice = new DbQueueService(queueName, 0);
+                        //if (queueName == "EmailQueue")
+                        //{
+                        //    queueservice = new DbQueueService(queueName, 0);
+                        //}
+                        //else
+                        //{
+                        //    queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+                        //}
 
-						queueservice = new DbQueueService(queueName, 0);//QueueServiceManager.GetQueueService(queueName, 0);
                         var response = queueservice.Receive(new TimeSpan(0, 0, 0, 10));
                         LastActivity = DateTime.UtcNow;
                         

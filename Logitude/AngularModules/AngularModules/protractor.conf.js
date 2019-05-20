@@ -39,7 +39,7 @@ exports.config = {
 
     // ********************* FullAccounting **********************************
       //  NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
-
+// Reports: 'e2e/Report/**/Report-spec.ts',
 
 
   },

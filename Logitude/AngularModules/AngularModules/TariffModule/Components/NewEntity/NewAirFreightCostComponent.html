@@ -7,152 +7,449 @@
 
     <tr>
         <td>
-            <table>
-                <tr>
-                    <td>
-                        <table>
+            <ScrollViewer>
+                <table>
+                    <tr>
+                        <td>
+                            <table>
 
-                            <!-- Name -->
-                            <tr class="FormFieldRow">
-                                <td style="width:120px;">
-                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td style="width:220px;">
-                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
+                                <!-- Name -->
+                                <tr class="FormFieldRow">
+                                    <td style="width:120px;">
+                                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="width:220px;">
+                                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
 
-                            <!-- ContractNumber -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'ContractNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'ContractNumber'" [InputType]="'integer'" [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName"></LogTextBox>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
+                                <!-- ContractNumber -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'ContractNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'ContractNumber'" [InputType]="'integer'" [DataContext]="DataContext"
+                                                    [ObjectTableName]="ObjectTableName"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
 
-                            <!-- Seller -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'SellerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <LogLov [ObjectFieldName]="'SellerId'"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [SelectedValue]="SellerId"
-                                            [DataContext]="DataContext"
-                                            [DependencyFilter1IsList]="true"
-                                            [HideMaintenanceIcon]="true"
-                                            [DependencyFilter1Value]="'AL'"
-                                            [LookUpTableName]="'Card'">
-                                    </LogLov>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
+                                <!-- Seller -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'SellerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'SellerId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [SelectedValue]="SellerId"
+                                                [DataContext]="DataContext"
+                                                [DependencyFilter1IsList]="true"
+                                                [HideMaintenanceIcon]="true"
+                                                [DependencyFilter1Value]="'AL'"
+                                                [LookUpTableName]="'Card'">
+                                        </LogLov>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
 
-                            <!-- Currency -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-                                <td>
-                                    <LogLov [ObjectFieldName]="'CurrencyId'"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [SelectedValue]="CurrencyId"
-                                            [DataContext]="DataContext"
-                                            [HideMaintenanceIcon]="true"
-                                            [LookUpTableName]="'Currency'">
-                                    </LogLov>
-                                </td>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
+                                <!-- Currency -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [SelectedValue]="CurrencyId"
+                                                [DataContext]="DataContext"
+                                                [HideMaintenanceIcon]="true"
+                                                [LookUpTableName]="'Currency'">
+                                        </LogLov>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
 
-                            <!-- StartDate -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
+                                <!-- StartDate -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
 
-                                <td>
-                                    <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                </td>
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                    </td>
 
-                                <td>
-                                    <div></div>
-                                </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
 
-                            </tr>
+                                </tr>
 
-                            <!-- ExpirationDate -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
+                                <!-- ExpirationDate -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
 
-                                <td>
-                                    <LogDatePicker [ObjectFieldName]="'ExpirationDate'" [SelectedDateValue]="ExpirationDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                                </td>
+                                    <td>
+                                        <LogDatePicker [ObjectFieldName]="'ExpirationDate'" [SelectedDateValue]="ExpirationDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                    </td>
 
-                                <td>
-                                    <div></div>
-                                </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
 
-                            </tr>
+                                </tr>
 
-                            <tr style="height: 5px;">
-                                <td colspan="3">
-                                    <div></div>
-                                </td>
-                            </tr>
+                                <tr style="height: 5px;">
+                                    <td colspan="3">
+                                        <div></div>
+                                    </td>
+                                </tr>
 
-                            <!-- Description -->
-                            <tr style="height: 80px;">
-                                <td style="vertical-align: top; padding-top: 5px;">
-                                    <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
+                                <!-- Description -->
+                                <tr style="height: 80px;">
+                                    <td style="vertical-align: top; padding-top: 5px;">
+                                        <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
 
-                                <td>
-                                    <div style="height: 100%;">
-                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
-                                    </div>
-                                </td>
+                                    <td>
+                                        <div style="height: 100%;">
+                                            <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                        </div>
+                                    </td>
 
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
 
-                            <tr>
-                                <td colspan="3">
-                                    <div></div>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <div></div>
+                                    </td>
+                                </tr>
 
-                        </table>
-                    </td>
+                            </table>
+                        </td>
 
-                    <td style="width: 15px;">
-                        <div></div>
-                    </td>
+                        <td style="width: 15px;">
+                            <div></div>
+                        </td>
 
-                    <td style="width: 350px;">
+                        <td style="width: 350px;">
+                            <table *ngIf="VisibileSurchargesArea">
+                                <tr class="TabTitleRow">
+                                    <td>
+                                        Surcharges
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table>
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'Surcharge1Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px"><div></div></td>
+                                                <td>
 
-                    </td>
-                </tr>
-            </table>
-        </td>
+
+                                                    <LogLov [ObjectFieldName]="'Surcharge1UOM'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="Surcharge1UOM"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'Surcharge2Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px"><div></div></td>
+                                                <td>
+
+
+                                                    <LogLov [ObjectFieldName]="'Surcharge2UOM'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="Surcharge2UOM"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'Surcharge3Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px"><div></div></td>
+                                                <td>
+
+
+                                                    <LogLov [ObjectFieldName]="'Surcharge3UOM'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="Surcharge3UOM"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'Surcharge4Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px"><div></div></td>
+                                                <td>
+
+
+                                                    <LogLov [ObjectFieldName]="'Surcharge4UOM'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="Surcharge4UOM"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'Surcharge5Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px"><div></div></td>
+                                                <td>
+
+
+                                                    <LogLov [ObjectFieldName]="'Surcharge5UOM'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="Surcharge5UOM"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'Surcharge6Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px"><div></div></td>
+                                                <td>
+
+
+                                                    <LogLov [ObjectFieldName]="'Surcharge6UOM'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="Surcharge6UOM"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'Surcharge7Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px"><div></div></td>
+                                                <td>
+
+
+                                                    <LogLov [ObjectFieldName]="'Surcharge7UOM'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="Surcharge7UOM"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'Surcharge8Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px"><div></div></td>
+                                                <td>
+
+
+                                                    <LogLov [ObjectFieldName]="'Surcharge8UOM'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [SelectedValue]="Surcharge8UOM"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'Surcharge9Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px"><div></div></td>
+                                                <td>
+
+
+                                                    <LogLov [ObjectFieldName]="'Surcharge9UOM'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="Surcharge9UOM"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'Surcharge10Id'"
+                                                            [SelectedValue]="DataContext"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'ChargesType'"
+                                                            [HideLastColumn]="true"
+                                                            [RunToggleMode]="true"
+                                                            [QueryFilterItems]="ChargeTypesQueryFilters">
+                                                    </LogLov>
+                                                </td>
+                                                <td style="width:5px"><div></div></td>
+                                                <td>
+
+
+                                                    <LogLov [ObjectFieldName]="'Surcharge10UOM'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="Surcharge10UOM"
+                                                            [LookUpTableName]="'Measurement'"
+                                                            [DependencyFilter2Value]="false"
+                                                            [HideLastColumn]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+
+
+                                            <tr>
+                                                <td colspan="3"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </ScrollViewer>
+
+</td>
     </tr>
 
     <tr style="height: 32px;">

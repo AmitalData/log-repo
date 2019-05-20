@@ -75,6 +75,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.GrossWeightInKG = entityPM.GrossWeightInKG = GetWeightInKG(entityPM.GrossWeightUnitCode, entityPM.GrossWeight);
             entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
             entityPoco.ChargeableWeight = entityPM.ChargeableWeight;
+            entityPoco.ChargeableWeightInKG = entityPM.ChargeableWeightInKG = GetChargeableWeightInKG(entityPM.ChargeableWeightUnitCode, entityPM.ChargeableWeightInKG);
             entityPoco.Ratio = entityPM.Ratio;
             entityPoco.DimFactor = entityPM.DimFactor;
             entityPoco.NumberOfPackages = entityPM.NumberOfPackages;
@@ -313,6 +314,35 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             if (weightInKG != null)
             {
                 myResult = weightInKG / 1000;
+            }
+
+            if (myResult != null)
+            {
+                myResult = MethodHelper.Round(myResult.Value, 3);
+            }
+
+            return myResult;
+        }
+
+        public static double? GetChargeableWeightInKG(string weightCode, double? weight)
+        {
+            double? myResult = null;
+
+            if (weight != null)
+            {
+                double? factorOfConvert = 1;
+
+                if (!string.IsNullOrEmpty(weightCode))
+                {
+                    switch (weightCode.ToUpper())
+                    {
+                        case "KG": { factorOfConvert = 1; break; }
+                        case "LB": { factorOfConvert = 0.45359237; break; }
+                        case "MT": { factorOfConvert = 1000; break; }
+                    }
+                }
+
+                myResult = weight * factorOfConvert;
             }
 
             if (myResult != null)

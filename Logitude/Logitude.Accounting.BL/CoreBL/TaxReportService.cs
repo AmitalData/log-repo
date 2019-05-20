@@ -191,6 +191,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
 
+                if(a.JournalId == "1-808875")
+                {
+
+                }
                     if (a.AccountingEntity == "4")
                     {
 
@@ -219,7 +223,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
 
-                            VatNumber = "999999999";
+                            VatNumber = "999999998";
                         }
 
                         InputInvoiceAmount = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
@@ -227,7 +231,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (VatNumber == null)
                 {
-                    VatNumber = "999999999";
+                    VatNumber = "999999998";
                 }
 
                 GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();

@@ -31,17 +31,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                 entityPM.Id = IdCounter.GetNumber("WarehouseEntry", entityPM.Tenant);
-
-                if (string.IsNullOrEmpty(entityPM.EntryNumber) || entityPM.EntryNumber == "123")
-                {
-                    entityPM.EntryNumber = CodeCounter.GetNumber("WarehouseEntry", entityPM.Tenant).ToString();
-                }
-
-                //if (!string.IsNullOrEmpty(entityPM.ShipmentId))
-                //{
-                //    this.UpdateShipment(entityPM);
-                //}
-
+                entityPM.EntryNumber = TableCounter.GetNumber(entityPM.Tenant, "WAEC", null, null).ToString();
                 this.BuildActivityLog("N", entityPM);
 
             }

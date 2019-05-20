@@ -1,23 +1,23 @@
 
-<div class="TabHolder">
-    <table *ngIf="IsResourcesReady">
+<div class="TabHolder" style="overflow:auto; height:100%;width:100%">
+    <table style="min-width:1150px;">
         <tr style="height: 1px;">
             <td>
                 <table>
                     <tr>
-                        <td style="width:120px;">
+                        <td style="width:100px;">
                             <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
-                        <td *ngIf="IsDraftVersion" style="width:230px;">
+                        <td *ngIf="IsDraftVersion" style="width:150px;">
                             <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                         </td>
 
-                        <td *ngIf="!IsDraftVersion" style="width:230px;">
+                        <td *ngIf="!IsDraftVersion" style="width:130px;">
                             {{StartDate | DateTimeToDatePipe}}
                         </td>
 
-                        <td style="width:15px;">
+                        <td style="width:10px;">
                             <div></div>
                         </td>
 
@@ -25,20 +25,78 @@
                             <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
-                        <td *ngIf="IsDraftVersion" style="width:230px;">
+                        <td *ngIf="IsDraftVersion" style="width:150px;">
                             <LogDatePicker [ObjectFieldName]="'ExpirationDate'" [SelectedDateValue]="ExpirationDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                         </td>
 
-                        <td *ngIf="!IsDraftVersion" style="width:230px;">
+                        <td *ngIf="!IsDraftVersion" style="width:130px;">
                             {{ExpirationDate | DateTimeToDatePipe}}
                         </td>
 
+                        <td style="float:left;min-width:495px;">
+                            <table>
+                                <tr>
+                                    <td style="width:90px;">
+                                        <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'IsComparToChecked'" [Checked]="IsComparToChecked" [Text]="'Compare to'" [DataContext]="DataContext"></LogCheckBox>
+                                    </td>
+                                    <td style="width:190px;">
+                                        <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="IsVersionsComboBoxEnabled" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
+                                    </td>
+                                    <td style="width:5px;">
+                                        <div></div>
+                                    </td>
+                                    <td style="width:130px;">
+                                        <div>
+                                            Warning Percentage
+                                        </div>
+                                    </td>
+                                    <td style="float:left; width:80px;">
+                                        <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'WarningPercentage'" [Text]="WarningPercentage" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    
                         <td>
+                            <div></div>
+                        </td>
+                        <td style="width: 20px;">
+                            <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Add'" [IsSmall]="true" (click)="AddTariffLine()"></IconButton>
+                        </td>
+
+                        <td style="width:5px;">
                             <div></div>
                         </td>
 
                         <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
                             <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
+                        </td>
+
+                        <td style="width:5px;" *ngIf="IsApproveVersionButtonVisible">
+                            <div></div>
+                        </td>
+
+                        <td style="width:70px;">
+                            <div tabindex="0" class="ToggleButton">
+                                <label>Actions</label>
+                                <img src="./Images/ToggleIcon.png" />
+
+                                <div class="ToggleButtonMenu">
+                                    <button (click)="DownloadExcelClicked('Template')">Download Excel Template</button>
+                                    <button (click)="DownloadExcelClicked('Data')">Download Excel</button>
+
+                                    <div *ngIf="IsDraftVersion">
+                                        <input class="upload" style="display: none;width:65px"
+                                               type="file" (change)="OnFileChanged($event)"
+                                               #fileInput>
+                                        <a href="#" style="text-decoration:none">
+                                            <button (click)="fileInput.click()">Upload Excel</button>
+                                        </a>
+                                    </div>
+
+                                    <button (click)="CopyVersionClicked()" *ngIf="!IsDraftVersion">Copy into new Version</button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -51,52 +109,6 @@
             </td>
         </tr>
 
-        <tr class="SectionHeader">
-            <td>
-                <table>
-                    <tr>
-                        <td>
-                            <label>Tariffs</label>
-                        </td>
-
-                        <td>
-                            <div></div>
-                        </td>
-
-                        <td style="width:95px;">
-                            <Hyperlink [IsEnabled]="IsDraftVersion" (click)="DownloadExcel()" [Text]="'Download Excel'"></Hyperlink>
-                        </td>
-
-                        <td width="5px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width:95px;">
-                            <input class="upload" style="display: none;width:65px"
-                                   type="file" (change)="OnFileChanged($event)"
-                                   #fileInput>
-                            <a href="#">
-                                <button [disabled]="!IsDraftVersion" (click)="fileInput.click()">Upload Excel</button>
-                            </a>
-                            <!--<Hyperlink (click)="UploadExcel()" [Text]="'Upload Excel'"></Hyperlink>-->
-                        </td>
-
-                        <td width="5px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width: 20px; padding: 3px;">
-                            <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Add'" [IsSmall]="true" (click)="AddTariffLine()"></IconButton>
-                        </td>
-
-                        <td style="width:5px;">
-                            <div></div>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-
         <!-- Tariff Grid -->
         <tr>
             <td>
@@ -105,14 +117,23 @@
                         <td>
                             <div class="MediaFill">
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="TariffsLinesSource">
+
                                     <!--Error-->
-                                    <log-column [width]="'30'">
+                                    <log-column [width]="'60'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div style="height: 100%; width: 100%;">
                                                 <table>
                                                     <tr>
-                                                        <td *ngIf="item.HasError">
-                                                            <img class="CenterCenter" src="./Images/ValidationError.png" />
+                                                        <td style="width:16px;" *ngIf="item.HasErrors">
+                                                            <img class="CenterCenter" src="./Images/ValidationError.png" [title]="item.ErrorText" />
+                                                        </td>
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td *ngIf="item.IsNewEntity">
+                                                            <div style="width: 1px; color:red; font-size:10px; font-style:italic;">
+                                                                New
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -122,19 +143,19 @@
 
                                     <!-- OriginPortId -->
                                     <log-column [header]="'TariffLine.F.OriginPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.OriginPortColor}">{{item.OriginPortValue}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogLov [ObjectFieldName]="'OriginPortId'"
-                                                        [ObjectTableName]="'TarifflLine'"
+                                                        [ObjectTableName]="'TariffLine'"
                                                         [DataContext]="item"
                                                         [LookUpTableName]="'Port'"
                                                         [HideColumns]="true"
                                                         (SelectedItemChanged)="item.OriginPort = $event"
                                                         [DisplayMemberPath]="'Code'"
-                                                        [FocusOnMe]="true"
+                                                        [FocusOnMe]="'true'"
                                                         [SelectedValue]="item.OriginPortId">
                                                 </LogLov>
 
@@ -144,19 +165,19 @@
 
                                     <!-- DestinationPortId -->
                                     <log-column [header]="'TariffLine.F.DestinationPortId' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate>
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
                                                 <span [ngStyle]="{color: item.DestinationPortColor}">{{item.DestinationPortValue}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogLov [ObjectFieldName]="'DestinationPortId'"
-                                                        [ObjectTableName]="'TarifflLine'"
+                                                        [ObjectTableName]="'TariffLine'"
                                                         [DataContext]="item"
                                                         [LookUpTableName]="'Port'"
                                                         [HideColumns]="true"
                                                         (SelectedItemChanged)="item.DestinationPort = $event"
                                                         [DisplayMemberPath]="'Code'"
-                                                        [FocusOnMe]="true"
+                                                        [FocusOnMe]="'true'"
                                                         [SelectedValue]="item.DestinationPortId">
                                                 </LogLov>
 
@@ -165,10 +186,24 @@
                                     </log-column>
 
                                     <!-- MinPrice -->
-                                    <log-column [header]="'TariffLine.F.MinPrice' | TextCodeTranslationPipe" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span [ngStyle]="{color: item.MinPriceColor}">{{item.MinPriceValue}}</span>
+                                    <log-column [header]="'TariffLine.F.MinPrice' | TextCodeTranslationPipe" [width]="'100'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <table>
+                                                    <tr>
+                                                        <td [ngStyle]="{color: item.MinPriceComparingTextColor}" *ngIf="item.MinPriceComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.MinPriceComparingText}} %
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td [ngStyle]="{color: item.MinPriceColor}" style="width: 1px;">
+                                                            <span>{{item.MinPriceValue}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'MinPrice'" [InputType]="'double'" [DataContext]="item"
@@ -178,10 +213,25 @@
                                     </log-column>
 
                                     <!-- Step1Price -->
-                                    <log-column *ngIf="Step1PriceVisibility" [header]="Step1PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span [ngStyle]="{color: item.Step1PriceColor}">{{item.Step1PriceValue}}</span>
+                                    <log-column *ngIf="Step1PriceVisibility" [header]="Step1PriceLabel" [width]="'100'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                 <table>
+                                                    <tr>
+                                                        <td [ngStyle]="{color: item.Step1ComparingTextColor}" *ngIf="item.Step1ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step1ComparingText}} %
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td [ngStyle]="{color: item.Step1PriceColor}" style="width: 1px;">
+                                                          <span>{{item.Step1PriceValue}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                               
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step1Price'" [InputType]="'double'" [DataContext]="item"
@@ -191,10 +241,25 @@
                                     </log-column>
 
                                     <!-- Step2Price -->
-                                    <log-column *ngIf="Step2PriceVisibility" [header]="Step2PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span [ngStyle]="{color: item.Step2PriceColor}">{{item.Step2PriceValue}}</span>
+                                    <log-column *ngIf="Step2PriceVisibility" [header]="Step2PriceLabel" [width]="'100'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <table>
+                                                    <tr>
+                                                        <td [ngStyle]="{color: item.Step2ComparingTextColor}" *ngIf="item.Step2ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step2ComparingText}} %
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td [ngStyle]="{color: item.Step2PriceColor}" style="width: 1px;">
+                                                            <span>{{item.Step2PriceValue}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step2Price'" [InputType]="'double'" [DataContext]="item"
@@ -204,10 +269,25 @@
                                     </log-column>
 
                                     <!-- Step3Price -->
-                                    <log-column *ngIf="Step3PriceVisibility" [header]="Step3PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span [ngStyle]="{color: item.Step3PriceColor}">{{item.Step3PriceValue}}</span>
+                                    <log-column *ngIf="Step3PriceVisibility" [header]="Step3PriceLabel" [width]="'100'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <table>
+                                                    <tr>
+                                                        <td [ngStyle]="{color: item.Step3ComparingTextColor}" *ngIf="item.Step3ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step3ComparingText}} %
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td [ngStyle]="{color: item.Step3PriceColor}" style="width: 1px;">
+                                                            <span>{{item.Step3PriceValue}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+ 
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step3Price'" [InputType]="'double'" [DataContext]="item"
@@ -217,10 +297,24 @@
                                     </log-column>
 
                                     <!-- Step4Price -->
-                                    <log-column *ngIf="Step4PriceVisibility" [header]="Step4PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span [ngStyle]="{color: item.Step4PriceColor}">{{item.Step4PriceValue}}</span>
+                                    <log-column *ngIf="Step4PriceVisibility" [header]="Step4PriceLabel" [width]="'100'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                 <table>
+                                                    <tr>
+                                                        <td [ngStyle]="{color: item.Step4ComparingTextColor}" *ngIf="item.Step4ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step4ComparingText}} %
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td [ngStyle]="{color: item.Step4PriceColor}" style="width: 1px;">
+                                                            <span>{{item.Step4PriceValue}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step4Price'" [InputType]="'double'" [DataContext]="item"
@@ -230,10 +324,24 @@
                                     </log-column>
 
                                     <!-- Step5Price -->
-                                    <log-column *ngIf="Step5PriceVisibility" [header]="Step5PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span [ngStyle]="{color: item.Step5PriceColor}">{{item.Step5PriceValue}}</span>
+                                    <log-column *ngIf="Step5PriceVisibility" [header]="Step5PriceLabel" [width]="'100'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                 <table>
+                                                    <tr>
+                                                        <td [ngStyle]="{color: item.Step8ComparingTextColor}" *ngIf="item.Step8ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step8ComparingText}} %
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td [ngStyle]="{color: item.Step5PriceColor}" style="width: 1px;">
+                                                            <span>{{item.Step5PriceValue}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step5Price'" [InputType]="'double'" [DataContext]="item"
@@ -243,10 +351,24 @@
                                     </log-column>
 
                                     <!-- Step6Price -->
-                                    <log-column *ngIf="Step6PriceVisibility" [header]="Step6PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span [ngStyle]="{color: item.Step6PriceColor}">{{item.Step6PriceValue}}</span>
+                                    <log-column *ngIf="Step6PriceVisibility" [header]="Step6PriceLabel" [width]="'100'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                 <table>
+                                                    <tr>
+                                                        <td [ngStyle]="{color: item.Step6ComparingTextColor}" *ngIf="item.Step6ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step6ComparingText}} %
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td [ngStyle]="{color: item.Step6PriceColor}" style="width: 1px;">
+                                                            <span>{{item.Step6PriceValue}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step6Price'" [InputType]="'double'" [DataContext]="item"
@@ -256,10 +378,25 @@
                                     </log-column>
 
                                     <!-- Step7Price -->
-                                    <log-column *ngIf="Step7PriceVisibility" [header]="Step7PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span [ngStyle]="{color: item.Step7PriceColor}">{{item.Step7PriceValue}}</span>
+                                    <log-column *ngIf="Step7PriceVisibility" [header]="Step7PriceLabel" [width]="'100'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                <table>
+                                                    <tr>
+                                                        <td [ngStyle]="{color: item.Step7ComparingTextColor}" *ngIf="item.Step7ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step7ComparingText}} %
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td [ngStyle]="{color: item.Step7PriceColor}" style="width: 1px;">
+                                                            <span>{{item.Step7PriceValue}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                           
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step7Price'" [InputType]="'double'" [DataContext]="item"
@@ -269,10 +406,24 @@
                                     </log-column>
 
                                     <!-- Step8Price -->
-                                    <log-column *ngIf="Step8PriceVisibility" [header]="Step8PriceLabel" [width]="'70'">
-                                        <log-cell-template template="let item" #logcelltemplate>
-                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                                <span [ngStyle]="{color: item.Step8PriceColor}">{{item.Step8PriceValue}}</span>
+                                    <log-column *ngIf="Step8PriceVisibility" [header]="Step8PriceLabel" [width]="'100'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
+                                                 <table>
+                                                    <tr>
+                                                        <td [ngStyle]="{color: item.Step8ComparingTextColor}" *ngIf="item.Step8ComparingText" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
+                                                            {{item.Step8ComparingText}} %
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td [ngStyle]="{color: item.Step8PriceColor}" style="width: 1px;">
+                                                            <span>{{item.Step8PriceValue}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step8Price'" [InputType]="'double'" [DataContext]="item"
@@ -301,5 +452,89 @@
                 </table>
             </td>
         </tr>
+
+        <tr style="height: 20px;">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <div class="SimpleGridView">
+                                    <div class="SimpleGridViewHeader">
+                                        <table>
+                                            <tr>
+                                                <td colspan="12">
+                                                    <div> Deleted Lines</div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="SimpleGridViewBody">
+                                        <table>
+                                            <tr class="SimpleGridViewRow" *ngFor="let item of DeletedTariffsLines">
+                                                <td class="GridViewCell" style="width: 30px;">
+                                                    <div></div>
+                                                </td>
+                                                <td class="CellDisabled" style="width: 70px; text-align: left;">
+                                                    {{item.OriginPortValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 70px; text-align: left;">
+                                                    {{item.DestinationPortValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                    {{item.MinPriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                    {{item.Step1PriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                    {{item.Step2PriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                    {{item.Step3PriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                    {{item.Step4PriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                    {{item.Step5PriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                    {{item.Step6PriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                    {{item.Step7PriceValue}}
+                                                </td>
+                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                    {{item.Step8PriceValue}}
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="12">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
     </table>
 </div>

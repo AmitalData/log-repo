@@ -132,5 +132,7 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField20 { get; set; }
 
         public string CustomerExternalID { get; set; }
+
+        public string ShipperConsigneeExternalID { get; set; }
     }
 }

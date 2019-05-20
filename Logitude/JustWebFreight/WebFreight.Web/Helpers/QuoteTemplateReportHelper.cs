@@ -836,6 +836,7 @@ namespace Logitude.BL.Helpers
 
                 if (totalPerContainerGroupingListsByGroupCode.Count() > 0)
                 {
+                    HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
                     if (setting.ShowPageBreakBeforeTotalPerContainersTable)
                     {
@@ -847,6 +848,8 @@ namespace Logitude.BL.Helpers
                     if (setting.ShowTitleTotalPerContainersTable)
                     {
                         BuildPricingTitle(HtmlTemplate, totalPerContainersAdditionalTextDesign, "TotalPerContainers", textcodes, setting.RightToLeft);
+                        HtmlTemplate.Append("<div  style='height:5px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+
                     }
 
                     string styleTotalPerContainerTable = GetStyleTable(totalPerContainersTableDesign);
@@ -2757,38 +2760,26 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowSaleCurrencyColumnPackages)
                     {
-                        string AA = " ";
+                        string saleTotalAmount = " ";
                         if (chargePM.SaleTotalAmount != null)
                         {
                             double value = (double)chargePM.SaleTotalAmount;
-                            AA = value.ToString("N"); // 1,234.512
+                            saleTotalAmount = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                         }
 
-
-                        string SaleTotalAmount = AA + " " + chargePM.CurrencyCode;
-                        HtmlTemplate.Append(BuildTableColumn(SaleTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
+                        HtmlTemplate.Append(BuildTableColumn(saleTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft,true));
 
                     }
 
                     if (setting.ShowLocalCurrencyColumnPackages)
                     {
-                        string AA = " ";
-
-
+                        string localTotalAmount = " ";
                         if (chargePM.SaleTotalAmountLocal != null)
                         {
-
                             double value = (double)chargePM.SaleTotalAmountLocal;
-                            AA = value.ToString("N"); // 1,234.512
+                            localTotalAmount = value.ToString("N") + " " + LocalCurrencyCode;
                         }
-
-
-                        //string AA = String.Format("{0:0.000}", chargePM.SaleTotalAmountLocal.ToString());
-
-                        //chargePM.SaleTotalAmountLocal.ToString("N");
-
-                        string LocalTotalAmount = AA + " " + LocalCurrencyCode;
-                        HtmlTemplate.Append(BuildTableColumn(LocalTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
+                        HtmlTemplate.Append(BuildTableColumn(localTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft,true));
                     }
 
                     if (setting.ShowChargeDescriptionPackages)
@@ -2843,15 +2834,19 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowFixedPriceContainers)
                     {
-                        if (ViewFixedPrice && chargePM.SaleMeasurementCode != "BCNT")
+                        if (ViewFixedPrice)
                         {
-                            string AA = " ";
-                            if (chargePM.SaleAmountInSaleCurrency != null)
+                            string fixedPrice = " ";
+                            if (chargePM.SaleMeasurementCode != "BCNT")
                             {
-                                double value = (double)chargePM.SaleAmountInSaleCurrency;
-                                AA = value.ToString("N"); // 1,234.512
+                                if (chargePM.SaleAmountInSaleCurrency != null)
+                                {
+                                    double value = (double)chargePM.SaleAmountInSaleCurrency;
+                                    fixedPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
+                                }
                             }
-                            HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
+
+                            HtmlTemplate.Append(BuildTableColumn(fixedPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft,true));
                             row += 1;
                         }
 
@@ -2863,16 +2858,16 @@ namespace Logitude.BL.Helpers
                         {
                             if (setting.ShowPriceByContainerColumn)
                             {
-                                string AA = "";
+                                string saleContainerType1UnitPrice = "";
                                 double value = 0;
 
                                 row += 1;
                                 if (chargePM.SaleContainerType1UnitPrice != null)
                                 {
                                     value = (double)chargePM.SaleContainerType1UnitPrice;
-                                    AA = value.ToString("N"); // 1,234.512
+                                    saleContainerType1UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM); ;
                                 }
-                                HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
+                                HtmlTemplate.Append(BuildTableColumn(saleContainerType1UnitPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft,true));
                             }
 
                         }
@@ -2881,17 +2876,17 @@ namespace Logitude.BL.Helpers
                         {
                             if (setting.ShowPriceByContainerColumn)
                             {
-                                string AA = "";
+                                string saleContainerType2UnitPrice = "";
                                 double value = 0;
                                 row += 1;
                                 if (chargePM.SaleContainerType2UnitPrice != null)
                                 {
 
                                     value = (double)chargePM.SaleContainerType2UnitPrice;
-                                    AA = value.ToString("N");
+                                    saleContainerType2UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
 
-                                HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
+                                HtmlTemplate.Append(BuildTableColumn(saleContainerType2UnitPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft,true));
                             }
                         }
 
@@ -2899,16 +2894,17 @@ namespace Logitude.BL.Helpers
                         {
                             if (setting.ShowPriceByContainerColumn)
                             {
-                                string AA = "";
+                                string saleContainerType3UnitPrice = "";
                                 double value = 0;
                                 row += 1;
                                 if (chargePM.SaleContainerType3UnitPrice != null)
                                 {
                                     value = (double)chargePM.SaleContainerType3UnitPrice;
-                                    AA = value.ToString("N"); // 1,234.512
+                                    saleContainerType3UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
+
                                 }
 
-                                HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
+                                HtmlTemplate.Append(BuildTableColumn(saleContainerType3UnitPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft,true));
                             }
                         }
 
@@ -2916,17 +2912,16 @@ namespace Logitude.BL.Helpers
                         {
                             if (setting.ShowPriceByContainerColumn)
                             {
-                                string AA = "";
+                                string saleContainerType4UnitPrice = "";
                                 double value = 0;
                                 row += 1;
                                 if (chargePM.SaleContainerType4UnitPrice != null)
                                 {
                                     value = (double)chargePM.SaleContainerType4UnitPrice;
-                                    //double value = chargePM.SaleContainerType4UnitPrice != null ? (double)chargePM.SaleContainerType4UnitPrice : 0;
-                                    AA = value.ToString("N"); // 1,234.512
+                                    saleContainerType4UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
 
-                                HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
+                                HtmlTemplate.Append(BuildTableColumn(saleContainerType4UnitPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft,true));
                             }
                         }
 
@@ -2934,16 +2929,16 @@ namespace Logitude.BL.Helpers
                         {
                             if (setting.ShowPriceByContainerColumn)
                             {
-                                string AA = "";
+                                string saleContainerType5UnitPrice = "";
                                 double value = 0;
                                 row += 1;
                                 if (chargePM.SaleContainerType5UnitPrice != null)
                                 {
                                     value = (double)chargePM.SaleContainerType5UnitPrice;
-                                    // double value = chargePM.SaleContainerType5UnitPrice != null ? (double)chargePM.SaleContainerType5UnitPrice : 0;
-                                    AA = value.ToString("N"); // 1,234.512
+                                    saleContainerType5UnitPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
-                                HtmlTemplate.Append(BuildTableColumn(AA, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
+
+                                HtmlTemplate.Append(BuildTableColumn(saleContainerType5UnitPrice, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft,true));
                             }
                         }
                     }
@@ -2951,16 +2946,15 @@ namespace Logitude.BL.Helpers
 
                     if (setting.ShowSaleCurrencyColumnContainers)
                     {
-                        string AA = " ";
+                        string saleTotalAmount = " ";
                         row += 1;
                         if (chargePM.SaleTotalAmount != null)
                         {
                             double value = (double)chargePM.SaleTotalAmount;
-                            AA = value.ToString("N"); // 1,234.512
+                            saleTotalAmount = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                         }
-
-                        string SaleTotalAmount = AA + " " + chargePM.CurrencyCode;
-                        HtmlTemplate.Append(BuildTableColumn(SaleTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
+                
+                        HtmlTemplate.Append(BuildTableColumn(saleTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft,true));
                     }
 
                     if (setting.ShowLocalCurrencyColumnContainers)
@@ -2975,7 +2969,7 @@ namespace Logitude.BL.Helpers
                         }
 
                         string LocalTotalAmount = AA + " " + LocalCurrencyCode;
-                        HtmlTemplate.Append(BuildTableColumn(LocalTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft));
+                        HtmlTemplate.Append(BuildTableColumn(LocalTotalAmount, quoteTemplateTextDesignLines, quotetemplatetableDesignPM, "FieldPrice", setting.RightToLeft,true));
                     }
 
 
@@ -3003,9 +2997,17 @@ namespace Logitude.BL.Helpers
             }
         }
 
+        private static string GetChargeCurrencyCode(QuotePM quotePM, QuoteSaleChargePM chargePM)
+        {
+            return (quotePM.IsSaleCurrencySameAsCost ? chargePM.CurrencyCode : quotePM.SaleCurrencyCode);
+        }
 
-
-
+        private static string GetFormatDisplayAmountWithCurrencyCode(string saleTotalAmount, string currencyCode, QuoteTemplateSettingPM setting)
+        {
+            string result = saleTotalAmount + " " + currencyCode;
+         
+            return result;
+        }
 
 
 

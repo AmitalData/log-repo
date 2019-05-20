@@ -40,6 +40,7 @@ import { AccountingLoadTestComponent } from './Components/Maintenance/Accounting
 import { LoadRecoExPageComponent } from './Components/NewEntity/LoadRecoExPageComponent';
 import { Generate1000Component } from './Components/Maintenance/Generate1000Component';
 import { Receiving1000Component } from './Components/Maintenance/Receiving1000Component';
+import { AccountingFunctionalTestComponent } from './Components/Maintenance/AccountingFunctionalTestComponent';
 
 
 import {GLAccountGeneralTabComponent} from './Components/EditTabs/GLAccount/GLAccountGeneralTabComponent';
@@ -139,6 +140,7 @@ export const Components =
         AccountingLoadTestComponent,
         Generate1000Component,
         Receiving1000Component,
+        AccountingFunctionalTestComponent,
 
         //Edit Tabs
         GLAccountGeneralTabComponent,
@@ -247,6 +249,7 @@ export class ModuleDeclarations {
             case "AccountingLoadTestComponent": { myResult = AccountingLoadTestComponent; break; }
             case "Generate1000Component": { myResult = Generate1000Component; break; }
             case "Receiving1000Component": { myResult = Receiving1000Component; break; }
+            case "AccountingFunctionalTestComponent": { myResult = AccountingFunctionalTestComponent; break; }
                 
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }

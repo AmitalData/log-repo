@@ -71,10 +71,10 @@ export class TariffDomainService {
         });
     }
 
-    DownloadTariffLines(tariffId: string) {
+    DownloadTariff(tariffId: string, version: number, type: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetDownloadTariffLines?tariffId=' + tariffId
+        var url = this._apiUrl + '/GetDownloadTariff?tariffId=' + tariffId + "&version=" + version + "&type=" + type;
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
                 var myResult = response.json();
@@ -84,7 +84,7 @@ export class TariffDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
-
+    
     PostUploadExcelFile(filter: TariffFilterParameter) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -103,10 +103,10 @@ export class TariffDomainService {
         );
     }
 
-    ApproveVersion(tariffId: string) {
+    ApproveVersion(tariffId: string, version: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        var url = this._apiUrl + '/GetApproveVersion?tariffId=' + tariffId;
+        var url = this._apiUrl + '/GetApproveVersion?tariffId=' + tariffId + "&version=" + version;
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
                 var myResult = response.json();
@@ -186,12 +186,16 @@ export class TariffDomainService {
 
 export class TariffSummery {
     AirFreightCount: number;
+    AirSurchargeCount: number;
 }
 
 export class TariffFilterParameter {
     Tenant: number;
     FileData: string;
     PriceSteps: string;
+    TariffId: string;
+    Version: number;
+    TariffType: string
 }
 
 export class ExcelTariffLines {
@@ -222,4 +226,29 @@ export class ExcelTariffLines {
     Step6PriceText: string;
     Step7PriceText: string;
     Step8PriceText: string;
+
+    HasErrors: boolean;
+    ErrorText: string;
+
+    Surcharge1Price: number;
+    Surcharge2Price: number;
+    Surcharge3Price: number;
+    Surcharge4Price: number;
+    Surcharge5Price: number;
+    Surcharge6Price: number;
+    Surcharge7Price: number;
+    Surcharge8Price: number;
+    Surcharge9Price: number;
+    Surcharge10Price: number;
+
+    Surcharge1PriceText: string;
+    Surcharge2PriceText: string;
+    Surcharge3PriceText: string;
+    Surcharge4PriceText: string;
+    Surcharge5PriceText: string;
+    Surcharge6PriceText: string;
+    Surcharge7PriceText: string;
+    Surcharge8PriceText: string;
+    Surcharge9PriceText: string;
+    Surcharge10PriceText: string;
 }

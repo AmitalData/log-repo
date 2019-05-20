@@ -42,10 +42,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string SaleMeasurementId { get; set; }
         public string SaleMeasurementCode { get; set; }
         public string SaleMeasurementShortName { get; set; }
-        public string SaleMeasurementLocalName { get; set; }
-        
-
-
+        public string SaleMeasurementLocalName { get; set; }        
         public double? SaleQuantity { get; set; }
         public double? SaleUnitPrice { get; set; }
         public double? SaleTotalAmount { get; set; }
@@ -61,7 +58,6 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string VatTypeName { get; set; }
         public double? VatAmount { get; set; }
         public string UOMPercentage { get; set; }
-
         public double? SaleUnitPriceInSaleCurrency { get; set; }
         public double? SaleUnitPrice1InSaleCurrency { get; set; }
         public double? SaleUnitPrice2InSaleCurrency { get; set; }
@@ -69,10 +65,16 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? SaleUnitPrice4InSaleCurrency { get; set; }
         public double? SaleUnitPrice5InSaleCurrency { get; set; }
         public double? SaleAmountInSaleCurrency { get; set; }
-
         public double? CostMaxAmount { get; set; }
         public double? CostMinAmount { get; set; }
         public double? SaleMinAmount { get; set; }
         public double? SaleMaxAmount { get; set; }
+
+        public string MarkUpText { get; set; }
+        public string ContainerType1MarkUpText { get; set; }
+        public string ContainerType2MarkUpText { get; set; }
+        public string ContainerType3MarkUpText { get; set; }
+        public string ContainerType4MarkUpText { get; set; }
+        public string ContainerType5MarkUpText { get; set; }
     }
 }

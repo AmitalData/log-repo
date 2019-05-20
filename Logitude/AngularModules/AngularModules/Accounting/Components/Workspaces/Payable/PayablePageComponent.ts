@@ -198,10 +198,44 @@ export class PayablePageComponent {
     ViewInvoiceQuery(args: string) {
         if (args != null) {
 
+            var displayTitle = "";
+            var queryCode = args;
+            queryCode = "APPayment";
+            var filters = new ApiQueryFilters();
+            switch (args) {
+
+                case "Draft Payments":
+                    {
+                     
+                        displayTitle = TextCodeTranslator.Translate("APPayment.Q.DraftAPPayments");
+
+                        break;
+                    }
+                case "Open Payments":
+                    {
+                    
+                        displayTitle = TextCodeTranslator.Translate("APPayment.Q.OpenAPPayments");
+
+                        break;
+                    }
+                case "All Payments":
+                    {
+                       
+                       
+                        displayTitle = TextCodeTranslator.Translate("APPayment.Q.AllAPPayments");
+
+                        break;
+                    }
+
+
+
+                default: { break; }
+            }
+
             var backButtonTitle = "Accounting";
             var objectTableName = args.split(':')[0];
             var queryCode = args.split(':')[1];
-            var displayTitle = queryCode;
+           
             this.filterAgrs = new ApiQueryFilters();
 
             var ObjectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];

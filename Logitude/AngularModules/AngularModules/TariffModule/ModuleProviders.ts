@@ -1,6 +1,5 @@
 
 import { TariffTypeListService } from './Services/StandardLists/TariffTypeListService';
-import { TariffVersionListService } from './Services/StandardLists/TariffVersionListService';
 import { TariffListService } from './Services/StandardLists/TariffListService';
 import { TariffPMService } from './Services/StandardPMs/TariffPMService';
 import { TariffDomainService } from './Services/TariffDomainService';
@@ -15,7 +14,6 @@ export class ModuleProviders {
 
             // List
             case "TariffListService": { myResult = new TariffListService(); break; }
-            case "TariffVersionListService": { myResult = new TariffVersionListService(); break; }
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
             
             // PM
@@ -24,12 +22,8 @@ export class ModuleProviders {
            // DomainService
             case "TariffDomainService": { myResult = new TariffDomainService(); break; }
 
-
             // MenuButtons
-            case "TariffMenuButtonsHandler": { myResult = new TariffMenuButtonsHandler(); break; }   
-
-                
-     
+            case "TariffMenuButtonsHandler": { myResult = new TariffMenuButtonsHandler(); break; }
         }
 
         return myResult;

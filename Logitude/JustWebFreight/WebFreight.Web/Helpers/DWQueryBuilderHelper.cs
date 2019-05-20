@@ -120,14 +120,16 @@ namespace WebFreight.Web.Helpers
                                 {
                                     OperationSimpol = " = @@ ";
                                 }
+                                else if (filter.DataTypeCode == "Boolean")
+                                {
+                                    OperationSimpol = " IN (" + (filter.TextValue.ToString().ToLower() == "true" ? 1 : 0).ToString()  +")";
+                                    isHaveMultiSelect = true;
+                                }
                                 else
                                 {
-
                                     OperationSimpol = " IN ( '";
                                     OperationSimpol = this.BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
                                     isHaveMultiSelect = true;
-
-
                                 }
                             }
                             else if (filter.Operation.Code == "NotEqual")
@@ -136,14 +138,16 @@ namespace WebFreight.Web.Helpers
                                 {
                                     OperationSimpol = " <> @@ ";
                                 }
+                                else if (filter.DataTypeCode == "Boolean")
+                                {
+                                    OperationSimpol = " not IN (" + (filter.TextValue.ToString().ToLower() == "true" ? 1 : 0).ToString() + ")";
+                                    isHaveMultiSelect = true;
+                                }
                                 else
                                 {
-
                                     OperationSimpol = " not IN ( '";
                                     OperationSimpol = BuildMultiValueSql(filter.TextValue.ToString(), OperationSimpol);
                                     isHaveMultiSelect = true;
-
-                                    //abed
                                 }
                             }
                             else if (filter.Operation.Code == "StartsWith")
@@ -195,14 +199,23 @@ namespace WebFreight.Web.Helpers
                             else
                             {
                                 var operation = !isHaveMultiSelect ? OperationSimpol.Replace("@@", filter.TextValue.ToString()) : OperationSimpol;
+
+                                string fieldName = (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code;
+                                if (filter.IsCustom && filter.Operation.Code == "StartsWith")
+                                {
+                                    fieldName = "CONVERT(sysname," + fieldName + ")";
+                                }
+
+                                WhereStmt += fieldName + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+
                                 //SelectStmt.Append(field.AggregationTypeCode + "(" + field.DWObjectTableCode + "." + field.Code + ")" + (!string.IsNullOrEmpty(field.DisplayName) ? " as " + field.DisplayName + "," : ","));
                                 //if (filter.IsMeasurement)
                                 //{
                                 //    WhereStmt += filter.AggregationTypeCode + "(" + (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + ")" + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
                                 //}
                                 //else
-                                //{
-                                    WhereStmt += (!string.IsNullOrEmpty(filter.ParentDimTabelName) ? PDim : OTBL) + "." + filter.Code + operation + " " + AndOr + " ";//" = " + "'" + filter.TextValue + "' and ";
+                                //{ like
+
                                 //}
                             }
                         }

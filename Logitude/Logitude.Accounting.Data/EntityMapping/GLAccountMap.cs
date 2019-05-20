@@ -128,6 +128,14 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.IsEquipmentVendor).HasColumnName("IsEquipmentVendor");
 
             this.Property(t => t.ExcludeFromDeductionReport).HasColumnName("ExcludeFromDeductionReport");
+
+            this.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
         }
     }
 }

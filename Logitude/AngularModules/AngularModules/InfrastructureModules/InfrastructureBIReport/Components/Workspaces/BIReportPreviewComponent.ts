@@ -574,7 +574,7 @@ export class BIReportPreviewComponent implements OnInit {
         windowArgs.IsBIReportEditScreen = true;
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 1200;
-        logWindow.Height = 500;
+        logWindow.Height = 780;
         logWindow.Title = "Query Builder";
         logWindow.Show('./CommonModules/CommonOthers/Components/LoadSampleData/DWQueryBuilderComponent');
         logWindow.ComponentLoaded.subscribe(s => {

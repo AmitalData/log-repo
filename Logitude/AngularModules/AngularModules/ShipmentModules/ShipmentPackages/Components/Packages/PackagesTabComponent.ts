@@ -413,6 +413,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.ComputeDimFactor();
             this.OnMeasurmentsSettingsChanged();
+            this.ComputeChargeableWeight_Kg();
+
         }
     }
 
@@ -470,6 +472,30 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.EntityPM.GrossWeightInKG = weigh_Kg;
         this.EntityPM.GrossWeightPerTon = weigh_Ton;
     }
+    private ComputeChargeableWeight_Kg() {
+        var weigh_Kg: number = null;
+        var weigh_Ton: number = null;
+
+        if (this.ChargeableWeight != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.ChargeableWeightUnitCode)) {
+                switch (this.ChargeableWeightUnitCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.ChargeableWeight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+        }
+        this.EntityPM.ChargeableWeightInKG = weigh_Kg;
+    }
+    
     OnMeasurmentsSettingsChanged() {
         this.SetAttachedLabels();
         ShipmentTool.RecalculateShipmentFields(this.EntityPM);
@@ -548,6 +574,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set ChargeableWeight(newValue: number) {
         if (this.EntityPM.ChargeableWeight != newValue) {
             this.EntityPM.ChargeableWeight = AppTool.Round(newValue, 3);
+            this.ComputeChargeableWeight_Kg();
         }
     }
 
@@ -602,11 +629,19 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             valueInserted = Number(input);
         }
 
-        valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = valueInserted == 0 ? null : valueInserted;
-        this.GrossWeightEdited = !(valueComputed == valueInserted);
-        this.GrossWeight = valueInserted;
-        this.ComputeTotals();
+        if (!valueComputed) {
+            valueComputed = 0;
+        }
+
+        if (!valueInserted) {
+            valueInserted = 0;
+        }
+
+        if (this.GrossWeight != valueInserted) {
+            this.GrossWeightEdited = !(valueComputed == valueInserted);
+            this.GrossWeight = valueInserted;
+            this.ComputeTotals();
+        }
     }
     ChargeableWeightLostFocus(input: any) {
 
@@ -618,13 +653,22 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         if (!AppTool.IsNullOrEmpty(input)) {
             input = AppTool.Replace(input, ",", "");
             valueInserted = Number(input);
+            valueInserted = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
         }
 
-        valueComputed = valueComputed == 0 ? null : valueComputed;
-        valueInserted = valueInserted == 0 ? null : valueInserted;
-        this.ChargeableWeightEdited = !(valueComputed == valueInserted);
-        this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
-        this.ComputeTotals();
+        if (!valueComputed) {
+            valueComputed = 0;
+        }
+
+        if (!valueInserted) {
+            valueInserted = 0;
+        }
+
+        if (this.ChargeableWeight != valueInserted) {
+            this.ChargeableWeightEdited = !(valueComputed == valueInserted);
+            this.ChargeableWeight = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
+            this.ComputeTotals();
+        }
     }
     ResetGrossWeightEdited() {
         this.GrossWeightEdited = false;

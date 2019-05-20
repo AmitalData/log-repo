@@ -11,7 +11,7 @@ describe('Login Module', () => {
 
   it('Login Success', function () {
     browser.ignoreSynchronization = true;
-    page.navigateTo('https://pre.logitudeworld.com');
+    page.navigateTo('http://pre.logitudeworld.com');
     page.DoLogin('razantest@protractor.com', '!R123j456');
   });
 });

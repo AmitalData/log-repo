@@ -42,7 +42,27 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LastStartDate, 
 	         LastVersion, 
 	         ContractNumber, 
-	         TariffNumber,
+	         TariffNumber, 
+	         Surcharge1Id, 
+	         Surcharge2Id, 
+	         Surcharge3Id, 
+	         Surcharge4Id, 
+	         Surcharge5Id, 
+	         Surcharge6Id, 
+	         Surcharge7Id, 
+	         Surcharge8Id, 
+	         Surcharge9Id, 
+	         Surcharge10Id, 
+	         Surcharge1UOM, 
+	         Surcharge2UOM, 
+	         Surcharge3UOM, 
+	         Surcharge4UOM, 
+	         Surcharge5UOM, 
+	         Surcharge6UOM, 
+	         Surcharge7UOM, 
+	         Surcharge8UOM, 
+	         Surcharge9UOM, 
+	         Surcharge10UOM,
 	      }
 
 
@@ -72,7 +92,28 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         ContractNumber, 
 	         SetAsInActive, 
 	         SetAsReActive, 
-	         TariffNumber,
+	         TariffNumber, 
+	         TariffLinesAdded, 
+	         Surcharge1Id, 
+	         Surcharge2Id, 
+	         Surcharge3Id, 
+	         Surcharge4Id, 
+	         Surcharge5Id, 
+	         Surcharge6Id, 
+	         Surcharge7Id, 
+	         Surcharge8Id, 
+	         Surcharge9Id, 
+	         Surcharge10Id, 
+	         Surcharge1UOM, 
+	         Surcharge2UOM, 
+	         Surcharge3UOM, 
+	         Surcharge4UOM, 
+	         Surcharge5UOM, 
+	         Surcharge6UOM, 
+	         Surcharge7UOM, 
+	         Surcharge8UOM, 
+	         Surcharge9UOM, 
+	         Surcharge10UOM,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -179,6 +220,106 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffNumber))
             {
 				entityPOCO.TariffNumber = entityPM.TariffNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1Id))
+            {
+				entityPOCO.Surcharge1Id = entityPM.Surcharge1Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2Id))
+            {
+				entityPOCO.Surcharge2Id = entityPM.Surcharge2Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3Id))
+            {
+				entityPOCO.Surcharge3Id = entityPM.Surcharge3Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4Id))
+            {
+				entityPOCO.Surcharge4Id = entityPM.Surcharge4Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5Id))
+            {
+				entityPOCO.Surcharge5Id = entityPM.Surcharge5Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6Id))
+            {
+				entityPOCO.Surcharge6Id = entityPM.Surcharge6Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7Id))
+            {
+				entityPOCO.Surcharge7Id = entityPM.Surcharge7Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8Id))
+            {
+				entityPOCO.Surcharge8Id = entityPM.Surcharge8Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9Id))
+            {
+				entityPOCO.Surcharge9Id = entityPM.Surcharge9Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10Id))
+            {
+				entityPOCO.Surcharge10Id = entityPM.Surcharge10Id;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1UOM))
+            {
+				entityPOCO.Surcharge1UOM = entityPM.Surcharge1UOM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2UOM))
+            {
+				entityPOCO.Surcharge2UOM = entityPM.Surcharge2UOM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3UOM))
+            {
+				entityPOCO.Surcharge3UOM = entityPM.Surcharge3UOM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4UOM))
+            {
+				entityPOCO.Surcharge4UOM = entityPM.Surcharge4UOM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5UOM))
+            {
+				entityPOCO.Surcharge5UOM = entityPM.Surcharge5UOM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6UOM))
+            {
+				entityPOCO.Surcharge6UOM = entityPM.Surcharge6UOM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7UOM))
+            {
+				entityPOCO.Surcharge7UOM = entityPM.Surcharge7UOM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8UOM))
+            {
+				entityPOCO.Surcharge8UOM = entityPM.Surcharge8UOM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9UOM))
+            {
+				entityPOCO.Surcharge9UOM = entityPM.Surcharge9UOM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10UOM))
+            {
+				entityPOCO.Surcharge10UOM = entityPM.Surcharge10UOM;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -292,6 +433,106 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.TariffNumber = entityPOCO.TariffNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge1Id))
+            {
+					entityPM.Surcharge1Id = entityPOCO.Surcharge1Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge2Id))
+            {
+					entityPM.Surcharge2Id = entityPOCO.Surcharge2Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge3Id))
+            {
+					entityPM.Surcharge3Id = entityPOCO.Surcharge3Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge4Id))
+            {
+					entityPM.Surcharge4Id = entityPOCO.Surcharge4Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge5Id))
+            {
+					entityPM.Surcharge5Id = entityPOCO.Surcharge5Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge6Id))
+            {
+					entityPM.Surcharge6Id = entityPOCO.Surcharge6Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge7Id))
+            {
+					entityPM.Surcharge7Id = entityPOCO.Surcharge7Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge8Id))
+            {
+					entityPM.Surcharge8Id = entityPOCO.Surcharge8Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge9Id))
+            {
+					entityPM.Surcharge9Id = entityPOCO.Surcharge9Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge10Id))
+            {
+					entityPM.Surcharge10Id = entityPOCO.Surcharge10Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge1UOM))
+            {
+					entityPM.Surcharge1UOM = entityPOCO.Surcharge1UOM;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge2UOM))
+            {
+					entityPM.Surcharge2UOM = entityPOCO.Surcharge2UOM;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge3UOM))
+            {
+					entityPM.Surcharge3UOM = entityPOCO.Surcharge3UOM;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge4UOM))
+            {
+					entityPM.Surcharge4UOM = entityPOCO.Surcharge4UOM;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge5UOM))
+            {
+					entityPM.Surcharge5UOM = entityPOCO.Surcharge5UOM;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge6UOM))
+            {
+					entityPM.Surcharge6UOM = entityPOCO.Surcharge6UOM;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge7UOM))
+            {
+					entityPM.Surcharge7UOM = entityPOCO.Surcharge7UOM;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge8UOM))
+            {
+					entityPM.Surcharge8UOM = entityPOCO.Surcharge8UOM;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge9UOM))
+            {
+					entityPM.Surcharge9UOM = entityPOCO.Surcharge9UOM;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Surcharge10UOM))
+            {
+					entityPM.Surcharge10UOM = entityPOCO.Surcharge10UOM;
+            }
+
 		}
 
 		public void PMToOldPM(TariffPM entityPM, TariffPM oldEntityPM)
@@ -396,6 +637,106 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffNumber))
             {
                 oldEntityPM.TariffNumber = entityPM.TariffNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1Id))
+            {
+                oldEntityPM.Surcharge1Id = entityPM.Surcharge1Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2Id))
+            {
+                oldEntityPM.Surcharge2Id = entityPM.Surcharge2Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3Id))
+            {
+                oldEntityPM.Surcharge3Id = entityPM.Surcharge3Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4Id))
+            {
+                oldEntityPM.Surcharge4Id = entityPM.Surcharge4Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5Id))
+            {
+                oldEntityPM.Surcharge5Id = entityPM.Surcharge5Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6Id))
+            {
+                oldEntityPM.Surcharge6Id = entityPM.Surcharge6Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7Id))
+            {
+                oldEntityPM.Surcharge7Id = entityPM.Surcharge7Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8Id))
+            {
+                oldEntityPM.Surcharge8Id = entityPM.Surcharge8Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9Id))
+            {
+                oldEntityPM.Surcharge9Id = entityPM.Surcharge9Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10Id))
+            {
+                oldEntityPM.Surcharge10Id = entityPM.Surcharge10Id;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge1UOM))
+            {
+                oldEntityPM.Surcharge1UOM = entityPM.Surcharge1UOM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge2UOM))
+            {
+                oldEntityPM.Surcharge2UOM = entityPM.Surcharge2UOM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge3UOM))
+            {
+                oldEntityPM.Surcharge3UOM = entityPM.Surcharge3UOM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge4UOM))
+            {
+                oldEntityPM.Surcharge4UOM = entityPM.Surcharge4UOM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge5UOM))
+            {
+                oldEntityPM.Surcharge5UOM = entityPM.Surcharge5UOM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge6UOM))
+            {
+                oldEntityPM.Surcharge6UOM = entityPM.Surcharge6UOM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge7UOM))
+            {
+                oldEntityPM.Surcharge7UOM = entityPM.Surcharge7UOM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge8UOM))
+            {
+                oldEntityPM.Surcharge8UOM = entityPM.Surcharge8UOM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge9UOM))
+            {
+                oldEntityPM.Surcharge9UOM = entityPM.Surcharge9UOM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10UOM))
+            {
+                oldEntityPM.Surcharge10UOM = entityPM.Surcharge10UOM;
             }
 			
 		}
