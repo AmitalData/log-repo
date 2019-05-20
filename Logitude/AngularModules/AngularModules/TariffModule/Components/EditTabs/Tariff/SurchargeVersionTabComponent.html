@@ -283,6 +283,19 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- Tools Button -->
+                                    <log-column [width]="'80'" [Editable]="true" [Alignment]="'right'">
+                                        <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
+                                            <span class="CellSeparator" style="float: left;"></span>
+                                            <div style="width: 22px; float: left; height:20px; padding-top: 2px; display:block">
+                                                <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Edit'" [IsSmall]="true" (click)="EditTariffButtonClicked(item)"></IconButton>
+                                            </div>
+                                            <div style="width: 22px; float: left; height:20px; padding-top: 2px; display:block">
+                                                <IconButton [IsEnabled]="IsDraftVersion" [Name]="'delete'" [IsSmall]="true" (click)="DeleteTariffButtonClicked(item)"></IconButton>
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
                                 </logitude-edit-grid>
                             </div>
                         </td>
