@@ -755,33 +755,62 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (!_IsSubmitDeclarationResponse && _MyDeclarationPM.IsCourierDeclaration) //Task 48913
             {
-                LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
-                var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", _MyDeclarationPM.CustomerCode, false, true);
-                bool isCollectActive = def.DEFDATA == "Y";
-                if (isCollectActive)
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
+                if (currentDeclarationCourierStatusPM != null && 
+                    (string.IsNullOrEmpty(currentDeclarationCourierStatusPM.CourierPendingReasonCode) || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900" || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "901"))
                 {
-                    DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
-                    if (currentDeclarationCourierStatusPM != null)
+                    // Pending 901
+                    Boolean isSetPendingTo901 = false;
+                    if (customResponse.Response.Error != null)
                     {
-                        if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
+                        foreach (var errorItem in customResponse.Response.Error)
                         {
-                            currentDeclarationCourierStatusPM.CourierPendingReasonCode = "900";
-                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                            LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 900");
+                            if (errorItem.ValidationCode != null && errorItem.ValidationCode.Value == "2382")
+                            {
+                                LogMessagingUtil.Instance.AppendLine("Pending - הצהרה פלסטינאית = 901");
+                                isSetPendingTo901 = true;
+                                currentDeclarationCourierStatusPM.CourierPendingReasonCode = "901";
+                                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 901");
+                            }
                         }
-                        else if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
+                    }
+                    if (!isSetPendingTo901)
+                    {
+                        if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "901")
                         {
                             currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
                             currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                            LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 900");
+                            LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 901");
                         }
-                        if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+
+                        // Pending 901
+                        var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
+                        var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", _MyDeclarationPM.CustomerCode, false, true);
+                        bool isCollectActive = def.DEFDATA == "Y";
+                        if (isCollectActive)
                         {
-                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                            LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
+                            if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
+                            {
+                                currentDeclarationCourierStatusPM.CourierPendingReasonCode = "900";
+                                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 900");
+                            }
+                            else if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
+                            {
+                                currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
+                                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 900");
+                            }
                         }
+                    }
+
+                    if (currentDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
+                    {
+                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                     }
                 }
             }
