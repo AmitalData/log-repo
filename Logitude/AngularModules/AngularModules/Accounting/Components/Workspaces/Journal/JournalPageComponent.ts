@@ -13,6 +13,7 @@ import { JournalPM } from '../../../EntityPMs/JournalPM';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { JournalSummary } from '../../../DataContracts/AccountingSummery';
+import { RevaluationPM } from '../../../EntityPMs/RevaluationPM';
 
 
 @Component({
@@ -50,9 +51,11 @@ export class JournalPageComponent implements AfterViewInit {
             this._entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) => {
                 this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
                     this._entityResourceService.getEntityResourceByTableName("Reconciliation").subscribe((response: any) => {
-                        this.isScreenLoaded = true;
-                        this.CurrentSession.StopBusyIndicator();
-                        this.InitComponent();
+                        this._entityResourceService.getEntityResourceByTableName("Revaluation").subscribe((response: any) => {
+                            this.isScreenLoaded = true;
+                            this.CurrentSession.StopBusyIndicator();
+                            this.InitComponent();
+                        });
                     });
                 });
             });
@@ -209,6 +212,30 @@ export class JournalPageComponent implements AfterViewInit {
         }
     }
 
+    ViewRevaluationQuery(){
+
+        var displayTitle = "";
+        var filters = new ApiQueryFilters();
+        displayTitle = TextCodeTranslator.Translate("Revaluation.Q.AllRevaluations");
+        var queryCode = "AllRevaluations";
+
+        var listArgs = new ListComponentArgs();
+        listArgs.QueryCode = queryCode;
+        listArgs.Filters = filters;
+        listArgs.ObjectTableName = "Revaluation";
+        listArgs.DisplayTitle = displayTitle;
+        // listArgs.BackButtonTitle = "Full Accounting";
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe(response => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
+    }
+
     public RecentJournalsList: JournalList[];
     LoadRecentJournals() {
         this.RecentJournalsList = [];
@@ -329,5 +356,33 @@ export class JournalPageComponent implements AfterViewInit {
                 });
             });
     }
+
+    NewRevaluation() {
+
+        var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        if (useLocal) {
+            var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+            var ChangedText = GeneralText.split('%')[0];
+            var NewText = TextCodeTranslator.TranslateTable('Revaluation');
+            var FinalText = NewText + " " + ChangedText;
+            var newEntityButtonLabel = FinalText;
+        }
+        else {
+            var newEntityButtonLabel = TextCodeTranslator.Translate("General.O.NewEntity").replace("%Entity", TextCodeTranslator.TranslateTable('Revaluation'));
+        }
+
+
+        var windowTitle = newEntityButtonLabel;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 550;
+        logWindow.Height = 450;
+        logWindow.Title = windowTitle;
+        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./Accounting/Components/NewEntity/NewRevaluationComponent');
+
+    }
+
+
 
 }

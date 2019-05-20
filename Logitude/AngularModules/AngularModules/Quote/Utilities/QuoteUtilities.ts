@@ -187,6 +187,7 @@ export class QuoteUtilities {
         entityPM.VolumeUnitCode = copiedEntityPM.VolumeUnitCode;
         entityPM.DimensionsUnitCode = copiedEntityPM.DimensionsUnitCode;
         entityPM.GrossWeightUnitCode = copiedEntityPM.GrossWeightUnitCode;
+        entityPM.ChargeableWeightInKG = copiedEntityPM.ChargeableWeightInKG;
         entityPM.ChargeableWeightUnitCode = copiedEntityPM.ChargeableWeightUnitCode;
         entityPM.Ratio = copiedEntityPM.Ratio;
         entityPM.DimFactor = copiedEntityPM.DimFactor;
@@ -556,6 +557,7 @@ export class QuoteUtilities {
         shipmentPM.VolumeUnitCode = entityPM.VolumeUnitCode;
         shipmentPM.DimensionsUnitCode = entityPM.DimensionsUnitCode;
         shipmentPM.GrossWeightUnitCode = entityPM.GrossWeightUnitCode;
+        shipmentPM.ChargeableWeightInKG = entityPM.ChargeableWeightInKG;
         shipmentPM.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
         shipmentPM.BookingVolume = entityPM.Volume;
         shipmentPM.OrderVolumetricWeight = entityPM.VolumetricWeight;
