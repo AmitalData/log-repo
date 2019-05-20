@@ -133,7 +133,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         quoteChargePM.CostMeasurementShortName = iMeasurement.ShortName;
                                         quoteChargePM.SaleMeasurementShortName = iMeasurement.ShortName;
                                     }
-                                }                                                             
+                                }                                
 
                                 if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
                                 {

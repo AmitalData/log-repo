@@ -490,15 +490,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.isCopyButtonClicked = true;
 
         this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
+        this.EntityPM.LastStartDate = this.StartDate;
+        this.EntityPM.LastExpirationDate = this.ExpirationDate;
 
         var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
         copiedVersion.TariffId = this.CurrentVersion.TariffId;
         copiedVersion.Version = this.EntityPM.LastVersion;
         copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
         copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
-        copiedVersion.ExpirationDate = this.CurrentVersion.ExpirationDate;
+        copiedVersion.ExpirationDate = this.ExpirationDate;
         copiedVersion.IsDraft = true;
-        copiedVersion.StartDate = this.CurrentVersion.StartDate;
+        copiedVersion.StartDate = this.StartDate;
         copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
         copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
 
@@ -527,7 +529,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge9Price = item.Surcharge9Price;
             tariffLine.Surcharge10Price = item.Surcharge10Price;
 
-            this.CurrentVersion.AddTariffLine(tariffLine);
+            copiedVersion.AddTariffLine(tariffLine);
         });
 
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");

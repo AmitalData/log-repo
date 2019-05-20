@@ -27,6 +27,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public VersionLinesSource: ObservableCollection;
     private TariffDomainService: TariffDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsActionsEnabled: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.VersionLinesSource = new ObservableCollection([]);
@@ -289,7 +290,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
             this.VersionsList.push(newVersion);
         });
 
-        this.SelectedVersion = this.VersionsList[0];
+        if (this.VersionsList.length > 0) {
+            this.SelectedVersion = this.VersionsList[0];
+            this.IsActionsEnabled = true;
+        }
     }
 
     private selectedVersion: CodeNameClass;
@@ -298,7 +302,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
         if (this.selectedVersion != value) {
             this.selectedVersion = value;
 
-            this.VersionPM = this.EntityPM.TariffVersions.filter(d => d.Version == this.SelectedVersion.Code_Int)[0];
+            this.VersionPM = this.EntityPM.TariffVersions.filter(d => d.Version == value.Code_Int)[0];
             this.FillLines();
         }
     }
@@ -345,6 +349,8 @@ export class VersionHistoryTabComponent implements OnDestroy {
         this.isCopyButtonClicked = true;
 
         this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
+        this.EntityPM.LastStartDate = this.VersionPM.StartDate;
+        this.EntityPM.LastExpirationDate = this.VersionPM.ExpirationDate;
 
         var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
         copiedVersion.TariffId = this.VersionPM.TariffId;
@@ -371,17 +377,33 @@ export class VersionHistoryTabComponent implements OnDestroy {
             tariffLine.DestinationPortId = item.DestinationPortId;
             tariffLine.DestinationPortCode = item.DestinationPortCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
-            tariffLine.MinPrice = item.MinPrice;
-            tariffLine.Step1Price = item.Step1Price;
-            tariffLine.Step2Price = item.Step2Price;
-            tariffLine.Step3Price = item.Step3Price;
-            tariffLine.Step4Price = item.Step4Price;
-            tariffLine.Step5Price = item.Step5Price;
-            tariffLine.Step6Price = item.Step6Price;
-            tariffLine.Step7Price = item.Step7Price;
-            tariffLine.Step8Price = item.Step8Price;
 
-            this.VersionPM.AddTariffLine(tariffLine);
+            if (this.EntityPM.TypeCode == "AFC") {
+                tariffLine.MinPrice = item.MinPrice;
+                tariffLine.Step1Price = item.Step1Price;
+                tariffLine.Step2Price = item.Step2Price;
+                tariffLine.Step3Price = item.Step3Price;
+                tariffLine.Step4Price = item.Step4Price;
+                tariffLine.Step5Price = item.Step5Price;
+                tariffLine.Step6Price = item.Step6Price;
+                tariffLine.Step7Price = item.Step7Price;
+                tariffLine.Step8Price = item.Step8Price;
+            }
+
+            else if (this.EntityPM.TypeCode == "ASC") {
+                tariffLine.Surcharge1Price = item.Surcharge1Price;
+                tariffLine.Surcharge2Price = item.Surcharge2Price;
+                tariffLine.Surcharge3Price = item.Surcharge3Price;
+                tariffLine.Surcharge4Price = item.Surcharge4Price;
+                tariffLine.Surcharge5Price = item.Surcharge5Price;
+                tariffLine.Surcharge6Price = item.Surcharge6Price;
+                tariffLine.Surcharge7Price = item.Surcharge7Price;
+                tariffLine.Surcharge8Price = item.Surcharge8Price;
+                tariffLine.Surcharge9Price = item.Surcharge9Price;
+                tariffLine.Surcharge10Price = item.Surcharge10Price;
+            }
+
+            copiedVersion.AddTariffLine(tariffLine);
         });
 
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
