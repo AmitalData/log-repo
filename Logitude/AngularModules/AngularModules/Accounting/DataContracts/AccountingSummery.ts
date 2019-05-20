@@ -1,4 +1,4 @@
-﻿export class GLAccountSummary {
+export class GLAccountSummary {
     Id : number;
     ActiveGLAccountCount : number;
     InactiveGLAccountCount : number;
@@ -39,4 +39,16 @@ export class BankAccountSummary {
 export class PaymentChequeSummary {
     Id: number;
     AllPaymenChequesCount: number;
+}
+export class BankDepositSummary {
+    Id: number;
+    TodaysDepositCount: number;
+
+}
+
+export class CashBookSummary {
+    Id: number;
+    CashCashbookCount: number;
+    ChequeCashbookCount: number;
+    AllCashbookCount: number;
 }

@@ -56,10 +56,10 @@ export class EditTabsComponent {
     // this.OrderTabScenario.OrderTab(LogitudeShipType,ShipmentType);
     // this.PartnersTabScenario.PartnersTab(LogitudeShipType);
     // this.PackagesTabScenario.PackagesTab(LogitudeShipType,ShipmentType);
-    // this.RoutingTabScenario.RoutingTab(LogitudeShipType,ShipmentType);
+    this.RoutingTabScenario.RoutingTab(LogitudeShipType,ShipmentType);
     // this.PayablesTabScenario.PayablesTab(shipperRef1);
     // this.ReceivablesTabScenario.RecievablesTab(LogitudeShipType);
-    this.DocsOutTabScenario.DocsOutTab();
+    // this.DocsOutTabScenario.DocsOutTab();
     if(LogitudeShipType=='M'){
       this.ShipmentsTabScenario.ShipmentsTab();
     }
