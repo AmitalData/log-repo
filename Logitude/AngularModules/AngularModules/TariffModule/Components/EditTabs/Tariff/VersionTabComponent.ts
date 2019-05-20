@@ -18,7 +18,6 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { DatePipe } from '@angular/common';
-
 declare var ResultAsArray: any;
 
 @Component({
@@ -163,34 +162,44 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
     }
 
+    private ItemsCollection: TariffLineData[] = [];
     FillTariffLines() {
         this.TariffsLinesSource.Clear();
-        var itemsCollection: TariffLineData[] = [];
+        this.ItemsCollection = [];  
         this.DeletedTariffsLines = [];
 
+        this.CurrentVersion.TariffLines.forEach(item => {
+            this.ItemsCollection.push(new TariffLineData(item, this));
+        });
+
+        this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
+
         if (this.IsComparToChecked && this.ComparedToVersionPM != null) {
-            this.ComparedToVersionPM.TariffLines.forEach(item => {
-                var line = this.CurrentVersion.TariffLines.filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
-                if (line != null) { // same
-                    itemsCollection.push(new TariffLineData(line, item, this)); // item is the compaed value 
-                }
-                else {
-                    this.DeletedTariffsLines.push(new TariffLineData(item,null, this));// Deleted 
-                }
-            });
-            this.CurrentVersion.TariffLines.forEach(item => { // New 
-                var line = this.ComparedToVersionPM.TariffLines.filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
-                if (line == null) {
-                    itemsCollection.push(new TariffLineData(item,null, this, true));
-                }
-            });
+            this.ComaredLines();
+            this.BuildDeletedLines();
         }
-        else {
-            this.CurrentVersion.TariffLines.forEach(item => {
-                itemsCollection.push(new TariffLineData(item,null, this));
-            });
-        }
-        this.TariffsLinesSource.InsertCollection(itemsCollection);
+    }
+
+    ComaredLines() {
+        this.ItemsCollection.forEach((item: TariffLineData) => {
+            var line = this.ComparedToVersionPM.TariffLines.filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            if (line) {
+                item.ComparedEntity = line;
+                item.SetCellsComparingText();
+            }
+
+            else {
+                item.IsNewEntity = true;
+            }
+        });
+    }
+    BuildDeletedLines() {
+        this.ComparedToVersionPM.TariffLines.forEach(item => {
+            var line = this.CurrentVersion.TariffLines.filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            if (line == null) {
+                this.DeletedTariffsLines.push(new TariffLineData(item, this));// Deleted 
+            }
+        });
     }
 
     public isComparToChecked = false;
@@ -342,7 +351,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         itemPM.ExpirationDate = this.ExpirationDate;
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
-        var itemComponent = new TariffLineData(itemPM,  null, this, true);
+        var itemComponent = new TariffLineData(itemPM, this, true);
         logWindow.DataContext = itemComponent;
         logWindow.Title = "New Tariff Line";
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
@@ -748,92 +757,127 @@ export class TariffLineData extends BaseComponent {
     private ObjectTableName = "TariffLine";
     public IsNewEntity: boolean = false;
     public IsEditEnabled: boolean = false;
-    private ComparedEntity: TariffLinePM;
-
-    constructor(entity: TariffLinePM, comparedEntity: TariffLinePM = null, public FatherComponent: VersionTabComponent, isNew: boolean = false) {
+    public ComparedEntity: TariffLinePM;
+    constructor(entity: TariffLinePM, public FatherComponent: VersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
-        this.ComparedEntity = comparedEntity; 
         this.IsNewEntity = isNew;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
         this.SetUIProperties();
-        this.SetCellsComparingText();
     }
 
-    public MinPriceComparingText: string = null;
+    public MinPriceComparingPrice: number;
     public MinPriceComparingTextColor: string = null;
-    public Step1ComparingText: string = null;
+    public Step1ComparingPrice: number;
     public Step1ComparingTextColor: string = null;
-    public Step2ComparingText: string = null;
+    public Step2ComparingPrice: number;
     public Step2ComparingTextColor: string = null;
-    public Step3ComparingText: string = null;
+    public Step3ComparingPrice: number;
     public Step3ComparingTextColor: string = null;
-    public Step4ComparingText: string = null;
+    public Step4ComparingPrice: number;
     public Step4ComparingTextColor: string = null;
-    public Step5ComparingText: string = null;
+    public Step5ComparingPrice: number;
     public Step5ComparingTextColor: string = null;
-    public Step6ComparingText: string = null;
+    public Step6ComparingPrice: number;
     public Step6ComparingTextColor: string = null;
-    public Step7ComparingText: string = null;
+    public Step7ComparingPrice: number;
     public Step7ComparingTextColor: string = null;
-    public Step8ComparingText: string = null;
+    public Step8ComparingPrice: number;
     public Step8ComparingTextColor: string = null;
+
     SetCellsComparingText() {
         if (this.ComparedEntity != null) {
-
             var minPriceComparingValue = this.MinPrice - this.ComparedEntity.MinPrice;
             if (!AppTool.IsNullOrZero(minPriceComparingValue)) {
-                this.MinPriceComparingText = minPriceComparingValue + "";
-                this.MinPriceComparingTextColor = this.ComputeWarningPercentageColor(minPriceComparingValue);
+                this.MinPriceComparingPrice = AppTool.Round((minPriceComparingValue / this.ComparedEntity.MinPrice) * 100, 2);
+                this.MinPriceComparingTextColor = this.ComputeWarningPercentageColor(this.MinPriceComparingPrice);
             }
-
+            else {
+                this.MinPriceComparingPrice = null;
+                this.MinPriceComparingTextColor = null;
+            }
             // step 1
             var step1ComparingValue = this.Step1Price - this.ComparedEntity.Step1Price;
             if (!AppTool.IsNullOrZero(step1ComparingValue)) {
-                this.Step1ComparingText = step1ComparingValue + "";
-                this.Step1ComparingTextColor = this.ComputeWarningPercentageColor(step1ComparingValue);
+                this.Step1ComparingPrice = (step1ComparingValue / this.ComparedEntity.Step1Price) * 100;
+                this.Step1ComparingTextColor = this.ComputeWarningPercentageColor(this.Step1ComparingPrice);
             }
-
+            else {
+                this.Step1ComparingPrice = null;
+                this.Step1ComparingTextColor = null;
+            }
+           
             var step2ComparingValue = this.Step2Price - this.ComparedEntity.Step2Price;
             if (!AppTool.IsNullOrZero(step2ComparingValue)) {
-                this.Step2ComparingText = step2ComparingValue + "";
-                this.Step2ComparingTextColor = this.ComputeWarningPercentageColor(step2ComparingValue);
+                this.Step2ComparingPrice = (step2ComparingValue / this.ComparedEntity.Step2Price) * 100;
+                this.Step2ComparingTextColor = this.ComputeWarningPercentageColor(this.Step2ComparingPrice );
+            }
+            else {
+                this.Step2ComparingPrice = null;
+                this.Step2ComparingTextColor = null;
             }
 
             var step3ComparingValue = this.Step3Price - this.ComparedEntity.Step3Price;
             if (!AppTool.IsNullOrZero(step3ComparingValue)) {
-                this.Step3ComparingText = step3ComparingValue + "";
-                this.Step3ComparingTextColor = this.ComputeWarningPercentageColor(step3ComparingValue);
+                this.Step3ComparingPrice = (step3ComparingValue / this.ComparedEntity.Step3Price) * 100;
+                this.Step3ComparingTextColor = this.ComputeWarningPercentageColor(this.Step3ComparingPrice );
+            }
+            else {
+
+                this.Step3ComparingPrice = null;
+                this.Step3ComparingTextColor = null;
             }
 
             var step4ComparingValue = this.Step4Price - this.ComparedEntity.Step4Price;
             if (!AppTool.IsNullOrZero(step4ComparingValue)) {
-                this.Step4ComparingText = step4ComparingValue + "";
-                this.Step4ComparingTextColor = this.ComputeWarningPercentageColor(step4ComparingValue);
+                this.Step4ComparingPrice = (step4ComparingValue / this.ComparedEntity.Step4Price) * 100;
+                this.Step4ComparingTextColor = this.ComputeWarningPercentageColor(this.Step4ComparingPrice);
+            }
+            else {
+                this.Step4ComparingPrice = null;
+                this.Step4ComparingTextColor = null; 
             }
 
             var step5ComparingValue = this.Step5Price - this.ComparedEntity.Step5Price;
             if (!AppTool.IsNullOrZero(step5ComparingValue)) {
-                this.Step5ComparingText = step5ComparingValue + "";
-                this.Step5ComparingTextColor = this.ComputeWarningPercentageColor(step5ComparingValue);
+                this.Step5ComparingPrice = (step5ComparingValue / this.ComparedEntity.Step5Price) * 100;
+                this.Step5ComparingTextColor = this.ComputeWarningPercentageColor(this.Step5ComparingPrice);
+            }
+            else {
+                this.Step5ComparingPrice = null;
+                this.Step5ComparingTextColor = null;
             }
 
             var step6ComparingValue = this.Step6Price - this.ComparedEntity.Step6Price;
             if (!AppTool.IsNullOrZero(step6ComparingValue)) {
-                this.Step6ComparingText = step6ComparingValue + "";
-                this.Step6ComparingTextColor = this.ComputeWarningPercentageColor(step6ComparingValue);
+                this.Step6ComparingPrice = (step6ComparingValue / this.ComparedEntity.Step6Price) * 100;
+                this.Step6ComparingTextColor = this.ComputeWarningPercentageColor(this.Step6ComparingPrice);
+            }
+            else {
+                this.Step6ComparingPrice = null;
+                this.Step6ComparingTextColor = null;
+
             }
 
             var step7ComparingValue = this.Step7Price - this.ComparedEntity.Step7Price;
             if (!AppTool.IsNullOrZero(step7ComparingValue)) {
-                this.Step7ComparingText = step7ComparingValue + "";
-                this.Step7ComparingTextColor = this.ComputeWarningPercentageColor(step7ComparingValue);
+                this.Step7ComparingPrice = (step7ComparingValue / this.ComparedEntity.Step7Price) * 100;
+                this.Step7ComparingTextColor = this.ComputeWarningPercentageColor(this.Step7ComparingPrice);
+            }
+            else {
+
+                this.Step7ComparingPrice = null;
+                this.Step7ComparingTextColor = null;
             }
 
             var step8ComparingValue = this.Step8Price - this.ComparedEntity.Step8Price;
             if (!AppTool.IsNullOrZero(step8ComparingValue)) {
-                this.Step8ComparingText = step8ComparingValue + "";
-                this.Step8ComparingTextColor = this.ComputeWarningPercentageColor(step8ComparingValue);
+                this.Step8ComparingPrice = (step8ComparingValue / this.ComparedEntity.Step8Price) * 100;
+                this.Step8ComparingTextColor = this.ComputeWarningPercentageColor(this.Step8ComparingPrice);
+            }
+            else {
+                this.Step8ComparingPrice = null;
+                this.Step8ComparingTextColor = null;
             }
         }
     }
