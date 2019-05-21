@@ -595,7 +595,7 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
             errors.push(msg.replace("%FieldName", "Invoice Amount"));
         }
         if (this.EntityPM.InvoiceDate > this.EntityPM.AccountingDate) {
-            errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
+            errors.push(TextCodeTranslator.Translate("APInvoice.O.CheckInvoiceDate"));
         }
         if (AppTool.IsNullOrEmpty(this.EntityPM.InvoiceCurrencyId)) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceCurrencyId")));

@@ -10,7 +10,7 @@ export class JournalValidator
 
     public static ValidateJournal(entityPM: any)
     {
-        
+
 
         return [];
     }
@@ -48,7 +48,7 @@ export class JournalValidator
 
                 // Currency
                 if (!line.CurrencyId) {
-                    //you must choose Currency 
+                    //you must choose Currency
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseCurrency") + " " + line.Line  ); //You must choose Currency for line
 
                 }
@@ -96,7 +96,7 @@ export class JournalValidator
 
         if (entityPM.StatusCode == "1" || entityPM.StatusCode == "2" || entityPM.StatusCode == "3")
         {
-            
+
             var cSum: number = 0;
             var dSum: number = 0;
 
@@ -140,9 +140,12 @@ export class JournalValidator
     }
 
     public Validate(entityPM: JournalPM) {
+
+        JournalValidator.CurrentSession = SessionLocator.SelectedSession;
+
         var errors = [];
         var result = [];
-        // Validate last row of journal lines 
+        // Validate last row of journal lines
         if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
             var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
         }
@@ -156,7 +159,7 @@ export class JournalValidator
         if (result.length > 0) {
             return result;
         }
-        
+
         return errors;
     }
 
@@ -198,6 +201,6 @@ export class JournalValidator
         return new Date(year, month + 1, 0).getDate();
     }
 
-    
+
 }
 

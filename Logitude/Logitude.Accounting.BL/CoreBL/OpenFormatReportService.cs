@@ -3359,7 +3359,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 BankAccountPM bankAccountPM = bankAccountQueryService.GetSingle(item.CustomerVendorName, false, false);
                 if (bankAccountPM != null)
                 {
-                    item.CustomerVendorName = bankAccountPM.LocalName;
+                    item.CustomerVendorName = bankAccountPM.LocalName != null? bankAccountPM.LocalName : bankAccountPM.EnglishName;
 
                 }
                 else item.CustomerVendorName = null;
@@ -4007,7 +4007,6 @@ namespace Logitude.Accounting.BL.CoreBL
             DepositTotalRecords = DepositC100.Count();
             APinvoiceTotalRecords = APC100.Count();
 
-            
 
 
 
@@ -4070,7 +4069,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             // prepare file string
             string file = string.Join(Environment.NewLine, lines);
-
+          
             // create document
             int tenant = openFormatReport.Tenant;
             ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
@@ -4128,8 +4127,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 FileName = "BKMVDATA",
             };
 
-            byte[] bytearray = Encoding.Unicode.GetBytes(file);
+            byte[] bytearray = Encoding.Default.GetBytes(file);
             document.FileData = bytearray;
+
+
+
             docService.Create(document, document.FileData, contact.Id);
 
 
@@ -4695,7 +4697,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 FileName = "INI",
             };
 
-            byte[] bytearray = Encoding.Unicode.GetBytes(file);
+            byte[] bytearray = Encoding.Default.GetBytes(file);
             document.FileData = bytearray;
             docService.Create(document, document.FileData, contact.Id);
 

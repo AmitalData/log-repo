@@ -13,6 +13,8 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
+import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
 
 @Component({
     moduleId: module.id,
@@ -25,14 +27,36 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public VersionLinesSource: ObservableCollection;
     private TariffDomainService: TariffDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsActionsEnabled: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.VersionLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
 
-        this.SetStepsLabelsAndVisibility();
+        if (this.EntityPM.TypeCode == "AFC") {
+            this.SetStepsLabelsAndVisibility();
+        }
+
+        else if (this.EntityPM.TypeCode == "ASC") {
+            this.GetAllChargesTypes();
+        }
+        
         this.BuildVersionsList();
         this.Listen();
+    }
+
+    private AllChargesTypes: ChargesTypeList[];
+    private GetAllChargesTypes() {
+        var chargesTypeListService = new ChargesTypeListService();
+        chargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllChargesTypes = myResponse.Result;
+                if (this.AllChargesTypes != null) {
+                    this.AllChargesTypes = this.AllChargesTypes.filter(d => d.InActive == false);
+                    this.SetSurchargesLabelsAndVisibility();
+                }
+            }
+        });
     }
 
     private SaveCompletedEvent: any = null;
@@ -173,7 +197,82 @@ export class VersionHistoryTabComponent implements OnDestroy {
             }
         }
     }
-    
+
+    public Surcharge1PriceLabel: string;
+    public Surcharge2PriceLabel: string;
+    public Surcharge3PriceLabel: string;
+    public Surcharge4PriceLabel: string;
+    public Surcharge5PriceLabel: string;
+    public Surcharge6PriceLabel: string;
+    public Surcharge7PriceLabel: string;
+    public Surcharge8PriceLabel: string;
+    public Surcharge9PriceLabel: string;
+    public Surcharge10PriceLabel: string;
+
+    public Surcharge1PriceVisibility: boolean;
+    public Surcharge2PriceVisibility: boolean;
+    public Surcharge3PriceVisibility: boolean;
+    public Surcharge4PriceVisibility: boolean;
+    public Surcharge5PriceVisibility: boolean;
+    public Surcharge6PriceVisibility: boolean;
+    public Surcharge7PriceVisibility: boolean;
+    public Surcharge8PriceVisibility: boolean;
+    public Surcharge9PriceVisibility: boolean;
+    public Surcharge10PriceVisibility: boolean;
+
+    SetSurchargesLabelsAndVisibility() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge1Id)[0];
+            this.Surcharge1PriceLabel = chargeType.Code;
+            this.Surcharge1PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge2Id)[0];
+            this.Surcharge2PriceLabel = chargeType.Code;
+            this.Surcharge2PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge3Id)[0];
+            this.Surcharge3PriceLabel = chargeType.Code;
+            this.Surcharge3PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge4Id)[0];
+            this.Surcharge4PriceLabel = chargeType.Code;
+            this.Surcharge4PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge5Id)[0];
+            this.Surcharge5PriceLabel = chargeType.Code;
+            this.Surcharge5PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge6Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge6Id)[0];
+            this.Surcharge6PriceLabel = chargeType.Code;
+            this.Surcharge6PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge7Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge7Id)[0];
+            this.Surcharge7PriceLabel = chargeType.Code;
+            this.Surcharge7PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge8Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge8Id)[0];
+            this.Surcharge8PriceLabel = chargeType.Code;
+            this.Surcharge8PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge9Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge9Id)[0];
+            this.Surcharge9PriceLabel = chargeType.Code;
+            this.Surcharge9PriceVisibility = true;
+        }
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge10Id)) {
+            var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge10Id)[0];
+            this.Surcharge10PriceLabel = chargeType.Code;
+            this.Surcharge10PriceVisibility = true;
+        }
+    }
+
     public VersionsList: CodeNameClass[];
     private BuildVersionsList() {
         this.VersionsList = [];
@@ -191,7 +290,10 @@ export class VersionHistoryTabComponent implements OnDestroy {
             this.VersionsList.push(newVersion);
         });
 
-        this.SelectedVersion = this.VersionsList[0];
+        if (this.VersionsList.length > 0) {
+            this.SelectedVersion = this.VersionsList[0];
+            this.IsActionsEnabled = true;
+        }
     }
 
     private selectedVersion: CodeNameClass;
@@ -200,7 +302,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
         if (this.selectedVersion != value) {
             this.selectedVersion = value;
 
-            this.VersionPM = this.EntityPM.TariffVersions.filter(d => d.Version == this.SelectedVersion.Code_Int)[0];
+            this.VersionPM = this.EntityPM.TariffVersions.filter(d => d.Version == value.Code_Int)[0];
             this.FillLines();
         }
     }
@@ -247,6 +349,8 @@ export class VersionHistoryTabComponent implements OnDestroy {
         this.isCopyButtonClicked = true;
 
         this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
+        this.EntityPM.LastStartDate = this.VersionPM.StartDate;
+        this.EntityPM.LastExpirationDate = this.VersionPM.ExpirationDate;
 
         var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
         copiedVersion.TariffId = this.VersionPM.TariffId;
@@ -273,17 +377,33 @@ export class VersionHistoryTabComponent implements OnDestroy {
             tariffLine.DestinationPortId = item.DestinationPortId;
             tariffLine.DestinationPortCode = item.DestinationPortCode;
             tariffLine.DestinationPortName = item.DestinationPortName;
-            tariffLine.MinPrice = item.MinPrice;
-            tariffLine.Step1Price = item.Step1Price;
-            tariffLine.Step2Price = item.Step2Price;
-            tariffLine.Step3Price = item.Step3Price;
-            tariffLine.Step4Price = item.Step4Price;
-            tariffLine.Step5Price = item.Step5Price;
-            tariffLine.Step6Price = item.Step6Price;
-            tariffLine.Step7Price = item.Step7Price;
-            tariffLine.Step8Price = item.Step8Price;
 
-            this.VersionPM.AddTariffLine(tariffLine);
+            if (this.EntityPM.TypeCode == "AFC") {
+                tariffLine.MinPrice = item.MinPrice;
+                tariffLine.Step1Price = item.Step1Price;
+                tariffLine.Step2Price = item.Step2Price;
+                tariffLine.Step3Price = item.Step3Price;
+                tariffLine.Step4Price = item.Step4Price;
+                tariffLine.Step5Price = item.Step5Price;
+                tariffLine.Step6Price = item.Step6Price;
+                tariffLine.Step7Price = item.Step7Price;
+                tariffLine.Step8Price = item.Step8Price;
+            }
+
+            else if (this.EntityPM.TypeCode == "ASC") {
+                tariffLine.Surcharge1Price = item.Surcharge1Price;
+                tariffLine.Surcharge2Price = item.Surcharge2Price;
+                tariffLine.Surcharge3Price = item.Surcharge3Price;
+                tariffLine.Surcharge4Price = item.Surcharge4Price;
+                tariffLine.Surcharge5Price = item.Surcharge5Price;
+                tariffLine.Surcharge6Price = item.Surcharge6Price;
+                tariffLine.Surcharge7Price = item.Surcharge7Price;
+                tariffLine.Surcharge8Price = item.Surcharge8Price;
+                tariffLine.Surcharge9Price = item.Surcharge9Price;
+                tariffLine.Surcharge10Price = item.Surcharge10Price;
+            }
+
+            copiedVersion.AddTariffLine(tariffLine);
         });
 
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");

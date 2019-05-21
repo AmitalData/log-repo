@@ -86,11 +86,12 @@ namespace WebFreight.Web.AccountingWebServices.Testers
         protected void Page_Load(object sender, EventArgs e)
         {
             LogMessagingUtil.Instance.Clear();
+            //var testIt = new AccountingModel.WebInjection.XLSUtil();
+            //testIt.GetDataTableFromWorkSheet(null,"");
+
 
             try
             {
-
-
 
 
                 //AuthenticationUtil.Impersonate(1, 
@@ -1930,10 +1931,10 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 {
                     //OtherAccounts = true,
                     VatAccounts = true,
-                    ControlAccounts = false,
-                    ExchangeRateDiff = false,
-                    RevenueExpense = false,
-                    TaxWithholding = false
+                    ControlAccounts = true,
+                    ExchangeRateDiff = true,
+                    RevenueExpense = true,
+                    TaxWithholding = true
                 },
                 //BuildFullAccountingSetting = true,
                 //BuildFullAccountingSettingVAT = true,
@@ -1961,7 +1962,14 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 int YYYY = param.YYYY;
                 //bool BuildFullAccountingSetting = param.BuildFullAccountingSetting;
                 //bool BuildFullAccountingSettingVAT = param.BuildFullAccountingSettingVAT;
-                BuildAccountingTenantParam BuildAccountingTenant = param.BuildAccountingTenant;
+                BuildAccountingTenantParam BuildAccountingTenant = new BuildAccountingTenantParam()
+                {
+                    ControlAccounts = param.BuildAccountingTenant.ControlAccounts,
+                    ExchangeRateDiff = param.BuildAccountingTenant.ExchangeRateDiff,
+                    RevenueExpense = param.BuildAccountingTenant.RevenueExpense,
+                    TaxWithholding = param.BuildAccountingTenant.TaxWithholding,
+                    VatAccounts = param.BuildAccountingTenant.VatAccounts,
+                };
                 int BuildGLAccountEachType = param.BuildGLAccountEachType;
                 int BuildJournalEachMonth = param.BuildJournalEachMonth;
 

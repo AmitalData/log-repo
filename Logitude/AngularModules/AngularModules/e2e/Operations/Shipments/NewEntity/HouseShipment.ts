@@ -41,7 +41,7 @@ export class HouseShipment {
     this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'mvd');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
   }
-    this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'TestIncoterm');
+    this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'LDE');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     // this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveType');

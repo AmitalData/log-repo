@@ -134,13 +134,19 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if(entityPOCO.CreatedByUserId != null)
             {
                 ContactPM createdByContact = contactQuery.GetSinglePM(entityPOCO.CreatedByUserId, entityPOCO.Tenant);
-                entityPM.CreatedByUserName = showLocals ? createdByContact.LocalName : createdByContact.EnglishName;
+                if (createdByContact == null) 
+                    createdByContact = contactQuery.GetSinglePM(entityPOCO.CreatedByUserId, 0); // user is customer care, get it from tenant 0
+                if (createdByContact != null)
+                    entityPM.CreatedByUserName = showLocals ? createdByContact.LocalName : createdByContact.EnglishName;
             }
 
             if (entityPOCO.UpdatedByUserId != null)
             {
                 ContactPM updatedByContact = contactQuery.GetSinglePM(entityPOCO.UpdatedByUserId, entityPOCO.Tenant);
-                entityPM.UpdatedByUserName = showLocals ? updatedByContact.LocalName : updatedByContact.EnglishName;
+                if(updatedByContact == null) 
+                    updatedByContact = contactQuery.GetSinglePM(entityPOCO.UpdatedByUserId, 0); // user is customer care, get it from tenant 0
+                if (updatedByContact != null)
+                    entityPM.UpdatedByUserName = showLocals ? updatedByContact.LocalName : updatedByContact.EnglishName;
             }
 
 

@@ -48,7 +48,7 @@ export class EditTabsComponent {
     // this.QuickSearch.UseQuickSearch('SR1545342');
   }
 
-  EditTabs(shipperRef1:string,LogitudeShipType:string,ShipmentType: string) {
+  EditTabs(shipperRef1:string,LogitudeShipType:string,ShipmentType: string,Direction:string) {
 
 
     this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
@@ -56,10 +56,10 @@ export class EditTabsComponent {
     // this.OrderTabScenario.OrderTab(LogitudeShipType,ShipmentType);
     // this.PartnersTabScenario.PartnersTab(LogitudeShipType);
     // this.PackagesTabScenario.PackagesTab(LogitudeShipType,ShipmentType);
-    // this.RoutingTabScenario.RoutingTab(LogitudeShipType,ShipmentType);
-    // this.PayablesTabScenario.PayablesTab(shipperRef1);
-    // this.ReceivablesTabScenario.RecievablesTab(LogitudeShipType);
-    this.DocsOutTabScenario.DocsOutTab();
+    this.RoutingTabScenario.RoutingTab(LogitudeShipType,ShipmentType,Direction);
+    this.PayablesTabScenario.PayablesTab(shipperRef1);
+    this.ReceivablesTabScenario.RecievablesTab(LogitudeShipType);
+    // this.DocsOutTabScenario.DocsOutTab();
     if(LogitudeShipType=='M'){
       this.ShipmentsTabScenario.ShipmentsTab();
     }
