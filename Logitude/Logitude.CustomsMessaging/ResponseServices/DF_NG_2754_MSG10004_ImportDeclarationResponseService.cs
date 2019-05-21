@@ -53,25 +53,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
             {
-                var customContext = CustomContext.GetContext(requestParams.Tenant);
-                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
-                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(requestParams.AppicationId, false, false);
-                if (currentDeclarationCourierStatusPM != null)
-                {
-                    string prevVal = null;
-                    string currvVal = null;
-                    CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, requestParams.AppicationId, requestParams.Tenant);
-                    prevVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
-                    calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
-                    currvVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
-
-                    if (prevVal != currvVal)
-                    {
-                        DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), requestParams.Tenant);
-                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                        declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
-                    }
-                }
+                CalculateDeclarationCourierStatus.UpdateCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId);
             }
             base.OnRequestFail(customResponse, requestParams);
         }
