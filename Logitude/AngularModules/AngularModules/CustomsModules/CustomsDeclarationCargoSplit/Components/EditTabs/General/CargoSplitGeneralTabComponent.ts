@@ -341,8 +341,10 @@ public CargoIdentifiersList: ObservableCollection;
     SetWindowArgs(winArg: any) {
         this.EntityPM = winArg.CurrentEntity;
         if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
+            this.IsNewEntity = true;
             this.CustomFileNo = winArg.CustomFileNo;
-            this.CustomFileNoTextChanged("");
+            this.RequestDate = DateTool.GetDateByDay(+0);
+            this.CustomFileNoTextChanged(winArg.CustomFileNo);
         }
         this.Init();
         if (AppTool.IsNullOrEmpty(this.ImporterCode)) {
@@ -364,7 +366,7 @@ public CargoIdentifiersList: ObservableCollection;
           var item = new DecCargoSplitCargoIdentifierModel(conItem);
           this.ItemsList.Insert(item);
         }
-      }
+    }
         //this.EntityPM = winArg.declarationPM;
   }
 
