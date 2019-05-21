@@ -27,7 +27,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 .Where(rec => EntityFunctions.TruncateTime(rec.AccountingDate) >= fromDate.Date && EntityFunctions.TruncateTime(rec.AccountingDate) <= toDate.Date);
         }
 
-  
+
+
+        public IQueryable< IGrouping<String,JournalLine>> GetQGJournalLinesByExternalReco(int tenant)
+        {
+            return this.repository.GetAll(tenant)
+                .Where(rec => !String.IsNullOrWhiteSpace(rec.ExternalReconcileNumber)
+                    && rec.ExternalReconcileNumber != "0" && rec.ExternalReconcileNumber != "0.00").GroupBy(rec => rec.ExternalReconcileNumber).OrderBy(gr => Decimal.Parse(gr.Key));
+        }
+
 
         public IQueryable<JournalLineLedgerDTO> GetJournalLineAsLedgerTransaction(DateTime fromTruncateTime, DateTime toTruncateTime, int tenant
             //, JournalLineQueryService qsJournalLine
