@@ -2899,7 +2899,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         entityComputedFields.IsDigitalSignRequired = false;
                         entityComputedFields.MissingDocumentsCount = 0;
                         entityComputedFields.MissingDocumentsNames = "";
-   
+
                     }
 
                     else
@@ -2924,6 +2924,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         entityComputedFields.IsDigitalSignRequired = false;
                     }
 
+                    //abed
 
                     entityPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
                     entityPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;

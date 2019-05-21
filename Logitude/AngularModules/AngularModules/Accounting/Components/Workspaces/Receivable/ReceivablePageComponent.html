@@ -125,9 +125,9 @@
 
                                             <!-- General Invoices-->
                                             <div class="QueriesSection">
-                                                <div>{{'Accounting.General.O.GeneralInvoice' | TextCodeTranslationPipe}}</div>
+                                                <div>{{'Accounting.General.O.ARInvoices' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; position: absolute; top:0px; text-align:left;">
-                                                    <div tabindex="0" class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
+                                                    <div tabindex="0" id="{{'NewInvoice' | IdGeneratorPipe}}"  class="ToggleButton" style="margin: auto;text-align:left; width: 100% !important; height: 100% !important">
                                                         <label>{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</label>
                                                         <img src="./Images/ToggleIcon.png" />
                                                         <div  [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'" class="ToggleButtonMenu" style="width: 120px;">
@@ -148,7 +148,7 @@
 
                                             <!-- ARPayment -->
                                             <div class="QueriesSection" style="color: #58B8FF;">
-                                                <div>{{'Accounting.General.O.Payments' | TextCodeTranslationPipe}}</div>
+                                                <div>{{'Accounting.General.O.ARPayments' | TextCodeTranslationPipe}}</div>
                                                 <button [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'"  class="Button" style="width:45px;" (click)="NewARPaymentMethod()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 <!--<div style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
                                                     <button class="Button" (click)="NewARPaymentMethod()">New</button>
