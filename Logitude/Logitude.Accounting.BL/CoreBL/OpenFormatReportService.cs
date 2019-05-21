@@ -3359,7 +3359,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 BankAccountPM bankAccountPM = bankAccountQueryService.GetSingle(item.CustomerVendorName, false, false);
                 if (bankAccountPM != null)
                 {
-                    item.CustomerVendorName = bankAccountPM.LocalName;
+                    item.CustomerVendorName = bankAccountPM.LocalName != null? bankAccountPM.LocalName : bankAccountPM.EnglishName;
 
                 }
                 else item.CustomerVendorName = null;
