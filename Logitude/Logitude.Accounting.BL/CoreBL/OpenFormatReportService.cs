@@ -1644,26 +1644,29 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a);
                         myStringBuilder.Append('0', 17);
                     }
-
-
-
-                    if (line.UnitPrice != null)
+                    if(line.Quantity == null || line.Quantity == 0)
                     {
-                        string UnitPrice = Format((decimal)line.UnitPrice); // line.UnitPrice.ToString();
+                        line.Quantity = 1;
+                    }
+                    double? UnitPrice = line.LocalCurrencyAmount / line.Quantity;
 
-                        if (line.UnitPrice < 0)
+                    if (UnitPrice != null)
+                    {
+                        string unitPrice = Format((decimal)UnitPrice); // line.UnitPrice.ToString();
+
+                        if (UnitPrice < 0)
                         {
                             myStringBuilder.Append(a);
                             myStringBuilder.Append("-");
-                            if (UnitPrice.Length > 14) { UnitPrice = UnitPrice.Substring(0, 14); }
-                            myStringBuilder.Append( UnitPrice.PadLeft(14, '0'));
+                            if (unitPrice.Length > 14) { unitPrice = unitPrice.Substring(0, 14); }
+                            myStringBuilder.Append( unitPrice.PadLeft(14, '0'));
                         }
-                        else if (line.UnitPrice > 0)
+                        else if (UnitPrice > 0)
                         {
                             myStringBuilder.Append(a);
                             myStringBuilder.Append("+");
-                            if (UnitPrice.Length > 14) { UnitPrice = UnitPrice.Substring(0, 14); }
-                            myStringBuilder.Append( UnitPrice.PadLeft(14, '0'));
+                            if (unitPrice.Length > 14) { unitPrice = unitPrice.Substring(0, 14); }
+                            myStringBuilder.Append( unitPrice.PadLeft(14, '0'));
                         }
                        
                     }
