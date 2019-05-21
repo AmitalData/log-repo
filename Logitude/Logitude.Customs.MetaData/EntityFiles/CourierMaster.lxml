@@ -44,13 +44,14 @@
   <Query Code="&quot;OPENCOURIERMASTERS&quot;" TextCode="&quot;Open Courier Masters&quot;" LocalTextCode="&quot;טיסות פתוחות&quot;" QueryGroupCode="&quot;dcc9&quot;" IndexOrder="0" ObjectTableName="&quot;Customs.CourierMaster&quot;" QuerySection="&quot;Customs.CourierMaster&quot;" SystemLevel="true" IsAddNewEntity="true" IsPackagable="true" DefaultSortName="&quot;CreateDateTime&quot;" DefaultSortDirection="&quot;Desending&quot;" IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="0" ObjectFieldName="&quot;AirlineName&quot;" ColumnWidth="150" />
-      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="1" ObjectFieldName="&quot;MAWB&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="2" ObjectFieldName="&quot;HAWB&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="3" ObjectFieldName="&quot;GatewayPortName&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="4" ObjectFieldName="&quot;CreateDateTime&quot;" ColumnWidth="100" />
-      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="5" ObjectFieldName="&quot;EstimatedArrivalDate&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="6" ObjectFieldName="&quot;IsOpen&quot;" ColumnWidth="100" />
-      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="7" ObjectFieldName="&quot;IsCancelled&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="1" ObjectFieldName="&quot;IntegratorName&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="2" ObjectFieldName="&quot;MAWB&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="3" ObjectFieldName="&quot;HAWB&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="4" ObjectFieldName="&quot;GatewayPortName&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="5" ObjectFieldName="&quot;CreateDateTime&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="6" ObjectFieldName="&quot;EstimatedArrivalDate&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="7" ObjectFieldName="&quot;IsOpen&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;OPENCOURIERMASTERS&quot;" IndexOrder="8" ObjectFieldName="&quot;IsCancelled&quot;" ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter QueryCode="&quot;OPENCOURIERMASTERS&quot;" PredefinedValue="&quot;true&quot;" ObjectFieldName="&quot;IsOpen&quot;" IsPredefined="true" IndexOrder="0" />
@@ -59,13 +60,14 @@
   <Query Code="&quot;CLOSECOURIERMASTERS&quot;" TextCode="&quot;Close Courier Masters&quot;" LocalTextCode="&quot;טיסות סגורות&quot;" QueryGroupCode="&quot;dcc9&quot;" IndexOrder="1" ObjectTableName="&quot;Customs.CourierMaster&quot;" QuerySection="&quot;Customs.CourierMaster&quot;" SystemLevel="true" IsAddNewEntity="true" IsPackagable="true" DefaultSortName="&quot;CreateDateTime&quot;" DefaultSortDirection="&quot;Desending&quot;" IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="0" ObjectFieldName="&quot;AirlineName&quot;" ColumnWidth="150" />
-      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="1" ObjectFieldName="&quot;MAWB&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="2" ObjectFieldName="&quot;HAWB&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="3" ObjectFieldName="&quot;GatewayPortName&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="4" ObjectFieldName="&quot;CreateDateTime&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="5" ObjectFieldName="&quot;EstimatedArrivalDate&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="6" ObjectFieldName="&quot;IsOpen&quot;" ColumnWidth="100" />
-      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="7" ObjectFieldName="&quot;IsCancelled&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="1" ObjectFieldName="&quot;IntegratorName&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="2" ObjectFieldName="&quot;MAWB&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="3" ObjectFieldName="&quot;HAWB&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="4" ObjectFieldName="&quot;GatewayPortName&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="5" ObjectFieldName="&quot;CreateDateTime&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="6" ObjectFieldName="&quot;EstimatedArrivalDate&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="7" ObjectFieldName="&quot;IsOpen&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;CLOSECOURIERMASTERS&quot;" IndexOrder="8" ObjectFieldName="&quot;IsCancelled&quot;" ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter QueryCode="&quot;CLOSECOURIERMASTERS&quot;" PredefinedValue="&quot;false&quot;" ObjectFieldName="&quot;IsOpen&quot;" IsPredefined="true" IndexOrder="0" />
@@ -74,13 +76,14 @@
   <Query Code="&quot;ALLCOURIERS&quot;" TextCode="&quot;All Courier Masters&quot;" LocalTextCode="&quot;כל הטיסות&quot;" QueryGroupCode="&quot;dcc9&quot;" IndexOrder="2" ObjectTableName="&quot;Customs.CourierMaster&quot;" QuerySection="&quot;Customs.CourierMaster&quot;" SystemLevel="true" IsAddNewEntity="true" IsPackagable="true" DefaultSortName="&quot;CreateDateTime&quot;" DefaultSortDirection="&quot;Desending&quot;" IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="0" ObjectFieldName="&quot;AirlineName&quot;" ColumnWidth="150" />
-      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="1" ObjectFieldName="&quot;MAWB&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="2" ObjectFieldName="&quot;HAWB&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="3" ObjectFieldName="&quot;GatewayPortName&quot;" ColumnWidth="150" />
-      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="4" ObjectFieldName="&quot;CreateDateTime&quot;" ColumnWidth="100" />
-      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="5" ObjectFieldName="&quot;EstimatedArrivalDate&quot;" ColumnWidth="150" />
-      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="6" ObjectFieldName="&quot;IsOpen&quot;" ColumnWidth="120" />
-      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="7" ObjectFieldName="&quot;IsCancelled&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="1" ObjectFieldName="&quot;IntegratorName&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="2" ObjectFieldName="&quot;MAWB&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="3" ObjectFieldName="&quot;HAWB&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="4" ObjectFieldName="&quot;GatewayPortName&quot;" ColumnWidth="150" />
+      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="5" ObjectFieldName="&quot;CreateDateTime&quot;" ColumnWidth="100" />
+      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="6" ObjectFieldName="&quot;EstimatedArrivalDate&quot;" ColumnWidth="150" />
+      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="7" ObjectFieldName="&quot;IsOpen&quot;" ColumnWidth="120" />
+      <QueryColumn QueryCode="&quot;ALLCOURIERS&quot;" IndexOrder="8" ObjectFieldName="&quot;IsCancelled&quot;" ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters />
   </Query>
