@@ -29,6 +29,7 @@ using Logitude.Server.Tools.Models;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -48,7 +49,15 @@ namespace Logitude.CustomsMessaging.RequestServices
         private CourierMasterPM _CourierMasterPM;
         private CourierDeclarationPM _CourierDeclarationPM;
 
+        public override void OnRequestFail(MANIFESTRequestRequestParams requestParams)
+        {
+            if (!String.IsNullOrWhiteSpace(requestParams.DeclarationId))
+            {
+                CalculateDeclarationCourierStatus.UpdateCourierManifestStatusCode(requestParams.Tenant, requestParams.DeclarationId);
+            }
 
+            base.OnRequestFail(requestParams);
+        }
 
         public override MN_MSG1_MANIFEST GetRequest(MANIFESTRequestRequestParams requestParams)
         {

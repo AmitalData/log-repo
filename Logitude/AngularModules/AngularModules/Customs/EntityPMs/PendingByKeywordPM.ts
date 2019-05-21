@@ -49,6 +49,11 @@ export class PendingByKeywordPM {
     public set KeywordsList(newValue: string) { if (this.keywordsList != newValue) { this.keywordsList = newValue; this.MarkAsDirty("KeywordsList"); } }
        
 	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
 
     public OldEntityPM: PendingByKeywordPM;
 		

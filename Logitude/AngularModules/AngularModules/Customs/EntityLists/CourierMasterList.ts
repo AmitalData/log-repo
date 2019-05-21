@@ -44,6 +44,8 @@ export class CourierMasterList {
 	StorageSiteCode: string;
 	StorageSiteName: string;
 	TruckerId: string;
+	IntegratorCode: string;
+	IntegratorName: string;
 	
 }
  

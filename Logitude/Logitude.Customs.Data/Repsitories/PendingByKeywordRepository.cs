@@ -24,12 +24,12 @@ namespace Logitude.Customs.Data.Repsitories
         public string GetCourierPendingReasonCodeBykeyWords(string keyWordsList, int tenant)
         {
             keyWordsList = keyWordsList.ToLower();
-            keyWordsList.Replace(" ", ",");
+            keyWordsList = keyWordsList.Replace(" ", ",");
             char[] BAD_CHARS = new char[] { '!', '@', '#', '$', '%', '_' , ')' , '(' , '-' , '*', '&', '^', '~', '.', '"', ';', '\'', '\\', '/', '<', '>', '{', '}', '[', ']' };
             keyWordsList = string.Concat(keyWordsList.Split(BAD_CHARS, StringSplitOptions.RemoveEmptyEntries));
             while (keyWordsList.Contains(",,"))
             {
-                keyWordsList.Replace(",,", ",");
+                keyWordsList = keyWordsList.Replace(",,", ",");
             }
            
             List<string> keyWordsList2 = keyWordsList.Split(',').ToList();

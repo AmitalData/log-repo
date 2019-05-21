@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual CourierPendingReason CourierPendingReason { get; set; }
         [Column("KeywordsList")]
 	    public string KeywordsList { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 

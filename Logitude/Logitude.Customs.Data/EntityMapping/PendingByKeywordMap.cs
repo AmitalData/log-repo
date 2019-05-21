@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CourierPendingReasonCode).HasColumnName("CourierPendingReasonCode").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.KeywordsList).HasColumnName("KeywordsList").HasMaxLength(2000).IsUnicode(true);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(2000).IsUnicode(true);
         }
     }
 }

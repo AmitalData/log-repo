@@ -215,6 +215,9 @@ import { RefundCustomerActivityTypeListService } from './Services/StandardLists/
 import { TransferCargoMethodTypeListService } from './Services/StandardLists/TransferCargoMethodTypeListService';
 import { UpdateCodeListService } from './Services/StandardLists/UpdateCodeListService';
 import { GatepassReturnCodeListService } from './Services/StandardLists/GatepassReturnCodeListService';
+import { PendingByKeywordListService } from './Services/StandardLists/PendingByKeywordListService';
+
+
 
 //#endregion
 
@@ -267,6 +270,7 @@ import { InternationalSitePMService } from './Services/StandardPMs/International
 import { DeclarationCargoSplitPMService } from './Services/StandardPMs/DeclarationCargoSplitPMService';
 import { CustomsAirlinePMService } from './Services/StandardPMs/CustomsAirlinePMService';
 import { CustomsCountryPMService } from './Services/StandardPMs/CustomsCountryPMService';
+import { PendingByKeywordPMService } from './Services/StandardPMs/PendingByKeywordPMService';
 
 //#endregion
 
@@ -556,6 +560,8 @@ export class ModuleProviders {
             case "TransferCargoMethodTypeListService": { myResult = new TransferCargoMethodTypeListService(); break; }
             case "UpdateCodeListService": { myResult = new UpdateCodeListService(); break; }
             case "GatepassReturnCodeListService": { myResult = new GatepassReturnCodeListService(); break; }
+            case "PendingByKeywordListService": { myResult = new PendingByKeywordListService(); break; }
+                
             //#endregion                
 
             //#region StandardPMs
@@ -608,6 +614,7 @@ export class ModuleProviders {
             case "DeclarationCargoSplitPMService": { myResult = new DeclarationCargoSplitPMService(); break; }
             case "CustomsAirlinePMService": { myResult = new CustomsAirlinePMService(); break; }
             case "CustomsCountryPMService": { myResult = new CustomsCountryPMService(); break; }
+            case "PendingByKeywordPMService": { myResult = new PendingByKeywordPMService(); break; }
             //#endregion
 
             //#region ExtendedLists

@@ -24,6 +24,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CourierPendingReasonName  { get; set; }
        [DataMember]
        public string KeywordsList  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
    }
 
 }

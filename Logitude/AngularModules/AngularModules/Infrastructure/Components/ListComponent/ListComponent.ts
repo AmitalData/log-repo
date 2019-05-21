@@ -2332,7 +2332,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.ShowCloseButton = true;
                     break;
                 }
-
+                case "Customs.PendingByKeyword": {
+                    logWindow.Width = 430;
+                    logWindow.Height = 250;
+                    logWindow.ShowCloseButton = true;
+                    break;
+                }
                 case "Customs.Declaration":
                 case "Customs.PaymentOrder":
                 case "Customs.Claim":
