@@ -229,14 +229,10 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
 
     AddDeclarationCargoSplitCommand() {
 
-        //var errors: string[] = [];
-        //Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-        //if (errors.length > 0) {
-        //    SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-        //    return;
-        //}
         var newDeclarationCargoSplitPM = new DeclarationCargoSplitPM();
         newDeclarationCargoSplitPM.Tenant = this.EntityPM.Tenant;
+        newDeclarationCargoSplitPM.DeclarationId = this.EntityPM.Id;
+        newDeclarationCargoSplitPM.CustomFileNo = this.EntityPM.CustomFileNo;
         //this.DeclarationCargoSplitList.Insert(newDeclarationCargoSplitPM);
 
         this.NewDeclarationCargoSplit(newDeclarationCargoSplitPM);

@@ -1201,7 +1201,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 return res
                 ;
             },
-            null,null);
+            null, () =>
+            {
+                LogMessagingUtil.Instance.AppendLine("CustomsCommandGetCustomRequest.OnUpdateFail()");
+                _RequestService.OnRequestFail(requestParams);
+            });
             customsRequest = ContextObjectTag as TCustomsRequest;
             ;
             return toContinueNextCommand;
