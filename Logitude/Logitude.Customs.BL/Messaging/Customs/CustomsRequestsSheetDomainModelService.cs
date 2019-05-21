@@ -1148,6 +1148,12 @@ After that Remove file  from DCA  .. ");
                     LogMessagingUtil.Instance.AppendLine("Set InterfaceManagement.Description :" + defDesc);
                     updateDesc = defDesc;
                 }
+                updateDesc = updateDesc ?? "";
+                if (updateDesc.Length > 120)
+                {
+                    LogMessagingUtil.Instance.AppendLine("RequestDescription.Substring(0, 119)!!!!!!!!!!!!!!");
+                    updateDesc = updateDesc.Substring(0, 119);
+                }
                 _CommunicationLog.Subject = MyCustomsRequestsSheetPM.RequestDescription = updateDesc;
             }
             //if (String.IsNullOrWhiteSpace(CustomsRequestsSheet.RequestDescription))

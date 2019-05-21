@@ -162,7 +162,10 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                         Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
                         break;
                     }
-
+                    if (_ReceivedBrokeredMessage.RetryNumber > 5)
+                    {
+                        _IQueueService.CompleteAsFailed();
+                    }
 
                     ProccessReceivedMessage();
                     scope.Complete();
