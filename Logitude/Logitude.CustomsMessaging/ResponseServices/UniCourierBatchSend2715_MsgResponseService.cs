@@ -32,6 +32,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
             var myDeclarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+            var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -45,12 +46,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             else
             {
-                //listPM = qs.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
-                //    customResponse.SelectedBOLValue,
-                //    customResponse.SelectedStatusValue,
-                //    customResponse.SelectedTotalInvoiceValue,
-                //    customResponse.SelectedFastIndividualProcessValue,
-                //    customResponse.SelectedCustomStatusValue);
+                listPM = qs.GetByMasterIDCourierDocumentStatus(requestParams.Tenant, requestParams.AppicationId, "X",
+                    customResponse.SelectedBOLValue,
+                    customResponse.SelectedStatusValue,
+                    customResponse.SelectedTotalInvoiceValue,
+                    customResponse.SelectedFastIndividualProcessValue,
+                    customResponse.SelectedCustomStatusValue);
 
             }
             if (listPM.Count == 0)
@@ -71,28 +72,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var customsDocumentQueryService = new CustomsDocumentQueryService(context);
                 var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = itemPM.DeclarationId, ParentEntityCode = "Declaration" }, itemPM.Tenant);
 
-                foreach (var customsDocumentPM in customsDocumentPMList)
+                foreach (var customsDocumentPMItem in customsDocumentPMList)
                 {
-                    if (customsDocumentPM.DocumentStatusCode == "2")
+                    if (customsDocumentPMItem.DocumentStatusCode == "2")
                     {
                         try
                         {
-                            var requestParams2750 = new GenericRequestParams()
-                            {
-                                Tenant = requestParams.Tenant,
-                                LoggingEnabled = true,
-                                LoggingObjectTableId = objectTableId,
-                                LoggingEntityId = itemPM.DeclarationId,
-                                LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
-                                LoggingEntityId2 = objectTableIdCourierMaster,
-                                AppicationId = itemPM.DeclarationId,
-                                InterfaceTypeCode = "2750",
-                                //LoggingEntityReference = declarationNumber,
-                                LoggingUserId = requestParams.LoggingUserId,
-                                RequestVIA = SendRequestVIA.WebServiceBatch,
-                            };
-
-                            SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false);
+                            customsDocumentPMItem.ChangeSetOp = ChangeSetOperation.Update;
+                            customsDocumentPMItem.IsSendToQueue = true;
+                            myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+                            myCustomsDocumentUpdateService.Update(customsDocumentPMItem, true);
                             LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
                             mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
                         }
