@@ -119,7 +119,11 @@ namespace WebFreight.Web.DataProviders
 
         public string AgentPhoneNumber { get; set; }
         public string AgentContactName { get; set; }
+        public int NumberOfHBLs { get; set; }
+
         #endregion
+
+
 
         public List<ManifestDetailsClass> ManifestDetails { get; set; }
         public List<NewManifestDetailsClass> NewManifestDetails { get; set; }
@@ -344,7 +348,9 @@ namespace WebFreight.Web.DataProviders
         public string Reference1 { get; set; }
         public string Reference2 { get; set; }
         public string Reference3 { get; set; }
+        public string Reference4 { get; set; }
         public string CommodityNumber { get; set; }
+        public string Notes { get; set; }
     }
 
     public class GroupedContainersClass
