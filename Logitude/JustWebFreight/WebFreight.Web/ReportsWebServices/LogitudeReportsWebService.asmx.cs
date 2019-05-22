@@ -12719,158 +12719,7 @@ namespace WebFreight.Web.ReportsWebServices
                     ShipmentPackage firstShipmentPackage = ShipmentPackages.Where(d => d.ShipmentId == Item.Id).FirstOrDefault();
 
                     ShipmentDetals shipment = new ShipmentDetals();
-
-                    if(Item.DirectionId == "I")
-                    {
-                        if (!string.IsNullOrEmpty(Item.ConsigneeId))
-                        {
-                            Card consignee = commonContext.Cards.Where(d => d.Id == Item.ConsigneeId).FirstOrDefault();
-                            if (consignee != null)
-                            {
-                                shipment.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(Item.ShipperId))
-                        {
-                            Card shipper = commonContext.Cards.Where(d => d.Id == Item.ShipperId).FirstOrDefault();
-                            if (shipper != null)
-                            {
-                                shipment.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
-                            }
-                        }
-                    }
-
                     shipment.Openedby = Item.CreatedByUserName;
-                    if (!string.IsNullOrEmpty(Item.OperationalClosedByUserId))
-                    {
-                        ContactRepository contactRepository = new ContactRepository(commonContext);
-                        Contact contact = contactRepository.GetSingleContact(Item.OperationalClosedByUserId, tenant);
-                        if (contact != null)
-                        {
-                            shipment.OperationalClosedby = contact.EnglishName;
-                        }
-                    }
-
-                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, Item, shipment);
-
-                    if (firstShipmentPackage != null)
-                    {
-                        shipment.Reference1 = firstShipmentPackage.Reference1;
-                        shipment.Reference2 = firstShipmentPackage.Reference2;
-                        shipment.Reference3 = firstShipmentPackage.Reference3;
-                        shipment.Reference4 = firstShipmentPackage.Reference4;
-                    }
-
-                    if (myLastPickup != null)
-                    {
-                        switch (myLastPickup.PickUpDeliveryFromTypeCode)
-                        {
-                            case "PART":
-                                {
-                                    if (!string.IsNullOrEmpty(myLastPickup.FromPartnerCardId))
-                                    {
-                                        Address myPartnerAddress = FromPartnerAddressLists.Where(d => d.Id == myLastPickup.FromPartnerCardId).FirstOrDefault();// addressRepository.GetMainAddressByCardId(myLastPickup.FromPartnerCardId, tenant);
-                                        if (myPartnerAddress != null)
-                                        {
-                                            shipment.PickupCity = myPartnerAddress.City;
-                                            shipment.PickupCountry = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
-                                        }
-                                    }
-                                    break;
-                                }
-
-                            case "PORT":
-                                {
-                                    if (!string.IsNullOrEmpty(myLastPickup.FromPortId))
-                                    {
-                                        PortPM myPort = PortQuery.GetSinglePort(tenant, myLastPickup.FromPortId, true);
-                                        if (myPort != null)
-                                        {
-                                            shipment.PickupCity = myPort.StateName;
-                                            shipment.PickupCountry = myPort.CountryName;
-                                        }
-                                    }
-                                    break;
-                                }
-
-                            case "CASL":
-                                {
-                                    shipment.PickupCity = myLastPickup.FromAddressCity;
-                                    Country country = FromAddressCountryLists.Where(d => d.Id == myLastPickup.FromAddressCountryId).FirstOrDefault();
-                                    if (country != null)
-                                    {
-                                        shipment.PickupCountry = country.EnglishName;
-                                    }
-                                    break;
-                                }
-                        }
-                    }
-
-                    if (myLastDelivery != null)
-                    {
-                        if (!string.IsNullOrEmpty(myLastDelivery.CarrierId))
-                        {
-                            Card truckerCard = CardRepository.GetSingleCard(myLastDelivery.CarrierId, tenant, true);
-                            if (truckerCard != null)
-                            {
-                                shipment.TruckerName = truckerCard.EnglishName;
-                            }
-                        }
-
-                        switch (myLastDelivery.PickUpDeliveryToTypeCode)
-                        {
-
-                           
-
-                            case "PART":
-                                {
-                                    if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
-                                    {
-                                        Card myPartner = CardRepository.GetSingleCard(myLastDelivery.ToPartnerCardId, tenant, true);
-                                        if (myPartner != null)
-                                        {
-                                            shipment.DeliveryToName = myPartner.EnglishName;
-                                            Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.Id == myLastDelivery.ToPartnerCardId).FirstOrDefault();//addressRepository.GetMainAddressByCardId(myLastDelivery.ToPartnerCardId, tenant);
-                                            if (myPartnerAddress != null)
-                                            {
-                                                shipment.DeliveryTocity = myPartnerAddress.City;
-                                            }
-                                        }
-                                    }
-                                    break;
-                                }
-
-                            case "PORT":
-                                {
-                                    if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
-                                    {
-                                        PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.ToPortId, true);
-                                        if (myPort != null)
-                                        {
-
-                                            shipment.DeliveryToName = myPort.EnglishName;
-                                            shipment.DeliveryTocity = myPort.StateName;
-                                        }
-                                    }
-                                    break;
-                                }
-
-                            case "CASL":
-                                {
-                                    string myCity = myLastDelivery.ToAddressCity;
-                                    if (!string.IsNullOrEmpty(myCity))
-                                    {
-                                        shipment.DeliveryToName = myCity;
-                                        shipment.DeliveryTocity = myCity;
-                                    }
-                                    break;
-                                }
-                        }
-                    }
-
                     shipment.Direction = Item.DirectionName;
                     shipment.ShipmentId = Item.ShipmentNumber;
                     shipment.Shipper = Item.Shipper;
@@ -12935,7 +12784,161 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.Status = Item.ShipmentStatusName;
                     shipment.Dept = ShipmentDepartment != null ? ShipmentDepartment.EnglishName : null;
                     shipment.Branch = Item.BranchName;
+                    shipment.ChargeableWeight = Item.ChargeableWeight;
+                    shipment.ChargeableWeightUnitCode = Item.ChargeableWeightUnitCode;
+                    shipment.NumberofDeliveries = shipmentPickUpDeliveriesLists.Where(d => d.ShipmentId == Item.Id && d.PickUpDeliveryTypeCode == "DELV").ToList().Count;
 
+                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, Item, shipment);
+
+                    if (Item.DirectionId == "I")
+                    {
+                        if (!string.IsNullOrEmpty(Item.ConsigneeId))
+                        {
+                            Card consignee = commonContext.Cards.Where(d => d.Id == Item.ConsigneeId).FirstOrDefault();
+                            if (consignee != null)
+                            {
+                                shipment.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(Item.ShipperId))
+                        {
+                            Card shipper = commonContext.Cards.Where(d => d.Id == Item.ShipperId).FirstOrDefault();
+                            if (shipper != null)
+                            {
+                                shipment.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
+                            }
+                        }
+                    }
+                    
+                    if (!string.IsNullOrEmpty(Item.OperationalClosedByUserId))
+                    {
+                        ContactRepository contactRepository = new ContactRepository(commonContext);
+                        Contact contact = contactRepository.GetSingleContact(Item.OperationalClosedByUserId, tenant);
+                        if (contact != null)
+                        {
+                            shipment.OperationalClosedby = contact.EnglishName;
+                        }
+                    }                    
+
+                    if (firstShipmentPackage != null)
+                    {
+                        shipment.Reference1 = firstShipmentPackage.Reference1;
+                        shipment.Reference2 = firstShipmentPackage.Reference2;
+                        shipment.Reference3 = firstShipmentPackage.Reference3;
+                        shipment.Reference4 = firstShipmentPackage.Reference4;
+                    }
+
+                    if (myLastPickup != null)
+                    {
+                        shipment.LastPickupArrivalDate = myLastPickup.ATA;
+
+                        switch (myLastPickup.PickUpDeliveryFromTypeCode)
+                        {
+                            case "PART":
+                                {
+                                    if (!string.IsNullOrEmpty(myLastPickup.FromPartnerCardId))
+                                    {
+                                        Address myPartnerAddress = FromPartnerAddressLists.Where(d => d.Id == myLastPickup.FromPartnerCardId).FirstOrDefault();// addressRepository.GetMainAddressByCardId(myLastPickup.FromPartnerCardId, tenant);
+                                        if (myPartnerAddress != null)
+                                        {
+                                            shipment.PickupCity = myPartnerAddress.City;
+                                            shipment.PickupCountry = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                                        }
+                                    }
+                                    break;
+                                }
+
+                            case "PORT":
+                                {
+                                    if (!string.IsNullOrEmpty(myLastPickup.FromPortId))
+                                    {
+                                        PortPM myPort = PortQuery.GetSinglePort(tenant, myLastPickup.FromPortId, true);
+                                        if (myPort != null)
+                                        {
+                                            shipment.PickupCity = myPort.StateName;
+                                            shipment.PickupCountry = myPort.CountryName;
+                                        }
+                                    }
+                                    break;
+                                }
+
+                            case "CASL":
+                                {
+                                    shipment.PickupCity = myLastPickup.FromAddressCity;
+                                    Country country = FromAddressCountryLists.Where(d => d.Id == myLastPickup.FromAddressCountryId).FirstOrDefault();
+                                    if (country != null)
+                                    {
+                                        shipment.PickupCountry = country.EnglishName;
+                                    }
+                                    break;
+                                }
+                        }
+                    }
+
+                    if (myLastDelivery != null)
+                    {
+                        shipment.LastDeliveryArrivalDate = myLastDelivery.ATA;
+
+                        if (!string.IsNullOrEmpty(myLastDelivery.CarrierId))
+                        {
+                            Card truckerCard = CardRepository.GetSingleCard(myLastDelivery.CarrierId, tenant, true);
+                            if (truckerCard != null)
+                            {
+                                shipment.TruckerName = truckerCard.EnglishName;
+                            }
+                        }
+
+                        switch (myLastDelivery.PickUpDeliveryToTypeCode)
+                        {
+                            case "PART":
+                                {
+                                    if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
+                                    {
+                                        Card myPartner = CardRepository.GetSingleCard(myLastDelivery.ToPartnerCardId, tenant, true);
+                                        if (myPartner != null)
+                                        {
+                                            shipment.DeliveryToName = myPartner.EnglishName;
+                                            Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.Id == myLastDelivery.ToPartnerCardId).FirstOrDefault();//addressRepository.GetMainAddressByCardId(myLastDelivery.ToPartnerCardId, tenant);
+                                            if (myPartnerAddress != null)
+                                            {
+                                                shipment.DeliveryTocity = myPartnerAddress.City;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
+
+                            case "PORT":
+                                {
+                                    if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
+                                    {
+                                        PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.ToPortId, true);
+                                        if (myPort != null)
+                                        {
+
+                                            shipment.DeliveryToName = myPort.EnglishName;
+                                            shipment.DeliveryTocity = myPort.StateName;
+                                        }
+                                    }
+                                    break;
+                                }
+
+                            case "CASL":
+                                {
+                                    string myCity = myLastDelivery.ToAddressCity;
+                                    if (!string.IsNullOrEmpty(myCity))
+                                    {
+                                        shipment.DeliveryToName = myCity;
+                                        shipment.DeliveryTocity = myCity;
+                                    }
+                                    break;
+                                }
+                        }
+                    }
+                    
                     if (!string.IsNullOrEmpty(Item.CustomerId))
                     {
                         Card customer = commonContext.Cards.Where(d => d.Id == Item.CustomerId).FirstOrDefault();

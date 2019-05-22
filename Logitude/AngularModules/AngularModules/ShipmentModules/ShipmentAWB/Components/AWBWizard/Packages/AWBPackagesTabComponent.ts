@@ -31,9 +31,14 @@ export class AWBPackagesTabComponent extends BaseComponent {
     private DomainService: ShipmentDomainService;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+    private firstDigit: string = ",";
+    private secondDigit: string = ".";
+
     constructor() {
         super();
         this.DomainService = new ShipmentDomainService();
+        this.setDigits();
+
     }
 
     InitTab(wizard: AWBWizardComponent) {
@@ -74,6 +79,17 @@ export class AWBPackagesTabComponent extends BaseComponent {
             });
         }
     }
+
+    private ChargeableWeightPasted: boolean = false;
+    ChargeableWeightPaste($event) {
+        this.ChargeableWeightPasted = true;
+    }
+
+    private GrossWeightPasted: boolean = false;
+    GrossWeightPaste($event) {
+        this.GrossWeightPasted = true;
+    }
+
 
     // SetUIProperties
     public IsEditingEnabled: boolean = false;
@@ -552,6 +568,37 @@ export class AWBPackagesTabComponent extends BaseComponent {
         //this.FireAWBErrorsEvent();
     }
 
+    private setDigits() {
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+            case "CD": {
+                this.firstDigit = ",";
+                this.secondDigit = ".";
+                break;
+            }
+
+            case "DC": {
+                this.firstDigit = ".";
+                this.secondDigit = ",";
+                break;
+            }
+
+            case "AD": {
+                this.firstDigit = "'";
+                this.secondDigit = ".";
+                break;
+            }
+
+            default:
+                {
+                    this.firstDigit = ",";
+                    this.secondDigit = ".";
+                    break;
+                }
+        }
+    }
+
+
+
     GrossWeightLostFocus(input: any) {
 
         var valueComputed: number = 0;
@@ -564,7 +611,19 @@ export class AWBPackagesTabComponent extends BaseComponent {
         });
 
         if (!AppTool.IsNullOrEmpty(input)) {
-            input = AppTool.Replace(input, ",", "");
+            if (this.firstDigit == ".") {
+                if (!this.GrossWeightPasted) {
+                    input = input.replace(/\./g, '');
+                }
+                input = input.replace(/,/g, ".");
+            }
+
+            else if (this.firstDigit == "'") {
+                input = input.replace(/'/g, '');
+            }
+            else {
+                input = AppTool.Replace(input, ",", "");
+            }
             valueInserted = Number(input);
         }
 
@@ -582,7 +641,19 @@ export class AWBPackagesTabComponent extends BaseComponent {
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
         if (!AppTool.IsNullOrEmpty(input)) {
-            input = AppTool.Replace(input, ",", "");
+            if (this.firstDigit == ".") {
+                if (!this.ChargeableWeightPasted) {
+                    input = input.replace(/\./g, '');
+                }
+                input = input.replace(/,/g, ".");
+            }
+
+            else if (this.firstDigit == "'") {
+                input = input.replace(/'/g, '');
+            }
+            else {
+                input = AppTool.Replace(input, ",", "");
+            }
             valueInserted = Number(input);
         }
 

@@ -55,6 +55,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.TransportModeId = this.EntityPM.TransportModeId;
         this.ItemsSource = new ObservableCollection([]);
         this.Listen();
+        this.setDigits();
     }
 
     private SessionEvent: any = null;
@@ -62,6 +63,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null; 
     private CrossDockReleasesEvent: any = null;
+    private firstDigit: string = ",";
+    private secondDigit: string = ".";
 
     private Listen() {
         if (this.entityArgs.EditComponent) {
@@ -116,6 +119,18 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             });
         }
     }
+
+    private ChargeableWeightPasted: boolean = false;
+    ChargeableWeightPaste($event) {
+        this.ChargeableWeightPasted = true;
+    }
+
+
+    private GrossWeightPasted: boolean = false;
+    GrossWeightPaste($event) {
+        this.GrossWeightPasted = true;
+    }
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
@@ -613,7 +628,37 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
-    GrossWeightLostFocus(input: any) {
+    private setDigits() {
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+            case "CD": {
+                this.firstDigit = ",";
+                this.secondDigit = ".";
+                break;
+            }
+
+            case "DC": {
+                this.firstDigit = ".";
+                this.secondDigit = ",";
+                break;
+            }
+
+            case "AD": {
+                this.firstDigit = "'";
+                this.secondDigit = ".";
+                break;
+            }
+
+            default:
+                {
+                    this.firstDigit = ",";
+                    this.secondDigit = ".";
+                    break;
+                }
+        }
+    }
+
+    GrossWeightLostFocus(input: any) {        
+
 
         var valueComputed: number = 0;
         var valueInserted: number = 0;
@@ -625,8 +670,23 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         });
 
         if (!AppTool.IsNullOrEmpty(input)) {
-            input = AppTool.Replace(input, ",", "");
+
+            if (this.firstDigit == ".") {
+                if (!this.GrossWeightPasted) {
+                    input = input.replace(/\./g, '');
+                }
+                input = input.replace(/,/g, ".");
+            }
+
+            else if (this.firstDigit == "'") {
+                input = input.replace(/'/g, '');
+            }
+            else {
+                input = AppTool.Replace(input, ",", "");
+            }
             valueInserted = Number(input);
+
+
         }
 
         if (!valueComputed) {
@@ -651,7 +711,21 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         valueComputed = AppTool.CalculateChargeableWeight(this.EntityPM.GrossWeight, this.EntityPM.VolumetricWeight, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
 
         if (!AppTool.IsNullOrEmpty(input)) {
-            input = AppTool.Replace(input, ",", "");
+
+            if (this.firstDigit == ".") {
+                if (!this.ChargeableWeightPasted) {
+                    input = input.replace(/\./g, '');
+                }
+                input = input.replace(/,/g, ".");
+            }
+
+            else if (this.firstDigit == "'") {
+                input = input.replace(/'/g, '');
+            }
+            else {
+                input = AppTool.Replace(input, ",", "");
+            }
+
             valueInserted = Number(input);
             valueInserted = AppTool.RoundChargeableWeight(valueInserted, this.EntityPM.ChargeableWeightUnitCode, this.EntityPM.DirectionId, this.EntityPM.TransportModeId);
         }

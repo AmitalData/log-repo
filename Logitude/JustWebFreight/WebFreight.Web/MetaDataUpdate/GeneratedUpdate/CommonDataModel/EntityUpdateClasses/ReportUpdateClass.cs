@@ -791,6 +791,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   Feature ReportFeature_Vehicles = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicles", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.Vehicles", NameTextCodeDefaultText = @"Vehicles Shipping" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
+		   Feature ReportFeature_UNER = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UNER", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.UNER", NameTextCodeDefaultText = @"Unicargo Export Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
    
 	    
 		}

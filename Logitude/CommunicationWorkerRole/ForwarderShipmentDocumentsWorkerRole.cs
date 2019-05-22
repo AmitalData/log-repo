@@ -290,7 +290,8 @@ namespace CommunicationWorkerRole
                                                         SignersList = DocumentFilingPM.SignersList,
                                                         FileExtension = DocumentFilingPM.FileExtension,
                                                         FileName = DocumentFilingPM.FileName,
-                                                        CustomerTenantNumber = DocumentFilingPM.Tenant
+                                                        CustomerTenantNumber = DocumentFilingPM.Tenant,
+                                                        Code = DocumentFilingPM.Code,
 
                                                     };
                                                     if (DocumentFilingPM.DocumentsFilingMetaDataValues != null && DocumentFilingPM.DocumentsFilingMetaDataValues.Count > 0)
@@ -462,7 +463,8 @@ namespace CommunicationWorkerRole
                                                         SignersList = DocumentFilingPM.SignersList,
                                                         FileExtension = DocumentFilingPM.FileExtension,
                                                         FileName = DocumentFilingPM.FileName,
-                                                        CustomerTenantNumber = DocumentFilingPM.Tenant
+                                                        CustomerTenantNumber = DocumentFilingPM.Tenant,
+                                                        Code = DocumentFilingPM.Code,
 
                                                     };
                                                     if (DocumentFilingPM.DocumentsFilingMetaDataValues != null && DocumentFilingPM.DocumentsFilingMetaDataValues.Count > 0)
