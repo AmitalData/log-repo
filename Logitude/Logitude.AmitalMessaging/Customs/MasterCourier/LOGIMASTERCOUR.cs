@@ -78,6 +78,8 @@ public partial class LogitudeMasterCourier
 
     private string storageSiteCodeField;
 
+    private string integratorIndexField;
+
     /// <remarks/>
     public string AirlineId
     {
@@ -243,6 +245,19 @@ public partial class LogitudeMasterCourier
         set
         {
             this.storageSiteCodeField = value;
+        }
+    }
+    
+    /// <remarks/>
+    public string IntegratorIndex
+    {
+        get
+        {
+            return this.integratorIndexField;
+        }
+        set
+        {
+            this.integratorIndexField = value;
         }
     }
 }
