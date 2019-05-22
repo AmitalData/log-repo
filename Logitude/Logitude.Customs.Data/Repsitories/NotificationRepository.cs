@@ -81,7 +81,7 @@ namespace Logitude.Customs.Data.Repsitories
 
            foreach(string id in ids)
            {
-             Notification notification = ( from a in context.Notifications.Include("AssigneTo.Contact").Include("AssigneTo").Include("NotificationDefinition")
+             Notification notification = ( from a in context.Notifications.Include("AssigneTo.Contact").Include("AssigneTo").Include("NotificationDefinition").Include("Card")
                        where a.Tenant == tenant && a.Id == id
 
                        select a).FirstOrDefault();
