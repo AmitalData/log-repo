@@ -38,6 +38,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         this.WeightValueFilterItems.addAdditionalFilter("PaymentMethodCode", "CC,CA,NC,PO,PP", null, null, "InListExact", true, false, false, "string", false, true);
         this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("IntegratorCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("IntegratorName", this.ObjectTableName, false);
         this.DisplayOnlyCheck();
         this.CarrierDependencyProperty1 = "TR";
         this.Listen();
@@ -198,6 +199,14 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     set IntegratorCode(value: string) {
         if (this.EntityPM.IntegratorCode != value) {
             this.EntityPM.IntegratorCode = value;
+        }
+    }
+
+    get IntegratorName() { return this.EntityPM.IntegratorName; }
+    set IntegratorName(value: string) {
+        if (this.EntityPM.IntegratorName != value) {
+            this.EntityPM.IntegratorName = value;
+
         }
     }
 

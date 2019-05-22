@@ -348,14 +348,18 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:150px">
-                        <LogLov [ObjectFieldName]="'IntegratorCode'"
-                                [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"
-                                [SelectedValue]="IntegratorCode"
-                                [HideColumns]="true"
-                                [LookUpTableName]="'Card'"
-                                [DependencyFilter1Value]="'CS'">
+                        <LogTextBox [ObjectFieldName]="'IntegratorName'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        <!--
+    <LogLov [ObjectFieldName]="'IntegratorCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+            [SelectedValue]="IntegratorCode"
+            [HideColumns]="true"
+            [LookUpTableName]="'Card'">
+        [DependencyFilter1Value]="'CS'"
                         </LogLov>
+                        -->
                     </td>
                 </tr>
             </table>
