@@ -504,6 +504,8 @@ namespace CustomsWorkerRole
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method", null);
                 //message.SafeComplete();
                 //_CustomDbQueueService.SafeComplete();
+
+                _CustomDbQueueService.SafeAbandon();// make try (in 5101 CRS was analyze *1000000)
                 return false;
                 //throw;
             }
