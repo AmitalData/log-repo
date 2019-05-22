@@ -137,6 +137,24 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
+        public List<DeclarationCourierStatusPM> GetByMasterIDCourierDocumentStatus(int tenant, string CourierMasterId, string DocumentStatusCode
+            , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue)
+        {
+            var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+            var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in repository.GetAll(tenant).Where(r => r.DocumentStatusCode == DocumentStatusCode)
+                     on dec.DeclarationId equals status.DeclarationId
+                     orderby rDec.CourierHAWB ascending
+                     select status);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, q);
+            var pocos = q.ToList();
+            return pocos.Select(r => this.GetEntityPM(r)).ToList();
+
+
+        }
+
 
         public List<KeyValuePair<string,string>> GetByMasterIDStorageSiteCode(int tenant, string CourierMasterId,
          List<string> storageSiteCodeList)
