@@ -130,9 +130,34 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField18 { get; set; }
         public string ShipmentField19 { get; set; }
         public string ShipmentField20 { get; set; }
+        public string ShipmentField21 { get; set; }
+        public string ShipmentField22 { get; set; }
+        public string ShipmentField23 { get; set; }
+        public string ShipmentField24 { get; set; }
+        public string ShipmentField25 { get; set; }
+        public string ShipmentField26 { get; set; }
+        public string ShipmentField27 { get; set; }
+        public string ShipmentField28 { get; set; }
+        public string ShipmentField29 { get; set; }
+        public string ShipmentField30 { get; set; }
+        public string ShipmentField31 { get; set; }
+        public string ShipmentField32 { get; set; }
+        public string ShipmentField33 { get; set; }
+        public string ShipmentField34 { get; set; }
+        public string ShipmentField35 { get; set; }
+        public string ShipmentField36 { get; set; }
+        public string ShipmentField37 { get; set; }
+        public string ShipmentField38 { get; set; }
+        public string ShipmentField39 { get; set; }
+        public string ShipmentField40 { get; set; }
 
         public string CustomerExternalID { get; set; }
-
         public string ShipperConsigneeExternalID { get; set; }
+
+        public int NumberofDeliveries { get; set; }
+        public DateTime? LastPickupArrivalDate { get; set; }
+        public DateTime? LastDeliveryArrivalDate { get; set; }
+        public double? ChargeableWeight  { get; set; }
+        public string ChargeableWeightUnitCode  { get; set; }
     }
 }
