@@ -5,13 +5,16 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 {
-    class ClearAccountingDB
+    public class ClearAccountingDB
     {
         public void ClearDB(int tenant)
         {
@@ -66,6 +69,10 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
                 //.DeleteWhere<AccountingPeriod>(rec => rec.Tenant == tenant);
 
                 var exec = $"update GLAccountMoreDatas set BalanceInLocalCurrency=0.00,LocalBalanceInDue=0.00,NextDueDate='',TotalOpenChequesInLocalCur=0.00,TotFutureOpenChequesInLocalCur=0.00 where Tenant ={tenant}";
+
+                CommandExecuteNonQuery(AccountingContext.GetContext(tenant).GetConnection(), exec);
+
+
                 (accountingContext as DbContextBase)
     .DeleteWhere<BankDepositLine>(rec => rec.Tenant == tenant);
                 (accountingContext as DbContextBase)
@@ -108,6 +115,34 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
             }
         }
 
+        public static void CommandExecuteNonQuery(DbConnection conn, string cmd)
+        {
+            
 
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms != "oracle")
+            {
+                
+                using (var cn = conn as SqlConnection)
+                {
+                    Debug.WriteLine($"CommandExecuteNonQuery({cmd})");
+
+
+                    var command = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    command.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
+
+            else
+            {
+                throw new System.Exception("Context is not  4 oracle ");
+            }
+
+
+        }
     }
 }
+

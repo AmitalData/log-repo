@@ -41,6 +41,7 @@ using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.BankAccountPages;
 using Logitude.Accounting.BL;
+using Logitude.Accounting.BL.CoreBL.FunctionalTests;
 //using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace WebFreight.Web.AccountingWebServices.Testers
@@ -88,8 +89,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             LogMessagingUtil.Instance.Clear();
             //var testIt = new AccountingModel.WebInjection.XLSUtil();
             //testIt.GetDataTableFromWorkSheet(null,"");
-
-
+            var s = new ClearAccountingDB();
+            s.ClearDB(1148);
             try
             {
 
