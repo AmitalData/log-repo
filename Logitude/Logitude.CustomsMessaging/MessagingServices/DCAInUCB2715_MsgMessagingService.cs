@@ -104,22 +104,22 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
 
-            var genericRequestParams = new GenericRequestParams()
-            {
-                Tenant = mySendUnCorrectDocumentsRequestParams.Tenant,
-                AppicationId = mySendUnCorrectDocumentsRequestParams.CourierMasterId,
-                LoggingEnabled = true,
-                InterfaceTypeCode = this.MainInterfaceCode,
-                MainInterfaceCode = this.MainInterfaceCode,
-                LoggingObjectTableId = objectTableId,
-                LoggingEntityId = mySendUnCorrectDocumentsRequestParams.CourierMasterId,
-                LoggingEntityReference = mySendUnCorrectDocumentsRequestParams.CourierMasterId,
-                LoggingUserId = mySendUnCorrectDocumentsRequestParams.LoggingUserId,
-                RequestName = $" שידור מסמכים שגויים " + mySendUnCorrectDocumentsRequestParams.CourierMasterId + " "
-            };
-            UniCourierBatchSend2715_MsgResponseService ser = new UniCourierBatchSend2715_MsgResponseService();
-            ser.Update(myDCAInUCB2715WithResponseContentHeader, genericRequestParams);
-            return "מסמכים שגויים";
+            //var genericRequestParams = new GenericRequestParams()
+            //{
+            //    Tenant = mySendUnCorrectDocumentsRequestParams.Tenant,
+            //    AppicationId = mySendUnCorrectDocumentsRequestParams.CourierMasterId,
+            //    LoggingEnabled = true,
+            //    InterfaceTypeCode = this.MainInterfaceCode,
+            //    MainInterfaceCode = this.MainInterfaceCode,
+            //    LoggingObjectTableId = objectTableId,
+            //    LoggingEntityId = mySendUnCorrectDocumentsRequestParams.CourierMasterId,
+            //    LoggingEntityReference = mySendUnCorrectDocumentsRequestParams.CourierMasterId,
+            //    LoggingUserId = mySendUnCorrectDocumentsRequestParams.LoggingUserId,
+            //    RequestName = $" שידור מסמכים שגויים " + mySendUnCorrectDocumentsRequestParams.CourierMasterId + " "
+            //};
+            //UniCourierBatchSend2715_MsgResponseService ser = new UniCourierBatchSend2715_MsgResponseService();
+            //ser.Update(myDCAInUCB2715WithResponseContentHeader, genericRequestParams);
+            //return "מסמכים שגויים";
 
 
             var body = XmlGenericUtil<DCAInUCB2715WithResponseContentHeader>.SerializeObject(myDCAInUCB2715WithResponseContentHeader);
