@@ -86,19 +86,19 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                     this.IsConnectedToUniFreight = customsSetting.IsConnectedToUniFreight;
                 }
 
-                //// 2- get metadata values then 
+                //// 2- get metadata values then
                 //SessionLocator.CurrentSession.StartBusyIndicatorLoading();
                 //this.custDocsMetadataWebService.GetCustomsDocumentMetaDataValuesByCustomsDocumentFilingIds(customsDocTickets).subscribe((response2: ServiceResponse) => {
                 //    this.MetadataValues = response2.Result;
 
                     // 3- load documents(tickets)
                     this.LoadDocuments();
-                    
 
-                    
+
+
                     SessionLocator.CurrentSession.StopBusyIndicator();
 
-                    
+
             //    });
             });
 
@@ -153,13 +153,15 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         this.TrackBarValue = 1;
 
         this.LoadDocumentPage();
-        //this.LoadDocumentPage(); // need to check it again, it cannot draw image at first call 
+        //this.LoadDocumentPage(); // need to check it again, it cannot draw image at first call
 
     }
     RefreshButtonClicked() {
-        if (!AppTool.IsNullOrEmpty(this.CurrentPageIndex))
-            this.LoadDocumentPage();        
-        //this.renderImage();
+        this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
+
+        // if (!AppTool.IsNullOrEmpty(this.CurrentPageIndex))
+        //     this.LoadDocumentPage();
+        // //this.renderImage();
     }
 
     LoadDocumentPage(pageIndex: number = null) {
@@ -333,6 +335,8 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     set TrackBarValue(value: number) {
         this.trackBarValue = value;
         this.CalculateScaleValue();
+        this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
+
 
     }
 
@@ -344,11 +348,16 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         this.TrackBarValue += +this.TrackBarStep;
         this.CalculateScaleValue();
 
+        if(this.TrackBarValue == 1)
+            this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
+
+
     }
     ZoomOutButton() {
         if (this.TrackBarValue <= 1) return;
         this.TrackBarValue -= +this.TrackBarStep;
         this.CalculateScaleValue();
+
     }
     CalculateScaleValue() {
         //var scaleValue = this.trackBarValue / 100 + 1;
@@ -415,7 +424,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
     }
 
-    //- rotate image to convas - JS Code 
+    //- rotate image to convas - JS Code
     img = new Image;
     canvas;
     ctx;
@@ -435,43 +444,137 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
     }
     renderImage() {
-        this.StartBusyIndicator("Rendering...");
+        if (this.base64Image) {
+            this.StartBusyIndicator("Rendering...");
 
-        /// use index to set canvas size
-        switch (this.angleIndex) {
-            case 0:
-            case 2:
-                /// for 0 and 180 degrees size = image
-                this.canvas.width = this.img.width;
-                this.canvas.height = this.img.height;
-                break;
-            case 1:
-            case 3:
-                /// for 90 and 270 canvas width = img height etc.
-                this.canvas.width = this.img.height;
-                this.canvas.height = this.img.width;
-                break;
+            /// use index to set canvas size
+            switch (this.angleIndex) {
+                case 0:
+                case 2:
+                    /// for 0 and 180 degrees size = image
+                    this.canvas.width = this.img.width;
+                    this.canvas.height = this.img.height;
+                    break;
+                case 1:
+                case 3:
+                    /// for 90 and 270 canvas width = img height etc.
+                    this.canvas.width = this.img.height;
+                    this.canvas.height = this.img.width;
+                    break;
+            }
+
+            /// get stored angle and center of canvas
+            var angle = this.angles[this.angleIndex],
+                cw = this.canvas.width * 0.5,
+                ch = this.canvas.height * 0.5;
+
+            /// rotate context
+            this.ctx.translate(cw, ch);
+            this.ctx.rotate(angle);
+            this.ctx.translate(-this.img.width * 0.5, -this.img.height * 0.5);
+
+            /// draw image and reset transform
+            this.ctx.drawImage(this.img, 0, 0);
+            this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            this.img.src = this.base64Image;
+
+
+
+
+            this.StopBusyIndicator();
+            this.cd.detectChanges();
+
+            this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
+
+            setTimeout(() => {
+                this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
+            }, 500);
+
         }
 
-        /// get stored angle and center of canvas    
-        var angle = this.angles[this.angleIndex],
-            cw = this.canvas.width * 0.5,
-            ch = this.canvas.height * 0.5;
+    }
+    resample_single(canvas, width, height, resize_canvas) {
+        console.log("RESAMPLE: start");
 
-        /// rotate context
-        this.ctx.translate(cw, ch);
-        this.ctx.rotate(angle);
-        this.ctx.translate(-this.img.width * 0.5, -this.img.height * 0.5);
+        var width_source = canvas.width;
+        var height_source = canvas.height;
+        width = Math.round(width);
+        height = Math.round(height);
 
-        /// draw image and reset transform
-        this.ctx.drawImage(this.img, 0, 0);
-        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-        this.img.src = this.base64Image;
+        var ratio_w = width_source / width;
+        var ratio_h = height_source / height;
+        var ratio_w_half = Math.ceil(ratio_w / 2);
+        var ratio_h_half = Math.ceil(ratio_h / 2);
 
-      this.StopBusyIndicator();
-      this.cd.detectChanges();
+        var ctx = canvas.getContext("2d");
+        var img = ctx.getImageData(0, 0, width_source, height_source);
+        var img2 = ctx.createImageData(width, height);
+        var data = img.data;
+        var data2 = img2.data;
+
+        for (var j = 0; j < height; j++) {
+            for (var i = 0; i < width; i++) {
+                var x2 = (i + j * width) * 4;
+                var weight = 0;
+                var weights = 0;
+                var weights_alpha = 0;
+                var gx_r = 0;
+                var gx_g = 0;
+                var gx_b = 0;
+                var gx_a = 0;
+                var center_y = (j + 0.5) * ratio_h;
+                var yy_start = Math.floor(j * ratio_h);
+                var yy_stop = Math.ceil((j + 1) * ratio_h);
+                for (var yy = yy_start; yy < yy_stop; yy++) {
+                    var dy = Math.abs(center_y - (yy + 0.5)) / ratio_h_half;
+                    var center_x = (i + 0.5) * ratio_w;
+                    var w0 = dy * dy; //pre-calc part of w
+                    var xx_start = Math.floor(i * ratio_w);
+                    var xx_stop = Math.ceil((i + 1) * ratio_w);
+                    for (var xx = xx_start; xx < xx_stop; xx++) {
+                        var dx = Math.abs(center_x - (xx + 0.5)) / ratio_w_half;
+                        var w = Math.sqrt(w0 + dx * dx);
+                        if (w >= 1) {
+                            //pixel too far
+                            continue;
+                        }
+                        //hermite filter
+                        weight = 2 * w * w * w - 3 * w * w + 1;
+                        var pos_x = 4 * (xx + yy * width_source);
+                        //alpha
+                        gx_a += weight * data[pos_x + 3];
+                        weights_alpha += weight;
+                        //colors
+                        if (data[pos_x + 3] < 255)
+                            weight = weight * data[pos_x + 3] / 250;
+                        gx_r += weight * data[pos_x];
+                        gx_g += weight * data[pos_x + 1];
+                        gx_b += weight * data[pos_x + 2];
+                        weights += weight;
+                    }
+                }
+                data2[x2] = gx_r / weights;
+                data2[x2 + 1] = gx_g / weights;
+                data2[x2 + 2] = gx_b / weights;
+                data2[x2 + 3] = gx_a / weights_alpha;
+            }
+        }
+
+        //clear and resize canvas
+        if (resize_canvas === true) {
+            canvas.width = width;
+            canvas.height = height;
+        } else {
+            ctx.clearRect(0, 0, width_source, height_source);
+        }
+
+        //draw
+        ctx.putImageData(img2, 0, 0);
+
+        console.log("RESAMPLE: done");
 
     }
+
     rotateCW() {
         this.angleIndex++;     /// increment index of array
         if (this.angleIndex >= this.angles.length) this.angleIndex = 0;
