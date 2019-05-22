@@ -1186,6 +1186,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public string ChargesTypeId { get; set; }
         public double? AmountInLocal { get; set; }
         public double? AmountInProfit { get; set; }
+        public double? ExpectedAmountInLocal { get; set; }
+        public double? ExpectedAmountInProfit { get; set; }
     }
 
     public class ShipmentInvoice
