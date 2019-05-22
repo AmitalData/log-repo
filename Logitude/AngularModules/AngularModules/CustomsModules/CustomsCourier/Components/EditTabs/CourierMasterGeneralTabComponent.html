@@ -339,6 +339,27 @@
                 </tr>
             </table>
         </td>
+
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'IntegratorCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogLov [ObjectFieldName]="'IntegratorCode'"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [SelectedValue]="IntegratorCode"
+                                [HideColumns]="true"
+                                [LookUpTableName]="'Card'"
+                                [DependencyFilter1Value]="'CS'">
+                        </LogLov>
+                    </td>
+                </tr>
+            </table>
+        </td>
         <td><div></div></td>
     </tr>
 

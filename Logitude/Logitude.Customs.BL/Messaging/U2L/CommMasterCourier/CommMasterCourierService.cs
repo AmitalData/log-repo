@@ -208,6 +208,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 if (_CourierMasterPM.Tenant < 1) _CourierMasterPM.Tenant = ResolvedTenant();
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.FlightNumber)) _CourierMasterPM.FlightNumber = _LogitudeMasterCourier.FlightNumber;
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.WeightValueCode)) _CourierMasterPM.WeightValueCode = TranslateWeightValue(_LogitudeMasterCourier.WeightValueCode);
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.IntegratorIndex)) _CourierMasterPM.IntegratorCode = TranslateIntegratorIndex(_LogitudeMasterCourier.IntegratorIndex);
                 _CourierMasterPM.CurrentContextTag = UpsertActionConst;
                 if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.StorageSiteCode)) _CourierMasterPM.StorageSiteCode = TranslateStorageSite(_LogitudeMasterCourier.StorageSiteCode);
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
@@ -237,6 +238,29 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
             
         }
 
+        private string TranslateIntegratorIndex(string integratorIndex)
+        {
+            if (String.IsNullOrWhiteSpace(integratorIndex))
+            {
+                AppendLogLine("integratorIndex is null");
+                return null;
+            }
+            string integratorIndexId = null;
+
+            CardQuery cardQuery = new CardQuery(ResolvedTenant());
+            CardPM cardPM = cardQuery.GetSinglePMByCode(integratorIndex, ResolvedTenant());
+            if (cardPM != null)
+            {
+                integratorIndexId = cardPM.Id;
+            }
+            else
+            {
+                AppendLogLine("integratorIndex = " + integratorIndex + " could not translate to Logitude Card Id");
+                return null;
+            }
+            AppendLogLine("integratorIndex = " + integratorIndex + " Translated to Card Id" + integratorIndexId);
+            return integratorIndexId;
+        }
 
         private string TranslateStorageSite(string amitalstorageSiteCode)
         {
