@@ -15,6 +15,7 @@ using WebFreight.Web.DataProviders;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -34,6 +35,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private IInvoiceContext myInvoiceContext;
         private ICommonDataContext myCommonContext;
         private IShipmentsContext myShipmentsContext;
+        private CustomFieldResolver customFieldResolver;
 
         public DetailedShipmentChargesManager(byte[] xmlFilters, int tenant)
         {
@@ -42,7 +44,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             myInvoiceContext = InvoiceContext.GetContext(tenant);
             myCommonContext = CommonDataContext.GetContext(tenant);
             myShipmentsContext = ShipmentsContext.GetContext(tenant);
-            
+            customFieldResolver = new CustomFieldResolver();
+
             MemoryStream memoryStream = new MemoryStream(xmlFilters);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations myQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
@@ -481,7 +484,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                ShipmentId = g.Key.ShipmentId,
                                ChargesTypeId = g.Key.ChargesTypeId,
                                AmountInLocal = g.Sum(s => s.OpenAmountInLocalCurrency),
-                               AmountInProfit = g.Sum(s => s.OpenAmountInProfitCurrency)
+                               AmountInProfit = g.Sum(s => s.OpenAmountInProfitCurrency),
+                               ExpectedAmountInLocal = g.Sum(s => s.ExpectedAmountLocal),
+                               ExpectedAmountInProfit = g.Sum(s => s.ExpectedAmountInProfitCurrency),
                            }).ToList();
 
                     allReceivablesData
@@ -540,7 +545,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                    ShipmentId = g.Key.EntityId,
                                    ChargesTypeId = g.Key.ChargesTypeId,
                                    AmountInLocal = g.Sum(s => s.LocalCurrencyAmount),
-                                   AmountInProfit = g.Sum(s => s.ProfitCurrencyAmount)
+                                   AmountInProfit = g.Sum(s => s.ProfitCurrencyAmount),
                                }).ToList();
                     }
 
@@ -618,6 +623,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Consignee = myShipment.ConsigneeName;
                                     myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                                     myRecord.Direction = myShipment.DirectionName;
+                                    myRecord.OperationalDate = myShipment.OperationalDate;
+                                    myRecord.Origin = myShipment.Origin;
+                                    myRecord.Destination = myShipment.LastFinalDestination;
+                                    myRecord.ChargeableWeight = myShipment.ChargeableWeight;
+                                    myRecord.Profit = this.IsLocalCurrency ? myShipment.ProfitInLocalCurrency : myShipment.ProfitInProfitCurrency;
+                                    myRecord.ExpectedPayables = this.IsLocalCurrency ? item.ExpectedAmountInLocal : item.ExpectedAmountInProfit;
+
+                                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
                                     if (myBranch != null)
                                     {
@@ -679,6 +692,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Consignee = myShipment.ConsigneeName;
                                     myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                                     myRecord.Direction = myShipment.DirectionName;
+                                    myRecord.OperationalDate = myShipment.OperationalDate;
+                                    myRecord.Origin = myShipment.Origin;
+                                    myRecord.Destination = myShipment.LastFinalDestination;
+                                    myRecord.ChargeableWeight = myShipment.ChargeableWeight;
+                                    myRecord.Profit = this.IsLocalCurrency ? myShipment.ProfitInLocalCurrency : myShipment.ProfitInProfitCurrency;
+                                    
+                                    customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
                                     if (myBranch != null)
                                     {
@@ -705,8 +725,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             #endregion
                         }
                     }
-
-
+                    
                     List<string> myAPInvoicesIds = allShipmentsAPInvoices.Where(d => d.ShipmentId == myShipment.Id).Select(s => s.InvoiceId).ToList();
                     foreach (string id in myAPInvoicesIds)
                     {
@@ -715,7 +734,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         {
                             #region AP Invoices
                             Card myCard = allCards.Where(d => d.Id == invoice.VendorId).FirstOrDefault();
-                            //Branch myBranch = allBranchs.Where(d => d.Id == invoice.BranchId).FirstOrDefault();
                             Contact myContact = allContacts.Where(d => d.Id == invoice.CreatedByUserId).FirstOrDefault();
                             Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
 
@@ -723,8 +741,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                             {
                                 myBranch = allBranchs.Where(d => d.Id == myShipment.BranchId).FirstOrDefault();
                             }
-
-                            //List<ChargeTypeGroupClass> lines_Grouped = allAPInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id).ToList();
+                            
                             List<ChargeTypeGroupClass> lines_Grouped = allAPInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
 
                             foreach (ChargeTypeGroupClass item in lines_Grouped)
@@ -746,6 +763,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.Consignee = myShipment.ConsigneeName;
                                 myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                                 myRecord.Direction = myShipment.DirectionName;
+                                myRecord.OperationalDate = myShipment.OperationalDate;
+                                myRecord.Origin = myShipment.Origin;
+                                myRecord.Destination = myShipment.LastFinalDestination;
+                                myRecord.ChargeableWeight = myShipment.ChargeableWeight;
+                                myRecord.Profit = this.IsLocalCurrency ? myShipment.ProfitInLocalCurrency : myShipment.ProfitInProfitCurrency;
+                                
+                                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
                                 if (myCurrency != null)
                                 {
@@ -814,13 +838,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         {
                             #region AR Invoices
                             Card myCard = allCards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
-                            //Branch myBranch = allBranchs.Where(d => d.Id == invoice.BranchId).FirstOrDefault();
                             Contact myContact = allContacts.Where(d => d.Id == invoice.CreatedByUserId).FirstOrDefault();
                             Currency myCurrency = allCurrencies.Where(d => d.Id == invoice.InvoiceCurrencyId).FirstOrDefault();
 
                             List<ChargeTypeGroupClass> lines_Grouped = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id && d.ShipmentId == myShipment.Id).ToList();
-                            //List<ChargeTypeGroupClass> lines_Grouped2 = allARInvoiceLinesData.Where(d => d.InvoiceId == invoice.Id).ToList();
-
+                            
                             foreach (ChargeTypeGroupClass item in lines_Grouped)
                             {
                                 ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
@@ -840,6 +862,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.Consignee = myShipment.ConsigneeName;
                                 myRecord.ConsigneeNotImporter = myShipment.ConsigneeNotImporterName;
                                 myRecord.Direction = myShipment.DirectionName;
+                                myRecord.OperationalDate = myShipment.OperationalDate;
+                                myRecord.Origin = myShipment.Origin;
+                                myRecord.Destination = myShipment.LastFinalDestination;
+                                myRecord.ChargeableWeight = myShipment.ChargeableWeight;
+                                myRecord.Profit = this.IsLocalCurrency ? myShipment.ProfitInLocalCurrency : myShipment.ProfitInProfitCurrency;
+                                
+                                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
                                 if (myCurrency != null)
                                 {
