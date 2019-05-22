@@ -470,6 +470,19 @@
                                                                                 </li>
                                                                             </ul>
                                                                         </td>
+                                                                        <td style="width:1px"></td>
+                                                                        <td style="width:200px">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments()"
+                                                                                          [IsDisabled]="!(_SelectedDOCValue == 'U')"
+                                                                                          [ButtonText]="'שדר מסמכים שגויים'"
+                                                                                          [AsRegularButton]="'true'"
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                            </split-button>
+                                                                        </td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>

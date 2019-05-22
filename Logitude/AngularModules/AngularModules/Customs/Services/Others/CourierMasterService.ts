@@ -11,6 +11,7 @@ import { SendPayReadyLowRequestParams } from '../../DataContract/RequestParams/S
 import { SendALLCorrectRequestParams } from '../../DataContract/RequestParams/SendALLCorrectRequestParams';
 import { GatepassRequestMessageRequestParams } from '../../DataContract/RequestParams/GatepassRequestMessageRequestParams';
 import { SendALLStorageSiteRequestParams } from '../../DataContract/RequestParams/SendALLStorageSiteRequestParams';
+import { SendUnCorrectDocumentsRequestParams } from '../../DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
 
 
 @Injectable()
@@ -450,6 +451,30 @@ export class CourierMasterService {
                     serviceResponse = new ServiceResponse();
                     serviceResponse.Result = messString;
 
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+            ;
+
+        });
+    }
+
+    PostSendUnCorrectDocuments(requestParams: SendUnCorrectDocumentsRequestParams) {
+
+        return Observable.defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(
+                this._apiUrl + '/PostSendUnCorrectDocuments/', JSON.stringify(requestParams), { headers: authHeader })
+                .map((res) => {
+                    var messString = res.json();
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = messString;
                     return serviceResponse;
                 }).catch(ServiceHelper.HandleServiceError);
             ;

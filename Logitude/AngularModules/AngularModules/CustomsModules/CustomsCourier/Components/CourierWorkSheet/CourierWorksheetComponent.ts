@@ -27,6 +27,7 @@ import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/
 import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
+import { SendUnCorrectDocumentsRequestParams } from '../../../../Customs/DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
 
 
 @Component({
@@ -1475,6 +1476,36 @@ implements OnDestroy
                 }
             }
         });
+    }
+
+    SendUncorrectDocuments() {
+
+        var currRequestParams = new SendUnCorrectDocumentsRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.CourierMasterId = this.entityPM.Id;
+        currRequestParams.HAWB = this.entityPM.HAWB;
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        }
+
+        currRequestParams.SelectedAvailableValue = this._SelectedAvailableValue;
+        currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
+        currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
+        currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
+        currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
+        currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
+
+        this._CourierMasterService.PostSendUnCorrectDocuments(currRequestParams)
+            .subscribe(res => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(res.Result);
+                myMessageWindow.WindowClosed.subscribe(s => {
+                    this.RefreshButtonClicked();
+                });
+            });
     }
 
 }
