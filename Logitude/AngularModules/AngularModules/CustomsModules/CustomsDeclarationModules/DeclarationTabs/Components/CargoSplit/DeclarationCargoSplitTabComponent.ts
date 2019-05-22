@@ -237,6 +237,7 @@ export class DeclarationCargoSplitTabComponent extends BaseComponent implements 
         //}
         var newDeclarationCargoSplitPM = new DeclarationCargoSplitPM();
         newDeclarationCargoSplitPM.Tenant = this.EntityPM.Tenant;
+        newDeclarationCargoSplitPM.CustomFileNo= this.EntityPM.CustomFileNo;
         //this.DeclarationCargoSplitList.Insert(newDeclarationCargoSplitPM);
 
         this.NewDeclarationCargoSplit(newDeclarationCargoSplitPM);
