@@ -785,24 +785,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 901");
                         }
 
-                        // Pending 901
-                        var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                        var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", _MyDeclarationPM.CustomerCode, false, true);
-                        bool isCollectActive = def.DEFDATA == "Y";
-                        if (isCollectActive)
+                        // Pending 900
+                        CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
+                        CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
+                        if (courierMaster != null)
                         {
-                            LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
-                            if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
+                            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
+                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
+                            bool isCollectActive = def.DEFDATA == "Y";
+                            if (isCollectActive)
                             {
-                                currentDeclarationCourierStatusPM.CourierPendingReasonCode = "900";
-                                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 900");
-                            }
-                            else if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
-                            {
-                                currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
-                                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 900");
+                                LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
+                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
+                                {
+                                    currentDeclarationCourierStatusPM.CourierPendingReasonCode = "900";
+                                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                    LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 900");
+                                }
+                                else if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
+                                {
+                                    currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
+                                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                    LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 900");
+                                }
                             }
                         }
                     }

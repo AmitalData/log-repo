@@ -514,7 +514,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         var newClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(this.EntityPM);
         newClaimsRelatedEntityPM.ClaimId = this.EntityPM.Id;
         newClaimsRelatedEntityPM.Tenant = this.EntityPM.Tenant;
-        newClaimsRelatedEntityPM.EntityCounterKey = (ArrayTool.Max(this.EntityPM.ClaimsRelatedEntities, "EntityCounterKey") + 1);
+        //newClaimsRelatedEntityPM.EntityCounterKey = (ArrayTool.Max(this.EntityPM.ClaimsRelatedEntities, "EntityCounterKey") + 1);
         newClaimsRelatedEntityPM.IsSendClaimsRelatedEntity = true;
 
         let newClaimsRelatedEntityLineComponent = new ClaimsRelatedEntityLineComponent(newClaimsRelatedEntityPM, this.EntityPM, false);
