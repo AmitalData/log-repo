@@ -46,6 +46,7 @@ export class CourierMasterList {
 	TruckerId: string;
 	IntegratorCode: string;
 	IntegratorName: string;
+	IntegratorNumber: string;
 	
 }
  
