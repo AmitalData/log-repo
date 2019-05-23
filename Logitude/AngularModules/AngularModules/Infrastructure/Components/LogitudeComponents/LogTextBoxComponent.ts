@@ -1450,6 +1450,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.add("TextAreaDisabled");
+                inputDiv.classList.add("InputDivDisabled");
+
             }
         }
     }
@@ -1463,6 +1465,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.remove("TextAreaDisabled");
+                inputDiv.classList.remove("InputDivDisabled");
+
             }
         }
     }
