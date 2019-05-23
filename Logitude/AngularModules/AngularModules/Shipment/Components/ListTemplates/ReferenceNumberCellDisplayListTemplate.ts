@@ -8,7 +8,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
     template: `<table>
                 <tr>
                 <td>
-                       <div *ngIf="ShowImg" style="width: 100px;height:35px;text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left;margin-right: 5px;margin-top: -8px;">
+                       <div *ngIf="ShowImg" style="width: 80px;height:35px;text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left;margin-right: 5px;margin-top: -8px;">
                        <img *ngIf="Source" style="width: 70px;max-height:35px;" src="{{Source}}"  title="{{rowData ? rowData['PartnerName'] : ''}}" />
                        </div>
                 </td>
@@ -44,7 +44,7 @@ export class ReferenceNumberCellDisplayListTemplate {
 
     //public Imgs: Logosdictionary[];
     private CurrentSession = SessionLocator.SelectedSession;
-    public ToggleIsExportShipments: boolean = false;
+    public ToggleIsExportShipments: boolean = true;
     constructor(private CD: ChangeDetectorRef) {
         if (!this.CurrentSession.Imgs) {
             this.CurrentSession.Imgs = [];
