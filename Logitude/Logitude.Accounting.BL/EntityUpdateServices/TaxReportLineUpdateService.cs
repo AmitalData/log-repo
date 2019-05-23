@@ -152,7 +152,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else if (entityPM.VatNumber != null)
                 {
-                    if (entityPM.VatNumber.Length > 9)
+                    if (entityPM.VatNumber.Length > 9 || entityPM.VatNumber =="0")
                     {
                         entityPM.StatusCode = "2";
                     }
