@@ -613,6 +613,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     //#region Credit limit
     creditPercentage:number = 0;
+    accountTotal: number = 0;
     LoadCreditDetailsData(){
 
 
@@ -627,6 +628,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
             +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
             +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0);
             //+ (this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
+
+            this.accountTotal = percentage;
 
             if(this.accountCardlist.CreditLimitAmount && this.accountCardlist.CreditLimitAmount != 0)
                 percentage = percentage / (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0);
@@ -649,6 +652,19 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     CardIndexClicked(){
         this.DisplayTransactionsLinkClicked();
+    }
+    IsOverCredit(){
+        var total =
+        (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
+    +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
+    +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0);
+    //+ (this.accountCardlist.Total?this.accountCardlist.Total:0 Open shipments)
+
+
+        return (total > this.accountCardlist.CreditLimitAmount);
+    }
+    IsCreditNotDefined(){
+        return this.accountCardlist.CreditLimitOpenBalance == null;
     }
     //
 

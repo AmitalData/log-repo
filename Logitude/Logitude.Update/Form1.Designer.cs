@@ -152,6 +152,8 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblUTariffModule = new System.Windows.Forms.Label();
+            this.button41 = new System.Windows.Forms.Button();
             this.btnUpdateTenantZeroNew = new System.Windows.Forms.Button();
             this.lblTenantNew = new System.Windows.Forms.Label();
             this.lblUGlobal = new System.Windows.Forms.Label();
@@ -166,8 +168,10 @@
             this.HarmonizeCodesButton = new System.Windows.Forms.Button();
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
-            this.button41 = new System.Windows.Forms.Button();
-            this.lblUTariffModule = new System.Windows.Forms.Label();
+            this.tenantRTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tenantTxtBox = new System.Windows.Forms.ToolStripTextBox();
+            this.rTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -318,7 +322,8 @@
             this.productionToolStripMenuItem,
             this.customsBookToolStripMenuItem,
             this.metaDataUpdateToolStripMenuItem,
-            this.expImpToolStripMenuItem});
+            this.expImpToolStripMenuItem,
+            this.tenantRTLToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(751, 24);
@@ -447,7 +452,7 @@
             this.expPackagesToolStripMenuItem,
             this.expRolesToolStripMenuItem});
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // expPackagesToolStripMenuItem
@@ -470,7 +475,7 @@
             this.impPackagesToolStripMenuItem,
             this.impRolesToolStripMenuItem});
             this.importToolStripMenuItem1.Name = "importToolStripMenuItem1";
-            this.importToolStripMenuItem1.Size = new System.Drawing.Size(110, 22);
+            this.importToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.importToolStripMenuItem1.Text = "Import";
             // 
             // impPackagesToolStripMenuItem
@@ -640,7 +645,7 @@
             // 
             // btnAddBatchServicesDefinitions
             // 
-            this.btnAddBatchServicesDefinitions.Location = new System.Drawing.Point(522, 165);
+            this.btnAddBatchServicesDefinitions.Location = new System.Drawing.Point(522, 195);
             this.btnAddBatchServicesDefinitions.Name = "btnAddBatchServicesDefinitions";
             this.btnAddBatchServicesDefinitions.Size = new System.Drawing.Size(184, 35);
             this.btnAddBatchServicesDefinitions.TabIndex = 26;
@@ -680,7 +685,7 @@
             // 
             // DownLoadZipFile
             // 
-            this.DownLoadZipFile.Location = new System.Drawing.Point(522, 121);
+            this.DownLoadZipFile.Location = new System.Drawing.Point(522, 151);
             this.DownLoadZipFile.Name = "DownLoadZipFile";
             this.DownLoadZipFile.Size = new System.Drawing.Size(184, 38);
             this.DownLoadZipFile.TabIndex = 30;
@@ -691,7 +696,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(522, 27);
+            this.checkBox1.Location = new System.Drawing.Point(522, 57);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(85, 17);
             this.checkBox1.TabIndex = 18;
@@ -805,7 +810,7 @@
             // 
             // button31
             // 
-            this.button31.Location = new System.Drawing.Point(522, 227);
+            this.button31.Location = new System.Drawing.Point(522, 257);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(184, 28);
             this.button31.TabIndex = 55;
@@ -861,7 +866,7 @@
             // 
             // button27
             // 
-            this.button27.Location = new System.Drawing.Point(522, 299);
+            this.button27.Location = new System.Drawing.Point(522, 329);
             this.button27.Name = "button27";
             this.button27.Size = new System.Drawing.Size(184, 28);
             this.button27.TabIndex = 41;
@@ -871,7 +876,7 @@
             // 
             // ConvertXmalTemplateToHtmlButton
             // 
-            this.ConvertXmalTemplateToHtmlButton.Location = new System.Drawing.Point(522, 82);
+            this.ConvertXmalTemplateToHtmlButton.Location = new System.Drawing.Point(522, 112);
             this.ConvertXmalTemplateToHtmlButton.Name = "ConvertXmalTemplateToHtmlButton";
             this.ConvertXmalTemplateToHtmlButton.Size = new System.Drawing.Size(184, 33);
             this.ConvertXmalTemplateToHtmlButton.TabIndex = 42;
@@ -931,7 +936,7 @@
             // ConvertXmalTemplateLable
             // 
             this.ConvertXmalTemplateLable.AutoSize = true;
-            this.ConvertXmalTemplateLable.Location = new System.Drawing.Point(519, 324);
+            this.ConvertXmalTemplateLable.Location = new System.Drawing.Point(519, 354);
             this.ConvertXmalTemplateLable.Name = "ConvertXmalTemplateLable";
             this.ConvertXmalTemplateLable.Size = new System.Drawing.Size(0, 13);
             this.ConvertXmalTemplateLable.TabIndex = 47;
@@ -993,7 +998,7 @@
             // 
             // ConvertSignatureButton
             // 
-            this.ConvertSignatureButton.Location = new System.Drawing.Point(522, 53);
+            this.ConvertSignatureButton.Location = new System.Drawing.Point(522, 83);
             this.ConvertSignatureButton.Name = "ConvertSignatureButton";
             this.ConvertSignatureButton.Size = new System.Drawing.Size(184, 23);
             this.ConvertSignatureButton.TabIndex = 48;
@@ -1004,7 +1009,7 @@
             // ConvertSignatureLable
             // 
             this.ConvertSignatureLable.AutoSize = true;
-            this.ConvertSignatureLable.Location = new System.Drawing.Point(538, 28);
+            this.ConvertSignatureLable.Location = new System.Drawing.Point(538, 58);
             this.ConvertSignatureLable.Name = "ConvertSignatureLable";
             this.ConvertSignatureLable.Size = new System.Drawing.Size(0, 13);
             this.ConvertSignatureLable.TabIndex = 49;
@@ -1012,7 +1017,7 @@
             // 
             // _UpdatePortsButton
             // 
-            this._UpdatePortsButton.Location = new System.Drawing.Point(522, 259);
+            this._UpdatePortsButton.Location = new System.Drawing.Point(522, 289);
             this._UpdatePortsButton.Name = "_UpdatePortsButton";
             this._UpdatePortsButton.Size = new System.Drawing.Size(184, 34);
             this._UpdatePortsButton.TabIndex = 50;
@@ -1023,7 +1028,7 @@
             // UpdatePortslbl
             // 
             this.UpdatePortslbl.AutoSize = true;
-            this.UpdatePortslbl.Location = new System.Drawing.Point(565, 454);
+            this.UpdatePortslbl.Location = new System.Drawing.Point(565, 484);
             this.UpdatePortslbl.MinimumSize = new System.Drawing.Size(100, 0);
             this.UpdatePortslbl.Name = "UpdatePortslbl";
             this.UpdatePortslbl.Size = new System.Drawing.Size(100, 13);
@@ -1049,7 +1054,7 @@
             // 
             // CopyReportButton
             // 
-            this.CopyReportButton.Location = new System.Drawing.Point(522, 333);
+            this.CopyReportButton.Location = new System.Drawing.Point(522, 363);
             this.CopyReportButton.Name = "CopyReportButton";
             this.CopyReportButton.Size = new System.Drawing.Size(184, 28);
             this.CopyReportButton.TabIndex = 57;
@@ -1060,7 +1065,7 @@
             // CopyReportButtonLable
             // 
             this.CopyReportButtonLable.AutoSize = true;
-            this.CopyReportButtonLable.Location = new System.Drawing.Point(565, 476);
+            this.CopyReportButtonLable.Location = new System.Drawing.Point(565, 506);
             this.CopyReportButtonLable.MinimumSize = new System.Drawing.Size(100, 0);
             this.CopyReportButtonLable.Name = "CopyReportButtonLable";
             this.CopyReportButtonLable.Size = new System.Drawing.Size(100, 13);
@@ -1081,7 +1086,7 @@
             // updateFillComputingLBL
             // 
             this.updateFillComputingLBL.AutoSize = true;
-            this.updateFillComputingLBL.Location = new System.Drawing.Point(565, 428);
+            this.updateFillComputingLBL.Location = new System.Drawing.Point(565, 458);
             this.updateFillComputingLBL.MinimumSize = new System.Drawing.Size(100, 0);
             this.updateFillComputingLBL.Name = "updateFillComputingLBL";
             this.updateFillComputingLBL.Size = new System.Drawing.Size(100, 13);
@@ -1091,7 +1096,7 @@
             // updateFillComputingPortsLBL
             // 
             this.updateFillComputingPortsLBL.AutoSize = true;
-            this.updateFillComputingPortsLBL.Location = new System.Drawing.Point(565, 441);
+            this.updateFillComputingPortsLBL.Location = new System.Drawing.Point(565, 471);
             this.updateFillComputingPortsLBL.MinimumSize = new System.Drawing.Size(100, 0);
             this.updateFillComputingPortsLBL.Name = "updateFillComputingPortsLBL";
             this.updateFillComputingPortsLBL.Size = new System.Drawing.Size(100, 13);
@@ -1118,7 +1123,7 @@
             // addWarehouseLabel
             // 
             this.addWarehouseLabel.AutoSize = true;
-            this.addWarehouseLabel.Location = new System.Drawing.Point(565, 415);
+            this.addWarehouseLabel.Location = new System.Drawing.Point(565, 445);
             this.addWarehouseLabel.MinimumSize = new System.Drawing.Size(100, 0);
             this.addWarehouseLabel.Name = "addWarehouseLabel";
             this.addWarehouseLabel.Size = new System.Drawing.Size(100, 13);
@@ -1394,6 +1399,27 @@
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // lblUTariffModule
+            // 
+            this.lblUTariffModule.AutoSize = true;
+            this.lblUTariffModule.Location = new System.Drawing.Point(206, 522);
+            this.lblUTariffModule.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblUTariffModule.Name = "lblUTariffModule";
+            this.lblUTariffModule.Size = new System.Drawing.Size(100, 13);
+            this.lblUTariffModule.TabIndex = 94;
+            this.lblUTariffModule.Text = "...";
+            // 
+            // button41
+            // 
+            this.button41.Location = new System.Drawing.Point(16, 517);
+            this.button41.Name = "button41";
+            this.button41.Size = new System.Drawing.Size(184, 22);
+            this.button41.TabIndex = 93;
+            this.button41.Text = "Update Tariff Module";
+            this.button41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button41.UseVisualStyleBackColor = true;
+            this.button41.Click += new System.EventHandler(this.button41_Click);
+            // 
             // btnUpdateTenantZeroNew
             // 
             this.btnUpdateTenantZeroNew.Location = new System.Drawing.Point(16, 315);
@@ -1526,7 +1552,7 @@
             // 
             // btnCompareData
             // 
-            this.btnCompareData.Location = new System.Drawing.Point(522, 400);
+            this.btnCompareData.Location = new System.Drawing.Point(522, 430);
             this.btnCompareData.Name = "btnCompareData";
             this.btnCompareData.Size = new System.Drawing.Size(165, 23);
             this.btnCompareData.TabIndex = 93;
@@ -1564,7 +1590,7 @@
             // 
             // btnDownloadMrt
             // 
-            this.btnDownloadMrt.Location = new System.Drawing.Point(522, 369);
+            this.btnDownloadMrt.Location = new System.Drawing.Point(522, 399);
             this.btnDownloadMrt.Name = "btnDownloadMrt";
             this.btnDownloadMrt.Size = new System.Drawing.Size(165, 24);
             this.btnDownloadMrt.TabIndex = 89;
@@ -1582,26 +1608,35 @@
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
             // 
-            // button41
+            // tenantRTLToolStripMenuItem
             // 
-            this.button41.Location = new System.Drawing.Point(16, 517);
-            this.button41.Name = "button41";
-            this.button41.Size = new System.Drawing.Size(184, 22);
-            this.button41.TabIndex = 93;
-            this.button41.Text = "Update Tariff Module";
-            this.button41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button41.UseVisualStyleBackColor = true;
-            this.button41.Click += new System.EventHandler(this.button41_Click);
+            this.tenantRTLToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tenantTxtBox,
+            this.rTLToolStripMenuItem,
+            this.lTRToolStripMenuItem});
+            this.tenantRTLToolStripMenuItem.Name = "tenantRTLToolStripMenuItem";
+            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
+            this.tenantRTLToolStripMenuItem.Text = "Tenant RTL";
             // 
-            // lblUTariffModule
+            // tenantTxtBox
             // 
-            this.lblUTariffModule.AutoSize = true;
-            this.lblUTariffModule.Location = new System.Drawing.Point(206, 522);
-            this.lblUTariffModule.MinimumSize = new System.Drawing.Size(100, 0);
-            this.lblUTariffModule.Name = "lblUTariffModule";
-            this.lblUTariffModule.Size = new System.Drawing.Size(100, 13);
-            this.lblUTariffModule.TabIndex = 94;
-            this.lblUTariffModule.Text = "...";
+            this.tenantTxtBox.Name = "tenantTxtBox";
+            this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
+            this.tenantTxtBox.Text = "1";
+            // 
+            // rTLToolStripMenuItem
+            // 
+            this.rTLToolStripMenuItem.Name = "rTLToolStripMenuItem";
+            this.rTLToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rTLToolStripMenuItem.Text = "RTL";
+            this.rTLToolStripMenuItem.Click += new System.EventHandler(this.rtlBtn_Click);
+            // 
+            // lTRToolStripMenuItem
+            // 
+            this.lTRToolStripMenuItem.Name = "lTRToolStripMenuItem";
+            this.lTRToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lTRToolStripMenuItem.Text = "LTR";
+            this.lTRToolStripMenuItem.Click += new System.EventHandler(this.ltrBtn_Click);
             // 
             // Form1
             // 
@@ -1787,6 +1822,10 @@
 		private System.Windows.Forms.Button btnCompareData;
         private System.Windows.Forms.Label lblUTariffModule;
         private System.Windows.Forms.Button button41;
+        private System.Windows.Forms.ToolStripMenuItem tenantRTLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox tenantTxtBox;
+        private System.Windows.Forms.ToolStripMenuItem rTLToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lTRToolStripMenuItem;
     }
 }
 

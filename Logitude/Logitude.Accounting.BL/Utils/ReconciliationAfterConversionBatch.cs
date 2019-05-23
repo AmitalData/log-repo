@@ -129,7 +129,7 @@ namespace Logitude.Accounting.BL.Utils
             {
                 rv = false;
             }
-            else if (journalLineRecoList.Exists(line => line._oneLineLedger is null || line._oneLineLedger.Count == 0))
+            else if (journalLineRecoList.Exists(line => line._oneLineLedger == null || line._oneLineLedger.Count == 0))
             {
                 rv = false;
             }
