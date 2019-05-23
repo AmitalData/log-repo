@@ -629,32 +629,34 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     private setDigits() {
-        switch (SessionLocator.TenantPM.NumberFormatCode) {
-            case "CD": {
-                this.firstDigit = ",";
-                this.secondDigit = ".";
-                break;
-            }
+        this.firstDigit = ",";
+        this.secondDigit = ".";
+        //switch (SessionLocator.TenantPM.NumberFormatCode) {
+        //    case "CD": {
+        //        this.firstDigit = ",";
+        //        this.secondDigit = ".";
+        //        break;
+        //    }
 
-            case "DC": {
-                this.firstDigit = ".";
-                this.secondDigit = ",";
-                break;
-            }
+        //    case "DC": {
+        //        this.firstDigit = ".";
+        //        this.secondDigit = ",";
+        //        break;
+        //    }
 
-            case "AD": {
-                this.firstDigit = "'";
-                this.secondDigit = ".";
-                break;
-            }
+        //    case "AD": {
+        //        this.firstDigit = "'";
+        //        this.secondDigit = ".";
+        //        break;
+        //    }
 
-            default:
-                {
-                    this.firstDigit = ",";
-                    this.secondDigit = ".";
-                    break;
-                }
-        }
+        //    default:
+        //        {
+        //            this.firstDigit = ",";
+        //            this.secondDigit = ".";
+        //            break;
+        //        }
+        //}
     }
 
     GrossWeightLostFocus(input: any) {        
