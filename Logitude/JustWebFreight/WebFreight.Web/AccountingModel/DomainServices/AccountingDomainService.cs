@@ -15,6 +15,7 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Simplog.Data.Helpers;
 //using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace WebFreight.Web.AccountingModel.DomainServices
@@ -132,7 +133,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 IQueryable<BankDeposit> iQueryable_Data = bankDepositRepository.GetAll(tenant);
 
                 
-                result.TodaysDepositCount = iQueryable_Data.Where(d=> d.DepositDate == DateTime.Today).Count();
+                result.TodaysDepositCount = iQueryable_Data.Where(d=> d.DepositDate.Month == DateTime.Now.Month && d.DepositDate.Day == DateTime.Now.Day && d.DepositDate.Year == DateTime.Now.Year).Count();
 
 
             }

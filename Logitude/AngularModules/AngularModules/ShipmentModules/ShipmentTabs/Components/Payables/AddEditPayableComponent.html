@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .SummarySection {
         overflow: hidden;
@@ -229,7 +229,7 @@
                                                                 <span>1</span>
                                                                 <span style="margin-left: 2px;">{{DataContext.ProfitCurrencyCode}}</span>
                                                                 <span style="margin-left: 2px;">=</span>
-                                                                <span style="margin-left: 2px;">{{DataContext.ProfitCurrencyExchangeRate}}</span>
+                                                                <span style="margin-left: 2px;">{{DataContext.ProfitCurrencyExchangeRate | NumbersPipe:'N1'}}</span>
                                                                 <span style="margin-left: 2px;">{{DataContext.LocalCurrencyCode}}</span>
                                                             </td>
                                                         </tr>

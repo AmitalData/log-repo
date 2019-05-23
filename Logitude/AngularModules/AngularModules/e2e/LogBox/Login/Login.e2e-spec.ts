@@ -11,7 +11,8 @@ describe('Login Module', () => {
 
   it('Login Success', function () {
     browser.ignoreSynchronization = true;
-      page.navigateTo(browser.params.Link);
-      page.DoLogin(browser.params.Login.Email, browser.params.Login.Password);
+      //page.navigateTo('https://system.logbox.co.il');
+      page.navigateTo(' http://localhost:4200');
+    page.DoLogin('ahmadb@test.com', 'ahmed!A123');
   });
 });

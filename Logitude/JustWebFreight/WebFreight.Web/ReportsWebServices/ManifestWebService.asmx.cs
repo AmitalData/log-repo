@@ -443,7 +443,9 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 List<ShipmentDataView> connectedShipments = shipmentRepository.GetShipmentViewsByTenantAndMasterId(masterId, tenant).ToList();
-                
+
+                manifestDataProvider.NumberOfHBLs = connectedShipments.Count;
+
                 #region manifest details region
 
                 List<FormCustomField> customfieldsList = formCustomFieldRepository.GetFormCustomFields(tenant).ToList();
@@ -892,7 +894,9 @@ namespace WebFreight.Web.ReportsWebServices
                             packageDetail.Reference1 = package.Reference1;
                             packageDetail.Reference2 = package.Reference2;
                             packageDetail.Reference3 = package.Reference3;
+                            packageDetail.Reference4 = package.Reference4;
                             packageDetail.CommodityNumber = package.CommodityNumber;
+                            packageDetail.Notes = package.Notes;                        
                             newDetail.PackageDetails.Add(packageDetail);
 
                             #region commented Code
