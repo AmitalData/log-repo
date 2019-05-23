@@ -150,7 +150,7 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting) && !AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductInfo)) {
             this.ProductInfo = ObjectsLocator.GlobalSetting.ProductInfo;
         } else {
-            this.ProductInfo=""l
+            this.ProductInfo = "";
         }
         this.LoggedUser = SessionLocator.LoggedUserPM.EnglishName;
 
