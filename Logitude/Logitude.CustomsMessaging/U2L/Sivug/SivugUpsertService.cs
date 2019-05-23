@@ -777,6 +777,10 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.UNIT_ID);
                 }
+                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.TaxExemptCode) && !string.IsNullOrWhiteSpace(invoiceItem.TAXEXEMPTCODE))
+                {
+                    SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
+                }
 
                 if (invoiceItem.CERTIFICATES != null && invoiceItem.CERTIFICATES.Count() > 0)
                 {
@@ -826,6 +830,24 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
 
             return SupplierInvoiceItemPMList;
+        }
+
+        private string TranslateTaxExemptCode(string amitalTaxExemptCode)
+        {
+            if (String.IsNullOrWhiteSpace(amitalTaxExemptCode))
+            {
+                AppendLogLine("amitalTaxExemptCode is null");
+                return null;
+            }
+            var taxExemptCode = new ValidCustomsItemQueryService(ResolvedTenant());
+            var myTaxExemptCode = taxExemptCode.GetSingle(amitalTaxExemptCode,false,true);
+            if (myTaxExemptCode == null)
+            {
+                AppendLogLine("amitalTaxExemptCode = " + amitalTaxExemptCode + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("amitalTaxExemptCode = " + amitalTaxExemptCode + " Translated to " + myTaxExemptCode.Code);
+            return myTaxExemptCode.Code;
         }
 
         public CustomsMessaging.Common.RequestParams.Unifreight_L2US01RequestParam RequestParams { get; set; }
