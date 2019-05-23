@@ -660,24 +660,36 @@ namespace WebFreight.Web.Security
             return myContactInfo;
         }
 
-        //private static string GetComputingPartnerCode(AuthenticationToken authToken)
-        //{
-        //    string computingPartnerCode = "";
-        //    if (authToken != null && !string.IsNullOrEmpty(authToken.APICredentialID))
-        //    {
-        //            ApiCredintialsRepository apiCredintialsRepository = new ApiCredintialsRepository();
-        //            ApiCredintials apiCredintials = apiCredintialsRepository.GetSingleApiCredintials(authToken.APICredentialID, authToken.Tenant);
-        //            if (apiCredintials != null && !string.IsNullOrEmpty(apiCredintials.ComputingPartnerId))
-        //            {
-        //                ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(authToken.Tenant);
-        //                computingPartnerCode = computingPartnerRepository.GetSingleComputingPartnerCodeById(apiCredintials.ComputingPartnerId);
-        //            }
-                
-        //    }
-        //    return computingPartnerCode;
-        //}
+		public static void AuthenticationOnEntityTenant(string objectTableName, int entityTenant, int authTokenTenant)
+		{
+			//if (HttpContext.Current != null && string.IsNullOrWhiteSpace(overrideEmail))
+			//{
+			//	overrideEmail = HttpContext.Current.User.Identity.Name;
+			//}
 
-        private static List<string> GetAllPackagesCodes(string email, int tenant, bool isCustomerCare)
+			if (entityTenant != authTokenTenant)
+				throw new Exception("Sorry! you have no permission to do this operation on Tenant:" + entityTenant);
+			//string errorMessage = "Sorry! you have no permission to do this operation" + Environment.NewLine + "Table:" + objectTableName + Environment.NewLine + "User:" + overrideEmail + Environment.NewLine + "Tenant:" + entityTenant;
+
+		}
+		//private static string GetComputingPartnerCode(AuthenticationToken authToken)
+		//{
+		//    string computingPartnerCode = "";
+		//    if (authToken != null && !string.IsNullOrEmpty(authToken.APICredentialID))
+		//    {
+		//            ApiCredintialsRepository apiCredintialsRepository = new ApiCredintialsRepository();
+		//            ApiCredintials apiCredintials = apiCredintialsRepository.GetSingleApiCredintials(authToken.APICredentialID, authToken.Tenant);
+		//            if (apiCredintials != null && !string.IsNullOrEmpty(apiCredintials.ComputingPartnerId))
+		//            {
+		//                ComputingPartnerRepository computingPartnerRepository = new ComputingPartnerRepository(authToken.Tenant);
+		//                computingPartnerCode = computingPartnerRepository.GetSingleComputingPartnerCodeById(apiCredintials.ComputingPartnerId);
+		//            }
+
+		//    }
+		//    return computingPartnerCode;
+		//}
+
+		private static List<string> GetAllPackagesCodes(string email, int tenant, bool isCustomerCare)
         {
             List<string> myResult = new List<string>();
 

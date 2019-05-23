@@ -907,6 +907,7 @@
     <Content Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
+    <Content Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.html" />
     <Content Include="Report\Components\Workspaces\BIFolderReportComponent.html" />
     <Content Include="Report\Components\Workspaces\BIReportComponent.html" />
@@ -3343,6 +3344,7 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\BIFolderReportComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\BIReportComponent.ts" />

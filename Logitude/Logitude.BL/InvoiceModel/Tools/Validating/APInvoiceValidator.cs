@@ -263,7 +263,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     if (glAccount.CurrencyId != invoiceCurrencyId)
                     {
-                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant, useLocal)  + glAccount.CurrencyCode;
+                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant, useLocal)  + " "+ glAccount.CurrencyName + " ";
                         errors += msg + ";";
                     }
                 }
