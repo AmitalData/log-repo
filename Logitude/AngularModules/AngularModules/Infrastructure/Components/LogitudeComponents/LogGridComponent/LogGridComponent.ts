@@ -1497,7 +1497,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             }
         }, this.DetectChangeTimerInterVal);
     }
-
+    IsDataLoaded: boolean = false;
     renderRows(res: any[]) {    
 
         if (res.length < this.viewportSize || res.length < this.rowsPerPage) {
@@ -1650,6 +1650,9 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
        
         this.rowsBuffer = [];
         this.DataLoaded.emit(this.rows);
+        if (this.SearchFieldChanged == true) {
+            this.IsDataLoaded = true;
+        }
         if (this.UseBusyIndecator)
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
 

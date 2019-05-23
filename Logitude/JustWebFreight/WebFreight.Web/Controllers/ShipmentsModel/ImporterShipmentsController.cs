@@ -293,7 +293,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                         NumberOfRetries = 1,
                         ObjectTableId = Objecttable.Id,
                         ExpirationDate = DateTime.Now.AddDays(90),
-                        Refrence = Shipment.CustomerShipmentNumber,
+                        Refrence = Shipment.ForwarderShipmentNumber,
                         Status = "I",
                         Tenant = Shipment.ImporterTenant
                     };
