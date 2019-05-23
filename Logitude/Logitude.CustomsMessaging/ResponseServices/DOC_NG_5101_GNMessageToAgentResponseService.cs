@@ -120,7 +120,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             LogMessagingUtil.Instance.AppendLine("בדיקת דיפולט - שליפת ספק בהודעה על תצהיר");
                             var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_RET_VEND", "NON", _MyDeclarationPM.CustomerCode, false, true);
+                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_RET_VEND", "NON", "NON", false, true);
                             bool isRetrieveVendorActive = def.DEFDATA == "Y";
                             if (isRetrieveVendorActive)
                             {
