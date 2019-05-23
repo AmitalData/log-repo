@@ -6,6 +6,14 @@ exports.config = {
   // specs: [
   //  './e2e/Operations/**/Operations.e2e-spec.ts'
   // ],
+    params: {
+        Login:{
+            Email: null,
+            Password:null,
+        },
+        Env: "prod",
+        Link: null,        
+},
   capabilities: {
     'browserName': 'chrome',
     'acceptInsecureCerts': true,
@@ -22,7 +30,20 @@ exports.config = {
   onPrepare() {
     require('ts-node').register({
       project: 'e2e/tsconfig.e2e.json'
-    });
+      });
+      if (browser.params.Env == "prod") {
+          browser.params.Login.Email = "razantest@protractor.com";
+          browser.params.Login.Password = "!R123j456";
+          browser.params.Link = "https://system.logitudeworld.com";
+
+      }
+      else if (browser.params.Env == "test") {
+          browser.params.Login.Email = "razan@logitudeworld.com";
+          browser.params.Login.Password = "!R123j456";
+          browser.params.Link = "https://test.logitudeworld.com/test";
+      }
+    
+  
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   },
 
