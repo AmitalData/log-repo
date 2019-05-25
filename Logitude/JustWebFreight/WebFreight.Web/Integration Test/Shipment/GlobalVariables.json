@@ -1,0 +1,44 @@
+{
+	"id": "1acc70a0-e74d-439b-84e3-738a79925668",
+	"values": [
+		{
+			"key": "",
+			"value": "",
+			"enabled": false
+		},
+		{
+			"key": "",
+			"value": null,
+			"enabled": false
+		},
+		{
+			"key": "LoggedUserId",
+			"value": "1-96018",
+			"enabled": true
+		},
+		{
+			"key": "Tenant",
+			"value": 1,
+			"enabled": true
+		},
+		{
+			"key": "Token",
+			"value": "WMuARQC+sDg1HKFeNU/QRfP7OWltpcf6q+4=",
+			"enabled": true
+		},
+		{
+			"key": "LogitudeURL",
+			"value": "system.logitudeworld.com",
+			"enabled": true
+		},
+		{
+			"key": "DocumentDownloadToken",
+			"value": "syiUbl+K+LDRiQWwswuPO/4FLdqUdAj0bO8=",
+			"enabled": true
+		}
+	],
+	"name": "Team Workspace Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2019-05-20T12:34:46.522Z",
+	"_postman_exported_using": "Postman/7.1.0"
+}

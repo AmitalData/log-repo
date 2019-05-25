@@ -25,14 +25,11 @@ import {VatTypeListService} from '../../../../Common/Services/StandardLists/VatT
 import {ChargesTypeListService} from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import {CommonDomainService} from '../../../../Common/Services/CommonDomainService';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {UpdateCurrencyRateComponent} from '../../../../CommonModules/CommonOthers/Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
 import {VatTypePercentagePM} from '../../../../Common/EntityPMs/VatTypePercentagePM';
 import {VATTypesGroupPM} from '../../../../Common/EntityPMs/VATTypesGroupPM';
 import {NumbersPipe} from '../../../../Infrastructure/Pipes/NumbersPipe';
 import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
 import {ShipmentReceivablePM} from '../../../../Shipment/EntityPMs/ShipmentReceivablePM';
-import {JournalExtendedPMService} from '../../../../Accounting/Services/ExtendedPMs/JournalExtendedPMService';
-import {JournalPM} from '../../../../Accounting/EntityPMs/JournalPM';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainService';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
@@ -60,7 +57,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    public InvoiceNumberFilterList: CodeNameClass[];
+    public InvoiceNumberFilterList: CodeNameClass[] = [];
     constructor(private entityArgs: EntityArgs) {
         super();      
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
@@ -92,6 +89,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         if (!AppTool.IsNullOrEmpty(this.ARInvoiceStockId)) {
             this.IsInvoiceNumberComboBoxEnabled = false;
         }
+
         this.BuildInvoiceNumberFilters();
     }
 
@@ -106,14 +104,14 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     this.SetUIProperties();
                     this.BuildInvoiceLines();
                 }
+
                 else {
                     if (this.IsgetFromStockAfterSaving) {
                         this.InvoiceNumber = null;
                         this.ARInvoiceStockId = null;
                         this.IsInvoiceNumberComboBoxEnabled = true;
                     }
-                }
-          
+                }          
             });
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -1499,7 +1497,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             return this.EntityPM.InvoiceNumber;
         }
     }
-
     set InvoiceNumber(value: string) {
         if (this.EntityPM.InvoiceNumber != value) {
             if (this.IsInvoiceNumberManuallySet || (this.IsInvoiceNumberFromStock)) {

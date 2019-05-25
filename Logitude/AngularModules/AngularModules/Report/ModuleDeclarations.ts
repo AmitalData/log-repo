@@ -26,6 +26,7 @@ import {OceanShipmentReportFilterComponent} from './Components/FilterReportCompo
 import {ProfitByShipmentFilterConmponent} from './Components/FilterReportComponent/ProfitByShipmentFilterConmponent';
 import {InventoryReportFilterConmponent} from './Components/FilterReportComponent/InventoryReportFilterConmponent';
 import {OpenShipmentsByCustomerFilterComponent} from './Components/FilterReportComponent/OpenShipmentsByCustomerFilterComponent';
+import { UnicargoExportReportFilterComponent } from './Components/FiltersComponent/Operational/UnicargoExportReportFilterComponent';
 
 // Accounting
 import {AccountingLedgerFilterComponent} from './Components/FilterReportComponent/AccountingLedgerFilterComponent';
@@ -62,6 +63,9 @@ import {ParentVsChildTenantsComponent} from './Components/FilterReportComponent/
 import {UsersByTenantReportFilterComponent} from './Components/FiltersComponent/CRM/UsersByTenantReportFilterComponent';
 import {LicenseManagementFilterComponent} from './Components/FiltersComponent/Operational/LicenseManagementFilterComponent';
 import { VehiclesFilterComponent } from './Components/FiltersComponent/Operational/VehiclesFilterComponent';
+
+
+
 
 // Time Sheet
 import {EmployeeTimeSheetFilterComponent} from './Components/FilterReportComponent/EmployeeTimeSheetFilterComponent';
@@ -136,6 +140,7 @@ export const Components =
         VendorChargesAnalysisFilterComponent,
         VDKFilterComponent,
         VehiclesFilterComponent,
+        UnicargoExportReportFilterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -202,7 +207,8 @@ export class ModuleDeclarations {
             case "DetailedShipmentChargesAnalysisComponent": { myResult = DetailedShipmentChargesAnalysisComponent; break; }
             case "VendorChargesAnalysisFilterComponent": { myResult = VendorChargesAnalysisFilterComponent; break; }
             case "VDKFilterComponent": { myResult = VDKFilterComponent; break; }
-            case "VehiclesFilterComponent": { myResult = VehiclesFilterComponent; break; }                
+            case "VehiclesFilterComponent": { myResult = VehiclesFilterComponent; break; }
+            case "UnicargoExportReportFilterComponent": { myResult = UnicargoExportReportFilterComponent; break; }                
         }
 
         return myResult;

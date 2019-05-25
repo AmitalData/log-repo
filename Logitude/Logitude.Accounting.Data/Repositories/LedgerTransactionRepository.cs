@@ -93,12 +93,21 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         }
         public List<LedgerTransaction> GetByJournalId(string journalId, int tenant)
         {
-            
+
             return (from a in context.LedgerTransactions
-                                        where a.JournalId == journalId && a.Tenant == tenant
-                                        select a).ToList();
-            
+                    where a.JournalId == journalId && a.Tenant == tenant
+                    select a).ToList();
+
         }
+
+        public List<LedgerTransaction> GetByJournalIdAndLine(string journalId, int line, int tenant)
+        {
+
+            return (from a in context.LedgerTransactions
+                    where a.JournalId == journalId && a.JournalLineNumber == line && a.Tenant == tenant
+                    select a).ToList();
+        }
+
         public List<LedgerTransaction> GetByAccountId(string accountId, int tenant)
         {
             return (from a in context.LedgerTransactions

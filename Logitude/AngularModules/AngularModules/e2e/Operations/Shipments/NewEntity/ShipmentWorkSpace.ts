@@ -42,7 +42,7 @@ export class ShipmentWorkSpace {
   }
 
   CreateShipment(LogitudeShipType: string, Direction: string, TransportMode: string, ShipmentType: string) {
-    this.DirectShipment.CreateAndCloseNewShipment();
+    this.DirectShipment.CreateAndCloseNewShipment('NEWDIRECT','ShipmentCancelbtn');
 
     if (LogitudeShipType == 'D') {
       if (TransportMode == 'A') {
@@ -52,7 +52,7 @@ export class ShipmentWorkSpace {
 
         
         this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
-        this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType);
+        this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType,Direction);
 
       }
       else if ((TransportMode == 'O' || TransportMode == 'I') && ShipmentType != '') {
@@ -61,7 +61,7 @@ export class ShipmentWorkSpace {
         this.Helper.WaitBusyIndicator();
 
         this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
-        this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType);
+        this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType,Direction);
       }
       // this.ShipmentMenuButtons.OperationalCloseShipment();
       // this.ShipmentMenuButtons.AccountingCloseShipment();
@@ -76,16 +76,19 @@ export class ShipmentWorkSpace {
       this.Helper.WaitBusyIndicator();
 
       this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
-      this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType);
+      this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType,Direction);
 
     }
     else if (LogitudeShipType == 'M') {
+    // this.DirectShipment.CreateAndCloseNewShipment('NEWMASTER','MasterCancelbtn');
+    // this.Helper.WaitBusyIndicator();
+
       var shipperRef1 = this.GeneralFunction.RandomNum();
       this.MasterShipment.CreateMasterShipment(shipperRef1, LogitudeShipType, Direction, TransportMode, ShipmentType);// Create shipment 
       this.Helper.WaitBusyIndicator();
 
       this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
-      this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType);
+      this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType,Direction);
     }
 
   }
