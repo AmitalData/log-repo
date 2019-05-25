@@ -133,7 +133,7 @@
       <QueryFilter QueryCode="&quot;Vendor Accounts&quot;" PredefinedValue="&quot;3&quot;" ObjectFieldName="&quot;AccountTypeCode&quot;" IsPredefined="true" Operator="&quot;Equals&quot;" IndexOrder="0" />
     </QueryFilters>
   </Query>
-  <Query Code="&quot;All Customers&quot;" TextCode="&quot;All Customers&quot;" LocalTextCode="&quot;לקוחות&quot;" QueryGroupCode="&quot;GLAC&quot;" IndexOrder="2" ObjectTableName="&quot;GLAccount&quot;" QuerySection="&quot;GLAccount&quot;" SystemLevel="true" IsAddNewEntity="false" IsPackagable="true" QueryGroupName="&quot;GLAccount&quot;" TextCodeCode="&quot;GLAccounts.Q.Clients&quot;" FeatureCode="&quot;CLIENTGLACCOUNTS&quot;" FeatureTextCodeCode="&quot;GLAccount.Features.Clients&quot;" FeatureDefaultText="&quot;All Customers Accounts&quot;" IsSpellChecked="false">
+  <Query Code="&quot;All Customers&quot;" TextCode="&quot;All Customers&quot;" LocalTextCode="&quot;לקוחות&quot;" QueryGroupCode="&quot;GLAC&quot;" IndexOrder="2" ObjectTableName="&quot;GLAccount&quot;" QuerySection="&quot;GLAccount&quot;" SystemLevel="true" IsAddNewEntity="false" IsPackagable="true" QueryGroupName="&quot;GLAccount&quot;" TextCodeCode="&quot;GLAccounts.Q.Clients&quot;" FeatureCode="&quot;CLIENTS&quot;" FeatureTextCodeCode="&quot;GLAccount.Features.Clients&quot;" FeatureDefaultText="&quot;All Customers Accounts&quot;" IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn QueryCode="&quot;All Customers&quot;" IndexOrder="0" ObjectFieldName="&quot;DisplayNumber&quot;" ColumnWidth="73" />
       <QueryColumn QueryCode="&quot;All Customers&quot;" IndexOrder="1" ObjectFieldName="&quot;EnglishName&quot;" ColumnWidth="160" />
@@ -490,6 +490,8 @@
       <DCField DCFieldName="&quot;Parent&quot;" FieldName="&quot;Parent&quot;" IsKey="false" IsManualMapping="false" IsMulti="false" FieldsDataType="&quot;Text&quot;" IsNullable="true" IsSpecialField="false" IsCustomType="false" IsAttribute="false" IgnoreCustomTypeCheck="false" IsCloseField="false" IsCompositKey="false" />
     </DataContract>
   </DataContracts>
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode Code="&quot;GLAccount.O.NoCreditDefined&quot;" DefaultText="&quot;Credit balance not defined&quot;" LocalDefaultText="&quot;לא הוגדרה מסגרת אשראי ללקוח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
