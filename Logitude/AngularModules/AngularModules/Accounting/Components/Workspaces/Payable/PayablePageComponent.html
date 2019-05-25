@@ -94,18 +94,18 @@
                                                                     </tr>-->
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="activeVendorsGLAVisibility" (click)="ViewVendorQuery('ActiveVendorsGLAccounts')"> {{'GLAccounts.Q.ActiveVendors' | TextCodeTranslationPipe}} ({{glAccountSummary.ActiveVendorsCount}})</p>
+                                                                            <p class="QueryLink" *ngIf="activeVendorsGLAVisibility" (click)="ViewVendorQuery('ActiveVendorsGLAccounts')"> {{'GLAccounts.Q.ActiveVendors' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="inactiveVendorsGlaVisibility" (click)="ViewVendorQuery('InactiveVendorsGLAccount')"> {{'GLAccounts.Q.InactiveVendors' | TextCodeTranslationPipe}} ({{glAccountSummary.InactiveVendorsCount}})</p>
+                                                                            <p class="QueryLink" *ngIf="inactiveVendorsGlaVisibility" (click)="ViewVendorQuery('InactiveVendorsGLAccount')"> {{'GLAccounts.Q.InactiveVendors' | TextCodeTranslationPipe}}</p>
                                                                         </td>
                                                                     </tr>
 
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="CLIENTGLACCOUNTSGlaVisibility" (click)="ViewVendorQuery('All Vendors')"> {{'GLAccounts.Q.AllVendors' | TextCodeTranslationPipe}} ({{glAccountSummary.AllVendorsCount}})</p>
+                                                                            <p class="QueryLink" *ngIf="CLIENTGLACCOUNTSGlaVisibility" (click)="ViewVendorQuery('All Vendors')"> {{'GLAccounts.Q.AllVendors' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
 
@@ -135,7 +135,7 @@
                                                 </div>-->
                                                 <div>
                                                     <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Waiting for Approval')">{{'APInvoice.Q.WaitingApprovalAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesDraftsCount}})</p>
-                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Unpaid Invoices')">{{'APInvoice.Q.UnpaidAPInvoices'|TextCodeTranslationPipe}} ({{APInvoicesUnpaidCount}})</p>
+                                                    <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Unpaid Invoices')">{{'APInvoice.Q.UnpaidAPInvoices'|TextCodeTranslationPipe}} </p>
                                                     <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:All Invoices')">{{'APInvoice.Q.AllAPInvoices'|TextCodeTranslationPipe}}</p>
                                                 </div>
                                             </div>
@@ -153,14 +153,14 @@
                                                         <tr>
                                                             <td>
                                                                 <table>
-                                                                    <tr>
+                                                                    <!--<tr>
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Draft Payments')"> {{'APPayment.Q.DraftAPPayments' | TextCodeTranslationPipe}}  ({{APPaymentsDraftsCount}})</p>
                                                                         </td>
-                                                                    </tr>
+                                                                    </tr>-->
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')"> {{'APPayment.Q.OpenAPPayments' | TextCodeTranslationPipe}}  ({{APPaymentsOpenedCount}})</p>
+                                                                            <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')"> {{'APPayment.Q.OpenAPPayments' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
