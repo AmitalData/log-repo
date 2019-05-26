@@ -1,7 +1,7 @@
 ﻿USE [LogitudeMain-Test2]
 GO
 
-/****** Object:  StoredProcedure [dbo].[usp_AccountingStreaming]    Script Date: 1/16/2019 6:26:49 AM ******/
+/****** Object:  StoredProcedure [dbo].[usp_AccountingStreaming]    Script Date: 20190523 6:26:49 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -84,7 +84,7 @@ print N'Check  Journal_cursor'
 	end
 
 UPDATE [dbo].[Journals]
-SET [QueueId]= @pQMessageId
+SET [QueueId]= @pQMessageId,[IsLedgerCreated]=1
 WHERE [Journals].Id=  @pJournalId and [Journals].Tenant = @pTenant;
 
  SELECT @myrowcount = @@ROWCOUNT
