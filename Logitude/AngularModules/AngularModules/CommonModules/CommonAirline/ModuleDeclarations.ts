@@ -8,6 +8,9 @@ import {AddEditAirlineMessagingRuleComponent} from './Components/AddEdit/AddEdit
 import {AddEditTarrifHeaderComponent} from './Components/AddEdit/AddEditTarrifHeaderComponent';
 import {AddEditTariffChargeComponent} from './Components/AddEdit/AddEditTariffChargeComponent';
 import { AirlineDocsInTabComponent } from './Components/EditTabs/AirlineDocsInTabComponent';
+import { AirlineGeneralTabComponent } from './Components/EditTabs/AirlineGeneralTabComponent';
+
+
 
 export const Components =
     [
@@ -21,6 +24,7 @@ export const Components =
         AddEditTarrifHeaderComponent,
         AddEditTariffChargeComponent,
         AirlineDocsInTabComponent,
+        AirlineGeneralTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -39,6 +43,9 @@ export class ModuleDeclarations {
             case "AddEditTarrifHeaderComponent": { myResult = AddEditTarrifHeaderComponent; break; }
             case "AddEditTariffChargeComponent": { myResult = AddEditTariffChargeComponent; break; }
             case "AirlineDocsInTabComponent": { myResult = AirlineDocsInTabComponent; break; }
+            case "AirlineGeneralTabComponent": { myResult = AirlineGeneralTabComponent; break; }
+
+                
         }
 
         return myResult;
