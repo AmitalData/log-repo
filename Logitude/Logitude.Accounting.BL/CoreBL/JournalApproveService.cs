@@ -693,7 +693,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
             }
         }
-
+        /// <summary>
+        /// Task 52385: Journals & Transactions - after the Journal transform to LedgerTransaction >Update field IsLedgerCreated = True in Journals
+        /// </summary>
+        /// <param name="myLedgerTransactionsWithCounters"></param>
+        /// <param name="allGLAccountTotalByMonths"></param>
         private void Exec_usp_AccountingStreaming(List<LedgerTransactionPM> myLedgerTransactionsWithCounters, List<GLAccountTotalByMonthPM> allGLAccountTotalByMonths)
         {
 
