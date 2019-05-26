@@ -64,16 +64,19 @@ export class QuoteTemplateExtendedPMService {
         );
     }
 
-    GetSinglePMByQuoteId(id: string, quoteId: string, tenant: number, defultQuoteTemplate: string, quotationSections:string ) {
+
+    GetTemplateSectionsByQuoteTemplateIdAndQuoteId(id: string, quoteId: string, tenant: number, defultQuoteTemplate: string, quotationSections: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/GetSinglePMByQuoteId/?' + 'id=' + id + '&quoteId=' + quoteId + '&tenant=' + tenant + '&defultQuoteTemplate=' + defultQuoteTemplate + '&quotationSections=' + quotationSections, { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + '/GetTemplateSectionsByQuoteTemplateIdAndQuoteId/?' + 'id=' + id + '&quoteId=' + quoteId + '&tenant=' + tenant + '&defultQuoteTemplate=' + defultQuoteTemplate + '&quotationSections=' + quotationSections, { headers: authHeader }).map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response.json();
             return pmresponse;
         }).catch(ServiceHelper.HandleServiceError);
     }
+    
+
 
     GetQuoteTemplateListsByQuoteTemplateTypeAndTenant(quotetemplatetype: string, tenant : number) {
         var authHeader = new Headers();

@@ -153,6 +153,7 @@ namespace WebFreight.Web.Helpers
                 ExpirationDate = DateTime.Now.AddDays(90),
                 Status = "I",
                 Tenant = tenant,
+                Refrence = depositionRequestAM.ForwarderShipmentNumber,
                 Subject = "Deposition request task send to cloud"
 
             };

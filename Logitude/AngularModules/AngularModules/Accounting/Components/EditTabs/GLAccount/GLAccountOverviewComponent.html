@@ -137,7 +137,7 @@
     }
 
     .red {
-        color: #b63d3d !important;
+        color: #dd2626 !important;
     }
 
     .Last-Labels {
@@ -257,17 +257,18 @@
         user-select: none;
         display: inline-block;
         font-size: 16px;
-        width: 180px;
+        width: 160px;
     }
     .credit-limit-row .amount{
         direction: ltr;
-        width: 170px;
+        width: 180px;
         height: 20px;
         display: inline-block;
         font-size: 16px;
         color:green;
         padding: 0 5px;
         text-align: right;
+        font-family: sans-serif;
     }
     .credit-limit-row .link{
         user-select: none;
@@ -289,12 +290,11 @@
     .credit-limit-row .progress{
         position: relative;
         display: inline-block;
-        width: 180px;
+        width: 145px;
     }
     .credit-limit-row .progress > progress {
         height: 30px;
         width: 100%;
-        border: 1px solid #a0d548;
         border-radius: 8px;
 
     }
@@ -302,17 +302,22 @@
         user-select: none;
         /* color: #676767; */
         color: black;
-        width: 100%;
+        /* width: 100%; */
         position: absolute;
         top: 7px;
-        padding: 0 20px;
+        /* padding: 0 20px; */
+        text-align: center;
+        min-width: 50px;
         /* text-shadow: 1px 1px 1px black; */
     }
     progress[value]{
         -webkit-appearance: none;
         appearance: none;
     }
-    progress[value]::-webkit-progress-value{
+    .green > progress{
+        border: 1px solid #a0d548;
+    }
+    .green  progress[value]::-webkit-progress-value{
 
         /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9dd53a+0,a1d54f+50,80c217+51,7cbc0a+100;Green+Gloss+%231 */
         background: #9dd53a; /* Old browsers */
@@ -321,7 +326,21 @@
         background: linear-gradient(to bottom, #9dd53a 0%,#a1d54f 50%,#80c217 51%,#7cbc0a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9dd53a', endColorstr='#7cbc0a',GradientType=0 ); /* IE6-9 */
 
-        border-radius: 7px;
+        border-radius: 4px;
+
+    }
+    .red  > progress{
+        border: 1px solid #d85d6e !important;
+    }
+    .red  progress[value]::-webkit-progress-value{
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f85032+0,f16f5c+50,f6290c+51,f02f17+71,e73827+100;Red+Gloss+%231 */
+        background: #f85032; /* Old browsers */
+        background: -moz-linear-gradient(top,  #f85032 0%, #f16f5c 50%, #f6290c 51%, #f02f17 71%, #e73827 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #f85032 0%,#f16f5c 50%,#f6290c 51%,#f02f17 71%,#e73827 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #f85032 0%,#f16f5c 50%,#f6290c 51%,#f02f17 71%,#e73827 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f85032', endColorstr='#e73827',GradientType=0 ); /* IE6-9 */
+
+        border-radius: 4px;
 
     }
     .credit-limit-row .progress:hover{
@@ -330,7 +349,7 @@
     progress[value]::-webkit-progress-bar{
 
         background: rgb(243, 243, 243);
-        border-radius: 7px;
+        border-radius: 6px;
     }
     .fnt-sz-14{
         font-size: 14px !important;
@@ -531,63 +550,69 @@
 
                                         <!-- 1 -->
                                         <div class="credit-limit-row" style="height: 45px;">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start style="padding-top: 5px;">
                                                 {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div class="progress" [style.float]="isRTL ? 'left' : 'right'">
+                                            <div *ngIf="!IsCreditNotDefined()" style="font-weight: bold;" class="amount" float-start text-start style="padding-top: 5px;font-weight: bold;font-size: 18px;">
+                                                {{accountTotal | NumbersPipe:'N2'}}
+                                            </div>
+                                            <div *ngIf="!IsCreditNotDefined()" class="progress green" [class.red]="IsOverCredit()" float-end>
                                                 <progress [attr.value]="creditPercentage" max="100"></progress>
-                                                <div class="percentage-label">{{ (creditPercentage?creditPercentage:0) | NumbersPipe:'N2'}}%</div>
+                                                <div class="percentage-label" [style.width.%]="creditPercentage>100?100:creditPercentage">{{ (creditPercentage?creditPercentage:0) | NumbersPipe:'N2'}}%</div>
+                                            </div>
+                                            <div *ngIf="IsCreditNotDefined()" style="font-size: 16px; color: #ef8703;font-weight: bold;">
+                                                {{ 'GLAccount.O.NoCreditDefined' | TextCodeTranslationPipe }}
                                             </div>
                                         </div>
 
                                         <!-- 2 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
                                                 {{ 'GLAccounts.O.AccountingBalance' | TextCodeTranslationPipe }}
                                             </div>
                                             <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 {{GLAccountMoreData.BalanceInLocalCurrency | NumbersPipe:'N2'}}
                                             </div>
-                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;"  (click)="CardIndexClicked()" float-start [style.text-align]="isRTL ? 'left' : 'right'" >
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;"  (click)="CardIndexClicked()" float-start text-end >
                                                 {{ 'GLAccounts.O.CardIndex' | TextCodeTranslationPipe }}
                                             </a>
                                         </div>
 
                                         <!-- 3 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
                                                 {{ 'GLAccounts.O.FutureChequesToday' | TextCodeTranslationPipe }}
                                             </div>
                                             <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 {{GLAccountMoreData.TotalOpenChequesInLocalCur | NumbersPipe:'N2'}}
                                             </div>
-                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked()" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked()" float-start text-start >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
                                             </a>
                                         </div>
 
                                         <!-- 4 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
                                                 {{ 'GLAccounts.O.FutureCheques' | TextCodeTranslationPipe }}
                                             </div>
                                             <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 {{GLAccountMoreData.TotFutureOpenChequesInLocalCur | NumbersPipe:'N2'}}
                                             </div>
-                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start text-start >
                                                 <!-- {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }} -->
                                             </a>
                                         </div>
 
                                         <!-- 5 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
                                                 {{ 'GLAccounts.O.TotalOpenShipments' | TextCodeTranslationPipe }}
                                             </div>
                                             <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
                                                 <!-- 132,538 -->
                                             </div>
-                                            <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start text-start >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
                                             </div> a-->
                                         </div>
@@ -595,13 +620,13 @@
 
                                         <!-- 6 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
-                                                {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
+                                                {{ 'GLAccount.O.CreditStatus ' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
+                                            <div style="font-weight: bold;font-size: 18px;" class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" [class.red]="IsOverCredit()" >
                                                 {{accountCardlist.CreditLimitAmount | NumbersPipe:'N2'}}
                                             </div>
-                                            <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start [style.text-align]="isRTL ? 'right' : 'left'" >
+                                            <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start text-start >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
                                             </div> a-->
                                         </div>

@@ -10,6 +10,8 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator'
+
+
 @Component({
     selector: 'NewAirFreightCostComponent',
     moduleId: module.id,
@@ -455,7 +457,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
     get ContractNumber() {
         return this.EntityPM.ContractNumber;
     }
-    set ContractNumber(value: number) {
+    set ContractNumber(value: string) {
         if (this.EntityPM.ContractNumber != value) {
             this.EntityPM.ContractNumber = value;
         }
@@ -475,6 +477,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
         var UOMProps: string[] = [];
         var IdPropsName: string[] = [];
         var UOMPropsName: string[] = [];
+        var DuplicatedChargesIds: string[] = [];
         var EmptyIndex = 1;
         for (var index = 1; index <= 10; index++) {
             IdProps.push("Surcharge" + index + "Id");
@@ -482,6 +485,21 @@ export class NewAirFreightCostComponent extends BaseComponent {
 
             IdPropsName.push("Charge Type " + index );
             UOMPropsName.push("UOM " + index);
+            if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]]!=null)[0] != null) {
+                var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
+                if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
+                    DuplicatedChargesIds.push(this[chargresType + ""]);
+                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
+                        if (!res.HasError) {
+                            var chargesTypeList: ChargesTypeList = res.Result;
+                            if (res) {
+                                this.ValidationErrorsList.push("Charge type "+chargesTypeList.EnglishName + " is duplicated");
+                            }
+                        }
+                    });
+
+                }
+            }
             if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
                     this.ValidationErrorsList.push(IdPropsName[index - 1] + " is required");
@@ -506,7 +524,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
                 if (index >= 3) {
                     if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
                         if (EmptyIndex != 1) {
-                            this.ValidationErrorsList.push("No empty charge lines between line " + (EmptyIndex - 1) + " and line " + index);
+                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line " + (EmptyIndex - 1) + " and line " + index);
                             EmptyIndex = 1;
                         }
                         if (AppTool.IsNullOrEmpty(this[IdProps[index - 2]])) {
@@ -515,6 +533,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
                     }
                 }
             }
+
         }
     }
   

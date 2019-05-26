@@ -489,6 +489,8 @@
 
             var defaultParam = new Object();
             defaultParam.Tenant = 1;
+            defaultParam.FromExtNum = "1";
+            defaultParam.ToExtNum = "99";
 
             if (!_ResponseToken) {
                 getToken();
@@ -505,7 +507,14 @@
             }
             var objToCheck1 = JSON.parse(myJson);
 
-            var myUrl = _ReconciliationAfterConversionUrl + "?tenant=" + objToCheck1.Tenant;
+            var myUrl;
+            if (objToCheck1.FromExtNum == "" && objToCheck1.ToExtNum == "") {
+                myUrl = _ReconciliationAfterConversionUrl + "?tenant=" + objToCheck1.Tenant;
+            }
+            else {
+                myUrl = _ReconciliationAfterConversionUrl + "?tenant=" + objToCheck1.Tenant + "&fromExtNum=" + objToCheck1.FromExtNum + "&toExtNum=" + objToCheck1.ToExtNum;
+            }
+            
             //alert(myUrl);
 
 

@@ -410,5 +410,36 @@ namespace Logitude.BL.QuoteModel.EntityQueries
 
 
         }
+
+        public IQueryable<QuoteTemplatePM> GetQuoteTemplatePMListsByQuotetemplatetype(string quotetemplatetype, int tenant)
+        {
+            IQueryable<QuoteTemplatePM> qUoteTemplate = from a in repository.quotesContext.QuoteTemplates
+                                                          where a.Tenant == tenant && a.TemplateTypeCode == quotetemplatetype && a.InActive == false
+                                                          select new QuoteTemplatePM()
+                                                          {
+                                                              Id = a.Id,
+                                                              HeaderDocId = a.HeaderDocId,
+                                                              FooterDocId = a.FooterDocId,
+                                                              QuoteTemplateSettingId = a.QuoteTemplateSettingId,
+                                                              Name = a.Name,
+                                                              IsTemplate = a.IsTemplate,
+                                                              OriginalQuoteTemplateId = a.OriginalQuoteTemplateId,
+                                                              CreateDate = a.CreateDate,
+                                                              UpdateDate = a.UpdateDate,
+                                                              CreatedByUserId = a.CreatedByUserId,
+                                                              UpdatedByUserId = a.UpdatedByUserId,
+                                                              SearchFields = a.SearchFields,
+                                                              TemplateTypeCode = a.TemplateTypeCode,
+                                                              Tenant = a.Tenant,
+                                                              IsDefault = a.IsDefault,
+                                                              InActive = a.InActive,
+                                                              IsEnabledForCustomers = a.IsEnabledForCustomers,
+                                                              IsCopiedAtSignup = a.IsCopiedAtSignup,
+
+                                                          };
+            return qUoteTemplate;
+        }
+
+
     }
 }

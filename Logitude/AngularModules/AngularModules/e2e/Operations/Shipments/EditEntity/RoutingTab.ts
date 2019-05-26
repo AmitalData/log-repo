@@ -8,18 +8,28 @@ export class RoutingTabComponent {
     this.Helper = new FieldsHelper();
   }
 
-  public RoutingTab(LogitudeShipType: any, ShipmentType: any) {
+  public RoutingTab(LogitudeShipType: any, ShipmentType: any, Direction: string) {
     this.Helper.WaitByIdAndClick('Shipment.TH.Routings');
-    this.AddPickup();
-    this.Helper.WaitBusyIndicator();
-    if (LogitudeShipType == 'D' || LogitudeShipType == 'H') {
-      this.AddPreCarriage(ShipmentType);
-      this.AddOnCarriage(ShipmentType);
-    }
-    // this.EditMainCarriage(LogitudeShipType, ShipmentType);
-    this.AddDelivery();
-    this.Helper.WaitBusyIndicator();
+    if (Direction == 'Domestic' && ShipmentType == 'FTL') {
+      // var mainCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'Trucker1London');
+      // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
+      this.Helper.WaitByIdAndFill('Shipment_Driver', 'Driver, Protractor ... ');
+      this.Helper.WaitByIdAndFill('Shipment_TruckNumber', '985');
+
+    }
+    else {
+
+      this.AddPickup();
+      this.Helper.WaitBusyIndicator();
+      if (LogitudeShipType == 'D' || LogitudeShipType == 'H') {
+        this.AddPreCarriage(ShipmentType);
+        this.AddOnCarriage(ShipmentType);
+      }
+      this.EditMainCarriage(LogitudeShipType, ShipmentType);
+      this.AddDelivery();
+      this.Helper.WaitBusyIndicator();
+    }
   }
 
 
@@ -100,18 +110,18 @@ export class RoutingTabComponent {
 
         this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierNumber', '125');
 
-        var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', '45b');
+        var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', 'SOU');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        var transshipment2CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierId', 'balu');
+        var transshipment2CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierId', 'MSCU');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierNumber', '126');
 
-        var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'w2w');
+        var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'LHR');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        var transshipment3CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierId', 'votu');
+        var transshipment3CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierId', 'MSCU');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierNumber', '127');
@@ -119,26 +129,26 @@ export class RoutingTabComponent {
         this.Helper.WaitByIdAndClick('MainCarriageOKBtn');
       }
       else if (ShipmentType == 'LTL' || ShipmentType == 'FTL') {
-        var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', 'du');
+        var transshipment1FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1FromPortId', 'MAN');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        var transshipment1CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierId', 'trk1');
+        var transshipment1CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierId', 'Trucker1London');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndFill('Shipment_Transshipment1CarrierNumber', '125');
 
-        var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', 'fra');
+        var transshipment2FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2FromPortId', 'LON');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        var transshipment2CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierId', 'trk2');
+        var transshipment2CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierId', 'Trucker1London');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndFill('Shipment_Transshipment2CarrierNumber', '126');
 
-        var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'bras');
+        var transshipment3FromPortId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3FromPortId', 'NYC');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        var transshipment3CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierId', 'trk3');
+        var transshipment3CarrierId = this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierId', 'Trucker1London');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndFill('Shipment_Transshipment3CarrierNumber', '127');
@@ -179,7 +189,7 @@ export class RoutingTabComponent {
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_ToPortId', 'mvd');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 'TestTruckerTP');
+    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 'Trucker1London');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierNumber', 'Truck Prot');
@@ -212,10 +222,10 @@ export class RoutingTabComponent {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'istanb');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'LHR');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'ams');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'JFK');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'aerolin');
@@ -229,13 +239,13 @@ export class RoutingTabComponent {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'be');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'LHR');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'isa');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'SOU');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'a');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'aerol');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierNumber', '985');
@@ -246,13 +256,13 @@ export class RoutingTabComponent {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'antalya');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageFromPortId', 'LHR');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'abk');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'NYC');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'trk1');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'Trucker1London');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierNumber', '985');
@@ -270,13 +280,13 @@ export class RoutingTabComponent {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'a');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'JFK');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'is');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'LHR');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'sa');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'American');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierNumber', '985');
@@ -287,13 +297,13 @@ export class RoutingTabComponent {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'be');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'SOU');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'isa');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'LHR');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'f');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'Maersk lines');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierNumber', '985');
@@ -304,13 +314,13 @@ export class RoutingTabComponent {
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
 
-      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'antalya');
+      var preCarriageFromPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageFromPortId', 'NYC');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'abk');
+      var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_OnCarriageToPortId', 'LHR');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'trk1');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierId', 'Trucker1NewYork');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_OnCarriageCarrierNumber', '985');
@@ -321,7 +331,7 @@ export class RoutingTabComponent {
   private AddDelivery() {
     this.Helper.WaitByIdAndClick('Add-Delivery');
 
-    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 'TestTruckerTP');
+    var trucker = this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierId', 'Trucker1London');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('ShipmentPickUpDelivery_CarrierNumber', '777');

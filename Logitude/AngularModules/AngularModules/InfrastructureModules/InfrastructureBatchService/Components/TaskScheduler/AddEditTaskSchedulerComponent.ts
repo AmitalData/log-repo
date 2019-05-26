@@ -345,7 +345,7 @@ export class AddEditTaskSchedulerComponent  {
 
             else {
                 if (this.EntityPM.IsDirty) {
-                    this.EntityPM.UpdatedBy = SessionLocator.LoggedUserId;
+                    this.EntityPM.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName;
 
                     this.schedulerExtendedPMService.update(this.EntityPM).subscribe(myResult => {
                         var myResponse: ServiceResponse = myResult;

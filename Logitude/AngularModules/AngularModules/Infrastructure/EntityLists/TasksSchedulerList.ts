@@ -16,7 +16,6 @@ export class TasksSchedulerList {
 		Name: string;
 		Description: string;
 		NextRunTime: Date;
-		LastRunTime: Date;
 		LastRunResult: string;
 		InActive: boolean;
 		ServiceClassName: string;
@@ -34,9 +33,13 @@ export class TasksSchedulerList {
 		IsLastRunError: boolean;
 		Type: string;
 		NextRunTimeUTC: Date;
-		LastRunTimeUTC: Date;
 		StartDateTimeUTC: Date;
+		LastRunEndTime: Date;
+		LastRunEndTimeUTC: Date;
+		LastRunStartTimeUTC: Date;
+		LastRunStartTime: Date;
 		Version: number;
 		Status: string;
+		Retries: number;
 	
 }

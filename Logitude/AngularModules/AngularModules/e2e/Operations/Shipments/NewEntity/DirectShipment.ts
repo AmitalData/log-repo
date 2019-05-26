@@ -18,7 +18,7 @@ export class DirectShipment {
     this.Helper.WaitByIdAndClick('NEWDIRECT');
     this.ShipmentModes.SelectDicrctionTransportMode(Direction, TransportMode, ShipmentType);
 
-    this.FillDirectShipmentFields(ReferenceNumber,TransportMode);
+    this.FillDirectShipmentFields(ReferenceNumber,TransportMode,Direction);
 
     this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
   }
@@ -31,15 +31,26 @@ export class DirectShipment {
     this.Helper.WaitByIdAndClick('NEWSHIP');
 
   }
-  public CreateAndCloseNewShipment() {
+  public CreateAndCloseNewShipment(MasterDirectType:string,CancelBtnId:string) {
     var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
-    this.Helper.WaitByIdAndClick('NEWDIRECT');
-    this.Helper.WaitByIdAndClick('ShipmentCancelbtn');
+    this.Helper.WaitByIdAndClick(MasterDirectType);
+    this.Helper.WaitByIdAndClick(CancelBtnId);
   }
 
 
 
-  FillDirectShipmentFields(ShipperRef: string ,TransportMode:string) {
+  FillDirectShipmentFields(ShipperRef: string ,TransportMode:string,Direction:string) {
+if(Direction=='Domestic'&&TransportMode=='I')
+{
+  this.Helper.WaitByIdAndFill('Shipment_ShipperId', 'TestShipper');
+  this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+  this.Helper.WaitByIdAndFill('Shipment_ShipperReference1', ShipperRef);// test random number randomWholeNum
+
+
+  this.Helper.WaitByIdAndFill('Shipment_ConsigneeId', 'TestShipper');
+  this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+}else{
     this.Helper.WaitByIdAndFill('Shipment_ShipperId', 'TestShipper');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
@@ -54,40 +65,40 @@ export class DirectShipment {
 
     this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'mvd');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
+}
     if(TransportMode=='A')
     {
-      this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'TestAirlineL8');
+      this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'BA');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
   
       this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierNumber', '115');  
 
-      this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveType');
+      this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveTypeIdAirMTA');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
   
     }
     else if(TransportMode=='O'){
-      this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'TestShippingLineSLPT');
+      this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'MAEU');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
   
       this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierNumber', 'Voyage 1');  
 
-      this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveTypeIDOceanMTO1');
+      this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveTypeIDOceanMTO');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
   
     }
     else{
-      this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'TestTruckerTP');
-      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      // this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'Trucker1London');
+      // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
   
       this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierNumber', 'Trucker # 1');  
   
-      this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveTypeIDInlandMTI1');
+      this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveTypeIdInlandMTI');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
   
     }
    
-    this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'TestIncoterm');
+    this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'CIF');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
    
