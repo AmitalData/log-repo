@@ -344,7 +344,7 @@ public CargoIdentifiersList: ObservableCollection;
             this.IsNewEntity = true;
             this.CustomFileNo = winArg.CustomFileNo;
             this.RequestDate = DateTool.GetDateByDay(+0);
-            this.CustomFileNoTextChanged(winArg.CustomFileNo);
+            //this.CustomFileNoTextChanged(winArg.CustomFileNo);
         }
         this.Init();
         if (AppTool.IsNullOrEmpty(this.ImporterCode)) {
@@ -625,8 +625,10 @@ public CargoIdentifiersList: ObservableCollection;
                                     if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {
                                         this.ImporterCode = this._LastFetchDeclarationList.ImporterCode;
                                       if (this.SelectedTab != null) {
-                                        this.SelectedTab.EntityPM.ImporterCode = this.ImporterCode;
-                                        this.SelectedTab.ComponentReference.DataContext.ImporterCode = this.ImporterCode;
+                                          this.SelectedTab.EntityPM.ImporterCode = this.ImporterCode;
+                                          if (this.SelectedTab.ComponentReference != null) {
+                                              this.SelectedTab.ComponentReference.DataContext.ImporterCode = this.ImporterCode;
+                                          }
                                       }
                                     }
                                 }
@@ -658,7 +660,7 @@ public CargoIdentifiersList: ObservableCollection;
         if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {
             var pm = this._LastFetchConsignmentPMList[0]
           this.ImporterCode = this._LastFetchDeclarationList.ImporterCode;
-          if (this.SelectedTab != null) {
+            if (this.SelectedTab != null && this.SelectedTab.ComponentReference != null) {
             this.SelectedTab.ComponentReference.DataContext.ImporterCode = this.ImporterCode;
             this.SelectedTab.EntityPM.ImporterCode = this.ImporterCode;
           }
