@@ -2184,7 +2184,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             //var commission: VendorCommissionPM = response.Result;
 
-            var commission: VendorCommissionList = this.CustomerCommissionsList.filter(d => d.VendorId == this.EntityPM.VendorId)[0];
+            var commission: VendorCommissionList = this.CustomerCommissionsList.filter(d => d.VendorId == this.EntityPM.VendorId && d.ModificationsTypeCode == "I10")[0];
             if (commission) {
                 if (commission.CommisionPercentage) {
 
@@ -2216,7 +2216,6 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                                     //update record
                                     modTypeI10.CurrencyTypeCode = newCurrency;
                                     modTypeI10.CurrencyTypeName = this.invoiceCurrencyName;
-
                                     modTypeI10.Amount = newAmount;
 
                                     this.UpdateModificationsList();
