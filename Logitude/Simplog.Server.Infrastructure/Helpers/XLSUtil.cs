@@ -29,11 +29,11 @@ namespace Simplog.Server.Infrastructure.Helpers
             var stream = new MemoryStream(byteArrayXLS);
             //Loads or open an existing workbook through Open method of IWorkbooks
             IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
-            var JournalsWorksheet = workbook.Worksheets["Journals"];
+            workbook.CalculationOptions.CalculationMode = ExcelCalculationMode.Automatic;
+            var JournalsWorksheet = workbook.Worksheets[WorksheetName];
             int headerRow = 1;
-            var rangeJournalInput = JournalsWorksheet.Range["JournalInput"];
-            var rangeGLAccountOutput = JournalsWorksheet.Range["GLAccountOutput"];
             //
+            JournalsWorksheet.EnableSheetCalculations();
 
             DataTable customersTable = JournalsWorksheet.ExportDataTable(JournalsWorksheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
 
