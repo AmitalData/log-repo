@@ -550,61 +550,67 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
             {
                 case "TR1":
                     {
-                        if (this.location_From.DateTime != null)
+                        if (this.location_From != null)
                         {
-                            switch (this.location_From.DateTime.DateType)
+                            if (this.location_From.DateTime != null)
                             {
-                                case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
-                                    {
-                                        if (this.shipmentPM.Transshipment1ETD == null && this.shipmentPM.Transshipment1ATD == null)
+                                switch (this.location_From.DateTime.DateType)
+                                {
+                                    case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
                                         {
-                                            this.shipmentPM.Transshipment1ETD = this.DepartureDate;
-                                        }
-
-                                        break;
-                                    }
-
-                                case INTTRA_Status.DateTimeType2DateType.DepartureActual:
-                                    {
-                                        if (this.EventLocationCode == "VD")
-                                        {
-                                            if (this.shipmentPM.Transshipment1ATD == null)
+                                            if (this.shipmentPM.Transshipment1ETD == null && this.shipmentPM.Transshipment1ATD == null)
                                             {
-                                                this.shipmentPM.Transshipment1ATD = EventLocationeDate;
+                                                this.shipmentPM.Transshipment1ETD = this.DepartureDate;
                                             }
+
+                                            break;
                                         }
 
-                                        break;
-                                    }
+                                    case INTTRA_Status.DateTimeType2DateType.DepartureActual:
+                                        {
+                                            if (this.EventLocationCode == "VD")
+                                            {
+                                                if (this.shipmentPM.Transshipment1ATD == null)
+                                                {
+                                                    this.shipmentPM.Transshipment1ATD = EventLocationeDate;
+                                                }
+                                            }
+
+                                            break;
+                                        }
+                                }
                             }
                         }
 
-                        if (this.location_To.DateTime != null)
+                        if (this.location_To != null)
                         {
-                            switch (location_To.DateTime.DateType)
+                            if (this.location_To.DateTime != null)
                             {
-                                case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
-                                    {
-                                        if (this.shipmentPM.Transshipment1ETA == null && this.shipmentPM.Transshipment1ATA == null)
+                                switch (location_To.DateTime.DateType)
+                                {
+                                    case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
                                         {
-                                            this.shipmentPM.Transshipment1ETA = this.ArrivalDate;
-                                        }
-
-                                        break;
-                                    }
-
-                                case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
-                                    {
-                                        if (this.EventLocationCode == "VA")
-                                        {
-                                            if (this.shipmentPM.Transshipment1ATA == null)
+                                            if (this.shipmentPM.Transshipment1ETA == null && this.shipmentPM.Transshipment1ATA == null)
                                             {
-                                                this.shipmentPM.Transshipment1ATA = EventLocationeDate;
+                                                this.shipmentPM.Transshipment1ETA = this.ArrivalDate;
                                             }
+
+                                            break;
                                         }
 
-                                        break;
-                                    }
+                                    case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
+                                        {
+                                            if (this.EventLocationCode == "VA")
+                                            {
+                                                if (this.shipmentPM.Transshipment1ATA == null)
+                                                {
+                                                    this.shipmentPM.Transshipment1ATA = EventLocationeDate;
+                                                }
+                                            }
+
+                                            break;
+                                        }
+                                }
                             }
                         }
 
@@ -623,61 +629,67 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                 default:
                     {
-                        if (this.location_From.DateTime != null)
+                        if (this.location_From != null)
                         {
-                            switch (this.location_From.DateTime.DateType)
+                            if (this.location_From.DateTime != null)
                             {
-                                case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
-                                    {
-                                        if (this.shipmentPM.MainCarriageETD == null && this.shipmentPM.MainCarriageATD == null)
+                                switch (this.location_From.DateTime.DateType)
+                                {
+                                    case INTTRA_Status.DateTimeType2DateType.DepartureEstimated:
                                         {
-                                            this.shipmentPM.MainCarriageETD = this.DepartureDate;
-                                        }
-
-                                        break;
-                                    }
-
-                                case INTTRA_Status.DateTimeType2DateType.DepartureActual:
-                                    {
-                                        if (this.EventLocationCode == "VD")
-                                        {
-                                            if (this.shipmentPM.MainCarriageATD == null)
+                                            if (this.shipmentPM.MainCarriageETD == null && this.shipmentPM.MainCarriageATD == null)
                                             {
-                                                this.shipmentPM.MainCarriageATD = EventLocationeDate;
+                                                this.shipmentPM.MainCarriageETD = this.DepartureDate;
                                             }
+
+                                            break;
                                         }
 
-                                        break;
-                                    }
+                                    case INTTRA_Status.DateTimeType2DateType.DepartureActual:
+                                        {
+                                            if (this.EventLocationCode == "VD")
+                                            {
+                                                if (this.shipmentPM.MainCarriageATD == null)
+                                                {
+                                                    this.shipmentPM.MainCarriageATD = EventLocationeDate;
+                                                }
+                                            }
+
+                                            break;
+                                        }
+                                }
                             }
                         }
 
-                        if (this.location_To.DateTime != null)
+                        if (this.location_To != null)
                         {
-                            switch (location_To.DateTime.DateType)
+                            if (this.location_To.DateTime != null)
                             {
-                                case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
-                                    {
-                                        if (this.shipmentPM.MainCarriageETA == null && this.shipmentPM.MainCarriageATA == null)
+                                switch (location_To.DateTime.DateType)
+                                {
+                                    case INTTRA_Status.DateTimeType2DateType.ArrivalEstimated:
                                         {
-                                            this.shipmentPM.MainCarriageETA = this.ArrivalDate;
-                                        }
-
-                                        break;
-                                    }
-
-                                case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
-                                    {
-                                        if (this.EventLocationCode == "VA")
-                                        {
-                                            if (this.shipmentPM.MainCarriageATA == null)
+                                            if (this.shipmentPM.MainCarriageETA == null && this.shipmentPM.MainCarriageATA == null)
                                             {
-                                                this.shipmentPM.MainCarriageATA = EventLocationeDate;
+                                                this.shipmentPM.MainCarriageETA = this.ArrivalDate;
                                             }
+
+                                            break;
                                         }
 
-                                        break;
-                                    }
+                                    case INTTRA_Status.DateTimeType2DateType.ArrivalActual:
+                                        {
+                                            if (this.EventLocationCode == "VA")
+                                            {
+                                                if (this.shipmentPM.MainCarriageATA == null)
+                                                {
+                                                    this.shipmentPM.MainCarriageATA = EventLocationeDate;
+                                                }
+                                            }
+
+                                            break;
+                                        }
+                                }
                             }
                         }
 

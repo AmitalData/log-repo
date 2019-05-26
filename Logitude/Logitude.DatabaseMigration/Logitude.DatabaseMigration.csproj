@@ -1045,6 +1045,10 @@
     <Compile Include="Migrations\201905160948101_IncreaseQuoteSubjectField.Designer.cs">
       <DependentUpon>201905160948101_IncreaseQuoteSubjectField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.cs" />
+    <Compile Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.Designer.cs">
+      <DependentUpon>201905260647064_TariffContractNumberConvertedToString_Samar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1770,6 +1774,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.resx">
       <DependentUpon>201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.resx">
+      <DependentUpon>201905260647064_TariffContractNumberConvertedToString_Samar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
