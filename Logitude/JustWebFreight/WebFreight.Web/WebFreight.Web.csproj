@@ -101,6 +101,10 @@
       <HintPath>..\..\packages\Dropbox.Api.4.2.4\lib\net45\Dropbox.Api.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EAGetMail, Version=4.6.5.1, Culture=neutral, PublicKeyToken=e10a0812eb29cf94">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\EAGetMail.4.6.5.1\lib\net11\EAGetMail.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>

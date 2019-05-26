@@ -192,7 +192,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
 
     private allStages: QuoteStageList[] = [];
-    public QuotationTemplates: QuoteTemplateList[] = [];
+    public QuotationTemplates: QuoteTemplatePM[] = [];
 
     public TemplateListTitle: string;
 
@@ -215,21 +215,21 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
         if (this.SelectedMode === "Generate" && this.currentDocumentVersion != null && this.currentDocumentVersion.VersionType == "U") {
             if (this.QuotationTemplates.length > 0) {
-                if (this.selectedQuoteTemplateList == null) {
+                if (this.selectedQuoteTemplate == null) {
                     if (!AppTool.IsNullOrEmpty(this.QuotePM.QuoteTemplateId)) {
-                        this.SelectedQuoteTemplateList = this.QuotationTemplates.filter(r => r.Id == this.QuotePM.QuoteTemplateId)[0];
+                        this.SelectedQuoteTemplate = this.QuotationTemplates.filter(r => r.Id == this.QuotePM.QuoteTemplateId)[0];
                     }
                     else {
 
                         if (!AppTool.IsNullOrEmpty(this.QuotationDefaultTemplateId)) {
-                            this.SelectedQuoteTemplateList = this.QuotationTemplates.filter(t => t.Id == this.QuotationDefaultTemplateId)[0];
+                            this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.Id == this.QuotationDefaultTemplateId)[0];
                         }
-                        else this.SelectedQuoteTemplateList = this.QuotationTemplates.filter(t => t.IsDefault == true)[0];
+                        else this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.IsDefault == true)[0];
                        
                     }
 
-                    if (this.SelectedQuoteTemplateList == null) {
-                        this.SelectedQuoteTemplateList = this.QuotationTemplates[0];
+                    if (this.SelectedQuoteTemplate == null) {
+                        this.SelectedQuoteTemplate = this.QuotationTemplates[0];
 
                     }
                 }
@@ -317,19 +317,19 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                 //this.QuotationTemplates.length
 
                 if (!AppTool.IsNullOrEmpty(templateId)) {
-                    this.SelectedQuoteTemplateList = this.QuotationTemplates.filter(t => t.Id == templateId)[0];
+                    this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.Id == templateId)[0];
                 }
 
 
               else  if (!AppTool.IsNullOrEmpty(this.QuotePM.QuoteTemplateId)) {
-                    this.SelectedQuoteTemplateList = this.QuotationTemplates.filter(r => r.Id == this.QuotePM.QuoteTemplateId)[0];
+                    this.SelectedQuoteTemplate = this.QuotationTemplates.filter(r => r.Id == this.QuotePM.QuoteTemplateId)[0];
                 }
                 else {
                 
                     if (!AppTool.IsNullOrEmpty(this.QuotationDefaultTemplateId)) {
-                        this.SelectedQuoteTemplateList = this.QuotationTemplates.filter(t => t.Id == this.QuotationDefaultTemplateId)[0];
+                        this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.Id == this.QuotationDefaultTemplateId)[0];
                     }
-                    else this.SelectedQuoteTemplateList = this.QuotationTemplates.filter(t => t.IsDefault == true)[0];
+                    else this.SelectedQuoteTemplate = this.QuotationTemplates.filter(t => t.IsDefault == true)[0];
 
                     
                 }
@@ -337,8 +337,8 @@ export class QuotationComponent extends BaseComponent implements OnInit {
               
                     
 
-                if (this.SelectedQuoteTemplateList == null) {
-                    this.SelectedQuoteTemplateList = this.QuotationTemplates[0];
+                if (this.SelectedQuoteTemplate == null) {
+                    this.SelectedQuoteTemplate = this.QuotationTemplates[0];
 
                 }
 
@@ -412,15 +412,13 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
 
 
-     //this.SelectedQuoteTemplateList
-    private selectedQuoteTemplateList: QuoteTemplateList;
-    private selectedQuoteTemplatePM: QuoteTemplatePM;
-
-    public get SelectedQuoteTemplateList() { return this.selectedQuoteTemplateList; }
-    public set SelectedQuoteTemplateList(newValue: QuoteTemplateList) {
-        if (this.selectedQuoteTemplateList != newValue) {
-            this.selectedQuoteTemplateList = newValue;
-            var title = this.QuotationTitle + (" (" + this.SelectedQuoteTemplateList.Name + ")");
+     //this.SelectedQuoteTemplate
+    private selectedQuoteTemplate: QuoteTemplatePM;
+    public get SelectedQuoteTemplate() { return this.selectedQuoteTemplate; }
+    public set SelectedQuoteTemplate(newValue: QuoteTemplatePM) {
+        if (this.selectedQuoteTemplate != newValue) {
+            this.selectedQuoteTemplate = newValue;
+            var title = this.QuotationTitle + (" (" + this.SelectedQuoteTemplate.Name + ")");
            if (this.QuotationWindow && this.QuotationWindow.Title != title) {
                this.QuotationWindow.Title = title;
             }
@@ -442,9 +440,9 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         var quotationSections = !AppTool.IsNullOrEmpty(this.QuotePM.QuotationSections) ? this.QuotePM.QuotationSections : "";
 
         if (isGenerate) defultQuoteTemplateId = "";
-        this.quoteTemplateExtendedPMService.GetSinglePMByQuoteId(this.selectedQuoteTemplateList.Id, this.QuotePM.Id, SessionLocator.Tenant, defultQuoteTemplateId, quotationSections).subscribe(response => {
+        this.quoteTemplateExtendedPMService.GetTemplateSectionsByQuoteTemplateIdAndQuoteId(this.selectedQuoteTemplate.Id, this.QuotePM.Id, SessionLocator.Tenant, defultQuoteTemplateId, quotationSections).subscribe(response => {
             if (!response.HasError) {
-                this.selectedQuoteTemplatePM = response.Result;
+                this.selectedQuoteTemplate.TemplateSections = response.Result;
                 this.BuildingQuoteTemplateSectionsAndVersions(isGenerate);
             }
         });
@@ -468,9 +466,9 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             }
         }
 
-        if (this.selectedQuoteTemplatePM.TemplateSections) {
-            for (var k in this.selectedQuoteTemplatePM.TemplateSections) {
-                var item = this.selectedQuoteTemplatePM.TemplateSections[k];
+        if (this.SelectedQuoteTemplate.TemplateSections) {
+            for (var k in this.SelectedQuoteTemplate.TemplateSections) {
+                var item = this.SelectedQuoteTemplate.TemplateSections[k];
                 //if (!item.IsCancel) {
                     if (!AppTool.IsNullOrEmpty(PricingType)) {
                         if ((PricingType == "P" && item.QuoteTemplateSectionTypeCode === "PC")
@@ -557,11 +555,11 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             if (enableGenerate) {
                 this.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
 
-                if (this.QuotePM.QuoteTemplateId != this.selectedQuoteTemplatePM.Id) {
-                    this.QuotePM.QuoteTemplateId = this.selectedQuoteTemplatePM.Id;
+                if (this.QuotePM.QuoteTemplateId != this.SelectedQuoteTemplate.Id) {
+                    this.QuotePM.QuoteTemplateId = this.SelectedQuoteTemplate.Id;
                     var templateIds = "";
 
-                    this.selectedQuoteTemplatePM.TemplateSections.forEach(section => {
+                    this.SelectedQuoteTemplate.TemplateSections.forEach(section => {
                         templateIds += (section.Id + ",");
 
                     });
@@ -574,7 +572,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
                 }
 
-                this.quoteTemplateExtendedPMService.GetUpdatedQuoteDocumentVersion(this.currentDocumentVersion.QuoteId, this.currentDocumentVersion.VersionNumber, this.selectedQuoteTemplatePM.Id, SessionLocator.LoggedUserId, this.currentDocumentVersion.Tenant, isGenerate).subscribe(response => {
+                this.quoteTemplateExtendedPMService.GetUpdatedQuoteDocumentVersion(this.currentDocumentVersion.QuoteId, this.currentDocumentVersion.VersionNumber, this.SelectedQuoteTemplate.Id, SessionLocator.LoggedUserId, this.currentDocumentVersion.Tenant, isGenerate).subscribe(response => {
                     var pmResponse: ServiceResponse = response;
                     this.CurrentSession.StopBusyIndicator();
                     if (!pmResponse.HasError && pmResponse.Result) {
@@ -607,7 +605,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
     BuildDocumentVersion() {
 
-        if (this.selectedQuoteTemplatePM != null) {
+        if (this.SelectedQuoteTemplate != null) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Generating....");
 
             var quoteDocumentVersion: QuoteDocumentVersionPM = new QuoteDocumentVersionPM(this.QuotePM);
@@ -617,7 +615,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             quoteDocumentVersion.CreatedByUserId = SessionLocator.LoggedUserId;
             quoteDocumentVersion.UpdatedByUserId = SessionLocator.LoggedUserId;
             quoteDocumentVersion.VersionType = "G";
-            quoteDocumentVersion.QuoteTemplateId = this.selectedQuoteTemplatePM.Id;
+            quoteDocumentVersion.QuoteTemplateId = this.SelectedQuoteTemplate.Id;
             quoteDocumentVersion.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
             quoteDocumentVersion.UpdateByUserName = SessionInfo.LoggedUserPM.EnglishName;
             quoteDocumentVersion.CreatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
@@ -634,9 +632,9 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                 this.QuotePM.StageName = myDraftStage.Name;
             }
 
-            this.QuotePM.QuoteTemplateId = this.selectedQuoteTemplatePM.Id;
+            this.QuotePM.QuoteTemplateId = this.SelectedQuoteTemplate.Id;
             var templateIds = "";
-            this.selectedQuoteTemplatePM.TemplateSections.forEach(section => {
+            this.SelectedQuoteTemplate.TemplateSections.forEach(section => {
                 templateIds += (section.Id + ",");
 
             });
@@ -684,20 +682,20 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             //    else { }
 
             //});
-            //templatesListBox.SelectedItem = selectedQuoteTemplatePM;
+            //templatesListBox.SelectedItem = SelectedQuoteTemplate;
 
 
         }
     }
 
     public ClearLastQuoteTemplateVersionDocuemnt() {
-        if (this.selectedQuoteTemplatePM.IsLastQuoteTemplateDocumentVersion != true) {
+        if (this.SelectedQuoteTemplate.IsLastQuoteTemplateDocumentVersion != true) {
             var lastVersions = this.QuotationTemplates.filter(d => d.IsLastQuoteTemplateDocumentVersion == true);
             lastVersions.forEach(list => {
                 list.IsLastQuoteTemplateDocumentVersion = false;
             });
 
-            this.selectedQuoteTemplatePM.IsLastQuoteTemplateDocumentVersion = true;
+            this.SelectedQuoteTemplate.IsLastQuoteTemplateDocumentVersion = true;
         }
     }
 
@@ -731,7 +729,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
 
     GetQuoteTemplatePdf() {
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
-        this.quoteTemplateSectionExtendedPMService.GetQuoteTemplatePdfReport(this.QuotePM.Id, this.SelectedQuoteTemplateList.Id, SessionLocator.LoggedUserId).subscribe(res => {
+        this.quoteTemplateSectionExtendedPMService.GetQuoteTemplatePdfReport(this.QuotePM.Id, this.SelectedQuoteTemplate.Id, SessionLocator.LoggedUserId).subscribe(res => {
             var pmResponse: ServiceResponse = res;
             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError && pmResponse.Result) {
@@ -881,7 +879,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                 this.QuotePM.StageName = myDraftStage.Name;
             }
 
-            this.QuotePM.QuoteTemplateId = this.selectedQuoteTemplatePM.Id;
+            this.QuotePM.QuoteTemplateId = this.SelectedQuoteTemplate.Id;
             this.quotePMService.update(this.QuotePM).subscribe(response => {
 
 
@@ -984,7 +982,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                 attachmentsList.push(attachment);
 
                 if (!this.GeneralEmailSender || (this.GeneralEmailSender && !this.GeneralEmailSender.LoadingSendingComponent)) {
-                    this.GeneralEmailSender = new GeneralEmailSender("Quote", "QUOTE", this.QuotePM.Id, this.QuotePM.QuoteNumber, this.QuotePM.CustomerId, "", "", this.SelectedQuoteTemplateList.Name, attachmentsList, eventRefreshName, this.QuotePM, false, "QEMO");
+                    this.GeneralEmailSender = new GeneralEmailSender("Quote", "QUOTE", this.QuotePM.Id, this.QuotePM.QuoteNumber, this.QuotePM.CustomerId, "", "", this.SelectedQuoteTemplate.Name, attachmentsList, eventRefreshName, this.QuotePM, false, "QEMO");
 
                     if (sendtype == "Send to Customer") {
                         this.GeneralEmailSender.ToSpecificeEmail = this.QuoteCustomerEmail;
@@ -999,16 +997,16 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     }
 
     OnEditQuotationTemplate() {
-        if (this.selectedQuoteTemplateList != null) {
+        if (this.selectedQuoteTemplate != null) {
             this.IsShowPreviewPDF = false;
             var windowArgs: any = {};
             var logWindow = new LogitudeWindow();
             windowArgs.IsNewEntityCall = false;
-            windowArgs.CurrentEntity = this.selectedQuoteTemplateList;
+            windowArgs.CurrentEntity = this.selectedQuoteTemplate;
             windowArgs.QuotePM = this.QuotePM;
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = windowArgs;
-            logWindow.Title = this.selectedQuoteTemplateList.Name;
+            logWindow.Title = this.selectedQuoteTemplate.Name;
             logWindow.Width = window.innerWidth - 150;
             logWindow.Height = window.innerHeight - 150;
             logWindow.IsShowCloseButton = true;
@@ -1030,7 +1028,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     ExcludeSection(sectionViewModel: QuoteTemplateSectionViewModel) {
 
        // this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        this.quoteTemplateSectionExtendedPMService.GetMakeQuoteTemplateSectionsExcluded(this.QuotePM.Id, this.selectedQuoteTemplateList.Id, sectionViewModel.Id, SessionLocator.Tenant).subscribe(response => {
+        this.quoteTemplateSectionExtendedPMService.GetMakeQuoteTemplateSectionsExcluded(this.QuotePM.Id, this.selectedQuoteTemplate.Id, sectionViewModel.Id, SessionLocator.Tenant).subscribe(response => {
             this.IsQuoteTemplateSectionInCludedChange = true;
           //  this.CurrentSession.CurrentWindow.StopBusyIndicator();
             //this.PreviewQuoteTemplatePdfReport();
@@ -1039,7 +1037,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     }
     IncludeSection(sectionViewModel: QuoteTemplateSectionViewModel) {
        // this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        this.quoteTemplateSectionExtendedPMService.GetMakeQuoteTemplateSectionsIncluded(this.QuotePM.Id, this.selectedQuoteTemplateList.Id, sectionViewModel.Id, SessionLocator.Tenant).subscribe(response => {
+        this.quoteTemplateSectionExtendedPMService.GetMakeQuoteTemplateSectionsIncluded(this.QuotePM.Id, this.selectedQuoteTemplate.Id, sectionViewModel.Id, SessionLocator.Tenant).subscribe(response => {
             this.IsQuoteTemplateSectionInCludedChange = true;
           //  this.CurrentSession.CurrentWindow.StopBusyIndicator();
            // this.PreviewQuoteTemplatePdfReport();
@@ -1048,7 +1046,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     IsStartEditSession: boolean = false;
     OnEditSectionButtonClicked(item: QuoteTemplateSectionViewModel) {
 
-        if (this.selectedQuoteTemplatePM && !this.IsStartEditSession) {
+        if (this.SelectedQuoteTemplate && !this.IsStartEditSession) {
             this.IsStartEditSession = true;
             var widthwindow = window.innerWidth;
             var heighthwindow = window.innerHeight;
@@ -1063,7 +1061,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             windowArgs.FatherComponent = this;
             windowArgs.HeightWindow = sendWindowHeight;
             windowArgs.QuoteTemplateSectionViewModel = item;
-            windowArgs.QuoteTemplateId = this.selectedQuoteTemplatePM.Id;
+            windowArgs.QuoteTemplateId = this.SelectedQuoteTemplate.Id;
 
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = windowArgs;
