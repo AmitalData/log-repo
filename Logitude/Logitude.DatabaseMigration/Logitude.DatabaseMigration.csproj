@@ -1049,6 +1049,10 @@
     <Compile Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.Designer.cs">
       <DependentUpon>201905260647064_TariffContractNumberConvertedToString_Samar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905261011040_TariffLine_Index_Add.cs" />
+    <Compile Include="Migrations\201905261011040_TariffLine_Index_Add.Designer.cs">
+      <DependentUpon>201905261011040_TariffLine_Index_Add.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1777,6 +1781,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.resx">
       <DependentUpon>201905260647064_TariffContractNumberConvertedToString_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261011040_TariffLine_Index_Add.resx">
+      <DependentUpon>201905261011040_TariffLine_Index_Add.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
