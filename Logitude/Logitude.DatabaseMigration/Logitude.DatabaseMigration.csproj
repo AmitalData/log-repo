@@ -1045,6 +1045,10 @@
     <Compile Include="Migrations\201905160948101_IncreaseQuoteSubjectField.Designer.cs">
       <DependentUpon>201905160948101_IncreaseQuoteSubjectField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs" />
+    <Compile Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.Designer.cs">
+      <DependentUpon>201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.cs" />
     <Compile Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.Designer.cs">
       <DependentUpon>201905260647064_TariffContractNumberConvertedToString_Samar.cs</DependentUpon>
@@ -1775,6 +1779,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905160948101_IncreaseQuoteSubjectField.resx">
       <DependentUpon>201905160948101_IncreaseQuoteSubjectField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.resx">
+      <DependentUpon>201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.resx">
       <DependentUpon>201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.cs</DependentUpon>
