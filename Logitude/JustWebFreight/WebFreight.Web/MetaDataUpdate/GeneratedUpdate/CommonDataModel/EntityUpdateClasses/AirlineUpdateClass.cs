@@ -5302,7 +5302,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ALGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AirlineGeneralFeature_TH0.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = AirlineObjectTable.Id, TabNameTextCodeId = AirlineGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ALGC",HtmlComponentName = "AirlineGeneralTabComponent",HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AirlineGeneralTabComponent", FeatureId = AirlineGeneralFeature_TH0.Id, ControlPath = "", ObjectTableId = AirlineObjectTable.Id, TabNameTextCodeId = AirlineGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ALBL",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AirlineBillingFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.GeneralControls.BillingTabControl", ObjectTableId = AirlineObjectTable.Id, TabNameTextCodeId = AirlineBillingTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
