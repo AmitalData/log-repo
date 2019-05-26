@@ -61,6 +61,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                  .IsMaxLength()
                  .IsUnicode(true);
             this.Property(t => t.RepeatInMinutes).IsOptional();
+            this.Property(t => t.Status)
+              .HasMaxLength(25)
+              .IsUnicode(false);
 
 
             // Table & Column Mappings
@@ -100,6 +103,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.NextRunTimeUTC).HasColumnName("NextRunTimeUTC");
             this.Property(t => t.LastRunTimeUTC).HasColumnName("LastRunTimeUTC");
             this.Property(t => t.StartDateTimeUTC).HasColumnName("StartDateTimeUTC");
+            this.Property(t => t.Version).HasColumnName("Version");
+            this.Property(t => t.Status).HasColumnName("Status");
+            this.Property(t => t.Retries).HasColumnName("Retries");
 
 
         }

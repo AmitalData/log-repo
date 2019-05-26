@@ -1,9 +1,6 @@
-﻿using Logitude.Accounting.BL.CloseTables;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.BL.EntityUpdateServices;
+﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
@@ -11,9 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using WebFreight.Web.Helpers;
-using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -85,7 +79,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-                HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                //HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
                 EncodedHtmlHelper encodedHtmlHelper = new EncodedHtmlHelper();
                 //string htmlstring = "<html>Attach flowing ...</html>";
 
@@ -142,10 +136,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 string entityReference = null;
                 string from = "no-reply@LogitudeWorld.com";
                 string replyTo = "";
+
+                string res = null;
+
+                /*
+    
+                 * 
                 string res = htmlEditorHelper.SendHtmlDocument(
-                    bytePlainTextdata/*htmlData*/, internalDocumentId, externalDocumentId, tenant, Email, "subject", "", "", userId, entityId, objectTableId, attachments,
+                    bytePlainTextdata/*htmlData, internalDocumentId, externalDocumentId, tenant, Email, "subject", "", "", userId, entityId, objectTableId, attachments,
                     entityReference, from, replyTo);
+                **/
+
                 scope.Complete();
+
                 return res;
             }
         }

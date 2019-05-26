@@ -61,11 +61,11 @@ namespace Logitude.Server.Tools.Helpers
             if (startDate != null) dateBefore = (DateTime)startDate;
             EntityChangesAutomationsFailedList = new List<EntityChangeAutomation>();
             EntityChangesAutomationsSsucceedList = new List<EntityChangeAutomation>();
-            
+
             ObjectTable shipmentobjectTable = null;
             string OtherObjectTableIdWithLastUpdate = string.Empty;
             bool IsRunMasterHouseAutomation = false;
-            
+
             Type type = entityPM.GetType();
             Object value = null;
             int tenant = 0;
@@ -78,7 +78,7 @@ namespace Logitude.Server.Tools.Helpers
             //Entity
             value = GetPropertyValue(entityPM, type, "Id");
             if (value != null) entityId = value.ToString();
-            
+
             if (tableName == "MasterAndHouse")
             {
                 tableName = "Master";
@@ -96,49 +96,16 @@ namespace Logitude.Server.Tools.Helpers
 
             AutomationLastUpdateRepository automationLastUpdateRepository = new AutomationLastUpdateRepository(tenant);
             AutomationLastUpdate automationLastUpdate = automationLastUpdateRepository.GetSingleAutomationLastUpdate(objectTable.Id, tenant);
-            
+
             AutomationLastUpdate otherAutomationLastUpdate = null;
             if (IsRunMasterHouseAutomation)
             {
                 otherAutomationLastUpdate = automationLastUpdateRepository.GetSingleAutomationLastUpdate(shipmentobjectTable.Id, tenant);
             }
 
-            #region Get Create By User Id
-
-            ContactRepository contactRepository = new ContactRepository(tenant);
-            string createByUserId = string.Empty;
-            if (HttpContext.Current != null)
-            {
-                string email = HttpContext.Current.User != null ? HttpContext.Current.User.Identity.Name : "";
-                Contact contact = null;
-                if (!string.IsNullOrEmpty(email))
-                {
-                    contact = contactRepository.GetSingleContactByEmail(email, tenant, true);
-                    if (contact != null) createByUserId = contact.Id;
-                }
-            }
-            else
-            {
-                Contact contact = contactRepository.GetContactByUserTypeAndTenant("S", tenant);
-                if (contact != null) createByUserId = contact.Id;
-            }
-
-            #endregion
-
-            EntityChange entityChange = new EntityChange()
-            {
-                Id = IdCounter.GetNumber("EntityChange", tenant),
-                Tenant = tenant,
-                EntityId = entityId,
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                CreateByUserId = createByUserId,
-                ObjectTableId = shipmentobjectTable != null ? shipmentobjectTable.Id : objectTable != null ? objectTable.Id : "",
-                ChangesFieldsXml = entityChangeFieldXml,
-                CheckStartDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-            };
-
+            EntityChange entityChange = CreateEntityChange(entityChangeFieldXml, shipmentobjectTable, tenant, entityId, objectTable);
             entityChangeRepository.Add(entityChange);
-            
+
             if (automationLastUpdate != null || otherAutomationLastUpdate != null)
             {
                 AutomationRepository automationRepository = new AutomationRepository(tenant);
@@ -158,7 +125,7 @@ namespace Logitude.Server.Tools.Helpers
                 List<ObjectField> automationsObjectFieldLists = new List<ObjectField>();
                 List<ObjectField> otherAutomationsObjectFieldLists = null;
                 string lastUpdateDate = automationLastUpdate != null ? automationLastUpdate.LastUpdateDate.ToString() : "";
-                
+
                 if ((automations != null && automations.Count > 0) || (otherAutomations != null && otherAutomations.Count > 0))
                 {
                     #region Build Automation Object Field Lists
@@ -167,7 +134,7 @@ namespace Logitude.Server.Tools.Helpers
 
                     if (automationLastUpdate != null && automations.Count > 0)
                     {
-                        automationsObjectFieldLists = BuildAutomationObjectFieldLists(automationsObjectFieldLists, automations, objectTable.Id, automationLastUpdate.LastUpdateDate.ToString(), tenant,processtype,tableId);
+                        automationsObjectFieldLists = BuildAutomationObjectFieldLists(automationsObjectFieldLists, automations, objectTable.Id, automationLastUpdate.LastUpdateDate.ToString(), tenant, processtype, tableId);
                     }
 
                     if (IsRunMasterHouseAutomation && otherAutomationLastUpdate != null && otherAutomations != null && otherAutomations.Count > 0)
@@ -210,13 +177,13 @@ namespace Logitude.Server.Tools.Helpers
                     foreach (ObjectField objectField in automationsObjectFieldLists)
                     {
                         string objectTableName = shipmentobjectTable != null ? shipmentobjectTable.Name : objectTable != null ? objectTable.Name : "";
-                        string currentvalue = GetValue(entityPM, objectField);                       
+                        string currentvalue = GetValue(entityPM, objectField);
                         string oldvalue = "";
                         bool ischange = false;
 
                         if (oldentityPM != null)
                         {
-                            oldvalue = GetValue(oldentityPM, objectField);                           
+                            oldvalue = GetValue(oldentityPM, objectField);
                             if (currentvalue != oldvalue) ischange = true;
                         }
 
@@ -324,7 +291,7 @@ namespace Logitude.Server.Tools.Helpers
                         r rFields = new r();
                         rFields.cs = Changefields;
                         entityChange.ChangesAutomationFieldsXml = rFields.cs.Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(rFields) : "";
-                    }    
+                    }
 
                     if (!IsDelayAutomation && emailAutomations.Count == 0)
                     {
@@ -346,6 +313,45 @@ namespace Logitude.Server.Tools.Helpers
             entityChange.ExecutionTime = (int)((DateTime.Now.Ticks - dateBefore.Ticks) / TimeSpan.TicksPerMillisecond);
             entityChangeRepository.SubmitChanges();
         }
+
+        private EntityChange CreateEntityChange(string entityChangeFieldXml, ObjectTable shipmentobjectTable, int tenant, string entityId, ObjectTable objectTable)
+        {
+            return new EntityChange()
+            {
+                Id = IdCounter.GetNumber("EntityChange", tenant),
+                Tenant = tenant,
+                EntityId = entityId,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                CreateByUserId = GetLoggedContactId(tenant),
+                ObjectTableId = shipmentobjectTable != null ? shipmentobjectTable.Id : objectTable != null ? objectTable.Id : "",
+                ChangesFieldsXml = entityChangeFieldXml,
+                CheckStartDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+            };
+        }
+
+
+        private string GetLoggedContactId(int tenant)
+        {
+            string loggedContactId = string.Empty;
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            {
+                string email = HttpContext.Current.User.Identity.Name;
+                var contact = contactRepository.GetSingleContactByEmail(email, tenant, true);
+                if (contact != null) loggedContactId = contact.Id;
+            }
+            else
+            {
+                string systemContactEmail = "system@tenant" + tenant.ToString() + ".com";
+                var contact  = contactRepository.GetSingleContactByEmail(systemContactEmail, tenant);
+                if (contact != null) loggedContactId = contact.Id;
+
+            }
+
+            return loggedContactId;
+        }
+
+
 
         private string GetStatuShipmentName(int tenant, string currentvalue)
         {
@@ -801,7 +807,7 @@ namespace Logitude.Server.Tools.Helpers
         #endregion
 
         #region Validate Automation And Condition
-        private bool ValidateCondition(List<Field> automationConditionFieldLists, AutomationCondition automationCondition)
+        private bool ValidateCondition(List<Field> automationConditionFieldLists, AutomationCondition automationCondition ,  EntityChange entityChange)
         {
             bool isValid = true;
 
@@ -903,7 +909,7 @@ namespace Logitude.Server.Tools.Helpers
                     if (!string.IsNullOrEmpty(automationConditionFieldValue) && automationConditionFieldValue.Contains(automationConditionvalue)) isValid = false;
                     return isValid;
                 }
-               
+
                 else if (automationCondition.OperatorCode == ">" || automationCondition.OperatorCode == ">F")
                 {
                     int reslutCompare = automationConditionFieldValue.CompareTo(automationConditionvalue);
@@ -955,6 +961,14 @@ namespace Logitude.Server.Tools.Helpers
                     return isValid;
                 }
 
+                else if (automationCondition.OperatorCode == "EqualSystemVariable" && automationCondition.Value == "SystemUser")
+                {
+                    string userId = GetSystemContactIdByTenant(entityChange.Tenant);
+                    if (userId != entityChange.CreateByUserId) isValid = false;
+
+                    return isValid;
+                }
+
             }
             else
             {
@@ -962,6 +976,14 @@ namespace Logitude.Server.Tools.Helpers
             }
 
             return isValid;
+        }
+
+
+        private  string GetSystemContactIdByTenant(int tenant)
+        {
+            ContactRepository contactRepository = new ContactRepository(tenant);
+            string userId = contactRepository.GetContactIdByUserTypeAndTenant("S", tenant);
+            return userId;
         }
 
         public ValidateAutomationResultClass ValidateAutomation(Automation automation, EntityChange entityChange, List<Field> automationConditionFields, string lastupdateautomation, string typeConditionValidate)
@@ -1033,7 +1055,7 @@ namespace Logitude.Server.Tools.Helpers
                 if (conditionOrCount == 0) validconditionOr = true;
                 foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "And"))
                 {
-                    validconditionAnd = ValidateCondition(automationConditionFields, automationCondition);
+                    validconditionAnd = ValidateCondition(automationConditionFields, automationCondition, entityChange);
                     if (!validconditionAnd) break;
                 }
 
@@ -1041,7 +1063,7 @@ namespace Logitude.Server.Tools.Helpers
                 {
                     foreach (AutomationCondition automationCondition in automationConditionList.Where(d => d.ConditionType == "Or"))
                     {
-                        validconditionOr = ValidateCondition(automationConditionFields, automationCondition);
+                        validconditionOr = ValidateCondition(automationConditionFields, automationCondition , entityChange);
                         if (validconditionOr) break;
                     }
                 }
@@ -1155,9 +1177,8 @@ namespace Logitude.Server.Tools.Helpers
             if (automationFollowUp != null)
             {
                 #region Fill Data
-                ContactRepository contactRepository = new ContactRepository(0);
-                string userId = contactRepository.GetContactIdByUserTypeAndTenant("S", entityChange.Tenant);
-                if(string.IsNullOrEmpty(userId)) userId = entityChange.CreateByUserId;
+                string userId = GetSystemContactIdByTenant(entityChange.Tenant);
+                if (string.IsNullOrEmpty(userId)) userId = entityChange.CreateByUserId;
 
                 string ownerId = automationFollowUp.OwnerValue;
                 string note = automationFollowUp.NoteValue;

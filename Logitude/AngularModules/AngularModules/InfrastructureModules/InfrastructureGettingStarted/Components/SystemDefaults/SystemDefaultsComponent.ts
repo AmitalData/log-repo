@@ -573,8 +573,8 @@ export class SystemDefaultsComponent extends BaseComponent{
 
     get CustomerTenantShareExportFileVisible() {
         var result = false;
-        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX" && d.TenantNumber == SessionLocator.Tenant)[0];
-        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES") && FeatureToggle) {
+        //var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (FeatureLocator.HasFeaturePermession("General", "CUSTOMERTENANTACCESSES")) {
             result = true;
         }
 

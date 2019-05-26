@@ -84,7 +84,7 @@ namespace CommunicationWorkerRole.Tasks
 			{
 				directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
 				Path.GetExtension(f).TrimStart('.')
-				.Equals(schedulerDetails.FTPDetails.Extension, StringComparison.CurrentCultureIgnoreCase)))
+				.Equals(schedulerDetails.FTPDetails.Extension.TrimStart('.'), StringComparison.CurrentCultureIgnoreCase)))
 				.ToList();
 			}
 

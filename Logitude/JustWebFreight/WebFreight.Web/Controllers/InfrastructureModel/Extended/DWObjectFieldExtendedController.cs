@@ -81,6 +81,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 //var Category2Group = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenant(0, DWOTId).GroupBy(a => a.Category2);
                 var CategoryGroup = dWObjectFieldQuery.GetDWObjectFieldPMsByDWObjectTabelAndTenantGroupedByCategory(0, DWOTId).GroupBy(a => a.Category);
 
+                ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(authToken.Tenant);
+                List<ObjectFieldPM> objectFieldPMs = objectFieldQuery.GetCustomObjectFieldsByTenantAndObjectTable(authToken.Tenant, "Shipment");
+
+
                 List<DWFieldsGroup> MyGroups = new List<DWFieldsGroup>();
                 foreach (var item in CategoryGroup)
                 {
@@ -97,86 +101,21 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                        
                         MyGroup.FieldsList = item.Select(a => a).OrderBy(a => a.Name).ToList();
 
+
                         if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
                         {
+                            ResolveDWCustomObjectFields(objectFieldPMs , MyGroup , authToken.Tenant);
                             MyGroups.Add(MyGroup);
+
                         }
 
                     }
                 }
                 MyGroups = MyGroups.OrderBy(a => a.Index).ToList();
-                //foreach (var item in Category1Group)
-                //{
-                //    var MyKey = MyGroups.Where(a => a.Key == item.Key).FirstOrDefault();
-                //    if (MyKey == null)
-                //    {
-                //        var MyGroup = new DWFieldsGroup();
-                //        MyGroup.Key = item.Key;
-                //        if (item.Key == null)
-                //        {
-                //            MyGroup.FieldsList = item.Where(a => a.Category2 == null).ToList();
-                //        }
-                //        else
-                //        {
-                //            MyGroup.FieldsList = item.Select(a => a).ToList();
-                //        }
-                //        if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
-                //        {
-                //            MyGroups.Add(MyGroup);
-                //        }
 
-                //    }
-                //    else
-                //    {
-                //        //MyKey.FieldsList = MyKey.FieldsList.Concat(item.Select(a => a).ToList()).ToList();
-                //        if (MyKey.Key == null)
-                //        {
-                //            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Where(a => a.Category2 == null && (MyKey.FieldsList.Where(b => b.Id != a.Id).FirstOrDefault() == null)).ToList()).ToList();
-                //        }
-                //        else
-                //        {
-                //            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Select(a => a).ToList()).ToList();
-                //        }
-                //    }
-                //}
-                //foreach (var item in Category2Group)
-                //{
-                //    var MyKey = MyGroups.Where(a => a.Key == item.Key).FirstOrDefault();
-                //    if (MyKey == null)
-                //    {
-                //        var MyGroup = new DWFieldsGroup();
-                //        MyGroup.Key = item.Key;
-                //        if (item.Key == null)
-                //        {
-                //            MyGroup.FieldsList = item.Where(a => a.Category1 == null).ToList();
-                //        }
-                //        else
-                //        {
-                //            MyGroup.FieldsList = item.Select(a => a).ToList();
-                //        }
-                //        if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
-                //        {
-                //            MyGroups.Add(MyGroup);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        if (MyKey.Key == null)
-                //        {
-                //            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Where(a => a.Category1 == null && (MyKey.FieldsList.Where(b => b.Id != a.Id).FirstOrDefault() == null)).ToList()).ToList();
-                //        }
-                //        else
-                //        {
-                //            MyKey.FieldsList = MyKey.FieldsList.Concat(item.Select(a => a).ToList()).ToList();
-                //        }
-                //    }
-                //}
-                //var NULLGroup = MyGroups.Where(a => a.Key == null).FirstOrDefault();
-                //if (NULLGroup != null && NULLGroup.FieldsList.Count == 0)
-                //{
-                //    MyGroups.Remove(NULLGroup);
-                //}
 
+
+   
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, MyGroups);
@@ -188,6 +127,30 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             }
 
         }
+
+        private void ResolveDWCustomObjectFields(List<ObjectFieldPM> objectFieldPMs, DWFieldsGroup MyGroup, int tenant)
+        {
+            foreach (var field in MyGroup.FieldsList.Where(d => d.IsCustom && d.DisplayInQueryBuilder).ToList())
+            {
+                ObjectFieldPM objectFieldPM = objectFieldPMs.Where(d => d.FieldName == field.Name).FirstOrDefault();
+                if (objectFieldPM != null)
+                {
+                    if (objectFieldPM.DataTypeCode != "PickList" && objectFieldPM.DataTypeCode != "LookUp")
+                    {
+                        field.DisplayName = objectFieldPM.FullNameTextCodeDefaultText;//TranslateTextsClass.Translate(objectFieldPM.FullNameTextCodeCode, tenant);
+                        field.DataTypeCode = objectFieldPM.DataTypeCode;
+                        if (field.DataTypeCode == "Date" || field.DataTypeCode == "DateTime")
+                        {
+                            field.DataTypeCode = "Dimension";
+                            field.DimensionTableCode = "DIM_Dates";
+                        }
+                    } else field.DisplayInQueryBuilder = false;
+                }
+                else field.DisplayInQueryBuilder = false;
+            }
+        }
+
+        
 
         public HttpResponseMessage getDWObjectFieldsWithChildrenByDWTableId(string DWOTId)
         {
