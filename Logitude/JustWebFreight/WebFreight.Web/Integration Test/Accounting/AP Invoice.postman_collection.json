@@ -1,0 +1,796 @@
+{
+	"info": {
+		"_postman_id": "cc26f55a-8c81-4d3e-8e57-c67f6d12c561",
+		"name": "AP Invoice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateVendorTest",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"AddressId\": \"1-613390\",\n \n  \"PartnerTypeId\": \"VD\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n\"Address\": {\n    \"$id\": \"2\",\n    \"Id\": \"1-613390\",\n    \"Tenant\": \"{{Tenant}}\",\n    \"Description\": \"Main Address\",\n    \"City\": \"TEST\",\n    \"StateId\": \"1-144544\",\n \n    \"AddressTypeId\": \"M\",\n  \n    \"Name\": \"TestVendor\",\n    \"CountryId\": \"1-138278\",\n   \n    \"CountryCode\": \"1 \",\n    \"CountryName\": \"palestine\",\n    \"CountryEnglishName\": \"palestine\",\n    \"StateEnglishName\": \"test\",\n    \"StateCode\": \"12121\",\n  \n    \"InActive\": false,\n    \"IsLocalLanguage\": false,\n    \"IsHybrid\": false,\n \n    \"IsCreatedWithPartner\": true,\n  \n    \"HasStates\": false,\n    \"IsStateRequired\": false,\n    \"BranchId\": null\n  },\n  \"Vendor\": {\n    \"$id\": \"3\",\n \n     \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n\n    \"IsHybrid\": false,\n    \"EnglishName\": \"TestVendorId\",\n\n    \"LocalName\": \"TestVendor\",\n    \"InActive\": false,\n\n    \"CreatedByUserId\": \"{{CreatedByUserId}}\",\n    \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\n    \"PartnerTypeId\": \"VD\",\n   \n    \"FieldsChanged\": false,\n  \n    \"IsExternal\": false,\n  \n    \"IsFirstContactToAdd\": false,\n    \"EnableConsolidationInvoices\": false,\n\n   \n   \n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null\n  },\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
+				},
+				"url": "{{LogitudeURL}}/api/PartnersDomain"
+			},
+			"response": []
+		},
+		{
+			"name": "GetVendorTest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "34effda9-678f-48aa-878e-faac84d0aad1",
+						"exec": [
+							"pm.test(\"GetVendorId\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    ",
+							"   pm.environment.set(\"VendorId\",idvalue);",
+							"",
+							"",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"AddressId\": \"1-613390\",\n \n  \"PartnerTypeId\": \"VD\",\n  \"IsAddressDirty\": false,\n  \"IsContactDirty\": false,\n  \"IsPartnerDirty\": false,\n\n  \"Vendor\": {\n    \"$id\": \"3\",\n \n     \"Tenant\": \"{{Tenant}}\",\n    \"IsSecured\": false,\n\n    \"IsHybrid\": false,\n    \"EnglishName\": \"TestVendorId\",\n\n    \"LocalName\": \"TestVendor\",\n    \"InActive\": false,\n\n    \"CreatedByUserId\": \"{{CreatedByUserId}}\",\n    \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\n    \"PartnerTypeId\": \"VD\",\n   \n    \"FieldsChanged\": false,\n  \n    \"IsExternal\": false,\n  \n    \"IsFirstContactToAdd\": false,\n    \"EnableConsolidationInvoices\": false,\n\n   \n   \n    \"ExternalAccountingBusinessArea\": null,\n    \"PaymentMethodCode\": null,\n    \"ExternalId2\": null,\n    \"SATForeignRFC\": null,\n    \"MetodoPagoCode\": null,\n    \"UsoCFDICode\": null\n  },\n  \"Warehouse\": null,\n  \"Airline\": null,\n  \"ShippingLine\": null,\n  \"Trucker\": null\n}"
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/vendorviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=TestVendorId&GetCount=true&PageIndex=0&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"vendorviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "TestVendorId"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCashPaymentTerm",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b7bc030-7f42-44c5-a2c5-21ab8011aa89",
+						"exec": [
+							"pm.test(\"GetVendorId\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    ",
+							"   pm.environment.set(\"PaymentTermId\",idvalue);",
+							"",
+							"",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/paymenttermviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"paymenttermviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "Cash"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUSDCurrencyID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b29157ef-a2a2-4e50-bc80-b717c5b3cc43",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"GetUSDId\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idvalue2 = (pm.response.json().Result[0].Code);",
+							"    ",
+							"    var idexist = idvalue !== null;",
+							"    var idexist2 = idvalue2 !== null;",
+							"    ",
+							"    pm.expect(idexist);",
+							"    pm.expect(idexist2);",
+							"    ",
+							"   pm.environment.set(\"USDCurrencyId\",idvalue);",
+							"   pm.environment.set(\"USDCurrencyCode\",idvalue2);",
+							"",
+							"",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=usd&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22usd%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"currencyviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "usd"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": ""
+						},
+						{
+							"key": "SortDirection",
+							"value": ""
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22usd%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetChargeTypeId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db5e4dd0-112f-4cf2-a0d5-28f22815370c",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"GetAFTChargetype\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"  ",
+							"    ",
+							"    var idexist = idvalue !== null;",
+							"",
+							"    pm.expect(idexist);",
+							"  ",
+							"    ",
+							"   pm.environment.set(\"AFTChargeTypeId\",idvalue);",
+							" ",
+							"",
+							"",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/chargestypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"chargestypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "air%20freight"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetVatTypeId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66a623b8-bed8-46fc-a81f-4e7f653ee4f8",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"GetZeroVatType\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    ",
+							"    ",
+							"    var idexist = idvalue !== null;",
+							"",
+							"    pm.expect(idexist);",
+							"  ",
+							"    ",
+							"    pm.environment.set(\"ZeroVatTypeId\",idvalue);",
+							" ",
+							"",
+							"",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=zero&GetCount=true&PageIndex=0&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"vattypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "zero"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLocal/ProfitCurrencyId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "669f9754-106a-426b-8630-342cfa582eeb",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"GetLocal/ProfitCurrencyId\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().ProfitCurrencyId);",
+							"    var idvalue4 = (pm.response.json().ProfitCurrencyRate);",
+							"    var idvalue2 = (pm.response.json().FreightCurrencyId);",
+							"    var idvalue3 = (pm.response.json().CurrencyId);",
+							"  ",
+							"    ",
+							"    var idexist = idvalue !== null;",
+							"    var idexist2 = idvalue2 !== null;",
+							"    var idexist3 = idvalue3 !== null;",
+							"    var idexist4 = idvalue4 !== null;",
+							"",
+							"    pm.expect(idexist);",
+							"    pm.expect(idexist2);",
+							"    pm.expect(idexist3);",
+							"    pm.expect(idexist4);",
+							"  ",
+							"    ",
+							"    pm.globals.set(\"ProfitCurrencyId\",idvalue);",
+							"    pm.globals.set(\"FreightCurrencyId\",idvalue2);",
+							"    pm.globals.set(\"CurrencyId\",idvalue3);",
+							"    pm.globals.set(\"ProfitCurrencyRate\",idvalue4);",
+							"",
+							" ",
+							"",
+							"",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": "{{LogitudeURL}}/api/CommonDomain/GetLoggedTenantDB"
+			},
+			"response": []
+		},
+		{
+			"name": "Create AP Invoice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0aecbbd0-3ab2-437b-a469-0d5ce1e6624b",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"GetAPInvoice\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().InvoiceNumber);",
+							"    var idvalue2 = (pm.response.json().ShipmentNewConcurrencyGUID);",
+							"    var idvalue3 = (pm.response.json().ShipmentConcurrencyGUID);",
+							"    ",
+							"    var idexist = idvalue !== null;",
+							"    var idexist2 = idvalue2 !== null;",
+							"    var idexist3 = idvalue3 !== null;",
+							"",
+							"    pm.expect(idexist);",
+							"    pm.expect(idexist2);",
+							"    pm.expect(idexist3);",
+							"    ",
+							"    pm.environment.set(\"APInvoice#\",idvalue);",
+							"    pm.environment.set(\"ShipmentNewConcurrencyGUID\",idvalue2);",
+							"    pm.environment.set(\"ConcurrencyGUID\",idvalue3);",
+							" ",
+							"",
+							"",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \n  \"Tenant\": \"{{Tenant}}\",\n  \"IsSecured\": false,\n  \n  \"InvoiceNumber\": \"54567865465\",\n  \"VendorId\": \"{{AgentIdTest}}\",\n\n  \"InvoiceDate\": \"2019-05-01T00:00:00Z\",\n  \"DueDate\": \"2019-05-01T00:00:00Z\",\n  \"PaymentTermId\": \"{{PaymentTermId}}\",\n  \n  \"InvoiceCurrencyExchangeRate\": 3,\n\n  \"InvoiceCurrencyId\": \"{{USDCurrencyId}}\",\n \n  \"LocalCurrencyId\": \"{{CurrencyId}}\",\n  \"SubTotalInLocalCurrency\": 300,\n  \"SubTotalInInvoiceCurrency\": 100,\n  \"AmountInInvoiceCurrency\": 100,\n  \"AmountInInvoiceCurrency_Summary\": 100,\n  \"AmountInLocalCurrency\": 300,\n  \"AmountInLocalCurrency_Summary\": 300,\n  \"AmountInProfitCurrency\": 300,\n \n  \"StatusCode\": \"WA\",\n\n  \"CreatedByUserId\": \"{{CreatedByUserId}}\",\n  \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\n  \"IsClosed\": false,\n\n  \"InvoiceExpectedAmount\": 100,\n  \"MainEntityId\": \"1-1511245\",\n  \"MainEntityReference\": \"{{ShipmentNumber}}\",\n\n \n  \"ProfitCurrencyId\": \"{{ProfitCurrencyId}}\",\n  \"ProfitCurrencyExchangeRate\": \"{{ProfitCurrencyRate}}\",\n  \n  \"AmountDue\": 100,\n\n  \"AmountDueInLocalCurrency\": 300,\n  \"AmountDueInProfitCurrency\": 300,\n  \"BranchId\": \"{{BranchId}}\",\n \n  \"VendorPartnerTypeId\": \"VD\",\n\n  \"TransferTries\": 0,\n  \"TransferError\": \"Credit Account is missing,External Code is missing,Debit Account is missing\",\n  \"IsTransferStarted\": false,\n  \"TransferStatusCode\": \"NR\",\n  \"TransferStatusName\": \"Not Ready\",\n\n  \"ReadyForTransfer\": false,\n  \"IsTransferStatusSetManually\": false,\n  \"IsMultipleEntities\": false,\n\n  \"OperationalDate\": \"2019-05-18T21:59:11.027\",\n\n  \"IsExternalEntity\": false,\n  \"IsGeneralInvoice\": false,\n  \n  \"InvoiceLines\": [\n    {\n      \"$id\": \"2\",\n \n      \"LineNumber\": 1,\n      \"Tenant\": \"{{Tenant}}\",\n      \"InvoiceCurrencyAmount\": 100,\n  \n      \"ChargesTypeId\": \"{{AFTChargeTypeId}}\",\n      \"VatTypeId\": \"{{ZeroVatTypeId}}\",\n      \"VatPercentage\": 0,\n      \"VatIsMultiPercentage\": false,\n      \n      \"OpenAmount\": -88,\n      \"ForiegnCurrencyId\": \"{{FreightCurrencyId}}\",\n      \"ForiegnCurrencyAmount\": 100,\n      \"ForiegnExchangeRate\": 3,\n      \"LocalCurrencyAmount\": 300,\n      \"ProfitCurrencyAmount\": 300,\n      \"EntityId\": \"{{ShipmentId}}\",\n     \n      \"ObjectTableId\": \"1-4\",\n      \"EntityReference\": \"{{ShipmentNumber}}\",\n    \n      \"OtherInvoicesAmounts\": 0,\n      \"ExpectedAmount\": 12,\n      \"CorrectionAmount\": 0,\n   \n      \"AmountTypeCode\": \"ACCU\",\n      \"ForiegnCurrencyCode\": \"EUR\",\n      \"ChangeSetOp\": 1,\n  \n      \"Description\": \"Ocean fright\",\n      \"LocalDescription\": \"Ocean fright\",\n    \n      \"AuthorizedSignatory\": false,\n      \"PrepaidCollectId\": \"P\"\n    }\n  ],\n  \"InvoiceEntities\": [\n    {\n      \"$id\": \"3\",\n    \n      \"Tenant\": \"{{Tenant}}\",\n      \"EntityId\": \"{{ShipmentId}}\",\n     \n      \"ObjectTableId\": \"1-4\",\n    \n      \"IndexOrder\": 0\n    }\n  ],\n\n \n  \"TotalVATs\": [\n    {\n      \"$id\": \"4\",\n   \n      \"Tenant\": 1,\n   \n      \"VatTypeId\": \"1-4327\",\n      \"VatPercent\": 0,\n      \"VatTypeName\": \"Zero\",\n      \"VatTypeCell\": \"Zero (0%)\",\n      \"ExternalVATCard\": null,\n      \"ExternalTAXItemId\": null,\n      \"InvoiceCurrencyVatableAmount\": 100,\n      \"LocalVatableAmount\": 300,\n      \"ProfitVatableAmount\": 300,\n      \"InvoiceCurrencyVATAmount\": 0,\n      \"LocalVATAmount\": 0,\n      \"ProfitCurrencyVATAmount\": 0,\n      \"ChangeSetOp\": 1\n    }\n  ],\n  \"SetVoided\": false,\n  \"SetApproved\": false,\n  \"SetCancelApproval\": false,\n  \"SetReTransfer\": false,\n  \"SetReSendQBO\": false,\n\n  \"ShipmentConcurrencyGUID\": \"{{ConcurrencyGUID}}\",\n  \"ShipmentNewConcurrencyGUID\": \"21b3a929-1b4f-43b8-ad5a-f182d76969bc\"\n}"
+				},
+				"url": "{{LogitudeURL}}/api/apinvoices"
+			},
+			"response": []
+		},
+		{
+			"name": "GetAPInvoice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "59f020d7-31cb-40df-8dfc-24202dc697fb",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"GetAPInvoiceID\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    ",
+							"    ",
+							"    var idexist = idvalue !== null;",
+							"",
+							"    pm.expect(idexist);",
+							"  ",
+							"    ",
+							"    pm.environment.set(\"APInvoiceId\",idvalue);",
+							" ",
+							"",
+							"",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{LogitudeURL}}/api/apinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=54567865465&GetCount=true&PageIndex=0&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"apinvoiceviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "54567865465"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateAPInvoice",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Id\": \"1-615666\",\n  \"Tenant\": \"{{Tenant}}\",\n  \"IsSecured\": true,\n  \"InternalNumber\": \"Bill4379\",\n  \"InvoiceNumber\": \"54567865465\",\n  \"VendorId\": \"{{VendorId}}\",\n  \n  \"InvoiceDate\": \"2019-05-01T00:00:00\",\n  \"PaymentTermId\": \"{{PaymentTermId}}\",\n  \"DueDate\": \"2019-05-01T00:00:00\",\n  \"InvoiceCurrencyExchangeRate\": 3,\n\n   \"InvoiceCurrencyId\": \"{{USDCurrencyId}}\",\n \n  \"LocalCurrencyId\": \"{{CurrencyId}}\",\n \n  \"InternalNotes\": \"ttttt\",\n  \"SubTotalInLocalCurrency\": 300,\n  \"SubTotalInInvoiceCurrency\": 100,\n  \"AmountInInvoiceCurrency\": 100,\n  \"AmountInInvoiceCurrency_Summary\": 100,\n  \"AmountInLocalCurrency\": 300,\n  \"AmountInLocalCurrency_Summary\": 300,\n  \"AmountInProfitCurrency\": 100,\n  \"AmountInProfitCurrency_Summary\": 100,\n  \"StatusCode\": \"WA\",\n  \"CreateDate\": \"2019-05-26T14:05:56.447\",\n  \"CreatedByUserId\": \"{{CreatedByUserId}}\",\n  \"IsClosed\": false,\n  \"ProfitCurrencyId\": \"{{ProfitCurrencyId}}\",\n  \"ProfitCurrencyExchangeRate\": \"{{ProfitCurrencyRate}}\",\n  \"UpdatedByUserId\": \"{{CreatedByUserId}}\",\n  \"UpdateDate\": \"2019-05-26T14:10:49.3728584Z\",\n  \"InvoiceExpectedAmount\": 100,\n  \"MainEntityId\": \"{{ShipmentId}}\",\n  \"MainEntityReference\": \"{{ShipmentNumber}}\",\n\n\n  \"StatusName\": \"Waiting For Approval\",\n  \"CreatedByUserName\": \"Razan Salesman \",\n\n  \"AmountDue\": 100,\n \n  \"AmountDueInLocalCurrency\": 300,\n  \"AmountDueInProfitCurrency\": 300,\n  \"BranchId\": \"{{BranchId}}\",\n  \"ConnectedEntityReferences\": \"{{ShipmentNumber}}\",\n \n\n  \"TransferTries\": 0,\n  \"TransferError\": \"Credit Account is missing,External Code is missing,Debit Account is missing\",\n  \"IsTransferStarted\": false,\n  \"TransferStatusCode\": \"NR\",\n  \"TransferStatusName\": \"Not Ready\",\n\n  \"ReadyForTransfer\": false,\n  \"IsTransferStatusSetManually\": false,\n  \"IsMultipleEntities\": false,\n\n  \"OperationalDate\": \"2019-05-18T21:59:11.027\",\n\n  \"IsExternalEntity\": false,\n  \"IsGeneralInvoice\": false,\n\n  \"InvoiceLines\": [\n    {\n      \"$id\": \"2\",\n      \"APInvoiceId\": \"{{APInvoiceId}}\",\n      \"LineNumber\": 1,\n      \"Tenant\": \"{{Tenant}}\",\n      \"InvoiceCurrencyAmount\": 100,\n      \"Notes\": \"Update Invoice\",\n      \"ChargesTypeId\": \"{{AFTChargeTypeId}}\",\n      \"VatTypeId\": \"{{ZeroVatTypeId}}\",\n      \"VatPercentage\": 0,\n    \n      \"VatIsMultiPercentage\": false,\n      \"VendorId\": \"{{VendorId}}\",\n      \"OpenAmount\": -88,\n      \"ForiegnCurrencyId\": \"{{FreightCurrencyId}}\",\n      \"ForiegnCurrencyAmount\": 100,\n      \"ForiegnExchangeRate\": 3,\n      \"LocalCurrencyAmount\": 300,\n      \"ProfitCurrencyAmount\": 300,\n      \"EntityId\": \"{{ShipmentId}}\",\n      \"EntityPayableId\": \"1-3868198\",\n     \n      \"ObjectTableId\": \"1-4\",\n   \n      \"OtherInvoicesAmounts\": 0,\n   \n      \"AmountTypeCode\": \"NEXP\",\n \n      \"ChangeSetOp\": 0,\n\n      \"Description\": \"Ocean fright\",\n      \"LocalDescription\": \"Ocean fright\",\n      \"AuthorizedSignatory\": false,\n      \"PrepaidCollectId\": \"P\"\n    }\n  ],\n  \"InvoiceEntities\": [\n    {\n      \"$id\": \"3\",\n      \"Id\": \"1-727673\",\n      \"Tenant\": 1,\n      \"EntityId\": \"{{ShipmentId}}\",\n      \"EntityReference\": \"{{ShipmentNumber}}\",\n      \"ObjectTableId\": \"1-4\",\n      \"APInvoiceId\": \"{{APInvoiceId}}\",\n      \"IndexOrder\": 0\n    }\n  ],\n \"ShipmentConcurrencyGUID\": \"5a58739b-8d0e-403f-80a0-a3f1a8f443da\",\n    \"ShipmentNewConcurrencyGUID\": \"be6e06c1-3552-4cb7-9649-29e2027f6cef\"\n}"
+				},
+				"url": "{{LogitudeURL}}/api/apinvoices"
+			},
+			"response": []
+		}
+	]
+}
