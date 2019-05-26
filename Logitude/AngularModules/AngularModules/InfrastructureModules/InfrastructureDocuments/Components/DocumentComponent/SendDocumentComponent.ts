@@ -118,6 +118,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     IsEnableLinkDocOout: boolean = true;
     IsEnableLinkDocsSharedWithAgents: boolean = true;
     IsEnableLinkDocIn: boolean = true;
+    IsSendDocumentSucceeded: boolean;
+    IsSendDocumentFailed: boolean;
 
     table: Element;
     table2: Element;
@@ -791,6 +793,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
 
     SendDocumentHtml() {
+        this.IsSendDocumentSucceeded = false;
+        this.IsSendDocumentFailed = false;
 
         ServiceLocator.SendTotangoUserActivity(this.ObjecttableName, "SendDocByEmail");
 
@@ -847,6 +851,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         if (!filter.ToEmail) {
             this.ShowMessage("Please specify at least one recepient", "Logitude Message");
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.IsSendDocumentFailed = true;
             return;
         }
 
@@ -855,6 +860,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
             this.ShowMessage("Some of To e- mails are Invalid", "Logitude Message");
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.IsSendDocumentFailed = true;
             return;
         }
 
@@ -862,12 +868,14 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         if (filter.Cc != null && !this.CheckIsValidEmails(filter.Cc)) {
             this.ShowMessage("Some of Cc e-mails are Invalid", "Logitude Message");
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.IsSendDocumentFailed = true;
             return;
         }
 
         if (filter.Bcc != null && !this.CheckIsValidEmails(filter.Bcc)) {
             this.ShowMessage("Some of Bcc e-mails are Invalid", "Logitude Message");
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.IsSendDocumentFailed = true;
             return;
         }
 
@@ -887,6 +895,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.ShowMessage("The maximum size of documents you can attach is 15 MB. Please send the documents in separated emails", "Attachment Limit");
             //this.ShowMessage("The file you are trying to send exceeds the 15 MB attachment limit.", "Attachment Limit");
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            this.IsSendDocumentFailed = true;
             return;
         }
 
@@ -895,7 +904,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             var response: ServiceResponse = res;
 
             if (!response.HasError) {
-
+                this.IsSendDocumentSucceeded = true;
                 this._communicationLogExtendedPMService.getCommunicationLogPMsByEntityIdAndDocumentOutId(this.EntityId, this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -949,6 +958,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             }
             else {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.IsSendDocumentFailed = true;
                 if (response.ErrorsArray && response.ErrorsArray.length > 0) {
                     this.ShowMessage(response.ErrorsArray[0], "Logitude Message");
                 }
