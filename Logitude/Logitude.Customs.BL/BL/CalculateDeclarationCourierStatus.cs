@@ -204,7 +204,7 @@ namespace Logitude.Customs.BL.BL
 
         public void CalcCourierPaymentStatusCode(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
-            if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
+            if (declarationPM == null || myDeclarationCourierStatusPM == null || (myDeclarationCourierStatusPM != null && myDeclarationCourierStatusPM.CourierPaymentStatusCode == "P")) return;
             //Set CourierPaymentStatusCode
             if (declarationPM.PaymentDate == null)
             {
