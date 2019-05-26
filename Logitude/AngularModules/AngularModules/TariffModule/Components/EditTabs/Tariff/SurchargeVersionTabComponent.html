@@ -14,7 +14,7 @@
                         </td>
 
                         <td *ngIf="!IsDraftVersion" style="width:230px;">
-                            {{StartDate | DateTimeToDatePipe}}
+                            {{StartDate | DateTimePipe:'SD'}}
                         </td>
 
                         <td style="width:15px;">
@@ -30,7 +30,7 @@
                         </td>
 
                         <td *ngIf="!IsDraftVersion" style="width:230px;">
-                            {{ExpirationDate | DateTimeToDatePipe}}
+                            {{ExpirationDate | DateTimePipe:'SD'}}
                         </td>
 
                         <td>
@@ -154,7 +154,7 @@
                                     </log-column>
 
                                     <!-- Surcharge1Price -->
-                                    <log-column *ngIf="Surcharge1PriceVisibility" [header]="Surcharge1PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge1PriceVisibility" [Alignment]="'center'" [header]="Surcharge1PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span [ngStyle]="{color: item.Surcharge1PriceColor}">{{item.Surcharge1PriceValue}}</span>
@@ -167,7 +167,7 @@
                                     </log-column>
 
                                     <!-- Surcharge2Price -->
-                                    <log-column *ngIf="Surcharge2PriceVisibility" [header]="Surcharge2PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge2PriceVisibility" [Alignment]="'center'" [header]="Surcharge2PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span [ngStyle]="{color: item.Surcharge2PriceColor}">{{item.Surcharge2PriceValue}}</span>
@@ -180,7 +180,7 @@
                                     </log-column>
 
                                     <!-- Surcharge3Price -->
-                                    <log-column *ngIf="Surcharge3PriceVisibility" [header]="Surcharge3PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge3PriceVisibility" [Alignment]="'center'" [header]="Surcharge3PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span [ngStyle]="{color: item.Surcharge3PriceColor}">{{item.Surcharge3PriceValue}}</span>
@@ -193,7 +193,7 @@
                                     </log-column>
 
                                     <!-- Surcharge4Price -->
-                                    <log-column *ngIf="Surcharge4PriceVisibility" [header]="Surcharge4PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge4PriceVisibility" [Alignment]="'center'" [header]="Surcharge4PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span [ngStyle]="{color: item.Surcharge4PriceColor}">{{item.Surcharge4PriceValue}}</span>
@@ -206,7 +206,7 @@
                                     </log-column>
 
                                     <!-- Surcharge5Price -->
-                                    <log-column *ngIf="Surcharge5PriceVisibility" [header]="Surcharge5PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge5PriceVisibility" [Alignment]="'center'" [header]="Surcharge5PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span [ngStyle]="{color: item.Surcharge5PriceColor}">{{item.Surcharge5PriceValue}}</span>
@@ -219,7 +219,7 @@
                                     </log-column>
 
                                     <!-- Surcharge6Price -->
-                                    <log-column *ngIf="Surcharge6PriceVisibility" [header]="Surcharge6PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge6PriceVisibility" [Alignment]="'center'" [header]="Surcharge6PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span [ngStyle]="{color: item.Surcharge6PriceColor}">{{item.Surcharge6PriceValue}}</span>
@@ -232,7 +232,7 @@
                                     </log-column>
 
                                     <!-- Surcharge7Price -->
-                                    <log-column *ngIf="Surcharge7PriceVisibility" [header]="Surcharge7PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge7PriceVisibility" [Alignment]="'center'" [header]="Surcharge7PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span [ngStyle]="{color: item.Surcharge7PriceColor}">{{item.Surcharge7PriceValue}}</span>
@@ -245,7 +245,7 @@
                                     </log-column>
 
                                     <!-- Surcharge8Price -->
-                                    <log-column *ngIf="Surcharge8PriceVisibility" [header]="Surcharge8PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge8PriceVisibility" [Alignment]="'center'" [header]="Surcharge8PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span [ngStyle]="{color: item.Surcharge8PriceColor}">{{item.Surcharge8PriceValue}}</span>
@@ -258,7 +258,7 @@
                                     </log-column>
 
                                     <!-- Surcharge9Price -->
-                                    <log-column *ngIf="Surcharge9PriceVisibility" [header]="Surcharge9PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge9PriceVisibility" [Alignment]="'center'" [header]="Surcharge9PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span [ngStyle]="{color: item.Surcharge9PriceColor}">{{item.Surcharge9PriceValue}}</span>
@@ -271,7 +271,7 @@
                                     </log-column>
 
                                     <!-- Surcharge10Price -->
-                                    <log-column *ngIf="Surcharge10PriceVisibility" [header]="Surcharge10PriceLabel" [width]="'70'">
+                                    <log-column *ngIf="Surcharge10PriceVisibility" [Alignment]="'center'" [header]="Surcharge10PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <span [ngStyle]="{color: item.Surcharge10PriceColor}">{{item.Surcharge10PriceValue}}</span>

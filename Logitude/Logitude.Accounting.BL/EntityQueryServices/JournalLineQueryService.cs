@@ -29,11 +29,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
 
 
-        public IQueryable< IGrouping<String,JournalLine>> GetQGJournalLinesByExternalReco(int tenant)
+        //public IQueryable< IGrouping<String,JournalLine>> GetQGJournalLinesByExternalReco(int tenant)
+        //{
+        //    return this.repository.GetAll(tenant)
+        //        .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != "" 
+        //            && rec.ExternalReconcileNumber != "0" && rec.ExternalReconcileNumber != "0.00").OrderBy(rec => rec.ExternalReconcileNumber).GroupBy(rec => rec.ExternalReconcileNumber);
+        //}
+
+        public IQueryable<IGrouping<String, JournalLine>> GetQGJournalLinesByExternalRecoFromTo(int tenant, string fromExtNum, string toExtNum)
         {
             return this.repository.GetAll(tenant)
-                .Where(rec => !String.IsNullOrWhiteSpace(rec.ExternalReconcileNumber)
-                    && rec.ExternalReconcileNumber != "0" && rec.ExternalReconcileNumber != "0.00").GroupBy(rec => rec.ExternalReconcileNumber).OrderBy(gr => Decimal.Parse(gr.Key));
+                .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
+                    && rec.ExternalReconcileNumber != "0" && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber.CompareTo(fromExtNum) >= 0 && rec.ExternalReconcileNumber.CompareTo(toExtNum) <= 0)
+                    .OrderBy(rec => rec.ExternalReconcileNumber).GroupBy(rec => rec.ExternalReconcileNumber);
         }
 
 
