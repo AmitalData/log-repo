@@ -14,7 +14,7 @@
                         </td>
 
                         <td *ngIf="!IsDraftVersion" style="width:130px;">
-                            {{StartDate | DateTimeToDatePipe}}
+                            {{StartDate | DateTimePipe:'SD'}}
                         </td>
 
                         <td style="width:10px;">
@@ -30,7 +30,7 @@
                         </td>
 
                         <td *ngIf="!IsDraftVersion" style="width:130px;">
-                            {{ExpirationDate | DateTimeToDatePipe}}
+                            {{ExpirationDate | DateTimePipe:'SD'}}
                         </td>
 
                         <td style="float:left;min-width:495px;">
@@ -186,7 +186,7 @@
                                     </log-column>
 
                                     <!-- MinPrice -->
-                                    <log-column [header]="'TariffLine.F.MinPrice' | TextCodeTranslationPipe" [width]="'100'">
+                                    <log-column [header]="'TariffLine.F.MinPrice' | TextCodeTranslationPipe" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <table>
@@ -213,7 +213,7 @@
                                     </log-column>
 
                                     <!-- Step1Price -->
-                                    <log-column *ngIf="Step1PriceVisibility" [header]="Step1PriceLabel" [width]="'100'">
+                                    <log-column *ngIf="Step1PriceVisibility" [Alignment]="'center'" [header]="Step1PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                  <table>
@@ -241,7 +241,7 @@
                                     </log-column>
 
                                     <!-- Step2Price -->
-                                    <log-column *ngIf="Step2PriceVisibility" [header]="Step2PriceLabel" [width]="'100'">
+                                    <log-column *ngIf="Step2PriceVisibility" [Alignment]="'center'" [header]="Step2PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <table>
@@ -269,7 +269,7 @@
                                     </log-column>
 
                                     <!-- Step3Price -->
-                                    <log-column *ngIf="Step3PriceVisibility" [header]="Step3PriceLabel" [width]="'100'">
+                                    <log-column *ngIf="Step3PriceVisibility" [Alignment]="'center'" [header]="Step3PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <table>
@@ -297,7 +297,7 @@
                                     </log-column>
 
                                     <!-- Step4Price -->
-                                    <log-column *ngIf="Step4PriceVisibility" [header]="Step4PriceLabel" [width]="'100'">
+                                    <log-column *ngIf="Step4PriceVisibility" [Alignment]="'center'" [header]="Step4PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                  <table>
@@ -324,7 +324,7 @@
                                     </log-column>
 
                                     <!-- Step5Price -->
-                                    <log-column *ngIf="Step5PriceVisibility" [header]="Step5PriceLabel" [width]="'100'">
+                                    <log-column *ngIf="Step5PriceVisibility" [Alignment]="'center'" [header]="Step5PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                  <table>
@@ -351,7 +351,7 @@
                                     </log-column>
 
                                     <!-- Step6Price -->
-                                    <log-column *ngIf="Step6PriceVisibility" [header]="Step6PriceLabel" [width]="'100'">
+                                    <log-column *ngIf="Step6PriceVisibility" [Alignment]="'center'" [header]="Step6PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                  <table>
@@ -378,7 +378,7 @@
                                     </log-column>
 
                                     <!-- Step7Price -->
-                                    <log-column *ngIf="Step7PriceVisibility" [header]="Step7PriceLabel" [width]="'100'">
+                                    <log-column *ngIf="Step7PriceVisibility" [Alignment]="'center'" [header]="Step7PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                 <table>
@@ -406,7 +406,7 @@
                                     </log-column>
 
                                     <!-- Step8Price -->
-                                    <log-column *ngIf="Step8PriceVisibility" [header]="Step8PriceLabel" [width]="'100'">
+                                    <log-column *ngIf="Step8PriceVisibility" [Alignment]="'center'" [header]="Step8PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
                                                  <table>

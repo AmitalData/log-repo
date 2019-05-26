@@ -476,127 +476,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 for (var i = 1; i <= count; i++) {
                     tariffLine["Step" + i + "Price"] = item["Step" + i + "Price"];
                     tariffLine["Step" + i + "PriceText"] = item["Step" + i + "PriceText"];
-                }
-
-                //    if (count == 1) {
-                //        tariffLine.MinPrice = item.MinPrice;
-                //        tariffLine.Step1Price = item.Step1Price;
-
-                //        tariffLine.MinPriceText = item.MinPriceText;
-                //        tariffLine.Step1PriceText = item.Step1PriceText;
-                //    }
-                //    else if (count == 2) {
-                //        tariffLine.MinPrice = item.MinPrice;
-                //        tariffLine.Step1Price = item.Step1Price;
-                //        tariffLine.Step2Price = item.Step2Price;
-
-                //        tariffLine.MinPriceText = item.MinPriceText;
-                //        tariffLine.Step1PriceText = item.Step1PriceText;
-                //        tariffLine.Step2PriceText = item.Step2PriceText;
-                //    }
-                //    else if (count == 3) {
-                //        tariffLine.MinPrice = item.MinPrice;
-                //        tariffLine.Step1Price = item.Step1Price;
-                //        tariffLine.Step2Price = item.Step2Price;
-                //        tariffLine.Step3Price = item.Step3Price;
-
-                //        tariffLine.MinPriceText = item.MinPriceText;
-                //        tariffLine.Step1PriceText = item.Step1PriceText;
-                //        tariffLine.Step2PriceText = item.Step2PriceText;
-                //        tariffLine.Step3PriceText = item.Step3PriceText;
-                //    }
-                //    else if (count == 4) {
-                //        tariffLine.MinPrice = item.MinPrice;
-                //        tariffLine.Step1Price = item.Step1Price;
-                //        tariffLine.Step2Price = item.Step2Price;
-                //        tariffLine.Step3Price = item.Step3Price;
-                //        tariffLine.Step4Price = item.Step4Price;
-
-                //        tariffLine.MinPriceText = item.MinPriceText;
-                //        tariffLine.Step1PriceText = item.Step1PriceText;
-                //        tariffLine.Step2PriceText = item.Step2PriceText;
-                //        tariffLine.Step3PriceText = item.Step3PriceText;
-                //        tariffLine.Step4PriceText = item.Step4PriceText;
-                //    }
-                //    else if (count == 5) {
-                //        tariffLine.MinPrice = item.MinPrice;
-                //        tariffLine.Step1Price = item.Step1Price;
-                //        tariffLine.Step2Price = item.Step2Price;
-                //        tariffLine.Step3Price = item.Step3Price;
-                //        tariffLine.Step4Price = item.Step4Price;
-                //        tariffLine.Step5Price = item.Step5Price;
-
-                //        tariffLine.MinPriceText = item.MinPriceText;
-                //        tariffLine.Step1PriceText = item.Step1PriceText;
-                //        tariffLine.Step2PriceText = item.Step2PriceText;
-                //        tariffLine.Step3PriceText = item.Step3PriceText;
-                //        tariffLine.Step4PriceText = item.Step4PriceText;
-                //        tariffLine.Step5PriceText = item.Step5PriceText;
-                //    }
-                //    else if (count == 6) {
-                //        tariffLine.MinPrice = item.MinPrice;
-                //        tariffLine.Step1Price = item.Step1Price;
-                //        tariffLine.Step2Price = item.Step2Price;
-                //        tariffLine.Step3Price = item.Step3Price;
-                //        tariffLine.Step4Price = item.Step4Price;
-                //        tariffLine.Step5Price = item.Step5Price;
-                //        tariffLine.Step6Price = item.Step6Price;
-
-                //        tariffLine.MinPriceText = item.MinPriceText;
-                //        tariffLine.Step1PriceText = item.Step1PriceText;
-                //        tariffLine.Step2PriceText = item.Step2PriceText;
-                //        tariffLine.Step3PriceText = item.Step3PriceText;
-                //        tariffLine.Step4PriceText = item.Step4PriceText;
-                //        tariffLine.Step5PriceText = item.Step5PriceText;
-                //        tariffLine.Step6PriceText = item.Step6PriceText;
-                //    }
-                //    else if (count == 7) {
-                //        tariffLine.MinPrice = item.MinPrice;
-                //        tariffLine.Step1Price = item.Step1Price;
-                //        tariffLine.Step2Price = item.Step2Price;
-                //        tariffLine.Step3Price = item.Step3Price;
-                //        tariffLine.Step4Price = item.Step4Price;
-                //        tariffLine.Step5Price = item.Step5Price;
-                //        tariffLine.Step6Price = item.Step6Price;
-                //        tariffLine.Step7Price = item.Step7Price;
-
-                //        tariffLine.MinPriceText = item.MinPriceText;
-                //        tariffLine.Step1PriceText = item.Step1PriceText;
-                //        tariffLine.Step2PriceText = item.Step2PriceText;
-                //        tariffLine.Step3PriceText = item.Step3PriceText;
-                //        tariffLine.Step4PriceText = item.Step4PriceText;
-                //        tariffLine.Step5PriceText = item.Step5PriceText;
-                //        tariffLine.Step6PriceText = item.Step6PriceText;
-                //        tariffLine.Step7PriceText = item.Step7PriceText;
-                //    }
-                //    else if (count == 8) {
-                //        tariffLine.MinPrice = item.MinPrice;
-                //        tariffLine.Step1Price = item.Step1Price;
-                //        tariffLine.Step2Price = item.Step2Price;
-                //        tariffLine.Step3Price = item.Step3Price;
-                //        tariffLine.Step4Price = item.Step4Price;
-                //        tariffLine.Step5Price = item.Step5Price;
-                //        tariffLine.Step6Price = item.Step6Price;
-                //        tariffLine.Step7Price = item.Step7Price;
-                //        tariffLine.Step8Price = item.Step8Price;
-
-                //        tariffLine.MinPriceText = item.MinPriceText;
-                //        tariffLine.Step1PriceText = item.Step1PriceText;
-                //        tariffLine.Step2PriceText = item.Step2PriceText;
-                //        tariffLine.Step3PriceText = item.Step3PriceText;
-                //        tariffLine.Step4PriceText = item.Step4PriceText;
-                //        tariffLine.Step5PriceText = item.Step5PriceText;
-                //        tariffLine.Step6PriceText = item.Step6PriceText;
-                //        tariffLine.Step7PriceText = item.Step7PriceText;
-                //        tariffLine.Step8PriceText = item.Step8PriceText;
-                //    }
-                //}
-
-                //else {
-                //    tariffLine.MinPrice = item.MinPrice;
-                //    tariffLine.MinPriceText = item.MinPriceText;
-                //}
+                }                
             }
+
             this.CurrentVersion.AddTariffLine(tariffLine);
         });
         
@@ -627,16 +509,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
             errors.push("Invalid Tariff Lines");
         }
-
-        this.CurrentVersion.TariffLines.forEach(item => {
-            if (AppTool.IsNullOrEmpty(item.OriginPortId)) {
-                errors.push("Missing Origin Port");
-            }
-
-            if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
-                errors.push("Missing Destination Port");
-            }
-        });
         
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
@@ -749,8 +621,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.UIProperties.SetEnabled("WarningPercentage", null, true);
         }
     }
-
-
+    
     private selectedVersion: VersionClass;
     get SelectedVersion() { return this.selectedVersion; }
     set SelectedVersion(value: VersionClass) {
@@ -930,7 +801,6 @@ export class TariffLineData extends BaseComponent {
     }
     
     private CheckIfLineHasError() {
-
         if (this.ErrorText != 'Line is a duplicate') {
             var error: boolean = false;
             var errorText: string;
@@ -946,6 +816,17 @@ export class TariffLineData extends BaseComponent {
                     errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
                 }
             }
+            else if (AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)){
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Missing Origin Port";
+                }
+
+                else {
+                    errorText = errorText + ", Missing Origin Port"
+                }
+            }
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
                 error = true;
@@ -956,6 +837,17 @@ export class TariffLineData extends BaseComponent {
 
                 else {
                     errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
+                }
+            }
+            else if (AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Missing Destination Port";
+                }
+
+                else {
+                    errorText = errorText + ", Missing Destination Port"
                 }
             }
 

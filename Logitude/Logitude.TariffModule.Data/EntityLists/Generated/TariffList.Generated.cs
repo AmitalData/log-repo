@@ -51,7 +51,7 @@ namespace Logitude.TariffModule.Data.EntityLists
        [DataMember]
        public int LastVersion  { get; set; }
        [DataMember]
-       public int? ContractNumber  { get; set; }
+       public string ContractNumber  { get; set; }
        [DataMember]
        public string CreatedByUserName  { get; set; }
        [DataMember]
