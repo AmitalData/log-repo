@@ -1,6 +1,12 @@
 
 <div class="TabHolder" style="overflow:auto; height:100%;width:100%">
     <table style="min-width:1150px;">
+        <tr style="height:1px;" class="BlueTitle">
+            <td style="left:10px;">
+                Version {{ VersionNumber}}
+            </td>
+        </tr>
+
         <tr style="height: 1px;">
             <td>
                 <table>
@@ -56,7 +62,7 @@
                                 </tr>
                             </table>
                         </td>
-                    
+
                         <td>
                             <div></div>
                         </td>
@@ -216,7 +222,7 @@
                                     <log-column *ngIf="Step1PriceVisibility" [Alignment]="'center'" [header]="Step1PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                 <table>
+                                                <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step1ComparingTextColor}" *ngIf="item.Step1ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
                                                             {{item.Step1ComparingPrice| NumbersPipe:'N2'}} %
@@ -227,11 +233,11 @@
                                                         </td>
 
                                                         <td [ngStyle]="{color: item.Step1PriceColor}" style="width: 1px;">
-                                                          <span>{{item.Step1PriceValue}}</span>
+                                                            <span>{{item.Step1PriceValue}}</span>
                                                         </td>
                                                     </tr>
                                                 </table>
-                                               
+
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step1Price'" [InputType]="'double'" [DataContext]="item"
@@ -287,7 +293,7 @@
                                                         </td>
                                                     </tr>
                                                 </table>
- 
+
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step3Price'" [InputType]="'double'" [DataContext]="item"
@@ -300,7 +306,7 @@
                                     <log-column *ngIf="Step4PriceVisibility" [Alignment]="'center'" [header]="Step4PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                 <table>
+                                                <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step4ComparingTextColor}" *ngIf="item.Step4ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
                                                             {{item.Step4ComparingPrice| NumbersPipe:'N2'}} %
@@ -327,7 +333,7 @@
                                     <log-column *ngIf="Step5PriceVisibility" [Alignment]="'center'" [header]="Step5PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                 <table>
+                                                <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step5ComparingTextColor}" *ngIf="item.Step5ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
                                                             {{item.Step5ComparingPrice| NumbersPipe:'N2'}} %
@@ -354,7 +360,7 @@
                                     <log-column *ngIf="Step6PriceVisibility" [Alignment]="'center'" [header]="Step6PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                 <table>
+                                                <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step6ComparingTextColor}" *ngIf="item.Step6ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
                                                             {{item.Step6ComparingPrice| NumbersPipe:'N2'}} %
@@ -396,7 +402,7 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                           
+
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Step7Price'" [InputType]="'double'" [DataContext]="item"
@@ -409,7 +415,7 @@
                                     <log-column *ngIf="Step8PriceVisibility" [Alignment]="'center'" [header]="Step8PriceLabel" [width]="'120'">
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                             <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:right;">
-                                                 <table>
+                                                <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step8ComparingTextColor}" *ngIf="item.Step8ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
                                                             {{item.Step8ComparingPrice| NumbersPipe:'N2'}} %
