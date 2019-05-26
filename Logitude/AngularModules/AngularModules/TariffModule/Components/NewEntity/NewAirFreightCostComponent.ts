@@ -457,7 +457,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
     get ContractNumber() {
         return this.EntityPM.ContractNumber;
     }
-    set ContractNumber(value: number) {
+    set ContractNumber(value: string) {
         if (this.EntityPM.ContractNumber != value) {
             this.EntityPM.ContractNumber = value;
         }

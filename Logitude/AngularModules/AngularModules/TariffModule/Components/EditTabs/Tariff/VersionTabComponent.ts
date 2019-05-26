@@ -40,7 +40,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public IsVersionsComboBoxEnabled: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private CurrentSession = SessionLocator.SelectedSession;
-   
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -111,6 +110,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
 
         this.IsApproveVersionButtonVisible = isApproveVersionButtonVisible;
+    }
+
+    get VersionNumber() {
+        return this.CurrentVersion.Version;
     }
 
     get StartDate() {
@@ -256,100 +259,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                     this["Step" + i + "PriceLabel"] = steps[i - 1] + " KG";
                     this["Step" + i + "PriceVisibility"] = true;
                 }
-
-                //if (count == 1) {
-                //    this.Step1PriceLabel = steps[0] + " KG";
-                //    this.Step1PriceVisibility = true;
-                //}
-                //else if (count == 2) {
-                //    this.Step1PriceLabel = steps[0] + " KG";
-                //    this.Step2PriceLabel = steps[1] + " KG";
-                //    this.Step1PriceVisibility = true;
-                //    this.Step2PriceVisibility = true;
-                //}
-                //else if (count == 3) {
-                //    this.Step1PriceLabel = steps[0] + " KG";
-                //    this.Step2PriceLabel = steps[1] + " KG";
-                //    this.Step3PriceLabel = steps[2] + " KG";
-                //    this.Step1PriceVisibility = true;
-                //    this.Step2PriceVisibility = true;
-                //    this.Step3PriceVisibility = true;
-                //}
-                //else if (count == 4) {
-                //    this.Step1PriceLabel = steps[0] + " KG";
-                //    this.Step2PriceLabel = steps[1] + " KG";
-                //    this.Step3PriceLabel = steps[2] + " KG";
-                //    this.Step4PriceLabel = steps[3] + " KG";
-                //    this.Step1PriceVisibility = true;
-                //    this.Step2PriceVisibility = true;
-                //    this.Step3PriceVisibility = true;
-                //    this.Step4PriceVisibility = true;
-                //}
-                //else if (count == 5) {
-                //    this.Step1PriceLabel = steps[0] + " KG";
-                //    this.Step2PriceLabel = steps[1] + " KG";
-                //    this.Step3PriceLabel = steps[2] + " KG";
-                //    this.Step4PriceLabel = steps[3] + " KG";
-                //    this.Step5PriceLabel = steps[4] + " KG";
-                //    this.Step1PriceVisibility = true;
-                //    this.Step2PriceVisibility = true;
-                //    this.Step3PriceVisibility = true;
-                //    this.Step4PriceVisibility = true;
-                //    this.Step5PriceVisibility = true;
-                //}
-                //else if (count == 6) {
-                //    this.Step1PriceLabel = steps[0] + " KG";
-                //    this.Step2PriceLabel = steps[1] + " KG";
-                //    this.Step3PriceLabel = steps[2] + " KG";
-                //    this.Step4PriceLabel = steps[3] + " KG";
-                //    this.Step5PriceLabel = steps[4] + " KG";
-                //    this.Step6PriceLabel = steps[5] + " KG";
-                //    this.Step1PriceVisibility = true;
-                //    this.Step2PriceVisibility = true;
-                //    this.Step3PriceVisibility = true;
-                //    this.Step4PriceVisibility = true;
-                //    this.Step5PriceVisibility = true;
-                //    this.Step6PriceVisibility = true;
-                //}
-                //else if (count == 7) {
-                //    this.Step1PriceLabel = steps[0] + " KG";
-                //    this.Step2PriceLabel = steps[1] + " KG";
-                //    this.Step3PriceLabel = steps[2] + " KG";
-                //    this.Step4PriceLabel = steps[3] + " KG";
-                //    this.Step5PriceLabel = steps[4] + " KG";
-                //    this.Step6PriceLabel = steps[5] + " KG";
-                //    this.Step7PriceLabel = steps[6] + " KG";
-                //    this.Step1PriceVisibility = true;
-                //    this.Step2PriceVisibility = true;
-                //    this.Step3PriceVisibility = true;
-                //    this.Step4PriceVisibility = true;
-                //    this.Step5PriceVisibility = true;
-                //    this.Step6PriceVisibility = true;
-                //    this.Step7PriceVisibility = true;
-                //}
-                //else if (count == 8) {
-                //    this.Step1PriceLabel = steps[0] + " KG";
-                //    this.Step2PriceLabel = steps[1] + " KG";
-                //    this.Step3PriceLabel = steps[2] + " KG";
-                //    this.Step4PriceLabel = steps[3] + " KG";
-                //    this.Step5PriceLabel = steps[4] + " KG";
-                //    this.Step6PriceLabel = steps[5] + " KG";
-                //    this.Step7PriceLabel = steps[6] + " KG";
-                //    this.Step8PriceLabel = steps[7] + " KG";
-                //    this.Step1PriceVisibility = true;
-                //    this.Step2PriceVisibility = true;
-                //    this.Step3PriceVisibility = true;
-                //    this.Step4PriceVisibility = true;
-                //    this.Step5PriceVisibility = true;
-                //    this.Step6PriceVisibility = true;
-                //    this.Step7PriceVisibility = true;
-                //    this.Step8PriceVisibility = true;
-                //}
-                //}
-                //else {
-                //    this.Step1PriceLabel = this.PriceSteps;
-                //    this.Step1PriceVisibility = true;
-                //}
             }
         }
     }

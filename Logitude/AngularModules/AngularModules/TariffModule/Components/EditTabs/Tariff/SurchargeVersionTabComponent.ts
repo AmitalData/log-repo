@@ -196,6 +196,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
 
+    get VersionNumber() {
+        return this.CurrentVersion.Version;
+    }
+
     get StartDate() {
         return this.CurrentVersion.StartDate;
     }
