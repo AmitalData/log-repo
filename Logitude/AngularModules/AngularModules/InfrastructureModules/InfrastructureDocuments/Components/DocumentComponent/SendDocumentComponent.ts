@@ -851,7 +851,6 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         if (!filter.ToEmail) {
             this.ShowMessage("Please specify at least one recepient", "Logitude Message");
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.IsSendDocumentFailed = true;
             return;
         }
 
@@ -860,7 +859,6 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
             this.ShowMessage("Some of To e- mails are Invalid", "Logitude Message");
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.IsSendDocumentFailed = true;
             return;
         }
 
@@ -868,14 +866,12 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         if (filter.Cc != null && !this.CheckIsValidEmails(filter.Cc)) {
             this.ShowMessage("Some of Cc e-mails are Invalid", "Logitude Message");
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.IsSendDocumentFailed = true;
             return;
         }
 
         if (filter.Bcc != null && !this.CheckIsValidEmails(filter.Bcc)) {
             this.ShowMessage("Some of Bcc e-mails are Invalid", "Logitude Message");
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.IsSendDocumentFailed = true;
             return;
         }
 
@@ -895,7 +891,6 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.ShowMessage("The maximum size of documents you can attach is 15 MB. Please send the documents in separated emails", "Attachment Limit");
             //this.ShowMessage("The file you are trying to send exceeds the 15 MB attachment limit.", "Attachment Limit");
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-            this.IsSendDocumentFailed = true;
             return;
         }
 
