@@ -125,7 +125,7 @@ export class DateTimePipe {
                     }
                     case "DTLL12": { //Scheduler
                         // Today:Yesterday:Tomorrow:ShortDate + hh:mm:ss (AM/PM)
-                        myResult = myFormats.DateString + " " + myFormats.LocalTimeString;
+                        myResult = myFormats.DateString + " " + myFormats.ShortTimeString12;
                         break;
                     }
                     default: {

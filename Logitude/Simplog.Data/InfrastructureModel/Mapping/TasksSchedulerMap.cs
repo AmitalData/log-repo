@@ -79,7 +79,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsLastRunError).HasColumnName("IsLastRunError");
 
             this.Property(t => t.LastRunResult).HasColumnName("LastRunResult");
-            this.Property(t => t.LastRunTime).HasColumnName("LastRunTime");
+            this.Property(t => t.LastRunStartTime).HasColumnName("LastRunStartTime");
             this.Property(t => t.Monday).HasColumnName("Monday");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.NextRunTime).HasColumnName("NextRunTime");
@@ -101,11 +101,14 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.SchedulerDetailsXML).HasColumnName("SchedulerDetailsXML");
             this.Property(t => t.Type).HasColumnName("Type");
             this.Property(t => t.NextRunTimeUTC).HasColumnName("NextRunTimeUTC");
-            this.Property(t => t.LastRunTimeUTC).HasColumnName("LastRunTimeUTC");
+            this.Property(t => t.LastRunStartTimeUTC).HasColumnName("LastRunStartTimeUTC");
             this.Property(t => t.StartDateTimeUTC).HasColumnName("StartDateTimeUTC");
             this.Property(t => t.Version).HasColumnName("Version");
             this.Property(t => t.Status).HasColumnName("Status");
             this.Property(t => t.Retries).HasColumnName("Retries");
+            this.Property(t => t.LastRunEndTimeUTC).HasColumnName("LastRunEndTimeUTC"); 
+            this.Property(t => t.LastRunEndTime).HasColumnName("LastRunEndTime");
+
 
 
         }
