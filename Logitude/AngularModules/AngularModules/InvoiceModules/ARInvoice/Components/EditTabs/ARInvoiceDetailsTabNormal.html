@@ -237,17 +237,18 @@
                                                     {{RelativeRateDate}}
                                                 </td>
                                             </tr>
+
                                             <tr class="FormFieldRow">
                                                 <td style="width: 5px;">
                                                     <div></div>
                                                 </td>
-                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="padding-left: 3px;padding-right: 3px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' && ARInvoiceStockId == null">
-                                                    <Hyperlink (click)=" GetInvoiceNumberFromStock()" [Text]="'Get from stock'" [IsEnabled]="IsEditingEnabled" ></Hyperlink>
-                                                </td>
-                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="padding-left: 3px;padding-right: 3px;" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' &&ARInvoiceStockId != null">
-                                                    <Hyperlink (click)=" ReturnInvoiceNumberToStock()" [Text]="'Return to stock'" [IsEnabled]="IsEditingEnabled" ></Hyperlink>
+
+                                                <td>
+                                                    <Hyperlink (click)=" GetInvoiceNumberFromStock()" [Text]="'Get from stock'" [IsEnabled]="IsEditingEnabled" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' && ARInvoiceStockId == null"></Hyperlink>
+                                                    <Hyperlink (click)=" ReturnInvoiceNumberToStock()" [Text]="'Return to stock'" [IsEnabled]="IsEditingEnabled" *ngIf="SelectedInvoiceNumberFilter != null && SelectedInvoiceNumberFilter.Code =='STK' &&ARInvoiceStockId != null"></Hyperlink>
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <td>
                                                     <div></div>

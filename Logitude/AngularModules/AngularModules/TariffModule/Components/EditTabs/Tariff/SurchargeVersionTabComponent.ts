@@ -196,6 +196,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
 
+    get VersionNumber() {
+        return this.CurrentVersion.Version;
+    }
+
     get StartDate() {
         return this.CurrentVersion.StartDate;
     }
@@ -439,19 +443,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
             errors.push("Invalid Tariff Lines");
         }
-
-        this.CurrentVersion.TariffLines.forEach(item => {
-            this.CurrentVersion.TariffLines.forEach(item => {
-                if (AppTool.IsNullOrEmpty(item.OriginPortId)) {
-                    errors.push("Missing Origin Port");
-                }
-
-                if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
-                    errors.push("Missing Destination Port");
-                }
-            });
-        });
-
+        
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
@@ -566,6 +558,17 @@ export class TariffLineData extends BaseComponent {
                 errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
             }
         }
+        else if (AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Missing Origin Port";
+            }
+
+            else {
+                errorText = errorText + ", Missing Origin Port"
+            }
+        }
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
             error = true;
@@ -576,6 +579,17 @@ export class TariffLineData extends BaseComponent {
 
             else {
                 errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
+            }
+        }
+        else if (AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Missing Destination Port";
+            }
+
+            else {
+                errorText = errorText + ", Missing Destination Port"
             }
         }
 

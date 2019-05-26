@@ -244,7 +244,7 @@
                                     <table>
                                         <tr>
                                             <td style="width: 1px;">
-                                                <BackButton [Text]="BackButtonLabel" (click)="BackButtonClicked()"></BackButton>
+                                                <BackButton  id="{{'BackButton' | IdGeneratorPipe}}" [Text]="BackButtonLabel" (click)="BackButtonClicked()"></BackButton>
                                             </td>
 
                                             <td style="width: 10px; min-width: 10px;">
