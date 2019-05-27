@@ -89,8 +89,8 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             LogMessagingUtil.Instance.Clear();
             //var testIt = new AccountingModel.WebInjection.XLSUtil();
             //testIt.GetDataTableFromWorkSheet(null,"");
-            //var s = new ClearAccountingDB();
-            //s.ClearDB(1148);
+            var s = new ClearAccountingDB();
+            s.ClearDB(1148);
             try
             {
 

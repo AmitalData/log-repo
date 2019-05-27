@@ -59,9 +59,11 @@ namespace CommunicationWorkerRole.Tasks
 
                     Task.Status = null;
                     queueservice.Complete();
+                    TaskSchedulerHistoryPM LastExecutionHistory = SubmitLogsData();
+                    Task.LastRunEndTime = LastExecutionHistory.EndDateTime;
+                    Task.LastRunEndTimeUTC = LastExecutionHistory.EndDateTimeUTC;
+                    Task.LastRunResult = LastExecutionHistory.LogType;
                     AddSchedulerQueue(Task);
-                    SubmitLogsData();
-
 
                     scope.Complete();
                 }
@@ -130,7 +132,7 @@ namespace CommunicationWorkerRole.Tasks
             }
         }
 
-        private void SubmitLogsData()
+        private TaskSchedulerHistoryPM SubmitLogsData()
         {
             IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
             TaskSchedulerHistoryService TaskSchedulerHistoryService = new TaskSchedulerHistoryService(objectContext, Tenant);
@@ -183,6 +185,7 @@ namespace CommunicationWorkerRole.Tasks
                 TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
 
             }
+            return TaskSchedulerHistory;
         }
 
         public virtual void StartTask()

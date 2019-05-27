@@ -41,6 +41,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "LogBoxExport", 
                 SearchFields = "LEX,LogBoxExport", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "URT", 
+                Name = "Unicargo Report Toggle", 
+                SearchFields = "URT,Unicargo Report Toggle", 
+			});
 			
             return all;
        }

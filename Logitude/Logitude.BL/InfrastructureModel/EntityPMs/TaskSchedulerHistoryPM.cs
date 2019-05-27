@@ -23,5 +23,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public DateTime? EndDateTimeUTC { get; set; }
         public string LogType { get; set; }
         public string LogFirstLine { get; set; }
+        public int? Duration { get; set; }
+
     }
 }

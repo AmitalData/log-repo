@@ -3717,7 +3717,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
                 EnglishName = "Child GLAccount was added",
                 Tenant = 0,
                 AddedManually = false,
-                LocalName = "הכרטיס נוסף ככרטיס בן ",
+                LocalName = "לכרטיס נוסף כרטיס בן",
                 ObjectTableId = gLAccountObject.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",

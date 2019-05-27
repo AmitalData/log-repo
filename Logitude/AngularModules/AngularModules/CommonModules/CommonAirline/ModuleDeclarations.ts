@@ -10,6 +10,8 @@ import {AddEditTariffChargeComponent} from './Components/AddEdit/AddEditTariffCh
 import { AirlineDocsInTabComponent } from './Components/EditTabs/AirlineDocsInTabComponent';
 import { AirlineGeneralTabComponent } from './Components/EditTabs/AirlineGeneralTabComponent';
 
+
+
 export const Components =
     [
         NewAirlineComponent,
@@ -42,6 +44,8 @@ export class ModuleDeclarations {
             case "AddEditTariffChargeComponent": { myResult = AddEditTariffChargeComponent; break; }
             case "AirlineDocsInTabComponent": { myResult = AirlineDocsInTabComponent; break; }
             case "AirlineGeneralTabComponent": { myResult = AirlineGeneralTabComponent; break; }
+
+                
         }
 
         return myResult;
