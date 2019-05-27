@@ -1,0 +1,646 @@
+<style>
+    .amcharts-axis-label{
+        font-family: Arial !important;
+    }
+    .red {
+        color: red !important;
+    }
+
+    .orangeCircle {
+        background: #ff7920 !important;
+    }
+
+    .circleDraw {
+        background: #00b1e9;
+        margin: 0 auto;
+        margin-top: 9px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        display: block;
+    }
+
+    .circleWrapper {
+        /*padding: 9px;*/
+    }
+
+    .accounting-notes-list {
+        width: 100%;
+        height: 100%;
+        list-style: none;
+    }
+
+    .accounting-notes-list li {
+        position: relative;
+        border-radius: 2px;
+        cursor: pointer;
+        list-style: none;
+        width: 100%;
+        height: 25px;
+        border-bottom: 1px solid #e6e6e6;
+        padding: 0px 8px;
+        line-height: 23px;
+        color: #424242;
+    }
+
+    .accounting-notes-list li:hover {
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f9feff+0,bfd9ff+100 */
+        background: #f9feff;
+        background: -moz-linear-gradient(top, #f9feff 0%, #bfd9ff 100%);
+        background: -webkit-linear-gradient(top, #f9feff 0%, #bfd9ff 100%);
+        background: linear-gradient(to bottom, #f9feff 0%, #bfd9ff 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9feff', endColorstr='#bfd9ff', GradientType=0);
+    }
+
+    .accounting-notes-list li span {
+        width: 100%;
+        display: block;
+    }
+
+    .accounting-notes-list li .btns {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0px 5px;
+        padding: 3px 0px;
+    }
+
+    .btns IconButton {
+        width: 20px;
+    }
+
+    /* show/hide */
+    .btns {
+        display: none;
+    }
+
+    li span:hover+.btns {
+        display: inline-block;
+    }
+
+    .btns:hover {
+        display: inline-block;
+    }
+</style>
+<style>
+    .subTitle {
+        color: #1b90cb;
+        font-size: 16px;
+    }
+
+    .widget {
+        width: 30%;
+        height: 350px;
+        /*background: red;*/
+        margin: 0 15px;
+        float: left;
+        min-width: 385px;
+        max-width: 500px;
+        padding-bottom: 25px;
+    }
+
+    .widget .header {
+        font-size: 13px;
+        border-radius: 4px 4px 0px 0px;
+        -moz-border-radius: 4px 4px 0px 0px;
+        -webkit-border-radius: 4px 4px 0px 0px;
+        background: linear-gradient(180deg, rgba(235, 235, 235, 1) 0%, rgba(233, 233, 233, 1) 48.14%, rgba(226, 226, 226, 1) 67.05%, rgba(214, 214, 214, 1) 80.81%, rgba(197, 197, 197, 1) 92.01%, rgba(179, 179, 179, 1) 100%);
+        padding: 4px 12px;
+        height: 25px;
+    }
+
+    .widget .content {
+        height: calc(100% - 26px);
+        padding: 7px;
+        overflow: auto;
+    }
+
+    .widget .content-no-header {
+        height: 100%;
+        padding: 7px;
+    }
+
+    .header-labels {
+        font-size: 16px;
+    }
+
+    .amount-labels {
+        color: #21a373;
+        font-size: 15px;
+        /*font-weight: bold;*/
+        font-family: sans-serif;
+        direction: ltr;
+    }
+
+    .labels-table td {
+        text-align: center;
+    }
+
+    .red {
+        color: #dd2626 !important;
+    }
+
+    .Last-Labels {
+        height: 20px;
+    }
+
+    .Last-Labels div {
+        display: inline-block;
+        color: #1b90cb;
+    }
+
+    .Last-Transaction-Item {
+        height: 35px;
+    }
+
+    .Last-Transaction-Item div {
+        display: inline-block;
+        height: 100%;
+    }
+
+    .last-transactions-list {
+        height: calc(100% - 20px);
+        /* overflow: auto; */
+        width: fit-content;
+    }
+
+    .FiltersMenu li {
+        width: fit-content;
+        height: 22px;
+        padding: 0 10px;
+    }
+</style>
+<style>
+    .NoResult {
+        font-style: italic;
+        color: #AAA;
+        text-align: center;
+        font-family: Calibri, 'Trebuchet MS', sans-serif;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        justify-content: center;
+
+    }
+
+    .LoadingDiv {
+        display: flex;
+        align-items: center;
+    }
+
+    .spinner {
+        margin: 100px auto 0;
+        width: 70px;
+        text-align: center;
+        height: 100%;
+    }
+
+    .spinner>div {
+        height: 100%;
+        width: 14px;
+        height: 14px;
+        background-color: #83b7dd;
+
+        border-radius: 100%;
+        display: inline-block;
+        -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+        animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    }
+
+    .spinner .bounce1 {
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+    }
+
+    .spinner .bounce2 {
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+    }
+
+    @-webkit-keyframes sk-bouncedelay {
+
+        0%,
+        80%,
+        100% {
+            -webkit-transform: scale(0)
+        }
+
+        40% {
+            -webkit-transform: scale(1.0)
+        }
+    }
+
+    @keyframes sk-bouncedelay {
+
+        0%,
+        80%,
+        100% {
+            -webkit-transform: scale(0);
+            transform: scale(0);
+        }
+
+        40% {
+            -webkit-transform: scale(1.0);
+            transform: scale(1.0);
+        }
+    }
+</style>
+<style>
+    /* Credit limit styles */
+    .credit-limit-row{
+        width: 100%;
+        padding-top: 10px;
+        height: 30px;
+        min-width: 485px;
+    }
+    .credit-limit-row .label{
+        user-select: none;
+        display: inline-block;
+        font-size: 16px;
+        width: 160px;
+    }
+    .credit-limit-row .amount{
+        direction: ltr;
+        width: 180px;
+        height: 20px;
+        display: inline-block;
+        font-size: 16px;
+        color:green;
+        padding: 0 5px;
+        text-align: right;
+        font-family: sans-serif;
+    }
+    .credit-limit-row .link{
+        user-select: none;
+        width: fit-content;
+        display: inline-block;
+        font-size: 13px;
+        color:rgb(0, 133, 221);
+        cursor: pointer;
+        padding: 3px 5px;
+    }
+    .credit-limit-row .link:hover{
+        border-radius: 10px;
+        background: #f3f3f3;
+    }
+    .credit-limit-row .link:active{
+        background: #e4e4e4;
+        transform: scale(0.92);
+    }
+    .credit-limit-row .progress{
+        position: relative;
+        display: inline-block;
+        width: 145px;
+    }
+    .credit-limit-row .progress > progress {
+        height: 30px;
+        width: 100%;
+        border-radius: 8px;
+
+    }
+    .credit-limit-row .progress .percentage-label{
+        user-select: none;
+        /* color: #676767; */
+        color: black;
+        /* width: 100%; */
+        position: absolute;
+        top: 7px;
+        /* padding: 0 20px; */
+        text-align: center;
+        min-width: 50px;
+        /* text-shadow: 1px 1px 1px black; */
+    }
+    progress[value]{
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    .green > progress{
+        border: 1px solid #a0d548;
+    }
+    .green  progress[value]::-webkit-progress-value{
+
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#9dd53a+0,a1d54f+50,80c217+51,7cbc0a+100;Green+Gloss+%231 */
+        background: #9dd53a; /* Old browsers */
+        background: -moz-linear-gradient(top, #9dd53a 0%, #a1d54f 50%, #80c217 51%, #7cbc0a 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #9dd53a 0%,#a1d54f 50%,#80c217 51%,#7cbc0a 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #9dd53a 0%,#a1d54f 50%,#80c217 51%,#7cbc0a 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9dd53a', endColorstr='#7cbc0a',GradientType=0 ); /* IE6-9 */
+
+        border-radius: 4px;
+
+    }
+    .red  > progress{
+        border: 1px solid #d85d6e !important;
+    }
+    .red  progress[value]::-webkit-progress-value{
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f85032+0,f16f5c+50,f6290c+51,f02f17+71,e73827+100;Red+Gloss+%231 */
+        background: #f85032; /* Old browsers */
+        background: -moz-linear-gradient(top,  #f85032 0%, #f16f5c 50%, #f6290c 51%, #f02f17 71%, #e73827 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #f85032 0%,#f16f5c 50%,#f6290c 51%,#f02f17 71%,#e73827 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #f85032 0%,#f16f5c 50%,#f6290c 51%,#f02f17 71%,#e73827 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f85032', endColorstr='#e73827',GradientType=0 ); /* IE6-9 */
+
+        border-radius: 4px;
+
+    }
+    .credit-limit-row .progress:hover{
+        opacity: 0.9;
+    }
+    progress[value]::-webkit-progress-bar{
+
+        background: rgb(243, 243, 243);
+        border-radius: 6px;
+    }
+    .fnt-sz-14{
+        font-size: 14px !important;
+    }
+
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <!-- <tr class="TabTitleRow">
+                        <td>{{'GLAccount.TH.Overview' | TextCodeTranslationPipe}}</td>
+                    </tr> -->
+                    <tr>
+
+                        <td style="vertical-align: top;">
+                            <div>
+                                <!-- Widget: Balance Section -->
+                                <div float-start *ngIf="GLAccountMoreData" class="widget">
+
+                                    <!-- <IconButton [Name]="'Refresh'" (click)="LoadAllData()"></IconButton> -->
+
+
+                                    <!-- balance -->
+                                    <div class="content-no-header" style="height: 90px;">
+                                        <table class="labels-table" style="table-layout: fixed;">
+                                            <tr>
+                                                <td class="header-labels">{{ 'GLAccounts.O.AccountingBalance' |
+                                                    TextCodeTranslationPipe }}</td>
+                                                <td class="header-labels">{{ 'GLAccounts.O.TotalDue' |
+                                                    TextCodeTranslationPipe }}</td>
+                                                <td class="header-labels">{{ 'GLAccounts.O.OpenTransactions' |
+                                                    TextCodeTranslationPipe }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="amount-labels" [class.red]="GLAccountMoreData.BalanceInLocalCurrency<=0">{{
+                                                    (GLAccountMoreData.BalanceInLocalCurrency
+                                                    ?GLAccountMoreData.BalanceInLocalCurrency:0) | NumbersPipe:'N2' }}</td>
+                                                <td class="amount-labels" [class.red]="GLAccountMoreData.LocalBalanceInDue<=0">{{
+                                                    (GLAccountMoreData.LocalBalanceInDue?GLAccountMoreData.LocalBalanceInDue:0)
+                                                    | NumbersPipe:'N2' }}</td>
+                                                <td class="amount-labels" style="color: black;">{{
+                                                    GLAccountOpenTransactionsCount }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><a style="font-size: 12px;" (click)="DisplayTransactionsLinkClicked()">{{
+                                                        'GLAccounts.O.DispalyTransactions' | TextCodeTranslationPipe }}</a></td>
+                                                <td style="font-size: 12px;">{{ 'GLAccounts.O.NextDueDate' |
+                                                    TextCodeTranslationPipe }}: {{GLAccountMoreData.NextDueDate |
+                                                    DateTimePipe:'SD'}}</td>
+                                                <td><a style="font-size: 12px;" (click)="ReconcileLinkClicked()">{{
+                                                        'GLAccounts.O.Reconcile' | TextCodeTranslationPipe }}</a></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <br>
+
+                                    <!-- accounting notes -->
+                                    <div class="header">
+                                        {{ 'Accounting.O.CustomersNotes' | TextCodeTranslationPipe }}
+                                        <IconButton [IsSmall]="true" [style.float]="isRTL ? 'left' : 'right'" [Name]="'Add'"
+                                            (click)="OpenAccountingNote(null)"></IconButton>
+                                    </div>
+                                    <div class="content" style="padding: 5px 0;height: calc(100% - 120px);overflow: auto;">
+                                        <ul *ngIf="!isNotesLoading && accountingNotesList.length > 0" class="accounting-notes-list">
+
+                                            <li *ngFor="let note of accountingNotesList" [attr.title]="GetNoteTitle(note)">
+                                                <!-- <span style="width:70px;color:gray; font-size: 9px;display: inline-block;">2018-02-15</span> -->
+                                                <span class="TextTrimming">{{note.Notes?note.Notes:'&nbsp;'}}</span>
+                                                <div class="btns" [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'">
+                                                    <IconButton [IsSmall]="true" [style.float]="isRTL ? 'right' : 'left'"
+                                                        [Name]="'Edit'" (click)="ItemEditButton(note)"></IconButton>
+                                                    <IconButton [IsSmall]="true" [style.float]="isRTL ? 'right' : 'left'"
+                                                        [Name]="'Delete'" (click)="ItemDeleteButton(note)"></IconButton>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                        <div class="LoadingDiv" *ngIf="isNotesLoading">
+                                            <div class="spinner spinner" style="margin: 70px auto 0;">
+                                                <div class="bounce1"></div>
+                                                <div class="bounce2"></div>
+                                                <div class="bounce3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="NoResult" *ngIf="!isNotesLoading &&  accountingNotesList.length == 0">{{
+                                            'General.O.NoData' | TextCodeTranslationPipe }}</div>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Widget: Last 10 transactions -->
+                                <div float-start class="widget" style="">
+                                    <div class="header">
+                                        {{ 'GLAccounts.O.LastTransactions' | TextCodeTranslationPipe }}
+                                    </div>
+                                    <div class="content">
+                                        <div class="Last-Labels">
+                                            <div style="width: 80px;"></div>
+                                            <div style="width: 100px;padding: 0 5px;">{{ 'GLAccounts.O.Date' |
+                                                TextCodeTranslationPipe }}</div>
+                                            <div style="width: 100px;text-align: right;">{{ GetAmountLabel() }}</div>
+                                            <div style="width: 145px;padding: 0 15px 0 15px;">{{
+                                                'Accounting.General.O.References' | TextCodeTranslationPipe }}</div>
+                                        </div>
+                                        <ul class="last-transactions-list">
+                                            <li class="Last-Transaction-Item RecentEntityItem" *ngFor="let transaction of lastTransactionsList">
+
+                                                <!-- SourceType -->
+                                                <div style="color:white;padding: 10px 5px 2px 5px;    font-size: 11px;">
+                                                    <span title="{{transaction['SourceType']}}" [class]="'SourceTypeIcon color-' + transaction['SourceTypeCode']"
+                                                        (click)="OpenSource(transaction['SourceId'])" style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;color:white !important;">{{GetIconText(transaction)}}</span>
+                                                </div>
+                                                <div style="width: 50px;padding: 9px 0;    font-size: 11px;">
+                                                    <a href="javascript:;" (click)="OpenSource(transaction, transaction['SourceId'])">
+                                                        {{ transaction['SourceNumber'] }}
+                                                    </a>
+                                                </div>
+
+                                                <div style="width: 100px;padding: 9px 0;    font-size: 11px;">
+                                                    {{ transaction.AccountingDate | DateTimePipe:'SD' }}
+                                                </div>
+                                                <div class="TextTrimming" style="width: 110px;    font-size: 12px;padding: 9px 0;color:#00a24d; text-align: right; direction: ltr;"
+                                                    [class.red]='transaction.LocalAmountDebit==0'>
+                                                    {{ GetTransAmount(transaction) | NumbersPipe:'N2' }}
+                                                </div>
+
+                                                <div style="width: 150px;padding: 9px 5px;    font-size: 11px;">
+                                                    {{ GetReferencesText(transaction) }}
+                                                </div>
+                                                <div *ngIf="transaction['OpenAmount'] != 0"  style="width: 20px;padding: 5px 0;height: 100%;" title="{{GetIndicatorText(transaction)}}">
+                                                    <div class="circleDraw" style="height: 7px;" [class.orangeCircle]="transaction['OpenAmount'] != CalculateOriginalAmount(transaction)"></div>
+                                                </div>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div float-start class="widget">3</div>
+
+                                <!-- Widget: Aging Details -->
+                                <div float-start class="widget" style="position: relative;">
+                                    <div class="header">
+                                        {{ GetAgingHeader() }}
+                                    </div>
+                                    <div class="content" style="padding: 7px 0;">
+
+                                        <!-- Filters -->
+                                        <div style="height: 22px; width: 100%;">
+                                            <!-- Months -->
+                                            <ul float-start class="FiltersMenu">
+                                                <li id="3mo" (click)="FilterItemClicked('3mo')" [class.SelectedFilter]="FilterSelectedValue === '3mo'">
+                                                    3 Mo
+                                                </li>
+                                                <li id="6mo" (click)="FilterItemClicked('6mo')" [class.SelectedFilter]="FilterSelectedValue === '6mo'">
+                                                    6 Mo
+                                                </li>
+                                                <li id="9mo" (click)="FilterItemClicked('9mo')" [class.SelectedFilter]="FilterSelectedValue === '9mo'">
+                                                    9 Mo
+                                                </li>
+                                                <!-- <li id="12mo" (click)="FilterItemClicked('12mo')"
+                                                    [class.SelectedFilter]="FilterSelectedValue === '12mo'">
+                                                    12 Mo
+                                                </li> -->
+                                            </ul>
+
+                                            <ul [style.float]="isRTL ? 'left' : 'right'" class="FiltersMenu">
+                                                <li id="filter_Collecting" (click)="DateFilterItemClicked('filter_Collecting')"
+                                                    [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Collecting'">
+                                                    {{ 'GLAccounts.O.Collecting' | TextCodeTranslationPipe }}
+                                                </li>
+                                                <li id="filter_Accounting" (click)="DateFilterItemClicked('filter_Accounting')"
+                                                    [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Accounting'">
+                                                    {{ 'GLAccounts.O.Accounting' | TextCodeTranslationPipe }}
+                                                </li>
+                                            </ul>
+
+                                        </div>
+
+                                        <!-- Chart -->
+                                        <div style="width: 100%;overflow: auto;position:absolute;top: 62px;bottom: 0;left: 0;">
+                                            <div [style.width.px]="FilterSelectedValue=='12mo' ? '650' : '450'" [id]="chartId"
+                                                style="position:absolute;top:0;bottom:0;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Widget: Credit Limit -->
+                                <div float-start class="widget">
+                                    <div class="header">
+                                        {{ 'GLAccounts.O.CreditDetails' | TextCodeTranslationPipe }} {{TenantCurrency ? '('+ TenantCurrency +')' : ''}}
+                                    </div>
+                                    <div class="content" *ngIf="GLAccountMoreData && accountCardlist">
+
+                                        <!-- 1 -->
+                                        <div class="credit-limit-row" style="height: 45px;">
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start style="padding-top: 5px;">
+                                                {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
+                                            </div>
+                                            <div *ngIf="!IsCreditNotDefined()" style="font-weight: bold;" class="amount" float-start text-start style="padding-top: 5px;font-weight: bold;font-size: 18px;">
+                                                {{accountTotal | NumbersPipe:'N2'}}
+                                            </div>
+                                            <div *ngIf="!IsCreditNotDefined()" class="progress green" [class.red]="IsOverCredit()" float-end>
+                                                <progress [attr.value]="creditPercentage" max="100"></progress>
+                                                <div class="percentage-label" [style.width.%]="creditPercentage>100?100:creditPercentage">{{ (creditPercentage?creditPercentage:0) | NumbersPipe:'N2'}}%</div>
+                                            </div>
+                                            <div *ngIf="IsCreditNotDefined()" style="font-size: 16px; color: #ef8703;font-weight: bold;">
+                                                {{ 'GLAccount.O.NoCreditDefined' | TextCodeTranslationPipe }}
+                                            </div>
+                                        </div>
+
+                                        <!-- 2 -->
+                                        <div class="credit-limit-row" style="">
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
+                                                {{ 'GLAccounts.O.AccountingBalance' | TextCodeTranslationPipe }}
+                                            </div>
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
+                                                {{GLAccountMoreData.BalanceInLocalCurrency | NumbersPipe:'N2'}}
+                                            </div>
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;"  (click)="CardIndexClicked()" float-start text-end >
+                                                {{ 'GLAccounts.O.CardIndex' | TextCodeTranslationPipe }}
+                                            </a>
+                                        </div>
+
+                                        <!-- 3 -->
+                                        <div class="credit-limit-row" style="">
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
+                                                {{ 'GLAccounts.O.FutureChequesToday' | TextCodeTranslationPipe }}
+                                            </div>
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
+                                                {{GLAccountMoreData.TotalOpenChequesInLocalCur | NumbersPipe:'N2'}}
+                                            </div>
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked()" float-start text-start >
+                                                {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
+                                            </a>
+                                        </div>
+
+                                        <!-- 4 -->
+                                        <div class="credit-limit-row" style="">
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
+                                                {{ 'GLAccounts.O.FutureCheques' | TextCodeTranslationPipe }}
+                                            </div>
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
+                                                {{GLAccountMoreData.TotFutureOpenChequesInLocalCur | NumbersPipe:'N2'}}
+                                            </div>
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start text-start >
+                                                <!-- {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }} -->
+                                            </a>
+                                        </div>
+
+                                        <!-- 5 -->
+                                        <div class="credit-limit-row" style="">
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
+                                                {{ 'GLAccounts.O.TotalOpenShipments' | TextCodeTranslationPipe }}
+                                            </div>
+                                            <div class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" >
+                                                <!-- 132,538 -->
+                                            </div>
+                                            <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start text-start >
+                                                {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
+                                            </div> a-->
+                                        </div>
+
+
+                                        <!-- 6 -->
+                                        <div class="credit-limit-row" style="">
+                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
+                                                {{ 'GLAccount.O.CreditStatus ' | TextCodeTranslationPipe }}
+                                            </div>
+                                            <div style="font-weight: bold;font-size: 18px;" class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" [class.red]="IsOverCredit()" >
+                                                {{accountCardlist.CreditLimitAmount | NumbersPipe:'N2'}}
+                                            </div>
+                                            <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start text-start >
+                                                {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
+                                            </div> a-->
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div float-start class="widget">6</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
