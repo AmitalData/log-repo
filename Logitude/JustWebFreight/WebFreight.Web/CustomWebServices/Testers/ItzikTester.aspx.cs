@@ -29,7 +29,7 @@ namespace WebFreight.Web.CustomWebServices.Testers
             try
             {
                 Response.Clear();
-                
+
                 //    var myCCUFILEMRepository = new CCUFILEMRepository(1);
                 //var ccufilem= myCCUFILEMRepository.GetFILENOByCUSTOMFILENO(51340152);
                 //var myCCUQUELOCKRepository = new CCUQUELOCKRepository(1);
@@ -37,11 +37,12 @@ namespace WebFreight.Web.CustomWebServices.Testers
                 //    //myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CFIFILEM", "51340152");
                 //    myCCUQUELOCKRepository.GetSingleGeneralLockNOWAIT("CCUFILEM", ccufilem.ToString());
 
-                var s = new
-                    //DCAInUCB2750_MsgMessagingService();
-                    DCAInUCB2755_MsgMessagingService();
-                s.CreateCRS(1, "1-7", "1-69", "bbb" , "1-3");
+                //var s = new
+                //    //DCAInUCB2750_MsgMessagingService();
+                //    DCAInUCB2755_MsgMessagingService();
+                //s.CreateCRS(1, "1-7", "1-69", "bbb" , "1-3");
                 //ExportExcel();
+                ExportExcel8330();
 
             }
             catch (Exception eee)
@@ -51,6 +52,19 @@ namespace WebFreight.Web.CustomWebServices.Testers
 
             }
             
+        }
+        private static void ExportExcel8330()
+        {
+            var myXLSExportService = new XLSExportService();
+            var result =
+            myXLSExportService
+            //.Start("8347","1-1370596", 1);
+            .Start("8330", null, 1, new BlockListInWarehouseDetailProvider());
+
+            string ShowType = "attachment";
+            string documentName = Guid.NewGuid().ToString() + ".xls";
+            HttpContext.Current.Response.AppendHeader("Content-Disposition", ShowType + "; filename=\"" + HttpUtility.UrlPathEncode(documentName) + "\"");
+            HttpContext.Current.Response.BinaryWrite(result);
         }
 
         private static void ExportExcel()

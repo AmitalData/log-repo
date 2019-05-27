@@ -304,7 +304,7 @@ rgb(27, 144, 203)
         }
         protected string TranslateText(string code)
         {
-            return TextCodesTranslator.TranslateText(code, this.Tenant);
+            return TextCodesTranslator.TranslateText(code, this.Tenant,true);
         }
 
         protected void AddEditBoxBorder(IRange myRange)
