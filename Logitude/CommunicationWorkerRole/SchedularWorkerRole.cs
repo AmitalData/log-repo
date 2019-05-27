@@ -6,6 +6,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
@@ -70,6 +71,8 @@ namespace CommunicationWorkerRole
                                     TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
                                     TasksSchedulerPM Task = TasksSchedulerQuery.GetSingleTasksSchedulerPM(Id);
                                     Task.Retries = Retries;
+                                    Task.LastRunStartTime = TenantServerConfigration.GetCurrentDateTime(Task.Tenant);
+                                    Task.LastRunStartTimeUTC = DateTime.UtcNow;
                                     if (Task != null)
                                     {
                                         if (Version >= Task.Version)

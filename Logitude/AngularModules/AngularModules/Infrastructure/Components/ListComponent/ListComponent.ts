@@ -468,6 +468,10 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     name: string;
     processAdvanceQueryFilters(filters) {
+        if (this.IsAdvancedSearchOpened == false) {
+            return;
+
+        }
         this.dataSource = {
             pageSize: 30,
             rowCount: null,

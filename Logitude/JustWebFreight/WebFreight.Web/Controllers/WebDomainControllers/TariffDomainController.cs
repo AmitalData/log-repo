@@ -635,12 +635,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private List<ExcelTariffLines> BuildAirFreightCostExcelLines(IWorksheet sheet, int tenant)
         {
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
-
+            int rowIndex = 0;
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
                 String[] rowData = new String[sheet.Columns.Count()];
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
-
+                tariffLine.Index = rowIndex;
                 for (int i = 0; i < sheet.Columns.Count(); i++)
                 {
                     rowData[i] = row.Cells[i].Value2.ToString();
@@ -779,6 +779,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 myResult.Add(tariffLine);
+                rowIndex++;
             }
 
             foreach (ExcelTariffLines item in myResult)
@@ -791,11 +792,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private List<ExcelTariffLines> BuildAirSurchargesCostExcelLines(IWorksheet sheet, int tenant)
         {
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
+            int rowIndex = 0;
 
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
                 String[] rowData = new String[sheet.Columns.Count()];
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
+                tariffLine.Index = rowIndex;
 
                 for (int i = 0; i < sheet.Columns.Count(); i++)
                 {
@@ -947,6 +950,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 myResult.Add(tariffLine);
+                rowIndex++;
             }
 
             foreach (ExcelTariffLines item in myResult)
@@ -1515,6 +1519,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string Surcharge8PriceText { get; set; }
         public string Surcharge9PriceText { get; set; }
         public string Surcharge10PriceText { get; set; }
+
+        public int Index { get; set; }
     }
 }
 
