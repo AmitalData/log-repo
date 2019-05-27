@@ -118,7 +118,15 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
                 mode = UnifreightListsUtil.GetValue(ref unifreightListsParams, "MODE");
                 AppendLogLine("mode: " + mode);
-                if (mode == "UMS2L") mode = "INSERT_UPDATE_DELETE";
+                if (mode == "UMS2L")
+                {
+                    mode = "INSERT_UPDATE_DELETE";
+                    messageType = "UMS2L";
+                }
+                else
+                {
+                    messageType = "US2L";
+                }
             }
 
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -790,6 +798,11 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.UNIT_ID);
                 }
+                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.StatisticQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.StatisticQuantityType))
+                {
+                    SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
+                }
+                
                 if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.TaxExemptCode) && !string.IsNullOrWhiteSpace(invoiceItem.TAXEXEMPTCODE))
                 {
                     SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
