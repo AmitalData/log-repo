@@ -49,19 +49,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
             this.CustomMappedPMProperties.Add(PMPropertyNames.TarriffName);
 
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            if (authToken != null)
+            if (HttpContext.Current != null && HttpContext.Current.Request != null)
             {
-                int tenant = authToken.Tenant;
-
-                if (entityPOCO.TarriffCode != null)
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                if (authToken != null)
                 {
-                    TradeAgreementQueryService tradeAgreementQueryService = new TradeAgreementQueryService(tenant);
-                    TradeAgreementPM tradeAgreementPM = tradeAgreementQueryService.GetSingle(entityPOCO.TarriffCode, false, true);
-                    if(tradeAgreementPM != null)
+                    int tenant = authToken.Tenant;
+
+                    if (entityPOCO.TarriffCode != null)
                     {
-                        entityPM.TarriffName = tradeAgreementPM.LocalName;
+                        TradeAgreementQueryService tradeAgreementQueryService = new TradeAgreementQueryService(tenant);
+                        TradeAgreementPM tradeAgreementPM = tradeAgreementQueryService.GetSingle(entityPOCO.TarriffCode, false, true);
+                        if (tradeAgreementPM != null)
+                        {
+                            entityPM.TarriffName = tradeAgreementPM.LocalName;
+                        }
                     }
                 }
             }
