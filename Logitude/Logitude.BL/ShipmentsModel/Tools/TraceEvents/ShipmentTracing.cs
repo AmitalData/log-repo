@@ -223,7 +223,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
                     ObjectTableName = "Airline",
                 });
 
-                this.CreateTraceEvent("AWBS");
+                this.CreateTraceEvent("AWBS", "Stack number: " + entityPM.Master);
             }
 
             if (entityPoco.IsOperationalClosed && !entityPM.IsOperationalClosed)

@@ -595,6 +595,7 @@ export class TariffLineData extends BaseComponent {
     public Step7ComparingTextColor: string = null;
     public Step8ComparingPrice: number;
     public Step8ComparingTextColor: string = null;
+    private DefaultColor = "blue";
 
     SetCellsComparingText() {
         if (this.ComparedEntity != null) {
@@ -605,7 +606,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.MinPriceComparingPrice = null;
-                this.MinPriceComparingTextColor = null;
+                this.MinPriceComparingTextColor = this.DefaultColor;
             }
             // step 1
             var step1ComparingValue = this.Step1Price - this.ComparedEntity.Step1Price;
@@ -615,7 +616,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step1ComparingPrice = null;
-                this.Step1ComparingTextColor = null;
+                this.Step1ComparingTextColor = this.DefaultColor;
             }
            
             var step2ComparingValue = this.Step2Price - this.ComparedEntity.Step2Price;
@@ -625,7 +626,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step2ComparingPrice = null;
-                this.Step2ComparingTextColor = null;
+                this.Step2ComparingTextColor = this.DefaultColor;
             }
 
             var step3ComparingValue = this.Step3Price - this.ComparedEntity.Step3Price;
@@ -636,7 +637,7 @@ export class TariffLineData extends BaseComponent {
             else {
 
                 this.Step3ComparingPrice = null;
-                this.Step3ComparingTextColor = null;
+                this.Step3ComparingTextColor = this.DefaultColor;
             }
 
             var step4ComparingValue = this.Step4Price - this.ComparedEntity.Step4Price;
@@ -646,7 +647,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step4ComparingPrice = null;
-                this.Step4ComparingTextColor = null; 
+                this.Step4ComparingTextColor = this.DefaultColor; 
             }
 
             var step5ComparingValue = this.Step5Price - this.ComparedEntity.Step5Price;
@@ -656,7 +657,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step5ComparingPrice = null;
-                this.Step5ComparingTextColor = null;
+                this.Step5ComparingTextColor = this.DefaultColor;
             }
 
             var step6ComparingValue = this.Step6Price - this.ComparedEntity.Step6Price;
@@ -666,7 +667,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step6ComparingPrice = null;
-                this.Step6ComparingTextColor = null;
+                this.Step6ComparingTextColor = this.DefaultColor;
 
             }
 
@@ -678,7 +679,7 @@ export class TariffLineData extends BaseComponent {
             else {
 
                 this.Step7ComparingPrice = null;
-                this.Step7ComparingTextColor = null;
+                this.Step7ComparingTextColor = this.DefaultColor;
             }
 
             var step8ComparingValue = this.Step8Price - this.ComparedEntity.Step8Price;
@@ -688,16 +689,22 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step8ComparingPrice = null;
-                this.Step8ComparingTextColor = null;
+                this.Step8ComparingTextColor = this.DefaultColor;
             }
         }
     }
 
     ComputeWarningPercentageColor(price: number) {
         var color = "blue";
-        var price_abs = Math.abs(price);
-        if (price_abs > this.FatherComponent.WarningPercentage) {
-            color = "red";
+        if (this.FatherComponent.WarningPercentage == null) {
+            color = "blue";
+        }
+        else {
+          
+            var price_abs = Math.abs(price);
+            if (price_abs > this.FatherComponent.WarningPercentage) {
+                color = "red";
+            }
         }
         return color; 
     }
