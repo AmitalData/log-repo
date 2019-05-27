@@ -103,14 +103,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         string importerVAT = null;
                         string customsVendorId = null;
                         string[] msgString = customResponse.MessageToAgent.msgString.Split(new[] { "היבואן: " }, StringSplitOptions.None);
-                        if (msgString != null)
+                        if (msgString != null && msgString.Length > 1)
                         {
                             string[] message = msgString[1].Split(" ".ToCharArray());
                             importerVAT = message[0];
                         }
                         string[] messageSplit = customResponse.MessageToAgent.msgString.Split(new[] { "הספק: " }, StringSplitOptions.None);
                         string customsVendorCode = null;
-                        if (msgString != null)
+                        if (messageSplit != null && messageSplit.Length > 1)
                         {
                             string[] message = messageSplit[1].Split(" ".ToCharArray());
                             customsVendorCode = message[0];
