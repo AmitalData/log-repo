@@ -721,15 +721,17 @@ namespace WebFreight.Web.Helpers
         {
             QueryOperations queryOperations = new QueryOperations();
             queryOperations.QueryFilterItems = new System.Collections.Generic.List<QueryFilterItem>();
-
-            foreach (QueryFilterItem filterItem in queryFilterItemLists)
+            if (queryFilterItemLists != null)
             {
-                if (filterItem.FieldDataType == "Date")
+                foreach (QueryFilterItem filterItem in queryFilterItemLists)
                 {
-                    if (filterItem.FieldValue != null)
-                        filterItem.FieldValue = DateTime.Parse(filterItem.FieldValue.ToString());
+                    if (filterItem.FieldDataType == "Date")
+                    {
+                        if (filterItem.FieldValue != null)
+                            filterItem.FieldValue = DateTime.Parse(filterItem.FieldValue.ToString());
+                    }
+                    queryOperations.QueryFilterItems.Add(filterItem);
                 }
-                queryOperations.QueryFilterItems.Add(filterItem);
             }
 
             FilterSerializer filterSeriazlizer = new FilterSerializer();
@@ -1280,6 +1282,16 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
+
+                case "UNER":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(UnicargoExportDataProvider));
+                        UnicargoExportDataProvider reportDataProvider = (UnicargoExportDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "UnicargoExport", Name = "UnicargoExportDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
             }
             return urlImage;
         }
@@ -1744,6 +1756,13 @@ namespace WebFreight.Web.Helpers
                 case "LTRP":
                     {
                         dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
+
+                case "UNER":
+                    {
+                        UnicargoExportManager myDataManager = new UnicargoExportManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
                         break;
                     }
 
