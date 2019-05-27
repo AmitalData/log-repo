@@ -1483,6 +1483,7 @@ namespace WebFreight.Web.Helpers
 
                 case "COTR":
                     {
+
                         dataProvider = logitudeReportsWebService.LoadContainerTruckingData(filters, reportFliter.tenant);
                         break;
                     }

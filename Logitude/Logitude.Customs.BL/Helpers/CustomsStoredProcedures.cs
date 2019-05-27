@@ -491,8 +491,9 @@ AS */
 
             }
             string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             CustomContext context = new CustomContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
