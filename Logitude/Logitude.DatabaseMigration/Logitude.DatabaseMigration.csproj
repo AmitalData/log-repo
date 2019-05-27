@@ -977,6 +977,10 @@
     <Compile Include="Migrations\201905160948101_IncreaseQuoteSubjectField.Designer.cs">
       <DependentUpon>201905160948101_IncreaseQuoteSubjectField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs" />
+    <Compile Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.Designer.cs">
+      <DependentUpon>201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1651,6 +1655,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905160948101_IncreaseQuoteSubjectField.resx">
       <DependentUpon>201905160948101_IncreaseQuoteSubjectField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.resx">
+      <DependentUpon>201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

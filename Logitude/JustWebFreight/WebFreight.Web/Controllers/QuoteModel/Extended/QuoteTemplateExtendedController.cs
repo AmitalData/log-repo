@@ -214,12 +214,10 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
-                QuoteTemplateRepository quoteTemplateRepository = new QuoteTemplateRepository(tenant);
-                QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(quoteTemplateRepository);
-                IQueryable<QuoteTemplate> quoteTemplates = quoteTemplateRepository.GetQuoteTemplatesByType(quotetemplatetype, tenant);
-                IQueryable<QuoteTemplateList> query2 = quoteTemplateQuery.GetIQueryableEntityList(quoteTemplates);
-
-                return Request.CreateResponse(HttpStatusCode.OK, query2.ToList());
+                QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(authToken.Tenant);
+                IQueryable<QuoteTemplatePM> quoteTemplates = quoteTemplateQuery.GetQuoteTemplatePMListsByQuotetemplatetype(quotetemplatetype, tenant);
+    
+                return Request.CreateResponse(HttpStatusCode.OK, quoteTemplates.ToList());
             }
             catch (Exception ex)
             {
@@ -229,10 +227,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
         }
 
 
-        public HttpResponseMessage GetSinglePMByQuoteId(string id, string quoteId, int tenant , string defultQuoteTemplate, string quotationSections)
+        public HttpResponseMessage GetTemplateSectionsByQuoteTemplateIdAndQuoteId(string id, string quoteId, int tenant , string defultQuoteTemplate, string quotationSections)
         {
-
-
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
@@ -240,9 +236,10 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("QuoteTemplate", "READ", authToken.Tenant);
                 QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(tenant);
-                var result = quoteTemplateQuery.GetSinglePMByQuoteId(id, quoteId, tenant, defultQuoteTemplate, quotationSections);
+                QuoteTemplateSectionQuery quoteTemplateSectionQuery = new QuoteTemplateSectionQuery(tenant);
+                var templateSections = quoteTemplateSectionQuery.GetQuoteTemplateSectionPMsByTemplateId(id, quoteId, tenant, defultQuoteTemplate, quotationSections);
 
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+                return Request.CreateResponse(HttpStatusCode.OK, templateSections);
             }
             catch (Exception ex)
             {

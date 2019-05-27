@@ -34,7 +34,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     public _ShipmentPMService: ShipmentPMService;
     private CurrentSession = SessionLocator.SelectedSession;
-    public ToggleIsExportShipments: boolean = false;
+    public ToggleIsExportShipments: boolean = true;
     constructor(private _entityListService: EntityListService) {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();
@@ -656,8 +656,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     GridAfterViewInitCompleted($event) {
         this.LoadImporterShipments();
     }
+    timerToken: any;
     RefreshBtnClick() {
-        this.LoadImporterShipments();
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+        this.timerToken = setTimeout(() => this.LoadImporterShipments(), 500);
+        
     }
 
     AddNewEntity() {
