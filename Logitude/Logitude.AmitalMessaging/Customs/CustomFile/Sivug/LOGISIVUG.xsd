@@ -65,6 +65,8 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="CLASIFIEDREMARKS" />
         <xs:element minOccurs="0" maxOccurs="1" ref="UNIT_ID" />
         <xs:element minOccurs="0" maxOccurs="1" ref="TAXEXEMPTCODE" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="StatisticQuantity" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="StatisticQuantityType" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="CERTIFICATES" />
       </xs:sequence>
     </xs:complexType>
@@ -83,6 +85,8 @@
   <xs:element name="CLASIFIEDREMARKS" type="xs:string" />
   <xs:element name="UNIT_ID" type="xs:string" />
   <xs:element name="TAXEXEMPTCODE" type="xs:string" />
+  <xs:element name="StatisticQuantity" type="xs:string" />
+  <xs:element name="StatisticQuantityType" type="xs:string" />
   <xs:element name="CERTIFICATES">
     <xs:complexType>
       <xs:sequence>

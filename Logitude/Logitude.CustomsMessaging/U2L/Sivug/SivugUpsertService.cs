@@ -43,6 +43,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         private DeclarationPM _MyDeclarationPM;
         private Stopwatch _Stopwatch;
         private string mode;
+        private string messageType;
         List<LineToSequenceNumeric> lineToSequence;
         private int? lastSequenceNumeric = 0;
 
@@ -117,7 +118,15 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
                 mode = UnifreightListsUtil.GetValue(ref unifreightListsParams, "MODE");
                 AppendLogLine("mode: " + mode);
-                if (mode == "UMS2L") mode = "INSERT_UPDATE_DELETE";
+                if (mode == "UMS2L")
+                {
+                    mode = "INSERT_UPDATE_DELETE";
+                    messageType = "UMS2L";
+                }
+                else
+                {
+                    messageType = "US2L";
+                }
             }
 
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -738,6 +747,18 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     }
                 }
 
+                if (invoiceItem.StatisticQuantity != null && !String.IsNullOrWhiteSpace(invoiceItem.StatisticQuantity))
+                {
+                    if (decimal.TryParse(invoiceItem.StatisticQuantity, out decimal1))
+                    {
+                        SupplierInvoiceItemPM.StatisticQuantity = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing Statistic Quantity (" + invoiceItem.StatisticQuantity + ") into integer");
+                    }
+                }
+
                 if (invoiceItem.ITEMPRICE != null && !String.IsNullOrWhiteSpace(invoiceItem.ITEMPRICE))
                 {
                     if (decimal.TryParse(invoiceItem.ITEMPRICE, out decimal1))
@@ -777,6 +798,11 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.UNIT_ID);
                 }
+                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.StatisticQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.StatisticQuantityType))
+                {
+                    SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
+                }
+                
                 if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.TaxExemptCode) && !string.IsNullOrWhiteSpace(invoiceItem.TAXEXEMPTCODE))
                 {
                     SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
