@@ -14,7 +14,7 @@ export class ReceivablesTabComponent {
     public RecievablesTab(shipmentType: string) {
         this.Helper.WaitByIdAndClick('Shipment.TH.Receivables');
         this.Helper.WaitBusyIndicator();
-        var EC = protractor.ExpectedConditions;
+        // var EC = protractor.ExpectedConditions;
         // this.Helper.WaitByIdAndClick('Shipment_EstimateProfitInSelectedCurrency');
 
         if (shipmentType == 'D' || shipmentType == 'H') {
@@ -58,7 +58,7 @@ export class ReceivablesTabComponent {
             // return receivableCurrency;
         });
 
-        this.Helper.WaitByIdAndClick('Add');
+        this.Helper.WaitByIdAndClick('AddReceivableId');
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_ChargesTypeId', ChargeType);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
