@@ -196,6 +196,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
 
+    get VersionNumber() {
+        return this.CurrentVersion.Version;
+    }
+
     get StartDate() {
         return this.CurrentVersion.StartDate;
     }
@@ -240,7 +244,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.TariffsLinesSource.Clear();
         var itemsCollection: TariffLineData[] = [];
 
-        this.CurrentVersion.TariffLines.forEach(item => {
+        this.CurrentVersion.TariffLines.sort(p => p.Index).forEach(item => {
             itemsCollection.push(new TariffLineData(item, this));
         });
 
@@ -254,6 +258,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         itemPM.ExpirationDate = this.ExpirationDate;
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
+
+        var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
+        if (Version) {
+            if (Version.TariffLines.length > 0) {
+                var index = Math.max.apply(Math, Version.TariffLines.map(function (o) { return o.Index; })) + 1;
+                if (index) {
+                    itemPM.Index = index;
+                }
+            }
+        }
+
         var itemComponent = new TariffLineData(itemPM, this, true);
         logWindow.DataContext = itemComponent;
         logWindow.Title = "New Tariff Line";
@@ -358,6 +373,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.DestinationPortText = item.ToPortText;
             tariffLine.HasErrors = item.HasErrors;
             tariffLine.ErrorText = item.ErrorText;
+            tariffLine.Index = item.Index;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
@@ -439,19 +455,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
             errors.push("Invalid Tariff Lines");
         }
-
-        this.CurrentVersion.TariffLines.forEach(item => {
-            this.CurrentVersion.TariffLines.forEach(item => {
-                if (AppTool.IsNullOrEmpty(item.OriginPortId)) {
-                    errors.push("Missing Origin Port");
-                }
-
-                if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
-                    errors.push("Missing Destination Port");
-                }
-            });
-        });
-
+        
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
@@ -506,7 +510,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         this.EntityPM.AddTariffVersion(copiedVersion);
 
-        this.CurrentVersion.TariffLines.forEach(item => {
+        this.CurrentVersion.TariffLines.sort(p => p.Index).forEach(item => {
             var tariffLine = new TariffLinePM(copiedVersion);
             tariffLine.StartDate = this.StartDate;
             tariffLine.ExpirationDate = this.ExpirationDate;
@@ -528,6 +532,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge8Price = item.Surcharge8Price;
             tariffLine.Surcharge9Price = item.Surcharge9Price;
             tariffLine.Surcharge10Price = item.Surcharge10Price;
+            tariffLine.Index = item.Index;
 
             copiedVersion.AddTariffLine(tariffLine);
         });
@@ -566,6 +571,17 @@ export class TariffLineData extends BaseComponent {
                 errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
             }
         }
+        else if (AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Missing Origin Port";
+            }
+
+            else {
+                errorText = errorText + ", Missing Origin Port"
+            }
+        }
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
             error = true;
@@ -576,6 +592,17 @@ export class TariffLineData extends BaseComponent {
 
             else {
                 errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
+            }
+        }
+        else if (AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Missing Destination Port";
+            }
+
+            else {
+                errorText = errorText + ", Missing Destination Port"
             }
         }
 

@@ -22,7 +22,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.InActive = TaskSchedulerPM.InActive;
             TaskScheduler.IsLastRunError = TaskSchedulerPM.IsLastRunError;
             TaskScheduler.LastRunResult = TaskSchedulerPM.LastRunResult;
-            TaskScheduler.LastRunTime = TaskSchedulerPM.LastRunTime;
+            TaskScheduler.LastRunEndTime = TaskSchedulerPM.LastRunEndTime;
             TaskScheduler.Monday = TaskSchedulerPM.Monday;
             TaskScheduler.Name = TaskSchedulerPM.Name;
             TaskScheduler.NextRunTime = TaskSchedulerPM.NextRunTime;
@@ -41,12 +41,16 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             TaskScheduler.SchedulerDetailsXML = TaskSchedulerPM.SchedulerDetailsXML;
 
             TaskScheduler.StartDateTimeUTC = TaskSchedulerPM.StartDateTimeUTC;
-            TaskScheduler.LastRunTimeUTC = TaskSchedulerPM.LastRunTimeUTC;
+            TaskScheduler.LastRunEndTimeUTC = TaskSchedulerPM.LastRunEndTimeUTC;
             TaskScheduler.NextRunTimeUTC = TaskSchedulerPM.NextRunTimeUTC;
 
             TaskScheduler.Version = TaskSchedulerPM.Version;
             TaskScheduler.Status = TaskSchedulerPM.Status;
             TaskScheduler.Retries = TaskSchedulerPM.Retries;
+            TaskScheduler.LastRunStartTime = TaskSchedulerPM.LastRunStartTime;
+
+            TaskScheduler.LastRunStartTimeUTC = TaskSchedulerPM.LastRunStartTimeUTC;
+
 
         }
     }

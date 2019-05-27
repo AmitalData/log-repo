@@ -8,6 +8,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using System.Data.Entity;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -46,7 +47,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         StartDateTimeUTC = a.StartDateTimeUTC,
                         EndDateTimeUTC = a.EndDateTimeUTC,
                         LogFirstLine = a.LogFirstLine,
-                        LogType = a.LogType
+                        LogType = a.LogType,
+                        Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
 
                     }).FirstOrDefault();
         }
@@ -131,6 +133,49 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                               LogType = a.LogType
                                                           };
             return result;
+        }
+
+        public double GetTaskAvarageDuration(string taskId)
+        {
+            var Latest10Histories = (from a in repository.context.TaskSchedulerHistories
+                                     where a.TaskId == taskId
+                                     select new TaskSchedulerHistoryPM()
+                                     {
+                                         Id = a.Id,
+                                         Tenant = a.Tenant,
+                                         EndDateTime = a.EndDateTime,
+                                         IsError = a.IsError,
+                                         RunResult = a.RunResult,
+                                         StartDateTime = a.StartDateTime,
+                                         TaskId = a.TaskId,
+                                         StartDateTimeUTC = a.StartDateTimeUTC,
+                                         EndDateTimeUTC = a.EndDateTimeUTC,
+                                         LogFirstLine = a.LogFirstLine,
+                                         LogType = a.LogType,
+                                         Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
+
+                                     }).OrderByDescending(x => x.StartDateTime).Take(10);
+
+            var Duration = Latest10Histories.Average(a => a.Duration);
+            return (double)Duration;
+
+            //return (from a in repository.context.TaskSchedulerHistories
+            //                         where a.TaskId == taskId
+            //                         select new TaskSchedulerHistoryPM()
+            //                         {
+            //                             Id = a.Id,
+            //                             Tenant = a.Tenant,
+            //                             EndDateTime = a.EndDateTime,
+            //                             IsError = a.IsError,
+            //                             RunResult = a.RunResult,
+            //                             StartDateTime = a.StartDateTime,
+            //                             TaskId = a.TaskId,
+            //                             StartDateTimeUTC = a.StartDateTimeUTC,
+            //                             EndDateTimeUTC = a.EndDateTimeUTC,
+            //                             LogFirstLine = a.LogFirstLine,
+            //                             LogType = a.LogType,
+            //                             Duration = DbFunctions.DiffSeconds(a.EndDateTime, a.StartDateTime),
+            //                         }).Average(x => x.Duration);
         }
 
     }

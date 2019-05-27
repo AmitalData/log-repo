@@ -509,6 +509,11 @@ export class AirlinePM {
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
        
 	 
+    private imageDetailId: string;
+    public get ImageDetailId() { return this.imageDetailId; }
+    public set ImageDetailId(newValue: string) { if (this.imageDetailId != newValue) { this.imageDetailId = newValue; this.MarkAsDirty("ImageDetailId"); } }
+       
+	 
 
     public OldEntityPM: AirlinePM;
 		

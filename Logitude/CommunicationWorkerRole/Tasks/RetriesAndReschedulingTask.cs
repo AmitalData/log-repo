@@ -7,16 +7,16 @@ using System.Threading;
 
 namespace CommunicationWorkerRole.Tasks
 {
-    public class TestLoggingTask : TaskManagerBase
+    public class RetriesAndReschedulingTask : TaskManagerBase
     {
-        public TestLoggingTask(string Id, int tenant)
+        public RetriesAndReschedulingTask(string Id, int tenant)
             : base(Id, tenant)
         {
 
         }
         public override void StartTask()
         {
-            throw new System.Exception("This is screwed !");
+            throw new System.Exception("Exceptins to test Retries And Rescheduling !");
 
         }
     }

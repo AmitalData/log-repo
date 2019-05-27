@@ -63,19 +63,21 @@ export class TariffTabsContentComponent implements OnDestroy {
 
         var draftVersion: TariffVersionPM = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
         if (draftVersion != null) {
-            from = datePipe.transform(draftVersion.StartDate, 'dd/MM/yyyy');
-            to = datePipe.transform(draftVersion.ExpirationDate, 'dd/MM/yyyy');
+            from = datePipe.transform(draftVersion.StartDate, 'dd/MMM/yy');
+            to = datePipe.transform(draftVersion.ExpirationDate, 'dd/MMM/yy');
 
-            header = "Version " + draftVersion.Version + " (" + from + " - " + to + ")";
+            //header = "Version " + draftVersion.Version + " (" + from + " - " + to + ")";
+            header = from + " - " + to;
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, draftVersion));
             index++;
         }
 
         this.EntityPM.TariffVersions.filter(d => !d.IsDraft && DateTool.TruncateTime(d.ExpirationDate).valueOf() > todayDate.valueOf()).sort((a, b) => { return (a.Version === b.Version) ? 0 : (a.Version > b.Version) ? -1 : 1 }).forEach(item => {
-            from = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-            to = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+            from = datePipe.transform(item.StartDate, 'dd/MMM/yy');
+            to = datePipe.transform(item.ExpirationDate, 'dd/MMM/yy');
 
-            header = "Version " + item.Version + " (" + from + " - " + to + ")";
+            //header = "Version " + item.Version + " (" + from + " - " + to + ")";
+            header = from + " - " + to;
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, item));
             index++;
         });

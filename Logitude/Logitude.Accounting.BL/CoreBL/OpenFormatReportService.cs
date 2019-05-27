@@ -4919,6 +4919,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             string formated = Math.Abs(value).ToString().Replace(".", string.Empty);
             string[] sub = value.ToString().Split('.');
+          
             if (quantity)
             {
                 formated = formated + "00";
@@ -4932,9 +4933,9 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 formated = "0"+ formated  ;
             }
-            else if ((sub.Count() > 1) && !isVat && sub[1] != "00")
+            else if (sub.Length > 1 && sub[1].Length == 1)
             {
-                formated =  formated + "0";
+                formated = formated + "0";
             }
 
 

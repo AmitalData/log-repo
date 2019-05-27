@@ -480,12 +480,12 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
-	  private int? contractNumber ;
+	  private string contractNumber ;
 	  	  
        
 	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? ContractNumber  
+       public string ContractNumber  
 	   {
 	    
 	     get
@@ -496,7 +496,7 @@ namespace Logitude.TariffModule.BL.EntityPMs
 		 {
 		   if(contractNumber != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContractNumber",OldValue=contractNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContractNumber",OldValue=contractNumber,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   contractNumber=value;
 		   }
