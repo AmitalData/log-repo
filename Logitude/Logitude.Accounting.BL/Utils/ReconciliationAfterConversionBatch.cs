@@ -35,15 +35,20 @@ namespace Logitude.Accounting.BL.Utils
         {
             return _StatusCode;
         }
-        public void RunReconciliationAfterConversion(int tenant)
+        public void RunReconciliationAfterConversion(int tenant, string fromExtNum, string toExtNum)
         {
             try
             {
                 IAccountingContext context = AccountingContext.GetContext(tenant);
                 JournalLineQueryService journalLineQueryService = new JournalLineQueryService(context);
-                IQueryable<IGrouping<String, JournalLine>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalReco(tenant);
-                LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(context);
 
+                //IQueryable<IGrouping<String, JournalLine>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalReco(tenant);
+                IQueryable<IGrouping<String, JournalLine>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
+                LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(context);
+                List<ReconciableGroup> reconciableGroupList = new List<ReconciableGroup>();
+                List<string> badList = new List<string>();
+                List<string> goodList = new List<string>();
+                List<Int32> madeList = new List<Int32>();
 
                 foreach (IGrouping<String, JournalLine> group in journalLineGroups)
                 {
@@ -55,13 +60,26 @@ namespace Logitude.Accounting.BL.Utils
                     }
                     if (IsGroupReconciable(journalLineList))
                     {
-                        string gLAccountId = GetGroupGLAccountId(journalLineList);
-                        if (!String.IsNullOrWhiteSpace(gLAccountId))
-                        {
-                            ReconcileOneRef(groupKey, journalLineList, gLAccountId);
-                        }
+                        ReconciableGroup recoGroup = new ReconciableGroup(groupKey, journalLineList);
+                        reconciableGroupList.Add(recoGroup);
+                        goodList.Add(groupKey);
+                    }
+                    else
+                    {
+                        badList.Add(groupKey);
                     }
                 }
+                reconciableGroupList.Sort((x, y) => x._Ref.CompareTo(y._Ref));
+                reconciableGroupList.ForEach(recoGroup =>
+                {
+                    string gLAccountId = GetGroupGLAccountId(recoGroup._LineGroup);
+                    if (!String.IsNullOrWhiteSpace(gLAccountId))
+                    {
+                        ReconcileOneRef(recoGroup._LineGroup, gLAccountId);
+                        madeList.Add(recoGroup._Ref);
+                    }
+                });
+                _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}";
             }
             catch (Exception e)
             {
@@ -111,7 +129,7 @@ namespace Logitude.Accounting.BL.Utils
             {
                 rv = false;
             }
-            else if (journalLineRecoList.Exists(line => line._oneLineLedger is null || line._oneLineLedger.Count == 0))
+            else if (journalLineRecoList.Exists(line => line._oneLineLedger == null || line._oneLineLedger.Count == 0))
             {
                 rv = false;
             }
@@ -131,7 +149,7 @@ namespace Logitude.Accounting.BL.Utils
             return rv;
         }
 
-        private void ReconcileOneRef(string externalReconcileNo, List<JournalLineReco> journalLineRecoList, string gLAccountId)
+        private void ReconcileOneRef(List<JournalLineReco> journalLineRecoList, string gLAccountId)
         {
             using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
             {
@@ -152,6 +170,18 @@ namespace Logitude.Accounting.BL.Utils
             }
         }
 
+        private class ReconciableGroup
+        {
+            public Int32 _Ref { get; set; }
+            public List<JournalLineReco> _LineGroup { get; set; }
+            public ReconciableGroup(string reference, List<JournalLineReco> lineGroup)
+            {
+                _LineGroup = lineGroup;
+                _Ref = Int32.Parse(reference);
+            }
+        }
+
+
         private class JournalLineReco
         {
 
@@ -164,11 +194,11 @@ namespace Logitude.Accounting.BL.Utils
                 this._valueToMatch = 0m;
                 if (journalLine.ActionCode == "1")
                 {
-                    this._valueToMatch = journalLine.LocalAmount + (journalLine.ExternalOpenAmount ?? 0m);
+                    this._valueToMatch = journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m);
                 }
                 else if (journalLine.ActionCode == "2")
                 {
-                    this._valueToMatch = journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m);
+                    this._valueToMatch = - (journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m));
                 }
                 this._oneLineLedger = ledgerTransactionQueryService.GetByJournalLineIdAndLine(journalLine.JournalId, journalLine.Line, journalLine.Tenant);
             }

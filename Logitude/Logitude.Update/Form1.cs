@@ -3653,6 +3653,46 @@ User/Pass",
             thread.IsBackground = true;
             thread.Start();
         }
+
+        private void rtlBtn_Click(object sender, EventArgs e)
+        {
+            ChangeTenantLayoutDirection("rtl");
+        }
+
+        private void ChangeTenantLayoutDirection(string dir)
+        {
+            CommonDataContext Context = CommonDataContext.GetContextByDBId("0");
+            string connectionString = Context.GetConnection().ConnectionString;
+            SqlConnection sqlConnection1 = new SqlConnection(connectionString);
+
+            int tenant = Convert.ToInt32(tenantTxtBox.Text);
+
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = String.Format("UPDATE Tenants set LayoutDirection = '{1}' where Id = {0}", tenant, dir),
+                Connection = sqlConnection1
+            };
+
+            try
+            {
+                sqlConnection1.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                sqlConnection1.Close();
+
+                MessageBox.Show(string.Format("Tenant {0}: {1}",tenant, dir));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Failed! Tenant {0}: {1} \n {2}", tenant, dir, ex.Message));
+                throw;
+            }
+        }
+
+        private void ltrBtn_Click(object sender, EventArgs e)
+        {
+            ChangeTenantLayoutDirection("ltr");
+            
+        }
     }
 
 
