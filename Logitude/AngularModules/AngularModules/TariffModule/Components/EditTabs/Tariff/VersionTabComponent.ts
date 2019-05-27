@@ -171,7 +171,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.ItemsCollection = [];  
         this.DeletedTariffsLines = [];
 
-        this.CurrentVersion.TariffLines.forEach(item => {
+        this.CurrentVersion.TariffLines.sort(p => p.Index).forEach(item => {
             this.ItemsCollection.push(new TariffLineData(item, this));
         });
 
@@ -185,7 +185,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     ComaredLines() {
         this.ItemsCollection.forEach((item: TariffLineData) => {
-            var line = this.ComparedToVersionPM.TariffLines.filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            var line = this.ComparedToVersionPM.TariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line) {
                 item.ComparedEntity = line;
                 item.SetCellsComparingText();
@@ -197,8 +197,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         });
     }
     BuildDeletedLines() {
-        this.ComparedToVersionPM.TariffLines.forEach(item => {
-            var line = this.CurrentVersion.TariffLines.filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+        this.ComparedToVersionPM.TariffLines.sort(p => p.Index).forEach(item => {
+            var line = this.CurrentVersion.TariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line == null) {
                 this.DeletedTariffsLines.push(new TariffLineData(item, this));// Deleted 
             }
@@ -270,6 +270,16 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         itemPM.ExpirationDate = this.ExpirationDate;
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
+        var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
+        if (Version) {
+            if (Version.TariffLines.length > 0) {
+                var index = Math.max.apply(Math, Version.TariffLines.map(function (o) { return o.Index; })) + 1;
+                if (index) {
+                    itemPM.Index = index;
+                }
+            }
+        }
+
         var itemComponent = new TariffLineData(itemPM, this, true);
         logWindow.DataContext = itemComponent;
         logWindow.Title = "New Tariff Line";
@@ -374,6 +384,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.DestinationPortText = item.ToPortText;
             tariffLine.HasErrors = item.HasErrors;
             tariffLine.ErrorText = item.ErrorText;
+            tariffLine.Index = item.Index;
 
             if (this.PriceSteps.indexOf(',') > -1) {
                 var steps: string[] = this.PriceSteps.split(",");
@@ -494,6 +505,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.Step6Price = item.Step6Price;
             tariffLine.Step7Price = item.Step7Price;
             tariffLine.Step8Price = item.Step8Price;
+            tariffLine.Index = item.Index;
             copiedVersion.AddTariffLine(tariffLine);
         });
 
@@ -583,6 +595,7 @@ export class TariffLineData extends BaseComponent {
     public Step7ComparingTextColor: string = null;
     public Step8ComparingPrice: number;
     public Step8ComparingTextColor: string = null;
+    private DefaultColor = "blue";
 
     SetCellsComparingText() {
         if (this.ComparedEntity != null) {
@@ -593,7 +606,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.MinPriceComparingPrice = null;
-                this.MinPriceComparingTextColor = null;
+                this.MinPriceComparingTextColor = this.DefaultColor;
             }
             // step 1
             var step1ComparingValue = this.Step1Price - this.ComparedEntity.Step1Price;
@@ -603,7 +616,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step1ComparingPrice = null;
-                this.Step1ComparingTextColor = null;
+                this.Step1ComparingTextColor = this.DefaultColor;
             }
            
             var step2ComparingValue = this.Step2Price - this.ComparedEntity.Step2Price;
@@ -613,7 +626,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step2ComparingPrice = null;
-                this.Step2ComparingTextColor = null;
+                this.Step2ComparingTextColor = this.DefaultColor;
             }
 
             var step3ComparingValue = this.Step3Price - this.ComparedEntity.Step3Price;
@@ -624,7 +637,7 @@ export class TariffLineData extends BaseComponent {
             else {
 
                 this.Step3ComparingPrice = null;
-                this.Step3ComparingTextColor = null;
+                this.Step3ComparingTextColor = this.DefaultColor;
             }
 
             var step4ComparingValue = this.Step4Price - this.ComparedEntity.Step4Price;
@@ -634,7 +647,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step4ComparingPrice = null;
-                this.Step4ComparingTextColor = null; 
+                this.Step4ComparingTextColor = this.DefaultColor; 
             }
 
             var step5ComparingValue = this.Step5Price - this.ComparedEntity.Step5Price;
@@ -644,7 +657,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step5ComparingPrice = null;
-                this.Step5ComparingTextColor = null;
+                this.Step5ComparingTextColor = this.DefaultColor;
             }
 
             var step6ComparingValue = this.Step6Price - this.ComparedEntity.Step6Price;
@@ -654,7 +667,7 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step6ComparingPrice = null;
-                this.Step6ComparingTextColor = null;
+                this.Step6ComparingTextColor = this.DefaultColor;
 
             }
 
@@ -666,7 +679,7 @@ export class TariffLineData extends BaseComponent {
             else {
 
                 this.Step7ComparingPrice = null;
-                this.Step7ComparingTextColor = null;
+                this.Step7ComparingTextColor = this.DefaultColor;
             }
 
             var step8ComparingValue = this.Step8Price - this.ComparedEntity.Step8Price;
@@ -676,16 +689,22 @@ export class TariffLineData extends BaseComponent {
             }
             else {
                 this.Step8ComparingPrice = null;
-                this.Step8ComparingTextColor = null;
+                this.Step8ComparingTextColor = this.DefaultColor;
             }
         }
     }
 
     ComputeWarningPercentageColor(price: number) {
         var color = "blue";
-        var price_abs = Math.abs(price);
-        if (price_abs > this.FatherComponent.WarningPercentage) {
-            color = "red";
+        if (this.FatherComponent.WarningPercentage == null) {
+            color = "blue";
+        }
+        else {
+          
+            var price_abs = Math.abs(price);
+            if (price_abs > this.FatherComponent.WarningPercentage) {
+                color = "red";
+            }
         }
         return color; 
     }

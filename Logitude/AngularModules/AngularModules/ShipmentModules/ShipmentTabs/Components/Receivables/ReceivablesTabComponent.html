@@ -55,8 +55,8 @@
                                         <CheckBox [IsChecked]="ProrateReceivables" (Checked)="ProrateReceivables = $event" [IsEnabled]="IsEditingEnabled" [Text]="'Shipment.F.ProrateReceivables' | TextCodeTranslationPipe"></CheckBox>
                                     </td>
 
-                                    <td style="width: 21px">
-                                        <IconButton [Name]="'Add'" [IsEnabled]="IsEditingEnabled" (click)="AddReceivable()"></IconButton>
+                                    <td id="{{'AddReceivable'| IdGeneratorPipe}}"  style="width: 21px">
+                                        <IconButton [Name]="'Add'"   [IsEnabled]="IsEditingEnabled" (click)="AddReceivable()"></IconButton>
                                     </td>
 
                                     <td style="width:15px;">

@@ -425,6 +425,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.DirectionId = entityPM.DirectionId;
                 entityPM.ShipmentDirectionConverted = false;
             }
+
+            ValidateMAWBStackField(entityPoco, entityMasterData);
+        }
+
+        private static void ValidateMAWBStackField(Shipment entityPoco, ShipmentMasterData entityMasterData)
+        {
+            if (entityMasterData != null)
+            {
+                if (entityPoco.TransportModeId == "A")
+                {
+                    if (entityMasterData.MainCarriageIsFromStack)
+                    {
+                        if (entityMasterData.MainCarriageCarrierId == null || entityMasterData.Master == null)
+                        {
+                            throw new ApplicationException("Master field from stock is required");
+                        }
+                    }
+                }
+            }
         }
 
         private static void MapXSDMessagesFields(ShipmentPM entityPM, Shipment entityPoco, ShipmentMasterData entityMasterData, bool isNewEntity)

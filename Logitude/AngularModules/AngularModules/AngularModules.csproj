@@ -107,6 +107,7 @@
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
+    <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerCustomsAgentByProductSplitComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerForwarderByProductSplitComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerMediatorByProductSplitComponent.html" />
@@ -405,6 +406,7 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\Depositions\EditTab\CustomsShipperGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.ts" />
@@ -7168,6 +7170,7 @@
     <Folder Include="Dashboard\Components\Graphs\" />
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\CRM\Quotes\" />
+    <Folder Include="e2e\LogBox\Documents\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
     <Folder Include="Logitude\Components\Customization\" />

@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { AirlinePM } from '../../../../Common/EntityPMs/AirlinePM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-
 
 @Component({
     moduleId: module.id,
@@ -23,7 +22,7 @@ export class AirlineGeneralTabComponent extends BaseComponent {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.ImageId = this.EntityPM.ImageDetailId;
-        this.EntityName = "Customer";
+        this.EntityName = "Airline";
         this.EntityId = this.EntityPM.Id;
         
         this.RunComponent();
