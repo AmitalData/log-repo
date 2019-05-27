@@ -1288,6 +1288,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StateName = oldTenantCard.StateName,
                     IsInternationalPartner = oldTenantCard.IsInternationalPartner,
                     IsAutonomy = oldTenantCard.IsAutonomy,
+                    ImageDetailId = oldTenantCard.ImageDetailId,
                 };
 
                 #region PaymentTerm

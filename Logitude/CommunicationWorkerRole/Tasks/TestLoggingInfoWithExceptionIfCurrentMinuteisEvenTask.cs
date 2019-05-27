@@ -8,9 +8,9 @@ using System.Threading;
 
 namespace CommunicationWorkerRole.Tasks
 {
-    public class TestLoggingInfoTask : TaskManagerBase
+    public class TestLoggingInfoWithExceptionIfCurrentMinuteisEvenTask : TaskManagerBase
     {
-        public TestLoggingInfoTask(string Id, int tenant)
+        public TestLoggingInfoWithExceptionIfCurrentMinuteisEvenTask(string Id, int tenant)
             : base(Id, tenant)
         {
 
@@ -24,10 +24,10 @@ namespace CommunicationWorkerRole.Tasks
                 {
                     LogInfo("Log Info # " + i + " , # is Event");
                 }
-                else
+                else if (DateTime.Now.Minute % 2 == 0)
                 {
                     LogException("Log Exception # " + i + " , # Oh Yea");
-                }
+                } 
             }
 
         }

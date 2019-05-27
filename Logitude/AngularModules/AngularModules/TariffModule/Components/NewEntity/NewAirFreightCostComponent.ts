@@ -10,6 +10,8 @@ import { AppTool } from '../../../Infrastructure/Tools';
 import { ChargesTypeListService } from '../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ChargesTypeList } from '../../../Common/EntityLists/ChargesTypeList';
 import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator'
+
+
 @Component({
     selector: 'NewAirFreightCostComponent',
     moduleId: module.id,
@@ -455,7 +457,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
     get ContractNumber() {
         return this.EntityPM.ContractNumber;
     }
-    set ContractNumber(value: number) {
+    set ContractNumber(value: string) {
         if (this.EntityPM.ContractNumber != value) {
             this.EntityPM.ContractNumber = value;
         }
@@ -475,24 +477,45 @@ export class NewAirFreightCostComponent extends BaseComponent {
         var UOMProps: string[] = [];
         var IdPropsName: string[] = [];
         var UOMPropsName: string[] = [];
+        var DuplicatedChargesIds: string[] = [];
         var EmptyIndex = 1;
+        var emptyLines: boolean = false;
+        var tempErrors:Array<string> = [];
         for (var index = 1; index <= 10; index++) {
             IdProps.push("Surcharge" + index + "Id");
             UOMProps.push("Surcharge" + index + "UOM");
 
             IdPropsName.push("Charge Type " + index );
             UOMPropsName.push("UOM " + index);
+            if (this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]]!=null)[0] != null) {
+                var chargresType = this.IdProps.filter(p => this[p + ""] == this[IdProps[index - 1]] && (p + "" != IdProps[index - 1] + "") && this[IdProps[index - 1]] != null)[0];
+                if (!DuplicatedChargesIds.includes(this[chargresType + ""])) {
+                    DuplicatedChargesIds.push(this[chargresType + ""]);
+                    this.chargesTypePMService.getSingleFromCache(this[chargresType + ""]).subscribe(res => {
+                        if (!res.HasError) {
+                            var chargesTypeList: ChargesTypeList = res.Result;
+                            if (res) {
+                                this.ValidationErrorsList.push("Charge type "+chargesTypeList.EnglishName + " is duplicated");
+                            }
+                        }
+                    });
+
+                }
+            }
             if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                    this.ValidationErrorsList.push(IdPropsName[index - 1] + " is required");
+                    tempErrors.push(IdPropsName[index - 1] + " is required");
                 }
 
                 if (AppTool.IsNullOrEmpty(this[UOMProps[index - 1]])) {
-                    this.ValidationErrorsList.push(UOMPropsName[index - 1] + " is required");
+                    tempErrors.push(UOMPropsName[index - 1] + " is required");
                 }
             }
 
             else {
+
+       
+
                 if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
                     if (EmptyIndex == 1) {
                         EmptyIndex = index;
@@ -502,11 +525,20 @@ export class NewAirFreightCostComponent extends BaseComponent {
                 if (AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
                     this.ValidationErrorsList.push(IdPropsName[index - 1] + " is filled without a UOM");
                 }
+                if (index == 2) {
+                    if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
+                        if (EmptyIndex == 1) {
+                            emptyLines = true;
+                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line 2 and line 1");
+                       }
+                    }
+                }
 
                 if (index >= 3) {
                     if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
                         if (EmptyIndex != 1) {
-                            this.ValidationErrorsList.push("No empty charge lines between line " + (EmptyIndex - 1) + " and line " + index);
+                            emptyLines = true;
+                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line " + (EmptyIndex - 1) + " and line " + index);
                             EmptyIndex = 1;
                         }
                         if (AppTool.IsNullOrEmpty(this[IdProps[index - 2]])) {
@@ -515,6 +547,13 @@ export class NewAirFreightCostComponent extends BaseComponent {
                     }
                 }
             }
+
+        }
+
+        if (!emptyLines) {
+            tempErrors.forEach(error => {
+                this.ValidationErrorsList.push(error);
+            });
         }
     }
   

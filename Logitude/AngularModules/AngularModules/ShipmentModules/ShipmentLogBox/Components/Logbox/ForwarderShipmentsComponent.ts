@@ -493,7 +493,12 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     }
     UnAssignedPackageTypeId: string = '';
     ValidationErrorsList: any[];
+    IsCreateButtonClicked: boolean = false;
     CreateButtonClicked() {
+        if (this.IsCreateButtonClicked == true) {
+            return;
+        }
+        this.IsCreateButtonClicked = true;
         this.ValidationErrorsList = []; 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
@@ -622,6 +627,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
                     else {
                         this.ValidationErrorsList = myResult.ErrorsArray;
                     }
+                    this.IsCreateButtonClicked = false;
                 });
             });
            

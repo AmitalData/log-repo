@@ -74,7 +74,13 @@ namespace WebFreight.Web.Helpers
                 DocumentTypeCopy documentTypeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(documentTypeCopyId);
                 DocumentType documentType = repository.GetSingleDocumentTypes(documentTypeId, tenant);
                 DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(tenant);
-                bool isJsonBody = false;
+
+				if (documentType.Code == "FTDT")
+				{
+					throw new Exception("This is a failure test document!");
+				}
+
+				bool isJsonBody = false;
                 if (defaulttemplate != null)
                 {
                     if (defaulttemplate.TemplateBodyjson != null)

@@ -41,20 +41,20 @@ export class MasterShipment {
 
     if(TransportMode=='A')
     {
-      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'TestAirlineL8');
+      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'BA');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
   
       this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierNumber', '115');  
     }
     else if(TransportMode=='O'){
-      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'SLPT');
+      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'MAEU');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
   
       this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierNumber', 'Voyage 1');  
 
     }
     else{
-      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'TestTruckerTP');
+      this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'Trucker1London');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
   
       this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierNumber', 'Trucker # 1');  

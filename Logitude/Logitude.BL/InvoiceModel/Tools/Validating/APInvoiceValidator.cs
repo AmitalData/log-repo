@@ -263,7 +263,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     if (glAccount.CurrencyId != invoiceCurrencyId)
                     {
-                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant, useLocal)  + glAccount.CurrencyCode;
+                        string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceCurrNotMatch", tenant, useLocal)  + " "+ glAccount.CurrencyName + " ";
                         errors += msg + ";";
                     }
                 }
@@ -276,13 +276,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     var month = accountingDate.Value.Month;
                     if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
                     {
-                        string msg = "ClosedMonth";
+                        
+                        string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, useLocal);
                         errors += msg + ";";
                     }
                 }
                 else
                 {
-                    string msg = "ClosedMonth";
+                    string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, useLocal);
                     errors += msg + ";";
                 }
                 if (!string.IsNullOrEmpty(errors))

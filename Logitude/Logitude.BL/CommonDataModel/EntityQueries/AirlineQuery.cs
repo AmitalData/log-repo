@@ -114,6 +114,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                SATForeignRFC= a.Card.ExternalId2,
                                MetodoPagoCode = a.Card.MetodoPagoCode,
                                UsoCFDICode = a.Card.UsoCFDICode,
+                               ImageDetailId = a.Card.ImageDetailId,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -213,6 +214,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                SATForeignRFC = a.Card.ExternalId2,
                                MetodoPagoCode = a.Card.MetodoPagoCode,
                                UsoCFDICode = a.Card.UsoCFDICode,
+                               ImageDetailId = a.Card.ImageDetailId,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -312,6 +314,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                SATForeignRFC = a.Card.ExternalId2,
                                MetodoPagoCode = a.Card.MetodoPagoCode,
                                UsoCFDICode = a.Card.UsoCFDICode,
+                               ImageDetailId = a.Card.ImageDetailId,
                                Card = new CardPM()
                                {
                                    Id = a.Id,
@@ -432,6 +435,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  SATForeignRFC = a.Card.ExternalId2,
                                                  MetodoPagoCode = a.Card.MetodoPagoCode,
                                                  UsoCFDICode = a.Card.UsoCFDICode,
+                                                 ImageDetailId = a.Card.ImageDetailId,
                                              };         
             return airlines;
         }
@@ -518,6 +522,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              SATForeignRFC = a.Card.ExternalId2,
                              MetodoPagoCode = a.Card.MetodoPagoCode,
                              UsoCFDICode = a.Card.UsoCFDICode,
+                             ImageDetailId = a.Card.ImageDetailId,
                          }).AsQueryable();
 
             IQueryable<AirlinePM> query2 = null;

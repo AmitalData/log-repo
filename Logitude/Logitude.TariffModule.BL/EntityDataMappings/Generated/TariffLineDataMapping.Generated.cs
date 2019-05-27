@@ -74,7 +74,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         HasErrors, 
 	         ErrorText, 
 	         LineUniqueKey, 
-	         LineUniqueKeyText,
+	         LineUniqueKeyText, 
+	         Index,
 	      }
 
 
@@ -137,7 +138,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         HasErrors, 
 	         ErrorText, 
 	         LineUniqueKey, 
-	         LineUniqueKeyText,
+	         LineUniqueKeyText, 
+	         Index,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -404,6 +406,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineUniqueKeyText))
             {
 				entityPOCO.LineUniqueKeyText = entityPM.LineUniqueKeyText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Index))
+            {
+				entityPOCO.Index = entityPM.Index;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -677,6 +684,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.LineUniqueKeyText = entityPOCO.LineUniqueKeyText;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Index))
+            {
+					entityPM.Index = entityPOCO.Index;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -941,6 +953,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LineUniqueKeyText))
             {
                 oldEntityPM.LineUniqueKeyText = entityPM.LineUniqueKeyText;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Index))
+            {
+                oldEntityPM.Index = entityPM.Index;
             }
 			
 		}

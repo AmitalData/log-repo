@@ -620,13 +620,31 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 result = this.TenantCurrencySign;
             }
             else {
-                if (this.EntityPM.ReconcileMethodCode == "0") { // 0- Local Currency
-                    result = this.TenantCurrencySign;
+                result = this.EntityPM.CurrencySign;
 
-                } else {
-                    result = this.EntityPM.CurrencySign;
+                // if (this.EntityPM.ReconcileMethodCode == "0") { // 0- Local Currency
+                //     result = this.TenantCurrencySign;
 
-                }
+                // } else {
+                //     result = this.EntityPM.CurrencySign;
+
+                // }
+            }
+        }
+        return result;
+    }
+    GetOpenBalanceAmount() {
+        var result = 0;
+        if (this.EntityPM) {
+            if (this.EntityPM.IsMultiCurrency) {
+                if(this.LTBSummery)
+                    if(this.LTBSummery.StartBalanceLocal)
+                        result = Number(this.LTBSummery.StartBalanceLocal);
+            }
+            else {
+                if(this.LTBSummery)
+                    if(this.LTBSummery.StartBalanceForeignList.length > 0)
+                        result = Number(this.LTBSummery.StartBalanceForeignList[0].BalanceForeign);
             }
         }
         return result;

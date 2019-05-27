@@ -961,10 +961,11 @@ namespace Logitude.Server.Tools.Helpers
                     return isValid;
                 }
 
-                else if (automationCondition.OperatorCode == "EqualSystemVariable")
+                else if (automationCondition.OperatorCode == "EqualSystemVariable" && automationCondition.Value == "SystemUser")
                 {
                     string userId = GetSystemContactIdByTenant(entityChange.Tenant);
                     if (userId != entityChange.CreateByUserId) isValid = false;
+
                     return isValid;
                 }
 

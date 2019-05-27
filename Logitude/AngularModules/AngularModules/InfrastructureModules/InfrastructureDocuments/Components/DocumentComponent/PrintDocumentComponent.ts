@@ -750,7 +750,9 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     HeaderHeight: number;
     FooterHeight: number;
     ReBluidHtmlDocument(documentTypeCopyId: string) {
-    
+        this.IsDocumentBuildSucceeded = false;
+        this.IsDocumentBuildFailed = false;
+
         var documentTypeId = this.CurrentDocumentOut.DocumentTypeId;
         var shipmentId = this.CurrentDocumentOut.EntityId;
     
@@ -881,14 +883,15 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     }
 
     BuildCurrentCopies(copies: Array<DocumentCopiesViewModel>, mode: string) {
-        
+
+        this.IsDocumentBuildSucceeded = false;
+        this.IsDocumentBuildFailed = false;
 
         this.CurrentSession.StartBusyIndicator(this.BuildingDocumentText);
 
         this.AddedDocumentTypeCopyViewModels = new Array<DocumentCopiesViewModel>();
         this.RemovedDocumentTypeCopyViewModels = new Array<DocumentCopiesViewModel>();
 
-   
         var anySelected = false;
 
         
@@ -995,7 +998,8 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
       
     }
 
-    
+    IsDocumentBuildSucceeded: boolean = false;
+    IsDocumentBuildFailed: boolean = false;
 
     SaveContext() {
 
@@ -1031,6 +1035,10 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                                     if (this.DataContext.IsNotFromDocsOutListOpenPrintControl) {
                                         this.CurrentSession.FireEvent("RefreshDocumentOutPrint");
                                     }
+
+                                    this.IsDocumentBuildSucceeded = true;
+
+
                                 }
                             }
 
@@ -1253,6 +1261,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
         var messageWindow: MessageWindow = new MessageWindow();
         messageWindow.Show(message);
+        this.IsDocumentBuildFailed = true;
     }
     private SetSelectedAsDefaultBtnClick() {
 

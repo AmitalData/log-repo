@@ -312,6 +312,11 @@ export class TariffLinePM {
     public set LineUniqueKeyText(newValue: string) { if (this.lineUniqueKeyText != newValue) { this.lineUniqueKeyText = newValue; this.MarkAsDirty("LineUniqueKeyText"); } }
        
 	 
+    private index: number;
+    public get Index() { return this.index; }
+    public set Index(newValue: number) { if (this.index != newValue) { this.index = newValue; this.MarkAsDirty("Index"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	

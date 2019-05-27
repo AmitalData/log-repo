@@ -81,6 +81,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ShipmentDetailsReportFeature = tenantFeatures.Where(d => d.Code == "SHIPMENTDETAILS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature VDKReportFeature = tenantFeatures.Where(d => d.Code == "VDK" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature VehiclesReportFeature = tenantFeatures.Where(d => d.Code == "Vehicles" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature UnicargoExportReportFeature = tenantFeatures.Where(d => d.Code == "UNER" && d.FeatureTypeCode == "AREA").FirstOrDefault();
 
 
             AddReports.AddReport(new ReportDetails() { Code = "CASS", Description = "CASS Report", Name = "CASS Report", FilterControlName = "CASSReportFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = cassReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/CASSReportFilterComponent" }, reportRepository, tenantReports);
@@ -94,6 +95,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddReports.AddReport(new ReportDetails() { Code = "SHID", Description = "Shipment Details", Name = "Shipment Details", FilterControlName = "ShipmentDetailsFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = ShipmentDetailsReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ShipmentDetailsFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "VDK", Description = "VDK Report Templates", Name = "VDK Report Templates", FilterControlName = "VDKFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = VDKReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/VDKFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "VEHI", Description = "Vehicles Shipping", Name = "Vehicles Shipping", FilterControlName = "VehiclesFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = VehiclesReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Operational/VehiclesFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "UNER", Description = "Unicargo Export Report", Name = "Unicargo Export Report", FilterControlName = "UnicargoExportReportFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = UnicargoExportReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/Operational/UnicargoExportReportFilterComponent" }, reportRepository, tenantReports);
 
         }
         private void LoadReports_Accounting(ReportGroup accountingGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)

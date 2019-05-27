@@ -479,61 +479,57 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     LoadQuoteTemplateDetailsFields() {
         this.quoteTemplateDetailsFieldExtendedPMService.GetQuoteTemplateDetailsFieldByQuoteTemplateId(this.QuoteTemplatePM.Id, SessionLocator.Tenant).subscribe(res => {
             var pmResponse: ServiceResponse = res;
-  
+
 
             this.IsLoadingQuoteField = false;
             this.LoadCompleted();
             this.ObjectFieldTextListColum2 = [];
             this.ObjectFieldTextListColum1 = [];
             this.AllObjectFieldTextList = [];
-           
+
             if (!pmResponse.HasError && pmResponse.Result) {
-           
+
                 this.QuoteTemplateDetailsFieldPMList = pmResponse.Result;
-                this.QuoteTemplateDetailsFieldPMList.forEach((item) => {
-                    var fieldCode: string = item.FieldCode;
-                    var field: string= this.GetNameFieldQuoteDetails(fieldCode);
-                    if (AppTool.IsNullOrEmpty(field)) {
-
-                        field = TextCodeTranslator.Translate(item.FieldCode);
-                    }
-
-                    this.ObjectFieldTextList = this.ObjectFieldTextList.filter(d => d.Code != fieldCode);
-                    if (item.Column == 0) this.ObjectFieldTextListColum1.push(new ObjectFieldText(field, fieldCode));
-                    else this.ObjectFieldTextListColum2.push(new ObjectFieldText(field, fieldCode));
-
-
-
-
-
-                });
-
-
+                this.FillObjectFieldTextColumLists(0, this.QuoteTemplateDetailsFieldPMList,"Details");
+                this.FillObjectFieldTextColumLists(1, this.QuoteTemplateDetailsFieldPMList,"Details");
             }
 
-
-            if (this.ObjectFieldTextList) {
-                this.ObjectFieldTextList.forEach((item) => {
-                    this.AllObjectFieldTextList.push(item);
-                });
-            }
-  
-                this.ObjectFieldTextListColum1.forEach((item) => {
-                    this.AllObjectFieldTextList.push(item);
-                });
-            
-   
-                this.ObjectFieldTextListColum2.forEach((item) => {
-                    this.AllObjectFieldTextList.push(item);
-                });
-            
-
-
-         
-
+            this.FillAllObjectFieldLists();
         });
 
     }
+
+
+
+
+    FillAllObjectFieldLists() {
+        if (this.ObjectFieldTextList) {
+            this.ObjectFieldTextList.forEach((item) => {
+                this.AllObjectFieldTextList.push(item);
+            });
+        }
+
+        this.ObjectFieldTextListColum1.forEach((item) => {
+            this.AllObjectFieldTextList.push(item);
+        });
+
+        this.ObjectFieldTextListColum2.forEach((item) => {
+            this.AllObjectFieldTextList.push(item);
+        });
+    }
+    
+    FillObjectFieldTextColumLists(column: number, quoteTemplateFieldPMList: any[] , type:string) {
+        quoteTemplateFieldPMList.filter(d => d.Column == column).sort((a, b) => { return a.Row - b.Row }).forEach((item) => {
+            var fieldCode: string = item.FieldCode;
+            var field: string = type == "Header" ? this.GetFieldNameQuoteHeader(fieldCode) : this.GetFieldNameQuoteDetails(fieldCode);
+
+            if (AppTool.IsNullOrEmpty(field)) field = TextCodeTranslator.Translate(item.FieldCode);
+            this.ObjectFieldTextList = this.ObjectFieldTextList.filter(d => d.Code != fieldCode);
+            if (item.Column == 0) this.ObjectFieldTextListColum1.push(new ObjectFieldText(field, fieldCode));
+            else this.ObjectFieldTextListColum2.push(new ObjectFieldText(field, fieldCode));
+        });
+    }
+
     
     LoadCompleted() {
 
@@ -550,44 +546,15 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
             this.IsLoadingQuoteField = false;
             this.LoadCompleted();
             if (!pmResponse.HasError && pmResponse.Result) {
-
                 this.QuoteTemplateHeaderFieldPMList = pmResponse.Result;
-
-                this.QuoteTemplateHeaderFieldPMList.forEach((item) => {
-                    var fieldCode: string = item.FieldCode;
-                    var field: string = this.GetNameFieldQuoteHeader(fieldCode);
-                    if (AppTool.IsNullOrEmpty(field)) {
-
-                        field = TextCodeTranslator.Translate(item.FieldCode);
-                    }
-
-                    this.ObjectFieldTextList = this.ObjectFieldTextList.filter(d => d.Code != fieldCode);
-                    if (item.Column == 0) this.ObjectFieldTextListColum1.push(new ObjectFieldText(field, fieldCode));
-                    else this.ObjectFieldTextListColum2.push(new ObjectFieldText(field, fieldCode));
-
-                });
-
-
+                this.FillObjectFieldTextColumLists(0, this.QuoteTemplateHeaderFieldPMList,"Header");
+                this.FillObjectFieldTextColumLists(1, this.QuoteTemplateHeaderFieldPMList,"Header");
             }
-
-            if (this.ObjectFieldTextList) {
-                this.ObjectFieldTextList.forEach((item) => {
-                    this.AllObjectFieldTextList.push(item);
-                });
-            }
-
-            this.ObjectFieldTextListColum1.forEach((item) => {
-                this.AllObjectFieldTextList.push(item);
-            });
-
-
-            this.ObjectFieldTextListColum2.forEach((item) => {
-                this.AllObjectFieldTextList.push(item);
-            });
+            this.FillAllObjectFieldLists();
 
         });
     }
-    private GetNameFieldQuoteDetails(fieldname: string) {
+    private GetFieldNameQuoteDetails(fieldname: string) {
 
         var Field: string = "";
 
@@ -756,7 +723,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
         return Field;
     }
 
-    private GetNameFieldQuoteHeader(fieldname: string) {
+    private GetFieldNameQuoteHeader(fieldname: string) {
 
 
         var Field: string = "";
