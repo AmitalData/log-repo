@@ -128,6 +128,7 @@
     <Content Include="Common\Components\AccountingTab\Advanced\ChargesExternalByProductsComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\CustomerActivation\ReadyForActivationComponent.html" />
     <Content Include="Common\Components\FiltersMenu\CustomsShipperFiltersMenuComponent.html" />
+    <Content Include="Controls\All\GreenButtonComponent.html" />
     <Content Include="Controls\All\SplitButtonComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\EditProductComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsInTabComponent.html" />
@@ -171,6 +172,7 @@
     <Content Include="CustomsModules\CustomsCourier\Components\GatepassRequest\GatepassRequestComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\AddEditMamanStickerComponent.html" />
     <Content Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\DeclarationMamanSpecialActionComponent.html" />
+    <Content Include="CustomsModules\CustomsCourier\Components\PendingByKeyword\AddEditPendingByKeywordComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationCargoSplit\Components\EditTabs\DecCargoSplitConsPackDetComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationSupplierInvoice\Components\SupplierInvoices\VendorExtendedSearchComponent.html" />
     <Content Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\CasualSupplierDetailsComponent.html" />
@@ -390,6 +392,7 @@
     <TypeScriptCompile Include="Common\Services\StandardLists\CustomsShipperListService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomerDepositionPMService.ts" />
     <TypeScriptCompile Include="Common\Services\StandardPMs\CustomsShipperPMService.ts" />
+    <TypeScriptCompile Include="Controls\All\GreenButtonComponent.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOpportunity\Components\EditTabs\EditProductComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsInTabComponent.ts" />
@@ -446,6 +449,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\GatepassRequest\GatepassRequestComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\AddEditMamanStickerComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\MamanSpecialAction\DeclarationMamanSpecialActionComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsCourier\Components\PendingByKeyword\AddEditPendingByKeywordComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\ModuleCustomsCourier.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsCourier\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationCargoSplit\Components\EditTabs\DecCargoSplitConComponent.ts" />
@@ -540,6 +544,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\DeclarationMamanSpecialActionList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassRequestList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\GatepassReturnCodeList.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\PendingByKeywordList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\PendingErrorPlaceList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\RefundCustomerActivityTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\SeizureFactorTypeList.ts" />
@@ -558,6 +563,7 @@
     <TypeScriptCompile Include="Customs\EntityPMs\DeclarationMamanSpecialActionPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassRequestPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\GatepassReturnCodePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\PendingByKeywordPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\PendingErrorPlacePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\RefundCustomerActivityTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\SeizureFactorTypePM.ts" />
@@ -576,6 +582,7 @@
     <TypeScriptCompile Include="Customs\Services\StandardLists\DeclarationMamanSpecialActionListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassRequestListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\GatepassReturnCodeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\PendingByKeywordListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\PendingErrorPlaceListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\RefundCustomerActivityTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\SeizureFactorTypeListService.ts" />
@@ -585,9 +592,11 @@
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CourierPendingReasonPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsAirlinePMService.ts" />
     <TypeScriptCompile Include="Customs\Services\Others\GITITEMCacheService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsCountryPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\CustomsPartnerFtpPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\DeclarationMamanSpecialActionPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardPMs\GatepassRequestPMService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardPMs\PendingByKeywordPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\WebServices\DeclarationCourierStatusWebService.ts" />
     <TypeScriptCompile Include="Customs\Validators\VehicleValidator.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsDeclarationModules\DeclarationTabs\Components\Classification\DeclarationClassificationComponent.ts" />

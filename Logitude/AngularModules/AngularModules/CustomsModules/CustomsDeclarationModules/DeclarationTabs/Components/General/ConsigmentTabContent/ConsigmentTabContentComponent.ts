@@ -491,7 +491,7 @@ export class ConsigmentTabContentComponent
 
     MasterBOLRequestMethod() {
         if (this.IsDisplayOnly) {
-            return; 
+            //return; 
         }
 
         let customsRequestMenuService = new CustomsRequestMenuService();
@@ -536,7 +536,7 @@ export class ConsigmentTabContentComponent
 
     CourierBOLRequestMethod() {
         if (this.IsDisplayOnly) {
-            return;
+            //return;
         }
 
         if (!AppTool.IsNullOrEmpty(this.SecondCargoID)) {
@@ -580,8 +580,8 @@ export class ConsigmentTabContentComponent
     }
 
     CargoQueryRequestMethod() {
-        if (this.IsDisplayOnly) {
-            return;
+        if (this.IsDisplayOnly && this.EntityPM.CargoTypeCode != "20") {
+            //return;
         }
 
         if (SessionLocator.CurrentSession.CurrentEditComponent.EntityPM.IsDirty) {

@@ -51,8 +51,36 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 
             }
+            if(!String.IsNullOrWhiteSpace(entityPM.CargoDescription))
+            {
+                ConsignmentPM dbOccConsignmentPM = GetDBEntity(entityPM);
+                if(entityPM.CargoDescription != dbOccConsignmentPM.CargoDescription)
+                {
+                    var pendingByKeywordQueryService = new PendingByKeywordQueryService(entityPM.Tenant);
+                    var courierReasonCode = pendingByKeywordQueryService.GetCourierPendingReasonCodeBykeyWords(entityPM.CargoDescription, entityPM.Tenant);
+                    if (!String.IsNullOrWhiteSpace(courierReasonCode))
+                    {
+                        DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(entityPM.Tenant);
+                        DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.DeclarationId, false, false);
+                        if (currentDeclarationCourierStatusPM != null)
+                        {
+                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                            currentDeclarationCourierStatusPM.CourierPendingReasonCode = courierReasonCode;
+                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                        }
+                    }
+                }
+            }
             
             base.OnUpdating(entityPM, entityPOCO);
+        }
+
+        private ConsignmentPM GetDBEntity(ConsignmentPM entityPM)
+        {
+            var consignmentQueryService = new ConsignmentQueryService(entityPM.Tenant);
+            var myDBEntity = consignmentQueryService.GetSingle(entityPM.DeclarationId,entityPM.ConsignmentNumber, true, false);
+            return myDBEntity ?? new ConsignmentPM();
         }
 
         private void LogHowClearUnloadPort(ConsignmentPM entityPM, Consignment entityPOCO)

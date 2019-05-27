@@ -82,6 +82,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     IsInvoiceAnswer: boolean;
     AccumulatedFilter: string;
     IsSelectedRowTextBoxVisibile: boolean = false;
+    public tariffErrorItems: number = 0;
     //public ItemCode_LocalCache: ItemCodeComponent[];
     public GITITEMExtendedPMService: GITITEMExtendedPMService = new GITITEMExtendedPMService();
 
@@ -1513,6 +1514,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         }
 
+        if (this.tariffErrorItems > 0) { errors.push("ישנן שורות עם קוד הסכם שגוי")}
+
         if (errors.length == 0) {
 
             //if (isNewEntity) {
@@ -2181,7 +2184,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             //var commission: VendorCommissionPM = response.Result;
 
-            var commission: VendorCommissionList = this.CustomerCommissionsList.filter(d => d.VendorId == this.EntityPM.VendorId)[0];
+            var commission: VendorCommissionList = this.CustomerCommissionsList.filter(d => d.VendorId == this.EntityPM.VendorId && d.ModificationsTypeCode == "I10")[0];
             if (commission) {
                 if (commission.CommisionPercentage) {
 
@@ -2213,7 +2216,6 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                                     //update record
                                     modTypeI10.CurrencyTypeCode = newCurrency;
                                     modTypeI10.CurrencyTypeName = this.invoiceCurrencyName;
-
                                     modTypeI10.Amount = newAmount;
 
                                     this.UpdateModificationsList();

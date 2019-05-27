@@ -8,6 +8,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 
 @Component({
     moduleId: module.id,
@@ -27,12 +28,18 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
 
     public WeightValueFilterItems: ApiQueryFilters;
 
+    public IsDisplayOnly: boolean = false;
+    public DisplayOnlyMessage: string = "";
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.WeightValueFilterItems = new ApiQueryFilters();
         this.WeightValueFilterItems.addAdditionalFilter("Code", "CC,CA,NC,PO,PP", null, null, "InListExact", false, false, false, "string", false, true);
         this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("IntegratorCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("IntegratorName", this.ObjectTableName, false);
+        this.DisplayOnlyCheck();
         this.CarrierDependencyProperty1 = "TR";
         this.Listen();
     }
@@ -188,6 +195,21 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get IntegratorCode() { return this.EntityPM.IntegratorCode; }
+    set IntegratorCode(value: string) {
+        if (this.EntityPM.IntegratorCode != value) {
+            this.EntityPM.IntegratorCode = value;
+        }
+    }
+
+    get IntegratorName() { return this.EntityPM.IntegratorName; }
+    set IntegratorName(value: string) {
+        if (this.EntityPM.IntegratorName != value) {
+            this.EntityPM.IntegratorName = value;
+
+        }
+    }
+
     AirLineIdLostFocus(value: any) {
 
         //this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.EntityPM.AirlineId, this.EntityPM.HAWB, this.EntityPM.MAWB).subscribe(Result => {
@@ -208,6 +230,45 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     }
 
     HAWBLostFocus(value: any) {
+    }
+
+    DisplayOnlyCheck() {
+        this.IsDisplayOnly = false;
+
+        //Check if changing StorageSiteCode
+        this.CourierMasterValidator.SetEntityPM(this.EntityPM);
+        this.CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.EntityPM.Tenant, "UCBCMSS", this.EntityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                }
+            }
+            this.SetScreenFieldsEditability();
+        });
+    }
+
+    SetScreenFieldsEditability() {
+        this.UIProperties.SetEnabled("AirlineId", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("MAWB", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("IsOpen", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("HAWB", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("GatewayPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("OriginPortCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("FlightNumber", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("DepartureDate", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("EstimatedArrivalTimeOnly", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("EstimatedArrivalDateOnly", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("PackageQuantity", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("GrossMassMeasure", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("WeightValueCode", this.ObjectTableName, !this.IsDisplayOnly);
+    }
+
+    RefreshEntity() {
+        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.DisplayOnlyCheck();
     }
 
 }

@@ -26,7 +26,7 @@ import { DeclarationEditComponentController } from '../../../../../Customs/Contr
 import {DeclarationEventManager} from '../../../../../Customs/Utilities/DeclarationEventManager';
 import {CustomsRequiredFieldListService} from '../../../../../Customs/Services/StandardLists/CustomsRequiredFieldListService';
 import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
-
+import { CustomsSettingExtendedListService } from '../../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { CustomsRequestMenuService } from '../../../../../Customs/Services/Others/CustomsRequestMenuService';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 
@@ -414,13 +414,13 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
             this.EntityPM.ImporterTypeName = "IL";
 
             this.EntityPM.MainImporterEntitlemntTypeCode = null;
-            this.EntityPM.ImporterAddress = null;
+            //this.EntityPM.ImporterAddress = null;
             this.EntityPM.ImporterPassportNumber = null;
            // this.EntityPM.ImporterName = null;
             this.EntityPM.ImporterPassCountryCode = null;
             if (!this.EntityPM.IsCourierDeclaration) {
                 this.EntityPM.ImporterName = "";//
-
+                this.EntityPM.ImporterAddress = null;
                 this.EntityPM.CasualImporterAddress1 = "";
                 this.EntityPM.CasualImporterAddress2 = "";
                 this.EntityPM.CasualImporterCity = "";
@@ -579,35 +579,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     PreviusEntitleImporterCountryName: string;
     PreviusCalculatedClient: string;
 
-    ImporterLostFocus(type: any, item: any, importerSearchBox: any) {
-
-        if (this.isImporterClicked != true) {
-            switch (type) {
-                case 'Importer': {
-                    this.EntityPM.ImporterId = "";
-                    //this.CalculatedImporterName = "";
-                    if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)) {
-                        this.CalculatedImporterName = this.EntityPM.ImporterName;
-                    }
-                    break;
-                }
-                case 'Transfer': {
-                    this.EntityPM.TransferImporterId = "";
-                    this.CalculatedTransferImporterName = "";
-                    break;
-                }
-                case 'Entitle': {
-                    this.EntityPM.EntitleImporterId = "";
-                    this.CalculatedEntitleImporterName = "";
-                    this.CalculatedClient = null;
-
-                    this.EntitleImporterCountryCode = null;
-                    this.EntitleImporterCountryName = null;
-                    break;
-                }
-            }
-        }
-        this.isImporterClicked = false;
+    ImporterLostFocusChange(type: any, item: any, importerSearchBox: any) {
 
         if (type == 'Importer' && !AppTool.IsNullOrEmpty(this.EntityPM.CustomerVatNo) && !AppTool.IsNullOrEmpty(item) && this.EntityPM.CustomerVatNo != item) {
 
@@ -641,6 +613,102 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
                     this.EntitleImporterCode = item;
                     break;
                 }
+            }
+        }
+    }
+
+    ImporterLostFocus(type: any, item: any, importerSearchBox: any) {
+
+        if (this.isImporterClicked != true) {
+            switch (type) {
+                case 'Importer': {
+                    this.EntityPM.ImporterId = "";
+                    //this.CalculatedImporterName = "";
+                    if (AppTool.IsNullOrEmpty(this.EntityPM.ImporterCode)) {
+                        this.CalculatedImporterName = this.EntityPM.ImporterName;
+                    }
+                    break;
+                }
+                case 'Transfer': {
+                    this.EntityPM.TransferImporterId = "";
+                    this.CalculatedTransferImporterName = "";
+                    break;
+                }
+                case 'Entitle': {
+                    this.EntityPM.EntitleImporterId = "";
+                    this.CalculatedEntitleImporterName = "";
+                    this.CalculatedClient = null;
+
+                    this.EntitleImporterCountryCode = null;
+                    this.EntitleImporterCountryName = null;
+                    break;
+                }
+            }
+        }
+        this.isImporterClicked = false;
+
+        if (this.EntityPM.IsCourierDeclaration) {
+            this.ImporterLostFocus4CourierDeclaration(type, item, importerSearchBox);
+        }
+        else {
+            this.ImporterLostFocusChange(type, item, importerSearchBox);
+        }
+    }
+
+    private _UnifreightCustomerDefualt: string = null;
+    ImporterLostFocus4CourierDeclaration(type: any, item: any, importerSearchBox: any) {
+
+        if (this._UnifreightCustomerDefualt == null) {
+            var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+            customsSettingExtendedListService.GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON", this.EntityPM.Tenant)
+                .subscribe((response: ServiceResponse) => {
+                    let obj = response.Result;
+                    if (obj) {
+                        let DefaultValue = obj['DefaultValue'];
+                        if (!AppTool.IsNullOrEmpty(DefaultValue)) {
+                            this._UnifreightCustomerDefualt = DefaultValue;
+                        }
+                        if (this._UnifreightCustomerDefualt == this.EntityPM.CustomerCode) {
+                            switch (type) {
+                                case 'Importer': {
+                                    this.ImporterCode = item;
+                                    break;
+                                }
+                                case 'Transfer': {
+                                    this.TransferImporterCode = item;
+                                    break;
+                                }
+                                case 'Entitle': {
+                                    this.EntitleImporterCode = item;
+                                    break;
+                                }
+                            }
+                        }
+                        else {
+                            this.ImporterLostFocusChange(type, item, importerSearchBox);
+                        }
+                    }
+                });
+        }
+        else {
+            if (this._UnifreightCustomerDefualt == this.EntityPM.CustomerCode) {
+                switch (type) {
+                    case 'Importer': {
+                        this.ImporterCode = item;
+                        break;
+                    }
+                    case 'Transfer': {
+                        this.TransferImporterCode = item;
+                        break;
+                    }
+                    case 'Entitle': {
+                        this.EntitleImporterCode = item;
+                        break;
+                    }
+                }
+            }
+            else {
+                this.ImporterLostFocusChange(type, item, importerSearchBox);
             }
         }
     }

@@ -47,10 +47,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return (from a in context.VendorCommissions.Where(d => d.CustomerId == customerId && d.Tenant == tenant)
                     select new VendorCommissionList()
                     {
-
                         VendorId = a.VendorId,
-                        ModificationsTypeCode = a.ModificationsTypeCode,
                         CustomerId = a.CustomerId,
+                        ModificationsTypeCode = a.ModificationsTypeCode,
                         CommisionPercentage = a.CommisionPercentage,
 
                     }).ToList();

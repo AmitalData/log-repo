@@ -20,6 +20,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using UnifreightIIG.Common.ImportDeclarationSubmitRequestServiceReference;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -27,7 +28,15 @@ namespace Logitude.CustomsMessaging.RequestServices
         : RequestServiceBase<DF_NG_2755_MSG12001_SubmitDeclaration, GenericRequestParams>
     {
         private ICustomContext dbContext;
+        public override void OnRequestFail(GenericRequestParams requestParams)
+        {
+            if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
+            {
+                CalculateDeclarationCourierStatus.UpdateCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId);
+            }
 
+            base.OnRequestFail(requestParams);
+        }
         public override void ManipulateRequestParams(GenericRequestParams requestParams)
         {
 

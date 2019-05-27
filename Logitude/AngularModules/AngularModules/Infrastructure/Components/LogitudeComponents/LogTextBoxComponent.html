@@ -98,6 +98,10 @@
         text-align: right;
         padding-right: 6px;
     }
+    .AlignLeft {
+        text-align: left;
+        padding-right: 6px;
+    }
 
     .collapse-btn {
         background-image: url('./Images/Icons/collapse.png') !important;
@@ -180,6 +184,8 @@
                            (keydown)="OnKeyDown($event)"
                            [placeholder]="Placeholder"
                            [class.AlignRight]="AlignTextToRight"
+                           [class.AlignLeft]="AlignTextToLeft"
+                           
                            [id]="InputId" #input ondrop="return false" (paste)="OnPaste($event)" />
                 </div>
 

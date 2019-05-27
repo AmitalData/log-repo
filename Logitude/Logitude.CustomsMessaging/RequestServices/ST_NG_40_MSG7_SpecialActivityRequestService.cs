@@ -56,7 +56,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                 myST_NG_40_MSG7_SpecialActivityRequestMessage.desiredPackingDetails = GetdesiredPackingDetailsList(requestParams);  
             }
 
-
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = "בקשה לפעולות מיוחדות";
             this.MyRequestSheetParam.CustomFileNo = requestParams.GeneralDetailsData.CustomFileNo;
@@ -128,6 +127,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                     cargoIdentifierKey3 = requestParams.GeneralDetailsData.CargoIdentifier.CargoIdentifierKey3,
                     cargoIdentifierType = requestParams.GeneralDetailsData.CargoIdentifier.CargoIdentifierType,
                 };
+            }
+
+            // OtherActivity        
+            if (requestParams.OtherActivityDetailsData != null)
+            {
+                myGeneral.OtherComment = requestParams.OtherActivityDetailsData.OtherActivityComment;
             }
 
             return myGeneral;

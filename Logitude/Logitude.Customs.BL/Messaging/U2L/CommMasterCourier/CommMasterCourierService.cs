@@ -148,43 +148,69 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 
                 _CourierMasterPM.AirlineId = airlineId;
                 _CourierMasterPM.MAWB = _LogitudeMasterCourier.MAWB;
-                _CourierMasterPM.MAWBTypeCode = "740";
-                _CourierMasterPM.HAWB = _LogitudeMasterCourier.HAWB;
+                if(string.IsNullOrWhiteSpace(_CourierMasterPM.MAWBTypeCode))_CourierMasterPM.MAWBTypeCode = "740";
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.HAWB)) _CourierMasterPM.HAWB = _LogitudeMasterCourier.HAWB;
                 decimal grossMassMeasure = 0;
-                if (decimal.TryParse(_LogitudeMasterCourier.GrossMassMeasure, out grossMassMeasure) || string.IsNullOrWhiteSpace(_LogitudeMasterCourier.GrossMassMeasure))
+                if (_CourierMasterPM.GrossMassMeasure == null)
                 {
-                    _CourierMasterPM.GrossMassMeasure = grossMassMeasure;
+                    if (decimal.TryParse(_LogitudeMasterCourier.GrossMassMeasure, out grossMassMeasure) || string.IsNullOrWhiteSpace(_LogitudeMasterCourier.GrossMassMeasure))
+                    {
+                        _CourierMasterPM.GrossMassMeasure = grossMassMeasure;
+                    }
+                }
+                else if(!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.GrossMassMeasure))
+                {
+                    if (decimal.TryParse(_LogitudeMasterCourier.GrossMassMeasure, out grossMassMeasure))
+                    {
+                        _CourierMasterPM.GrossMassMeasure = grossMassMeasure;
+                    }
                 }
                 int packageQuantity = 0;
-                if (int.TryParse(_LogitudeMasterCourier.PackageQuantityTy, out packageQuantity) || string.IsNullOrWhiteSpace(_LogitudeMasterCourier.PackageQuantityTy))
+                if (_CourierMasterPM.PackageQuantity == null)
                 {
-                    _CourierMasterPM.PackageQuantity = packageQuantity;
+                    if (int.TryParse(_LogitudeMasterCourier.PackageQuantityTy, out packageQuantity) || string.IsNullOrWhiteSpace(_LogitudeMasterCourier.PackageQuantityTy))
+                    {
+                        _CourierMasterPM.PackageQuantity = packageQuantity;
+                    }
+                }
+                else if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.PackageQuantityTy))
+                {
+                    if (int.TryParse(_LogitudeMasterCourier.PackageQuantityTy, out packageQuantity))
+                    {
+                        _CourierMasterPM.PackageQuantity = packageQuantity;
+                    }
                 }
                 DateTime temp;
-                if (DateTime.TryParse(_LogitudeMasterCourier.EstimatedArrivalDate, out temp))
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.EstimatedArrivalDate))
                 {
-                    _CourierMasterPM.EstimatedArrivalDate = temp;
+                    if (DateTime.TryParse(_LogitudeMasterCourier.EstimatedArrivalDate, out temp))
+                    {
+                        _CourierMasterPM.EstimatedArrivalDate = temp;
+                    }
+                    else
+                    {
+                        _CourierMasterPM.EstimatedArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.EstimatedArrivalDate, "LogitudeMasterCourier.EstimatedArrivalDate");
+                    }
                 }
-                else
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.DepartureDate))
                 {
-                    _CourierMasterPM.EstimatedArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.EstimatedArrivalDate, "LogitudeMasterCourier.EstimatedArrivalDate");
+                    if (DateTime.TryParse(_LogitudeMasterCourier.DepartureDate, out temp))
+                    {
+                        _CourierMasterPM.DepartureDate = temp;
+                    }
+                    else
+                    {
+                        _CourierMasterPM.DepartureDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.DepartureDate, "LogitudeMasterCourier.DepartureDate");
+                    }
                 }
-                if (DateTime.TryParse(_LogitudeMasterCourier.DepartureDate, out temp))
-                {
-                    _CourierMasterPM.DepartureDate = temp;
-                }
-                else
-                {
-                    _CourierMasterPM.DepartureDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.DepartureDate, "LogitudeMasterCourier.DepartureDate");
-                }
-
-                _CourierMasterPM.GatewayPortCode = TranslateInternationalSite(_LogitudeMasterCourier.GatewayPortCode);
-                _CourierMasterPM.OriginPortCode = TranslateInternationalSite(_LogitudeMasterCourier.OriginPortCode);
-                _CourierMasterPM.Tenant = ResolvedTenant();
-                _CourierMasterPM.FlightNumber = _LogitudeMasterCourier.FlightNumber;
-                _CourierMasterPM.WeightValueCode = TranslateWeightValue(_LogitudeMasterCourier.WeightValueCode);
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.GatewayPortCode)) _CourierMasterPM.GatewayPortCode = TranslateInternationalSite(_LogitudeMasterCourier.GatewayPortCode);
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.OriginPortCode)) _CourierMasterPM.OriginPortCode = TranslateInternationalSite(_LogitudeMasterCourier.OriginPortCode);
+                if (_CourierMasterPM.Tenant < 1) _CourierMasterPM.Tenant = ResolvedTenant();
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.FlightNumber)) _CourierMasterPM.FlightNumber = _LogitudeMasterCourier.FlightNumber;
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.WeightValueCode)) _CourierMasterPM.WeightValueCode = TranslateWeightValue(_LogitudeMasterCourier.WeightValueCode);
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.IntegratorIndex)) _CourierMasterPM.IntegratorCode = TranslateIntegratorIndex(_LogitudeMasterCourier.IntegratorIndex);
                 _CourierMasterPM.CurrentContextTag = UpsertActionConst;
-                _CourierMasterPM.StorageSiteCode = TranslateStorageSite(_LogitudeMasterCourier.StorageSiteCode);
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.StorageSiteCode)) _CourierMasterPM.StorageSiteCode = TranslateStorageSite(_LogitudeMasterCourier.StorageSiteCode);
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
 
                 AppendLogLine("CourierMasterUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -212,6 +238,29 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
             
         }
 
+        private string TranslateIntegratorIndex(string integratorIndex)
+        {
+            if (String.IsNullOrWhiteSpace(integratorIndex))
+            {
+                AppendLogLine("integratorIndex is null");
+                return null;
+            }
+            string integratorIndexId = null;
+
+            CardQuery cardQuery = new CardQuery(ResolvedTenant());
+            CardPM cardPM = cardQuery.GetSinglePMByCode(integratorIndex, ResolvedTenant());
+            if (cardPM != null)
+            {
+                integratorIndexId = cardPM.Id;
+            }
+            else
+            {
+                AppendLogLine("integratorIndex = " + integratorIndex + " could not translate to Logitude Card Id");
+                return null;
+            }
+            AppendLogLine("integratorIndex = " + integratorIndex + " Translated to Card Id" + integratorIndexId);
+            return integratorIndexId;
+        }
 
         private string TranslateStorageSite(string amitalstorageSiteCode)
         {

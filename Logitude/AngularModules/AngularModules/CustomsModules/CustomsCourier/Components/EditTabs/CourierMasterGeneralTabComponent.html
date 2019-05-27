@@ -1,6 +1,19 @@
+<style>
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+</style>
+
 <table style="height:350px; width:750px">
 
-    <tr style="height:50px; width:700px" class="TabTitleRow">
+    <!--<tr style="height:50px; width:700px" class="TabTitleRow">
         <td>
             <table>
                 <tr>
@@ -9,6 +22,18 @@
             </table>
         </td>
         <td><div></div></td>
+    </tr>-->
+    <!--Disble Alert-->
+    <tr style="height:30px;">
+        <td colspan="4">
+            <div *ngIf="IsDisplayOnly" style="width: 100%;text-align:center">
+                <div class="DisbleBox">
+                    {{DisplayOnlyMessage}}
+                    <span style="padding: 0px 16px;">-</span>
+                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
+                </div>
+            </div>
+        </td>
     </tr>
 
     <tr style="height:40px; width:700px">
@@ -26,8 +51,8 @@
                                 [DataContext]="DataContext"
                                 [HideColumns]="false"
                                 [SelectedValue]="AirlineId"
-                                [LookUpTableName]="'Customs.CustomsAirline'"
-                                [DependencyFilter1Value]="'AL'">
+                                [LookUpTableName]="'Customs.CustomsAirline'">
+                            <!--[DependencyFilter1Value]="'AL'"-->
                         </LogLov>
                     </td>
                 </tr>
@@ -59,7 +84,7 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:100px">
-                        <CheckBox (Checked)="IsOpen = $event" [IsChecked]="IsOpen"></CheckBox>
+                        <CheckBox (Checked)="IsOpen = $event" [IsChecked]="IsOpen" [IsEnabled]="!IsDisplayOnly"></CheckBox>
                     </td>
                 </tr>
             </table>
@@ -301,13 +326,6 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:150px">
-                        <!--<LogLov [ObjectFieldName]="'TruckerId'"
-                                [ObjectTableName]="'Customs.Card'"
-                                [DataContext]="DataContext"
-                                [HideColumns]="true"
-                                [SelectedValue]="TruckerId"
-                                [LookUpTableName]="'Trucker'">
-                        </LogLov>-->
                         <LogLov [ObjectFieldName]="'TruckerId'"
                                 [SelectedValue]="TruckerId"
                                 [ObjectTableName]="ObjectTableName"
@@ -318,6 +336,31 @@
                         </LogLov>
                     </td>
                     <td style="width:30px"></td>
+                </tr>
+            </table>
+        </td>
+
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'IntegratorCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogTextBox [ObjectFieldName]="'IntegratorName'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        <!--
+    <LogLov [ObjectFieldName]="'IntegratorCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+            [SelectedValue]="IntegratorCode"
+            [HideColumns]="true"
+            [LookUpTableName]="'Card'">
+        [DependencyFilter1Value]="'CS'"
+                        </LogLov>
+                        -->
+                    </td>
                 </tr>
             </table>
         </td>

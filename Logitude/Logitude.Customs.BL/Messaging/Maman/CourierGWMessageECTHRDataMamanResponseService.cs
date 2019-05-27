@@ -218,7 +218,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             using (var scope = TransactionFactory.GetNewTransaction())
             {
-                var myDeclarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>() ,settings.Tenant);
+                var myDeclarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), settings.Tenant);
                 myDeclarationCourierStatusUpdateService.Update(declarationCourierStatusQueryServicePM, true);
                 scope.Complete();
             }

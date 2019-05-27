@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                  Inactive = a.Inactive,
                                                  MalamId = a.MalamId,
                                                  TarriffCode = a.TarriffCode,
-                                                 
+                                                 TarriffName = a.TradeAgreement != null ? a.TradeAgreement.LocalName : null,
 
 
                                              });

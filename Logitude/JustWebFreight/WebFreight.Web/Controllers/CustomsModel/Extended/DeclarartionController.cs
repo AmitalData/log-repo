@@ -43,6 +43,8 @@ using Unifreight.Data.AmitalModel;
 using WebFreight.Web.WebServices;
 using System.Net.Http.Headers;
 using System.Xml.Linq;
+using Logitude.CustomsMessaging.Helpers;
+using Logitude.Server.Tools.Models;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -430,35 +432,44 @@ new XElement("FileStreamError",
                 // first check if Declaration exist 
                 if (decPoco == null)
                 {
-                    throw new Exception("Declaration !exist ");
+                    throw new BusinessErrorException("Declaration !exist ");
                 }
 
                 declarationVersionId = decPoco.VersionId;
                 if (String.IsNullOrWhiteSpace(declarationVersionId))
                 {
-                    throw new Exception("declarationVersionId !exist ");
+                    throw new BusinessErrorException("declarationVersionId !exist ");
                 }
                 var crsAnalyzeStatus = "30";
                 string interfaceTypeCode = "2755";
                 var crsRepo = new CustomsRequestsSheetRepository(customContext);
-                var crsPoco = crsRepo.GetLastCRSByCustomfileStatusInterface(decPoco.CustomFileNo, crsAnalyzeStatus, interfaceTypeCode, tenant);
+                var crsPoco = crsRepo.GetLastCRSByCustomfileStatusInterfaceFirstOrDefault(decPoco.CustomFileNo, crsAnalyzeStatus, interfaceTypeCode, tenant);
                 if (crsPoco == null)
                 {
-                    throw new Exception("CustomsRequestsSheet !exist ");
+                    throw new BusinessErrorException(/*"CustomsRequestsSheet !exist "*/ $"Message '{interfaceTypeCode}' didn't send yet  to customs!!!.");
                 }
+
                 var stepRepo = new CommunicationLogStepRepository(tenant);
                 int stepReceivedCustomResponseCorrelation = 20;
                 var stepPoco = stepRepo.CommunicationLogStep(crsPoco.RequestComminicationId, stepReceivedCustomResponseCorrelation, tenant);
                 responseDataDocumentId = stepPoco.DocumentId;
                 if (String.IsNullOrWhiteSpace(responseDataDocumentId))
                 {
-                    throw new Exception("ResponseDataDocumentId !exist ");
+                    throw new BusinessErrorException("ResponseDataDocumentId !exist ");
                 }
 
 
                 string blobId = tenant + "_" + responseDataDocumentId;
                 httpResponse = Uploader.GetFileStream(blobId);
                 Status = "OK";
+            }
+            catch (BusinessErrorException businessErrorException)
+            {
+                XElement myXml =
+new XElement("FileStreamError",
+    new XElement("Error", businessErrorException.Message
+        ));
+                httpResponse = GetResponse(responseDataDocumentId, myXml);
             }
             catch (Exception ee)
             {
@@ -469,15 +480,7 @@ new XElement("FileStreamError",
 
         )
     );
-
-                var data = System.Text.UTF8Encoding.UTF8.GetBytes(myXml.ToString());
-
-                httpResponse = new HttpResponseMessage(HttpStatusCode.OK);
-
-                httpResponse.Content = new StreamContent(new MemoryStream(data));
-                httpResponse.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                httpResponse.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-                httpResponse.Content.Headers.ContentDisposition.FileName = responseDataDocumentId + ".xml";
+                httpResponse = GetResponse(responseDataDocumentId, myXml);
             }
             finally
             {
@@ -491,6 +494,20 @@ new XElement("FileStreamError",
             return httpResponse;
 
 
+        }
+
+        private static HttpResponseMessage GetResponse(string responseDataDocumentId, XElement myXml)
+        {
+            HttpResponseMessage httpResponse;
+            var data = System.Text.UTF8Encoding.UTF8.GetBytes(myXml.ToString());
+
+            httpResponse = new HttpResponseMessage(HttpStatusCode.OK);
+
+            httpResponse.Content = new StreamContent(new MemoryStream(data));
+            httpResponse.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            httpResponse.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+            httpResponse.Content.Headers.ContentDisposition.FileName = responseDataDocumentId + ".xml";
+            return httpResponse;
         }
     }
 }

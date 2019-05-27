@@ -33,18 +33,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(UIMessagePM entityPM, UIMessage entityPOCO)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            if (authToken != null)
+            if (HttpContext.Current != null && HttpContext.Current.Request != null)
             {
-                int tenant = authToken.Tenant;
-
-                UIMessageAdditionalRepository additionalRep = new UIMessageAdditionalRepository(tenant);
-                UIMessageAdditional additional = additionalRep.GetSingleAdditionalByCode(entityPM.Code, tenant);
-                if (additional != null)
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                if (authToken != null)
                 {
-                    entityPM.Tenant = tenant;
-                    entityPM.Sort = additional.Sort;
+                    int tenant = authToken.Tenant;
+
+                    UIMessageAdditionalRepository additionalRep = new UIMessageAdditionalRepository(tenant);
+                    UIMessageAdditional additional = additionalRep.GetSingleAdditionalByCode(entityPM.Code, tenant);
+                    if (additional != null)
+                    {
+                        entityPM.Tenant = tenant;
+                        entityPM.Sort = additional.Sort;
+                    }
                 }
             }
         }

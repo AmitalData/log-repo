@@ -1471,6 +1471,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
                     case "Customs.CourierPendingReason":
+                    case "Customs.CustomsCountry":
                     //case "Customs.InternationalSite":
                         selectedEntityId = $event.rowData.Code;
                         break;
@@ -2331,7 +2332,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.ShowCloseButton = true;
                     break;
                 }
-
+                case "Customs.PendingByKeyword": {
+                    logWindow.Width = 430;
+                    logWindow.Height = 250;
+                    logWindow.ShowCloseButton = true;
+                    break;
+                }
                 case "Customs.Declaration":
                 case "Customs.PaymentOrder":
                 case "Customs.Claim":

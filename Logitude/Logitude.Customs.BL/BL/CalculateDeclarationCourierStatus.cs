@@ -15,12 +15,58 @@ using Logitude.Customs.Data;
 using Logitude.Customs.BL.Validators;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityPMs.UGenerated;
+using Logitude.Customs.BL.EntityUpdateServices;
 
 namespace Logitude.Customs.BL.BL
 {
     public class CalculateDeclarationCourierStatus
     {
         private DeclarationPM declarationPM;
+        public static void UpdateCourierDeclarationStatusCode(int Tenant, string DeclarationId)
+        {
+            var customContext = CustomContext.GetContext(Tenant);
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(DeclarationId, false, false);
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                string prevVal = null;
+                string currvVal = null;
+                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, DeclarationId, Tenant);
+                prevVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+                calculateDeclarationCourierStatus.CalcCourierDeclarationStatusCode(currentDeclarationCourierStatusPM);
+                currvVal = currentDeclarationCourierStatusPM.CourierDeclarationStatusCode;
+
+                if (prevVal != currvVal)
+                {
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), Tenant);
+                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                }
+
+            }
+        }
+         public static void UpdateCourierManifestStatusCode(int Tenant, string DeclarationId)
+        {
+            var customContext = CustomContext.GetContext(Tenant);
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(customContext);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(DeclarationId, false, false);
+            if (currentDeclarationCourierStatusPM != null)
+            {
+                string prevVal = null;
+                string currvVal = null;
+                CalculateDeclarationCourierStatus calculateDeclarationCourierStatus = new CalculateDeclarationCourierStatus(null, DeclarationId, Tenant);
+                prevVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+                calculateDeclarationCourierStatus.CalcCourierManifestStatusCode(currentDeclarationCourierStatusPM);
+                currvVal = currentDeclarationCourierStatusPM.CourierManifestStatusCode;
+
+                if (prevVal != currvVal)
+                {
+                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(customContext, new Dictionary<string, IContext>(), Tenant);
+                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                    declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                }
+            }
+        }
 
         public CalculateDeclarationCourierStatus(DeclarationPM declarationPM, string declarationId = null, int tenant = 0)
         {
@@ -36,7 +82,22 @@ namespace Logitude.Customs.BL.BL
                 this.declarationPM = declarationQueryService.GetSingle(declarationId, true, false);
             }
         }
+        public void Update( Action<DeclarationCourierStatusPM> UPDATEDeclarationCourierStatusPM)
+        {
+            var context = CustomContext.GetContext(this.declarationPM.Tenant);
+            DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+            DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(this.declarationPM.Id, false, false);
+            if (currentDeclarationCourierStatusPM != null)
+            {
 
+                //currentDeclarationCourierStatusPM.CourierDeclarationStatusCode = "X";
+                UPDATEDeclarationCourierStatusPM(currentDeclarationCourierStatusPM);
+                var declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(context, new Dictionary<string, IContext>(), this.declarationPM.Tenant);
+                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+
+            }
+        }
         public DeclarationCourierStatusPM CalcAll()
         {
             if (declarationPM == null) return null;

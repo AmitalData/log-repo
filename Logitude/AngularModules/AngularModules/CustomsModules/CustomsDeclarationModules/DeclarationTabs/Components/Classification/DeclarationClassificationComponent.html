@@ -92,10 +92,12 @@
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
                                     <td style="width: 105px;" tabindex="2">
-                                        <LogTextBox [ObjectFieldName]="'CasualSupplierName'"
+                                        <LogTextBox style="direction: ltr;"
+                                                    [ObjectFieldName]="'CasualSupplierName'"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [HideColumns]="true"
                                                     [DataContext]="DataContext"
+                                                    
                                                     [Text]="CasualSupplierName"></LogTextBox>
 
                                     </td>
@@ -179,9 +181,11 @@
                                     <td style="width: 150px;">
                                         <LogLabel [ObjectFieldName]="'TotalInvoiceAmountInUSD'"
                                                   [ObjectTableName]="'Customs.SupplierInvoice'"
-                                                  [Text]="'ערך סחורה בUsd'"
+                                                  [Text]="'ערך סחורה ב USD'"
                                                   [DataContext]="DataContext"></LogLabel>
                                     </td>
+
+
 
                                     <td style="width: 160px;">
                                         <LogTextBox [FocusOnMe]="'true'"
@@ -192,6 +196,7 @@
                                                     [HideColumns]="true"></LogTextBox>
 
                                     </td>
+                                    <td style="width: 25px;"></td>
 
                                     <td style="width: 10px;"><div></div></td>
 
@@ -255,6 +260,7 @@
                                                     [HideColumns]="true" [DataContext]="DataContext"></LogTextBox>
 
                                     </td>
+                                    <td style="width: 25px;"></td>
                                     <td style="width: 10px;"><div></div></td>
 
                                     <!-- GrossMassMeasure -->

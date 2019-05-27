@@ -501,7 +501,7 @@ namespace AmitalCustomsWindowsService.Tester
                 case "CustomsAnalyzeQueueWR":
                     {
                         var customsAnalyzeQueueWR = new CustomsAnalyzeQueueWR();
-                        customsAnalyzeQueueWR.DebugStep(_TBID.Text, _CBInterfaceID.Text, GetTenant());
+                        customsAnalyzeQueueWR.CheckParamsAndExec(_TBID.Text, _CBInterfaceID.Text, GetTenant());
 
                     }
                     break;
@@ -852,6 +852,45 @@ namespace AmitalCustomsWindowsService.Tester
         private void textBoxLogger_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void downloadFTPToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string interfaceID = _CBInterfaceID.Text;
+            if (string.IsNullOrWhiteSpace(interfaceID))
+            {
+                MessageBox.Show("_CBInterfaceID.Text is null");
+                return;
+            }
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            try
+            {
+                openFileDialog1.InitialDirectory = "c:\\";
+                openFileDialog1.Filter = "All files (*.*)|*.*";
+                openFileDialog1.FilterIndex = 2;
+                openFileDialog1.RestoreDirectory = true;
+
+                if (openFileDialog1.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                var fileName = openFileDialog1.FileName;
+                var bytsDcaFile = File.ReadAllBytes(fileName);
+                fileName = Path.GetFileName(fileName);
+
+                int Tenant = GetTenant();
+
+                FTPToAnalyzeQueueWR.SaveAnalyzeQueueFromCode(Tenant, interfaceID, fileName, bytsDcaFile);
+            }
+            finally
+            {
+                openFileDialog1.Dispose();
+            }
+            
+
+
+            
+            
         }
     }
 }

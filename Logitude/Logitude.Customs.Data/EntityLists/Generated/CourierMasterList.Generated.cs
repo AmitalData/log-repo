@@ -86,6 +86,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string StorageSiteName  { get; set; }
        [DataMember]
        public string TruckerId  { get; set; }
+       [DataMember]
+       public string IntegratorCode  { get; set; }
+       [DataMember]
+       public string IntegratorName  { get; set; }
    }
 
 }

@@ -28,6 +28,10 @@ using Logitude.Server.Tools.Models;
 using Logitude.Customs.BL.Models;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Customs.Def.Messaging.Customs;
+using Simplog.Server.Infrastructure.Helpers;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {  // moran 6.10.14 - Task 8066 -->
@@ -92,22 +96,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 case 11:
                     /*notificationDefinitionCode = "5101I";
                     assigneToNotificationTypeCode = "I"; */
-                    if (customResponse.MessageToAgent.RelatedEntity.entityType == 1163) //Deposition
+                    if (customResponse.MessageToAgent.RelatedEntity.entityType == 1053 || customResponse.MessageToAgent.RelatedEntity.entityType == 1054) //Deposition
                     {
                         string importerVAT = null;
                         string customsVendorId = null;
                         string[] msgString = customResponse.MessageToAgent.msgString.Split(new[] { "היבואן: " }, StringSplitOptions.None);
-                        if (msgString != null)
+                        if (msgString != null && msgString.Length > 1)
                         {
                             string[] message = msgString[1].Split(" ".ToCharArray());
                             importerVAT = message[0];
                         }
                         string[] messageSplit = customResponse.MessageToAgent.msgString.Split(new[] { "הספק: " }, StringSplitOptions.None);
-                        if (msgString != null)
+                        string customsVendorCode = null;
+                        if (messageSplit != null && messageSplit.Length > 1)
                         {
                             string[] message = messageSplit[1].Split(" ".ToCharArray());
-                            string customsVendorCode = message[0];
+                            customsVendorCode = message[0];
                             customsVendorId = CheckIfCustomsVendorCodeExist(customsVendorCode, requestParams.Tenant);
+                        }
+                        if (string.IsNullOrWhiteSpace(customsVendorId))
+                        {
+                            LogMessagingUtil.Instance.AppendLine("בדיקת דיפולט - שליפת ספק בהודעה על תצהיר");
+                            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
+                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_RET_VEND", "NON", _MyDeclarationPM.CustomerCode, false, true);
+                            bool isRetrieveVendorActive = def.DEFDATA == "Y";
+                            if (isRetrieveVendorActive)
+                            {
+                                SendVendorSearchByCustomsAgentRequest(requestParams, importerVAT, customsVendorCode);
+                            }
                         }
                         if (!string.IsNullOrWhiteSpace(customsVendorId))
                         {
@@ -189,6 +205,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     notificationDescription = "ממתין לבטחון, יסמ ולבקרת מסמכים " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     notificationStatusCode = "VCT";
                     break;
+                
                 default:
                     notificationDefinitionCode = "5101N";
                     assigneToNotificationTypeCode = "I";
@@ -197,12 +214,80 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     break;
             }
 
+            if (customResponse.MessageToAgent.msgCode == 29 || customResponse.MessageToAgent.msgCode == 30 || customResponse.MessageToAgent.msgCode == 31)
+            {
+                try
+                {
+                    int tenant = requestParams.Tenant;
+                    string email = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                    string id = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                    if (!string.IsNullOrWhiteSpace(id))
+                    {
+                        ContactRepository contactrep = new ContactRepository(tenant);
+                        var contact = contactrep.GetSingleContact(id, tenant);
+                        email = contact.Email;
+
+                    }
+                    InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "SpecialReplyToCustoms", tenant, email);
+
+                    switch (customResponse.MessageToAgent.msgCode)
+                    {
+                        case 29:
+                            notificationDefinitionCode = "5101R";
+                            assigneToNotificationTypeCode = "I";
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            {
+                                notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                                notificationDescription = "התכתבות בגין מסמך נדרש הצהרה מספר " + notificationDeclaration; 
+                            }
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
+                            {
+                                notificationDescription = "התכתבות בגין מסמך נדרש בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            }
+                            break;
+                        case 30:
+                            notificationDefinitionCode = "5101A";
+                            assigneToNotificationTypeCode = "I";
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            {
+                                notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                                notificationDescription = "התכתבות בגין דחיית פיצול מטען הצהרה מספר " + notificationDeclaration;
+                            }
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
+                            {
+                                notificationDescription = "התכתבות בגין דחיית פיצול מטען בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            }
+                            break;
+                        case 31:
+                            notificationDefinitionCode = "5101E";
+                            assigneToNotificationTypeCode = "I";
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055)
+                            {
+                                notificationDeclaration = customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                                notificationDescription = "התכתבות בגין כופר חוקיות הצהרה מספר " + notificationDeclaration;
+                            }
+                            if (customResponse.MessageToAgent.RelatedEntity.entityType == 12234)
+                            {
+                                notificationDescription = "התכתבות בגין כופר חוקיות בטוחה מספר " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
+                            }
+                            break;
+                        default:
+                            
+                            break;
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Check for SpecialReplyToCustoms Feature Failed, Notification will not be built, Message: " + ex.Message);
+                }
+            }
+
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.RequestDescription = notificationDescription;
 
             if (!string.IsNullOrWhiteSpace(customResponse.MessageToAgent.msgString))
             {
-                notificationDescription = notificationDescription + "\n" + customResponse.MessageToAgent.msgString;
+                notificationDescription = notificationDescription + "\n" + customResponse.MessageToAgent.msgString.Replace("00:00:00", "");
             }
 
             if (customResponse.MessageToAgent.RelatedEntity.entityType == 1055 || customResponse.MessageToAgent.RelatedEntity.entityType == 1015)
@@ -436,7 +521,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 };
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = " + code + " CustomFileNo= " + dirtyDeclarationPM.CustomFileNo + "   ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
 
             }
             catch (System.Exception)
@@ -502,14 +587,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 RequestVIA = SendRequestVIA.WebServiceBatch
             };
 
-            var service = new VE_8326_ImporterDeclarationMessagingService();
-            var responseData = service.Send(newImporterDeclarationRequestParams);
-            if (!responseData.Succeeded)
+            //var service = new VE_8326_ImporterDeclarationMessagingService();
+            //var responseData = service.Send(newImporterDeclarationRequestParams);
+            //if (!responseData.Succeeded)
+            //{
+            //    LogMessagingUtil.Instance.AppendLine("Request Failed " + responseData.CustomsRequestsSheetId + ", Message: " + responseData.UserMessage);
+            //    return;
+            //}
+            try
             {
-                LogMessagingUtil.Instance.AppendLine("Request Failed " + responseData.CustomsRequestsSheetId + ", Message: " + responseData.UserMessage);
+                SBQMessageService.CreateSheetSBQMessage<ImporterDeclarationRequestParams>(newImporterDeclarationRequestParams, false, DateTime.Now.AddMinutes(2));
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    LogMessagingUtil.Instance.AppendLine("8326- ImporterDeclaration RequestInProgress stop create a new one !! ");
+                }
                 return;
             }
-            LogMessagingUtil.Instance.AppendLine("Request Succeeded " + responseData.CustomsRequestsSheetId);
+            LogMessagingUtil.Instance.AppendLine("8326 - ImporterDeclaration Request Succeeded");
+
         }
 
         string CheckIfCustomsVendorCodeExist(string vendorNumber, int tenant)
@@ -523,12 +621,36 @@ namespace Logitude.CustomsMessaging.ResponseServices
             ICustomContext customContext = CustomContext.GetContext(tenant);
             CustomsVendorQueryService query = new CustomsVendorQueryService(customContext);
             string vendorId = query.GetIdByVendorNumber(vendorNumber, tenant);
-            if (!string.IsNullOrWhiteSpace(vendorId))
+            if(!string.IsNullOrWhiteSpace(vendorId))
             {
                 return vendorId;
             }
 
             return null;
+        }
+
+        void SendVendorSearchByCustomsAgentRequest(GenericRequestParams requestParams, string importerNumber, string vendorCode)
+        {
+            int vendorNumber;
+            int.TryParse(vendorCode, out vendorNumber);
+            var req = new VE_MSG051_VendorSearchByCustomsAgentRequestParams()
+            {
+                Tenant = requestParams.Tenant,
+                RecallSuppliersFromFileRequest = true,
+                VendorNumber = vendorNumber,
+                RequestVIA = SendRequestVIA.WebServiceInteractive
+            };
+
+            var vendorSearchByCustomsAgentMessagingService = new VE_MSG051_VendorSearchByCustomsAgentMessagingService();
+            var responseData = vendorSearchByCustomsAgentMessagingService.Send(req);
+            if (!responseData.Succeeded)
+            {
+                LogMessagingUtil.Instance.AppendLine("Request 3650-VendorSearchByCustomsAgent Failed " + responseData.CustomsRequestsSheetId + ", Message: " + responseData.UserMessage);
+                return;
+            }
+            LogMessagingUtil.Instance.AppendLine("3650 - VendorSearchByCustomsAgent Request Succeeded");
+            SendImporterDeclarationRequest(requestParams, importerNumber, vendorCode);
+
         }
     }
 }

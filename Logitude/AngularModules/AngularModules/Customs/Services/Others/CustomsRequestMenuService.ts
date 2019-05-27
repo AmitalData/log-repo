@@ -33,7 +33,12 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.FaultQuery"), "FaultQuery", './CustomsModules/CustomsRequests/Components/TapagRequests/FaultQueryComponent', 750, 680, "8332"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.WarehouseBlockBalance"), "WarehouseBlockBalanceQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/WarehouseBlockBalanceComponent', 850, 690, "8328"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasterBOLQuery"), "MasterBOLQuery", './CustomsModules/CustomsGeneralRequests/Components/MasterBOLQueryComponent', 600, 590, "9020"));
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CurrencyExchangeRateQuery"), "ExchangeRateQuery", './CustomsModules/CustomsGeneralRequests/Components/ExchangeRatesQueryComponent', 650, 590, "8347"));
+
+        let my8347 =new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CurrencyExchangeRateQuery"), "ExchangeRateQuery", './CustomsModules/CustomsGeneralRequests/Components/ExchangeRatesQueryComponent', 650, 590, "8347")
+        my8347.CanExportExcel = true;
+        this._CustomsRequestMenuItems.push(my8347);
+
+        
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CustomItemLegalDemandsQuery"), "CustomItemLegalDemandsQuery", './CustomsModules/CustomsGeneralRequests/Components/CustomItemLegalDemandsQueryComponent', 950, 630, "8316"));
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.DeclarationPrintQuery"), "DeclarationPrintQuery", './CustomsModules/CustomsRequests/Components/DeclarationRequests/PrintRequestComponent', 500, 490, "8302"));
 
@@ -47,7 +52,9 @@ export class CustomsRequestMenuService {
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.Vendor.O.NewClient"), "NewClient", './CustomsModules/CustomsClient/Components/NewClient/NewClientComponent', 850, 500, "Customs.Client")); //3610
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.ClientSearchByIDQuery"), "ClientSearchByID", './CustomsModules/CustomsGeneralRequests/Components/ClientSearchByIDComponent', 850, 800, "8343"));
 
-        this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.BlockListInWarehouseQuery"), "BlockList", './CustomsModules/CustomsRequests/Components/DeclarationRequests/BlockListInWarehouseComponent', 900, 520, "8330"));
+        var item8330 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.BlockListInWarehouseQuery"), "BlockList", './CustomsModules/CustomsRequests/Components/DeclarationRequests/BlockListInWarehouseComponent', 900, 520, "8330");
+        item8330.CanExportExcel = true;
+        this._CustomsRequestMenuItems.push(item8330);
         //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CargoQuery"), "MainfestStatus", '', 850, 500, ""));
 
         this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.CargoQuery"), "MainfestStatus", './CustomsModules/CustomsGeneralRequests/Components/CargoQueryRequestComponent', 1010, 680, "8240"));

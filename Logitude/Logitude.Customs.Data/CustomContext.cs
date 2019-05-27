@@ -23,7 +23,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.Data
 {
-   public class CustomContext: DbContextBase, ICustomContext
+   public partial class CustomContext: DbContextBase, ICustomContext
     {
         public CustomContext()
         {
@@ -481,6 +481,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new PaymentProtestTypeMap());
 	
             modelBuilder.Configurations.Add(new PaymentTypeMap());
+	
+            modelBuilder.Configurations.Add(new PendingByKeywordMap());
 	
             modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
 	
@@ -2316,6 +2318,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PaymentType> PaymentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PendingByKeyword> PendingByKeywords 
 	 {
 	      get; set;
 	 

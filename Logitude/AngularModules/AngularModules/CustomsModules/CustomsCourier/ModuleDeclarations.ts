@@ -12,6 +12,7 @@ import { DeclarationMamanSpecialActionComponent } from './Components/MamanSpecia
 import { AddCourierPendingToUnifreightStatusComponent } from './Components/CourierPendingReason/AddCourierPendingToUnifreightStatusComponent';
 import { GatepassRequestComponent } from './Components/GatepassRequest/GatepassRequestComponent';
 import { GetStorageSiteCodeComponent } from './Components/CourierWorkSheet/GetStorageSiteCodeComponent';
+import { AddEditPendingByKeywordComponent } from './Components/PendingByKeyword/AddEditPendingByKeywordComponent';
 
 export const Components =
     [
@@ -29,6 +30,7 @@ export const Components =
         GatepassRequestComponent,
         DeclarationMamanSpecialActionComponent,
         GetStorageSiteCodeComponent,
+        AddEditPendingByKeywordComponent,
 
     ];
 
@@ -52,6 +54,8 @@ export class ModuleDeclarations {
             case "GatepassRequestComponent": { myResult = GatepassRequestComponent; break; }
             case "DeclarationMamanSpecialActionComponent": { myResult = DeclarationMamanSpecialActionComponent; break; }
             case "GetStorageSiteCodeComponent": { myResult = GetStorageSiteCodeComponent; break; }
+            case "AddEditPendingByKeywordComponent": { myResult = AddEditPendingByKeywordComponent; break; }
+                
         }
 
         return myResult;

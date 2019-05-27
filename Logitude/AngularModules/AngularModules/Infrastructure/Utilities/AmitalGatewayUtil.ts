@@ -86,6 +86,24 @@ export class AmitalGatewayUtil {
             " אישורים נדרשים");
     }
 
+    public ShowDocumentsSharing(
+        UnifreightEntityNumber: string,
+        LogitudeEntityNumber: string,
+        ViewModelName: string,
+        CustomerId: string) {
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+        unifreightMessageM.Requset.push(["CustomerId", CustomerId]);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "ScriptableGatewayUtil.ShowDocumentsSharingUnifreightCallBack",
+            "CFIHMAIN.LogitudeTask",
+            "ShowDocumentsSharingUnifreightCallBack",
+            unifreightMessageM,
+            " שיתוף מסמכים");
+    }
+
     public GetRihbitFromTransmissions(
         UnifreightEntityNumber: string,
         LogitudeEntityNumber: string,
@@ -837,6 +855,19 @@ export class AmitalGatewayUtil {
                 unifreightMessageM,
                 " אישורים נדרשים");
         }
+
+        public ShowDocumentsSharingUnifreightCallBack(
+            UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName, CustomerId) {
+            var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName);
+            unifreightMessageM.Requset.push(["CustomerId", CustomerId]);
+
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "ScriptableGatewayUtil.ShowDocumentsSharingUnifreightCallBack",
+                "CFIHMAIN.LogitudeTask",
+                "ShowDocumentsSharingUnifreightCallBack",
+                unifreightMessageM,
+                " שיתוף מסמכים");
+        }
     }
 }
 export class RequestWrapperM {
@@ -991,13 +1022,14 @@ export class ShowGeneralLOVReturnSelected {
             //'./Customs/Components/Maintenance/DocumentTypeCustomsDataComponent'
             './CustomsModules/CustomsMaintenance/Components/GeneralLOVComponent'
         );
-
+        AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = true;
         logWindow.WindowClosed.subscribe((event1: any) => {
             ///AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
             if (event1 == "Cancel") {
 
             }
             SessionLocator.CurrentSession.StopBusyIndicator();
+            AmitalGatewayUtil.Instance.IsAmitalBackButtonDisable = false;
             AmitalGatewayUtil.Instance.ShowGeneralLOVReturnSelectedCallBack(event1);
 
 

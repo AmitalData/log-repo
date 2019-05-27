@@ -24,7 +24,7 @@ import { CheckRepresentativeTypeListService } from './Services/StandardLists/Che
 import { CheckTypeLookupListService } from './Services/StandardLists/CheckTypeLookupListService';
 import { CityListService } from './Services/StandardLists/CityListService';
 import { AgentTalkBackTypeListService } from './Services/StandardLists/AgentTalkBackTypeListService';
-
+import { AcceptanceStatusListService } from './Services/StandardLists/AcceptanceStatusListService';
 import { ClaimEntityListService } from './Services/StandardLists/ClaimEntityListService';
 import { ClaimExplanationCodeListService } from './Services/StandardLists/ClaimExplanationCodeListService';
 import { ClaimListService } from './Services/StandardLists/ClaimListService';
@@ -215,6 +215,9 @@ import { RefundCustomerActivityTypeListService } from './Services/StandardLists/
 import { TransferCargoMethodTypeListService } from './Services/StandardLists/TransferCargoMethodTypeListService';
 import { UpdateCodeListService } from './Services/StandardLists/UpdateCodeListService';
 import { GatepassReturnCodeListService } from './Services/StandardLists/GatepassReturnCodeListService';
+import { PendingByKeywordListService } from './Services/StandardLists/PendingByKeywordListService';
+
+
 
 //#endregion
 
@@ -266,6 +269,8 @@ import { UIMessagePMService } from './Services/StandardPMs/UIMessagePMService';
 import { InternationalSitePMService } from './Services/StandardPMs/InternationalSitePMService';
 import { DeclarationCargoSplitPMService } from './Services/StandardPMs/DeclarationCargoSplitPMService';
 import { CustomsAirlinePMService } from './Services/StandardPMs/CustomsAirlinePMService';
+import { CustomsCountryPMService } from './Services/StandardPMs/CustomsCountryPMService';
+import { PendingByKeywordPMService } from './Services/StandardPMs/PendingByKeywordPMService';
 
 //#endregion
 
@@ -363,7 +368,7 @@ export class ModuleProviders {
             case "CheckTypeLookupListService": { myResult = new CheckTypeLookupListService(); break; }
             case "CityListService": { myResult = new CityListService(); break; }
             case "AgentTalkBackTypeListService": { myResult = new AgentTalkBackTypeListService(); break; }
-                
+            case "AcceptanceStatusListService": { myResult = new AcceptanceStatusListService(); break; }   
             case "ClaimEntityListService": { myResult = new ClaimEntityListService(); break; }
             case "ClaimExplanationCodeListService": { myResult = new ClaimExplanationCodeListService(); break; }
             case "ClaimListService": { myResult = new ClaimListService(); break; }
@@ -555,6 +560,8 @@ export class ModuleProviders {
             case "TransferCargoMethodTypeListService": { myResult = new TransferCargoMethodTypeListService(); break; }
             case "UpdateCodeListService": { myResult = new UpdateCodeListService(); break; }
             case "GatepassReturnCodeListService": { myResult = new GatepassReturnCodeListService(); break; }
+            case "PendingByKeywordListService": { myResult = new PendingByKeywordListService(); break; }
+                
             //#endregion                
 
             //#region StandardPMs
@@ -606,6 +613,8 @@ export class ModuleProviders {
             case "InternationalSitePMService": { myResult = new InternationalSitePMService(); break; }
             case "DeclarationCargoSplitPMService": { myResult = new DeclarationCargoSplitPMService(); break; }
             case "CustomsAirlinePMService": { myResult = new CustomsAirlinePMService(); break; }
+            case "CustomsCountryPMService": { myResult = new CustomsCountryPMService(); break; }
+            case "PendingByKeywordPMService": { myResult = new PendingByKeywordPMService(); break; }
             //#endregion
 
             //#region ExtendedLists

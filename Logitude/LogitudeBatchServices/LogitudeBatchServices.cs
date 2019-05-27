@@ -52,6 +52,7 @@ namespace LogitudeBatchServices
             {
                 EventLog.WriteEntry("LogitudeBatchServices Error");
                 EventLog.WriteEntry(ex.Message);
+                EventLog.WriteEntry(ex.InnerException.Message);
             } 
         }
 

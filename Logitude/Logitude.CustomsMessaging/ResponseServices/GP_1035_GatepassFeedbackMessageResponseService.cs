@@ -28,11 +28,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(GP_NG_1035_MSG2_GatepassFeedbackMessage customResponse, GatepassRequestMessageRequestParams requestParams)
         {
-
             ICustomContext customContext = CustomContext.GetContext(requestParams.Tenant);
             var gatepassRequestQueryService = new GatepassRequestQueryService(customContext);
-            var myCourierMasterQueryService = new CourierMasterQueryService(customContext);
             var gatepassRequestUpdateService = new GatepassRequestUpdateService(customContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), requestParams.Tenant);
+            CourierMasterQueryService myCourierMasterQueryService = new CourierMasterQueryService(customContext);
 
             this.MyResponseData = new GatepassFeedbackMessageResponseData();
             this.MyResponseData.Succeeded = true;
@@ -44,6 +43,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LogMessagingUtil.Instance.AppendLine("GatepassFeedbackMessage is empty");
                 this.MyResponseData.HasException = true;
                 this.MyResponseData.UserMessage = "לא התקבלו נתונים מהמכס";
+                if (customResponse.ResponseContentHeader.Exception != null)
+                {
+                    this.MyResponseData.UserMessage = GetException(customResponse.ResponseContentHeader.Exception);
+                }
                 return;
             }
 
@@ -66,6 +69,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         this.MyResponseData.UserMessage = " משוב לבקשת העברה" + courierMasterPM.AirlinePrefix + "-" + courierMasterPM.MAWB;
                     }
+
                     if (this._GatepassRequestPM.CustomsUpdateDateTime != null && this._GatepassRequestPM.CustomsUpdateDateTime.Value.Date > gatepassFeedbackMessageItem.dateTime)
                     {
                         LogMessagingUtil.Instance.AppendLine("GatepassFeedbackMessage was rejected because it is out of date");
@@ -73,7 +77,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         this.MyResponseData.UserMessage = "המסר נדחה בגלל שהוא עדכני לשעה " + gatepassFeedbackMessageItem.dateTime.Date.ToString("g") + " ויש עדכון משעה " + this._GatepassRequestPM.CustomsUpdateDateTime.Value.Date.ToString("g");
                         return;
                     }
-                    
+
                     this._GatepassRequestPM.ChangeSetOp = ChangeSetOperation.Update;
                     this._GatepassRequestPM.CustomsUpdateDateTime = gatepassFeedbackMessageItem.dateTime;
 
@@ -82,76 +86,85 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         StatusDateTime = DateTime.Now,
                     };
 
-                    switch(gatepassFeedbackMessageItem.recordCategory)
+                    switch (gatepassFeedbackMessageItem.recordCategory)
                     {
-                        case 1: // מסר משוב על קליטת בקשת העברה
-                            if(gatepassFeedbackMessageItem.gatepassStatus == 1)
-                            {
-                                this._GatepassRequestPM.GatepassRequestStatus = "2";
-                                myEventContextTagModel.EventCode = "VGE";
-                                myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
-                                this.MyResponseData.HasException = true;
-                                this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", myEventContextTagModel.EventRemarks);
-                            }
-                            else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
+                        case 1: //  Receiving a transfer request
+
+                            if (gatepassFeedbackMessageItem.gatepassStatus == 2 || gatepassFeedbackMessageItem.gatepassStatus == 3 || gatepassFeedbackMessageItem.gatepassStatus == 4 || gatepassFeedbackMessageItem.gatepassStatus == 5 || gatepassFeedbackMessageItem.gatepassStatus == 10) // Correct
                             {
                                 this._GatepassRequestPM.GatepassRequestStatus = "1";
                                 myEventContextTagModel.EventCode = "VGR";
                                 myEventContextTagModel.EventRemarks = "בקשת העברה ממתינה לאישור";
                             }
-                            break;
-                        case 2: // מסר משוב על קליטת בקשת ביטול
-                            if (gatepassFeedbackMessageItem.gatepassStatus == 1)
+                            else // Not Correct
                             {
-                                this._GatepassRequestPM.GatepassRequestStatus = "6";
+                                this._GatepassRequestPM.GatepassRequestStatus = "2";
                                 myEventContextTagModel.EventCode = "VGE";
                                 myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
-                                this.MyResponseData.HasException = true;
                                 this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", myEventContextTagModel.EventRemarks);
                             }
-                            else if (gatepassFeedbackMessageItem.gatepassStatus == 2)
+                            break;
+                        case 2: // Receiving a cancellation request 
+                            if (gatepassFeedbackMessageItem.gatepassStatus == 2 || gatepassFeedbackMessageItem.gatepassStatus == 3 || gatepassFeedbackMessageItem.gatepassStatus == 4 || gatepassFeedbackMessageItem.gatepassStatus == 5 || gatepassFeedbackMessageItem.gatepassStatus == 10) // Correct
                             {
                                 this._GatepassRequestPM.GatepassRequestStatus = "5";
                                 myEventContextTagModel.EventCode = "VGR";
                                 myEventContextTagModel.EventRemarks = "בקשת ביטול העברה ממתינה לאישור";
                             }
-                            break;
-                        case 3: // מסר אישור/דחייה בקשת העברה
-                            if (gatepassFeedbackMessageItem.gatepassStatus == 2)
+                            else // Not Correct
                             {
+                                this._GatepassRequestPM.GatepassRequestStatus = "6";
+                                myEventContextTagModel.EventCode = "VGE";
+                                myEventContextTagModel.EventRemarks = GetException(gatepassFeedbackMessageItem.Exception);
+                                this.MyResponseData.UserMessage = string.Concat(this.MyResponseData.UserMessage, "\n", myEventContextTagModel.EventRemarks);
+                            }
+                            break;
+                        case 3: // Receiving approval/rejection transfer request
+                            if (gatepassFeedbackMessageItem.gatepassStatus == 2 || gatepassFeedbackMessageItem.gatepassStatus == 10) // Approved 
+                            {
+                                this._GatepassRequestPM.GatepassRequestStatus = "3";
+                                myEventContextTagModel.EventCode = "VGA";
                                 switch (gatepassFeedbackMessageItem.gatepassReturnCode)
                                 {
                                     case 2:
-                                        this._GatepassRequestPM.GatepassRequestStatus = "3";
-                                        myEventContextTagModel.EventCode = "VGA";
                                         myEventContextTagModel.EventRemarks = GetReturnCode(gatepassFeedbackMessageItem.gatepassReturnCode, _GatepassRequestPM.Tenant);
                                         break;
+                                }
+                            }
+                            else if (gatepassFeedbackMessageItem.gatepassStatus == 3 || gatepassFeedbackMessageItem.gatepassStatus == 4 || gatepassFeedbackMessageItem.gatepassStatus == 5 || gatepassFeedbackMessageItem.gatepassStatus == 9 || gatepassFeedbackMessageItem.gatepassStatus == 11)// Rejected
+                            {
+                                this._GatepassRequestPM.GatepassRequestStatus = "4";
+                                myEventContextTagModel.EventCode = "VGD";
+                                switch (gatepassFeedbackMessageItem.gatepassReturnCode)
+                                {
                                     case 3:
                                     case 4:
-                                        this._GatepassRequestPM.GatepassRequestStatus = "4";
-                                        myEventContextTagModel.EventCode = "VGD";
                                         myEventContextTagModel.EventRemarks = GetReturnCode(gatepassFeedbackMessageItem.gatepassReturnCode, _GatepassRequestPM.Tenant);
-
                                         break;
                                 }
                             }
                             break;
-                        case 4: // מסר אישור/דחייה בקשת ביטול
-                            if (gatepassFeedbackMessageItem.gatepassStatus == 2)
+                        case 4: // Receiving approval/rejection a cancellation request
+                            if (gatepassFeedbackMessageItem.gatepassStatus == 6 || gatepassFeedbackMessageItem.gatepassStatus == 7 || gatepassFeedbackMessageItem.gatepassStatus == 8 || gatepassFeedbackMessageItem.gatepassStatus == 10) // Cancelling Approved
                             {
+                                _GatepassRequestPM.GatepassRequestStatus = "7";
+                                myEventContextTagModel.EventCode = "VGA";
                                 switch (gatepassFeedbackMessageItem.gatepassReturnCode)
                                 {
                                     case 5:
-                                        this._GatepassRequestPM.GatepassRequestStatus = "7";
-                                        myEventContextTagModel.EventCode = "VGA";
                                         myEventContextTagModel.EventRemarks = GetReturnCode(gatepassFeedbackMessageItem.gatepassReturnCode, _GatepassRequestPM.Tenant);
                                         break;
+                                }
+                            }
+                            else if (gatepassFeedbackMessageItem.gatepassStatus == 3 || gatepassFeedbackMessageItem.gatepassStatus == 4 || gatepassFeedbackMessageItem.gatepassStatus == 5 || gatepassFeedbackMessageItem.gatepassStatus == 9 || gatepassFeedbackMessageItem.gatepassStatus == 11) // Cancelling Rejected
+                            {
+                                _GatepassRequestPM.GatepassRequestStatus = "8";
+                                myEventContextTagModel.EventCode = "VGD";
+                                switch (gatepassFeedbackMessageItem.gatepassReturnCode)
+                                {
                                     case 6:
                                     case 7:
-                                        this._GatepassRequestPM.GatepassRequestStatus = "8";
-                                        myEventContextTagModel.EventCode = "VGD";
                                         myEventContextTagModel.EventRemarks = GetReturnCode(gatepassFeedbackMessageItem.gatepassReturnCode, _GatepassRequestPM.Tenant);
-
                                         break;
                                 }
                             }
@@ -159,7 +172,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     RaiseEvent(myEventContextTagModel);
                     gatepassRequestUpdateService.Update(this._GatepassRequestPM, true);
-
                 }
                 else
                 {
@@ -169,6 +181,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     return;
                 }
             }
+
+            this.MyRequestSheetParam = new RequestSheetParam();
+            this.MyRequestSheetParam.RequestDescription = this.MyResponseData.UserMessage;
+
         }
 
         private string GetReturnCode(int? gatepassReturnCode, int tenant)
@@ -193,7 +209,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 foreach (var item in exception)
                 {
-                    exceptionDescription += string.Concat(exceptionDescription, item.ExceptionLevel, ": ", item.ExeptionDescription, "\n");
+                    string itemExceptionLevel = "";
+                    switch (item.ExceptionLevel)
+                    {
+                        case 1:
+                            itemExceptionLevel = "שגיאה ";
+                            break;
+                        case 2:
+                            itemExceptionLevel = "התראה ";
+                            break;
+                        case 3:
+                            itemExceptionLevel = "אזהרה ";
+                            break;
+                    }
+                    exceptionDescription += string.Concat(itemExceptionLevel, ": ", item.ExeptionDescription, "\n");
                 }
             }
             return exceptionDescription;

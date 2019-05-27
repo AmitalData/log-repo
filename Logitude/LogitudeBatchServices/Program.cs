@@ -14,20 +14,23 @@ namespace LogitudeBatchServices
         /// </summary>
         static void Main(string[] args)
         {
-            if (Environment.UserInteractive)
-            {
-                LogitudeBatchServices service1 = new LogitudeBatchServices(args);
-                service1.TestStartupAndStop(args);
-            }
-            else
-            {
-                ServiceBase[] ServicesToRun;
-                ServicesToRun = new ServiceBase[] 
-            { 
-                new LogitudeBatchServices() 
-            };
-                ServiceBase.Run(ServicesToRun);
-            }
+            
+                if (Environment.UserInteractive)
+                {
+                    LogitudeBatchServices service1 = new LogitudeBatchServices(args);
+                    service1.TestStartupAndStop(args);
+                }
+                else
+                {
+                    ServiceBase[] ServicesToRun;
+                    ServicesToRun = new ServiceBase[]
+                {
+                new LogitudeBatchServices()
+                };
+                    ServiceBase.Run(ServicesToRun);
+                }
+            
+           
 
         }
 

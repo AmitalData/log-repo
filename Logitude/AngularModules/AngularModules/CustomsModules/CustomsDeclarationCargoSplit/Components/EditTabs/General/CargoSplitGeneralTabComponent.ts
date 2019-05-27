@@ -340,6 +340,12 @@ public CargoIdentifiersList: ObservableCollection;
 
     SetWindowArgs(winArg: any) {
         this.EntityPM = winArg.CurrentEntity;
+        if (!AppTool.IsNullOrEmpty(winArg.CustomFileNo)) {
+            this.IsNewEntity = true;
+            this.CustomFileNo = winArg.CustomFileNo;
+            this.RequestDate = DateTool.GetDateByDay(+0);
+            //this.CustomFileNoTextChanged(winArg.CustomFileNo);
+        }
         this.Init();
         if (AppTool.IsNullOrEmpty(this.ImporterCode)) {
             if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {
@@ -360,7 +366,7 @@ public CargoIdentifiersList: ObservableCollection;
           var item = new DecCargoSplitCargoIdentifierModel(conItem);
           this.ItemsList.Insert(item);
         }
-      }
+    }
         //this.EntityPM = winArg.declarationPM;
   }
 
@@ -619,8 +625,10 @@ public CargoIdentifiersList: ObservableCollection;
                                     if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {
                                         this.ImporterCode = this._LastFetchDeclarationList.ImporterCode;
                                       if (this.SelectedTab != null) {
-                                        this.SelectedTab.EntityPM.ImporterCode = this.ImporterCode;
-                                        this.SelectedTab.ComponentReference.DataContext.ImporterCode = this.ImporterCode;
+                                          this.SelectedTab.EntityPM.ImporterCode = this.ImporterCode;
+                                          if (this.SelectedTab.ComponentReference != null) {
+                                              this.SelectedTab.ComponentReference.DataContext.ImporterCode = this.ImporterCode;
+                                          }
                                       }
                                     }
                                 }
@@ -652,7 +660,7 @@ public CargoIdentifiersList: ObservableCollection;
         if (this._LastFetchConsignmentPMList != null && this._LastFetchDeclarationList != null) {
             var pm = this._LastFetchConsignmentPMList[0]
           this.ImporterCode = this._LastFetchDeclarationList.ImporterCode;
-          if (this.SelectedTab != null) {
+            if (this.SelectedTab != null && this.SelectedTab.ComponentReference != null) {
             this.SelectedTab.ComponentReference.DataContext.ImporterCode = this.ImporterCode;
             this.SelectedTab.EntityPM.ImporterCode = this.ImporterCode;
           }

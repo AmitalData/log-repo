@@ -150,6 +150,7 @@ export class CustomsClosedTablesListTemplate {
                     case "Customs.CustomsHouseType":
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
+                    case "Customs.CustomsCountry":
                     //case "Customs.InternationalSite":
                         listArgs.SuppressOnRowSelected = false;
                         break;

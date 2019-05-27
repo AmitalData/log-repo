@@ -484,12 +484,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //    }
                 //}
                 var mySend2MasofIfNeededService = new Send2MasofIfNeededService();
-                mySend2MasofIfNeededService.Send2Masof(entityPM);
+                mySend2MasofIfNeededService.Send2Masof(entityPM, CourierStorageSiteChanged);
 
             }
         }
+        public bool CourierStorageSiteChanged { get; set; }
 
-        
 
         private void ResetMetadataVER(DeclarationPM entityPM)
         {
@@ -860,8 +860,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     /*
                      * getSingle moved to CalculateDeclarationCourierStatus
                     DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
-                    DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id, false, false);
-                    if (currentDeclarationCourierStatusPM == null)
+                    DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.Id, false, false);
+                    if (newDeclarationCourierStatusPM == null)
                     {
                         newDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
                     }
@@ -872,6 +872,51 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     */
 
                     declarationCourierStatusUpdateService.Update(newDeclarationCourierStatusPM, true);
+                    if(entityPM.CurrentContextTag != null && entityPM.CurrentContextTag.ToString() == "Logitude.Customs.BL.Messaging.U2L.CommDec.CommDecService.Upsert()")
+                    {
+                        if (!string.IsNullOrWhiteSpace(entityPM.ImporterCode))
+                        {
+                            if (newDeclarationCourierStatusPM != null)
+                            {
+                                Boolean toUpdate = false;
+                                if (entityPM.ImporterCode.Substring(0, 1) == "5")
+                                {
+                                    if (newDeclarationCourierStatusPM.HighLowValue == "L" && entityPM.ProcedureCurrentCode != "4000007")
+                                    {
+                                        entityPM.ProcedureCurrentCode = "4000007";
+                                        toUpdate = true;
+                                    }
+                                    else if (newDeclarationCourierStatusPM.HighLowValue == "H" && entityPM.ProcedureCurrentCode != "4000001")
+                                    {
+                                        entityPM.ProcedureCurrentCode = "4000001";
+                                        toUpdate = true;
+                                    }
+                                }
+                                else
+                                {
+                                    if (newDeclarationCourierStatusPM.HighLowValue == "L" && entityPM.ProcedureCurrentCode != "4000507")
+                                    {
+                                        entityPM.ProcedureCurrentCode = "4000507";
+                                        toUpdate = true;
+                                    }
+                                    else if (newDeclarationCourierStatusPM.HighLowValue == "H" && entityPM.ProcedureCurrentCode != "4000501")
+                                    {
+                                        entityPM.ProcedureCurrentCode = "4000501";
+                                        toUpdate = true;
+                                    }
+                                }
+                                if(toUpdate)
+                                {
+                                    DeclarationRepository rep = new DeclarationRepository(entityPM.Tenant);
+                                    Declaration declaration = rep.GetSingle(entityPM.Id, entityPM.Tenant);
+                                    declaration.ProcedureCurrentCode = entityPM.ProcedureCurrentCode;
+                                    rep.Update(declaration);
+                                    rep.SubmitChanges();
+                                }
+                            }
+                        }
+                    }
+                    
                 }
             }
         }

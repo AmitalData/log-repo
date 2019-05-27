@@ -615,7 +615,10 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             //    SessionLocator.CurrentSession.StopBusyIndicator();
             });
 
-       
+        if (AppTool.IsNullOrEmpty(this.dataCount))
+        {
+            this.EnableFilters = true;
+        }
         return this.entityListService.getExtendedByFilters("Customs.Notification", filters);
 
 
@@ -1010,6 +1013,9 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                     }
 
                                 case "5101N":
+                                case "5101R":
+                                case "5101A":
+                                case "5101E":
                                     {
                                         currentScreenCode = "DCNT";
                                         break;
@@ -1177,6 +1183,9 @@ export class NotificationComponent extends BaseComponent implements OnInit {
                                 case "8211N":
                                 case "8211U":
                                 case "5101N":
+                                case "5101R":
+                                case "5101A":
+                                case "5101E":
                                     {
                                         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe(response => {
                                             this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral").subscribe(response => {

@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CourierMasterList> GetIqueryableList(IQueryable<CourierMaster> iQueryable)
         {
-            IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort")
+            IQueryable<CourierMasterList> query = (from a in iQueryable.Include("CustomsAirline").Include("MAWBType").Include("OriginPort").Include("GatewayPort").Include("Card")
                                                    select new CourierMasterList()
                                                    {
                                                        // comments made because of cannot convert nclob to char exception ---mohammad
@@ -58,6 +58,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        WeightValueName = a.FreightPaymentMethod != null ? a.FreightPaymentMethod.LocalName : null,
                                                        StorageSiteCode = a.StorageSiteCode,
                                                        StorageSiteName = a.DeliverySiteType != null ? a.DeliverySiteType.LocalName : null,
+                                                       TruckerId = a.TruckerId,
+                                                       IntegratorCode = a.IntegratorCode,
+                                                       IntegratorName = a.Card != null ? a.Card.LocalName : null,
                                                    });
             return query;
 		}

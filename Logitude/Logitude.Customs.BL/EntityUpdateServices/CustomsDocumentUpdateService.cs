@@ -405,6 +405,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public const string AvoidSendToCustoms = "Logitude.Customs.BL.EntityUpdateServices.CustomsDocumentUpdateService.AvoidSendToCustoms";
 
         //protected override void AfterUpdating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
+
+        public bool IgnoreSendFailure = false;
         void TrySendMessageToQueue(CustomsDocumentPM entityPM, bool forceDueLoadTest = false)
         {
             var send = false;
@@ -562,7 +564,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     requestParams.ForcePersonalSign = true;
                 }
                 var my9mb = 9000000;
-                var my3mb = 3000000;
+                //var my3mb = 3000000;
+                var my10mb = 10*1000000;
+                var my200mb = 200 * 1000000;
                 //if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > my3mb)
                 //{
                 //    SendDCA(requestParams);
@@ -578,9 +582,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         var lastGDMFILEVER = list.First(r => r.VERSION == lastVer);
                         //9558452
                         //7000000
-                        if (lastGDMFILEVER.FILESIZE > my3mb)
+                        if (lastGDMFILEVER.FILESIZE > my10mb)
                         {
-
+                            if (lastGDMFILEVER.FILESIZE > my200mb)
+                            {
+                                throw new Exception("המסמך מעל 200MB - לא תתאפשר שליחה");
+                            }
                             hugeFile = true;
 
                         }
@@ -588,7 +595,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     else
                     {
 
-                        if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > my3mb)
+                        if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > my10mb)
                         {
                             hugeFile = true;
                         }
@@ -628,16 +635,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
                     {
-
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("2715 RequestInProgress stop create a new one !! " + myCustomsRequestsSheetServiceException.Message);
+                        return send;
                     }
                     throw;
                 }
             }
             catch (Exception e)
             {
-
-                e.ChangeExceptionMessage(@"שליחת מסמך למכס נכשל" + Environment.NewLine);
-                throw e;
+                if(!IgnoreSendFailure)
+                {
+                    e.ChangeExceptionMessage(@"שליחת מסמך למכס נכשל" + Environment.NewLine);
+                    throw e;
+                }
             }
             return send;
 

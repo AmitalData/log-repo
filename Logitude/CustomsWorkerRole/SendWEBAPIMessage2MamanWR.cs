@@ -162,7 +162,10 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                         Thread.Sleep(TimeSpan.FromSeconds(15));//not using soo mach 
                         break;
                     }
-
+                    if (_ReceivedBrokeredMessage.RetryNumber > 5)
+                    {
+                        _IQueueService.CompleteAsFailed();
+                    }
 
                     ProccessReceivedMessage();
                     scope.Complete();
@@ -228,7 +231,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
         private void SentWAPIComm(bool forceRetryFromTester=false)
         {
-            if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < 5)
+            if (forceRetryFromTester ||_ReceivedBrokeredMessage.RetryNumber < 2)
             {
 
                 LogMessagingUtil.Instance.Append("DoAction(PostWebAPI)..");
@@ -524,9 +527,10 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     {
                         client.UseDefaultCredentials = false;
                         client.Credentials = myCredentials;
-                        
+                        client.Encoding = System.Text.Encoding.UTF8;
 
                         var dataString = dataJson;
+                        //client.Headers.Add(HttpRequestHeader.ContentType, "application/json; charset=UTF-8");
                         client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
 
                         myResultString =

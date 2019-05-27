@@ -517,13 +517,13 @@
       <HintPath>..\..\packages\UltimatePDF.1.0.0\lib\Net40\UltimatePdf.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.3.1803.14\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.3.1803.16\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.3.1803.14\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.3.1803.16\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.3.1803.14\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.3.1803.16\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -1142,6 +1142,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\CustomsAirlineController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomBankController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomDocumentTypesController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\CustomsCountriesController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsDocumentsDefinitionExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsDocumentsTicketsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsExchangeRatesExtendedController.cs" />
@@ -1373,6 +1374,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PaymentProcessViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PaymentProtestTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PaymentTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PendingByKeywordViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PendingErrorPlaceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckOperationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PhysicalCheckStatusMessageViewsController.Generated.cs" />
@@ -1467,6 +1469,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsBookController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsClosedTableController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsCollateralController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsCountryController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsDocumentController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsDocumentsDefinitionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomsDocumentsTicketController.Generated.cs" />
@@ -1502,6 +1505,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\NotificationDefinitionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\NotificationTenantDefinitionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PaymentOrderController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PendingByKeywordController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PhysicalCheckController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ProceduralFaultController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SupplierInvoiceController.Generated.cs" />
@@ -1832,6 +1836,7 @@
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitConsItem.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitConsPackDet.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.DecCargoSplitCon.cs" />
+    <Compile Include="CustomModel\DomainServices\CustomDomainService.PendingByKeyword.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.TreatmentWay.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.ActionCode.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.SplitOrMergeReason.cs" />
@@ -1840,6 +1845,9 @@
     <Compile Include="CustomModel\DomainServices\CustomDomainService.FreightPaymentMethod.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.PointerLevel.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.StorageStatus.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\PendingByKeywordDomainService.Generated.cs" />
+    <Compile Include="CustomWebServices\BL\XLSExport\BlockListInWarehouseDetailExport.cs" />
+    <Compile Include="CustomWebServices\BL\XLSExport\BlockListInWarehouseDetailProvider.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\ExchangeRateExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\GuaranteeExport.cs" />
     <Compile Include="CustomWebServices\BL\XLSExport\GuaranteeRequestProvider.cs" />
@@ -2503,6 +2511,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ManifestCargoStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MAWBTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PendingByKeywordUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PendingErrorPlaceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportUpdateClass.cs" />
