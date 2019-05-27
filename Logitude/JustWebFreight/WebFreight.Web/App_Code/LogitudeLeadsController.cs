@@ -37,10 +37,10 @@ namespace WebFreight.Web.App_Code
                 {
                     var temp = HttpContext.Current.Request.UserHostAddress;
                     string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-                    if (currentIP == "160.153.153.150")
-                    {
+                    //if (currentIP == "160.153.153.150" || currentIP == "164.138.223.157")
+                    //{
                         logitudeLeadHelper.CreateLogitudeLead(leadPM);
-                    }
+                    //}
                 }
             }
 

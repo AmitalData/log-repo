@@ -1045,9 +1045,17 @@
     <Compile Include="Migrations\201905160948101_IncreaseQuoteSubjectField.Designer.cs">
       <DependentUpon>201905160948101_IncreaseQuoteSubjectField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs" />
+    <Compile Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.Designer.cs">
+      <DependentUpon>201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.cs" />
     <Compile Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.Designer.cs">
       <DependentUpon>201905260647064_TariffContractNumberConvertedToString_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905261011040_TariffLine_Index_Add.cs" />
+    <Compile Include="Migrations\201905261011040_TariffLine_Index_Add.Designer.cs">
+      <DependentUpon>201905261011040_TariffLine_Index_Add.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -1772,11 +1780,17 @@
     <EmbeddedResource Include="Migrations\201905160948101_IncreaseQuoteSubjectField.resx">
       <DependentUpon>201905160948101_IncreaseQuoteSubjectField.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.resx">
+      <DependentUpon>201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.resx">
       <DependentUpon>201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.resx">
       <DependentUpon>201905260647064_TariffContractNumberConvertedToString_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261011040_TariffLine_Index_Add.resx">
+      <DependentUpon>201905261011040_TariffLine_Index_Add.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

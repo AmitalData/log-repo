@@ -171,7 +171,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.ItemsCollection = [];  
         this.DeletedTariffsLines = [];
 
-        this.CurrentVersion.TariffLines.forEach(item => {
+        this.CurrentVersion.TariffLines.sort(p => p.Index).forEach(item => {
             this.ItemsCollection.push(new TariffLineData(item, this));
         });
 
@@ -185,7 +185,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     ComaredLines() {
         this.ItemsCollection.forEach((item: TariffLineData) => {
-            var line = this.ComparedToVersionPM.TariffLines.filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            var line = this.ComparedToVersionPM.TariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line) {
                 item.ComparedEntity = line;
                 item.SetCellsComparingText();
@@ -197,8 +197,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         });
     }
     BuildDeletedLines() {
-        this.ComparedToVersionPM.TariffLines.forEach(item => {
-            var line = this.CurrentVersion.TariffLines.filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+        this.ComparedToVersionPM.TariffLines.sort(p => p.Index).forEach(item => {
+            var line = this.CurrentVersion.TariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line == null) {
                 this.DeletedTariffsLines.push(new TariffLineData(item, this));// Deleted 
             }
@@ -270,6 +270,16 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         itemPM.ExpirationDate = this.ExpirationDate;
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
+        var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
+        if (Version) {
+            if (Version.TariffLines.length > 0) {
+                var index = Math.max.apply(Math, Version.TariffLines.map(function (o) { return o.Index; })) + 1;
+                if (index) {
+                    itemPM.Index = index;
+                }
+            }
+        }
+
         var itemComponent = new TariffLineData(itemPM, this, true);
         logWindow.DataContext = itemComponent;
         logWindow.Title = "New Tariff Line";
@@ -374,6 +384,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.DestinationPortText = item.ToPortText;
             tariffLine.HasErrors = item.HasErrors;
             tariffLine.ErrorText = item.ErrorText;
+            tariffLine.Index = item.Index;
 
             if (this.PriceSteps.indexOf(',') > -1) {
                 var steps: string[] = this.PriceSteps.split(",");
@@ -494,6 +505,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.Step6Price = item.Step6Price;
             tariffLine.Step7Price = item.Step7Price;
             tariffLine.Step8Price = item.Step8Price;
+            tariffLine.Index = item.Index;
             copiedVersion.AddTariffLine(tariffLine);
         });
 
