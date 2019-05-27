@@ -30,6 +30,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -4129,8 +4130,23 @@ namespace Logitude.Accounting.BL.CoreBL
                 SecurityId = "100",
                 FileName = "BKMVDATA",
             };
+          
+            MemoryStream memstream = new MemoryStream();
+           
+            StreamReader sr = new StreamReader(file);
+            StreamWriter sw = new StreamWriter(memstream,  Encoding.Default);
+         
 
-            byte[] bytearray = Encoding.Default.GetBytes(file);
+            sw.WriteLine(sr.ReadToEnd());
+
+          
+   
+            sw.Close();
+            sr.Close();
+
+
+
+            byte[] bytearray = memstream.ToArray(); 
             document.FileData = bytearray;
 
 
@@ -4700,7 +4716,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 FileName = "INI",
             };
 
-            byte[] bytearray = Encoding.Default.GetBytes(file);
+            byte[] bytearray = Encoding.Unicode.GetBytes(file);
             document.FileData = bytearray;
             docService.Create(document, document.FileData, contact.Id);
 
