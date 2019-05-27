@@ -25,3 +25,6 @@ export class SendMailPopup {
         this.helper.WaitByIdAndClick('SendMessagebtn');
     }
 }
+
+//here we need to make sure that the mail send successfully or not there div insife msg pop up 
+//if the sunject exseption the msg will find div and make sure that hte mail has failed 
