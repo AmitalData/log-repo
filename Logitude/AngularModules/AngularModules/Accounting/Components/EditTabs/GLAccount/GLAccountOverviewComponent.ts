@@ -664,7 +664,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         return (total > this.accountCardlist.CreditLimitAmount);
     }
     IsCreditNotDefined(){
-        return this.accountCardlist.CreditLimitOpenBalance == null;
+        return this.accountCardlist.CreditLimitAmount == null;
     }
     //
 
