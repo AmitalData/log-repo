@@ -4072,7 +4072,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private   DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines, OpenFormatReportPM openFormatReport, bool isFromWR = false)
         {
             // prepare file string
-            string file = string.Join(Environment.NewLine, lines);
+            string file = lines.ToString();// string.Join(Environment.NewLine, lines);
           
             // create document
             int tenant = openFormatReport.Tenant;
@@ -4146,7 +4146,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-            byte[] bytearray = memstream.ToArray(); 
+            byte[] bytearray =  memstream.ToArray(); 
             document.FileData = bytearray;
 
 
