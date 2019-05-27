@@ -405,6 +405,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public string CompetitorFields { get; set; }
 
+        [DataMember]
+        public string LeadSourceName { get; set; }
+        
 
     }
 }
