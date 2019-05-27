@@ -69,6 +69,10 @@ export class AnalyzeChampXMLComponent {
             simulator.XmlText = this.XML_Text;
             simulator.MessageIdentifier = "XML";
 
+            if (this.UseAnalyzeQueueId) {
+                simulator.MessageIdentifier = "AnalyzeQueueId";
+            }
+
             if (!SessionLocator.IsProduction) {
                 simulator.IsLocalAnalyze = true;
             }
