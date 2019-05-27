@@ -10,6 +10,7 @@ using System.Web;
 using WebFreight.Web.Helpers.TicketAnalyzer;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
+using EAGetMail;
 
 namespace WebFreight.Web.Helpers
 {
@@ -20,6 +21,7 @@ namespace WebFreight.Web.Helpers
         public InboundEmailGeneralHelperMethods(HttpRequest request)
         {
             this.request = request;
+
         }
 
         public List<FileAttachment> FillAttachments()
@@ -36,13 +38,44 @@ namespace WebFreight.Web.Helpers
                 {
                     fileName = request.Files[i].FileName;
                 }
-                attachmentsFiles.Add(new FileAttachment()
+                if (fileName != null && fileName.ToLower().Contains("winmail.dat"))
                 {
-                    ContentLength = request.Files[i].ContentLength,
-                    ContentType = request.Files[i].ContentType,
-                    FileName = fileName,
-                    InputStream = ReadFully(request.Files[i].InputStream),
-                });
+                    Attachment[] tatts = null;
+                    try
+                    {
+                        Mail oMail = new Mail("EG-C1508812802-00231-D7D3CB86FA99TU25-C22U9T5EED9826FF");
+                        tatts = Mail.ParseTNEF(ReadFully(request.Files[i].InputStream), true);
+                    }
+                    catch (Exception ep)
+                    {
+
+                    }
+                    int y = tatts.Length;
+                    for (int x = 0; x < y; x++)
+                    {
+                        Attachment tatt = tatts[x];
+                        if (tatt != null && tatt.Name != null && !tatt.Name.ToLower().Contains(".rtf"))
+                        {
+                            attachmentsFiles.Add(new FileAttachment()
+                            {
+                                ContentLength = tatt.Content.Length,
+                                ContentType = tatt.ContentType,
+                                FileName = tatt.Name,
+                                InputStream = tatt.Content,
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    attachmentsFiles.Add(new FileAttachment()
+                    {
+                        ContentLength = request.Files[i].ContentLength,
+                        ContentType = request.Files[i].ContentType,
+                        FileName = fileName,
+                        InputStream = ReadFully(request.Files[i].InputStream),
+                    });
+                }
             }
 
             return attachmentsFiles;

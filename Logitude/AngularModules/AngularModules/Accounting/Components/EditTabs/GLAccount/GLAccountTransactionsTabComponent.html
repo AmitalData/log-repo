@@ -498,46 +498,36 @@
                                                     <!-- open balance -->
                                                     <span  float-start style="height: 100%; padding: 7px 10px;direction: ltr;font-size: 16px;font-weight: bold;color: #60956e;font-family: sans-serif; padding-right: 5px;direction: ltr;"
                                                         *ngIf="LTBSummery.StartBalanceLocal != undefined">
-                                                        {{LTBSummery.StartBalanceLocal | NumbersPipe:'N2'}}
+                                                        {{GetOpenBalanceAmount() | NumbersPipe:'N2'}}
                                                         {{GetOpenBalanceCurrencySign()}}
                                                     </span>
 
-                                                    <!-- info icon -->
-                                                    <span float-start style="height: 100%; width: 30px;"  *ngIf="EntityPM.IsMultiCurrency" [attr.id]="'tooltip-1'" id="t" class="small-tooltip" (mouseover)="OnMouseOver()"
-                                                        (mouseleave)="OnMouseLeave()">
+                                                    <LogToolTip float-start [direction]="isRTL?'bottomleft':'bottomright'"
+                                                        [title]="'Accounting.General.O.OpenBalanceByCurrency' | TextCodeTranslationPipe" [name]="'toto'"
+                                                        *ngIf="EntityPM.IsMultiCurrency">
+                                                        <span style="font-size: bold;">
+                                                            <div>
+                                                                <ul style="list-style: none;">
+                                                                    <li *ngFor="let currency of LTBSummery.StartBalanceForeignList; let i=index;">
+                                                                        <div>
+                                                                            <span
+                                                                                style="font-size: 13px; color:#707070; padding-right: 20px; float: left;">{{currency.CurrencyCode}}</span>
+                                                                            <span style="font-size: 13px; color:#21a373;text-align: right;float: right;"
+                                                                                [class.red]="currency.BalanceForeign<=0">
+                                                                                {{currency.BalanceForeign
+                                                                                                                                    | NumbersPipe:'N2'}}
+                                                                                {{currency.CurrencySign}}
+                                                                            </span>
+                                                                            <div style="clear: both;"></div>
 
-                                                        <!--<img src="./Images/Info.png" width="18" height="18" />-->
-                                                        <div class="ConfirmIcon">!</div>
-
-
-                                                        <div *ngIf="OpenAmountHint" [attr.id]="'tooltip-body-1'" class="small-tooltip-body">
-                                                            <!--<div class="popup-arrow"></div>-->
-                                                            <div class="tooltip-header">
-                                                                {{'Accounting.General.O.OpenBalanceByCurrency'
-                                                                | TextCodeTranslationPipe}}: </div>
-                                                            <div class="tooltip-text">
-
-                                                                <div>
-                                                                    <ul style="list-style: none;">
-                                                                        <li *ngFor="let currency of LTBSummery.StartBalanceForeignList; let i=index;">
-                                                                            <div>
-                                                                                <span style="font-size: 13px; color:#707070; padding-right: 20px; float: left;">{{currency.CurrencyCode}}</span>
-                                                                                <span style="font-size: 13px; color:#21a373;text-align: right;float: right;" [class.red]="currency.BalanceForeign<=0">
-                                                                                    {{currency.BalanceForeign
-                                                                                    | NumbersPipe:'N2'}}
-                                                                                    {{currency.CurrencySign}}
-                                                                                </span>
-                                                                                <div style="clear: both;"></div>
-
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
-                                                        </div>
+                                                        </span>
+                                                    </LogToolTip>
 
-                                                    </span>
+
 
                                                 </td>
 
