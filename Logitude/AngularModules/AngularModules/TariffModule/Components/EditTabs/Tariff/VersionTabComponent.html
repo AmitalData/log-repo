@@ -45,13 +45,15 @@
                                     <td style="width:5px;">
                                         <div></div>
                                     </td>
-                                    <td style="width:130px;">
-                                        <div>
-                                            Warning Percentage
-                                        </div>
+                                    <td style="width:60px;">
+                                        <LogLabel [NoObjectField]="true" [Text]="'Warning'" [DataContext]="DataContext"></LogLabel>
                                     </td>
-                                    <td style="float:left; width:80px;">
-                                        <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'WarningPercentage'" [Text]="WarningPercentage" [DataContext]="DataContext"></LogTextBox>
+                                    <td style="float:left; width:50px;">
+                                        <LogTextBox [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'WarningPercentage'" [Text]="WarningPercentage" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+
+                                    <td style="width:5px;float:left;margin-left:3px;margin-top:3px;">
+                                        <div class="Label LeftCenter" style="width:5px;float:left;text-align:left;vertical-align:central;"> % </div>
                                     </td>
                                 </tr>
                             </table>
@@ -192,7 +194,7 @@
                                                 <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.MinPriceComparingTextColor}" *ngIf="item.MinPriceComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.MinPriceComparingPrice| NumbersPipe:'N2'}} %
+                                                            {{item.MinPriceComparingPrice| NumbersPipe:'N1'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -219,7 +221,7 @@
                                                  <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step1ComparingTextColor}" *ngIf="item.Step1ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step1ComparingPrice| NumbersPipe:'N2'}} %
+                                                            {{item.Step1ComparingPrice| NumbersPipe:'N1'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -247,7 +249,7 @@
                                                 <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step2ComparingTextColor}" *ngIf="item.Step2ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step2ComparingPrice| NumbersPipe:'N2'}} %
+                                                            {{item.Step2ComparingPrice| NumbersPipe:'N1'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -275,7 +277,7 @@
                                                 <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step3ComparingTextColor}" *ngIf="item.Step3ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step3ComparingPrice| NumbersPipe:'N2'}} %
+                                                            {{item.Step3ComparingPrice| NumbersPipe:'N1'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -303,7 +305,7 @@
                                                  <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step4ComparingTextColor}" *ngIf="item.Step4ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step4ComparingPrice| NumbersPipe:'N2'}} %
+                                                            {{item.Step4ComparingPrice| NumbersPipe:'N1'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -330,7 +332,7 @@
                                                  <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step5ComparingTextColor}" *ngIf="item.Step5ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step5ComparingPrice| NumbersPipe:'N2'}} %
+                                                            {{item.Step5ComparingPrice| NumbersPipe:'N1'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -357,7 +359,7 @@
                                                  <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step6ComparingTextColor}" *ngIf="item.Step6ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step6ComparingPrice| NumbersPipe:'N2'}} %
+                                                            {{item.Step6ComparingPrice| NumbersPipe:'N1'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -384,7 +386,7 @@
                                                 <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step7ComparingTextColor}" *ngIf="item.Step7ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step7ComparingPrice| NumbersPipe:'N2'}} %
+                                                            {{item.Step7ComparingPrice| NumbersPipe:'N1'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -412,7 +414,7 @@
                                                  <table>
                                                     <tr>
                                                         <td [ngStyle]="{color: item.Step8ComparingTextColor}" *ngIf="item.Step8ComparingPrice" style="width: 1px; font-size:10px; font-style:italic; padding-left:5px;">
-                                                            {{item.Step8ComparingPrice| NumbersPipe:'N2'}} %
+                                                            {{item.Step8ComparingPrice| NumbersPipe:'N1'}} %
                                                         </td>
 
                                                         <td style="width: 2px;">
@@ -435,13 +437,21 @@
                                     <!-- Tools Button -->
                                     <log-column [width]="'80'" [Editable]="true" [Alignment]="'right'">
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
-                                            <span class="CellSeparator" style="float: left;"></span>
-                                            <div style="width: 22px; float: left; height:20px; padding-top: 2px; display:block">
-                                                <IconButton [IsEnabled]="IsDraftVersion" [Name]="'Edit'" [IsSmall]="true" (click)="EditTariffButtonClicked(item)"></IconButton>
-                                            </div>
-                                            <div style="width: 22px; float: left; height:20px; padding-top: 2px; display:block">
-                                                <IconButton [IsEnabled]="IsDraftVersion" [Name]="'delete'" [IsSmall]="true" (click)="DeleteTariffButtonClicked(item)"></IconButton>
-                                            </div>
+                                            <div style="width: 100%; height: 100%; position: relative;">
+                                                <div class="LeftCenter" style="height: 20px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 4px;">
+                                                                <span class="CellSeparator"></span>
+                                                            </td>
+                                                            <td>
+                                                                <IconButton [IsEnabled]="IsDraftVersion" [Left]="3" [Name]="'Edit'" [IsSmall]="true" (click)="EditTariffButtonClicked(item)"></IconButton>
+                                                                <IconButton [IsEnabled]="IsDraftVersion" [Left]="3" [Name]="'delete'" [IsSmall]="true" (click)="DeleteTariffButtonClicked(item)"></IconButton>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    </div>
+                                                </div>
                                         </log-cell-template>
                                     </log-column>
 
@@ -479,8 +489,8 @@
                                     <div class="SimpleGridViewBody">
                                         <table>
                                             <tr class="SimpleGridViewRow" *ngFor="let item of DeletedTariffsLines">
-                                                <td class="GridViewCell" style="width: 30px;">
-                                                    <div></div>
+                                                <td class="GridViewCell" style="width: 60px;">
+                                                     <img class="CenterCenter" src="./Images/RedX.png" [title]="item.ErrorText" />
                                                 </td>
                                                 <td class="CellDisabled" style="width: 70px; text-align: left;">
                                                     {{item.OriginPortValue}}
