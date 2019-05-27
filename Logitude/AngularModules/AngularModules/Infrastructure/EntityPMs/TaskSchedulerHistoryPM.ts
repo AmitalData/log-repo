@@ -80,6 +80,11 @@ export class TaskSchedulerHistoryPM {
     public set LogFirstLine(newValue: string) { if (this.logFirstLine != newValue) { this.logFirstLine = newValue; this.MarkAsDirty("LogFirstLine"); } }
        
 	 
+    private duration: number;
+    public get Duration() { return this.duration; }
+    public set Duration(newValue: number) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
+       
+	 
 
     public OldEntityPM: TaskSchedulerHistoryPM;
 		
