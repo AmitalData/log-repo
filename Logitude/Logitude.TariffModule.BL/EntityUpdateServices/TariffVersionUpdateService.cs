@@ -79,6 +79,11 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     line.ErrorText = null;
                 }
 
+                if (iUniqueKey == null)
+                {
+                    iUniqueKey = "";
+                }
+
                 line.LineUniqueKey = iUniqueKey;
                 line.LineUniqueKeyText = iUniqueKey;
 
