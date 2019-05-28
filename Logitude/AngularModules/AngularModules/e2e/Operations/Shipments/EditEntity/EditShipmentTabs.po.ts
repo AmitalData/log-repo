@@ -48,19 +48,19 @@ export class EditTabsComponent {
     // this.QuickSearch.UseQuickSearch('SR1545342');
   }
 
-  EditTabs(shipperRef1:string,LogitudeShipType:string,ShipmentType: string) {
+  EditTabs(shipperRef1:string,ShipmentLevelCode:string,ShipmentType: string,Direction:string) {
 
 
     this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
-    this.GeneralTabScenario.GeneralTab(LogitudeShipType);
-    // this.OrderTabScenario.OrderTab(LogitudeShipType,ShipmentType);
-    // this.PartnersTabScenario.PartnersTab(LogitudeShipType);
-    // this.PackagesTabScenario.PackagesTab(LogitudeShipType,ShipmentType);
-    // this.RoutingTabScenario.RoutingTab(LogitudeShipType,ShipmentType);
-    // this.PayablesTabScenario.PayablesTab(shipperRef1);
-    // this.ReceivablesTabScenario.RecievablesTab(LogitudeShipType);
-    //this.DocsOutTabScenario.DocsOutTab();
-    if(LogitudeShipType=='M'){
+    this.GeneralTabScenario.GeneralTab(ShipmentLevelCode);
+    // this.OrderTabScenario.OrderTab(ShipmentLevelCode,ShipmentType);
+    // this.PartnersTabScenario.PartnersTab(ShipmentLevelCode);
+    // this.PackagesTabScenario.PackagesTab(ShipmentLevelCode,ShipmentType);
+    // this.RoutingTabScenario.RoutingTab(ShipmentLevelCode,ShipmentType,Direction);
+    this.PayablesTabScenario.PayablesTab(shipperRef1);
+    this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode);
+    // this.DocsOutTabScenario.DocsOutTab();
+    if(ShipmentLevelCode=='M'){
       this.ShipmentsTabScenario.ShipmentsTab();
     }
   }
