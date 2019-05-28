@@ -34,11 +34,15 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     IsCustomCombox: boolean = false;
     AutomationCondationFieldListFilterItems: ApiQueryFilters;
     CustomAutomationCondationFieldListFilterItems: ApiQueryFilters;
-   
+    SystemVariableOperatorLists: Operator[];
+    SelectedSystemVariableOperator: Operator;
+
+
+
 
    CurrentEntityType: string;
-    ObjectFieldId: string = "";
-
+   ObjectFieldId: string = "";
+   //IsSystemVariables: boolean = false;
     CustomObjectFieldId: string = "";
     AutomationHelper: AutomationHelper;
     constructor(entityPM: AutomationCondition, addEditAutomationsViewModel: any, delayAutomationconditionsViewModel = null) {
@@ -58,7 +62,9 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         this.DateTypeList.push(new Operator("Date", "Date"));
         this.SelectedDateType = this.DateTypeList[0];
         this.CurrentEntityType = this.AddEditAutomationsViewModel.CurrentEntityPM.Type;
-      
+        this.SystemVariableOperatorLists = [];
+        this.SystemVariableOperatorLists.push(new Operator("System User", "SystemUser"));
+
 
         if (this.ObjectFieldPM) {
             this.ChosenOperatorList(this.ObjectFieldPM.DataTypeCode, false, this.ObjectFieldPM);
@@ -129,8 +135,6 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         }
 
         if (this.SelectedOperator) {
-
-          
             this.BuildCustomFromFieldbjectFieldLists();
             if (this.HideGeneralControl(this.SelectedOperator.Code)) {
                 this.IsHideGeneralControl = true;
@@ -138,10 +142,14 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                 this.CurrentEntityPM.Value = "";
             }
 
-
-
+            if (this.SelectedOperator.Code == "EqualSystemVariable") {
+                this.SelectedSystemVariableOperator = this.SystemVariableOperatorLists.filter(d => d.Code == this.FieldValue)[0];
+                if (!this.SelectedSystemVariableOperator) {
+                    this.SelectedSystemVariableOperator = this.SystemVariableOperatorLists[0];
+                    this.AutomationHelper.ConditionValueChange(this.SelectedSystemVariableOperator.Code);
+                }
+            }
         }
-
 
         this.IsLoadOperatorList = true;
 
@@ -155,6 +163,17 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     }
 
    
+    get IsSystemVariables() {
+        var result = false;
+        if (this.SelectedOperator) {
+            if (this.SelectedOperator.Code == "EqualSystemVariable") result = true;
+        }
+
+        return result;
+
+
+    }
+
 
 
     InitLOVFilters() {
@@ -358,7 +377,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
     HideGeneralControl(operatorCode: string) {
         var result: boolean = false;
-        if (operatorCode == "CHANGED" || operatorCode == "ISEMPTY" || operatorCode == "ISNOTEMPTY" || operatorCode == "EqualSystemVariable") {
+        if (operatorCode == "CHANGED" || operatorCode == "ISEMPTY" || operatorCode == "ISNOTEMPTY") {
             result = true;
         }
 
@@ -377,6 +396,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
             if ((item.Code.indexOf("F") != -1 && this.SelectedOperator.Code.indexOf("F") == -1) || (item.Code.indexOf("F") == -1 && this.SelectedOperator.Code.indexOf("F") != -1)) {
                 this.FieldValue = "";
                 this.CurrentEntityPM.Value = "";
+                this.SelectedSystemVariableOperator = null;
             }
 
             this.SelectedOperator = item;
@@ -388,6 +408,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                 this.IsHideGeneralControl = true;
                 this.FieldValue = "";
                 this.CurrentEntityPM.Value = "";
+                this.SelectedSystemVariableOperator = null;
 
             } else {
                 this.IsHideGeneralControl = false;
@@ -454,6 +475,11 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     }
 
 
+    SystemVariableCondationValueChanged(value) {
+        this.AutomationHelper.SystemVariableCondationValueChanged(value);
+    }
+
+
     DateTypeListCondationValueChanged(value) {
 
         this.AutomationHelper.DateTypeListCondationValueChanged(value);
@@ -482,3 +508,5 @@ class Operator {
 
 
 }
+
+

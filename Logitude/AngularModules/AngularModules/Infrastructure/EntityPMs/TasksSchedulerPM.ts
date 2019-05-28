@@ -70,11 +70,6 @@ export class TasksSchedulerPM {
     public set NextRunTime(newValue: Date) { if (this.nextRunTime != newValue) { this.nextRunTime = newValue; this.MarkAsDirty("NextRunTime"); } }
        
 	 
-    private lastRunTime: Date;
-    public get LastRunTime() { return this.lastRunTime; }
-    public set LastRunTime(newValue: Date) { if (this.lastRunTime != newValue) { this.lastRunTime = newValue; this.MarkAsDirty("LastRunTime"); } }
-       
-	 
     private lastRunResult: string;
     public get LastRunResult() { return this.lastRunResult; }
     public set LastRunResult(newValue: string) { if (this.lastRunResult != newValue) { this.lastRunResult = newValue; this.MarkAsDirty("LastRunResult"); } }
@@ -165,11 +160,6 @@ export class TasksSchedulerPM {
     public set NextRunTimeUTC(newValue: Date) { if (this.nextRunTimeUTC != newValue) { this.nextRunTimeUTC = newValue; this.MarkAsDirty("NextRunTimeUTC"); } }
        
 	 
-    private lastRunTimeUTC: Date;
-    public get LastRunTimeUTC() { return this.lastRunTimeUTC; }
-    public set LastRunTimeUTC(newValue: Date) { if (this.lastRunTimeUTC != newValue) { this.lastRunTimeUTC = newValue; this.MarkAsDirty("LastRunTimeUTC"); } }
-       
-	 
     private startDateTimeUTC: Date;
     public get StartDateTimeUTC() { return this.startDateTimeUTC; }
     public set StartDateTimeUTC(newValue: Date) { if (this.startDateTimeUTC != newValue) { this.startDateTimeUTC = newValue; this.MarkAsDirty("StartDateTimeUTC"); } }
@@ -183,6 +173,36 @@ export class TasksSchedulerPM {
     private status: string;
     public get Status() { return this.status; }
     public set Status(newValue: string) { if (this.status != newValue) { this.status = newValue; this.MarkAsDirty("Status"); } }
+       
+	 
+    private retries: number;
+    public get Retries() { return this.retries; }
+    public set Retries(newValue: number) { if (this.retries != newValue) { this.retries = newValue; this.MarkAsDirty("Retries"); } }
+       
+	 
+    private duration: number;
+    public get Duration() { return this.duration; }
+    public set Duration(newValue: number) { if (this.duration != newValue) { this.duration = newValue; this.MarkAsDirty("Duration"); } }
+       
+	 
+    private lastRunEndTime: Date;
+    public get LastRunEndTime() { return this.lastRunEndTime; }
+    public set LastRunEndTime(newValue: Date) { if (this.lastRunEndTime != newValue) { this.lastRunEndTime = newValue; this.MarkAsDirty("LastRunEndTime"); } }
+       
+	 
+    private lastRunEndTimeUTC: Date;
+    public get LastRunEndTimeUTC() { return this.lastRunEndTimeUTC; }
+    public set LastRunEndTimeUTC(newValue: Date) { if (this.lastRunEndTimeUTC != newValue) { this.lastRunEndTimeUTC = newValue; this.MarkAsDirty("LastRunEndTimeUTC"); } }
+       
+	 
+    private lastRunStartTimeUTC: Date;
+    public get LastRunStartTimeUTC() { return this.lastRunStartTimeUTC; }
+    public set LastRunStartTimeUTC(newValue: Date) { if (this.lastRunStartTimeUTC != newValue) { this.lastRunStartTimeUTC = newValue; this.MarkAsDirty("LastRunStartTimeUTC"); } }
+       
+	 
+    private lastRunStartTime: Date;
+    public get LastRunStartTime() { return this.lastRunStartTime; }
+    public set LastRunStartTime(newValue: Date) { if (this.lastRunStartTime != newValue) { this.lastRunStartTime = newValue; this.MarkAsDirty("LastRunStartTime"); } }
        
 	 
     private schedulerDetailsData: any;

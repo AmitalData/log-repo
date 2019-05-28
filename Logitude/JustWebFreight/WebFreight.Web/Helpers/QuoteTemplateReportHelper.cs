@@ -2839,9 +2839,9 @@ namespace Logitude.BL.Helpers
                             string fixedPrice = " ";
                             if (chargePM.SaleMeasurementCode != "BCNT")
                             {
-                                if (chargePM.SaleAmountInSaleCurrency != null)
+                                if (chargePM.SaleTotalAmount != null)
                                 {
-                                    double value = (double)chargePM.SaleAmountInSaleCurrency;
+                                    double value = (double)chargePM.SaleTotalAmount;
                                     fixedPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
                             }
@@ -3077,8 +3077,8 @@ namespace Logitude.BL.Helpers
         {
             double value = 0;
             PackageType packageType = PackageTypeRepository.GetSinglePackageType(PackageTypeId, chargePM.Tenant, true);
-            string containerTypeCode = packageType.Code;
-            string Name = packageTypeQuantity != null ? packageTypeQuantity + " x " + containerTypeCode : " x " + containerTypeCode;
+            string printAs = packageType.PrintAs;
+            string name = packageTypeQuantity != null ? packageTypeQuantity + " x " + printAs : " x " + printAs;
 
             if (chargePM.SaleMeasurementCode == "BCNT" && packageTypeQuantity != null && saleUnitPriceInSaleCurrency != null)
             {
@@ -3095,7 +3095,7 @@ namespace Logitude.BL.Helpers
                     value = (double)chargePM.SaleAmountInSaleCurrency;
                 }
             }
-            AddPerContainerClassToLists(totalPerContainerClassLists, value, Name, fieldCode, chargePM);
+            AddPerContainerClassToLists(totalPerContainerClassLists, value, name, fieldCode, chargePM);
 
         }
         private static void AddPerContainerClassToLists(List<TotalPerContainerClass> totalPerContainerClassLists, double value, string name, string fieldCode, QuoteSaleChargePM chargePM)

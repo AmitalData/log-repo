@@ -85,6 +85,11 @@ export class StatePM {
     public set ComputedLocalName(newValue: string) { if (this.computedLocalName != newValue) { this.computedLocalName = newValue; this.MarkAsDirty("ComputedLocalName"); } }
        
 	 
+    private qBOTransactionLocationCode: string;
+    public get QBOTransactionLocationCode() { return this.qBOTransactionLocationCode; }
+    public set QBOTransactionLocationCode(newValue: string) { if (this.qBOTransactionLocationCode != newValue) { this.qBOTransactionLocationCode = newValue; this.MarkAsDirty("QBOTransactionLocationCode"); } }
+       
+	 
     private countryCode: string;
     public get CountryCode() { return this.countryCode; }
     public set CountryCode(newValue: string) { if (this.countryCode != newValue) { this.countryCode = newValue; this.MarkAsDirty("CountryCode"); } }

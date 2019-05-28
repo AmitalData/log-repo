@@ -19,30 +19,33 @@ export class AutomationHelper   {
 
     LogLovCondationValueChange(value, otherValue:string = null) {
         var newValue: string = value ? !AppTool.IsNullOrEmpty(value.Id) ? value.Id : value.Code : "";
+        this.ConditionValueChange(newValue);
 
-        if (newValue != this.CurrentEntityPM.Value) {
-
-            this.CurrentEntityPM.Value = newValue;
-            if (this.Type == "Condation") {
-                this.AddEditAutomationsViewModel.IsChangeCondition = true;
-            } else {
-                this.AddEditAutomationsViewModel.IsChangeSetValue = true;
-            }
-        }
     }
 
     ObjectFieldCondationValueChange(value) {
         var newValue: string = value ? !AppTool.IsNullOrEmpty(value.Id) ? value.Id : "" : "";
-        if (newValue != this.CurrentEntityPM.Value) {
-            this.CurrentEntityPM.Value = newValue;
+        this.ConditionValueChange(newValue);
+    }
 
+    ConditionValueChange(newValue: string) {
+        if (newValue != this.CurrentEntityPM.Value) {
+
+            this.CurrentEntityPM.Value = newValue;
             if (this.Type == "Condation") {
                 this.AddEditAutomationsViewModel.IsChangeCondition = true;
             } else {
                 this.AddEditAutomationsViewModel.IsChangeSetValue = true;
             }
         }
+
     }
+
+    SystemVariableCondationValueChanged(value) {
+        var newValue: string = value ? value.Code : "";
+        this.ConditionValueChange(newValue);
+    }
+
 
 
     TextBoxCondationValueChange(value) {
@@ -58,20 +61,11 @@ export class AutomationHelper   {
         if (value) {
 
             var newValue = this.ViewModel.SelectedDateType.Name + "*" + FieldValueResolver.ConvertUTCDateToString(value, "Automation");
-            if (newValue != this.CurrentEntityPM.Value) {
-                this.CurrentEntityPM.Value = newValue;
-                if (this.Type == "Condation") this.AddEditAutomationsViewModel.IsChangeCondition = true;
-                else this.AddEditAutomationsViewModel.IsChangeSetValue = true;
-            
-            }
+            this.ConditionValueChange(newValue);
         }
         else {
             var newValue = this.ViewModel.SelectedDateType.Name + "*";
-            if (newValue != this.CurrentEntityPM.Value) {
-                this.CurrentEntityPM.Value = newValue;
-                if (this.Type == "Condation") this.AddEditAutomationsViewModel.IsChangeCondition = true;
-                else this.AddEditAutomationsViewModel.IsChangeSetValue = true;
-            }
+            this.ConditionValueChange(newValue);
         }
     }
 
