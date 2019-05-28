@@ -900,17 +900,21 @@ namespace Logitude.BL.InvoiceModel.Tools
 					Profact.TimbraCFDI33.ComprobanteConceptoImpuestosRetencion retencion = new Profact.TimbraCFDI33.ComprobanteConceptoImpuestosRetencion()
 					{
 						Impuesto = "002",
-						TipoFactor = (line.VatPercentage == 0 ? "Exento" : "Tasa"),
-						TasaOCuota = (line.VatPercentage != null ? decimal.Parse(StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8)) : 0),//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
-						Importe = GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(((line.InvoiceCurrencyAmount != null ? (line.InvoiceCurrencyAmount.Value) : 0) * ((line.VatPercentage != null ? line.VatPercentage.Value : 0) / 100))), 2)),
+                        Importe = GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(((line.InvoiceCurrencyAmount != null ? (line.InvoiceCurrencyAmount.Value) : 0) * ((line.VatPercentage != null ? line.VatPercentage.Value : 0) / 100))), 2)),
 					};
 
 					//VatType lineVatType = vatTypes.FirstOrDefault(v => v.Id == line.VatTypeId);
 					if (lineVatType.Code != "EXMPT")
 					{
-
-						retencion.Base = GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? (decimal)line.InvoiceCurrencyAmount.Value : 0)));//retencion.Importe;
+                        retencion.Base = GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? (decimal)line.InvoiceCurrencyAmount.Value : 0)));//retencion.Importe;
+                        retencion.TipoFactor = (line.VatPercentage == 0 ? "Exento" : "Tasa");
+                        retencion.TasaOCuota = (line.VatPercentage != null ? decimal.Parse(StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8)) : 0);//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0)
 					}
+                    else
+                    {
+                        retencion.TipoFactor =  "Tasa";
+                        retencion.TasaOCuota =  decimal.Parse(StringHelper.StringPadRight((Math.Abs(0 / 100).ToString()), '0', 8));//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0)
+                    }
 
 					lineRetencions.Add(retencion);
 				}
@@ -1015,17 +1019,22 @@ namespace Logitude.BL.InvoiceModel.Tools
 						Profact.TimbraCFDI33.ComprobanteConceptoImpuestosRetencion retencion = new Profact.TimbraCFDI33.ComprobanteConceptoImpuestosRetencion()
 						{
 							Impuesto = "002",
-							TipoFactor = (lineTotal.VATPercent == 0 ? "Exento" : "Tasa"),
-							TasaOCuota = (lineTotal.VATPercent != null ? decimal.Parse(StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8)) : 0),//(lineTotal.VatTypePercentage != null ? (decimal)(Math.Abs(lineTotal.VatTypePercentage.Value / 100)) : 0),
 							Importe = GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(lineTotal.InvoiceCurrencyVATAmount != null ? lineTotal.InvoiceCurrencyVATAmount.Value : 0), 2)),//Math.Abs(((lineTotal.InvoiceCurrencyAmount != null ? ((decimal)lineTotal.InvoiceCurrencyAmount.Value) : 0) * ((lineTotal.VATPercent != null ? (decimal)lineTotal.VATPercent.Value : 0) / 100))),
 						};
 
 						if (lineVatType.Code != "EXMPT")
 						{
 							retencion.Base = GetDecimalWith2DigitsAfterPoint(Math.Abs((lineTotal.InvoiceCurrencyVatableAmount != null ? (decimal)lineTotal.InvoiceCurrencyVatableAmount.Value : 0)));//retencion.Importe;
-						}
+                            retencion.TipoFactor = (lineTotal.VATPercent == 0 ? "Exento" : "Tasa");
+                            retencion.TasaOCuota = (lineTotal.VATPercent != null ? decimal.Parse(StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8)) : 0);//(lineTotal.VatTypePercentage != null ? (decimal)(Math.Abs(lineTotal.VatTypePercentage.Value / 100)) : 0),
+                        }
+                        else
+                        {
+                            retencion.TipoFactor = "Tasa";
+                            retencion.TasaOCuota = (lineTotal.VATPercent != null ? decimal.Parse(StringHelper.StringPadRight((Math.Abs(0 / 100).ToString()), '0', 8)) : 0);//(lineTotal.VatTypePercentage != null ? (decimal)(Math.Abs(lineTotal.VatTypePercentage.Value / 100)) : 0),
+                        }
 
-						lineRetencions.Add(retencion);
+                        lineRetencions.Add(retencion);
 					}
 				}
 
@@ -1112,8 +1121,6 @@ namespace Logitude.BL.InvoiceModel.Tools
 					Profact.TimbraCFDI33.ComprobanteConceptoImpuestosRetencion retencion = new Profact.TimbraCFDI33.ComprobanteConceptoImpuestosRetencion()
 					{
 						Impuesto = "002",
-						TipoFactor = (line.VatPercentage == 0 ? "Exento" : "Tasa"),
-						TasaOCuota = (line.VatPercentage != null ? decimal.Parse(StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8)) : 0),//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
 						Importe = GetImporte(line.InvoiceCurrencyAmount, line.VatPercentage),//GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(((line.InvoiceCurrencyAmount != null ? (line.InvoiceCurrencyAmount.Value) : 0) * ((line.VatPercentage != null ? line.VatPercentage.Value : 0) / 100))), 2)),
 					};
 
@@ -1122,9 +1129,18 @@ namespace Logitude.BL.InvoiceModel.Tools
 					{
 
 						retencion.Base = GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? (decimal)line.InvoiceCurrencyAmount.Value : 0)));//retencion.Importe;
+                        retencion.TipoFactor = (line.VatPercentage == 0 ? "Exento" : "Tasa");
+						retencion.TasaOCuota = (line.VatPercentage != null ? decimal.Parse(StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8)) : 0);//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
+						
 					}
+                    else
+                    {
+                        retencion.TipoFactor = "Tasa";
+                        retencion.TasaOCuota = (line.VatPercentage != null ? decimal.Parse(StringHelper.StringPadRight((Math.Abs(0 / 100).ToString()), '0', 8)) : 0);//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
+						
+                    }
 
-					lineRetencions.Add(retencion);
+                    lineRetencions.Add(retencion);
 				}
 			}
 			else
@@ -1227,17 +1243,24 @@ namespace Logitude.BL.InvoiceModel.Tools
 						Profact.TimbraCFDI33.ComprobanteConceptoImpuestosRetencion retencion = new Profact.TimbraCFDI33.ComprobanteConceptoImpuestosRetencion()
 						{
 							Impuesto = "002",
-							TipoFactor = (lineTotal.VATPercent == 0 ? "Exento" : "Tasa"),
-							TasaOCuota = (lineTotal.VATPercent != null ? decimal.Parse(StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8)) : 0),//(lineTotal.VatTypePercentage != null ? (decimal)(Math.Abs(lineTotal.VatTypePercentage.Value / 100)) : 0),
-							Importe = (decimal)lineTotal.InvoiceCurrencyVATAmount,//GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(lineTotal.InvoiceCurrencyVATAmount != null ? lineTotal.InvoiceCurrencyVATAmount.Value : 0), 2)),//Math.Abs(((lineTotal.InvoiceCurrencyAmount != null ? ((decimal)lineTotal.InvoiceCurrencyAmount.Value) : 0) * ((lineTotal.VATPercent != null ? (decimal)lineTotal.VATPercent.Value : 0) / 100))),
+                            Importe = (decimal)lineTotal.InvoiceCurrencyVATAmount,//GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(lineTotal.InvoiceCurrencyVATAmount != null ? lineTotal.InvoiceCurrencyVATAmount.Value : 0), 2)),//Math.Abs(((lineTotal.InvoiceCurrencyAmount != null ? ((decimal)lineTotal.InvoiceCurrencyAmount.Value) : 0) * ((lineTotal.VATPercent != null ? (decimal)lineTotal.VATPercent.Value : 0) / 100))),
 						};
 
 						if (lineVatType.Code != "EXMPT")
 						{
 							retencion.Base = GetDecimalWith2DigitsAfterPoint(Math.Abs((lineTotal.InvoiceCurrencyVatableAmount != null ? (decimal)lineTotal.InvoiceCurrencyVatableAmount.Value : 0)));//retencion.Importe;
+                            retencion.TipoFactor = (lineTotal.VATPercent == 0 ? "Exento" : "Tasa");
+                            retencion.TasaOCuota = (lineTotal.VATPercent != null ? decimal.Parse(StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8)) : 0);//(lineTotal.VatTypePercentage != null ? (decimal)(Math.Abs(lineTotal.VatTypePercentage.Value / 100)) : 0),
+							
 						}
+                        else
+                        {
+                            retencion.TipoFactor = "Tasa";
+                            retencion.TasaOCuota = (lineTotal.VATPercent != null ? decimal.Parse(StringHelper.StringPadRight((Math.Abs(0 / 100).ToString()), '0', 8)) : 0);//(lineTotal.VatTypePercentage != null ? (decimal)(Math.Abs(lineTotal.VatTypePercentage.Value / 100)) : 0),
 
-						lineRetencions.Add(retencion);
+                        }
+
+                        lineRetencions.Add(retencion);
 					}
 				}
 
