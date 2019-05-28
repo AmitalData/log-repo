@@ -96,7 +96,7 @@ export class ShipmentsEventsListFilterComponent extends BaseComponent {
     }
 
     UserId: string;
-    RunReport() {
+    RunReport(isloading: boolean) {
 
         this.Validate();
         //this.SetUIProperties();
