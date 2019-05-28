@@ -37,7 +37,7 @@ export class ShipmentsEventsListFilterComponent extends BaseComponent {
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-       // this.RunReport(false);
+       
     }
 
 
@@ -96,7 +96,7 @@ export class ShipmentsEventsListFilterComponent extends BaseComponent {
     }
 
     UserId: string;
-    RunReport(isloading: boolean) {
+    RunReport() {
 
         this.Validate();
         //this.SetUIProperties();
