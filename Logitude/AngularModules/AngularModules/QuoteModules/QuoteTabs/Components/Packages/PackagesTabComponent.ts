@@ -350,6 +350,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
             this.ComputeDimFactor();
             this.OnMeasurmentsSettingsChanged();
+            this.ChargeableWeight_Kg();
         }
     }
 
@@ -854,6 +855,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         this.ComputeGrossWeigh_Kg_Ton();
+        this.ChargeableWeight_Kg();
         QuoteTool.OnQuoteQuantitiesChanged(this.EntityPM);
 
         this.SetUIProperties_Totals();
@@ -899,7 +901,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         if (this.EntityPM.ChargeableWeight != newValue) {
             var result = AppTool.Round(newValue, 2);
             this.EntityPM.ChargeableWeight = result;
-
+            this.ChargeableWeight_Kg();
             if (this.EntityPM.QuotePackages.length == 0) {
                 if (this.GrossWeight == null && this.EntityPM.VolumetricWeight == null) {
                     this.EntityPM.VolumetricWeight = result;
@@ -1030,6 +1032,29 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         this.EntityPM.GrossWeightInKG = weigh_Kg;
         this.EntityPM.GrossWeightPerTon = weigh_Ton;
+    }
+    ChargeableWeight_Kg() {
+        var weigh_Kg: number = null;
+        var weigh_Ton: number = null;
+
+        if (this.ChargeableWeight != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.ChargeableWeightUnitCode)) {
+                switch (this.ChargeableWeightUnitCode.toUpperCase()) {
+                    case "KG": { factorOfConvert = 1; break; }
+                    case "LB": { factorOfConvert = 0.45359237; break; }
+                    case "MT": { factorOfConvert = 1000; break; }
+                }
+            }
+
+            weigh_Kg = this.ChargeableWeight * factorOfConvert;
+        }
+
+        if (weigh_Kg != null) {
+            weigh_Kg = AppTool.Round(weigh_Kg, 3);
+        }
+        this.EntityPM.ChargeableWeightInKG = weigh_Kg;
     }
     AddPackageClicked() {
         var itemPM = new QuotePackagePM(null);

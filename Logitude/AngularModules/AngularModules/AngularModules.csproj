@@ -59,16 +59,19 @@
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageLineListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\ReconcileExternalPageListTemplate.html" />
     <Content Include="Accounting\Components\ListTemplates\TaxReportListTemplate.html" />
+    <Content Include="Accounting\Components\Maintenance\AccountingFunctionalTestComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingPeriodEventComponent.html" />
     <Content Include="Accounting\Components\Maintenance\EditAccountingPeriodComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AccountingPeriodsComponent.html" />
     <Content Include="Accounting\Components\Maintenance\FullAccountingSettingsComponent.html" />
     <Content Include="Accounting\Components\Maintenance\AutoRecoMethodComponent.html" />
+    <Content Include="Accounting\Components\Maintenance\Generate1000Component.html" />
     <Content Include="Accounting\Components\Maintenance\NewCategory3Component.html" />
     <Content Include="Accounting\Components\Maintenance\NewCategory4Component.html" />
     <Content Include="Accounting\Components\Maintenance\NewCategory5Component.html" />
     <Content Include="Accounting\Components\Maintenance\NewCategory2Component.html" />
+    <Content Include="Accounting\Components\Maintenance\Receiving1000Component.html" />
     <Content Include="Accounting\Components\Maintenance\YearTransferComponent.html" />
     <Content Include="Accounting\Components\Maintenance\NewTaxWithholdingAssessingOfficeComponent.html" />
     <Content Include="Accounting\Components\NewEntity\AddEditRecoExPageComponent.html" />
@@ -104,6 +107,7 @@
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
+    <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerCustomsAgentByProductSplitComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerForwarderByProductSplitComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerMediatorByProductSplitComponent.html" />
@@ -370,7 +374,10 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\ListTemplates\TaxReportListTemplate.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingFunctionalTestComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Maintenance\AccountingLoadTestComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Maintenance\Generate1000Component.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Maintenance\Receiving1000Component.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\OpenFormatReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\MenuButtons\TaxDeductionReportMenuButtonsHandler.ts" />
     <TypeScriptCompile Include="Accounting\Components\NewEntity\LoadRecoExPageComponent.ts" />
@@ -397,7 +404,9 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\AccountingIntegrityCheckPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\JournalAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
+    <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\Depositions\EditTab\CustomsShipperGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.ts" />
@@ -711,6 +720,13 @@
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\NewEntity\NewChartOfAccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\New\NewGLAccount-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\New\NewGLAccount.ts" />
+    <TypeScriptCompile Include="e2e\LogBox\Helpers\FieldsHelper.ts" />
+    <TypeScriptCompile Include="e2e\LogBox\Helpers\GeneralFunctions.ts" />
+    <TypeScriptCompile Include="e2e\LogBox\Login\Login.e2e-spec.ts" />
+    <TypeScriptCompile Include="e2e\LogBox\Login\Login.po.ts" />
+    <TypeScriptCompile Include="e2e\LogBox\Shipments\CreateLogboxShipment.ts" />
+    <TypeScriptCompile Include="e2e\LogBox\Shipments\ShipmentSearch.e2e-spec.ts" />
+    <TypeScriptCompile Include="e2e\LogBox\Shipments\ShipmentSearch.ts" />
     <TypeScriptCompile Include="e2e\Report\Report-spec.ts" />
     <TypeScriptCompile Include="e2e\Report\ReportGenerator.ts" />
     <TypeScriptCompile Include="e2e\Report\ReportSearch.ts" />
@@ -893,6 +909,7 @@
     <Content Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.html" />
+    <Content Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.html" />
     <Content Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.html" />
     <Content Include="Report\Components\Workspaces\BIFolderReportComponent.html" />
     <Content Include="Report\Components\Workspaces\BIReportComponent.html" />
@@ -3329,6 +3346,7 @@
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Accounting\VendorChargesAnalysisFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\CRM\UsersByTenantReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\LicenseManagementFilterComponent.ts" />
+    <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\UnicargoExportReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FiltersComponent\Operational\VehiclesFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\BIFolderReportComponent.ts" />
     <TypeScriptCompile Include="Report\Components\Workspaces\BIReportComponent.ts" />
@@ -6545,6 +6563,7 @@
     <Content Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehiclesSelectionComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\DeleteVehicleComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\SendVehicleComponent.js.map" />
+    <Content Include="e2e\LogBox\tsconfig.e2e.json" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />
@@ -7151,6 +7170,7 @@
     <Folder Include="Dashboard\Components\Graphs\" />
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\CRM\Quotes\" />
+    <Folder Include="e2e\LogBox\Documents\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
     <Folder Include="Logitude\Components\Customization\" />

@@ -67,7 +67,7 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
         [Column("LastVersion")]
 	    public int LastVersion { get; set; }
         [Column("ContractNumber")]
-	    public int? ContractNumber { get; set; }
+	    public string ContractNumber { get; set; }
         [Column("TariffNumber")]
 	    public string TariffNumber { get; set; }
         [ForeignKey("Surcharge1I")]

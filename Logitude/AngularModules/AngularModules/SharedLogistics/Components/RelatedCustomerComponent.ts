@@ -154,6 +154,26 @@ export class RelatedCustomerComponent extends BaseComponent{
         filters.PageIndex = 0;
         filters.SortBy = "CreateDateTime";
         filters.SortDirection = "Descending";
+        var TodayDate = DateTool.TruncateTime(new Date());
+        var YesterdayDate = DateTool.AddDays(DateTool.GetDateParts(new Date()).DateObject, -1);
+        var LastSevenDaysDate = DateTool.AddDays(DateTool.GetDateParts(new Date()).DateObject, -7)
+        var LastThirtyDaysDate = DateTool.AddDays(DateTool.GetDateParts(new Date()).DateObject, -30);
+        var value: Date;
+        if ($event.Name == "Today") {
+            value = TodayDate;
+        }
+        else if ($event.Name == "Last Week") {
+            value = LastSevenDaysDate;
+        }
+        else if ($event.Name == "Last Month") {
+            value = LastThirtyDaysDate;
+        }
+
+        filters.addAdditionalFilter("CreateDateTime", value, null, null, "GreaterThanOrEqual", false, true, false, "datetime");
+
+
+
+
         service.getByFilters(filters).subscribe(result => {
             this.QueryObsList = result.Result;
         });
@@ -279,6 +299,7 @@ export class RelatedCustomerComponent extends BaseComponent{
         }
         else if (this.SelectedTabCode == "Q") {
             this.BatchTitle = "Card " + this.SelectedItem.EntityPM.CustomerCode + " - " + this.SelectedItem.CustomerName + " Queues History (last 100) ";
+            this.QueriesSelectedChange(this.SelectedQueryItem);
         }
     }
     public get SelectedItem() { return this.selectedItem; }

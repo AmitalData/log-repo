@@ -30,6 +30,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -1644,26 +1645,29 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(a);
                         myStringBuilder.Append('0', 17);
                     }
-
-
-
-                    if (line.UnitPrice != null)
+                    if(line.Quantity == null || line.Quantity == 0)
                     {
-                        string UnitPrice = Format((decimal)line.UnitPrice); // line.UnitPrice.ToString();
+                        line.Quantity = 1;
+                    }
+                    double? UnitPrice = line.LocalCurrencyAmount / line.Quantity;
 
-                        if (line.UnitPrice < 0)
+                    if (UnitPrice != null)
+                    {
+                        string unitPrice = Format((decimal)UnitPrice); // line.UnitPrice.ToString();
+
+                        if (UnitPrice < 0)
                         {
                             myStringBuilder.Append(a);
                             myStringBuilder.Append("-");
-                            if (UnitPrice.Length > 14) { UnitPrice = UnitPrice.Substring(0, 14); }
-                            myStringBuilder.Append( UnitPrice.PadLeft(14, '0'));
+                            if (unitPrice.Length > 14) { unitPrice = unitPrice.Substring(0, 14); }
+                            myStringBuilder.Append( unitPrice.PadLeft(14, '0'));
                         }
-                        else if (line.UnitPrice > 0)
+                        else if (UnitPrice > 0)
                         {
                             myStringBuilder.Append(a);
                             myStringBuilder.Append("+");
-                            if (UnitPrice.Length > 14) { UnitPrice = UnitPrice.Substring(0, 14); }
-                            myStringBuilder.Append( UnitPrice.PadLeft(14, '0'));
+                            if (unitPrice.Length > 14) { unitPrice = unitPrice.Substring(0, 14); }
+                            myStringBuilder.Append( unitPrice.PadLeft(14, '0'));
                         }
                        
                     }
@@ -3359,7 +3363,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 BankAccountPM bankAccountPM = bankAccountQueryService.GetSingle(item.CustomerVendorName, false, false);
                 if (bankAccountPM != null)
                 {
-                    item.CustomerVendorName = bankAccountPM.LocalName;
+                    item.CustomerVendorName = bankAccountPM.LocalName != null? bankAccountPM.LocalName : bankAccountPM.EnglishName;
 
                 }
                 else item.CustomerVendorName = null;
@@ -4007,7 +4011,6 @@ namespace Logitude.Accounting.BL.CoreBL
             DepositTotalRecords = DepositC100.Count();
             APinvoiceTotalRecords = APC100.Count();
 
-            
 
 
 
@@ -4069,8 +4072,8 @@ namespace Logitude.Accounting.BL.CoreBL
         private   DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines, OpenFormatReportPM openFormatReport, bool isFromWR = false)
         {
             // prepare file string
-            string file = string.Join(Environment.NewLine, lines);
-
+            string file = lines.ToString();// string.Join(Environment.NewLine, lines);
+          
             // create document
             int tenant = openFormatReport.Tenant;
             ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
@@ -4127,9 +4130,27 @@ namespace Logitude.Accounting.BL.CoreBL
                 SecurityId = "100",
                 FileName = "BKMVDATA",
             };
+          
+            MemoryStream memstream = new MemoryStream();
+           
+            StreamReader sr = new StreamReader(file);
+            StreamWriter sw = new StreamWriter(memstream,  Encoding.Default);
+         
 
-            byte[] bytearray = Encoding.Unicode.GetBytes(file);
+            sw.WriteLine(sr.ReadToEnd());
+
+          
+   
+            sw.Close();
+            sr.Close();
+
+
+
+            byte[] bytearray =  memstream.ToArray(); 
             document.FileData = bytearray;
+
+
+
             docService.Create(document, document.FileData, contact.Id);
 
 
@@ -4914,6 +4935,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             string formated = Math.Abs(value).ToString().Replace(".", string.Empty);
             string[] sub = value.ToString().Split('.');
+          
             if (quantity)
             {
                 formated = formated + "00";
@@ -4927,9 +4949,9 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 formated = "0"+ formated  ;
             }
-            else if ((sub.Count() > 1) && !isVat && sub[1] != "00")
+            else if (sub.Length > 1 && sub[1].Length == 1)
             {
-                formated =  formated + "0";
+                formated = formated + "0";
             }
 
 

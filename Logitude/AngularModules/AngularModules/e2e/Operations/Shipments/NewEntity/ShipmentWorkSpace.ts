@@ -41,10 +41,10 @@ export class ShipmentWorkSpace {
     this.ShipmentMenuButtons = new ShipmentHelper();
   }
 
-  CreateShipment(LogitudeShipType: string, Direction: string, TransportMode: string, ShipmentType: string) {
-    this.DirectShipment.CreateAndCloseNewShipment();
+  CreateShipment(ShipmentLevelCode: string, Direction: string, TransportMode: string, ShipmentType: string) {
+    this.DirectShipment.CreateAndCloseNewShipment('NEWDIRECT','ShipmentCancelbtn');
 
-    if (LogitudeShipType == 'D') {
+    if (ShipmentLevelCode == 'D') {
       if (TransportMode == 'A') {
         var shipperRef1 = this.GeneralFunction.RandomNum();
         this.DirectShipment.CreateDirectShipment(shipperRef1, Direction, TransportMode, ShipmentType);
@@ -52,7 +52,7 @@ export class ShipmentWorkSpace {
 
         
         this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
-        this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType);
+        this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
 
       }
       else if ((TransportMode == 'O' || TransportMode == 'I') && ShipmentType != '') {
@@ -61,7 +61,7 @@ export class ShipmentWorkSpace {
         this.Helper.WaitBusyIndicator();
 
         this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
-        this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType);
+        this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
       }
       // this.ShipmentMenuButtons.OperationalCloseShipment();
       // this.ShipmentMenuButtons.AccountingCloseShipment();
@@ -69,23 +69,26 @@ export class ShipmentWorkSpace {
       // this.ShipmentMenuButtons.OperationalReopenShipment();
       // this.ShipmentMenuButtons.CopyShipment();
     }
-    else if (LogitudeShipType == 'H') {
+    else if (ShipmentLevelCode == 'H') {
 
       var shipperRef1 = this.GeneralFunction.RandomNum();
-      this.HouseShipment.CreateHouseShipment(shipperRef1, LogitudeShipType, Direction, TransportMode, ShipmentType);// Create shipment 
+      this.HouseShipment.CreateHouseShipment(shipperRef1, ShipmentLevelCode, Direction, TransportMode, ShipmentType);// Create shipment 
       this.Helper.WaitBusyIndicator();
 
       this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
-      this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType);
+      this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
 
     }
-    else if (LogitudeShipType == 'M') {
+    else if (ShipmentLevelCode == 'M') {
+    // this.DirectShipment.CreateAndCloseNewShipment('NEWMASTER','MasterCancelbtn');
+    // this.Helper.WaitBusyIndicator();
+
       var shipperRef1 = this.GeneralFunction.RandomNum();
-      this.MasterShipment.CreateMasterShipment(shipperRef1, LogitudeShipType, Direction, TransportMode, ShipmentType);// Create shipment 
+      this.MasterShipment.CreateMasterShipment(shipperRef1, ShipmentLevelCode, Direction, TransportMode, ShipmentType);// Create shipment 
       this.Helper.WaitBusyIndicator();
 
       this.GeneralFunction.UseSearchBox('Shipment_Search', shipperRef1);
-      this.EditShipmentTabs.EditTabs(shipperRef1, LogitudeShipType, ShipmentType);
+      this.EditShipmentTabs.EditTabs(shipperRef1, ShipmentLevelCode, ShipmentType,Direction);
     }
 
   }

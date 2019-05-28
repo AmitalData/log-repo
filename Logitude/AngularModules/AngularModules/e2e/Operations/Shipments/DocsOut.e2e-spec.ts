@@ -21,13 +21,14 @@ describe('DocsOut', () => {
   });
 
 
-  it('Send Docs Out of Shipment To A User', function () {
+  it('Send Docs Out of Shipment To A User Successfully', function () {
     login.navigateTo('https://test.logitudeworld.com/test');
     login.DoLogin('raghad@protractor.com', '!RS123Rs');
     NewDirectShipment.DoOperations();
     docsOutTab.DocsOutTab();
     docsOutTab.QuickSearchDocOut('BRCL-S-DocsOut', 'BRCL-L-DocsOut', 'BOOKING REQUEST ');
     sendMailPopup.sendEmailToFirstUser();
+  //  sendMailPopup.isSendingCompleted('SendDocumentSucceededDiv');
   });
 
   it('Successfully Printing Document', function () {

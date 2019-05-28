@@ -394,7 +394,7 @@ namespace WebFreight.Web.WebServices
                 int numberofpackages = shipment.NumberOfPackages != null ? shipment.NumberOfPackages.Value : 0;
                 int numberofcontainers = shipment.NumberOfContainers != null ? shipment.NumberOfContainers.Value : 0;
 
-                myDataProvider.TotalQuantity = (numberofpackages + numberofcontainers).ToString();
+                myDataProvider.TotalQuantity = MethodHelper.IsLCLEntity(shipment.TransportModeId, shipment.ShipmentTypeId) ? numberofpackages.ToString() : numberofcontainers.ToString();
                 myDataProvider.TotalVolume = shipment.Volume != null && shipment.Volume != 0 ? shipment.Volume + " " + (volumeUnitCode) : "";
                 myDataProvider.TotalVolumetricWeight = shipment.VolumetricWeight != null && shipment.VolumetricWeight != 0 ? shipment.VolumetricWeight + " " + (volumetricUnitCode) : "";
 

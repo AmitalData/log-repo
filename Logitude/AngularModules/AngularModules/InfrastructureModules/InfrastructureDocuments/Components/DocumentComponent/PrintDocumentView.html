@@ -66,6 +66,8 @@
             <div style="height:100%">
 
                 <div style="height:5px;"></div>
+                <div id="{{'BuildDocumentSucceededDiv ' | IdGeneratorPipe}}" *ngIf="IsDocumentBuildSucceeded" style="width:0px;height:0px;"></div>
+                <div id="{{'BuildDocumentFailedDiv ' | IdGeneratorPipe}}" *ngIf="IsDocumentBuildFailed" style="width:0px;height:0px;"></div>
 
                 <div *ngIf="LastBuildDateVisible" style="height:30px;border-radius:5px;width:100%;background-color:#FFF9A8;border:2px solid #FFDEA1">
                     <table>
@@ -173,6 +175,7 @@
                                                     </table>
                                                 </button>
 
+                                            
 
                                             </td>
 

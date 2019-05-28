@@ -23,7 +23,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime? NextRunTime { get; set; }
-        public DateTime? LastRunTime { get; set; }
         public string LastRunResult { get; set; }
         public bool InActive  { get; set; }
         public string ServiceClassName { get; set; }
@@ -44,12 +43,16 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string Type { get; set; }
         public string SchedulerDetailsXML { get; set; }
         public DateTime? NextRunTimeUTC { get; set; }
-        public DateTime? LastRunTimeUTC { get; set; }
         public DateTime? StartDateTimeUTC { get; set; }
         public int Version { get; set; }
         public string Status { get; set; }
         public int Retries { get; set; }
+        public double Duration { get; set; }
 
+        public DateTime? LastRunEndTime { get; set; }
+        public DateTime? LastRunEndTimeUTC { get; set; }
+        public DateTime? LastRunStartTimeUTC { get; set; }
+        public DateTime? LastRunStartTime { get; set; }
 
         [DataMember]
         public SchedulerDetails SchedulerDetailsData { get; set; }

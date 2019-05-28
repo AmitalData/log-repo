@@ -122,8 +122,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                         SecurityUtility.AuthenticationOnTenant(tenant);
                         SecurityUtility.CheckContactFeature("Shipment", "NEW", tenant);
+						SecurityUtility.AuthenticationOnEntityTenant("Shipment", entityPM.Tenant, authToken.Tenant);
 
-                        IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
+						IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
@@ -159,8 +160,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                         SecurityUtility.AuthenticationOnTenant(tenant);
                         SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
+						SecurityUtility.AuthenticationOnEntityTenant("Shipment", entityPM.Tenant, authToken.Tenant);
 
-                        IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
+
+						IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Update(true);
 

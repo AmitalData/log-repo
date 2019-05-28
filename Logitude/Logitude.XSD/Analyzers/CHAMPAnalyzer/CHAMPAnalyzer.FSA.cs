@@ -54,6 +54,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     myMaster = "0" + myMaster;
                 }
             }
+
+            if (!string.IsNullOrEmpty(myPrefix) && !string.IsNullOrEmpty(myMaster))
+            {
+                myLongMaster = myPrefix + "-" + myMaster;
+            }
         }
 
         private void AnalyzeMessageQueue_FSA(ShipmentPM entityPM, IShipmentsContext myContext)

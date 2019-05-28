@@ -23,7 +23,17 @@ export class SendMailPopup {
         browser.executeScript('arguments[0].click();', element(by.id('SendMessageToCheckBox')).getWebElement());
         this.helper.WaitByIdAndClick('SaveSendMessageTobtn');
         this.helper.WaitByIdAndClick('SendMessagebtn');
+
+        
     }
+
+   // isSendingCompleted(expectedId) {
+      //  this.helper.waitElementByIDPresence(expectedId);
+        //if(closePopup) {
+          // this.helper.WaitByCssStringAndClick('.Button', 'Close');
+      // }   
+
+
 }
 
 //here we need to make sure that the mail send successfully or not there div insife msg pop up 

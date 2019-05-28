@@ -12,6 +12,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityLists;
 using System.Transactions;
 using Logitude.Server.Tools.Helpers;
+using System.IO;
 
 namespace Logitude.BL.GlobalModel
 {
@@ -85,11 +86,30 @@ namespace Logitude.BL.GlobalModel
                         analyzeQueue.ObjectTableName = commLog.ObjectTable != null ? commLog.ObjectTable.Name : null;
                     }
 
-                    string str = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
-                    analyzeQueue.MessageBodyString = str;
+					bool displayFileBody = true;
+					if (!string.IsNullOrEmpty(analyzeQueue.FileName)) {
+						string extention = Path.GetExtension(analyzeQueue.FileName);
+						if (extention != ".txt" && extention != ".xml")
+							displayFileBody = false;
+ 					}
+					if (analyzeQueue.FileSize > 20000)
+					{
+						displayFileBody = false;
+					}
+					if (displayFileBody)
+					{
+						string str = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
+						analyzeQueue.MessageBodyString = str;
+					}
+					else
+					{
+						analyzeQueue.MessageBodyString = "File body can't be displayed, please click View to download it.";
+					}
                     SecuredMapping.GetMappedPM(analyzeQueue, securedPm, "AnalyzeQueue", analyzeQueue.Tenant);
 
-                    return securedPm;
+					securedPm.MessageBody = null;
+
+					return securedPm;
                 }
                 else
                 {

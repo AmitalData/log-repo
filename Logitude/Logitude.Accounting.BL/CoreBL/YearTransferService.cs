@@ -21,9 +21,10 @@ namespace Logitude.Accounting.BL.CoreBL
         public const string RevenueType = "1";
         public const string ExpenseType = "2";
         private IQueryable<GLAccountAndMoreDTO> _AllRevenueExpenseCards;
-        
-        
-        
+        public const string M_ClosedMonth = "ARInvoice.M.ClosedMonth";
+
+
+
         private DateTime _EndOfYearUserInput;
         private FullAccountingSettingPM _FullAccountingSettingPM;
         private List<CurrencySum> _TotalBalance;
@@ -36,6 +37,32 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             _sb.AppendLine($"CheckYear({YYyear})");
             _EndOfYearUserInput = CheckYear(YYyear);
+            DateTime accountingDate = _EndOfYearUserInput.AddDays(1);//1.1.(yyyy+1)
+
+            if (accountingDate != null)
+            {
+                AccountingPeriodQueryService accountingPeriodQueryService = new AccountingPeriodQueryService(accountingContext);
+                List<AccountingPeriodPM> accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodsByTenantAndType("1", tenant);
+                if (accountingPeriodsByTypeRegular != null)
+                {
+                    string transText = "";
+                    bool useLocal = true;
+                    transText = TranslateTextsClassTranslate("General.MC.ACC.YearTransfer", 0, useLocal);
+                    if (String.IsNullOrWhiteSpace(transText))
+                    {
+                        transText = "Closed Month";
+                    }
+
+                    if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), accountingDate))
+                    {
+                        throw new Exception(transText);
+                    }
+                }
+            }
+
+
+
+
             _sb.AppendLine($"GetRevenueExpenseGLAccountFromAccSetting({tenant})");
             _FullAccountingSettingPM = GetRevenueExpenseGLAccountFromAccSetting(accountingContext,tenant);
             _AllRevenueExpenseCards = GetQAllRevenueExpenseCards(accountingContext,tenant);
@@ -175,10 +202,14 @@ namespace Logitude.Accounting.BL.CoreBL
             //
             journal.JournalLines.AddRange(TypeJL);
         }
-
+        public static ITextCodeTranslator OverrideITextCodeTranslator { get; set; }
 
         public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
         {
+            if (OverrideITextCodeTranslator != null)
+            {
+                return OverrideITextCodeTranslator.Translate(textCodeCode, tenant);
+            }
             return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);
         }
 
@@ -333,5 +364,57 @@ namespace Logitude.Accounting.BL.CoreBL
             return endOfYearUserInput;
 
         }
+
+
+        public static bool IsMonthOpenForAccountingDate(
+            IQueryable<AccountingPeriodPM> accountingPeriodsByTypeRegular,
+            //JournalPM myJournalPM
+            DateTime AccountingDate
+            )
+        {
+            bool valid = true;
+            var currentAccountingPeriodPM = accountingPeriodsByTypeRegular.FirstOrDefault(periods =>
+                periods.PeriodTypeCode == "1" && periods.Year == /*myJournalPM.*/AccountingDate.Date.Year);
+            if (currentAccountingPeriodPM == null)
+            {
+                valid = false;
+                //errorsList.Add(transText);
+            }
+            else
+            {
+                var accountingDateMonth = /*myJournalPM.*/AccountingDate.Date.Month;
+
+                if (accountingDateMonth > currentAccountingPeriodPM.ClosedMonth.GetValueOrDefault())
+                {
+                    //Valid ... AccountingDateMonth must be greater than close Mounth
+                }
+                else
+                {
+                    //Not Valid ... AccountingDateMonth must be greater than close Mounth
+                    //not valid  8>=8 
+                    //not valid  0>=1 - Must Open mounth before work on year !!
+                    valid = false;
+                    //errorsList.Add(transText); //ClosedMonth Must B
+                }
+                if (accountingDateMonth == currentAccountingPeriodPM.OpenMonth)
+                {
+                    //valid ... accountingDateMonth can be  equal to OpenMonth
+                }
+                else if (accountingDateMonth < currentAccountingPeriodPM.OpenMonth)
+                {
+                    //valid ... accountingDateMonth can be  less than OpenMonth
+                }
+                else
+                {
+
+                    valid = false;
+                    //errorsList.Add(transText);
+                }
+            }
+            return valid;
+        }
+
+
+
     }
 }

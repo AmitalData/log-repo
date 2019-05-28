@@ -1331,6 +1331,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private int index ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Index  
+	   {
+	    
+	     get
+		{
+		   return index;
+		 }
+		 set
+		 {
+		   if(index != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Index",OldValue=index,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   index=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

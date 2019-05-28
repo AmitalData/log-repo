@@ -16,12 +16,9 @@ export class OperationsComp {
   DoOperations() {
     this.Operation.GoToMainMenu('General.MH.Operations');
     this.Operation.SelectMenuWorkSpaceTabs('SHIP');
-  //  this.ShipmentWorkSpace.CreateWizard('M');
+    //  this.ShipmentWorkSpace.CreateWizard('M');
 
-      this.ShipmentWorkSpace.CreateShipment('D', 'Export', 'A', '');
-     
-
-
+    this.ShipmentWorkSpace.CreateShipment(browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.Direction, browser.params.ShipParams.TransportMode, browser.params.ShipParams.ShipmentType);
   }
 }
 

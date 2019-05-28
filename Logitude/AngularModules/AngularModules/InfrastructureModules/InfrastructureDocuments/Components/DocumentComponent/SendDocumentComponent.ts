@@ -118,6 +118,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
     IsEnableLinkDocOout: boolean = true;
     IsEnableLinkDocsSharedWithAgents: boolean = true;
     IsEnableLinkDocIn: boolean = true;
+    IsSendDocumentSucceeded: boolean;
+    IsSendDocumentFailed: boolean;
 
     table: Element;
     table2: Element;
@@ -791,6 +793,8 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
 
     SendDocumentHtml() {
+        this.IsSendDocumentSucceeded = false;
+        this.IsSendDocumentFailed = false;
 
         ServiceLocator.SendTotangoUserActivity(this.ObjecttableName, "SendDocByEmail");
 
@@ -895,7 +899,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             var response: ServiceResponse = res;
 
             if (!response.HasError) {
-
+                this.IsSendDocumentSucceeded = true;
                 this._communicationLogExtendedPMService.getCommunicationLogPMsByEntityIdAndDocumentOutId(this.EntityId, this.CurrentDocument.Id, this.CurrentDocument.Tenant).subscribe(res => {
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
@@ -949,6 +953,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             }
             else {
                 this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.IsSendDocumentFailed = true;
                 if (response.ErrorsArray && response.ErrorsArray.length > 0) {
                     this.ShowMessage(response.ErrorsArray[0], "Logitude Message");
                 }

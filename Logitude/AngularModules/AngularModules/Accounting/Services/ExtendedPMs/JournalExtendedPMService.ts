@@ -1,17 +1,13 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-
 import {JournalPM} from '../../EntityPMs/JournalPM';
-
 import {JournalLinePM} from '../../EntityPMs/JournalLinePM';
-import {JournalValidator} from '../../Validators/JournalValidator';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+
 @Injectable()
 
 export class JournalExtendedPMService {
