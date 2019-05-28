@@ -9,11 +9,10 @@ export class PrintDocOut {
         this.helper = new FieldsHelper();
     }
 
-        PrintEmailToFirstUser() {
-
-    //we need to check if div is exict if the doc type is normal id='BuildDocumentSucceededDiv'
-
-    //if the doc is correpted then the id will be id='BuildDocumentFailedDiv'
-
-}
+    isPrintingCompleted(expectedId, closePopup) {
+        this.helper.waitElementByIDPresence(expectedId);
+        if(closePopup) {
+            this.helper.WaitByCssStringAndClick('.Button', 'Close');
+        }   
+    }
 }

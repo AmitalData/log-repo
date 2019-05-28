@@ -28,7 +28,7 @@ exports.config = {
 
   suites: {
     // ********************* Login **********************************
-     login: 'e2e/Login/**/Login.e2e-spec.ts',
+     //login: 'e2e/Login/**/Login.e2e-spec.ts',
     //  CRM: 'e2e/CRM/**/CRMModule-spec.ts',
 
    //  NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',

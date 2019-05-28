@@ -110,6 +110,8 @@ export class FieldsHelper {
         input.sendKeys(value);
   
     });
+
+
   
   }
   
@@ -117,6 +119,13 @@ export class FieldsHelper {
     var EC = protractor.ExpectedConditions;
     browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000000).then(a => {
       return true;
+    });
+  }
+
+  public waitElementByIDPresence(id: string) {
+    var EC = protractor.ExpectedConditions;
+    browser.wait(EC.presenceOf(element(by.id(id))), 100000000).then(a => {
+      expect(element(by.id(id)).isPresent()).toBeTruthy();
     });
   }
 }

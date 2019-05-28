@@ -1,17 +1,18 @@
 import { LoginComp } from '../../Login/Login.po';
 import { browser, by, element } from 'protractor';
-import { ShipmentSearch } from '../ShipmentSearch';
 import { DocsOutTabComponent } from './EditEntity/DocsOutTab';
 import { OperationsComp } from './NewEntity/Operations.po';
 
 import { SendMailPopup } from '../SendMailPopup/SendMailPopup';
+import { PrintDocOut } from '../PrintDocOut/PrintDocOut';
 
 describe('DocsOut', () => {
 
-  //let searchPage: ShipmentSearch = new ShipmentSearch();
+  let login: LoginComp = new LoginComp();
   let docsOutTab: DocsOutTabComponent = new DocsOutTabComponent();
   let sendMailPopup: SendMailPopup = new SendMailPopup();
   let NewDirectShipment: OperationsComp = new OperationsComp();
+  let printDocOut: PrintDocOut = new PrintDocOut();
 
 
   beforeEach(() => {
@@ -21,11 +22,22 @@ describe('DocsOut', () => {
 
 
   it('Send Docs Out of Shipment To A User', function () {
+    login.navigateTo('https://test.logitudeworld.com/test');
+    login.DoLogin('raghad@protractor.com', '!RS123Rs');
     NewDirectShipment.DoOperations();
     docsOutTab.DocsOutTab();
-    docsOutTab.QuickSearchDocOut('BRCL-S-DocsOut', 'BRCL-L-DocsOut');
+    docsOutTab.QuickSearchDocOut('BRCL-S-DocsOut', 'BRCL-L-DocsOut', 'BOOKING REQUEST ');
     sendMailPopup.sendEmailToFirstUser();
-    // TODO We need to check if email is delivered to the destination
-    browser.driver.sleep(5000);
   });
+
+  it('Successfully Printing Document', function () {
+    docsOutTab.QuickSearchDocOut('ETO-P-DocsOut', 'ETO-L-DocsOut', 'Export Trucking Order');
+    printDocOut.isPrintingCompleted('BuildDocumentSucceededDiv', true);
+  });
+
+  it('Failing Printing Document', function () {
+    docsOutTab.QuickSearchDocOut('FTDT-P-DocsOut', 'FTDT-L-DocsOut', 'Failure Test Document');
+    printDocOut.isPrintingCompleted('BuildDocumentFailedDiv', false);
+  });
+
 });

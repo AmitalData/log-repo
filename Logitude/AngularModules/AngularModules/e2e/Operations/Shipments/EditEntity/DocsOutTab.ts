@@ -14,8 +14,8 @@ export class DocsOutTabComponent {
         this.Helper.WaitByIdAndClick('Shipment.TH.DocsOut');
     }
 
-    QuickSearchDocOut(docsOutId: string, docOutRow: string) {
-         this.UseDocsOutSearchBox('SearchFieldsId_0_0','BOOKING REQUEST ', docsOutId, docOutRow);
+    QuickSearchDocOut(docsOutId: string, docOutRow: string, searchTerm: string) {
+         this.UseDocsOutSearchBox('SearchFieldsId_0_0', searchTerm, docsOutId, docOutRow);
        }
 
        UseDocsOutSearchBox(searchFeildId: string, searchByRef: string, docOutId: string, docOutRow: string) {
