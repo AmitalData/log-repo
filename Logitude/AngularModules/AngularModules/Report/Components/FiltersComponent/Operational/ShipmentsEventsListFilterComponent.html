@@ -1,0 +1,129 @@
+﻿
+
+<!--<table style="height:60px;width:650px;">
+
+    <tr style="height:25px">
+        <td style="width:5px;"><div style="width:5px;"></div></td>
+        <td colspan="10"><div style="color:#1B90CB;font-size:14px;">Filter By:</div></td>
+    </tr>
+
+
+
+    <tr style="height:30px">
+        <td style="width:5px;"><div style="width:5px;"></div></td>
+        <td style="width:50px;"><div style="width:50px;">User</div></td>
+
+        <td style="width:200px;">
+            <div style="width:200px;">
+
+                <LogLov [LogitudeForm]="myForm"
+                        [ObjectFieldName]="'UserId'"
+                        [ObjectTableName]="'Shipment'"
+                        [DataContext]="DataContext"
+                        [LookUpTableName]="'User'"
+                        >
+                </LogLov>
+
+            </div>
+        </td>
+
+
+
+        <td style="width:20px"><div style="width:20px"></div></td>
+
+        <td style="width:65px;"><div style="width:65px;margin-left:-10px"> From Date </div></td>
+
+        <td style="width:120px;">
+            <div style="width:120px;">
+
+                <LogDatePicker [HideColumns]="true" [LogitudeForm]="myForm" [ObjectFieldName]="'FromDate'" [DataContext]="DataContext"></LogDatePicker>
+            </div>
+
+        </td>
+
+        <td style="width:20px"><div style="width:20px"></div></td>
+        <td style="width:50px;"><div style="width:50px;"> To Date </div></td>
+        <td style="width:120px;">
+            <div style="width:120px;">
+                <LogDatePicker [HideColumns]="true" [LogitudeForm]="myForm" [ObjectFieldName]="'ToDate'" [DataContext]="DataContext"></LogDatePicker>
+
+            </div>
+
+        </td>
+
+        <td style="width:60px"><div style="width:60px"></div></td>
+
+
+        <td style="width:22px">
+            <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'ManuallyAddedEventsOnly'" [DataContext]="DataContext"></LogCheckBox>
+        </td>
+        <td style="width:200px;">Manually Added Events Only</td>
+
+
+        <td style="width:90px;">
+            <button (click)="RunReport(true)" class="GreenButton" style="width:90px;height:22px;">Run Report</button>
+
+        </td>
+
+
+
+    </tr>
+
+    <tr><td colspan="11"></td></tr>
+
+</table>-->
+
+
+
+<table style="height:60px">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <!-- User -->
+                    <td style="width: 65px;" class="Label">User:</td>
+                    <td style="width: 180px;">
+                        <LogLov [NoObjectField]="true"
+                                [ObjectFieldName]="'UserId'"
+                                [SelectedValue]="UserId"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'User'">
+                        </LogLov>
+                    </td>
+
+
+                    <!-- From Date -->
+                    <td style="width: 70px; padding-right: 5px;" class="Label">From Date:</td>
+                    <td style="width: 180px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [SelectedDateValue]="FromDate" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <!-- To Date -->
+                    <td style="width: 70px; padding-right: 5px;" class="Label">To Date:</td>
+                    <td style="width: 180px;">
+                        <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [SelectedDateValue]="ToDate" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+
+                    <td style="width:20px"></td>
+                    <!--ManuallyAddedEventsOnly-->
+                    <td style="width: 220px;">
+                        <CheckBox [IsChecked]="ManuallyAddedEventsOnly" (Checked)="ManuallyAddedEventsOnly = $event" [Text]="'Manually Added Events Only'"></CheckBox>
+                    </td>
+
+
+                    <td style="width: 80px;">
+                        <button class="GreenButton" (click)="RunReport()">Run Report</button>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+       
+    </tr>
+</table>
