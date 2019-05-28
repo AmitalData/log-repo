@@ -38,6 +38,11 @@ using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.BL.EntityUpdateServices;
 using Simplog.Server.Infrastructure;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Server.Tools.QueueService;
+using WebFreight.Web.Helpers.APIHelpers;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -1453,6 +1458,54 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
 
             return isNumber;
+        }
+
+        public HttpResponseMessage GetGenerateTariffs()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                GenerateTariffsArgs args = new GenerateTariffsArgs() { LoggedUserEmail = loggedUserEmail, Tenant = tenant };
+                var stringwriter = new System.IO.StringWriter();
+                var serializer = new XmlSerializer(typeof(GenerateTariffsArgs));
+                serializer.Serialize(stringwriter, args);
+                string xmlParameters = stringwriter.ToString();
+
+                BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
+                {
+                    Subject = "Generate Tariffs",
+                    Tenant = tenant,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ClassName = "WebFreight.Web.Helpers.APIHelpers.GenerateTariffsHelper,WebFreight.Web",
+                    CreateDate = DateTime.Now,
+                    PrametersXml = xmlParameters,
+                    StatusCode = "C",
+                };
+
+                IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
+                BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                bteUpdateService.Update(taskExe, true);
+
+                // 2- Send to queue
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+                queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", taskExe.Id },
+                    { "Tenant", tenant.ToString() }
+                });
+
+                return Request.CreateResponse(HttpStatusCode.OK, taskExe);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 
