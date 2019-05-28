@@ -202,10 +202,14 @@ namespace Logitude.Accounting.BL.CoreBL
             //
             journal.JournalLines.AddRange(TypeJL);
         }
-
+        public static ITextCodeTranslator OverrideITextCodeTranslator { get; set; }
 
         public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
         {
+            if (OverrideITextCodeTranslator != null)
+            {
+                return OverrideITextCodeTranslator.Translate(textCodeCode, tenant);
+            }
             return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);
         }
 

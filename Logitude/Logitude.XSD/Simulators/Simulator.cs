@@ -58,11 +58,18 @@ namespace Logitude.XSD.Simulators
 
             if (Result.IsValid)
             {
-
                 if (Args.MessageIdentifier == "AnalyzeQueueId")
                 {
-                    AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
-                    AnalyzeQueue analyzeQueue = analyzeQueueReposiory.GetSingleAnalyzeQueue(Args.AnalyzeQueueId);
+                    AnalyzeQueue analyzeQueue = null;
+                    AnalyzeQueueRepository analyzeQueueReposiory = null;
+
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        analyzeQueueReposiory = new AnalyzeQueueRepository();
+                        analyzeQueue = analyzeQueueReposiory.GetSingleAnalyzeQueue(Args.AnalyzeQueueId);
+                        scope.Complete();
+                    }
+
                     if (analyzeQueue != null)
                     {
                         CHAMPAnalyzer analyzer = new CHAMPAnalyzer(analyzeQueue, analyzeQueueReposiory);

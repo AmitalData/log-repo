@@ -7170,6 +7170,7 @@
     <Folder Include="Dashboard\Components\Graphs\" />
     <Folder Include="e2e\CRM\Customers\" />
     <Folder Include="e2e\CRM\Quotes\" />
+    <Folder Include="e2e\LogBox\Documents\" />
     <Folder Include="InfrastructureModules\InfrastructureAutomation\Components\" />
     <Folder Include="InfrastructureModules\InfrastructureStimulsoft\Components\" />
     <Folder Include="Logitude\Components\Customization\" />

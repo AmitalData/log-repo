@@ -1,4 +1,4 @@
-﻿<style>
+<style>
     .HeaderBackGround {
         background: -moz-linear-gradient(-142.51% 1527.23% 0deg,rgba(226, 227, 228, 1) 0%,rgba(224, 225, 226, 1) 52.31%,rgba(217, 218, 220, 1) 72.91%,rgba(205, 207, 208, 1) 87.87%,rgba(188, 190, 192, 1) 100%);
         background: -webkit-linear-gradient(0deg, rgba(226, 227, 228, 1) 0%, rgba(224, 225, 226, 1) 52.31%, rgba(217, 218, 220, 1) 72.91%, rgba(205, 207, 208, 1) 87.87%, rgba(188, 190, 192, 1) 100%);
@@ -207,7 +207,7 @@
                                                 </td>
                                                 <td>
                                                     <ul class="FiltersMenu" style="float: left;width:235px;" *ngIf="TypeSelected == false">
-                                                        <li *ngFor="let item of TopTypes" [title]="item.Name" (click)="itemClicked(item.Id,item.Name)" (mouseover)="itemMouseOver(item.Id)" style="width:45px;" [class.SelectedFilter]="DocumentTypeId === item.Id">
+                                                        <li id="{{'DocumentTypeCode' | IdGeneratorPipe}}" *ngFor="let item of TopTypes" [title]="item.Name" (click)="itemClicked(item.Id,item.Name)" (mouseover)="itemMouseOver(item.Id)" style="width:45px;" [class.SelectedFilter]="DocumentTypeId === item.Id">
                                                             {{item.OrderedDisplayName}}
                                                         </li>
                                                         <li (click)="itemClicked('O','')" (mouseover)="itemMouseOver('O')" style="width:55px;" (mouseleave)="itemMouseLeave('O')" [class.SelectedFilter]="SelectedValue === 'O'">
@@ -366,8 +366,8 @@
                                 <td><div style="margin-top: 7px;"></div></td>
                                 <td>
                                     <div style="margin-top: 7px;">
-                                        <button class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">OK</button>
-                                        <button class="Button" (click)="CancelButtonClicked()" style="width:57px;float: right;">Cancel</button>
+                                        <button id="{{'OK' | IdGeneratorPipe}}" class="RedButton" (click)="SaveChanges()" style="width:57px;float: right;margin-left: 7px;margin-right: 7px;">OK</button>
+                                        <button id="{{'Cancel' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()" style="width:57px;float: right;">Cancel</button>
                                     </div>
                                 </td>
                             </tr>

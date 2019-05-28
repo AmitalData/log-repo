@@ -21,6 +21,11 @@ describe('Shipment search', () => {
       logboxShipment.InsertOrderNumber();
       logboxShipment.InsertAgent();
       logboxShipment.SaveShipment();
+      //logboxShipment.SearchForCreatedShipment();
+      logboxShipment.SelectShipment();
+      logboxShipment.CreateDocument();
+
+      
 
 
   });
