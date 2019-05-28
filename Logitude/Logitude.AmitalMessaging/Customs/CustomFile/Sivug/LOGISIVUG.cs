@@ -332,6 +332,10 @@
 
         private string tAXEXEMPTCODEField;
 
+        private string statisticQuantityField;
+
+        private string statisticQuantityTypeField;
+
         private CERTIFICATES[] cERTIFICATESField;
 
         /// <remarks/>
@@ -513,6 +517,32 @@
             set
             {
                 this.tAXEXEMPTCODEField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string StatisticQuantity
+        {
+            get
+            {
+                return this.statisticQuantityField;
+            }
+            set
+            {
+                this.statisticQuantityField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string StatisticQuantityType
+        {
+            get
+            {
+                return this.statisticQuantityTypeField;
+            }
+            set
+            {
+                this.statisticQuantityTypeField = value;
             }
         }
 
