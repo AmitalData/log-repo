@@ -13140,7 +13140,12 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 List<string> shipmentIds = shipmentlists.Select(d => d.Id).ToList();
                 TraceEventQuery traceEventQuery = new TraceEventQuery(tenant);
-                IQueryable<TraceEventPM> traceEventPMs = traceEventQuery.GetTraceEventPMsByEntityIdsAndObjectTableId(shipmentIds, "1-4", tenant);
+                ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
+                
+
+
+                ObjectTablePM table = objectTableQuery.GetObjectTableByName("Shipment", 0);
+                IQueryable<TraceEventPM> traceEventPMs = traceEventQuery.GetTraceEventPMsByEntityIdsAndObjectTableId(shipmentIds, table.Id, tenant);
                 List<TraceEventPM> traceEvenList = FilterTraceEvenList(manuallyAddedEventsOnly, userId, traceEventPMs);
 
                 FillShipmentNumberToTraceEventList(shipmentlists, traceEvenList);
