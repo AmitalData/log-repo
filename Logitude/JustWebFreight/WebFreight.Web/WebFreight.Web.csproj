@@ -2216,6 +2216,7 @@
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
+    <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
     <Compile Include="Helpers\APICredentialsHelper.cs" />

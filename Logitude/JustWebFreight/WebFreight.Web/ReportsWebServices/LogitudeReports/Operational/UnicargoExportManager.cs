@@ -1,7 +1,11 @@
 ﻿using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -20,11 +24,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
     {
         private int tenant;
         private IShipmentsContext shipmentsContext;
-
+       private  ICommonDataContext commonDataContext;
+        private EntityStatusRepository entityStatusRepository;
+        private IWebFreightContext webFreightContext;
+        private TransportModeRepository transportModeRepository;
         public UnicargoExportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
             shipmentsContext = ShipmentsContext.GetContext(tenant);
+            commonDataContext = CommonDataContext.GetContext(tenant);
+            webFreightContext = WebFreightContext.GetContext(tenant);
+            entityStatusRepository = new EntityStatusRepository(tenant);
+            transportModeRepository = new TransportModeRepository(tenant);
             MemoryStream memoryStream = new MemoryStream(xmlFilters);
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations myQueryOperations = (QueryOperations)xmlSerializer.Deserialize(memoryStream);
@@ -52,33 +63,70 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
              Shipments   = new List<UnicargoExport>()
             };
 
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
-            List<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant).ToList();
+            List<Shipment> shipments = shipmentsContext.Shipments.Where(p=>p.Tenant==tenant && p.IsOperationalClosed==false).ToList();
+           Dictionary<string,string> incoterms= commonDataContext.Incoterms.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
+            Dictionary<string, string> ShipmentTypes = shipmentsContext.ShipmentTypes.ToDictionary(a => a.Id, b => b.Name);
+            Dictionary<string, string> transportmodes = webFreightContext.TransportModes.ToDictionary(a => a.Id, b => b.Name);
+            Dictionary<string, string> Directions = webFreightContext.Directions.ToDictionary(a => a.Id, b => b.Name);
+            Dictionary<string, string> ShipmentLevels = shipmentsContext.ShipmentLevels.ToDictionary(a => a.Code, b => b.Name);
+
+
             shipments.ForEach(item =>
             {
                 UnicargoExport Shipment = new UnicargoExport();
 
                 #region  General Section
                 Shipment.House = item.House;
-                Shipment.Incoterms = item.IncotermCode; // Check
+                if (!string.IsNullOrEmpty(item.IncotermId))
+                {
+                    Shipment.Incoterms = incoterms[item.IncotermId]!=null? incoterms[item.IncotermId]:null;
+                }
+
                 Shipment.MainHarmonize = item.MainHarmonize;
-                Shipment.Type = item.ShipmentType;
-                Shipment.Status = item.ShipmentStatusName;
-                Shipment.TransportMode = item.TransportModeName;
-                Shipment.Direction = item.DirectionName;
+                if (!string.IsNullOrEmpty(item.ShipmentTypeId))
+                {
+                    Shipment.Type = ShipmentTypes[item.ShipmentTypeId] != null ? ShipmentTypes[item.ShipmentTypeId] : null;
+                }
+
+                if (!string.IsNullOrEmpty(item.StatusId))
+                {
+                    EntityStatus status= entityStatusRepository.GetSingleEntityStatus(item.StatusId, tenant);
+                    if (status != null)
+                    {
+                        Shipment.Status = status.Name;
+                    }
+                }
+
+
+                if (!string.IsNullOrEmpty(item.TransportModeId))
+                {
+                    Shipment.TransportMode = transportmodes[item.TransportModeId] != null ? transportmodes[item.TransportModeId] : null;
+                }
+
+                if (!string.IsNullOrEmpty(item.DirectionId))
+                {
+                    Shipment.Direction = Directions[item.DirectionId] != null ? Directions[item.DirectionId] : null;
+                }
+
                 Shipment.FileNumber = item.CustomFileNumber; // Check
-                Shipment.ShipmentLevel = item.ShipmentLevelName;
+
+                if (!string.IsNullOrEmpty(item.ShipmentLevelCode))
+                {
+                    Shipment.ShipmentLevel = ShipmentLevels[item.ShipmentLevelCode] != null ? ShipmentLevels[item.ShipmentLevelCode] : null;
+                }
+                
+                
                 // Shipment.AdditionalAirwayBill = item.AdditionalAirwayBill; // Check
                 //  Shipment.OpStatus = item.OpStatus; // Check
                 // Shipment.CargoReadyDate = item.CargoReadyDate; // check
                 Shipment.LFD = item.LastFinalDestination; // Check
                 Shipment.AvailableDate = item.TerminalAvailable; //Check
-                Shipment.Openedby = item.CreatedByUserName; // Check
-                Shipment.Salesman = item.SalesmanUserName; //check
-                Shipment.AccountManager = item.AccountManagerUserName; // check
+           //     Shipment.Openedby = item.CreatedByUserName; // Check
+            //    Shipment.Salesman = item.SalesmanUserName; //check
+            //    Shipment.AccountManager = item.AccountManagerUserName; // check
                 Shipment.Department = item.DepartmentId; // Set Name
-                Shipment.Branch = item.BranchName;
-                Shipment.SpecialServiceType = item.SpecialServicesTypeName;
+            //    Shipment.Branch = item.BranchName;
+             //   Shipment.SpecialServiceType = item.SpecialServicesTypeName;
                 Shipment.ValueofGoods = item.ValueOfGoods;
                 Shipment.Comments = item.Notes; //check
                 // Shipment.PaymentStatus = item.PaymentStatus; //status
@@ -87,19 +135,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 Shipment.CreateDate = item.CreateDateTime;
                 //Shipment.PickupRef = item.ShipmentPickUpIndex; //check
                 #endregion
-
                 #region Partners Section
                 Shipment.Shipper = item.ShipperName;
                 Shipment.Consignee = item.ConsigneeName;
-                Shipment.Notify1 = item.Notify1Name;
-                Shipment.Notify2 = item.Notify2Name;
+              //  Shipment.Notify1 = item.Notify1Name;
+              //  Shipment.Notify2 = item.Notify2Name;
                 //Shipment.CoLoader = item.CoLoader; Add To Shipment Views
-                Shipment.FreightForwarder = item.FreightForwarderName;
-                Shipment.Consolidator = item.ConsolidatorName;
-                Shipment.Customer = item.CustomerName;
-                Shipment.ShippernotExporter = item.ShipperNotExporterName;
-                Shipment.Agent = item.AgentName;
-                Shipment.ReleasingAgent = item.ReleasingAgentName;
+               // Shipment.FreightForwarder = item.FreightForwarderName;
+              //  Shipment.Consolidator = item.ConsolidatorName;
+              //  Shipment.Customer = item.CustomerName;
+              //  Shipment.ShippernotExporter = item.ShipperNotExporterName;
+              //  Shipment.Agent = item.AgentName;
+              //  Shipment.ReleasingAgent = item.ReleasingAgentName;
 
                 #endregion
 
@@ -127,7 +174,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 //Shipment.PickupActualDeparture
                 //Shipment.PickupToPort
                 //Shipment.PickupActualArrival
-                Shipment.MainCarriageLeg1LoadingPort = item.MainCarriageCarrierCode; // Check
+            //    Shipment.MainCarriageLeg1LoadingPort = item.MainCarriageCarrierCode; // Check
                // Shipment.MainCarriageLeg1ViaPort1 = item.maincarriagecarrier
 
 

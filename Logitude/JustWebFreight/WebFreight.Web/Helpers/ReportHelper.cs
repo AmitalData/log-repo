@@ -23,6 +23,7 @@ using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
@@ -1292,6 +1293,19 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
+
+
+                case "SHEL":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ShipmentsEventsListDataProvider));
+                        ShipmentsEventsListDataProvider reportDataProvider = (ShipmentsEventsListDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "ShipmentsEventsList", Name = "ShipmentsEventsListDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
+
             }
             return urlImage;
         }
@@ -1418,6 +1432,12 @@ namespace WebFreight.Web.Helpers
             switch (reportFliter.ReportCode)
             {
                 #region
+
+                case "SHEL":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
 
                 case "SHST":
                     {

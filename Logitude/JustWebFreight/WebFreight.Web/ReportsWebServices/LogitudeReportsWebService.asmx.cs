@@ -13079,6 +13079,71 @@ namespace WebFreight.Web.ReportsWebServices
         }
         #endregion
 
+        #region Shipments Events List
+        public byte[] LoadShipmentsEventsListDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ShipmentsEventsListDataProvider dataprovider = GetShipmentsEventsListDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ShipmentsEventsListDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+
+        private ShipmentsEventsListDataProvider GetShipmentsEventsListDataProvider(byte[] xmlFilters, int tenant)
+        {
+
+            DateTime fromDate;
+            DateTime toDate;
+            bool includeOperationalClosed = false;
+            string userId = string.Empty;
+            
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            QueryFilterItem filterItem_UserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "UserId").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_ManuallyAddedEventsOnly = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ManuallyAddedEventsOnly").FirstOrDefault();
+
+
+            if (filterItem_ManuallyAddedEventsOnly != null)
+            {
+                if (filterItem_ManuallyAddedEventsOnly.FieldValue != null)
+                {
+                    includeOperationalClosed = (bool)filterItem_ManuallyAddedEventsOnly.FieldValue;
+                }
+            }
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+            if (filterItem_UserId != null)
+            {
+                if (filterItem_UserId.FieldValue != null)
+                {
+                    userId = filterItem_UserId.FieldValue.ToString();
+                }
+            }
+
+            //TraceEventQuery traceEventQuery = new TraceEventQuery(0);
+
+            //var x =  traceEventQuery.GetTraceEventPMsByObjectTableId(0,"1-4");
+            ShipmentsEventsListDataProvider shipmentsEventsListDataProvider = new ShipmentsEventsListDataProvider();
+
+            return shipmentsEventsListDataProvider;
+        }
+        #endregion
+
+
         private ContactPM GetLoggedContact(int tenant)
         {
             //email
