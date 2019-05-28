@@ -462,7 +462,6 @@ if(enableSecurity)
 {
 #>
                         SecurityUtility.CheckContactFeature("<#= tableName #>", "NEW", authToken.Tenant);
-						SecurityUtility.AuthenticationOnEntityTenant("<#= tableName #>", entityPM.Tenant, authToken.Tenant);
 <#+
 }
 
@@ -528,7 +527,6 @@ if(enableSecurity)
 {
 #>
                         SecurityUtility.CheckContactFeature("<#= tableName #>", "UPDATE", authToken.Tenant);
-						SecurityUtility.AuthenticationOnEntityTenant("<#= tableName #>", entityPM.Tenant, authToken.Tenant);
 <#+
 }
 if(hasTenant)
