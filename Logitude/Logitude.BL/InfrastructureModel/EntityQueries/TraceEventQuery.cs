@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Simplog.Data.ShipmentsModel;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -348,6 +349,32 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                                                    };
             return traceEvents.FirstOrDefault();
+        }
+
+
+
+        public IQueryable<TraceEventPM> GetTraceEventPMsByObjectTableId(int tenant,  string objectTableId)
+        {
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            IQueryable<TraceEventPM> traceEvents = from a in repository.context.TraceEvent.Include("EventType").Include("User.Contact")
+                                                   join o in shipmentsContext.Shipments
+                                                    on a.EntityId equals o.Id into sr
+                                                   from shipment in sr.DefaultIfEmpty()
+                                                   where a.Tenant == tenant && a.ObjectTableId == objectTableId && !a.Deleted 
+                                                   select new TraceEventPM()
+                                                   {
+                                                       EventTypeCode = a.EventType.Code,
+                                                       EventTypeEnglishName = a.EventType.EnglishName,
+                                                       EventDateTime = a.EventDateTime,
+                                                       LogDateTime = a.LogDateTime,
+                                                       EntityId = a.EntityId,
+                                                       Notes = a.Notes,
+                                                       EventTypeId = a.EventTypeId,
+                                                       Id = a.Id,
+                                                       Tenant = a.Tenant,
+                                                       UserId = a.UserId,
+                                                   };
+            return traceEvents;
         }
 
     }

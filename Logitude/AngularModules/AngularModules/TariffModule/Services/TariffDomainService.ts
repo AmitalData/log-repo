@@ -48,6 +48,23 @@ export class TariffDomainService {
         });
     }
 
+    GenerateTariffs() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetGenerateTariffs';
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = listJason;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     GetTenantTariffSetting() {
 
         var authHeader = new Headers();
