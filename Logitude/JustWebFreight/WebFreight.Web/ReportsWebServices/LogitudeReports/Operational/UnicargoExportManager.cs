@@ -135,7 +135,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 Shipment.CreateDate = item.CreateDateTime;
                 //Shipment.PickupRef = item.ShipmentPickUpIndex; //check
                 #endregion
-
                 #region Partners Section
                 Shipment.Shipper = item.ShipperName;
                 Shipment.Consignee = item.ConsigneeName;
