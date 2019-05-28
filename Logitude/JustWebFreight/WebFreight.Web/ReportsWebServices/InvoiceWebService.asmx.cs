@@ -140,6 +140,9 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.State = tenantAddress.StateEnglishName;
                         invoicedataprovider.TenantStateCode = tenantAddress.StateCode;
                     }
+
+                    invoicedataprovider.CarrierCAAT = tenantSettings.CAAT;
+                    invoicedataprovider.CarrierCBSA = tenantSettings.CBSA;
                 }
 
                 List<VatType> allVATTypes = (from d in commonContext.VatTypes where d.Tenant == tenant select d).ToList();
@@ -1016,6 +1019,14 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.MainCarriageCarrier = maincarriagecarrier.EnglishName != null ? maincarriagecarrier.EnglishName : "";
                         invoicedataprovider.maincarriagecarrierLocalName = maincarriagecarrier.LocalName != null ? maincarriagecarrier.LocalName : "";
                         invoicedataprovider.MainCarriageCarrierPrefix = shipment.AirlinePrefix != null ? shipment.AirlinePrefix : "";
+
+                        if (maincarriagecarrier.PartnerTypeId == "SL")
+                        {
+                            ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
+                            ShippingLine shippingLine = shippingLineRepository.GetSingleShippingLine(maincarriagecarrier.Id, tenant);
+                            invoicedataprovider.CarrierCAAT = shippingLine != null ? shippingLine.CAAT : null;
+                            invoicedataprovider.CarrierCBSA = shippingLine != null ? shippingLine.CBSA : null;
+                        }
                     }
 
                     if (!string.IsNullOrEmpty(invoicedataprovider.MainCarriageCarrierPrefix) && !string.IsNullOrEmpty(invoicedataprovider.MainCarriageMAWBOBLBL))
