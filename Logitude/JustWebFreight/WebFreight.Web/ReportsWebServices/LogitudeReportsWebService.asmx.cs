@@ -13136,7 +13136,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             TraceEventQuery traceEventQuery = new TraceEventQuery(tenant);
-            IQueryable<TraceEventPM> traceEventPMsList = new TraceEventPM();//traceEventQuery.GetTraceEventPMsByDateAndObjectTableId(fromDate, toDate, "1-4", tenant);
+            IQueryable<TraceEventPM> traceEventPMsList =traceEventQuery.GetTraceEventPMsByDateAndObjectTableId(fromDate, toDate, "1-4", tenant);
             if (!string.IsNullOrEmpty(userId))
             {
                 traceEventPMsList = traceEventPMsList.Where(d => d.UserId == userId);
