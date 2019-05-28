@@ -44,5 +44,7 @@ export class ShippingLineList {
 		PrimaryContactName: string;
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
+		CBSA: string;
+		CAAT: string;
 	
 }

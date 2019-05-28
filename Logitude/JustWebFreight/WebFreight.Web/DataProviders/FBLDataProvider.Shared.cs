@@ -228,6 +228,11 @@ namespace WebFreight.Web.DataProviders
 
         public string ShipperAddress_NoTelFax { get; set; }
         public string ConsigneeAddress_NoTelFax { get; set; }
+
+        public string TenantCBSA { get; set; }
+        public string TenantCAAT { get; set; }
+        public string CarrierCBSA { get; set; }
+        public string CarrierCAAT { get; set; }
     } 
     
     public class ReceivablesCharges

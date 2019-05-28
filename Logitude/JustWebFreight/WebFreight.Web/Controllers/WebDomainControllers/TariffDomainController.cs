@@ -985,6 +985,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     errorText = errorText + ", Port with code " + item.FromPortText + " not found";
                 }
             }
+            else if (string.IsNullOrEmpty(item.FromPortText) && string.IsNullOrEmpty(item.FromPortId))
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Missing Origin Port";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Missing Origin Port";
+                }
+            }
 
             if (!string.IsNullOrEmpty(item.ToPortText) && string.IsNullOrEmpty(item.ToPortId))
             {
@@ -998,6 +1012,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 else
                 {
                     errorText = errorText + ", Port with code " + item.ToPortText + " not found";
+                }
+            }
+            else if (string.IsNullOrEmpty(item.ToPortText) && string.IsNullOrEmpty(item.ToPortId))
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Missing Destination Port";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Missing Destination Port";
                 }
             }
 
@@ -1158,6 +1186,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     errorText = errorText + ", Port with code " + item.FromPortText + " not found";
                 }
             }
+            else if (string.IsNullOrEmpty(item.FromPortText) && string.IsNullOrEmpty(item.FromPortId))
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Missing Origin Port";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Missing Origin Port";
+                }
+            }
 
             if (!string.IsNullOrEmpty(item.ToPortText) && string.IsNullOrEmpty(item.ToPortId))
             {
@@ -1171,6 +1213,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 else
                 {
                     errorText = errorText + ", Port with code " + item.ToPortText + " not found";
+                }
+            }
+            else if (string.IsNullOrEmpty(item.ToPortText) && string.IsNullOrEmpty(item.ToPortId))
+            {
+                error = true;
+
+                if (string.IsNullOrEmpty(errorText))
+                {
+                    errorText = "Missing Destination Port";
+                }
+
+                else
+                {
+                    errorText = errorText + ", Missing Destination Port";
                 }
             }
 

@@ -1057,6 +1057,10 @@
     <Compile Include="Migrations\201905261011040_TariffLine_Index_Add.Designer.cs">
       <DependentUpon>201905261011040_TariffLine_Index_Add.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905271323372_AddFieldsToTenantAndShippingLine_Maheera.cs" />
+    <Compile Include="Migrations\201905271323372_AddFieldsToTenantAndShippingLine_Maheera.Designer.cs">
+      <DependentUpon>201905271323372_AddFieldsToTenantAndShippingLine_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1791,6 +1795,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905261011040_TariffLine_Index_Add.resx">
       <DependentUpon>201905261011040_TariffLine_Index_Add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905271323372_AddFieldsToTenantAndShippingLine_Maheera.resx">
+      <DependentUpon>201905271323372_AddFieldsToTenantAndShippingLine_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

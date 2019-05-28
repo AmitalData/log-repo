@@ -252,5 +252,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string UsoCFDICode { get; set; }
+
+        public string CBSA { get; set; }
+        public string CAAT { get; set; }
     }
 }
