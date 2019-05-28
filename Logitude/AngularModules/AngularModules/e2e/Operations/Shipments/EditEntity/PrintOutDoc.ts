@@ -3,19 +3,19 @@ import { FieldsHelper } from '../../../Helpers/FieldsHelper';
 import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
 
 
-export class DocsOutTabComponent {
+export class PrintDocsOutTabComponent {
     private Helper: FieldsHelper;
 
     constructor() {
         this.Helper = new FieldsHelper();
     }
 
-    public DocsOutTab() {
+    public PrintDocsOutTab() {
         this.Helper.WaitByIdAndClick('Shipment.TH.DocsOut');
     }
 
-    QuickSearchDocOut(docsOutId: string, docOutRow: string, searchTerm: string) {
-         this.UseDocsOutSearchBox('SearchFieldsId_0_0', searchTerm, docsOutId, docOutRow);
+    QuickSearchDocOut(docsOutId: string, docOutRow: string) {
+         this.UseDocsOutSearchBox('SearchFieldsId_0_0','HAWB Lable ', docsOutId, docOutRow);
        }
 
        UseDocsOutSearchBox(searchFeildId: string, searchByRef: string, docOutId: string, docOutRow: string) {

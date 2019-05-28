@@ -49,6 +49,7 @@ export class ReportGenerator {
     runReport() {
 
         this.helper.WaitByIdAndClick('RunUnpaidInvoicesReportbtn');
+        this.helper.WaitBusyIndicator();
     }
 
     saveReport() {
