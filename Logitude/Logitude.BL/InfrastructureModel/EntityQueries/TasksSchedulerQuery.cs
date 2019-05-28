@@ -232,8 +232,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          Duration = DbFunctions.DiffSeconds(a.StartDateTime, a.EndDateTime), 
                                      }).Where(x => x.StartDateTime != null && x.EndDateTime != null).OrderByDescending(x => x.StartDateTime).Take(10).ToList();
 
-            double? Duration = 0;
-            if (Latest10Histories.Count == 0)
+            double? Duration = 0.0;
+            if (Latest10Histories.Count > 0)
             {
                 Duration = Latest10Histories.Average(a => a.Duration);
             }
