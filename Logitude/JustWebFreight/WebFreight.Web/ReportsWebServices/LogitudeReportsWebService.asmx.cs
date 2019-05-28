@@ -75,6 +75,7 @@ using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -13078,6 +13079,100 @@ namespace WebFreight.Web.ReportsWebServices
             return totalData;
         }
         #endregion
+
+        #region Shipments Events List
+        public byte[] LoadShipmentsEventsListDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ShipmentsEventsListDataProvider dataprovider = GetShipmentsEventsListDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(ShipmentsEventsListDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+
+        private ShipmentsEventsListDataProvider GetShipmentsEventsListDataProvider(byte[] xmlFilters, int tenant)
+        {
+            ShipmentsEventsListDataProvider shipmentsEventsListDataProvider = new ShipmentsEventsListDataProvider();
+            DateTime fromDate = DateTime.Now;
+            DateTime toDate = DateTime.Now;
+            bool manuallyAddedEventsOnly = false;
+            string userId = string.Empty;
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            QueryFilterItem filterItem_UserId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "UserId").FirstOrDefault();
+            QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate" && d.Operator == "GreaterThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate" && d.Operator == "LessThanOrEqual").FirstOrDefault();
+            QueryFilterItem filterItem_ManuallyAddedEventsOnly = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ManuallyAddedEventsOnly").FirstOrDefault();
+
+
+            if (filterItem_ManuallyAddedEventsOnly != null)
+            {
+                if (filterItem_ManuallyAddedEventsOnly.FieldValue != null)
+                {
+                    manuallyAddedEventsOnly = (bool)filterItem_ManuallyAddedEventsOnly.FieldValue;
+                }
+            }
+            if (filterItem_FromDate != null)
+            {
+                DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
+            }
+            if (filterItem_ToDate != null)
+            {
+                DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
+            }
+            if (filterItem_UserId != null)
+            {
+                if (filterItem_UserId.FieldValue != null)
+                {
+                    userId = filterItem_UserId.FieldValue.ToString();
+                }
+            }
+
+            TraceEventQuery traceEventQuery = new TraceEventQuery(tenant);
+            IQueryable<TraceEventPM> traceEventPMsList =traceEventQuery.GetTraceEventPMsByDateAndObjectTableId(fromDate, toDate, "1-4", tenant);
+            if (!string.IsNullOrEmpty(userId))
+            {
+                traceEventPMsList = traceEventPMsList.Where(d => d.UserId == userId);
+            }
+
+            if (manuallyAddedEventsOnly)
+            {
+                traceEventPMsList = traceEventPMsList.Where(d => d.IsAddedManually);
+            }
+            List<ShipmentEventsList> shipmentEventsLists = new List<ShipmentEventsList>();
+
+            IEnumerable<IGrouping<string, TraceEventPM>> traceEventgroups = traceEventPMsList.ToList().GroupBy(q => q.EntityNumber);
+            foreach (IGrouping<string, TraceEventPM> traceEventgroup in traceEventgroups)
+            {
+                foreach (TraceEventPM item in traceEventgroup.OrderBy(d => d.EventDateTime).ToList())
+                {
+
+                    shipmentEventsLists.Add(new ShipmentEventsList()
+                    {
+                        ShipmentNumber = item.EntityNumber,
+                        EventCode = item.EventTypeCode,
+                        EventName = item.EventTypeEnglishName,
+                        EventDate = item.EventDateTime,
+                        LogDate = item.LogDateTime,
+                        UserName = item.ContactEnglishFirstName,
+                        Notes = item.Notes,
+                    });
+                }
+
+
+            }
+            shipmentsEventsListDataProvider.ShipmentEventsLists = shipmentEventsLists;
+            return shipmentsEventsListDataProvider;
+        }
+        #endregion
+
 
         private ContactPM GetLoggedContact(int tenant)
         {

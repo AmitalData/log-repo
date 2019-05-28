@@ -19,6 +19,7 @@ namespace WebFreight.Web.DataProviders
         public string Total_DifferenceTime { get; set; }
         public string Total_TimeFromHome { get; set; }
         public string Total_TimeFromClient { get; set; }
+        public string Total_TimeFromDayOff { get; set; }
         public string Total_TotalWorkHrs { get; set; }
         public string Total_OverTime { get; set; }        
     }
@@ -34,6 +35,7 @@ namespace WebFreight.Web.DataProviders
         public double MinutesFromOffice { get; set; }
         public double MinutesFromHome { get; set; }
         public double MinutesFromClient { get; set; }
+        public double MinutesFromDayOff { get; set; }
         public double MinutesDifference { get; set; }
         public double MinutesTotalWork { get; set; }
         public double MinutesOverTime { get; set; }
@@ -43,6 +45,7 @@ namespace WebFreight.Web.DataProviders
         public string DifferenceTime { get; set; }
         public string TimeFromHome { get; set; }
         public string TimeFromClient { get; set; }
+        public string TimeFromDayOff { get; set; }
         public string TotalWorkHrs { get; set; }
         public string OverTime { get; set; }
     }

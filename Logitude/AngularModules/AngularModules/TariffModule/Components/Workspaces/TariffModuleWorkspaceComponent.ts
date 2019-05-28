@@ -1,5 +1,4 @@
 import {Component, ViewChildren, QueryList,OnInit} from '@angular/core';
-import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
@@ -7,6 +6,9 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { TariffDomainService, TariffSummery } from '../../Services/TariffDomainService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
+import { BatchTaskExecutionPM } from '../../../Infrastructure/EntityPMs/BatchTaskExecutionPM';
+import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
+import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
 
 @Component({
     selector: 'TariffModuleWorkspaceComponent',
@@ -51,7 +53,6 @@ export class TariffModuleWorkspaceComponent implements OnInit {
     LoadAllScreenData() {
         this.LoadQueriesCounts();
     }
-
 
     LoadQueriesCounts() {
         this.tariffDomainService.GetTariffsCounts().subscribe((myResponse: ServiceResponse) => {
@@ -190,14 +191,60 @@ export class TariffModuleWorkspaceComponent implements OnInit {
             this.selectedItem = newValue;
         }
     }
-
-
+    
     TariffSettingsClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
         logWindow.Height = 400;
         logWindow.Title = "Tariff Settings";
         logWindow.Show('./TariffModule/Components/Workspaces/TariffSettingComponent');
+    }
+
+    private timer: any;
+    private timerInterval: number = 1000;
+    private batchEntity: BatchTaskExecutionPM;
+    GenerateTariffsClicked() {
+        this.CurrentSession.StartBusyIndicator("Generating...");
+
+        this.tariffDomainService.GenerateTariffs().subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var mm: ServiceResponse = response;
+                this.batchEntity = mm.Result;
+
+                if (this.batchEntity != null) {
+                    this.timer = setInterval(() => { this.GetBTE(); }, this.timerInterval);
+                }
+            }
+        });
+    }
+
+    GetBTE() {
+        var bteList: BatchTaskExecutionList;
+        var myService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+        myService.getSingle(this.batchEntity.Id).subscribe(myResult => {            
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                bteList = mm.Result;
+
+                if (bteList.StatusCode == "D")
+                {                    
+                    this.LoadQueriesCounts();
+
+                    this.CurrentSession.StopBusyIndicator();                  
+                    if (this.timer) {
+                        clearInterval(this.timer);
+                    }
+                }
+
+                else if (bteList.StatusCode == "F")
+                {
+                    this.CurrentSession.StopBusyIndicator();
+                    if (this.timer) {
+                        clearInterval(this.timer);
+                    }
+                }
+            }
+        });
     }
 }
 

@@ -99,5 +99,7 @@ export class TenantList {
 		TemperatureUnitCode: string;
 		DefaultSLAId: string;
 		NumberFormatCode: string;
+		CBSA: string;
+		CAAT: string;
 	
 }

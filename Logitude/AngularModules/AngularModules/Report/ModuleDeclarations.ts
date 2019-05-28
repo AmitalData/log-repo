@@ -27,6 +27,9 @@ import {ProfitByShipmentFilterConmponent} from './Components/FilterReportCompone
 import {InventoryReportFilterConmponent} from './Components/FilterReportComponent/InventoryReportFilterConmponent';
 import {OpenShipmentsByCustomerFilterComponent} from './Components/FilterReportComponent/OpenShipmentsByCustomerFilterComponent';
 import { UnicargoExportReportFilterComponent } from './Components/FiltersComponent/Operational/UnicargoExportReportFilterComponent';
+import { ShipmentsEventsListFilterComponent } from './Components/FiltersComponent/Operational/ShipmentsEventsListFilterComponent';
+
+
 
 // Accounting
 import {AccountingLedgerFilterComponent} from './Components/FilterReportComponent/AccountingLedgerFilterComponent';
@@ -141,6 +144,7 @@ export const Components =
         VDKFilterComponent,
         VehiclesFilterComponent,
         UnicargoExportReportFilterComponent,
+        ShipmentsEventsListFilterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -208,7 +212,10 @@ export class ModuleDeclarations {
             case "VendorChargesAnalysisFilterComponent": { myResult = VendorChargesAnalysisFilterComponent; break; }
             case "VDKFilterComponent": { myResult = VDKFilterComponent; break; }
             case "VehiclesFilterComponent": { myResult = VehiclesFilterComponent; break; }
-            case "UnicargoExportReportFilterComponent": { myResult = UnicargoExportReportFilterComponent; break; }                
+            case "UnicargoExportReportFilterComponent": { myResult = UnicargoExportReportFilterComponent; break; }   
+            case "ShipmentsEventsListFilterComponent": { myResult = ShipmentsEventsListFilterComponent; break; }   
+
+          
         }
 
         return myResult;

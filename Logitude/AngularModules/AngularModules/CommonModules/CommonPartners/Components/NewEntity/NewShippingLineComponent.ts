@@ -118,6 +118,20 @@ export class NewShippingLineComponent extends BaseComponent implements OnInit {
         }
     }
 
+    get CBSA() { return this.ShippingLinePM.CBSA; }
+    set CBSA(value: string) {
+        if (this.ShippingLinePM.CBSA != value) {
+            this.ShippingLinePM.CBSA = value;
+        }
+    }
+
+    get CAAT() { return this.ShippingLinePM.CAAT; }
+    set CAAT(value: string) {
+        if (this.ShippingLinePM.CAAT != value) {
+            this.ShippingLinePM.CAAT = value;
+        }
+    }
+
     get EnglishName() { return this.ShippingLinePM.EnglishName; }
     set EnglishName(value: string) {
         if (this.ShippingLinePM.EnglishName != value) {

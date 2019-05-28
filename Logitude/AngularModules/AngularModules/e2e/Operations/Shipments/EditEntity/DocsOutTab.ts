@@ -1,6 +1,6 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from '../../../Helpers/FieldsHelper';
-import{GeneralFunctions} from'../../../Helpers/GeneralFunctions';
+import { GeneralFunctions } from '../../../Helpers/GeneralFunctions';
 
 
 export class DocsOutTabComponent {
@@ -12,12 +12,19 @@ export class DocsOutTabComponent {
 
     public DocsOutTab() {
         this.Helper.WaitByIdAndClick('Shipment.TH.DocsOut');
-
-
-        // this.Helper.WaitByIdAndClick('716SD-P-DocsOut');
-        // this.Helper.WaitByCssButtonClick('.Button', 'Close');
-
-
-
     }
+
+    QuickSearchDocOut(docsOutId: string, docOutRow: string, searchTerm: string) {
+         this.UseDocsOutSearchBox('SearchFieldsId_0_0', searchTerm, docsOutId, docOutRow);
+       }
+
+       UseDocsOutSearchBox(searchFeildId: string, searchByRef: string, docOutId: string, docOutRow: string) {
+        this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
+        this.Helper.WaitByIdAndClick(docOutRow);
+        this.Helper.WaitByIdAndClick(docOutId);
+        }
+
+
+        
+
 }
