@@ -12,6 +12,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -63,7 +64,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
              Shipments   = new List<UnicargoExport>()
             };
 
-            List<Shipment> shipments = shipmentsContext.Shipments.Where(p=>p.Tenant==tenant && p.IsOperationalClosed==false).ToList();
+            List<Shipment> shipments = shipmentsContext.Shipments.Where(p=>p.Tenant==tenant && p.IsOperationalClosed==false).Include("CreatedByUser").Include("CreatedByUser.Contact").Include("SalesmanUser").ToList();
            Dictionary<string,string> incoterms= commonDataContext.Incoterms.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
             Dictionary<string, string> ShipmentTypes = shipmentsContext.ShipmentTypes.ToDictionary(a => a.Id, b => b.Name);
             Dictionary<string, string> transportmodes = webFreightContext.TransportModes.ToDictionary(a => a.Id, b => b.Name);
@@ -121,8 +122,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 // Shipment.CargoReadyDate = item.CargoReadyDate; // check
                 Shipment.LFD = item.LastFinalDestination; // Check
                 Shipment.AvailableDate = item.TerminalAvailable; //Check
-           //     Shipment.Openedby = item.CreatedByUserName; // Check
-            //    Shipment.Salesman = item.SalesmanUserName; //check
+              Shipment.Openedby = item.CreatedByUser.Contact.EnglishName; 
+                Shipment.Salesman = item.SalesmanUser.Contact.EnglishName; //check
             //    Shipment.AccountManager = item.AccountManagerUserName; // check
                 Shipment.Department = item.DepartmentId; // Set Name
             //    Shipment.Branch = item.BranchName;
