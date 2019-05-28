@@ -478,8 +478,9 @@ export class NewAirFreightCostComponent extends BaseComponent {
         var IdPropsName: string[] = [];
         var UOMPropsName: string[] = [];
         var DuplicatedChargesIds: string[] = [];
-        var EmptyIndex = 0;
+        var EmptyIndex = 1;
         var emptyLines: boolean = false;
+        var FirstLineEmpty: boolean = false;
         var tempErrors:Array<string> = [];
         for (var index = 1; index <= 10; index++) {
             IdProps.push("Surcharge" + index + "Id");
@@ -505,6 +506,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
             if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
                     tempErrors.push(IdPropsName[index - 1] + " is required");
+                    FirstLineEmpty = true;
                 }
 
                 if (AppTool.IsNullOrEmpty(this[UOMProps[index - 1]])) {
@@ -517,7 +519,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
        
 
                 if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                    if (EmptyIndex == 0) {
+                    if (EmptyIndex == 1) {
                         EmptyIndex = index;
                     }
                 }
@@ -527,20 +529,20 @@ export class NewAirFreightCostComponent extends BaseComponent {
                 }
                 if (index == 2) {
                     if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                        if (EmptyIndex == 0) {
+                        if (FirstLineEmpty) {
                             emptyLines = true;
-                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line 2 and line 1");
-                            EmptyIndex = 0;
+                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line 1 and line 2");
+                            EmptyIndex = 1;
                        }
                     }
                 }
 
                 if (index >= 3) {
                     if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                        if (EmptyIndex != 0) {
+                        if (EmptyIndex != 1) {
                             emptyLines = true;
                             this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line " + (EmptyIndex - 1) + " and line " + index);
-                            EmptyIndex = 0;
+                            EmptyIndex = 1;
                         }
                         if (AppTool.IsNullOrEmpty(this[IdProps[index - 2]])) {
                          //   this.ValidationErrorsList.push("no empty line between 2 charges in line "+index+ " and "+(index-2));
