@@ -111,5 +111,6 @@
     <Feature Code="&quot;VDK&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.VDK&quot;" FeatureDefaultText="&quot;VDK Report Templates&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;Vehicles&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.Vehicles&quot;" FeatureDefaultText="&quot;Vehicles Shipping&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;UNER&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.UNER&quot;" FeatureDefaultText="&quot;Unicargo Export Report&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;SHEL&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.SHEL&quot;" FeatureDefaultText="&quot;Shipments Events List&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
