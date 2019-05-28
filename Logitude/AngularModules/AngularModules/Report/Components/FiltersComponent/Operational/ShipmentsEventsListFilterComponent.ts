@@ -37,7 +37,7 @@ export class ShipmentsEventsListFilterComponent extends BaseComponent {
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-       // this.RunReport(false);
+       
     }
 
 

@@ -12,6 +12,7 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel;
+using System;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -353,14 +354,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
 
 
-        public IQueryable<TraceEventPM> GetTraceEventPMsByObjectTableId(int tenant,  string objectTableId)
+        public IQueryable<TraceEventPM> GetTraceEventPMsByDateAndObjectTableId(DateTime fromDate, DateTime toDate,  string objectTableId, int tenant)
         {
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
             IQueryable<TraceEventPM> traceEvents = from a in repository.context.TraceEvent.Include("EventType").Include("User.Contact")
-                                                   join o in shipmentsContext.Shipments
-                                                    on a.EntityId equals o.Id into sr
-                                                   from shipment in sr.DefaultIfEmpty()
-                                                   where a.Tenant == tenant && a.ObjectTableId == objectTableId && !a.Deleted 
+                                                   join s in shipmentsContext.Shipments
+                                                    on a.EntityId equals s.Id into ship
+                                                   from shipment in ship.DefaultIfEmpty()
+                                                   where a.Tenant == tenant && a.ObjectTableId == objectTableId && !a.Deleted
+                                                   && shipment.CreateDateTime>=fromDate && shipment.CreateDateTime <=toDate
                                                    select new TraceEventPM()
                                                    {
                                                        EventTypeCode = a.EventType.Code,
@@ -373,6 +375,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        Id = a.Id,
                                                        Tenant = a.Tenant,
                                                        UserId = a.UserId,
+                                                       EntityNumber = shipment.ShipmentNumber,
+                                                       ContactEnglishFirstName =((a.User!=null && a.User.Contact!=null) ? a.User.Contact.EnglishName:null),
                                                    };
             return traceEvents;
         }

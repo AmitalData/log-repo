@@ -75,6 +75,7 @@ using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -13096,12 +13097,12 @@ namespace WebFreight.Web.ReportsWebServices
 
         private ShipmentsEventsListDataProvider GetShipmentsEventsListDataProvider(byte[] xmlFilters, int tenant)
         {
-
-            DateTime fromDate;
-            DateTime toDate;
-            bool includeOperationalClosed = false;
+            ShipmentsEventsListDataProvider shipmentsEventsListDataProvider = new ShipmentsEventsListDataProvider();
+            DateTime fromDate = DateTime.Now;
+            DateTime toDate = DateTime.Now;
+            bool manuallyAddedEventsOnly = false;
             string userId = string.Empty;
-            
+
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
@@ -13115,7 +13116,7 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 if (filterItem_ManuallyAddedEventsOnly.FieldValue != null)
                 {
-                    includeOperationalClosed = (bool)filterItem_ManuallyAddedEventsOnly.FieldValue;
+                    manuallyAddedEventsOnly = (bool)filterItem_ManuallyAddedEventsOnly.FieldValue;
                 }
             }
             if (filterItem_FromDate != null)
@@ -13134,11 +13135,40 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            //TraceEventQuery traceEventQuery = new TraceEventQuery(0);
+            //TraceEventQuery traceEventQuery = new TraceEventQuery(tenant);
+            //IQueryable<TraceEventPM> traceEventPMsList = traceEventQuery.GetTraceEventPMsByDateAndObjectTableId(fromDate, toDate, "1-4", tenant);
+            //if (!string.IsNullOrEmpty(userId))
+            //{
+            //    traceEventPMsList = traceEventPMsList.Where(d => d.UserId == userId);
+            //}
 
-            //var x =  traceEventQuery.GetTraceEventPMsByObjectTableId(0,"1-4");
-            ShipmentsEventsListDataProvider shipmentsEventsListDataProvider = new ShipmentsEventsListDataProvider();
+            //if (manuallyAddedEventsOnly)
+            //{
+            //    traceEventPMsList = traceEventPMsList.Where(d => d.IsAddedManually);
+            //}
+            //List<ShipmentEventsList> shipmentEventsLists = new List<ShipmentEventsList>();
 
+            //IEnumerable<IGrouping<string, TraceEventPM>> traceEventgroups = traceEventPMsList.ToList().GroupBy(q => q.EntityNumber);
+            //foreach (IGrouping<string, TraceEventPM> traceEventgroup in traceEventgroups)
+            //{
+            //    foreach (TraceEventPM item in traceEventgroup.OrderBy(d => d.EventDateTime).ToList())
+            //    {
+
+            //        shipmentEventsLists.Add(new ShipmentEventsList()
+            //        {
+            //            ShipmentNumber = item.EntityNumber,
+            //            EventCode = item.EventTypeCode,
+            //            EventName = item.EventTypeEnglishName,
+            //            EventDate = item.EventDateTime,
+            //            LogDate = item.LogDateTime,
+            //            UserName = item.ContactEnglishFirstName,
+            //            Notes = item.Notes,
+            //        });
+            //    }
+
+
+            //}
+            //shipmentsEventsListDataProvider.ShipmentEventsLists = shipmentEventsLists;
             return shipmentsEventsListDataProvider;
         }
         #endregion
