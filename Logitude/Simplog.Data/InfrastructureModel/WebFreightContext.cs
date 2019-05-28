@@ -57,7 +57,9 @@ namespace Simplog.Data.InfrastructureModel
 
             // }
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context;

@@ -46,7 +46,8 @@ namespace Logitude.Accounting.Data
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             AccountingContext context = new AccountingContext(connection);
 			 
             return context;
