@@ -13135,40 +13135,40 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            TraceEventQuery traceEventQuery = new TraceEventQuery(tenant);
-            IQueryable<TraceEventPM> traceEventPMsList = new TraceEventPM();//traceEventQuery.GetTraceEventPMsByDateAndObjectTableId(fromDate, toDate, "1-4", tenant);
-            if (!string.IsNullOrEmpty(userId))
-            {
-                traceEventPMsList = traceEventPMsList.Where(d => d.UserId == userId);
-            }
+            //TraceEventQuery traceEventQuery = new TraceEventQuery(tenant);
+            //IQueryable<TraceEventPM> traceEventPMsList = traceEventQuery.GetTraceEventPMsByDateAndObjectTableId(fromDate, toDate, "1-4", tenant);
+            //if (!string.IsNullOrEmpty(userId))
+            //{
+            //    traceEventPMsList = traceEventPMsList.Where(d => d.UserId == userId);
+            //}
 
-            if (manuallyAddedEventsOnly)
-            {
-                traceEventPMsList = traceEventPMsList.Where(d => d.IsAddedManually);
-            }
-            List<ShipmentEventsList> shipmentEventsLists = new List<ShipmentEventsList>();
+            //if (manuallyAddedEventsOnly)
+            //{
+            //    traceEventPMsList = traceEventPMsList.Where(d => d.IsAddedManually);
+            //}
+            //List<ShipmentEventsList> shipmentEventsLists = new List<ShipmentEventsList>();
 
-            IEnumerable<IGrouping<string, TraceEventPM>> traceEventgroups = traceEventPMsList.ToList().GroupBy(q => q.EntityNumber);
-            foreach (IGrouping<string, TraceEventPM> traceEventgroup in traceEventgroups)
-            {
-                foreach (TraceEventPM item in traceEventgroup.OrderBy(d => d.EventDateTime).ToList())
-                {
+            //IEnumerable<IGrouping<string, TraceEventPM>> traceEventgroups = traceEventPMsList.ToList().GroupBy(q => q.EntityNumber);
+            //foreach (IGrouping<string, TraceEventPM> traceEventgroup in traceEventgroups)
+            //{
+            //    foreach (TraceEventPM item in traceEventgroup.OrderBy(d => d.EventDateTime).ToList())
+            //    {
 
-                    shipmentEventsLists.Add(new ShipmentEventsList()
-                    {
-                        ShipmentNumber = item.EntityNumber,
-                        EventCode = item.EventTypeCode,
-                        EventName = item.EventTypeEnglishName,
-                        EventDate = item.EventDateTime,
-                        LogDate = item.LogDateTime,
-                        UserName = item.ContactEnglishFirstName,
-                        Notes = item.Notes,
-                    });
-                }
+            //        shipmentEventsLists.Add(new ShipmentEventsList()
+            //        {
+            //            ShipmentNumber = item.EntityNumber,
+            //            EventCode = item.EventTypeCode,
+            //            EventName = item.EventTypeEnglishName,
+            //            EventDate = item.EventDateTime,
+            //            LogDate = item.LogDateTime,
+            //            UserName = item.ContactEnglishFirstName,
+            //            Notes = item.Notes,
+            //        });
+            //    }
 
 
-            }
-            shipmentsEventsListDataProvider.ShipmentEventsLists = shipmentEventsLists;
+            //}
+            //shipmentsEventsListDataProvider.ShipmentEventsLists = shipmentEventsLists;
             return shipmentsEventsListDataProvider;
         }
         #endregion
