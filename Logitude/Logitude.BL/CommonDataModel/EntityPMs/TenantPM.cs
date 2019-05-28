@@ -367,6 +367,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool AutoArchiveOnInvoice { get; set; }
         public string EcommerceSupportEmail { get; set; }
 
+        public string CBSA { get; set; }
+        public string CAAT { get; set; }
+
 
     }
 }
