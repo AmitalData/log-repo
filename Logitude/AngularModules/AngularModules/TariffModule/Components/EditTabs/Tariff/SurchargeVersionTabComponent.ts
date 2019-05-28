@@ -244,7 +244,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.TariffsLinesSource.Clear();
         var itemsCollection: TariffLineData[] = [];
 
-        this.CurrentVersion.TariffLines.forEach(item => {
+        this.CurrentVersion.TariffLines.sort(p => p.Index).forEach(item => {
             itemsCollection.push(new TariffLineData(item, this));
         });
 
@@ -258,6 +258,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         itemPM.ExpirationDate = this.ExpirationDate;
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
+
+        var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
+        if (Version) {
+            if (Version.TariffLines.length > 0) {
+                var index = Math.max.apply(Math, Version.TariffLines.map(function (o) { return o.Index; })) + 1;
+                if (index) {
+                    itemPM.Index = index;
+                }
+            }
+        }
+
         var itemComponent = new TariffLineData(itemPM, this, true);
         logWindow.DataContext = itemComponent;
         logWindow.Title = "New Tariff Line";
@@ -362,6 +373,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.DestinationPortText = item.ToPortText;
             tariffLine.HasErrors = item.HasErrors;
             tariffLine.ErrorText = item.ErrorText;
+            tariffLine.Index = item.Index;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
@@ -498,7 +510,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         this.EntityPM.AddTariffVersion(copiedVersion);
 
-        this.CurrentVersion.TariffLines.forEach(item => {
+        this.CurrentVersion.TariffLines.sort(p => p.Index).forEach(item => {
             var tariffLine = new TariffLinePM(copiedVersion);
             tariffLine.StartDate = this.StartDate;
             tariffLine.ExpirationDate = this.ExpirationDate;
@@ -520,6 +532,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge8Price = item.Surcharge8Price;
             tariffLine.Surcharge9Price = item.Surcharge9Price;
             tariffLine.Surcharge10Price = item.Surcharge10Price;
+            tariffLine.Index = item.Index;
 
             copiedVersion.AddTariffLine(tariffLine);
         });
