@@ -345,7 +345,7 @@ namespace Logitude.Social.Data
 			modelBuilder.Configurations.Add(new ParticipantMap());
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
-            modelBuilder.Configurations.Add(new CustomsShipperMap());
+			modelBuilder.Configurations.Add(new CustomsShipperMap());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -441,4 +441,4 @@ namespace Logitude.Social.Data
  }
 
 
-}
+}

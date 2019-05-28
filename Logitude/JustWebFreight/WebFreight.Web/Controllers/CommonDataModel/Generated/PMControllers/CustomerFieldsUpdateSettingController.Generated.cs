@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CustomerFieldsUpdateSetting", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CustomerFieldsUpdateSetting", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         CustomerFieldsUpdateSettingService service = new CustomerFieldsUpdateSettingService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CustomerFieldsUpdateSetting", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CustomerFieldsUpdateSetting", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "CustomerFieldsUpdateSetting" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "CustomerFieldsUpdateSettingPM" + entityPM.Id + entityPM.Tenant;

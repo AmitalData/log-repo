@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TasksScheduler", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TasksScheduler", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         TasksSchedulerService service = new TasksSchedulerService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TasksScheduler", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TasksScheduler", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "TasksScheduler" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "TasksSchedulerPM" + entityPM.Id + entityPM.Tenant;

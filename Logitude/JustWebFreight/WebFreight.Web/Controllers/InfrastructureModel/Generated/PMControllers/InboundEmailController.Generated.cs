@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("InboundEmail", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("InboundEmail", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         InboundEmailService service = new InboundEmailService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("InboundEmail", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("InboundEmail", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "InboundEmail" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "InboundEmailPM" + entityPM.Id + entityPM.Tenant;
