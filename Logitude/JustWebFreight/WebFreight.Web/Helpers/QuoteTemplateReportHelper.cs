@@ -2839,9 +2839,9 @@ namespace Logitude.BL.Helpers
                             string fixedPrice = " ";
                             if (chargePM.SaleMeasurementCode != "BCNT")
                             {
-                                if (chargePM.SaleAmountInSaleCurrency != null)
+                                if (chargePM.SaleTotalAmount != null)
                                 {
-                                    double value = (double)chargePM.SaleAmountInSaleCurrency;
+                                    double value = (double)chargePM.SaleTotalAmount;
                                     fixedPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
                             }
