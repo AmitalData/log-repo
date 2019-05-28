@@ -11,8 +11,7 @@ using System.Configuration;
 namespace Simplog.Global.Data.GlobalModel.Helpers
 {
     public class GlobalDbHelper
-    {
-
+    { 
         public static GlobalDB GetGlobalDB(int tenant)
         {
             GlobalDB currentDb = null;

@@ -5518,6 +5518,7 @@ namespace WebFreight.Web.ReportsWebServices
         [WebMethod]
         public byte[] LoadContainerTruckingData(byte[] xmlFilters, int tenant)
         {
+            DatabaseInitializer.RunOnSeconderyDB = true;
             ContainerTruckingDataProvider dataProviderData = LoadContainerTruckingDataProvider(xmlFilters, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(ContainerTruckingDataProvider));
             MemoryStream memstream = new MemoryStream();
