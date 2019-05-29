@@ -677,6 +677,7 @@
     <Compile Include="Migrations\201905061035125_VendorCommissionMigration.cs" />
     <Compile Include="Migrations\201905061035125_VendorCommissionMigration.Designer.cs">
       <DependentUpon>201905061035125_VendorCommissionMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.cs" />
     <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.Designer.cs">
       <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
@@ -1133,6 +1134,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905061035125_VendorCommissionMigration.resx">
       <DependentUpon>201905061035125_VendorCommissionMigration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.resx">
       <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
     </EmbeddedResource>

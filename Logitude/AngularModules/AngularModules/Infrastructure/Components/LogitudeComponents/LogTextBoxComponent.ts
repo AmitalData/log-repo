@@ -1160,8 +1160,9 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 this.TextValue = textWithCommas;
                             }
 
-                            break;
                         }
+                        break;
+                    }
                     case 'unsinteger':
                     case 'integer':
                         {
@@ -1198,7 +1199,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                             //}
                             break;
                         }
-                    case "integertext": {
+                    case "integertext":
+                    {
                         if (isNaN(Number(this.TextValue))) {
                             this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         }
