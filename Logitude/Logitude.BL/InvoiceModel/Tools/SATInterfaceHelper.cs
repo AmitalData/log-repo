@@ -705,32 +705,33 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 if (totalVat.VATPercent >= 0)
                 {
+                    var totalVatVatType = allVatTypes.FirstOrDefault(d => d.Id == totalVat.VatTypeId);
 
                     TotalImpuestosTrasladados += Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0));
-                    string tipo = (totalVat.VATPercent == 0 ? "Exento" : "Tasa");
-                    Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = trasladoList.FirstOrDefault(t => t.TipoFactor == tipo);
+                    string tipoFactor = (totalVat.VATPercent == 0 && totalVatVatType.Code == "EXMPT" ? "Exento" : "Tasa");
+                    Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = trasladoList.FirstOrDefault(t => t.TipoFactor == tipoFactor);
                     if (traslado == null)
                     {
-                        if (totalVat.VATPercent != 0)
+                        //if (totalVat.VATPercent != 0)
+                        //{
+                        traslado = new Profact.TimbraCFDI33.ComprobanteImpuestosTraslado()
                         {
-                            traslado = new Profact.TimbraCFDI33.ComprobanteImpuestosTraslado()
-                            {
-                                Importe = GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0))),
-                                Impuesto = "002",
-                                TasaOCuota = (totalVat.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(totalVat.VATPercent.Value / 100).ToString()), '0', 8) : ""),
-                                TipoFactor = (totalVat.VATPercent == 0 ? "Exento" : "Tasa"),
-                            };
+                            Importe = GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0))),
+                            Impuesto = "002",
+                            TasaOCuota = totalVat.VATPercent != 0 ? (totalVat.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(totalVat.VATPercent.Value / 100).ToString()), '0', 8) : "") : "0.000000",
+                            TipoFactor = tipoFactor,//(totalVat.VATPercent == 0 ? "Exento" : "Tasa"),
+                        };
 
-                            //if (traslado.TipoFactor == "Tasa")
-                            //{
-                            //    traslado.TasaOCuota = (totalVat.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(totalVat.VATPercent.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
-                            //    traslado.Importe = Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0));
-                            //    //traslado.ImporteSpecified = true;
-                            //    //traslado.TasaOCuotaSpecified = true;
-                            //}
+                        //if (traslado.TipoFactor == "Tasa")
+                        //{
+                        //    traslado.TasaOCuota = (totalVat.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(totalVat.VATPercent.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
+                        //    traslado.Importe = Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0));
+                        //    //traslado.ImporteSpecified = true;
+                        //    //traslado.TasaOCuotaSpecified = true;
+                        //}
 
-                            trasladoList.Add(traslado);
-                        }
+                        trasladoList.Add(traslado);
+                        //}
                     }
                     else
                     {
@@ -794,11 +795,11 @@ namespace Logitude.BL.InvoiceModel.Tools
             decimal roundedTotalTraslados = (decimal)MethodHelper.Roundd((double)totalTraslados, 2);
             decimal roundedTotalRetenciones = (decimal)MethodHelper.Roundd((double)totalRetenciones, 2);
 
-            if ((trasladoList.Count > 0 && totalTraslados != 0) || retencionList.Count > 0)
+            if ((trasladoList.Count > 0) || retencionList.Count > 0)
             {
                 comprobante.Impuestos = new Profact.TimbraCFDI33.ComprobanteImpuestos();
 
-                if (trasladoList.Count > 0 && totalTraslados != 0)
+                if (trasladoList.Count > 0)
                 {
                     comprobante.Impuestos.Traslados = trasladoList.ToArray();
                     comprobante.Impuestos.TotalImpuestosTrasladados = GetDecimalWith2DigitsAfterPoint(totalTraslados);//Math.Abs(TotalImpuestosTrasladados);
@@ -886,7 +887,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     if (traslado.TipoFactor == "Tasa")
                     {
-                        traslado.TasaOCuota = (line.VatPercentage != null ? StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
+                        traslado.TasaOCuota = line.VatPercentage != 0 ? (line.VatPercentage != null ? StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8) : "") : "0.000000";//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
                         traslado.Importe = GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(((line.InvoiceCurrencyAmount != null ? (line.InvoiceCurrencyAmount.Value) : 0) * ((line.VatPercentage != null ? line.VatPercentage.Value : 0) / 100))), 2));
                         traslado.ImporteSpecified = true;
                         traslado.TasaOCuotaSpecified = true;
@@ -1002,7 +1003,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                         if (traslado.TipoFactor == "Tasa")
                         {
-                            traslado.TasaOCuota = (lineTotal.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
+                            traslado.TasaOCuota = lineTotal.VATPercent != 0 ? (lineTotal.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8) : "") : "0.000000";//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
                             traslado.Importe = GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(lineTotal.InvoiceCurrencyVATAmount != null ? lineTotal.InvoiceCurrencyVATAmount.Value : 0), 2));
                             traslado.ImporteSpecified = true;
                             traslado.TasaOCuotaSpecified = true;
@@ -1098,7 +1099,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     if (traslado.TipoFactor == "Tasa")
                     {
-                        traslado.TasaOCuota = (line.VatPercentage != null ? StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
+                        traslado.TasaOCuota = line.VatPercentage != 0 ?(line.VatPercentage != null ? StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8) : "") : "0.000000"; ;//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
                         traslado.Importe = GetImporte(line.InvoiceCurrencyAmount, line.VatPercentage);//GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(((line.InvoiceCurrencyAmount != null ? (line.InvoiceCurrencyAmount.Value) : 0) * ((line.VatPercentage != null ? line.VatPercentage.Value : 0) / 100))), 2));
                         traslado.ImporteSpecified = true;
                         traslado.TasaOCuotaSpecified = true;
@@ -1214,7 +1215,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                         if (traslado.TipoFactor == "Tasa")
                         {
-                            traslado.TasaOCuota = (lineTotal.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
+                            traslado.TasaOCuota = lineTotal.VATPercent != 0 ?(lineTotal.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8) : "") : "0.000000"; ;//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
                             traslado.Importe = (decimal)lineTotal.InvoiceCurrencyVATAmount;//GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(lineTotal.InvoiceCurrencyVATAmount != null ? lineTotal.InvoiceCurrencyVATAmount.Value : 0), 2));
                             traslado.ImporteSpecified = true;
                             traslado.TasaOCuotaSpecified = true;
