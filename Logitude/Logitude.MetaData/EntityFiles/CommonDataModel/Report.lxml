@@ -112,5 +112,6 @@
     <Feature Code="&quot;Vehicles&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.Vehicles&quot;" FeatureDefaultText="&quot;Vehicles Shipping&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;UNER&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.UNER&quot;" FeatureDefaultText="&quot;Unicargo Export Report&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;SHEL&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;Report.Features.SHEL&quot;" FeatureDefaultText="&quot;Shipments Events List&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;ATRE&quot;" FeatureTypeCode="&quot;Area&quot;" FeatureTextCodeCode="&quot;Report.Features.AutomationTestReport&quot;" FeatureDefaultText="&quot;Automation Test Report&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
