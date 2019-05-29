@@ -23,6 +23,8 @@ using System.Configuration;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
+using Unifreight.BL.EntityPMs.UGenerated;
+using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 
 namespace Logitude.Customs.BL.Messaging.U2L.CommDec
@@ -43,6 +45,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
         private DeclarationPM _MyDeclarationPM;
         //private DeclarationPM _MyEntryDeclarationPM;
         private Stopwatch _Stopwatch;
+        private bool _IsBuildItemsUnit = false;
 
         public CommDecService()
             : base(
@@ -278,8 +281,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             {
                 if (this._LogitudeCommDecFile.INVOICE.Count() > 0)
                 {
-                    
 
+                    string defValue = GetDefault("ISRAEL", "CGG_BUILD_UNIT", "NON", "NON", ResolvedTenant());
+                    if (defValue == "Y")
+                    {
+                        _IsBuildItemsUnit = true;
+                    }
                     if (this._MyDeclarationPM.SupplierInvoices == null || this._MyDeclarationPM.SupplierInvoices.Count() == 0)
                     {
                         this._MyDeclarationPM.SupplierInvoices = new List<SupplierInvoicePM>();
@@ -442,6 +449,23 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.Success;
         }
 
+        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant)
+        {
+            AmitalContext amitalContext = AmitalContext.GetContext(tenant);
+            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
+
+            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
+            {
+                return ("");
+            }
+
+            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
+            if (myGDFDATAPM == null)
+            {
+                return ("");
+            }
+            return (myGDFDATAPM.DEFDATA);
+        }
 
         private string TranslateAirline(string airlineId)
         {
@@ -1177,6 +1201,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
 
         private List<SupplierInvoiceItemPM> GetSupplierInvoiceItemPM(Logitude.AmitalMessaging.Customs.CustomFile.CommDecFile.INVOICE invoice)
         {
+            Dictionary<string, string> ClasificationQtyTypes = new Dictionary<string, string>() { };
+            CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(ResolvedTenant());
             var SupplierInvoiceItemPMList = new List<SupplierInvoiceItemPM>();
             
             foreach (var invoiceItem in invoice.INVOICEITEMS)
@@ -1231,7 +1257,28 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                         throw new BusinessErrorException("Error in parsing QUANTITY (" + invoiceItem.QUANTITY_STS + ") into decimal");
                     }
                 }
-                SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.QUANTITY_TYPE);
+                
+                string invoiceQuantityType = null;
+                if (_IsBuildItemsUnit && !string.IsNullOrEmpty(SupplierInvoiceItemPM.ClassificationCode))
+                {
+                    if (ClasificationQtyTypes.Keys.Contains(SupplierInvoiceItemPM.ClassificationCode))
+                    {
+                        invoiceQuantityType = ClasificationQtyTypes[SupplierInvoiceItemPM.ClassificationCode];
+                    }
+                    else
+                    {
+                        invoiceQuantityType = customsItemQueryService.GetQuantityTypeByClassificationCode(SupplierInvoiceItemPM.ClassificationCode, ResolvedTenant());
+                        ClasificationQtyTypes.Add(SupplierInvoiceItemPM.ClassificationCode, invoiceQuantityType);
+                    }
+                }
+                if (string.IsNullOrWhiteSpace(invoiceQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.QUANTITY_TYPE))
+                {
+                    invoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.QUANTITY_TYPE);
+                }
+                if (!string.IsNullOrWhiteSpace(invoiceQuantityType))
+                {
+                    SupplierInvoiceItemPM.InvoiceQuantityType = invoiceQuantityType;
+                }
 
                 if (!string.IsNullOrWhiteSpace(invoiceItem.ITEMPRICE) && invoiceItem.ITEMPRICE != "0")
                 {
