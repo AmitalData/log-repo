@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AirlineStatistics", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AirlineStatistics", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         AirlineStatisticsService service = new AirlineStatisticsService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AirlineStatistics", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AirlineStatistics", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "AirlineStatistics" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AirlineStatisticsPM" + entityPM.Id + entityPM.Tenant;

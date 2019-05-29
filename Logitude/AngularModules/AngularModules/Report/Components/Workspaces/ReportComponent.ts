@@ -88,6 +88,16 @@ export class ReportComponent {
                                         }
                                     }
                                 }
+                                else if (item.Code == "SHEL") {
+                                 
+                                    if (SessionLocator.TenantManagementJS.PackageCode == "DVMT" || SessionLocator.Tenant == 1609 || SessionLocator.Tenant == 1608 || SessionLocator.Tenant == 1523 || SessionLocator.Tenant == 1524 || SessionLocator.Tenant == 1525 || SessionLocator.Tenant == 1526) {
+                                        if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {
+                                            this.reportList.push(item);
+                                        }
+                                    }
+                                }
+
+
 
                                 else {
                                     if (item.FeatureCode && FeatureLocator.HasFeaturePermession("Report", item.FeatureCode)) {

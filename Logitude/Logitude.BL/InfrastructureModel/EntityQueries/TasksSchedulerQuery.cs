@@ -230,9 +230,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          StartDateTime = a.StartDateTime,
                                          EndDateTime = a.EndDateTime,
                                          Duration = DbFunctions.DiffSeconds(a.StartDateTime, a.EndDateTime), 
-                                     }).OrderByDescending(x => x.StartDateTime).Take(10).ToList();
+                                     }).Where(x => x.StartDateTime != null && x.EndDateTime != null).OrderByDescending(x => x.StartDateTime).Take(10).ToList();
 
-            var Duration = Latest10Histories.Average(a => a.Duration);
+            double? Duration = 0.0;
+            if (Latest10Histories.Count > 0)
+            {
+                Duration = Latest10Histories.Average(a => a.Duration);
+            }
+             
             return (double)Duration;
             //return (from a in repository.context.TaskSchedulerHistories
             //        where a.TaskId == taskId

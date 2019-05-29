@@ -74,8 +74,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StockTypeCode)
          .HasMaxLength(15)
          .IsUnicode(false);
-            this.Property(t => t.EcommerceSupportEmail).HasMaxLength(50).IsUnicode(false); 
+            this.Property(t => t.EcommerceSupportEmail).HasMaxLength(50).IsUnicode(false);
 
+            this.Property(t => t.CBSA).HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.CAAT).HasMaxLength(4).IsUnicode(false);
 
             this.ToTable("Tenants");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -130,7 +132,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AutoArchiveOnInvoice).HasColumnName("AutoArchiveOnInvoice");
             this.Property(t => t.NumberFormatCode).HasColumnName("NumberFormatCode");
             this.Property(t => t.EcommerceSupportEmail).HasColumnName("EcommerceSupportEmail");
-
+            this.Property(t => t.CBSA).HasColumnName("CBSA");
+            this.Property(t => t.CAAT).HasColumnName("CAAT");
 
 
             //#if ORACLE_DB

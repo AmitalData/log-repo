@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("GlobalZone", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("GlobalZone", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         GlobalZoneService service = new GlobalZoneService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("GlobalZone", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("GlobalZone", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "GlobalZone" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "GlobalZonePM" + entityPM.Id + entityPM.Tenant;

@@ -226,7 +226,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
 
-                            VatNumber = "999999998";
+                            VatNumber = "000000000";
                         }
 
                         InputInvoiceAmount = ledgerTransactons.Where(d => d.JournalId == a.JournalId && d.Reference == a.Reference).Sum(d => d.LocalAmountCredit);
@@ -234,7 +234,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     if (VatNumber == null)
                     {
-                        VatNumber = "999999998";
+                        VatNumber = "000000000";
                     }
 
                     GLAccountPM gLAccountPM = glAccounts.Where(d => d.Id == a.OppositGLAccount).FirstOrDefault();

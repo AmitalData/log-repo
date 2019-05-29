@@ -83,6 +83,9 @@ namespace WebFreight.Web.WebServices
 
             if (shipment != null && tenantSettings != null)
             {
+                myDataProvider.CarrierCAAT = tenantSettings.CAAT;
+                myDataProvider.CarrierCBSA = tenantSettings.CBSA;
+
                 PrepaidCollect shipmentprepaidcollect = (from a in webFreightContext.PrepaidCollects where a.Id == shipment.FreightPrepaidCollectId select a).FirstOrDefault();
 
                 myDataProvider.ShipmentType = shipment.ShipmentTypeName != null ? shipment.ShipmentTypeName : "";
@@ -1089,6 +1092,14 @@ namespace WebFreight.Web.WebServices
                 if (mainCarriageCarrier != null)
                 {
                     myDataProvider.MainCarriageCarrierName = mainCarriageCarrier.EnglishName;
+
+                    if(mainCarriageCarrier.PartnerTypeId == "SL")
+                    {
+                        ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
+                        ShippingLine shippingLine = shippingLineRepository.GetSingleShippingLine(mainCarriageCarrier.Id, tenant);
+                        myDataProvider.CarrierCAAT = shippingLine != null ? shippingLine.CAAT : null;
+                        myDataProvider.CarrierCBSA = shippingLine != null ? shippingLine.CBSA : null;
+                    }
                 }
                 #endregion
 

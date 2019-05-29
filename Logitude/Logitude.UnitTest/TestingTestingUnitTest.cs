@@ -22,7 +22,7 @@ using Logitude.UnitTest.Accounting;
 namespace Logitude.UnitTest
 {
     [TestClass]
-    public class TestingTestingUnitTest
+    public class TestingTestingUnitTest : TestBase
     {
 
         [TestMethod]

@@ -353,6 +353,16 @@ export class ShippingLinePM {
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
        
 	 
+    private cBSA: string;
+    public get CBSA() { return this.cBSA; }
+    public set CBSA(newValue: string) { if (this.cBSA != newValue) { this.cBSA = newValue; this.MarkAsDirty("CBSA"); } }
+       
+	 
+    private cAAT: string;
+    public get CAAT() { return this.cAAT; }
+    public set CAAT(newValue: string) { if (this.cAAT != newValue) { this.cAAT = newValue; this.MarkAsDirty("CAAT"); } }
+       
+	 
 
     public OldEntityPM: ShippingLinePM;
 		

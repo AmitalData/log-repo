@@ -635,6 +635,16 @@ export class TenantPM {
     public set EcommerceSupportEmail(newValue: string) { if (this.ecommerceSupportEmail != newValue) { this.ecommerceSupportEmail = newValue; this.MarkAsDirty("EcommerceSupportEmail"); } }
        
 	 
+    private cBSA: string;
+    public get CBSA() { return this.cBSA; }
+    public set CBSA(newValue: string) { if (this.cBSA != newValue) { this.cBSA = newValue; this.MarkAsDirty("CBSA"); } }
+       
+	 
+    private cAAT: string;
+    public get CAAT() { return this.cAAT; }
+    public set CAAT(newValue: string) { if (this.cAAT != newValue) { this.cAAT = newValue; this.MarkAsDirty("CAAT"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("APInvoice", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("APInvoice", entityPM.Tenant, authToken.Tenant);
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
                         APInvoiceService service = new APInvoiceService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("APInvoice", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("APInvoice", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "APInvoice" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "APInvoicePM" + entityPM.Id + entityPM.Tenant;
