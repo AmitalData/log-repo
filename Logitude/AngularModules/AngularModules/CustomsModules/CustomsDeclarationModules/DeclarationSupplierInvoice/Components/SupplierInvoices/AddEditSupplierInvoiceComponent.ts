@@ -1462,6 +1462,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         }
 
         // SupplierInvoiceItem
+        var emptyItems: string[] = [];
         for (let item of this.EntityPM.SupplierInvoiceItems) {
             Validator.TryValidateObject(item, "Customs.SupplierInvoiceItem", errors);
             //Validator.TryValidateObject(item, new ValidationContext(item, null, null), errors);
@@ -1470,8 +1471,26 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 itemModification.ChangeSetOp = "None";
             }
 
+            if (AppTool.IsNullOrEmpty(item.ItemDescription) && AppTool.IsNullOrEmpty(item.ClassificationCode) && AppTool.IsNullOrEmpty(item.ItemCode) && AppTool.IsNullOrEmpty(item.TradeAgreementCode) && AppTool.IsNullOrEmpty(item.InvoiceQuantity) && AppTool.IsNullOrEmpty(item.InvoiceQuantityType) && AppTool.IsNullOrEmpty(item.ItemPrice) && AppTool.IsNullOrEmpty(item.OriginCountryCode)) {
+                emptyItems.push(item.SequenceNumeric.toString());
+            }
         }
 
+        if (emptyItems != null && emptyItems.length > 0) {
+            if (emptyItems.length == 1) {
+                errors.push( + emptyItems[0] + "ריקה");
+            }
+            else {
+                var emptyMessage: string = "שים לב שורות  ";
+                for (let invoiceItem of emptyItems) {
+                    emptyMessage = emptyMessage.concat(invoiceItem + ",");
+                }
+                var newStr: string = emptyMessage.substring(0, emptyMessage.length - 1);
+                emptyMessage = newStr.concat(" ריקות");
+                errors.push(emptyMessage);
+            }
+        }
+        
         // IncotermCode
         //if (this.EntityPM.IncotermCode != null && (this.EntityPM.IncotermCode.startsWith("D") || this.EntityPM.IncotermCode == "CIF" || this.EntityPM.IncotermCode == "CIP")) {
 
