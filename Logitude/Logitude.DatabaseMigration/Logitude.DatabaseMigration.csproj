@@ -678,6 +678,14 @@
     <Compile Include="Migrations\201905061035125_VendorCommissionMigration.Designer.cs">
       <DependentUpon>201905061035125_VendorCommissionMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905290802314_missingcustoms2905.cs" />
+    <Compile Include="Migrations\201905290802314_missingcustoms2905.Designer.cs">
+      <DependentUpon>201905290802314_missingcustoms2905.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290831281_missingcustoms2905_2.cs" />
+    <Compile Include="Migrations\201905290831281_missingcustoms2905_2.Designer.cs">
+      <DependentUpon>201905290831281_missingcustoms2905_2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1130,6 +1138,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905061035125_VendorCommissionMigration.resx">
       <DependentUpon>201905061035125_VendorCommissionMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290802314_missingcustoms2905.resx">
+      <DependentUpon>201905290802314_missingcustoms2905.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290831281_missingcustoms2905_2.resx">
+      <DependentUpon>201905290831281_missingcustoms2905_2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

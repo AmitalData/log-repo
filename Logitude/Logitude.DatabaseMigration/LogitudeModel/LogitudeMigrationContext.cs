@@ -1838,11 +1838,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         #endregion
 
         #region Custom Context
+
         public IDbSet<MamanStatus> MamanStatuses
         {
             get; set;
 
         }
+
 
         public IDbSet<AcceptanceStatus> AcceptanceStatuses
         {
@@ -2189,6 +2191,12 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         {
             get;
             set;
+
+        }
+
+        public IDbSet<CustomsAirline> CustomsAirlines
+        {
+            get; set;
 
         }
 
@@ -2884,6 +2892,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<VehicleSafeAccessoryInstlType> VehicleSafeAccessoryInstlTypes { get; set; }
         public IDbSet<SupplierInvoiceItemVehicle> SupplierInvoiceItemVehicles { get; set; }
         public IDbSet<CustomsPartnersItem> CustomsPartnersItems { get; set; }
+        public IDbSet<CustomsPartnerFtp> CustomsPartnerFtps { get; set; }
         public IDbSet<SignatureType> SignatureTypes { get; set; }
         public IDbSet<CheckEssenceLookup> CheckEssenceLookups { get; set; }
         public IDbSet<Authority> Authorities { get; set; }
@@ -2910,6 +2919,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CargoStatus> CargoStatuses { get; set; }
         public IDbSet<MAWBType> MAWBTypes { get; set; }
         public IDbSet<DeclarationConsAcceptance> DeclarationConsAcceptances { get; set; }
+        public IDbSet<CourierCustomStatus> CourierCustomStatuses { get; set; }
+        public IDbSet<AgentTalkBackType> AgentTalkBackTypes { get; set; }
         public IDbSet<ManifestCargoStatus> ManifestCargoStatuses { get; set; }
         public IDbSet<CourierManifestStatus> CourierManifestStatuses { get; set; }
         public IDbSet<CourierDeclarationStatus> CourierDeclarationStatuses { get; set; }
@@ -2917,17 +2928,14 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ActionCode> ActionCodes { get; set; }
         public IDbSet<SplitOrMergeReason> SplitOrMergeReasons { get; set; }
         public IDbSet<CargoSplitRequestStatus> CargoSplitRequestStatuses { get; set; }
-        public IDbSet<DeclarationCargoSplit> DeclarationCargoSplits
-        {
-            get;
-            set;
-
-        }
+        public IDbSet<DeclarationCargoSplit> DeclarationCargoSplits { get; set; }
         public IDbSet<DecCargoSplitCon> DecCargoSplitCons { get; set; }
         public IDbSet<TreatmentWay> TreatmentWays { get; set; }
         public IDbSet<DecCargoSplitConsItem> DecCargoSplitConsItems { get; set; }
         public IDbSet<DecCargoSplitConsPackDet> DecCargoSplitConsPackDets { get; set; }
+        public IDbSet<TPGFileType> TPGFileTypes { get; set; }
         public IDbSet<DecCargoSplitCargoIdentifier> DecCargoSplitCargoIdentifiers { get; set; }
+
 
         #endregion
 
