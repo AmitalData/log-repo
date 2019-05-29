@@ -1787,6 +1787,7 @@
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\SprintViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMBudgetViewsController.Generated.cs" />
+    <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMDayOffTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMEmployeeTimeViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMLocationViewsController.Generated.cs" />
     <Compile Include="Controllers\TimeManagementModel\Generated\ListControllers\TMOfficeHourViewsController.Generated.cs" />
@@ -2582,6 +2583,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TeamMemberBusinessRoleUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TeamUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TMBudgetUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TMDayOffTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TMEmployeeTimeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TMLocationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TMOfficeHourUpdateClass.cs" />
