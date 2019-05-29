@@ -65,7 +65,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             MessageOut = "";
             _Stopwatch = Stopwatch.StartNew();
             MyCommunicationsParams.Subject = "CommDecService ";
-
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
             DeserilazeObject(xmlLOGICOMMDEC);
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
@@ -120,6 +120,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
+            if (!declarationUpdateService.CheckIfUpdatingAllowed(this._MyDeclarationPM))
+            {
+                AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                return;
+            }
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             string courier_id = null;
             if (!String.IsNullOrWhiteSpace(MoreParams))
