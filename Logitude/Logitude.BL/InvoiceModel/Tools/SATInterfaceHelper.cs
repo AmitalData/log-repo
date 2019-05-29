@@ -880,7 +880,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     {
                         Base = GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? (decimal)line.InvoiceCurrencyAmount.Value : 0))),
                         Impuesto = "002",
-                        TipoFactor = (line.VatPercentage == 0 ? "Exento" : "Tasa"),
+                        TipoFactor = (line.VatPercentage == 0 && lineVatType.Code == "EXMPT" ? "Exento" : "Tasa"),
 
                     };
 
@@ -997,7 +997,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                         {
                             Base = GetDecimalWith2DigitsAfterPoint(Math.Abs((lineTotal.InvoiceCurrencyVatableAmount != null ? (decimal)lineTotal.InvoiceCurrencyVatableAmount.Value : 0))),
                             Impuesto = "002",
-                            TipoFactor = (lineTotal.VATPercent == 0 ? "Exento" : "Tasa"),
+                            TipoFactor = (lineTotal.VATPercent == 0 && lineVatType.Code == "EXMPT" ? "Exento" : "Tasa"),
                         };
 
                         if (traslado.TipoFactor == "Tasa")
@@ -1092,7 +1092,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                     {
                         Base = GetDecimalWith2DigitsAfterPoint(Math.Abs((line.InvoiceCurrencyAmount != null ? (decimal)line.InvoiceCurrencyAmount.Value : 0))),
                         Impuesto = "002",
-                        TipoFactor = (line.VatPercentage == 0 ? "Exento" : "Tasa"),
+                        TipoFactor = (line.VatPercentage == 0 && lineVatType.Code == "EXMPT" ? "Exento" : "Tasa"),
 
                     };
 
@@ -1209,7 +1209,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                         {
                             Base = GetDecimalWith2DigitsAfterPoint(Math.Abs((lineTotal.InvoiceCurrencyVatableAmount != null ? (decimal)lineTotal.InvoiceCurrencyVatableAmount.Value : 0))),
                             Impuesto = "002",
-                            TipoFactor = (lineTotal.VATPercent == 0 ? "Exento" : "Tasa"),
+                            TipoFactor = (lineTotal.VATPercent == 0 && lineVatType.Code == "EXMPT" ? "Exento" : "Tasa"),
                         };
 
                         if (traslado.TipoFactor == "Tasa")
