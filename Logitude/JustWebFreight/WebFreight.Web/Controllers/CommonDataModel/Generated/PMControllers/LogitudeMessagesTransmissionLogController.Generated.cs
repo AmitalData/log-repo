@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("LogitudeMessagesTransmissionLog", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("LogitudeMessagesTransmissionLog", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         LogitudeMessagesTransmissionLogService service = new LogitudeMessagesTransmissionLogService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("LogitudeMessagesTransmissionLog", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("LogitudeMessagesTransmissionLog", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "LogitudeMessagesTransmissionLog" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "LogitudeMessagesTransmissionLogPM" + entityPM.Id + entityPM.Tenant;

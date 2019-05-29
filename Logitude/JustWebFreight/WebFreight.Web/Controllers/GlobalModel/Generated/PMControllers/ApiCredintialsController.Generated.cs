@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ApiCredintials", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ApiCredintials", entityPM.Tenant, authToken.Tenant);
                 
                         IGlobalContext MyContext = GlobalContext.GetContext();
                         ApiCredintialsService service = new ApiCredintialsService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ApiCredintials", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ApiCredintials", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "ApiCredintials" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ApiCredintialsPM" + entityPM.Id + entityPM.Tenant;

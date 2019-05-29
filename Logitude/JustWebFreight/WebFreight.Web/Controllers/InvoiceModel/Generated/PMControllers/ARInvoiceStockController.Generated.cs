@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ARInvoiceStock", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ARInvoiceStock", entityPM.Tenant, authToken.Tenant);
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
                         ARInvoiceStockService service = new ARInvoiceStockService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ARInvoiceStock", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ARInvoiceStock", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "ARInvoiceStock" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ARInvoiceStockPM" + entityPM.Id + entityPM.Tenant;

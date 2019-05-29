@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WebhookKeys", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("WebhookKeys", entityPM.Tenant, authToken.Tenant);
                 
                         IGlobalContext MyContext = GlobalContext.GetContext();
                         WebhookKeysService service = new WebhookKeysService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WebhookKeys", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("WebhookKeys", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "WebhookKeys" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "WebhookKeysPM" + entityPM.Id + entityPM.Tenant;
