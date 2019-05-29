@@ -15,6 +15,9 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.BL.EntityQueryServices;
+//using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -42,6 +45,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.GatewayPortName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.WeightValueName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.StorageSiteName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.IntegratorName);
 
             CustomsAirlineRepository rep = new CustomsAirlineRepository(entityPM.Tenant);
             UserRepository userRep = new UserRepository(entityPM.Tenant);
@@ -107,6 +111,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (deliverySiteTypePM != null)
                 {
                     entityPM.StorageSiteName = deliverySiteTypePM.LocalName;
+                }
+            }
+
+            if (entityPOCO.IntegratorCode != null)
+            {
+                CardQuery cardQuery = new CardQuery(entityPOCO.Tenant);
+                CardPM cardPM = cardQuery.GetSinglePM(entityPOCO.IntegratorCode, entityPOCO.Tenant);
+                if (cardPM != null)
+                {
+                    entityPM.IntegratorName = cardPM.LocalName;
+                    entityPM.IntegratorNumber = cardPM.VatNumber;
                 }
             }
 

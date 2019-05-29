@@ -47,11 +47,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 listPM = qs.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
                     customResponse.SelectedBOLValue,
-                    customResponse.SelectedStatusValue, customResponse.SelectedTotalInvoiceValue, customResponse.SelectedFastIndividualProcessValue);
+                    customResponse.SelectedStatusValue, 
+                    customResponse.SelectedTotalInvoiceValue, 
+                    customResponse.SelectedFastIndividualProcessValue,
+                    customResponse.SelectedCustomStatusValue);
                 if (customResponse.CourierDeclarationStatusCode == "RV")
                 {
                     var listPM2 = qs.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
-                    customResponse.SelectedStatusValue, customResponse.SelectedTotalInvoiceValue, customResponse.SelectedFastIndividualProcessValue);
+                    customResponse.SelectedStatusValue, 
+                    customResponse.SelectedTotalInvoiceValue, 
+                    customResponse.SelectedFastIndividualProcessValue,
+                    customResponse.SelectedCustomStatusValue);
                     listPM = listPM.Concat(listPM2).ToList();
                 }
             }
@@ -66,6 +72,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (listPM.Count == 0)
                 {
                     mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");
+                }
+                else
+                {
+                    //string inList = String.Join(",", listPM.Select(r => $"'{r.DeclarationId}'").ToArray());
+                    //string updateSql = $"Update DeclarationCourierStatuses set ='I' where DECLARATIONID in ({inList}) ";
+
+                    //(context as CustomContext).CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+                    listPM.ChunkBy(100)
+    .ForEach(list100 =>
+    {
+        string inList = String.Join(",", list100.Select(r => $"'{r.DeclarationId}'").ToArray());
+        string updateSql = $"Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
+
+        (context as CustomContext).CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+    });
+
                 }
             }
 

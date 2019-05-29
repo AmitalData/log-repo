@@ -55,7 +55,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 mess.AppendLine($"There ARE  NOT any Declarations (LOW Val.) 'R'eady to (DEc.Payment) send  for master {requestParams.AppicationId} ");
             }
-            
+            else
+            {
+                listPM.ChunkBy(100)
+                    .ForEach(list100 =>
+                    {
+                        string inList = String.Join(",", list100.Select(r => $"'{r.DeclarationId}'").ToArray());
+                        string updateSql = $"Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
+
+                        (context as CustomContext).CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+                    });
+
+            }
+
             var dic = new Dictionary<string, string>();
             dic.Add("InternalBankId", customResponse.InternalBankId);
 

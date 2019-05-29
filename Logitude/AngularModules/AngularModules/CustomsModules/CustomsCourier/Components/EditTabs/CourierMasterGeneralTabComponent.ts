@@ -35,8 +35,10 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.WeightValueFilterItems = new ApiQueryFilters();
-        this.WeightValueFilterItems.addAdditionalFilter("Code", "CC,CA,NC,PO,PP", null, null, "InListExact", false, false, false, "string", false, true);
+        this.WeightValueFilterItems.addAdditionalFilter("PaymentMethodCode", "CC,CA,NC,PO,PP", null, null, "InListExact", true, false, false, "string", false, true);
         this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("IntegratorCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("IntegratorName", this.ObjectTableName, false);
         this.DisplayOnlyCheck();
         this.CarrierDependencyProperty1 = "TR";
         this.Listen();
@@ -190,6 +192,21 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
     set TruckerId(value: string) {
         if (this.EntityPM.TruckerId != value) {
             this.EntityPM.TruckerId = value;
+        }
+    }
+
+    get IntegratorCode() { return this.EntityPM.IntegratorCode; }
+    set IntegratorCode(value: string) {
+        if (this.EntityPM.IntegratorCode != value) {
+            this.EntityPM.IntegratorCode = value;
+        }
+    }
+
+    get IntegratorName() { return this.EntityPM.IntegratorName; }
+    set IntegratorName(value: string) {
+        if (this.EntityPM.IntegratorName != value) {
+            this.EntityPM.IntegratorName = value;
+
         }
     }
 

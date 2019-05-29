@@ -182,6 +182,7 @@
     <Compile Include="MessagingServices\DCAInST_60_SpecialActivityExecutionReportMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInST_NG_10_SpecialActivityResponseMessagingServices.cs" />
     <Compile Include="MessagingServices\DCAInUCB1170_MsgMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB2715_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2750_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2755_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB8250_MsgMessagingService.cs" />
@@ -404,6 +405,7 @@
     <Compile Include="ResponseServices\TSH_NG_8290_Web06_CreditInfoResponseService.cs" />
     <Compile Include="ResponseServices\TSH_WEB8289_9060_RTGSInfoQueryResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend1170_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend2715_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2750_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend2755_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSend8250_MsgResponseService.cs" />

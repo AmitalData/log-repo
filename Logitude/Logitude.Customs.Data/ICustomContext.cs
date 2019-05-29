@@ -12,7 +12,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 namespace Logitude.Customs.Data
 {
 
-    public interface ICustomContext : IContext
+    public partial interface ICustomContext : IContext
     {
    
        	 IDbSet<AcceptanceStatus> AcceptanceStatuses { get; }

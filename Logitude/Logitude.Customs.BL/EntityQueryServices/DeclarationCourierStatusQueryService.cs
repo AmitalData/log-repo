@@ -20,7 +20,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             string SelectedBOLValue,
             string SelectedStatusValue,
             string SelectedTotalInvoiceValue,
-            string SelectedFastIndividualProcessValue
+            string SelectedFastIndividualProcessValue,
+            string SelectedCustomStatusValue
             )
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
@@ -33,7 +34,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                      orderby rDec.CourierHAWB ascending
                      select status);
 
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, q);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, q);
 
             var pocos = q.ToList();
             return pocos.Select(r => this.GetEntityPM(r)).ToList();
@@ -41,7 +42,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         }
 
-        private static IQueryable<DeclarationCourierStatus> MoreFilter(string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, IQueryable<DeclarationCourierStatus> q)
+        private static IQueryable<DeclarationCourierStatus> MoreFilter(string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue, IQueryable<DeclarationCourierStatus> q)
         {
             switch (SelectedBOLValue)
             {
@@ -97,11 +98,28 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         break;
                     }
             }
+
+            switch (SelectedCustomStatusValue)
+            {
+                case "H":
+                    {
+                        q = q.Where(r => r.Declaration.CourierCustomStatusCode == "1");
+
+                        break;
+                    }
+                case "S":
+                    {
+                        q = q.Where(r => r.Declaration.CourierCustomStatusCode == "2");
+                        break;
+                    }
+            }
             return q;
         }
 
+        
+
         public List<DeclarationCourierStatusPM> GetByMasterIDCourierManifestStatusCode(int tenant, string CourierMasterId, string CourierManifestStatusCode
-            , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue
+            , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue
             )
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
@@ -112,7 +130,25 @@ namespace Logitude.Customs.BL.EntityQueryServices
                      on dec.DeclarationId equals status.DeclarationId
                      orderby rDec.CourierHAWB ascending
                      select status);
-            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, q);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue , q);
+            var pocos = q.ToList();
+            return pocos.Select(r => this.GetEntityPM(r)).ToList();
+
+
+        }
+
+        public List<DeclarationCourierStatusPM> GetByMasterIDCourierDocumentStatus(int tenant, string CourierMasterId, string DocumentStatusCode
+            , string SelectedBOLValue, string SelectedStatusValue, string SelectedTotalInvoiceValue, string SelectedFastIndividualProcessValue, string SelectedCustomStatusValue)
+        {
+            var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
+            var repoDeclaration = new DeclarationRepository(this.context);
+            var q = (from dec in repoCourierDeclaration.GetByCourierMasterId(tenant, CourierMasterId)
+                     join rDec in repoDeclaration.GetAll(tenant) on dec.DeclarationId equals rDec.Id
+                     join status in repository.GetAll(tenant).Where(r => r.DocumentStatusCode == DocumentStatusCode)
+                     on dec.DeclarationId equals status.DeclarationId
+                     orderby rDec.CourierHAWB ascending
+                     select status);
+            q = MoreFilter(SelectedBOLValue, SelectedStatusValue, SelectedTotalInvoiceValue, SelectedFastIndividualProcessValue, SelectedCustomStatusValue, q);
             var pocos = q.ToList();
             return pocos.Select(r => this.GetEntityPM(r)).ToList();
 
@@ -154,8 +190,29 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
         }
+        public List<string> GetByMasterID_DeclarationIdList(int tenant, string CourierMasterId)
+        {
+            //List<string> declarationIdList = new List<string>();
+            IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);
+            return q.Select(r => r.DeclarationId).ToList();
+        }
+
+        public List<DeclarationCourierStatusPM> GetByDeclarationIdList(int tenant, List<string> declarationIdList)
+        {
+            var q = repository.GetAll(tenant).Where(r => declarationIdList.Contains(r.DeclarationId));
+            var pocos = q.ToList();
+            return pocos.Select(r => this.GetEntityPM(r)).ToList();
+
+        }
 
         public List<DeclarationCourierStatusPM> GetByMasterIDDeclarationCourierStatus(int tenant, string CourierMasterId)
+        {
+            IQueryable<DeclarationCourierStatus> q = GetBy(tenant, CourierMasterId);
+            var pocos = q.ToList();
+            return pocos.Select(r => this.GetEntityPM(r)).ToList();
+        }
+
+        private IQueryable<DeclarationCourierStatus> GetBy(int tenant, string CourierMasterId)
         {
             var repoCourierDeclaration = new CourierDeclarationRepository(this.context);
             var repoDeclaration = new DeclarationRepository(this.context);
@@ -165,8 +222,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                      join status in repository.GetAll(tenant)
                      on dec.DeclarationId equals status.DeclarationId
                      select status);
-            var pocos = q.ToList();
-            return pocos.Select(r => this.GetEntityPM(r)).ToList();
+            return q;
         }
 
         public List<DeclarationCourierStatusPM> GetDeclarationsByIds(List<string> ids, int tenant)

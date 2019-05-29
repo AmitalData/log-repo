@@ -27,6 +27,7 @@ import { CourierWorksheetSharedDataService } from '../../../../Customs/Services/
 import { CustomsSettingExtendedListService } from '../../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { DeclarationCourierStatusList } from '../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { CustomsRequestsSheetPM } from '../../../../Customs/EntityPMs/CustomsRequestsSheetPM';
+import { SendUnCorrectDocumentsRequestParams } from '../../../../Customs/DataContract/RequestParams/SendUnCorrectDocumentsRequestParams';
 
 
 @Component({
@@ -80,6 +81,7 @@ implements OnDestroy
     _SelectedAvailableValue: string = 'A';//ALL//Available//NotAvailable//Additional
     _SelectedTotalInvoiceValue: string = 'A';
     _SelectedFastIndividualProcessValue: string = 'A';
+    _SelectedCustomStatusValue: string = 'A';
 
     _SelectedMNFValue: string = 'A'; // ALL/Complete/Wrong
     _SelectedDECValue: string = 'A'; // ALL/Complete/Wrong_SelectedItems
@@ -268,6 +270,7 @@ implements OnDestroy
         currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
+        currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
 
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe(res => {
@@ -383,6 +386,7 @@ implements OnDestroy
         currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
         currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
         currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
+        currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
 
         this._CourierMasterService.PostSendALLCorrectDec(currRequestParams)
             .subscribe(res => {
@@ -1037,6 +1041,17 @@ implements OnDestroy
                 break;
             }
         }
+
+        switch (this._SelectedCustomStatusValue) {
+            case "H": {
+                filters.addAdditionalFilter("CourierCustomStatusCode", "1", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+            case "S": {
+                filters.addAdditionalFilter("CourierCustomStatusCode", "2", null, null, "Equals", false, false, false, "string");
+                break;
+            }
+        }
     }
 
     ViewInitCompleted($event) {
@@ -1078,7 +1093,7 @@ implements OnDestroy
 
     SelectedBOLValueClick(value: string) {
         this._SelectedBOLValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1089,7 +1104,7 @@ implements OnDestroy
 
     SelectedTotalInvoiceValue(value: string) {
         this._SelectedTotalInvoiceValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1100,7 +1115,7 @@ implements OnDestroy
 
     SelectedStatusValueClick(value: string) {
         this._SelectedStatusValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1111,7 +1126,7 @@ implements OnDestroy
 
     SelectedAvailableValueClick(value: string) {
         this._SelectedAvailableValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1122,7 +1137,18 @@ implements OnDestroy
 
     SelectedFastIndividualProcessValueClick(value: string) {
         this._SelectedFastIndividualProcessValue = value;
-        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A') {
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
+            this.IsFiltered = false;
+        }
+        else {
+            this.IsFiltered = true;
+        }
+        this.RefreshList();
+    }
+
+    SelectedCustomStatusValueClick(value: string) {
+        this._SelectedCustomStatusValue = value;
+        if (this._SelectedBOLValue == "A" && this._SelectedTotalInvoiceValue == "A" && this._SelectedStatusValue == "A" && this._SelectedAvailableValue == "A" && this._SelectedFastIndividualProcessValue == 'A' && this._SelectedCustomStatusValue == 'A') {
             this.IsFiltered = false;
         }
         else {
@@ -1142,6 +1168,7 @@ implements OnDestroy
         this._SelectedAvailableValue = 'A';
         this._SelectedTotalInvoiceValue = 'A';
         this._SelectedFastIndividualProcessValue = 'A';
+        this._SelectedCustomStatusValue = 'A';
         this.IsFiltered = false;
         this.RefreshList();
     }
@@ -1449,6 +1476,36 @@ implements OnDestroy
                 }
             }
         });
+    }
+
+    SendUncorrectDocuments() {
+
+        var currRequestParams = new SendUnCorrectDocumentsRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.CourierMasterId = this.entityPM.Id;
+        currRequestParams.HAWB = this.entityPM.HAWB;
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        }
+
+        currRequestParams.SelectedAvailableValue = this._SelectedAvailableValue;
+        currRequestParams.SelectedBOLValue = this._SelectedBOLValue;
+        currRequestParams.SelectedStatusValue = this._SelectedStatusValue;
+        currRequestParams.SelectedTotalInvoiceValue = this._SelectedTotalInvoiceValue;
+        currRequestParams.SelectedFastIndividualProcessValue = this._SelectedFastIndividualProcessValue;
+        currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
+
+        this._CourierMasterService.PostSendUnCorrectDocuments(currRequestParams)
+            .subscribe(res => {
+                SessionLocator.CurrentSession.StopBusyIndicator();
+                var myMessageWindow = new MessageWindow();
+                myMessageWindow.Show(res.Result);
+                myMessageWindow.WindowClosed.subscribe(s => {
+                    this.RefreshButtonClicked();
+                });
+            });
     }
 
 }
