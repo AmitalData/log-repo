@@ -13214,6 +13214,71 @@ namespace WebFreight.Web.ReportsWebServices
         #endregion
 
 
+        #region Automation Test Report
+        public byte[] LoadAutomationTestReportDataProvider(byte[] xmlFilters, int tenant)
+        {
+            AutomationTestReportDataProvider dataprovider = GetAutomationTestReportDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(AutomationTestReportDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+
+        private AutomationTestReportDataProvider GetAutomationTestReportDataProvider(byte[] xmlFilters, int tenant)
+        {
+            AutomationTestReportDataProvider automationTestReportDataProvider = new AutomationTestReportDataProvider();
+
+            bool isException = false;
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            QueryFilterItem filterItem_IsException = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsException").FirstOrDefault();
+
+
+            if (filterItem_IsException != null)
+            {
+                if (filterItem_IsException.FieldValue != null)
+                {
+                    isException = (bool)filterItem_IsException.FieldValue;
+                }
+            }
+
+            if (isException)
+            {
+                throw new Exception("Exception Test");
+            }
+
+
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            var tenantManagementPM =  tenantManagementQuery.GetSinglePM(tenant);
+            if (tenantManagementPM != null)
+            {
+                automationTestReportDataProvider.TenantName = tenantManagementPM.Name;
+                automationTestReportDataProvider.PackageName = tenantManagementPM.PackageName;
+                automationTestReportDataProvider.CreateDate = tenantManagementPM.CreateDate;
+                automationTestReportDataProvider.UpdateDate = tenantManagementPM.UpdateDate;
+                automationTestReportDataProvider.Notes = tenantManagementPM.Notes;
+            }
+            
+            return automationTestReportDataProvider;
+        }
+
+   
+
+        #endregion
+
+
+
+
+
+
+
         private ContactPM GetLoggedContact(int tenant)
         {
             //email

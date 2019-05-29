@@ -66116,7 +66116,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature ReportFeature61 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Features.LTReport", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Report.Features.LTReport", NameTextCodeDefaultText = "Ledger Transaction Report", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature62 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Vehicles", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.Vehicles", NameTextCodeDefaultText = "Vehicles Shipping", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature ReportFeature63 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHEL", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.ShipmentsEventsList", NameTextCodeDefaultText = "Shipments Events List", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
-            
+            Feature ReportFeature64 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ATRE", Packagable = true, ObjectTableId = ReportObjectTable.Id, Tenant = tenant, NameTextCodeCode = "ReportObjectTable.Features.AutomationTestReport", NameTextCodeDefaultText = "Automation Test Report", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
 
 
             #endregion

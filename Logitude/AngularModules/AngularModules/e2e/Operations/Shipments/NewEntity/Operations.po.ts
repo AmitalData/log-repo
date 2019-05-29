@@ -19,6 +19,8 @@ export class OperationsComp {
     //  this.ShipmentWorkSpace.CreateWizard('M');
 
     this.ShipmentWorkSpace.CreateShipment(browser.params.ShipParams.ShipmentLevelCode, browser.params.ShipParams.Direction, browser.params.ShipParams.TransportMode, browser.params.ShipParams.ShipmentType);
+    // this.ShipmentWorkSpace.CreateShipment('D', 'Export','A', '');
+  
   }
 }
 
