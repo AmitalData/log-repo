@@ -686,6 +686,10 @@
     <Compile Include="Migrations\201905290831281_missingcustoms2905_2.Designer.cs">
       <DependentUpon>201905290831281_missingcustoms2905_2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.cs" />
+    <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.Designer.cs">
+      <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1144,6 +1148,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905290831281_missingcustoms2905_2.resx">
       <DependentUpon>201905290831281_missingcustoms2905_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.resx">
+      <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

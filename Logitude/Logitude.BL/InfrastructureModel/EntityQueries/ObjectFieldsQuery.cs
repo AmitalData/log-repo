@@ -19,7 +19,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         ObjectFieldRepository repository;
         public ObjectFieldQuery()
         {
-            repository = new ObjectFieldRepository(); 
+            repository = new ObjectFieldRepository();
         }
 
         public ObjectFieldQuery(int tenant)
@@ -136,86 +136,88 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DependencyFilter3IsList = a.DependencyFilter3IsList,
                                              CopyToDW = a.CopyToDW,
                                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                             EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                          }).FirstOrDefault();
 
             ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
             objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
-            
+
             return objectField;
         }
-        
+
         public IQueryable<ObjectFieldList> GetIQueryableEntityList(IQueryable<ObjectField> iQueryable)
         {
             IQueryable<ObjectFieldList> result = from a in iQueryable
-                                              select new ObjectFieldList()
-                                              {
-                                                  IsMaxLength = a.IsMaxLength,
-                                                  AutomaticField = a.AutomaticField,
-                                                  CanFilter = a.CanFilter,
-                                                  ConverterName = a.ConverterName,
-                                                  DataTemplateName = a.DataTemplateName,
-                                                  DataTypeCode = a.DataTypeCode,
-                                                  DependencyFilter1Type = a.DependencyFilter1Type,
-                                                  DependencyFilter1Value = a.DependencyFilter1Value,
-                                                  DependencyFilter2Type = a.DependencyFilter2Type,
-                                                  DependencyFilter2Value = a.DependencyFilter2Value,
-                                                  DisplayInList = a.DisplayInList,
-                                                  DisplayInLookUpIndex = a.DisplayInLookUpIndex,
-                                                  DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
-                                                  DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
-                                                  DisplayInSearchWindowList = a.DisplayInSearchWindowList,
-                                                  DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
-                                                  DisplayOnLookUp = a.DisplayOnLookUp,
-                                                  DisplayOnly = a.DisplayOnly,
-                                                  FullNameTextCodeId = a.FullNameTextCodeId,
-                                                  FieldName = a.FieldName,
-                                                  ShortNameTextCodeId = a.ShortNameTextCodeId,
-                                                  HelpTextCodeId = a.HelpTextCodeId,
-                                                  Id = a.Id,
-                                                  IsCustom = a.IsCustom,
-                                                  IsCustomFilter = a.IsCustomFilter,
-                                                  IsMulti = a.IsMulti,
-                                                  IsRequiered = a.IsRequiered,
-                                                  IsTimeFrameFilter = a.IsTimeFrameFilter,
-                                                  ListTextCodeId = a.ListTextCodeId,
-                                                  ListPropertyPath = a.ListPropertyPath,
-                                                  LookUpControlName = a.LookUpControlName,
-                                                  LookUpTableId = a.LookUpTableId,
-                                                  MaxLength = a.MaxLength,
-                                                  MinLength = a.MinLength,
-                                                  MultiLine = a.MultiLine,
-                                                  MultiTableId = a.MultiTableId,
-                                                  ObjectTableId = a.ObjectTableId,
-                                                  ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
-                                                  Operator = a.Operator,
-                                                  PMPropertyPath = a.PMPropertyPath,
-                                                  SystemMaxLength = a.SystemMaxLength,
-                                                  SystemRequired = a.SystemRequired,
-                                                  Tenant = a.Tenant,
-                                                  UniqueField = a.UniqueField,                                                
-                                                  FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,                                                
-                                                  ValidForQuerySection2 = a.ValidForQuerySection2,
-                                                  ValidForQuerySection1 = a.ValidForQuerySection1,
-                                                  IsRestrictable = a.IsRestrictable,
-                                                  DisplayInEntityVariables = a.DisplayInEntityVariables,
-                                                  SearchFields = a.SearchFields,
-                                                  DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
-                                                  ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
-                                                  DependencyFilter1IsList = a.DependencyFilter1IsList,
-                                                  DependencyFilter2IsList = a.DependencyFilter2IsList,                                              
-                                                  AllowedinAutomationConditions = a.AllowedinAutomationConditions,
-                                                  AutomationEmailRecipient = a.AutomationEmailRecipient,                                              
-                                                  CanAutomateSetValue = a.CanAutomateSetValue,
-                                                  HasTemplate = a.HasTemplate,
-                                                  AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,                                               
-                                                  DisplayInDocumentReferences = a.DisplayInDocumentReferences,
-                                                  Code = a.Code,
-                                                  DependencyFilter3Value = a.DependencyFilter3Value,
-                                                  DependencyFilter3Type = a.DependencyFilter3Type,
-                                                  DependencyFilter3IsList = a.DependencyFilter3IsList,
-                                                  CopyToDW = a.CopyToDW,
-                                                  DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                                              };
+                                                 select new ObjectFieldList()
+                                                 {
+                                                     IsMaxLength = a.IsMaxLength,
+                                                     AutomaticField = a.AutomaticField,
+                                                     CanFilter = a.CanFilter,
+                                                     ConverterName = a.ConverterName,
+                                                     DataTemplateName = a.DataTemplateName,
+                                                     DataTypeCode = a.DataTypeCode,
+                                                     DependencyFilter1Type = a.DependencyFilter1Type,
+                                                     DependencyFilter1Value = a.DependencyFilter1Value,
+                                                     DependencyFilter2Type = a.DependencyFilter2Type,
+                                                     DependencyFilter2Value = a.DependencyFilter2Value,
+                                                     DisplayInList = a.DisplayInList,
+                                                     DisplayInLookUpIndex = a.DisplayInLookUpIndex,
+                                                     DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
+                                                     DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
+                                                     DisplayInSearchWindowList = a.DisplayInSearchWindowList,
+                                                     DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
+                                                     DisplayOnLookUp = a.DisplayOnLookUp,
+                                                     DisplayOnly = a.DisplayOnly,
+                                                     FullNameTextCodeId = a.FullNameTextCodeId,
+                                                     FieldName = a.FieldName,
+                                                     ShortNameTextCodeId = a.ShortNameTextCodeId,
+                                                     HelpTextCodeId = a.HelpTextCodeId,
+                                                     Id = a.Id,
+                                                     IsCustom = a.IsCustom,
+                                                     IsCustomFilter = a.IsCustomFilter,
+                                                     IsMulti = a.IsMulti,
+                                                     IsRequiered = a.IsRequiered,
+                                                     IsTimeFrameFilter = a.IsTimeFrameFilter,
+                                                     ListTextCodeId = a.ListTextCodeId,
+                                                     ListPropertyPath = a.ListPropertyPath,
+                                                     LookUpControlName = a.LookUpControlName,
+                                                     LookUpTableId = a.LookUpTableId,
+                                                     MaxLength = a.MaxLength,
+                                                     MinLength = a.MinLength,
+                                                     MultiLine = a.MultiLine,
+                                                     MultiTableId = a.MultiTableId,
+                                                     ObjectTableId = a.ObjectTableId,
+                                                     ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                                                     Operator = a.Operator,
+                                                     PMPropertyPath = a.PMPropertyPath,
+                                                     SystemMaxLength = a.SystemMaxLength,
+                                                     SystemRequired = a.SystemRequired,
+                                                     Tenant = a.Tenant,
+                                                     UniqueField = a.UniqueField,
+                                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
+                                                     ValidForQuerySection2 = a.ValidForQuerySection2,
+                                                     ValidForQuerySection1 = a.ValidForQuerySection1,
+                                                     IsRestrictable = a.IsRestrictable,
+                                                     DisplayInEntityVariables = a.DisplayInEntityVariables,
+                                                     SearchFields = a.SearchFields,
+                                                     DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
+                                                     ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
+                                                     DependencyFilter1IsList = a.DependencyFilter1IsList,
+                                                     DependencyFilter2IsList = a.DependencyFilter2IsList,
+                                                     AllowedinAutomationConditions = a.AllowedinAutomationConditions,
+                                                     AutomationEmailRecipient = a.AutomationEmailRecipient,
+                                                     CanAutomateSetValue = a.CanAutomateSetValue,
+                                                     HasTemplate = a.HasTemplate,
+                                                     AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
+                                                     DisplayInDocumentReferences = a.DisplayInDocumentReferences,
+                                                     Code = a.Code,
+                                                     DependencyFilter3Value = a.DependencyFilter3Value,
+                                                     DependencyFilter3Type = a.DependencyFilter3Type,
+                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
+                                                     CopyToDW = a.CopyToDW,
+                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                                     EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                 };
             return result;
         }
 
@@ -312,6 +314,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -401,7 +404,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              NumberOfDigits = a.NumberOfDigits,
                                              DependencyFilter1IsList = a.DependencyFilter1IsList,
                                              DependencyFilter2IsList = a.DependencyFilter2IsList,
-                                             FullNameTextCodeLocalDefaultText  = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
+                                             FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
                                              AllowedinAutomationConditions = a.AllowedinAutomationConditions,
                                              AutomationEmailRecipient = a.AutomationEmailRecipient,
                                              AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
@@ -421,11 +424,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DependencyFilter3IsList = a.DependencyFilter3IsList,
                                              CopyToDW = a.CopyToDW,
                                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                             EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                          }).FirstOrDefault();
-                        
-           ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
-           objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
-            
+
+            ObjectFieldValidationQuery objectFieldValidationQuery = new ObjectFieldValidationQuery(tenant);
+            objectField.ObjectFieldValidations = objectFieldValidationQuery.GetObjectFieldValidationPMsByObjectFieldId(objectField.Id, objectField.Tenant).ToList();
+
             return objectField;
         }
 
@@ -531,8 +535,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                 }).OrderBy(o => o.FieldName).ToList();
-            
+
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
         }
 
@@ -642,6 +647,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DependencyFilter3IsList = a.DependencyFilter3IsList,
                                              CopyToDW = a.CopyToDW,
                                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                             EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                          }).FirstOrDefault();
             if (mod != null)
             {
@@ -758,6 +764,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
@@ -866,113 +873,115 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                 }).ToList();
             return objectfields;
         }
 
         public List<ObjectFieldPM> GetObjectFieldsAllowedinAutomationConditionsPMsByObjectTableId(string objectTableId, int tenant)
         {
-            return   (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
-                      where (a.Tenant == tenant || a.Tenant == 0) && a.ObjectTableId == objectTableId && a.InActive == false && (a.AllowedinAutomationConditions == true || a.AutomationEmailRecipient == true || a.IsCustom)
-                                         select new ObjectFieldPM()
-                                         {
-                                             IsMaxLength = a.IsMaxLength,
-                                             AutomaticField = a.AutomaticField,
-                                             CanFilter = a.CanFilter,
-                                             ConverterName = a.ConverterName,
-                                             DataTemplateName = a.DataTemplateName,
-                                             DataTypeCode = a.DataTypeCode,
-                                             DependencyFilter1Type = a.DependencyFilter1Type,
-                                             DependencyFilter1Value = a.DependencyFilter1Value,
-                                             DependencyFilter2Type = a.DependencyFilter2Type,
-                                             DependencyFilter2Value = a.DependencyFilter2Value,
-                                             DisplayInList = a.DisplayInList,
-                                             DisplayInLookUpIndex = a.DisplayInLookUpIndex,
-                                             DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
-                                             DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
-                                             DisplayInSearchWindowList = a.DisplayInSearchWindowList,
-                                             DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
-                                             DisplayOnLookUp = a.DisplayOnLookUp,
-                                             DisplayOnly = a.DisplayOnly,
-                                             FullNameTextCodeId = a.FullNameTextCodeId,
-                                             FieldName = a.FieldName,
-                                             ShortNameTextCodeId = a.ShortNameTextCodeId,
-                                             HelpTextCodeId = a.HelpTextCodeId,
-                                             Id = a.Id,
-                                             IsCustom = a.IsCustom,
-                                             IsCustomFilter = a.IsCustomFilter,
-                                             IsMulti = a.IsMulti,
-                                             IsRequiered = a.IsRequiered,
-                                             IsTimeFrameFilter = a.IsTimeFrameFilter,
-                                             ListTextCodeId = a.ListTextCodeId,
-                                             ListPropertyPath = a.ListPropertyPath,
-                                             LookUpControlName = a.LookUpControlName,
-                                             LookUpTableId = a.LookUpTableId,
-                                             MaxLength = a.MaxLength,
-                                             MinLength = a.MinLength,
-                                             MultiLine = a.MultiLine,
-                                             MultiTableId = a.MultiTableId,
-                                             ObjectTableId = a.ObjectTableId,
-                                             ObjectTableName = a.ObjectTable.Name,
-                                             Operator = a.Operator,
-                                             PMPropertyPath = a.PMPropertyPath,
-                                             SystemMaxLength = a.SystemMaxLength,
-                                             SystemRequired = a.SystemRequired,
-                                             Tenant = a.Tenant,
-                                             UniqueField = a.UniqueField,
-                                             ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
-                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
-                                             ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                             FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                             ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                             HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                             ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
-                                             ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
-                                             ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
-                                             HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
-                                             ValidForQuerySection2 = a.ValidForQuerySection2,
-                                             ValidForQuerySection1 = a.ValidForQuerySection1,
-                                             IsRestrictable = a.IsRestrictable,
-                                             DisplayInEntityVariables = a.DisplayInEntityVariables,
-                                             DigitsAfterPoint = a.DigitsAfterPoint,
-                                             TextCase = a.TextCase,
-                                             SearchFields = a.SearchFields,
-                                             DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
-                                             ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
-                                             TenantZeroIsRequired = a.IsRequiered,
-                                             TenantZeroMaxLength = a.MaxLength,
-                                             TenantZeroMinLength = a.MinLength,
-                                             UserTenant = tenant,
-                                             DisplayLongName = a.DisplayLongName,
-                                             AgentPermissionTypeCode = a.AgentPermissionTypeCode,
-                                             CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
-                                             ControlField1 = a.ControlField1,
-                                             ControlField2 = a.ControlField2,
-                                             CustomPickListCode = a.CustomPickListCode,
-                                             NumberOfDigits = a.NumberOfDigits,
-                                             DependencyFilter1IsList = a.DependencyFilter1IsList,
-                                             DependencyFilter2IsList = a.DependencyFilter2IsList,
-                                             FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
-                                             AllowedinAutomationConditions = a.AllowedinAutomationConditions,
-                                             AutomationEmailRecipient = a.AutomationEmailRecipient,
-                                             AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
-                                             CanAutomateSetValue = a.CanAutomateSetValue,
-                                             HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
-                                             HtmlListComponentUrl = a.HtmlListComponentUrl,
-                                             HtmlHeaderComponentName = a.HtmlHeaderComponentName,
-                                             HtmlListComponentName = a.HtmlListComponentName,
-                                             HasTemplate = a.HasTemplate,
-                                             AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
-                                             GeneratedComponentPath = a.GeneratedComponentPath,
-                                             DisplayInDocumentReferences = a.DisplayInDocumentReferences,
-                                             Code = a.Code,
-                                             ControlField3 = a.ControlField3,
-                                             DependencyFilter3Value = a.DependencyFilter3Value,
-                                             DependencyFilter3Type = a.DependencyFilter3Type,
-                                             DependencyFilter3IsList = a.DependencyFilter3IsList,
-                                             CopyToDW = a.CopyToDW,
-                                             DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                                         }).ToList();
+            return (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
+                    where (a.Tenant == tenant || a.Tenant == 0) && a.ObjectTableId == objectTableId && a.InActive == false && (a.AllowedinAutomationConditions == true || a.AutomationEmailRecipient == true || a.IsCustom)
+                    select new ObjectFieldPM()
+                    {
+                        IsMaxLength = a.IsMaxLength,
+                        AutomaticField = a.AutomaticField,
+                        CanFilter = a.CanFilter,
+                        ConverterName = a.ConverterName,
+                        DataTemplateName = a.DataTemplateName,
+                        DataTypeCode = a.DataTypeCode,
+                        DependencyFilter1Type = a.DependencyFilter1Type,
+                        DependencyFilter1Value = a.DependencyFilter1Value,
+                        DependencyFilter2Type = a.DependencyFilter2Type,
+                        DependencyFilter2Value = a.DependencyFilter2Value,
+                        DisplayInList = a.DisplayInList,
+                        DisplayInLookUpIndex = a.DisplayInLookUpIndex,
+                        DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
+                        DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
+                        DisplayInSearchWindowList = a.DisplayInSearchWindowList,
+                        DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
+                        DisplayOnLookUp = a.DisplayOnLookUp,
+                        DisplayOnly = a.DisplayOnly,
+                        FullNameTextCodeId = a.FullNameTextCodeId,
+                        FieldName = a.FieldName,
+                        ShortNameTextCodeId = a.ShortNameTextCodeId,
+                        HelpTextCodeId = a.HelpTextCodeId,
+                        Id = a.Id,
+                        IsCustom = a.IsCustom,
+                        IsCustomFilter = a.IsCustomFilter,
+                        IsMulti = a.IsMulti,
+                        IsRequiered = a.IsRequiered,
+                        IsTimeFrameFilter = a.IsTimeFrameFilter,
+                        ListTextCodeId = a.ListTextCodeId,
+                        ListPropertyPath = a.ListPropertyPath,
+                        LookUpControlName = a.LookUpControlName,
+                        LookUpTableId = a.LookUpTableId,
+                        MaxLength = a.MaxLength,
+                        MinLength = a.MinLength,
+                        MultiLine = a.MultiLine,
+                        MultiTableId = a.MultiTableId,
+                        ObjectTableId = a.ObjectTableId,
+                        ObjectTableName = a.ObjectTable.Name,
+                        Operator = a.Operator,
+                        PMPropertyPath = a.PMPropertyPath,
+                        SystemMaxLength = a.SystemMaxLength,
+                        SystemRequired = a.SystemRequired,
+                        Tenant = a.Tenant,
+                        UniqueField = a.UniqueField,
+                        ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
+                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
+                        ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
+                        FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                        ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                        HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                        ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                        ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
+                        ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
+                        HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
+                        ValidForQuerySection2 = a.ValidForQuerySection2,
+                        ValidForQuerySection1 = a.ValidForQuerySection1,
+                        IsRestrictable = a.IsRestrictable,
+                        DisplayInEntityVariables = a.DisplayInEntityVariables,
+                        DigitsAfterPoint = a.DigitsAfterPoint,
+                        TextCase = a.TextCase,
+                        SearchFields = a.SearchFields,
+                        DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
+                        ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
+                        TenantZeroIsRequired = a.IsRequiered,
+                        TenantZeroMaxLength = a.MaxLength,
+                        TenantZeroMinLength = a.MinLength,
+                        UserTenant = tenant,
+                        DisplayLongName = a.DisplayLongName,
+                        AgentPermissionTypeCode = a.AgentPermissionTypeCode,
+                        CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
+                        ControlField1 = a.ControlField1,
+                        ControlField2 = a.ControlField2,
+                        CustomPickListCode = a.CustomPickListCode,
+                        NumberOfDigits = a.NumberOfDigits,
+                        DependencyFilter1IsList = a.DependencyFilter1IsList,
+                        DependencyFilter2IsList = a.DependencyFilter2IsList,
+                        FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
+                        AllowedinAutomationConditions = a.AllowedinAutomationConditions,
+                        AutomationEmailRecipient = a.AutomationEmailRecipient,
+                        AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
+                        CanAutomateSetValue = a.CanAutomateSetValue,
+                        HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
+                        HtmlListComponentUrl = a.HtmlListComponentUrl,
+                        HtmlHeaderComponentName = a.HtmlHeaderComponentName,
+                        HtmlListComponentName = a.HtmlListComponentName,
+                        HasTemplate = a.HasTemplate,
+                        AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
+                        GeneratedComponentPath = a.GeneratedComponentPath,
+                        DisplayInDocumentReferences = a.DisplayInDocumentReferences,
+                        Code = a.Code,
+                        ControlField3 = a.ControlField3,
+                        DependencyFilter3Value = a.DependencyFilter3Value,
+                        DependencyFilter3Type = a.DependencyFilter3Type,
+                        DependencyFilter3IsList = a.DependencyFilter3IsList,
+                        CopyToDW = a.CopyToDW,
+                        DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                        EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                    }).ToList();
         }
 
 
@@ -1078,6 +1087,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                 }).ToList();
             return objectfields;
         }
@@ -1190,109 +1200,110 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public IQueryable<ObjectFieldPM> GetObjectFieldPMsByTenant2(int tenant, int currenttenant)
         {
-            var result  = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
-                                                where a.Tenant == tenant && a.InActive == false
-                                                select new ObjectFieldPM()
-                                                {
-                                                    IsMaxLength = a.IsMaxLength,
-                                                    AutomaticField = a.AutomaticField,
-                                                    CanFilter = a.CanFilter,
-                                                    ConverterName = a.ConverterName,
-                                                    DataTemplateName = a.DataTemplateName,
-                                                    DataTypeCode = a.DataTypeCode,
-                                                    DependencyFilter1Type = a.DependencyFilter1Type,
-                                                    DependencyFilter1Value = a.DependencyFilter1Value,
-                                                    DependencyFilter2Type = a.DependencyFilter2Type,
-                                                    DependencyFilter2Value = a.DependencyFilter2Value,
-                                                    DisplayInList = a.DisplayInList,
-                                                    DisplayInLookUpIndex = a.DisplayInLookUpIndex,
-                                                    DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
-                                                    DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
-                                                    DisplayInSearchWindowList = a.DisplayInSearchWindowList,
-                                                    DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
-                                                    DisplayOnLookUp = a.DisplayOnLookUp,
-                                                    DisplayOnly = a.DisplayOnly,
-                                                    FullNameTextCodeId = a.FullNameTextCodeId,
-                                                    FieldName = a.FieldName,
-                                                    ShortNameTextCodeId = a.ShortNameTextCodeId,
-                                                    HelpTextCodeId = a.HelpTextCodeId,
-                                                    Id = a.Id,
-                                                    IsCustom = a.IsCustom,
-                                                    IsCustomFilter = a.IsCustomFilter,
-                                                    IsMulti = a.IsMulti,
-                                                    IsRequiered = a.IsRequiered,
-                                                    IsTimeFrameFilter = a.IsTimeFrameFilter,
-                                                    ListTextCodeId = a.ListTextCodeId,
-                                                    ListPropertyPath = a.ListPropertyPath,
-                                                    LookUpControlName = a.LookUpControlName,
-                                                    LookUpTableId = a.LookUpTableId,
-                                                    MaxLength = a.MaxLength,
-                                                    MinLength = a.MinLength,
-                                                    MultiLine = a.MultiLine,
-                                                    MultiTableId = a.MultiTableId,
-                                                    ObjectTableId = a.ObjectTableId,
-                                                    ObjectTableName = a.ObjectTable.Name,
-                                                    Operator = a.Operator,
-                                                    PMPropertyPath = a.PMPropertyPath,
-                                                    SystemMaxLength = a.SystemMaxLength,
-                                                    SystemRequired = a.SystemRequired,
-                                                    Tenant = a.Tenant,
-                                                    UniqueField = a.UniqueField,
-                                                    ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
-                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
-                                                    ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
-                                                    FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
-                                                    ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
-                                                    HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
-                                                    ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
-                                                    ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
-                                                    ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
-                                                    HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
-                                                    ValidForQuerySection2 = a.ValidForQuerySection2,
-                                                    ValidForQuerySection1 = a.ValidForQuerySection1,
-                                                    IsRestrictable = a.IsRestrictable,
-                                                    DisplayInEntityVariables = a.DisplayInEntityVariables,
-                                                    DigitsAfterPoint = a.DigitsAfterPoint,
-                                                    TextCase = a.TextCase,
-                                                    SearchFields = a.SearchFields,
-                                                    DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
-                                                    ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
-                                                    TenantZeroIsRequired = a.IsRequiered,
-                                                    TenantZeroMaxLength = a.MaxLength,
-                                                    TenantZeroMinLength = a.MinLength,
-                                                    DisplayLongName = a.DisplayLongName,
-                                                    UserTenant = tenant,
-                                                    AgentPermissionTypeCode = a.AgentPermissionTypeCode,
-                                                    CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
-                                                    ControlField1 = a.ControlField1,
-                                                    ControlField2 = a.ControlField2,
-                                                    CustomPickListCode = a.CustomPickListCode,
-                                                    NumberOfDigits = a.NumberOfDigits,
-                                                    DependencyFilter1IsList = a.DependencyFilter1IsList,
-                                                    DependencyFilter2IsList = a.DependencyFilter2IsList,
-                                                    FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
-                                                    AllowedinAutomationConditions = a.AllowedinAutomationConditions,
-                                                    AutomationEmailRecipient = a.AutomationEmailRecipient,
-                                                    AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
-                                                    CanAutomateSetValue = a.CanAutomateSetValue,
-                                                    HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
-                                                    HtmlListComponentUrl = a.HtmlListComponentUrl,
-                                                    HtmlHeaderComponentName = a.HtmlHeaderComponentName,
-                                                    HtmlListComponentName = a.HtmlListComponentName,
-                                                    HasTemplate = a.HasTemplate,
-                                                    AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
-                                                    GeneratedComponentPath = a.GeneratedComponentPath,
-                                                    DisplayInDocumentReferences = a.DisplayInDocumentReferences,
-                                                    Code = a.Code,
-                                                    ControlField3 = a.ControlField3,
-                                                    DependencyFilter3Value = a.DependencyFilter3Value,
-                                                    DependencyFilter3Type = a.DependencyFilter3Type,
-                                                    DependencyFilter3IsList = a.DependencyFilter3IsList,
-                                                    CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                                                });
+            var result = (from a in repository.context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable").Include("ObjectTable_MultiTable")
+                          where a.Tenant == tenant && a.InActive == false
+                          select new ObjectFieldPM()
+                          {
+                              IsMaxLength = a.IsMaxLength,
+                              AutomaticField = a.AutomaticField,
+                              CanFilter = a.CanFilter,
+                              ConverterName = a.ConverterName,
+                              DataTemplateName = a.DataTemplateName,
+                              DataTypeCode = a.DataTypeCode,
+                              DependencyFilter1Type = a.DependencyFilter1Type,
+                              DependencyFilter1Value = a.DependencyFilter1Value,
+                              DependencyFilter2Type = a.DependencyFilter2Type,
+                              DependencyFilter2Value = a.DependencyFilter2Value,
+                              DisplayInList = a.DisplayInList,
+                              DisplayInLookUpIndex = a.DisplayInLookUpIndex,
+                              DisplayInSearchWindowFilters = a.DisplayInSearchWindowFilters,
+                              DisplayInSearchWindowFiltersIndex = a.DisplayInSearchWindowFiltersIndex,
+                              DisplayInSearchWindowList = a.DisplayInSearchWindowList,
+                              DisplayInSearchWindowListIndex = a.DisplayInSearchWindowListIndex,
+                              DisplayOnLookUp = a.DisplayOnLookUp,
+                              DisplayOnly = a.DisplayOnly,
+                              FullNameTextCodeId = a.FullNameTextCodeId,
+                              FieldName = a.FieldName,
+                              ShortNameTextCodeId = a.ShortNameTextCodeId,
+                              HelpTextCodeId = a.HelpTextCodeId,
+                              Id = a.Id,
+                              IsCustom = a.IsCustom,
+                              IsCustomFilter = a.IsCustomFilter,
+                              IsMulti = a.IsMulti,
+                              IsRequiered = a.IsRequiered,
+                              IsTimeFrameFilter = a.IsTimeFrameFilter,
+                              ListTextCodeId = a.ListTextCodeId,
+                              ListPropertyPath = a.ListPropertyPath,
+                              LookUpControlName = a.LookUpControlName,
+                              LookUpTableId = a.LookUpTableId,
+                              MaxLength = a.MaxLength,
+                              MinLength = a.MinLength,
+                              MultiLine = a.MultiLine,
+                              MultiTableId = a.MultiTableId,
+                              ObjectTableId = a.ObjectTableId,
+                              ObjectTableName = a.ObjectTable.Name,
+                              Operator = a.Operator,
+                              PMPropertyPath = a.PMPropertyPath,
+                              SystemMaxLength = a.SystemMaxLength,
+                              SystemRequired = a.SystemRequired,
+                              Tenant = a.Tenant,
+                              UniqueField = a.UniqueField,
+                              ObjectTable_LookUpTableName = a.ObjectTable_LookUpTable != null ? a.ObjectTable_LookUpTable.Name : null,
+                              FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
+                              ShortNameTextCodeDefaultText = a.ShortNameTextCode != null ? a.ShortNameTextCode.DefaultText : null,
+                              FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
+                              ShortNameTextCodeCode = a.ShortNameTextCode != null ? a.ShortNameTextCode.Code : null,
+                              HelpTextTextCodeCode = a.HelpTextCode != null ? a.HelpTextCode.Code : null,
+                              ListTextCodeCode = a.ListTextCode != null ? a.ListTextCode.Code : null,
+                              ObjectTable_MultiTableName = a.ObjectTable_MultiTable != null ? a.ObjectTable_MultiTable.Name : null,
+                              ListTextCodeDefaultText = a.ListTextCode != null ? a.ListTextCode.DefaultText : null,
+                              HelpTextCodeDefaultText = a.HelpTextCode != null ? a.HelpTextCode.DefaultText : null,
+                              ValidForQuerySection2 = a.ValidForQuerySection2,
+                              ValidForQuerySection1 = a.ValidForQuerySection1,
+                              IsRestrictable = a.IsRestrictable,
+                              DisplayInEntityVariables = a.DisplayInEntityVariables,
+                              DigitsAfterPoint = a.DigitsAfterPoint,
+                              TextCase = a.TextCase,
+                              SearchFields = a.SearchFields,
+                              DisplayInLookupColumnSize = a.DisplayInLookupColumnSize,
+                              ColumnHeaderTemplateName = a.ColumnHeaderTemplateName,
+                              TenantZeroIsRequired = a.IsRequiered,
+                              TenantZeroMaxLength = a.MaxLength,
+                              TenantZeroMinLength = a.MinLength,
+                              DisplayLongName = a.DisplayLongName,
+                              UserTenant = tenant,
+                              AgentPermissionTypeCode = a.AgentPermissionTypeCode,
+                              CustomerPermissionTypeCode = a.CustomerPermissionTypeCode,
+                              ControlField1 = a.ControlField1,
+                              ControlField2 = a.ControlField2,
+                              CustomPickListCode = a.CustomPickListCode,
+                              NumberOfDigits = a.NumberOfDigits,
+                              DependencyFilter1IsList = a.DependencyFilter1IsList,
+                              DependencyFilter2IsList = a.DependencyFilter2IsList,
+                              FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
+                              AllowedinAutomationConditions = a.AllowedinAutomationConditions,
+                              AutomationEmailRecipient = a.AutomationEmailRecipient,
+                              AllowedInAirlineMessaging = a.AllowedInAirlineMessaging,
+                              CanAutomateSetValue = a.CanAutomateSetValue,
+                              HtmlHeaderComponentUrl = a.HtmlHeaderComponentUrl,
+                              HtmlListComponentUrl = a.HtmlListComponentUrl,
+                              HtmlHeaderComponentName = a.HtmlHeaderComponentName,
+                              HtmlListComponentName = a.HtmlListComponentName,
+                              HasTemplate = a.HasTemplate,
+                              AllowedInCustomerFieldsSettings = a.AllowedInCustomerFieldsSettings,
+                              GeneratedComponentPath = a.GeneratedComponentPath,
+                              DisplayInDocumentReferences = a.DisplayInDocumentReferences,
+                              Code = a.Code,
+                              ControlField3 = a.ControlField3,
+                              DependencyFilter3Value = a.DependencyFilter3Value,
+                              DependencyFilter3Type = a.DependencyFilter3Type,
+                              DependencyFilter3IsList = a.DependencyFilter3IsList,
+                              CopyToDW = a.CopyToDW,
+                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                              EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                          });
             return result;
-        }      
+        }
 
         public List<ObjectFieldPM> GetObjectFieldPMsByTenant(int tenant, int currenttenant)
         {
@@ -1395,12 +1406,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3Type = a.DependencyFilter3Type,
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
-                                                    DisplayOnLookUpLocal=a.DisplayOnLookUpLocal,
+                                                    DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox
                                                 }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);//.Take(800).ToList();
         }
-      
+
         private static List<ObjectFieldPM> Get_List_Of_ObjectFields_With_Modifications_And_Validations(List<ObjectFieldPM> objectfields, int tenant)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1419,7 +1431,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                 List<TextCode> textCodes = TextCodeRepository.GetTenantTextCodesWithTenantZero(tenant);
                 List<ObjectTable> objectTables = tableRep.GetObjectsByTenant(tenant).ToList();
-                
+
                 foreach (ObjectFieldPM objectField in objectfields)
                 {
                     if (objectFieldModificationsDictionary.Count != 0)
@@ -1446,14 +1458,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
                     if (objectField.LookUpTableId != null)
                     {
-                        objectField.ObjectTable_LookUpTableName = objectTables.Where(t => t.Id == objectField.LookUpTableId).FirstOrDefault().Name;                       
+                        objectField.ObjectTable_LookUpTableName = objectTables.Where(t => t.Id == objectField.LookUpTableId).FirstOrDefault().Name;
                     }
 
                     if (objectField.MultiTableId != null)
                     {
                         objectField.ObjectTable_MultiTableName = objectTables.Where(t => t.Id == objectField.MultiTableId).FirstOrDefault().Name;//tableRep.GetSingleObjectTable(objectField.MultiTableId, objectField.Tenant, true).Name;
                     }
-                    
+
                     if (objectField.FullNameTextCodeId != null)
                     {
                         TextCode fullnamecode = textCodes.Where(t => t.Id == objectField.FullNameTextCodeId).FirstOrDefault();
@@ -1497,7 +1509,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return objectfields;
         }
-  
+
         public List<ObjectFieldPM> GetObjectFieldsByTenantAndObjectTable(int tenant, string objecttableName)
         {
             ObjectTablePM table = ObjectTableQuery.GetObjectTableByCode(objecttableName, tenant);
@@ -1601,7 +1613,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                     CopyToDW = a.CopyToDW,
                                                     DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
-                                                }).ToList();          
+                                                    EnableFullscreenTextBox = a.EnableFullscreenTextBox,
+                                                }).ToList();
 
             return Get_List_Of_ObjectFields_With_Modifications_And_Validations(objectFields, tenant);
         }
@@ -1627,7 +1640,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             List<ObjectFieldPM> currentTenantObjectFields = new List<ObjectFieldPM>();
             List<ObjectFieldPM> zeroTenantObjectFields = new List<ObjectFieldPM>();
-            
+
             #region Current Tenant Fields
             if (tenant != 0)
             {
@@ -1726,6 +1739,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                              CopyToDW = a.CopyToDW,
                                                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                                             EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                          }).ToList();
 
                             currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -1832,6 +1846,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                          DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                          CopyToDW = a.CopyToDW,
                                                          DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                                         EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                      }).ToList();
 
                         currentTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(currentTenantObjectFields, tenant);
@@ -1937,6 +1952,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                       DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                       CopyToDW = a.CopyToDW,
                                                       DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                                      EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                                   }).ToList();
 
                         zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2044,6 +2060,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                   DependencyFilter3IsList = a.DependencyFilter3IsList,
                                                   CopyToDW = a.CopyToDW,
                                                   DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                                  EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                               }).ToList();
 
                     zeroTenantObjectFields = Get_List_Of_ObjectFields_With_Modifications_And_Validations(zeroTenantObjectFields, 0);
@@ -2052,8 +2069,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
             #endregion
 
-            result = zeroTenantObjectFields.Concat(currentTenantObjectFields).ToList();            
-            return result;         
+            result = zeroTenantObjectFields.Concat(currentTenantObjectFields).ToList();
+            return result;
         }
 
         public ObjectFieldPM GetSinglePMByNameAndTable(string fieldName, string tableId, int tenant)
@@ -2061,7 +2078,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             ObjectFieldPM objectField = (from a in repository.context.ObjectFields.Include("FullNameTextCode")
                                          where a.Tenant == tenant
                                          && a.FieldName == fieldName
-                                         &&a.ObjectTableId == tableId
+                                         && a.ObjectTableId == tableId
                                          select new ObjectFieldPM()
                                          {
                                              IsMaxLength = a.IsMaxLength,
@@ -2109,7 +2126,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              Tenant = a.Tenant,
                                              UniqueField = a.UniqueField,
                                              FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : null,
-                                             FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,                                            
+                                             FullNameTextCodeCode = a.FullNameTextCode != null ? a.FullNameTextCode.Code : null,
                                              ValidForQuerySection2 = a.ValidForQuerySection2,
                                              ValidForQuerySection1 = a.ValidForQuerySection1,
                                              IsRestrictable = a.IsRestrictable,
@@ -2134,8 +2151,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                              DependencyFilter2IsList = a.DependencyFilter2IsList,
                                              FullNameTextCodeLocalDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.LocalDefaultText : null,
                                              DisplayOnLookUpLocal = a.DisplayOnLookUpLocal,
+                                             EnableFullscreenTextBox = a.EnableFullscreenTextBox,
                                          }).FirstOrDefault();
-            
+
             return objectField;
         }
     }
