@@ -5066,6 +5066,116 @@
 				"url": "{{LogitudeURL}}/api/movetypes"
 			},
 			"response": []
+		},
+		{
+			"name": "GetVesselIdPT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22fbcb2f-42dd-43fe-9f51-6f9e6ac32bff",
+						"exec": [
+							"pm.test(\"GetVesselIdPT\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"\r",
+							"    pm.environment.set(\"VesselIdPT\", idvalue);\r",
+							"    if (idexist) {\r",
+							"        postman.setNextRequest(\"CreateVesselIdPT\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://system.logitudeworld.com/api/vesselviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=VesselIdPT&PageSize=23",
+					"protocol": "https",
+					"host": [
+						"system",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"api",
+						"vesselviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "VesselIdPT"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateVesselIdPT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"IsSecured\": false,\n  \"Code\": null,\n  \"EnglishName\": \"VesselIdPT \",\n  \"LocalName\": \"VesselIdPT\",\n  \"Notes\": null,\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IMOCode\": \"IMOCode PT\",\n  \"CountryId\": null\n}"
+				},
+				"url": "{{LogitudeURL}}/api/vessels"
+			},
+			"response": []
 		}
 	]
 }
