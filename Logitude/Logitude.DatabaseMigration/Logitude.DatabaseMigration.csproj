@@ -674,6 +674,10 @@
     <Compile Include="Migrations\201902071414099_AbedAddHideTreeToTableDwObjectField.Designer.cs">
       <DependentUpon>201902071414099_AbedAddHideTreeToTableDwObjectField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905210951283_missingMigrations2105.cs" />
+    <Compile Include="Migrations\201905210951283_missingMigrations2105.Designer.cs">
+      <DependentUpon>201905210951283_missingMigrations2105.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201905061035125_VendorCommissionMigration.cs" />
     <Compile Include="Migrations\201905061035125_VendorCommissionMigration.Designer.cs">
       <DependentUpon>201905061035125_VendorCommissionMigration.cs</DependentUpon>
@@ -1131,6 +1135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902100944337_AddFromToOriginToShipment_Samar.resx">
       <DependentUpon>201902100944337_AddFromToOriginToShipment_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905210951283_missingMigrations2105.resx">
+      <DependentUpon>201905210951283_missingMigrations2105.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905061035125_VendorCommissionMigration.resx">
       <DependentUpon>201905061035125_VendorCommissionMigration.cs</DependentUpon>

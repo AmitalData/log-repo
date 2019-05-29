@@ -27,8 +27,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                           VendorId = a.VendorId,
                                                           CustomerId = a.CustomerId,
-                                                          ModificationsTypeCode = a.ModificationsTypeCode,
-                                                          ModificationsTypeName = a.ModificationAndDiscountType != null ? a.ModificationAndDiscountType.LocalName : null,
+                                                          //ModificationsTypeCode = a.ModificationsTypeCode,
+                                                          //ModificationsTypeName = a.ModificationAndDiscountType != null ? a.ModificationAndDiscountType.LocalName : null,
                                                           CommisionPercentage = a.CommisionPercentage,
                                                           Tenant = a.Tenant,
                                                       });
@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     {
                         VendorId = a.VendorId,
                         CustomerId = a.CustomerId,
-                        ModificationsTypeCode = a.ModificationsTypeCode,
+                        //ModificationsTypeCode = a.ModificationsTypeCode,
                         CommisionPercentage = a.CommisionPercentage,
 
                     }).ToList();

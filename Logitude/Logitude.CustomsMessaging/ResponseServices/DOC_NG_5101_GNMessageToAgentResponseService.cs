@@ -89,11 +89,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     notificationStatusCode = "VAN";
                     break;
-                case 6:
+                //case 6:
+                case 11:
                     notificationDefinitionCode = "";
                     notificationDescription = "הודעה על תצהיר יבואן חדש ";
                     break;
-                case 11:
+                //case 11:
+                case 6:
                     /*notificationDefinitionCode = "5101I";
                     assigneToNotificationTypeCode = "I"; */
                     if (customResponse.MessageToAgent.RelatedEntity.entityType == 1053 || customResponse.MessageToAgent.RelatedEntity.entityType == 1054) //Deposition
@@ -118,7 +120,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             LogMessagingUtil.Instance.AppendLine("בדיקת דיפולט - שליפת ספק בהודעה על תצהיר");
                             var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_RET_VEND", "NON", _MyDeclarationPM.CustomerCode, false, true);
+                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_RET_VEND", "NON", "NON", false, true);
                             bool isRetrieveVendorActive = def.DEFDATA == "Y";
                             if (isRetrieveVendorActive)
                             {

@@ -1,4 +1,4 @@
-﻿
+
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 //import Rx from 'rxjs/Rx';
@@ -118,7 +118,7 @@ export class GeneralEntitiesService {
                 var mappedEntity: GeneralEntitiesArgs;
                 mappedEntity = this.MapJsonToEntityPM(entities, false);
 
-                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity),
+                return this._http.put(this._apiUrl + "/PutGeneralEntitiesArgs", JSON.stringify(mappedEntity),
                     { headers: authHeader }).map((res) => {
                         var pm = res.json();
                         if (pm) {

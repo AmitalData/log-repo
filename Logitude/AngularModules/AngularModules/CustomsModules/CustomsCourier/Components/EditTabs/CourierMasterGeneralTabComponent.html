@@ -45,16 +45,17 @@
                         <LogLabel [ObjectFieldName]="'AirlinePrefix'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td colspan="2" style="width:180px">
+                    <td style="width:150px">
                         <LogLov [ObjectFieldName]="'AirlineId'"
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
-                                [HideColumns]="false"
+                                [HideColumns]="true"
                                 [SelectedValue]="AirlineId"
                                 [LookUpTableName]="'Customs.CustomsAirline'">
                             <!--[DependencyFilter1Value]="'AL'"-->
                         </LogLov>
                     </td>
+                    <td style="width:30px"></td>
                 </tr>
             </table>
         </td>
