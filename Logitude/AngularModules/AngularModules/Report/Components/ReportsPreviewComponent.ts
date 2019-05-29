@@ -212,8 +212,15 @@ export class ReportsPreviewComponent implements AfterViewInit {
  
 
 
+IsRunReportSucceeded:boolean = false ;
+IsRunReportFailed:boolean = false ;
 
     GenerateReport(filter: ReportFliter, isloading: boolean) {
+
+
+
+       this.IsRunReportSucceeded= false ;
+        this.IsRunReportFailed = false ;
         this.ReportFliter = this.FillReportFilter(filter);
         if (AppTool.IsNullOrEmpty(this.ReportFliter.DefaultTemplateId)) {
             var messageWindow = new MessageWindow();
@@ -255,6 +262,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
         }
     }
     GenerateReportViewWorkerRole(filter: ReportFliter) {
+
+        this.IsRunReportSucceeded= false ;
+        this.IsRunReportFailed = false ;
         this.ReportFliter = this.FillReportFilter(filter);
         if (AppTool.IsNullOrEmpty(this.ReportFliter.DefaultTemplateId)) {
             var messageWindow = new MessageWindow();
@@ -283,9 +293,12 @@ export class ReportsPreviewComponent implements AfterViewInit {
             if (myResponse.HasError) {
                 var messageWindow = new MessageWindow();
                 messageWindow.Show(myResponse.ErrorsArray[0]);
+                this.IsRunReportFailed = true;
+      
             }
 
             else {
+              this.IsRunReportSucceeded = true;
                 var myResult = myResponse.Result;
                 if (myResult) {
 
