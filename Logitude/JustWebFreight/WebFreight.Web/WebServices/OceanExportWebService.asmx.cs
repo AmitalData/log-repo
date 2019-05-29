@@ -83,8 +83,8 @@ namespace WebFreight.Web.WebServices
 
             if (shipment != null && tenantSettings != null)
             {
-                myDataProvider.CarrierCAAT = tenantSettings.CAAT;
-                myDataProvider.CarrierCBSA = tenantSettings.CBSA;
+                myDataProvider.TenantCAAT = tenantSettings.CAAT;
+                myDataProvider.TenantCBSA = tenantSettings.CBSA;
 
                 PrepaidCollect shipmentprepaidcollect = (from a in webFreightContext.PrepaidCollects where a.Id == shipment.FreightPrepaidCollectId select a).FirstOrDefault();
 

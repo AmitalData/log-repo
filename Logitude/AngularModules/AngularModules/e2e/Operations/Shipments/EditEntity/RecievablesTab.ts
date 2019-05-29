@@ -18,7 +18,7 @@ export class ReceivablesTabComponent {
         // this.Helper.WaitByIdAndClick('Shipment_EstimateProfitInSelectedCurrency');
 
         if (shipmentType == 'D' || shipmentType == 'H') {
-            // this.Helper.WaitByIdAndClick('ATDS-Receivable');
+            // this.Helper.WaitByIdAndClick('ATDS-Receivable');//Generate Receivables 
             // var InvoiceAmount: any;
             this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD');
             this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
@@ -58,7 +58,7 @@ export class ReceivablesTabComponent {
             // return receivableCurrency;
         });
 
-        this.Helper.WaitByIdAndClick('AddReceivableId');
+        this.Helper.WaitByIdAndClick('AddReceivable');
 
         this.Helper.WaitByIdAndFill('ShipmentReceivable_ChargesTypeId', ChargeType);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);

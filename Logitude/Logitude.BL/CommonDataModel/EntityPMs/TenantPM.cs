@@ -367,7 +367,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool AutoArchiveOnInvoice { get; set; }
         public string EcommerceSupportEmail { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CBSA { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CAAT { get; set; }
 
 

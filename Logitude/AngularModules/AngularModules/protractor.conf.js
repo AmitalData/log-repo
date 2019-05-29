@@ -42,6 +42,11 @@ exports.config = {
       browser.params.Login.Email = "razantest@protractor.com";
       browser.params.Login.Password = "!R123j456";
     }
+    else if (browser.params.Env == "staging") {
+      browser.params.Link = "https://staging.logitudeworld.com";
+      browser.params.Login.Email = "protractor@test.com";
+      browser.params.Login.Password = "!P123t456";
+    }
     else if (browser.params.Env == "test") {
       browser.params.Link = "https://test.logitudeworld.com/test";
       browser.params.Login.Email = "protractor@test.com";
@@ -57,7 +62,6 @@ exports.config = {
       browser.params.Login.Email = "angular@fnarsoft.com";
       browser.params.Login.Password = "1";
     }
-    // browser.params.ShipParams.LogitudeShipType="D",
 
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   },
