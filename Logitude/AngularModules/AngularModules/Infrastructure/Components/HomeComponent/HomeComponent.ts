@@ -127,6 +127,7 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
     public EnvironmentSRC: string = null;
     public EnvironmentName: string = null;
     public Company: string;
+    public ProductInfo: string;
     public LoggedUser: string;
     public IsBellVisible: boolean = false;
     public IsCustomizationVisible: boolean = false;
@@ -146,6 +147,11 @@ private BluesnapContractService: BluesnapContractPMService= new BluesnapContract
         this.EnvironmentSRC = Environment.GetEnvironmentIcon();
         this.EnvironmentName = Environment.GetEnvironmentName();
         this.Company = SessionLocator.TenantPM.Company;
+        if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting) && !AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ProductInfo)) {
+            this.ProductInfo = ObjectsLocator.GlobalSetting.ProductInfo;
+        } else {
+            this.ProductInfo = "";
+        }
         this.LoggedUser = SessionLocator.LoggedUserPM.EnglishName;
 
         if (SessionLocator.Tenant == 261) {
