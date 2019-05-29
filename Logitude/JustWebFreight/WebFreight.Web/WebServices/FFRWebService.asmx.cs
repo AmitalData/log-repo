@@ -721,7 +721,7 @@ namespace WebFreight.Web.WebServices
                 EntityReference = myBooking.BookingNumber,
                 SearchFields = myBooking.BookingNumber + "," + xmlTarget + "," + "O" + "," + xmlSubject,
                 CreateDateUTC = DateTime.UtcNow,
-                AWBNumber = myBooking.Master,
+                AWBNumber = myBooking.AirlinePrefix + "-" + myBooking.Master,
             };
 
             if (IsDemoTenant)

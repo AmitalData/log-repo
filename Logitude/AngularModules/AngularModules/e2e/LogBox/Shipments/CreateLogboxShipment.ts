@@ -1,57 +1,75 @@
 import { browser, by, element, WebDriver, protractor } from 'protractor';
 import { FieldsHelper } from './../Helpers/FieldsHelper';
+import { GeneralFunctions } from './../Helpers/GeneralFunctions';
 
 export class LogboxShipment {
     private helper: FieldsHelper;
+    private GeneralFun: GeneralFunctions;
 
     constructor() {
         this.helper = new FieldsHelper();
+        this.GeneralFun = new GeneralFunctions();
     }
 
 
-
-    ClickNewShipment() {
+     ClickNewShipment() {
 
         
-        this.helper.WaitByIdAndClick('LogBoxNEWSHIP');
-        
-    }
+         this.helper.WaitByIdAndClick('LogBoxNEWSHIP');
+        }
 
-    ChooseTransportMode() {
-        // this.helper.WaitByIdAndClick('Dropdown_0_3') ;
-        // this.helper.WaitByCssAndClick_FromTagInsideList('.TextTrimming', 0);
+     ChooseTransportMode() {
+       
         this.helper.WaitByIdAndFill('TransportModeId', 'Air');
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        }
 
-       // this.helper.WaitByIdAndClick('ComboBoxItem');
-        //this.helper.WaitBusyIndicator();
-        //  THIS.helper.WaitByCssAndClick_FromTagInsideList
-    }
+     InsertOrderNumber() {
 
-    InsertOrderNumber() {
-
-        this.helper.WaitByIdAndFill('CustomerReference1', '123456');
-        //this.helper.WaitByIdAndFill('ToDate', '25');
+        var orderNumber = this.GeneralFun.RandomNum();
+        this.helper.WaitByIdAndFill('CustomerReference1', orderNumber);
+        }
 
 
-    }
-    //should be after run report 
-
-
-
-    InsertAgent() {
+     InsertAgent() {
         this.helper.WaitByIdAndFill('ForwarderPartnerId', 'Simplog LTD AH Baker');
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-        //this.helper.WaitByIdAndClick('RunUnpaidInvoicesReportbtn');
-    }
+         }
 
 
-    SaveShipment() {
+     SaveShipment() {
 
         this.helper.WaitByIdAndClick('OKButton');
+        this.helper.WaitBusyIndicator();
+        }
+
+    //SearchForCreatedShipment(orderNumber: string) {
+
+               
+    //    this.helper.WaitByIdAndFill('SearchFieldsId_0_0', orderNumber);
+        
+
+    //}
+
+    SelectShipment() {
+        this.helper.WaitByIdAndClick('LogGrid_0_0row0');
+        this.helper.WaitBusyIndicator();
+    }
+
+    CreateDocument() {
+        this.helper.WaitByIdAndClick('AddLogboxDocument');
+        this.helper.WaitByIdAndClick('DocumentTypeCode');
+        this.helper.WaitByIdAndFill('Description', 'Test Document');
+        this.helper.WaitByIdAndFill('Notes', 'Logbox test scenario');
+        this.helper.WaitByIdAndClick('OK');
+        this.helper.WaitBusyIndicator();
+        browser.sleep(2000);
 
     }
+
+
+
     //////--------------------------------------------------------------
 
 

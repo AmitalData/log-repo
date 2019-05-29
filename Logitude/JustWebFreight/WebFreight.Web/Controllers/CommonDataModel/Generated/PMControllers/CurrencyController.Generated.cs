@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Currency", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Currency", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         CurrencyService service = new CurrencyService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Currency", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Currency", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "Currency" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "CurrencyPM" + entityPM.Id + entityPM.Tenant;

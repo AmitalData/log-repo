@@ -8,7 +8,7 @@ using System.Text;
 using System.Web;
 using EvoPdf;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityQueries; 
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
@@ -2839,9 +2839,9 @@ namespace Logitude.BL.Helpers
                             string fixedPrice = " ";
                             if (chargePM.SaleMeasurementCode != "BCNT")
                             {
-                                if (chargePM.SaleAmountInSaleCurrency != null)
+                                if (chargePM.SaleTotalAmount != null)
                                 {
-                                    double value = (double)chargePM.SaleAmountInSaleCurrency;
+                                    double value = (double)chargePM.SaleTotalAmount;
                                     fixedPrice = value.ToString("N") + " " + GetChargeCurrencyCode(quotePM, chargePM);
                                 }
                             }

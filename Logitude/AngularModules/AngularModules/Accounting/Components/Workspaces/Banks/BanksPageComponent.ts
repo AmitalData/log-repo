@@ -56,7 +56,7 @@ export class BanksPageComponent {
     }
 
 
-    //#region Queries Features 
+    //#region Queries Features
     public TodayDepositsVisibility: boolean = false;
     public cashDepositsVisibility: boolean = false;
     public chequeDepositVisibility: boolean = false;
@@ -67,7 +67,7 @@ export class BanksPageComponent {
     txt_chequeDeposit: string = TextCodeTranslator.Translate('BankDeposit.Q.chequeDeposit');
 
     public isRTL: boolean = false;
-    chartId: string = ""; 
+    chartId: string = "";
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
       this.chartId = "CashBookChart_" + this.CurrentSession.GetChartId();
@@ -81,6 +81,7 @@ export class BanksPageComponent {
         this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPage").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ReconcileExternalPageLine").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ExternalReconciliation").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("ExternalReconciliationLine").subscribe((response: any) => { });
         this.LoadTenantCurrency();
         this.LoadAllScreenData();
@@ -95,14 +96,14 @@ export class BanksPageComponent {
         this.ScreenHeight = this.getScreenHeight();
 
     }
-    
+
     LoadAllScreenData() {
         this.LoadRecentBankDeposits();
         this.SetQueriesVisibility();
         this.LoadTenantCurrency();
         this.LoadChartData();
         this.LoadQueriesCounts();
-   
+
     }
 
     SetQueriesVisibility() {
@@ -138,7 +139,7 @@ export class BanksPageComponent {
 
                 this.cashBookSummary.ChequeCashbookCount = myResult.ChequeCashbookCount > 1000 ? "1000+" : myResult.ChequeCashbookCount.toString();
 
-            
+
 
             }
         });
@@ -244,7 +245,7 @@ export class BanksPageComponent {
             });
         }
     }
-    
+
     EditBankDeposit(entity: any) {
         if (entity != null) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -492,12 +493,12 @@ export class BanksPageComponent {
                             }
                         });
                     }
-                    
+
                 }
             }
         });
 
-        
+
     }
 
     ConvertToLocal(foreignAmount: number, currencyId) {
@@ -599,7 +600,7 @@ export class BanksPageComponent {
         }];
 
         // Graph Properties
-        var Graphs = Graphs = 
+        var Graphs = Graphs =
         //#endregion
 
 
@@ -618,7 +619,7 @@ export class BanksPageComponent {
             var name = "";
             if (element.CashBookTypeCode == "1") { // 1-cash
                 name = (useLocal ? "מזומן" : "Cash") + " (" + element.CurrencyCode + ")";
-            } else if (element.CashBookTypeCode == "2") { // 2-cheque 
+            } else if (element.CashBookTypeCode == "2") { // 2-cheque
               name = (useLocal ? "המחאות" :"Cheque") + " (" + element.CurrencyCode + ")";
                 isCheque = true;
             } else {
@@ -646,7 +647,7 @@ export class BanksPageComponent {
     BarClicking() {
         if (BarClick() != null) {
             this.OnBarClick(BarClick());
-            
+
         }
 
     }
@@ -685,7 +686,7 @@ export class BanksPageComponent {
                         });
                     });
             }
-            
+
         }
     }
 

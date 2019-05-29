@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AutomationResultEmailRecipient", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AutomationResultEmailRecipient", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         AutomationResultEmailRecipientService service = new AutomationResultEmailRecipientService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AutomationResultEmailRecipient", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AutomationResultEmailRecipient", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "AutomationResultEmailRecipient" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AutomationResultEmailRecipientPM" + entityPM.Id + entityPM.Tenant;

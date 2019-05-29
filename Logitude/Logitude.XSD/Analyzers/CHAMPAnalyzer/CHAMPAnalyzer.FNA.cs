@@ -114,6 +114,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                     //    }
                 }
             }
+
+            if (!string.IsNullOrEmpty(myPrefix) && !string.IsNullOrEmpty(myMaster))
+            {
+                myLongMaster = myPrefix + "-" + myMaster;
+            }
         }
 
         private void AnalyzeTechnicalFNA(string myReceivedMessageDetail)

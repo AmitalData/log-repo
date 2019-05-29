@@ -598,6 +598,28 @@
                                                                                     </td>
                                                                                 </tr>
 
+                                                                                <!-- CBSA -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 200px;">
+                                                                                        <LogLabel [ObjectFieldName]="'CBSA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'CBSA'" [Text]="CBSA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <!-- CAAT -->
+                                                                                <tr class="FormFieldRow">
+                                                                                    <td style="width: 200px;">
+                                                                                        <LogLabel [ObjectFieldName]="'CAAT'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <LogTextBox [ObjectFieldName]="'CAAT'" [Text]="CAAT" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                </tr>
+
                                                                                 <!-- FMCNumber -->
                                                                                 <tr class="FormFieldRow" *ngIf="IsTenantUS">
                                                                                     <td style="width: 200px;">

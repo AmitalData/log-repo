@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Vessel", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Vessel", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         VesselService service = new VesselService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Vessel", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Vessel", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "Vessel" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "VesselPM" + entityPM.Id + entityPM.Tenant;

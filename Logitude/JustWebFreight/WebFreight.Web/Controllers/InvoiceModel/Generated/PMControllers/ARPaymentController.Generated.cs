@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ARPayment", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ARPayment", entityPM.Tenant, authToken.Tenant);
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
                         ARPaymentService service = new ARPaymentService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ARPayment", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ARPayment", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "ARPayment" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ARPaymentPM" + entityPM.Id + entityPM.Tenant;

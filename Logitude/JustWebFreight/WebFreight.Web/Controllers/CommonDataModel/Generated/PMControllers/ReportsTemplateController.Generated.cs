@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ReportsTemplate", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ReportsTemplate", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         ReportsTemplateService service = new ReportsTemplateService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ReportsTemplate", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ReportsTemplate", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "ReportsTemplate" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ReportsTemplatePM" + entityPM.Id + entityPM.Tenant;
