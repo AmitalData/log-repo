@@ -480,6 +480,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
         var DuplicatedChargesIds: string[] = [];
         var EmptyIndex = 1;
         var emptyLines: boolean = false;
+        var FirstLineEmpty: boolean = false;
         var tempErrors:Array<string> = [];
         for (var index = 1; index <= 10; index++) {
             IdProps.push("Surcharge" + index + "Id");
@@ -505,6 +506,7 @@ export class NewAirFreightCostComponent extends BaseComponent {
             if (index == 1) {
                 if (AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
                     tempErrors.push(IdPropsName[index - 1] + " is required");
+                    FirstLineEmpty = true;
                 }
 
                 if (AppTool.IsNullOrEmpty(this[UOMProps[index - 1]])) {
@@ -527,9 +529,10 @@ export class NewAirFreightCostComponent extends BaseComponent {
                 }
                 if (index == 2) {
                     if (!AppTool.IsNullOrEmpty(this[UOMProps[index - 1]]) && !AppTool.IsNullOrEmpty(this[IdProps[index - 1]])) {
-                        if (EmptyIndex == 1) {
+                        if (FirstLineEmpty) {
                             emptyLines = true;
-                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line 2 and line 1");
+                            this.ValidationErrorsList.push("Empty Charge Lines aren't allowed between line 1 and line 2");
+                            EmptyIndex = 1;
                        }
                     }
                 }
