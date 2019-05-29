@@ -884,13 +884,17 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 					};
 
-					if (traslado.TipoFactor == "Tasa")
-					{
-						traslado.TasaOCuota = (line.VatPercentage != null ? StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
-						traslado.Importe = GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(((line.InvoiceCurrencyAmount != null ? (line.InvoiceCurrencyAmount.Value) : 0) * ((line.VatPercentage != null ? line.VatPercentage.Value : 0) / 100))), 2));
-						traslado.ImporteSpecified = true;
-						traslado.TasaOCuotaSpecified = true;
-					}
+                    if (lineVatType.Code == "EXMPT" && line.VatPercentage == 0)
+                    {
+                        traslado.TipoFactor = "Tasa";
+                    }
+                    if (traslado.TipoFactor == "Tasa")
+                    {
+                        traslado.TasaOCuota = (line.VatPercentage != null ? StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
+                        traslado.Importe = GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(((line.InvoiceCurrencyAmount != null ? (line.InvoiceCurrencyAmount.Value) : 0) * ((line.VatPercentage != null ? line.VatPercentage.Value : 0) / 100))), 2));
+                        traslado.ImporteSpecified = true;
+                        traslado.TasaOCuotaSpecified = true;
+                    }
 
 					lineTranslados.Add(traslado);
 				}
@@ -1003,8 +1007,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 							Impuesto = "002",
 							TipoFactor = (lineTotal.VATPercent == 0 ? "Exento" : "Tasa"),
 						};
-
-						if (traslado.TipoFactor == "Tasa")
+                        if (lineVatType.Code == "EXMPT" && lineTotal.VATPercent == 0)
+                        {
+                            traslado.TipoFactor = "Tasa";
+                        }
+                        if (traslado.TipoFactor == "Tasa")
 						{
 							traslado.TasaOCuota = (lineTotal.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
 							traslado.Importe = GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(lineTotal.InvoiceCurrencyVATAmount != null ? lineTotal.InvoiceCurrencyVATAmount.Value : 0), 2));
@@ -1105,7 +1112,12 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 					};
 
-					if (traslado.TipoFactor == "Tasa")
+                    if (lineVatType.Code == "EXMPT" && line.VatPercentage == 0)
+                    {
+                        traslado.TipoFactor = "Tasa";
+                    }
+
+                    if (traslado.TipoFactor == "Tasa")
 					{
 						traslado.TasaOCuota = (line.VatPercentage != null ? StringHelper.StringPadRight((Math.Abs(line.VatPercentage.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
 						traslado.Importe = GetImporte(line.InvoiceCurrencyAmount, line.VatPercentage);//GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(((line.InvoiceCurrencyAmount != null ? (line.InvoiceCurrencyAmount.Value) : 0) * ((line.VatPercentage != null ? line.VatPercentage.Value : 0) / 100))), 2));
@@ -1228,7 +1240,12 @@ namespace Logitude.BL.InvoiceModel.Tools
 							TipoFactor = (lineTotal.VATPercent == 0 ? "Exento" : "Tasa"),
 						};
 
-						if (traslado.TipoFactor == "Tasa")
+                        if (lineVatType.Code == "EXMPT" && lineTotal.VATPercent == 0)
+                        {
+                            traslado.TipoFactor = "Tasa";
+                        }
+
+                        if (traslado.TipoFactor == "Tasa")
 						{
 							traslado.TasaOCuota = (lineTotal.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(lineTotal.VATPercent.Value / 100).ToString()), '0', 8) : "");//(line.VatPercentage != null ? (decimal)(Math.Abs(line.VatPercentage.Value / 100)) : 0),
 							traslado.Importe = (decimal)lineTotal.InvoiceCurrencyVATAmount;//GetDecimalWith2DigitsAfterPoint((decimal)MethodHelper.Roundd(Math.Abs(lineTotal.InvoiceCurrencyVATAmount != null ? lineTotal.InvoiceCurrencyVATAmount.Value : 0), 2));
