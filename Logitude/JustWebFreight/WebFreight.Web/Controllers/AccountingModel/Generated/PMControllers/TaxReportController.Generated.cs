@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, authToken.Tenant);
 	                    
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         TaxReportUpdateService service = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, authToken.Tenant);
 	
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         TaxReportUpdateService service = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

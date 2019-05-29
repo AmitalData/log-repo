@@ -13134,44 +13134,149 @@ namespace WebFreight.Web.ReportsWebServices
                     userId = filterItem_UserId.FieldValue.ToString();
                 }
             }
-
-            TraceEventQuery traceEventQuery = new TraceEventQuery(tenant);
-            IQueryable<TraceEventPM> traceEventPMsList =traceEventQuery.GetTraceEventPMsByDateAndObjectTableId(fromDate, toDate, "1-4", tenant);
-            if (!string.IsNullOrEmpty(userId))
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            List<ShipmentList> shipmentlists = shipmentQuery.GetShipmentListsByFromCreateDateAndToCreateDate(fromDate, toDate, tenant).ToList();
+            if (shipmentlists.Count > 0)
             {
-                traceEventPMsList = traceEventPMsList.Where(d => d.UserId == userId);
-            }
+                List<string> shipmentIds = shipmentlists.Select(d => d.Id).ToList();
+                TraceEventQuery traceEventQuery = new TraceEventQuery(tenant);
+                ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
+                
 
-            if (manuallyAddedEventsOnly)
-            {
-                traceEventPMsList = traceEventPMsList.Where(d => d.IsAddedManually);
-            }
-            List<ShipmentEventsList> shipmentEventsLists = new List<ShipmentEventsList>();
 
-            IEnumerable<IGrouping<string, TraceEventPM>> traceEventgroups = traceEventPMsList.ToList().GroupBy(q => q.EntityNumber);
+                ObjectTablePM table = objectTableQuery.GetObjectTableByName("Shipment", 0);
+                IQueryable<TraceEventPM> traceEventPMs = traceEventQuery.GetTraceEventPMsByEntityIdsAndObjectTableId(shipmentIds, table.Id, tenant);
+                List<TraceEventPM> traceEvenList = FilterTraceEvenList(manuallyAddedEventsOnly, userId, traceEventPMs);
+
+                FillShipmentNumberToTraceEventList(shipmentlists, traceEvenList);
+                List<ShipmentEventsList> shipmentEventsLists = new List<ShipmentEventsList>();
+                GroupTraceEvenListByShipmentNumberAndOrderByEventDate(traceEvenList, shipmentEventsLists);
+                shipmentsEventsListDataProvider.ShipmentEventsLists = shipmentEventsLists;
+            }
+            return shipmentsEventsListDataProvider;
+        }
+
+        private  void GroupTraceEvenListByShipmentNumberAndOrderByEventDate(List<TraceEventPM> traceEvenList, List<ShipmentEventsList> shipmentEventsLists)
+        {
+            IEnumerable<IGrouping<string, TraceEventPM>> traceEventgroups = traceEvenList.ToList().GroupBy(q => q.EntityNumber);
             foreach (IGrouping<string, TraceEventPM> traceEventgroup in traceEventgroups)
             {
                 foreach (TraceEventPM item in traceEventgroup.OrderBy(d => d.EventDateTime).ToList())
                 {
-
-                    shipmentEventsLists.Add(new ShipmentEventsList()
-                    {
-                        ShipmentNumber = item.EntityNumber,
-                        EventCode = item.EventTypeCode,
-                        EventName = item.EventTypeEnglishName,
-                        EventDate = item.EventDateTime,
-                        LogDate = item.LogDateTime,
-                        UserName = item.ContactEnglishFirstName,
-                        Notes = item.Notes,
-                    });
+                    ShipmentEventsList shipmentEventsList = CreateNewShipmentEventsList(item);
+                    shipmentEventsLists.Add(shipmentEventsList);
                 }
-
-
             }
-            shipmentsEventsListDataProvider.ShipmentEventsLists = shipmentEventsLists;
-            return shipmentsEventsListDataProvider;
+        }
+
+        private static ShipmentEventsList CreateNewShipmentEventsList(TraceEventPM item)
+        {
+            return new ShipmentEventsList()
+            {
+                ShipmentNumber = item.EntityNumber,
+                EventCode = item.EventTypeCode,
+                EventName = item.EventTypeEnglishName,
+                EventDate = item.EventDateTime,
+                LogDate = item.LogDateTime,
+                UserName = item.ContactEnglishFirstName,
+                Notes = item.Notes,
+            };
+        }
+
+        private  void FillShipmentNumberToTraceEventList(List<ShipmentList> shipmentlists, List<TraceEventPM> traceEvenList)
+        {
+
+            foreach (TraceEventPM traceEventPM in traceEvenList)
+            {
+                var shipment = shipmentlists.Where
+                    (d => d.Id == traceEventPM.EntityId).FirstOrDefault();
+                if (shipment != null) traceEventPM.EntityNumber = shipment.ShipmentNumber;
+            }
+         
+        }
+
+
+        private  List<TraceEventPM> FilterTraceEvenList(bool manuallyAddedEventsOnly, string userId,  IQueryable<TraceEventPM> traceEventPMs)
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                traceEventPMs = traceEventPMs.Where(d => d.UserId == userId);
+            }
+
+            if (manuallyAddedEventsOnly)
+            {
+                traceEventPMs = traceEventPMs.Where(d => d.IsAddedManually);
+            }
+
+            List<TraceEventPM> traceEvenList = traceEventPMs.ToList();
+            return traceEvenList;
         }
         #endregion
+
+
+        #region Automation Test Report
+        public byte[] LoadAutomationTestReportDataProvider(byte[] xmlFilters, int tenant)
+        {
+            AutomationTestReportDataProvider dataprovider = GetAutomationTestReportDataProvider(xmlFilters, tenant);
+            XmlSerializer serializer = new XmlSerializer(typeof(AutomationTestReportDataProvider));
+            MemoryStream memstream = new MemoryStream();
+            serializer.Serialize(memstream, dataprovider);
+            memstream.Seek(0, SeekOrigin.Begin);
+            var reader = new StreamReader(memstream);
+            string content = reader.ReadToEnd();
+            byte[] bytearray = memstream.ToArray();
+            return bytearray;
+        }
+
+
+        private AutomationTestReportDataProvider GetAutomationTestReportDataProvider(byte[] xmlFilters, int tenant)
+        {
+            AutomationTestReportDataProvider automationTestReportDataProvider = new AutomationTestReportDataProvider();
+
+            bool isException = false;
+
+            MemoryStream memorystream = new MemoryStream(xmlFilters);
+            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
+            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            QueryFilterItem filterItem_IsException = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsException").FirstOrDefault();
+
+
+            if (filterItem_IsException != null)
+            {
+                if (filterItem_IsException.FieldValue != null)
+                {
+                    isException = (bool)filterItem_IsException.FieldValue;
+                }
+            }
+
+            if (isException)
+            {
+                throw new Exception("Exception Test");
+            }
+
+
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            var tenantManagementPM =  tenantManagementQuery.GetSinglePM(tenant);
+            if (tenantManagementPM != null)
+            {
+                automationTestReportDataProvider.TenantName = tenantManagementPM.Name;
+                automationTestReportDataProvider.PackageName = tenantManagementPM.PackageName;
+                automationTestReportDataProvider.CreateDate = tenantManagementPM.CreateDate;
+                automationTestReportDataProvider.UpdateDate = tenantManagementPM.UpdateDate;
+                automationTestReportDataProvider.Notes = tenantManagementPM.Notes;
+            }
+            
+            return automationTestReportDataProvider;
+        }
+
+   
+
+        #endregion
+
+
+
+
+
 
 
         private ContactPM GetLoggedContact(int tenant)

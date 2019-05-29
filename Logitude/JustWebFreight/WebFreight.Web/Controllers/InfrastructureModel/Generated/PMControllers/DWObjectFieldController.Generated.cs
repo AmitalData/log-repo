@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("DWObjectField", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("DWObjectField", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         DWObjectFieldService service = new DWObjectFieldService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("DWObjectField", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("DWObjectField", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "DWObjectField" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "DWObjectFieldPM" + entityPM.Id + entityPM.Tenant;

@@ -13,6 +13,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel;
 using System;
+using System.Text;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -354,19 +355,18 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
 
 
-        public IQueryable<TraceEventPM> GetTraceEventPMsByDateAndObjectTableId(DateTime fromDate, DateTime toDate,  string objectTableId, int tenant)
+        public IQueryable<TraceEventPM> GetTraceEventPMsByEntityIdsAndObjectTableId( List<string>entityIds,string objectTableId, int tenant)
         {
-            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+           // string sql = GetTraceEventSelectSql(entityIds, objectTableId, tenant);
+
+         //  IQueryable<TraceEvent> traceEvent = repository.context.GetActiveDbContext().Database.SqlQuery<TraceEvent>(sql).AsQueryable();
+
             IQueryable<TraceEventPM> traceEvents = from a in repository.context.TraceEvent.Include("EventType").Include("User.Contact")
-                                                   join s in shipmentsContext.Shipments
-                                                    on a.EntityId equals s.Id into ship
-                                                   from shipment in ship.DefaultIfEmpty()
-                                                   where a.Tenant == tenant && a.ObjectTableId == objectTableId && !a.Deleted
-                                                   && shipment.CreateDateTime>=fromDate && shipment.CreateDateTime <=toDate
-                                                   select new TraceEventPM()
+                                                   where entityIds.Contains(a.EntityId) && a.Tenant == tenant && a.ObjectTableId == objectTableId
+                                                   select new TraceEventPM() 
                                                    {
-                                                       EventTypeCode = a.EventType.Code,
-                                                       EventTypeEnglishName = a.EventType.EnglishName,
+                                                       EventTypeCode = a.EventType != null? a.EventType.Code:null,
+                                                       EventTypeEnglishName = a.EventType != null ?  a.EventType.Code:null,
                                                        EventDateTime = a.EventDateTime,
                                                        LogDateTime = a.LogDateTime,
                                                        EntityId = a.EntityId,
@@ -375,11 +375,23 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        Id = a.Id,
                                                        Tenant = a.Tenant,
                                                        UserId = a.UserId,
-                                                       EntityNumber = shipment.ShipmentNumber,
-                                                       ContactEnglishFirstName =((a.User!=null && a.User.Contact!=null) ? a.User.Contact.EnglishName:null),
+                                                       IsAddedManually =a.IsAddedManually,
+                                                       ContactEnglishFirstName = ((a.User != null && a.User.Contact != null) ? a.User.Contact.EnglishName : null),
                                                    };
             return traceEvents;
         }
 
+        private static string GetTraceEventSelectSql(List<string> entityIds ,string objectTableId, int tenant)
+        {
+            var values = new StringBuilder();
+            values.AppendFormat("{0}", "'" + entityIds[0] + "'");
+            for (int i = 1; i < entityIds.Count; i++)
+                values.AppendFormat(", {0}", "'" + entityIds[i] + "'");
+
+            var sql = string.Format(
+                "SELECT * FROM TraceEvent WHERE tenant = "  + tenant + " and objectTableId = "  + objectTableId  + " and id IN ({0})",
+                values);
+            return sql;
+        }
     }
 }

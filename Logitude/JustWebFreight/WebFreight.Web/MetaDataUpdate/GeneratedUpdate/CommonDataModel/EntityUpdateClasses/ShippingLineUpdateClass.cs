@@ -2873,7 +2873,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ObjectTableName =  "ShippingLine",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  5,
+					  						MaxLength =  4,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,

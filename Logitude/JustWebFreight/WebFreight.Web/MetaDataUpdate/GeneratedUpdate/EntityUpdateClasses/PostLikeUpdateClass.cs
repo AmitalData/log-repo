@@ -68,6 +68,10 @@ using Logitude.BL.GlobalModel;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PostLikeUpdateClass
@@ -142,9 +146,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PostId",
-					  						DefaultText =  @"Post",
+					  						DefaultText =  "Post",
 					  						ListFieldLable =  "PostIdListLable",
-					  						ListLableDefaultText =  @"Post ",
+					  						ListLableDefaultText =  "Post ",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -180,9 +184,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UserId",
-					  						DefaultText =  @"User",
+					  						DefaultText =  "User",
 					  						ListFieldLable =  "UserIdListLable",
-					  						ListLableDefaultText =  @"User",
+					  						ListLableDefaultText =  "User",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -218,9 +222,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsCancelled",
-					  						DefaultText =  @"Is Cancelled",
+					  						DefaultText =  "Is Cancelled",
 					  						ListFieldLable =  "IsCancelledListLable",
-					  						ListLableDefaultText =  @"Is Cancelled",
+					  						ListLableDefaultText =  "Is Cancelled",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
@@ -256,9 +260,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UserName",
-					  						DefaultText =  @"User Name",
+					  						DefaultText =  "User Name",
 					  						ListFieldLable =  "UserNameListLable",
-					  						ListLableDefaultText =  @"User Name",
+					  						ListLableDefaultText =  "User Name",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
