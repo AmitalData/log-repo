@@ -44,16 +44,6 @@ export class VendorCommissionPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private modificationsTypeCode: string;
-    public get ModificationsTypeCode() { return this.modificationsTypeCode; }
-    public set ModificationsTypeCode(newValue: string) { if (this.modificationsTypeCode != newValue) { this.modificationsTypeCode = newValue; this.MarkAsDirty("ModificationsTypeCode"); } }
-       
-	 
-    private modificationsTypeName: string;
-    public get ModificationsTypeName() { return this.modificationsTypeName; }
-    public set ModificationsTypeName(newValue: string) { if (this.modificationsTypeName != newValue) { this.modificationsTypeName = newValue; this.MarkAsDirty("ModificationsTypeName"); } }
-       
-	 
 
     public OldEntityPM: VendorCommissionPM;
 		
