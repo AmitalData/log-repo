@@ -41,6 +41,8 @@ namespace Logitude.TimeManagement.Data.EntityPOCOs
 	    public DateTime? ToDate { get; set; }
         [Column("Name")]
 	    public string Name { get; set; }
+        [Column("IsCompleted")]
+	    public bool IsCompleted { get; set; }
     }
 }
 	 
