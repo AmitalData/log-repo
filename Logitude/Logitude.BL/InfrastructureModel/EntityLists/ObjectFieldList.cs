@@ -71,6 +71,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string Code { get; set; }
         public bool CopyToDW { get; set; }
         public bool DisplayOnLookUpLocal { get; set; }
+        public bool EnableFullscreenTextBox { get; set; }
 
     }
 }
