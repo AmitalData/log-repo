@@ -39,6 +39,6 @@ export class MultilineTextBoxWindow implements OnInit {
         SessionLocator.CurrentSession.CloseCurrentWindowEmit(this.text);
     }
     CancelButtonClicked(){
-        SessionLocator.CurrentSession.CloseCurrentWindowEmit("");
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit("<!#cancelled>");
     }
 }

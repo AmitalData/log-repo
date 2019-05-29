@@ -689,7 +689,7 @@ namespace MeatadataGeneratorTool
             get { return isIncludeInSearchFieldsEnabled; }
             set { isIncludeInSearchFieldsEnabled = value; FirePropertyChanged("IsIncludeInSearchFieldsEnabled"); }
         }
-        
+
         string validForQuerySection1;
         public string ValidForQuerySection1
         {
@@ -1044,6 +1044,19 @@ namespace MeatadataGeneratorTool
             set { hTMLListComponentName = value; FirePropertyChanged("HtmlListComponentName"); }
         }
 
+        private bool enableFullscreenTextBox;
+        public bool EnableFullscreenTextBox
+        {
+            get
+            {
+                return enableFullscreenTextBox;
+            }
+            set
+            {
+                enableFullscreenTextBox = value;
+                FirePropertyChanged("EnableFullscreenTextBox");
+            }
+        }
 
         string helpTextCode;
         public string HelpTextCode
@@ -1463,5 +1476,7 @@ namespace MeatadataGeneratorTool
 
         }
         
+
+
     }
 }

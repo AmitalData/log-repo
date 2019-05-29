@@ -777,21 +777,21 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
-            var windowArgs: any = {};
-            windowArgs.EntityPM = this.EntityPM;
-            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
+        SessionLocator.CurrentSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
 
-            var logWindow = new LogitudeWindow();
-            windowArgs.Type = "Importer";
-            this.Type = "Importer";
-            logWindow.Width = 550;
+        var logWindow = new LogitudeWindow();
+        windowArgs.Type = "Importer";
+        this.Type = "Importer";
+        logWindow.Width = 550;
         logWindow.Height = this.EntityPM.IsCourierDeclaration ? 550 : 350;
-        
-            logWindow.Title = windowTitle;
-            logWindow.ShowCloseButton = true;
-            logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
     }
 
@@ -907,24 +907,23 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
 
         SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.CurrentSession.StopBusyIndicator();
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
 
-            var windowArgs: any = {};
-            windowArgs.EntityPM = this.EntityPM;
-            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
-
-            var logWindow = new LogitudeWindow();
-            windowArgs.Type = "Transfer";
-            this.Type = "Transfer";
-            logWindow.Width = 550;
-            logWindow.Height = 350;
-            logWindow.Title = windowTitle;
-            logWindow.ShowCloseButton = true;
-            logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        var logWindow = new LogitudeWindow();
+        windowArgs.Type = "Transfer";
+        this.Type = "Transfer";
+        logWindow.Width = 550;
+        logWindow.Height = 350;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
-
 
     }
 
@@ -932,22 +931,22 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
 
         SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
+        SessionLocator.CurrentSession.StopBusyIndicator();
 
-            SessionLocator.CurrentSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
 
-            var windowArgs: any = {};
-            windowArgs.EntityPM = this.EntityPM;
-            var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
-
-            var logWindow = new LogitudeWindow();
-            windowArgs.Type = "Entitle";
-            this.Type = "Entitle";
-            logWindow.Width = 550;
-            logWindow.Height = 350;
-            logWindow.Title = windowTitle;
-            logWindow.ShowCloseButton = true;
-            logWindow.WindowArgs = windowArgs;
-            logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
+        var logWindow = new LogitudeWindow();
+        windowArgs.Type = "Entitle";
+        this.Type = "Entitle";
+        logWindow.Width = 550;
+        logWindow.Height = 350;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.SetFieldsDisabled($event));
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/General/ImporterDetails/ImporterDetailsComponent');
 
 

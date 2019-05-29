@@ -304,7 +304,7 @@
                             </tr>
 
                             <!--Declaration List-->
-                            <tr style="height:80%;">
+                            <tr style="height:86%;">
                                 <td>
                                     <div style="margin-top:-3px;" class="MediaFill">
                                         <table style="margin: 15px 5px 5px 5px;" class="MediaFill">
@@ -470,6 +470,19 @@
                                                                                 </li>
                                                                             </ul>
                                                                         </td>
+                                                                        <td style="width:1px"></td>
+                                                                        <td style="width:200px">
+                                                                            <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments()"
+                                                                                          [IsDisabled]="!(_SelectedDOCValue == 'U')"
+                                                                                          [ButtonText]="'שדר מסמכים שגויים'"
+                                                                                          [AsRegularButton]="'true'"
+                                                                                          [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
+
+                                                                                <div class="class-MENUSplitButton-content">
+                                                                                    <div></div>
+                                                                                </div>
+                                                                            </split-button>
+                                                                        </td>
                                                                         <td></td>
                                                                     </tr>
                                                                 </table>
@@ -531,7 +544,7 @@
                                                                     </div>
 
                                                                     <div dir="RTL" class="class-dropdownfilter-content">
-                                                                        <div style="width:240px;height:280px">
+                                                                        <div style="width:240px;height:320px">
                                                                             <table>
                                                                                 <tr class="FormFieldRow" style="height:20px">
                                                                                     <td style="width: 240px"></td>
@@ -648,7 +661,30 @@
                                                                                     </td>
                                                                                 </tr>
 
-                                                                                <tr class="FormFieldRow" style="height:20px">
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px">
+                                                                                        <LogLabel [ObjectFieldName]="'CourierCustomStatus'" [DataContext]="DataContext" [TextCode]="'Customs.DeclarationCourierStatus.F.CourierCustomStatusName'"> </LogLabel>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="FormFieldRow" style="height:22px">
+                                                                                    <td style="width: 240px; height:20px">
+                                                                                        <ul class="FiltersMenu" style="float:right; padding-right: 10px;">
+                                                                                            <li (click)="SelectedCustomStatusValueClick('S')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'S'">
+                                                                                                <!--Suspended-->
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.Suspended' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedCustomStatusValueClick('H')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'H'">
+                                                                                                <!--Hatara-->
+                                                                                                {{'Customs.CourierMaster.CourierCustomStatus.Hatara' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                            <li (click)="SelectedCustomStatusValueClick('A')" style="width:55px;" [class.SelectedFilter]="_SelectedCustomStatusValue === 'A'">
+                                                                                                {{'Customs.General.O.All' | TextCodeTranslationPipe }}
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                <tr class="FormFieldRow" style="height:15px">
                                                                                     <td style="width: 240px"></td>
                                                                                 </tr>
                                                                                 <tr class="FormFieldRow" style="height:22px">

@@ -72,6 +72,8 @@ export class ObjectFieldList {
 		ListTextCodeCode: string;
 		Code: string;
 		CopyToDW: boolean;
-		DisplayOnLookUpLocal: boolean;
-	
-}
+        DisplayOnLookUpLocal: boolean;
+		EnableFullscreenTextBox: boolean;
+
+
+}

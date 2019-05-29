@@ -368,7 +368,7 @@ export class ModuleProviders {
             case "CheckTypeLookupListService": { myResult = new CheckTypeLookupListService(); break; }
             case "CityListService": { myResult = new CityListService(); break; }
             case "AgentTalkBackTypeListService": { myResult = new AgentTalkBackTypeListService(); break; }
-            case "AcceptanceStatusListService": { myResult = new AcceptanceStatusListService(); break; }   
+            case "AcceptanceStatusListService": { myResult = new AcceptanceStatusListService(); break; } 
             case "ClaimEntityListService": { myResult = new ClaimEntityListService(); break; }
             case "ClaimExplanationCodeListService": { myResult = new ClaimExplanationCodeListService(); break; }
             case "ClaimListService": { myResult = new ClaimListService(); break; }

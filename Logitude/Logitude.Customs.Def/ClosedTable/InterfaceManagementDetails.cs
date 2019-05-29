@@ -2495,6 +2495,23 @@ namespace Logitude.Customs.Def.ClosedTable
 
             all.Add(new InterfaceManagementDetails()
             {
+                Code = "UCB2715",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "שידור מסמכים שגויים ",// "Unifreight Courier *2715* Batch Send",
+                DcaPrefixName = "UnifreightCourier_UCB2715_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
                 //TML ==>https://www.abbreviations.com/abbreviation/terminal
                 Code = "UCBCTML",
 

@@ -158,7 +158,10 @@
     <table *ngIf="uiProperty.IsVisible" class="FixedTable">
         <tr lang="en">
             <td style="height: 100%;">
-                <div *ngIf="!IsMultiline" [ngStyle]="InputDivStyle" style="position:relative;" [className]="IsRatioBox == true ? 'InputDivNoBorder' : 'InputDiv'" [id]="InputDivId" (mouseover)="OnMouseOver()">
+                <div *ngIf="!IsMultiline" [ngStyle]="InputDivStyle" style="position:relative;"
+                [className]="IsRatioBox == true ? 'InputDivNoBorder' : 'InputDiv'" [id]="InputDivId"
+                (mouseover)="OnMouseOver()"
+                (mouseleave)="OnMouseLeave()">
                     <input [disabled]="IsDisabled" type="text" autocomplete="off"
                            style="-moz-box-shadow: inset 0 0 3px #AAAAAA;
                                   -webkit-box-shadow: inset 0 0 3px #AAAAAA;
@@ -185,7 +188,7 @@
                            [placeholder]="Placeholder"
                            [class.AlignRight]="AlignTextToRight"
                            [class.AlignLeft]="AlignTextToLeft"
-                           
+
                            [id]="InputId" #input ondrop="return false" (paste)="OnPaste($event)" />
                 </div>
 
