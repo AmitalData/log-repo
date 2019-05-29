@@ -615,7 +615,10 @@ export class NotificationComponent extends BaseComponent implements OnInit {
             //    SessionLocator.CurrentSession.StopBusyIndicator();
             });
 
-       
+        if (AppTool.IsNullOrEmpty(this.dataCount))
+        {
+            this.EnableFilters = true;
+        }
         return this.entityListService.getExtendedByFilters("Customs.Notification", filters);
 
 

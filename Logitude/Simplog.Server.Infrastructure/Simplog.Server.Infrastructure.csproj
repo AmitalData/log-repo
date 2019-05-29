@@ -182,6 +182,7 @@
     <Compile Include="DbContextBase.cs" />
     <Compile Include="EntityKeyFields.cs" />
     <Compile Include="ExtensionObjectContext.cs" />
+    <Compile Include="Helpers\AppDataUtil.cs" />
     <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\CacheWrapper.cs" />
     <Compile Include="Helpers\DatabaseInitializer.cs" />
