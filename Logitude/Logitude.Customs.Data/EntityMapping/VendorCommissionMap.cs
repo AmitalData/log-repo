@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("VendorCommissions", "Customs");
 		
-		    this.HasKey(t => new { t.VendorId, t.CustomerId });
+		    this.HasKey(t => new { t.VendorId, t.CustomerId, t.ModificationsTypeCode });
 	 
             this.Property(t => t.VendorId).HasColumnName("VendorId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
@@ -30,6 +30,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CommisionPercentage).HasColumnName("CommisionPercentage").HasPrecision(7, 4);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
+
+            this.Property(t => t.ModificationsTypeCode).HasColumnName("ModificationsTypeCode").IsRequired().HasMaxLength(3).IsUnicode(false);
         }
     }
 }

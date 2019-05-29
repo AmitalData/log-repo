@@ -121,7 +121,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (cardPM != null)
                 {
                     entityPM.IntegratorName = cardPM.LocalName;
-                    entityPM.IntegratorNumber = cardPM.VatNumber;
+                    //entityPM.IntegratorNumber = cardPM.VatNumber;
                 }
             }
 
