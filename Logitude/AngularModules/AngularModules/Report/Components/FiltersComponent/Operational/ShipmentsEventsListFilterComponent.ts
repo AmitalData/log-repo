@@ -32,6 +32,7 @@ export class ShipmentsEventsListFilterComponent extends BaseComponent {
         var daysofmonth = this.daysInMonth(new Date());
         this.FromDate = this.SetDate(Year, month, 1);
         this.ToDate = this.SetDate(Year, month, daysofmonth);
+
     }
 
 

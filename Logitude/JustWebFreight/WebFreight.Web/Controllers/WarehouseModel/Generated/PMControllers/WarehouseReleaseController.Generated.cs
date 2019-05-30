@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WarehouseRelease", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("WarehouseRelease", entityPM.Tenant, authToken.Tenant);
 	                    
                         IWarehouseContext MyContext = WarehouseContext.GetContext(entityPM.Tenant);
                         WarehouseReleaseUpdateService service = new WarehouseReleaseUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("WarehouseRelease", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("WarehouseRelease", entityPM.Tenant, authToken.Tenant);
 	
                         IWarehouseContext MyContext = WarehouseContext.GetContext(entityPM.Tenant);
                         WarehouseReleaseUpdateService service = new WarehouseReleaseUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

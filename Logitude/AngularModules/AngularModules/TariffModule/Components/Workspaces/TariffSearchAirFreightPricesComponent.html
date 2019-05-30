@@ -1,0 +1,269 @@
+<style>
+    .ListHeader{      
+        font-weight: normal;
+        font-size: 12px;
+        border: 1px solid #DADADA;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+        background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr style="height:70px">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:5px"><div></div></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:50px;">
+                                                <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td style="width:180px;">
+                                                <LogLov [ObjectFieldName]="'OriginPortId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [LookUpTableName]="'Port'"
+                                                        [DataContext]="DataContext"
+                                                        (SelectedItemChanged)="OriginPortId"
+                                                        [DisplayMemberPath]="'Code'"
+                                                        [SelectedValue]="OriginPortId">
+                                                </LogLov>
+                                            </td>
+
+                                            <td style="width:100px">
+                                                <div>
+
+                                                </div>
+                                            </td>
+
+
+                                            <td style="width:70px">
+                                                <LogLabel [ObjectFieldName]="'Weight'" [NoObjectField]="true" [Text]="'Weight'" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:240px">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:100px">
+                                                            <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Weight'" [HideColumns]="true"
+                                                                        (ValueChanged)="Weight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+
+                                                        </td>
+                                                        <td style="width:4px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:100px">
+                                                            <LogLov [ObjectFieldName]="'WeightCode'"
+                                                                    [SelectedValue]="WeightCode"
+                                                                    [NoObjectField]="true"
+                                                                    [DataContext]="DataContext"
+                                                                    [LookUpTableName]="'WeightUnit'"
+                                                                    [HideLastColumn]="true"
+                                                                    [RunToggleMode]="true"
+                                                                    >
+                                                            </LogLov>
+
+                                                        </td>
+                                                        <td style="width:36px"><div></div></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+
+
+
+
+                                            <td></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+                                            <td>
+                                                <LogLov [ObjectFieldName]="'DestinationPortId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [LookUpTableName]="'Port'"
+                                                        [DisplayMemberPath]="'Code'"
+                                                        [DataContext]="DataContext"
+                                                        (SelectedItemChanged)="DestinationPort = $event"
+                                                        [SelectedValue]="DestinationPortId">
+                                                </LogLov>
+                                            </td>
+                                            <td style="width:100px">
+                                                <div>
+
+                                                </div>
+                                            </td>
+                                            <td style="width:70px">
+                                                <LogLabel [ObjectFieldName]="'Date'" [NoObjectField]="true" [Text]="'Date'" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width:240px">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
+                                                            
+                                                        </td>
+                                                        <td style="width:18px">
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+
+                                            <td></td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="width: 100px">
+                                    <button class="GreenButton" style="height:60px;font-size:14px;font-weight:bold" (click)="SearchButtonClicked()">Search</button>
+                                </td>
+                            </tr>
+                         
+                        </table>
+                    </td>
+                    <td style="width:5px"><div></div></td>
+
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+
+                    <table>
+                        <tr>
+                            <td style="width:5px"><div></div></td>
+
+                            <td style="border: 1px solid lightgrey;">
+                                <table>
+                                    <tr class="ListHeader" style="height:30px">
+                                        <td style="padding-left:2px">
+                                            Results
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <ScrollViewer  [Small]="true">
+                                                <table>
+                                                    <tr style="height:70px;" *ngFor="let item of AvailableTariffs">
+
+                                                        <td>
+                                                            <table>
+                                                                <tr style="height:3px">
+                                                                    <td><div></div></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table style="-webkit-border-radius: 14px 14px 14px 14px; background-color:#F5F5F5">
+
+                                                                            <tr>
+                                                                                <td style="width:150px"><div>
+    <img style="width:120px;height:60px"  *ngIf="item.ImageId" class="CenterCenter"  [attr.id]="item.Name" src="{{item.ImageId}}" />
+
+</div></td>
+                                                                                <td style="width:20px"></td>
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width:200px;max-width:200px" >
+                                                                                                <div class="TextTrimming">
+                                                                                                Seller: {{item.Name}}
+                                                                                                    </div>
+                                                                                            </td>
+                                                                                            <td style="width:15px"><div></div></td>
+                                                                                            <td>
+                                                                                                Effictive till: {{item.EffictiveDate | DateTimePipe:'SD'}}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td colspan="2">
+                                                                                                Remarks: {{item.Remarks}}
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                                <td style="width:100px;font-size:x-large;font-weight:bold">
+                                                                                    {{item.price | NumbersPipe:'N2'}} USD
+                                                                                </td>
+                                                                                <td style="width:5px"><div></div></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                            </ScrollViewer>
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td style="width:5px"><div></div></td>
+                        </tr>
+
+                    </table>
+
+        </td>
+    </tr>
+
+    <tr style="height: 32px;min-height:32px">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

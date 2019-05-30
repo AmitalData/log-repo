@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CustomerSize", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CustomerSize", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         CustomerSizeService service = new CustomerSizeService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("CustomerSize", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("CustomerSize", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "CustomerSize" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "CustomerSizePM" + entityPM.Id + entityPM.Tenant;

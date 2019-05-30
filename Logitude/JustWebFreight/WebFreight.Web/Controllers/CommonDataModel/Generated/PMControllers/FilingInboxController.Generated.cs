@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("FilingInbox", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("FilingInbox", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         FilingInboxService service = new FilingInboxService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("FilingInbox", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("FilingInbox", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "FilingInbox" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "FilingInboxPM" + entityPM.Id + entityPM.Tenant;

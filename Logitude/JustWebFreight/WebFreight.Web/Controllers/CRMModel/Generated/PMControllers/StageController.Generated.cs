@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Stage", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("Stage", entityPM.Tenant, authToken.Tenant);
 	                    
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         StageUpdateService service = new StageUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -141,6 +142,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Stage", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("Stage", entityPM.Tenant, authToken.Tenant);
 	
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         StageUpdateService service = new StageUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

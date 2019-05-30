@@ -444,6 +444,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             }
         }
     }
+
+
     private DoApprove() {
         this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {

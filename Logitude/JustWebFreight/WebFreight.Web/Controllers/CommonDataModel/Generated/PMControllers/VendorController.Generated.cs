@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Vendor", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Vendor", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         VendorService service = new VendorService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Vendor", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Vendor", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "Vendor" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "VendorPM" + entityPM.Id + entityPM.Tenant;
