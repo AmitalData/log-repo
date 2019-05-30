@@ -71,6 +71,17 @@ export class TariffModuleWorkspaceComponent implements OnInit {
         
     }
 
+
+    CheckAirfreightCost() {
+        this._entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 900;
+            logWindow.Height = 500;
+            logWindow.Title = "Search Air Freight Prices";
+            logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
+        });      
+    }
+
     public NewTariff(code: string) {
         switch (code) {
             case "A": {
