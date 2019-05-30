@@ -75,6 +75,7 @@ using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -5517,7 +5518,7 @@ namespace WebFreight.Web.ReportsWebServices
         #region Container Trucking Report
         [WebMethod]
         public byte[] LoadContainerTruckingData(byte[] xmlFilters, int tenant)
-        {
+        { 
             ContainerTruckingDataProvider dataProviderData = LoadContainerTruckingDataProvider(xmlFilters, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(ContainerTruckingDataProvider));
             MemoryStream memstream = new MemoryStream();
@@ -13096,12 +13097,12 @@ namespace WebFreight.Web.ReportsWebServices
 
         private ShipmentsEventsListDataProvider GetShipmentsEventsListDataProvider(byte[] xmlFilters, int tenant)
         {
-
-            DateTime fromDate;
-            DateTime toDate;
-            bool includeOperationalClosed = false;
+            ShipmentsEventsListDataProvider shipmentsEventsListDataProvider = new ShipmentsEventsListDataProvider();
+            DateTime fromDate = DateTime.Now;
+            DateTime toDate = DateTime.Now;
+            bool manuallyAddedEventsOnly = false;
             string userId = string.Empty;
-            
+
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
@@ -13115,7 +13116,7 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 if (filterItem_ManuallyAddedEventsOnly.FieldValue != null)
                 {
-                    includeOperationalClosed = (bool)filterItem_ManuallyAddedEventsOnly.FieldValue;
+                    manuallyAddedEventsOnly = (bool)filterItem_ManuallyAddedEventsOnly.FieldValue;
                 }
             }
             if (filterItem_FromDate != null)
@@ -13133,13 +13134,82 @@ namespace WebFreight.Web.ReportsWebServices
                     userId = filterItem_UserId.FieldValue.ToString();
                 }
             }
+            ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+            List<ShipmentList> shipmentlists = shipmentQuery.GetShipmentListsByFromCreateDateAndToCreateDate(fromDate, toDate, tenant).ToList();
+            if (shipmentlists.Count > 0)
+            {
+                List<string> shipmentIds = shipmentlists.Select(d => d.Id).ToList();
+                TraceEventQuery traceEventQuery = new TraceEventQuery(tenant);
+                ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
+                
 
-            //TraceEventQuery traceEventQuery = new TraceEventQuery(0);
 
-            //var x =  traceEventQuery.GetTraceEventPMsByObjectTableId(0,"1-4");
-            ShipmentsEventsListDataProvider shipmentsEventsListDataProvider = new ShipmentsEventsListDataProvider();
+                ObjectTablePM table = objectTableQuery.GetObjectTableByName("Shipment", 0);
+                IQueryable<TraceEventPM> traceEventPMs = traceEventQuery.GetTraceEventPMsByEntityIdsAndObjectTableId(shipmentIds, table.Id, tenant);
+                List<TraceEventPM> traceEvenList = FilterTraceEvenList(manuallyAddedEventsOnly, userId, traceEventPMs);
 
+                FillShipmentNumberToTraceEventList(shipmentlists, traceEvenList);
+                List<ShipmentEventsList> shipmentEventsLists = new List<ShipmentEventsList>();
+                GroupTraceEvenListByShipmentNumberAndOrderByEventDate(traceEvenList, shipmentEventsLists);
+                shipmentsEventsListDataProvider.ShipmentEventsLists = shipmentEventsLists;
+            }
             return shipmentsEventsListDataProvider;
+        }
+
+        private  void GroupTraceEvenListByShipmentNumberAndOrderByEventDate(List<TraceEventPM> traceEvenList, List<ShipmentEventsList> shipmentEventsLists)
+        {
+            IEnumerable<IGrouping<string, TraceEventPM>> traceEventgroups = traceEvenList.ToList().GroupBy(q => q.EntityNumber);
+            foreach (IGrouping<string, TraceEventPM> traceEventgroup in traceEventgroups)
+            {
+                foreach (TraceEventPM item in traceEventgroup.OrderBy(d => d.EventDateTime).ToList())
+                {
+                    ShipmentEventsList shipmentEventsList = CreateNewShipmentEventsList(item);
+                    shipmentEventsLists.Add(shipmentEventsList);
+                }
+            }
+        }
+
+        private static ShipmentEventsList CreateNewShipmentEventsList(TraceEventPM item)
+        {
+            return new ShipmentEventsList()
+            {
+                ShipmentNumber = item.EntityNumber,
+                EventCode = item.EventTypeCode,
+                EventName = item.EventTypeEnglishName,
+                EventDate = item.EventDateTime,
+                LogDate = item.LogDateTime,
+                UserName = item.ContactEnglishFirstName,
+                Notes = item.Notes,
+            };
+        }
+
+        private  void FillShipmentNumberToTraceEventList(List<ShipmentList> shipmentlists, List<TraceEventPM> traceEvenList)
+        {
+
+            foreach (TraceEventPM traceEventPM in traceEvenList)
+            {
+                var shipment = shipmentlists.Where
+                    (d => d.Id == traceEventPM.EntityId).FirstOrDefault();
+                if (shipment != null) traceEventPM.EntityNumber = shipment.ShipmentNumber;
+            }
+         
+        }
+
+
+        private  List<TraceEventPM> FilterTraceEvenList(bool manuallyAddedEventsOnly, string userId,  IQueryable<TraceEventPM> traceEventPMs)
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                traceEventPMs = traceEventPMs.Where(d => d.UserId == userId);
+            }
+
+            if (manuallyAddedEventsOnly)
+            {
+                traceEventPMs = traceEventPMs.Where(d => d.IsAddedManually);
+            }
+
+            List<TraceEventPM> traceEvenList = traceEventPMs.ToList();
+            return traceEvenList;
         }
         #endregion
 

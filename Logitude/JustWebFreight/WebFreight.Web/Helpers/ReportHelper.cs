@@ -11,6 +11,7 @@ using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
@@ -1435,6 +1436,7 @@ namespace WebFreight.Web.Helpers
 
                 case "SHEL":
                     {
+                        DatabaseInitializer.RunOnSeconderyDB = true;
                         dataProvider = logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
                         break;
                     }
@@ -1503,6 +1505,7 @@ namespace WebFreight.Web.Helpers
 
                 case "COTR":
                     {
+
                         dataProvider = logitudeReportsWebService.LoadContainerTruckingData(filters, reportFliter.tenant);
                         break;
                     }

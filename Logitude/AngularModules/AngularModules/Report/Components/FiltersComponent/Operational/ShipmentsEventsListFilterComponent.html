@@ -1,4 +1,4 @@
-﻿
+
 
 <!--<table style="height:60px;width:650px;">
 
@@ -81,22 +81,26 @@
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
+
+
+    <tr style="height:25px">
+        <td>
+            <table>
+                <tr>
+
+                    <td style="width:5px;"><div style="width:5px;"></div></td>
+                    <td><div style="color:#1B90CB;font-size:14px;">Filter By:</div></td>
+                </tr>
+            </table>
+        </td>
+
+    </tr>
+
     <tr>
         <td>
             <table>
                 <tr>
-                    <!-- User -->
-                    <td style="width: 65px;" class="Label">User:</td>
-                    <td style="width: 180px;">
-                        <LogLov [NoObjectField]="true"
-                                [ObjectFieldName]="'UserId'"
-                                [SelectedValue]="UserId"
-                                [DataContext]="DataContext"
-                                [LookUpTableName]="'User'">
-                        </LogLov>
-                    </td>
-
-
+                 
                     <!-- From Date -->
                     <td style="width: 70px; padding-right: 5px;" class="Label">From Date:</td>
                     <td style="width: 180px;">
@@ -109,8 +113,19 @@
                         <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [SelectedDateValue]="ToDate" [DataContext]="DataContext"></LogDatePicker>
                     </td>
 
+               
+                    <!-- User -->
+                    <td style="width: 50px;" class="Label">User:</td>
+                    <td style="width: 180px;">
+                        <LogLov [NoObjectField]="true"
+                                [ObjectFieldName]="'UserId'"
+                                [SelectedValue]="UserId"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'User'">
+                        </LogLov>
+                    </td>
 
-                    <td style="width:20px"></td>
+                    <td style="width:10px"></td>
                     <!--ManuallyAddedEventsOnly-->
                     <td style="width: 220px;">
                         <CheckBox [IsChecked]="ManuallyAddedEventsOnly" (Checked)="ManuallyAddedEventsOnly = $event" [Text]="'Manually Added Events Only'"></CheckBox>
@@ -118,7 +133,7 @@
 
 
                     <td style="width: 80px;">
-                        <button class="GreenButton" (click)="RunReport()">Run Report</button>
+                        <button class="GreenButton" (click)="RunReport(true)">Run Report</button>
                     </td>
                     <td><div></div></td>
                 </tr>
