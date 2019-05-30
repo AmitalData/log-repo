@@ -41,7 +41,7 @@
                                 [ObjectTableName]="ObjectTableName"
                                 [SelectedValue]="ProjectId"
                                 [LookUpTableName]="'TMProject'"
-                                [HideColumns]="true">
+                                [HideColumns]="true" (SelectedItemChanged)="Project = $event">
                         </LogLov>
                     </td>
                     <td>

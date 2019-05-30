@@ -3,6 +3,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TMProjectListService } from '../../../Services/StandardLists/TMProjectListService';
+import { TMLocationListService } from '../../../Services/StandardLists/TMLocationListService';
 import { SprintListService } from '../../../Services/StandardLists/SprintListService';
 import {TimeManagementDomainService, TimeManagementAPIHelper } from '../../../Services/TimeManagementDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -13,6 +14,7 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {DateTimePipe} from '../../../../Controls/Pipes/DateTimePipe';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {TMEmployeeTimePM} from '../../../EntityPMs/TMEmployeeTimePM';
+import { TMProjectPM } from '../../../EntityPMs/TMProjectPM'; 
 
 @Component({
     selector: 'DailyTimeSheetComponent',
@@ -289,6 +291,8 @@ export class DailyTimeSheetComponent extends BaseComponent {
             var msg = "";
             var requiredSprints = items.filter(f => f.SprintId == null).length;
             var requiredDescriptions = items.filter(f => AppTool.IsNullOrEmpty(f.Description)).length;
+            var dayOffValidation = items.filter(f => (f.Project != null && !AppTool.IsNullOrEmpty(f.Project.DayOffTypeCode) && f.LocationCode != "D") || (f.LocationCode == "D" && f.Project != null && AppTool.IsNullOrEmpty(f.Project.DayOffTypeCode))).length;
+
             if (requiredSprints > 0 && requiredDescriptions) {
                 msg = "Sprint and Description fields are required for each line.";
             }
@@ -300,7 +304,11 @@ export class DailyTimeSheetComponent extends BaseComponent {
                     msg = "Description field is required for each line.";
                 }
             }
-           
+
+            if (dayOffValidation > 0 ) {
+                msg = "Project with a Day Off type requires a Day off Location for each line.";
+            }
+
             if (!AppTool.IsNullOrEmpty(msg)) {
                 this.IsValid = false;
                 this.ShowMessage(msg);
@@ -454,6 +462,7 @@ export class ItemSourceItem extends BaseComponent {
     public entityPM: TMEmployeeTimePM;
     public IsCopy: boolean = false;
     private TMProjectListService: TMProjectListService;
+    private TMLocationListService: TMLocationListService;
     private SprintListService: SprintListService;
     constructor(public entity: TMEmployeeTimePM, private father: DailyTimeSheetComponent, index: number) {
         super();
@@ -505,6 +514,18 @@ export class ItemSourceItem extends BaseComponent {
         }
     }
 
+    project: TMProjectPM;
+    get Project() { return this.project; }
+    set Project(value: TMProjectPM) {
+        if (this.project != value) {
+            this.project = value;
+            if (this.project != null && !AppTool.IsNullOrEmpty(this.project.DayOffTypeCode)) {
+                this.LocationCode = "D";
+            }
+        }
+    }
+
+
     private getProjectName(value: string) {
         if (this.TMProjectListService == null) {
             this.TMProjectListService = new TMProjectListService();
@@ -515,6 +536,20 @@ export class ItemSourceItem extends BaseComponent {
                 this.ProjectName = project.Name;
             } else {
                 this.ProjectName = null;
+            }
+        });
+    }
+
+    private getLocationName(value: string) {
+        if (this.TMLocationListService == null) {
+            this.TMLocationListService = new TMLocationListService();
+        }
+        this.TMLocationListService.getSingle(value).subscribe((myResult: ServiceResponse) => {
+            var location = myResult.Result;
+            if (location != null) {
+                this.LocationName = location.Name;
+            } else {
+                this.LocationName = null;
             }
         });
     }
@@ -559,6 +594,12 @@ export class ItemSourceItem extends BaseComponent {
     }
     
     get LocationName() { return this.entity.LocationName; }
+    set LocationName(value: string) {
+        if (this.entity.LocationName != value) {
+            this.entity.LocationName = value;
+            this.HasChanges = true;
+        }
+    }
 
     get Description() { return this.entity.Description; }
     set Description(value: string) {
@@ -579,6 +620,13 @@ export class ItemSourceItem extends BaseComponent {
 
     get EmployeeUserId() { return this.entity.EmployeeUserId; }
     get LocationCode() { return this.entity.LocationCode; }
+    set LocationCode(value: string) {
+        if (this.entity.LocationCode != value) {
+            this.entity.LocationCode = value;
+            this.HasChanges = true;
+            this.getLocationName(value);
+        }
+    }
 
     private showText = true;
     get ShowText() {
@@ -624,20 +672,6 @@ export class ItemSourceItem extends BaseComponent {
             this.entity.DateOfWork = value;
         }
     }
-
-    //public get DayMinutes() {
-    //    if (this.DayDate != null) {
-    //        return this.entity.TimeInMinutes;
-    //    }
-    //}
-    //public set DayMinutes(value: number) {
-    //    if (this.DayDate.Minuts != value) {
-    //        this.DayDate.Minuts = value;
-    //        this.HasChanges = true;
-    //        this.DayDateFormat = this.ApplyTimeFormat(value);
-    //        this.father.SetTotalDatesOfList();
-    //    }
-    //}
 
     public ViewWI(wiNumber: string) {
         var url = "https://logitudeteam.visualstudio.com/DefaultCollection/LogitudeWorld/_workitems/edit/" + wiNumber;

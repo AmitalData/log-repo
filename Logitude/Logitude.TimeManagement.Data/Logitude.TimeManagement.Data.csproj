@@ -87,6 +87,7 @@
     <Compile Include="CustomFilters\TMProjectCustomFilter.cs" />
     <Compile Include="EntityKeys\SprintKeys.cs" />
     <Compile Include="EntityKeys\TMBudgetKeys.cs" />
+    <Compile Include="EntityKeys\TMDayOffTypeKeys.cs" />
     <Compile Include="EntityKeys\TMEmployeeTimeKeys.cs" />
     <Compile Include="EntityKeys\TMLocationKeys.cs" />
     <Compile Include="EntityKeys\TMOfficeHourKeys.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="EntityKeys\TMReleaseKeys.cs" />
     <Compile Include="EntityListQueryServices\Generated\SprintListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TMBudgetListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TMDayOffTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TMEmployeeTimeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TMLocationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TMOfficeHourListQueryService.Generated.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="EntityListQueryServices\Generated\TMReleaseListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\SprintListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TMBudgetListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TMDayOffTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TMEmployeeTimeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TMLocationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TMOfficeHourListQueryService.cs" />
@@ -111,6 +114,7 @@
     <Compile Include="EntityListQueryServices\TMReleaseListQueryService.cs" />
     <Compile Include="EntityLists\Generated\SprintList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TMBudgetList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TMDayOffTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TMEmployeeTimeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TMLocationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TMOfficeHourList.Generated.cs" />
@@ -119,6 +123,7 @@
     <Compile Include="EntityLists\Generated\TMReleaseList.Generated.cs" />
     <Compile Include="EntityMapping\SprintMap.cs" />
     <Compile Include="EntityMapping\TMBudgetMap.cs" />
+    <Compile Include="EntityMapping\TMDayOffTypeMap.cs" />
     <Compile Include="EntityMapping\TMEmployeeTimeMap.cs" />
     <Compile Include="EntityMapping\TMLocationMap.cs" />
     <Compile Include="EntityMapping\TMOfficeHourMap.cs" />
@@ -127,6 +132,7 @@
     <Compile Include="EntityMapping\TMReleaseMap.cs" />
     <Compile Include="EntityPOCOs\Sprint.cs" />
     <Compile Include="EntityPOCOs\TMBudget.cs" />
+    <Compile Include="EntityPOCOs\TMDayOffType.cs" />
     <Compile Include="EntityPOCOs\TMEmployeeTime.cs" />
     <Compile Include="EntityPOCOs\TMLocation.cs" />
     <Compile Include="EntityPOCOs\TMOfficeHour.cs" />
@@ -137,6 +143,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Generated\SprintRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\TMBudgetRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\TMDayOffTypeRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\TMEmployeeTimeRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\TMLocationRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\TMOfficeHourRepository.Generated.cs" />
@@ -145,6 +152,7 @@
     <Compile Include="Repositories\Generated\TMReleaseRepository.Generated.cs" />
     <Compile Include="Repositories\SprintRepository.cs" />
     <Compile Include="Repositories\TMBudgetRepository.cs" />
+    <Compile Include="Repositories\TMDayOffTypeRepository.cs" />
     <Compile Include="Repositories\TMEmployeeTimeRepository.cs" />
     <Compile Include="Repositories\TMLocationRepository.cs" />
     <Compile Include="Repositories\TMOfficeHourRepository.cs" />

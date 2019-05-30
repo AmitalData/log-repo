@@ -88,6 +88,7 @@
     <None Include="App.config" />
     <None Include="EntityFiles\Sprint.lxml" />
     <None Include="EntityFiles\TMBudget.lxml" />
+    <None Include="EntityFiles\TMDayOffType.lxml" />
     <None Include="EntityFiles\TMEmployeeTime.lxml" />
     <None Include="EntityFiles\TMLocation.lxml" />
     <None Include="EntityFiles\TMOfficeHour.lxml" />

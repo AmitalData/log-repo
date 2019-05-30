@@ -83,7 +83,9 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
 
         if (SessionLocator.AccountingSettingPM.EnableInvoiceStocksManagement) {
-            this.AllowStockInvoiceNumber = true;
+            if (!this.EntityPM.IsConstituentInvoice) {
+                this.AllowStockInvoiceNumber = true;
+            }
         }
 
         if (!AppTool.IsNullOrEmpty(this.ARInvoiceStockId)) {
@@ -330,8 +332,12 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             isFieldtVisible = true;
         }
 
-        else if (SessionLocator.AccountingSettingPM.AllowManualInvoiceNumber) {
-            isFieldtVisible = true;
+        else {
+            if (SessionLocator.AccountingSettingPM.AllowManualInvoiceNumber) {
+                if (!this.EntityPM.IsConstituentInvoice) {
+                    isFieldtVisible = true;
+                }
+            }
         }
 
         this.AllowManualInvoiceNumber = isFieldtVisible;

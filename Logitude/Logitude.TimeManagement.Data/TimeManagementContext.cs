@@ -72,6 +72,8 @@ namespace Logitude.TimeManagement.Data
 	
             modelBuilder.Configurations.Add(new TMBudgetMap());
 	
+            modelBuilder.Configurations.Add(new TMDayOffTypeMap());
+	
             modelBuilder.Configurations.Add(new TMEmployeeTimeMap());
 	
             modelBuilder.Configurations.Add(new TMLocationMap());
@@ -370,6 +372,12 @@ namespace Logitude.TimeManagement.Data
 	 }
 	
 	 public IDbSet<TMBudget> TMBudgets 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TMDayOffType> TMDayOffTypes 
 	 {
 	      get; set;
 	 
