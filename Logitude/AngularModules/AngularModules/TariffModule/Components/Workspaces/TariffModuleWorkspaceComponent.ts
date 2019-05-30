@@ -71,6 +71,17 @@ export class TariffModuleWorkspaceComponent implements OnInit {
         
     }
 
+
+    CheckAirfreightCost() {
+        this._entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 900;
+            logWindow.Height = 500;
+            logWindow.Title = "Search Air Freight Prices";
+            logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
+        });      
+    }
+
     public NewTariff(code: string) {
         switch (code) {
             case "A": {
@@ -201,7 +212,8 @@ export class TariffModuleWorkspaceComponent implements OnInit {
     }
 
     private timer: any;
-    private timerInterval: number = 1000;
+    private timerInterval: number = 5000;
+    private IsLoading: boolean = false;
     private batchEntity: BatchTaskExecutionPM;
     GenerateTariffsClicked() {
         this.CurrentSession.StartBusyIndicator("Generating...");
@@ -217,34 +229,47 @@ export class TariffModuleWorkspaceComponent implements OnInit {
             }
         });
     }
-
+    
     GetBTE() {
-        var bteList: BatchTaskExecutionList;
-        var myService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-        myService.getSingle(this.batchEntity.Id).subscribe(myResult => {            
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-                bteList = mm.Result;
+        if (!this.IsLoading) {
+            this.IsLoading = true;
 
-                if (bteList.StatusCode == "D")
-                {                    
-                    this.LoadQueriesCounts();
+            var bteList: BatchTaskExecutionList;
+            var myService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+            myService.getSingle(this.batchEntity.Id).subscribe(myResult => {
+                var mm: ServiceResponse = myResult;
+                if (!mm.HasError) {
+                    bteList = mm.Result;
 
-                    this.CurrentSession.StopBusyIndicator();                  
-                    if (this.timer) {
-                        clearInterval(this.timer);
+                    if (bteList.StatusCode == "D") {
+                        this.LoadQueriesCounts();
+
+                        this.CurrentSession.StopBusyIndicator();
+                        if (this.timer) {
+                            clearInterval(this.timer);
+                        }
+                    }
+
+                    else if (bteList.StatusCode == "F") {
+                        console.log(bteList.ErrorLog);
+
+                        this.CurrentSession.StopBusyIndicator();
+                        if (this.timer) {
+                            clearInterval(this.timer);
+                        }                        
                     }
                 }
 
-                else if (bteList.StatusCode == "F")
-                {
+                else {
                     this.CurrentSession.StopBusyIndicator();
                     if (this.timer) {
                         clearInterval(this.timer);
                     }
                 }
-            }
-        });
+
+                this.IsLoading = false;
+            });
+        }
     }
 }
 

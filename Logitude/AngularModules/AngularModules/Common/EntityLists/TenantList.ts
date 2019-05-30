@@ -101,5 +101,6 @@ export class TenantList {
 		NumberFormatCode: string;
 		CBSA: string;
 		CAAT: string;
-	
-}
+		IsTestTenant: boolean;
+
+}

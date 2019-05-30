@@ -171,7 +171,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             ValidateAccountingSetting(entityPM);
-            ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account);
+            ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account, entityPM.Bank);
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
@@ -319,7 +319,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             return glaAccount;
         }
 
-        public static void ValidateFullAccounting(int tenant, string billToId, string paymentCurrencyId, CashBookPM cashBook, string code, DateTime? registerDate, string bankAccountId, bool isOut = false, DateTime? valueDate = null, string branch = null, string account = null)
+        public static void ValidateFullAccounting(int tenant, string billToId, string paymentCurrencyId, CashBookPM cashBook, string code, DateTime? registerDate, string bankAccountId, bool isOut = false, DateTime? valueDate = null, string branch = null, string account = null, string bank=null)
         {
             var errors = "";
 
@@ -361,6 +361,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
                         errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Account", tenant, useLocal)) + ";";
+                    }
+
+                    if (code == "CH" && string.IsNullOrEmpty(bank))
+                    {
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
+                        errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Bank", tenant, useLocal)) + ";";
                     }
                 }
                 GLAccountPM glAccount = getGLAccount(billToId, tenant);
