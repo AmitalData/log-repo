@@ -447,9 +447,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 DateTime? AutoCreditDate = DateHelper.GetDate(AutoCreditDateString);
                 IInvoiceContext objectContext = InvoiceContext.GetContext(tenant);
                 ARInvoiceService service = new ARInvoiceService(objectContext, tenant);
-                string AutoCreditId = service.CreateAutoCredit(entityId, IsInvoiceNumberManuallySet, AutoCreditManualNumber, AutoCreditDate);
+                //string AutoCreditId = service.CreateAutoCredit(entityId, IsInvoiceNumberManuallySet, AutoCreditManualNumber, AutoCreditDate);
 
-                return Request.CreateResponse(HttpStatusCode.OK, AutoCreditId);
+                return Request.CreateResponse(HttpStatusCode.OK, "");
             }
 
             catch (Exception ex)
