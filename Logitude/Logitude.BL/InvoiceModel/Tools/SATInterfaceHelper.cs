@@ -708,20 +708,23 @@ namespace Logitude.BL.InvoiceModel.Tools
                     var totalVatVatType = allVatTypes.FirstOrDefault(d => d.Id == totalVat.VatTypeId);
 
                     TotalImpuestosTrasladados += Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0));
-                    string tipoFactor = (totalVat.VATPercent == 0 && totalVatVatType.Code == "EXMPT" ? "Exento" : "Tasa");
-                    Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = trasladoList.FirstOrDefault(t => t.TipoFactor == tipoFactor);//&& (totalVat.VATPercent != 0)
-                    if (traslado == null || (traslado!= null && totalVat.VATPercent != 0 && traslado.TasaOCuota == "0.000000"))
+                    string _totaltipoFactor = (totalVat.VATPercent == 0 && totalVatVatType.Code == "EXMPT" ? "Exento" : "Tasa");
+                    string total_tasaOCuota = totalVat.VATPercent != 0 ? (totalVat.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(totalVat.VATPercent.Value / 100).ToString()), '0', 8) : "") : "0.000000";
+                    Profact.TimbraCFDI33.ComprobanteImpuestosTraslado traslado = trasladoList.FirstOrDefault(t => t.TipoFactor == _totaltipoFactor);//&& (totalVat.VATPercent != 0)
+                    if (traslado == null
+                        || (traslado!= null && (totalVat.VATPercent != 0 && traslado.TasaOCuota == "0.000000") 
+                        || (totalVat.VATPercent == 0 && traslado.TasaOCuota != "0.000000")))
                     {
                         //if (totalVat.VATPercent != 0)
                         //{
-                        if (tipoFactor != "Exento")
+                        if (_totaltipoFactor != "Exento")
                         {
                             traslado = new Profact.TimbraCFDI33.ComprobanteImpuestosTraslado()
                             {
                                 Importe = GetDecimalWith2DigitsAfterPoint(Math.Abs((totalVat.InvoiceCurrencyVATAmount != null ? ((decimal)totalVat.InvoiceCurrencyVATAmount.Value) : 0))),
                                 Impuesto = "002",
-                                TasaOCuota = totalVat.VATPercent != 0 ? (totalVat.VATPercent != null ? StringHelper.StringPadRight((Math.Abs(totalVat.VATPercent.Value / 100).ToString()), '0', 8) : "") : "0.000000",
-                                TipoFactor = tipoFactor,//(totalVat.VATPercent == 0 ? "Exento" : "Tasa"),
+                                TasaOCuota = total_tasaOCuota,
+                                TipoFactor = _totaltipoFactor,//(totalVat.VATPercent == 0 ? "Exento" : "Tasa"),
                             };
 
                             //if (traslado.TipoFactor == "Tasa")
