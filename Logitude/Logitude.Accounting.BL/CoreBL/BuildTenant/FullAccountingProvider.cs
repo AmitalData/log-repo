@@ -312,7 +312,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                     });
                     ///TEnant  ---fullPm.TenantPaymentTermId = GetTenantPaymentTermId(tenant);
                 }
-                if (buildAccountingTenant.ControlAccounts)
+                if (buildAccountingTenant.VatAccounts)
                 {
                     CreateVatGLAccount(tenant, accountingContext, fullSetting);
                 }

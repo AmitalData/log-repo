@@ -2274,7 +2274,11 @@ namespace WebFreight.Web
                 if (!authenticatedIPs.Contains(currentIP))
                 {
                     if (Environment.CommandLine.ToLower().Contains("iisexpress.exe") &&
-                        HttpContext.Current.Request.UserHostAddress == "::1") ///localhost !!!
+                        (
+                        HttpContext.Current.Request.UserHostAddress == "::1" ||
+                        HttpContext.Current.Request.UserHostAddress =="127.0.0.1"
+                        )
+                        ) ///localhost !!!
                     {
                         isIpAuthenticated = true;//iisexpress
                     }

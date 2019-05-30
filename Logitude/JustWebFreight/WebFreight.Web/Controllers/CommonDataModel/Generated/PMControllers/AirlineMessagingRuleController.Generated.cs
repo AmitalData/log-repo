@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AirlineMessagingRule", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AirlineMessagingRule", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         AirlineMessagingRuleService service = new AirlineMessagingRuleService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("AirlineMessagingRule", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AirlineMessagingRule", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "AirlineMessagingRule" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AirlineMessagingRulePM" + entityPM.Id + entityPM.Tenant;

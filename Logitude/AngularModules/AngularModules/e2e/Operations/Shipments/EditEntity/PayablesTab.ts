@@ -27,7 +27,7 @@ export class PayablesTabComponent {
     AddPayables(ChargeType: string, quantity: any, unitPrice: any) {
 
         var amount: any = 0;
-        this.Helper.WaitByIdAndClick('Add');
+        this.Helper.WaitByIdAndClick('AddPayable');
         amount = parseInt(quantity) * parseInt(unitPrice);
         console.log(amount);
         this.Helper.WaitByIdAndFill('ShipmentPayable_ChargesTypeId', ChargeType);

@@ -141,8 +141,8 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.TenantStateCode = tenantAddress.StateCode;
                     }
 
-                    invoicedataprovider.CarrierCAAT = tenantSettings.CAAT;
-                    invoicedataprovider.CarrierCBSA = tenantSettings.CBSA;
+                    invoicedataprovider.TenantCAAT = tenantSettings.CAAT;
+                    invoicedataprovider.TenantCBSA = tenantSettings.CBSA;
                 }
 
                 List<VatType> allVATTypes = (from d in commonContext.VatTypes where d.Tenant == tenant select d).ToList();
