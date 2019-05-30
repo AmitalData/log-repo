@@ -130,5 +130,5 @@ export class TenantManagementList {
 		PackageCodeSearchField: string;
 		IsINTTRAOnlyDemo: boolean;
 		IsTestTenant: boolean;
-
-}
+	
+}

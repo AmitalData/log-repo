@@ -5518,7 +5518,7 @@ namespace WebFreight.Web.ReportsWebServices
         #region Container Trucking Report
         [WebMethod]
         public byte[] LoadContainerTruckingData(byte[] xmlFilters, int tenant)
-        {
+        { 
             ContainerTruckingDataProvider dataProviderData = LoadContainerTruckingDataProvider(xmlFilters, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(ContainerTruckingDataProvider));
             MemoryStream memstream = new MemoryStream();
@@ -13273,10 +13273,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         #endregion
 
-
-
-
-
+        
 
 
         private ContactPM GetLoggedContact(int tenant)

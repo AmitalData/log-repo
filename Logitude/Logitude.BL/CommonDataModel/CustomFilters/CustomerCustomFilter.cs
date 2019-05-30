@@ -204,12 +204,12 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
                         if (!string.IsNullOrEmpty(mySalesmanUserId))
                         {
-                            queryableData = queryableData.Where(d => d.SalesmanUserId == null || d.SalesmanUserId == mySalesmanUserId);
+                            queryableData = queryableData.Where(d =>d.SalesmanUserId == mySalesmanUserId);
                         }
 
                         if (!string.IsNullOrEmpty(mySalesmanBusinessUnitId))
                         {
-                            queryableData = queryableData.Where(d => d.SalesmanUserId == null || d.SalesmanBusinessUnitId == mySalesmanBusinessUnitId);
+                            queryableData = queryableData.Where(d =>d.SalesmanBusinessUnitId == mySalesmanBusinessUnitId);
                         }
                     }
                 }

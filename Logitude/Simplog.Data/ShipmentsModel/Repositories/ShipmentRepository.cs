@@ -628,23 +628,26 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public List<ShipmentDataView> GetShipmentsFromIdList(List<string> ids, int tenant)
         {
             IShipmentDataViewContext shipmentdataviewcontext = ShipmentDataViewContext.GetContext(tenant);
-
+            List<ShipmentDataView> shipments = new List<ShipmentDataView>();
             //List<ShipmentDataView> shipments = (from a in shipmentdataviewcontext.ShipmentDataViews
             //                                    where a.Tenant == tenant && ids.Contains(a.Id)
             //                                    select a).ToList();
+            if (ids.Count() != 0)
+            {
+                var values = new StringBuilder();
+                values.AppendFormat("{0}", "'" + ids[0] + "'");
+                for (int i = 1; i < ids.Count; i++)
+                    values.AppendFormat(", {0}", "'" + ids[i] + "'");
 
-			var values = new StringBuilder();
-			values.AppendFormat("{0}", "'" + ids[0] + "'");
-			for (int i = 1; i < ids.Count; i++)
-				values.AppendFormat(", {0}", "'" + ids[i] + "'");
+                var sql = string.Format(
+                    "SELECT * FROM ShipmentDataView WHERE id IN ({0})",
+                    values);
 
-			var sql = string.Format(
-				"SELECT * FROM ShipmentDataView WHERE id IN ({0})",
-				values);
 
-			List<ShipmentDataView> shipments = shipmentdataviewcontext.GetActiveDbContext().Database.SqlQuery<ShipmentDataView>(sql).ToList();
+                shipments = shipmentdataviewcontext.GetActiveDbContext().Database.SqlQuery<ShipmentDataView>(sql).ToList();
+            }
 
-			return shipments;
+            return shipments;
         }
 
         public IQueryable<Shipment> GetShipmentsForUnpaidInvoicesReport(List<string> shipmentIds)
