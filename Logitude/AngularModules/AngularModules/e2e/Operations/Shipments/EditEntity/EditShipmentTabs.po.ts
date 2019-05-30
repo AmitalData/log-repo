@@ -57,9 +57,9 @@ export class EditTabsComponent {
     // this.PartnersTabScenario.PartnersTab(ShipmentLevelCode);
     // this.PackagesTabScenario.PackagesTab(ShipmentLevelCode,ShipmentType);
     // this.RoutingTabScenario.RoutingTab(ShipmentLevelCode,ShipmentType,Direction);
-    this.PayablesTabScenario.PayablesTab(shipperRef1);
-    this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode);
-    // this.DocsOutTabScenario.DocsOutTab();
+    //this.PayablesTabScenario.PayablesTab(shipperRef1);
+    //this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode);
+  //  this.DocsOutTabScenario.DocsOutTab();
     if(ShipmentLevelCode=='M'){
       this.ShipmentsTabScenario.ShipmentsTab();
     }

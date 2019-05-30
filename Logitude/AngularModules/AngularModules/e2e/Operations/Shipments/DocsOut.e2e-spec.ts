@@ -22,14 +22,22 @@ describe('DocsOut', () => {
 
 
   it('Send Docs Out of Shipment To A User Successfully', function () {
-    login.navigateTo('https://test.logitudeworld.com/test');
-    login.DoLogin('raghad@protractor.com', '!RS123Rs');
+    // login.navigateTo('https://test.logitudeworld.com/test');
+    // login.DoLogin('raghad@protractor.com', '!RS123Rs');
     NewDirectShipment.DoOperations();
     docsOutTab.DocsOutTab();
     docsOutTab.QuickSearchDocOut('BRCL-S-DocsOut', 'BRCL-L-DocsOut', 'BOOKING REQUEST ');
     sendMailPopup.sendEmailToFirstUser();
-  //  sendMailPopup.isSendingCompleted('SendDocumentSucceededDiv');
+    sendMailPopup.isSendingCompleted('SendDocumentSucceededDiv');
   });
+
+ /* it('Failing Sending Email',function(){
+    //add subject to doc 
+     sendMailPopup.isSendingCompleted('SendDocumentFailedDiv');
+
+
+
+  });*/
 
   it('Successfully Printing Document', function () {
     docsOutTab.QuickSearchDocOut('ETO-P-DocsOut', 'ETO-L-DocsOut', 'Export Trucking Order');
@@ -40,5 +48,4 @@ describe('DocsOut', () => {
     docsOutTab.QuickSearchDocOut('FTDT-P-DocsOut', 'FTDT-L-DocsOut', 'Failure Test Document');
     printDocOut.isPrintingCompleted('BuildDocumentFailedDiv', false);
   });
-
 });
