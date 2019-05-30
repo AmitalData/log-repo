@@ -372,6 +372,19 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<GLAccountAndMoreDTO> GetQAllByAccountTypeCode(int tenant, string AccountTypeCode)
         {
+            var q=(from a in
+                    //context.GLAccounts
+                    //join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
+                    //where a.Tenant == tenant
+                    this.GetAllAsGLAccountAndMore(tenant)
+             
+             select a);
+            if (!string.IsNullOrWhiteSpace(AccountTypeCode))
+            {
+                q = q.Where(r => r.AccountTypeCode == AccountTypeCode);
+            }
+            return q;
+
             return (from a in
                     //context.GLAccounts
                     //join md in context.GLAccountMoreDatas on a.Id equals md.AccountId
