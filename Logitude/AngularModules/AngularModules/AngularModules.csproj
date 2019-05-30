@@ -2025,6 +2025,7 @@
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.html" />
+    <Content Include="TariffModule\Components\Workspaces\TariffSearchAirFreightPricesComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\TariffSettingComponent.html" />
     <Content Include="TimeManagement\Components\Connections\ConnectToParentComponent.html" />
     <Content Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.html" />
@@ -6392,6 +6393,7 @@
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffSearchAirFreightPricesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffSettingComponent.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffSettingList.ts" />
