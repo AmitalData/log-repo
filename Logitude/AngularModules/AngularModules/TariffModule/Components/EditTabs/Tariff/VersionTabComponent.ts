@@ -445,14 +445,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
     }
 
-    CheckAirfreightCost() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 900;
-        logWindow.Height = 500;
-        logWindow.Title = "Search Air Freight Prices";
-        logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
 
-    }
     private DoApprove() {
         this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {

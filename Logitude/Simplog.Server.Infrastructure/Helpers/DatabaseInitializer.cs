@@ -15,10 +15,17 @@ namespace Simplog.Server.Infrastructure
 {
     public class DatabaseInitializer
     {
-
-        public static DbConnection GetConnection(string dbConnectionInfo)
+        [ThreadStatic] public static bool RunOnSeconderyDB = false;
+        public static DbConnection GetConnection(string dbConnectionInfo, string SeconderyDBConnectionInfo)//SeconderyDBConnectionInfo = null
         {
-            return GetConnection(dbConnectionInfo, null, null);
+            if (RunOnSeconderyDB == true && !string.IsNullOrEmpty(SeconderyDBConnectionInfo))
+            { 
+                return GetConnection(SeconderyDBConnectionInfo, null, null);
+            }
+            else
+            { 
+                return GetConnection(dbConnectionInfo, null, null);
+            }
         }
 
 
@@ -184,6 +191,8 @@ namespace Simplog.Server.Infrastructure
             //}
             return connection;
         }
+
+       
 
 
     }

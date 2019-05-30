@@ -32,7 +32,7 @@ export class LogboxShipment {
 
 
      InsertAgent() {
-        this.helper.WaitByIdAndFill('ForwarderPartnerId', 'Simplog LTD AH Baker');
+        this.helper.WaitByIdAndFill('ForwarderPartnerId', 'Ahmad');
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
          }
@@ -41,16 +41,14 @@ export class LogboxShipment {
      SaveShipment() {
 
         this.helper.WaitByIdAndClick('OKButton');
-        this.helper.WaitBusyIndicator();
+         this.helper.WaitBusyIndicator();
+         browser.sleep(5000);
         }
 
-    //SearchForCreatedShipment(orderNumber: string) {
-
-               
-    //    this.helper.WaitByIdAndFill('SearchFieldsId_0_0', orderNumber);
-        
-
-    //}
+    //SearchForCreatedShipment() {
+    //    this.helper.WaitByIdAndFill('SearchFieldsId_0_0', '1009');
+    //    browser.sleep(4000);
+    //    }
 
     SelectShipment() {
         this.helper.WaitByIdAndClick('LogGrid_0_0row0');
@@ -64,7 +62,7 @@ export class LogboxShipment {
         this.helper.WaitByIdAndFill('Notes', 'Logbox test scenario');
         this.helper.WaitByIdAndClick('OK');
         this.helper.WaitBusyIndicator();
-        browser.sleep(2000);
+        browser.sleep(5000);
 
     }
 

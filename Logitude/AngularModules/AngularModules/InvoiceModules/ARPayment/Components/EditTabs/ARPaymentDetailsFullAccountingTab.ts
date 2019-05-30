@@ -506,8 +506,17 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.UIProperties.SetEnabled("BankAccountId", this.ObjectTableName, true);
             }
         }
+        this.SetBankRequired();
     }
 
+    SetBankRequired() {
+
+        if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
+
+            this.UIProperties.SetRequired("Bank", this.ObjectTableName, true);
+        }
+
+    }
     SetUIProperties_Invoices() {
         if (!this.IsScreenEnabled) {
             this.UIProperties.SetEnabled("BillToId", this.ObjectTableName, false);
@@ -1368,6 +1377,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM != null) {
             if (this.EntityPM.Bank != value) {
                 this.EntityPM.Bank = value;
+
+                if (!AppTool.IsNullOrEmpty(value)) {
+                    this.UIProperties.SetRequired("Bank", this.ObjectTableName, false);
+
+                }
+                else {
+
+                    this.UIProperties.SetRequired("Bank", this.ObjectTableName, true);
+                }
             }
         }
     }
