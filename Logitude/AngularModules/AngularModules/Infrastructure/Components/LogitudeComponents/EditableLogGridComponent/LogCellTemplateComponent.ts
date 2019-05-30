@@ -337,11 +337,11 @@ export class LogCellTemplateComponent implements OnDestroy {
   private focusTimerToken: any;
     blurevt(_thisComponent: LogCellTemplateComponent) {
       if (!SessionLocator.SustainFocusOnCell) {
-        this.focusTimerToken = setTimeout(() => {
-          ElementProperities(_thisComponent);
-        }, 1);
+        //this.focusTimerToken = setTimeout(() => {
+        //  ElementProperities(_thisComponent);
+        //}, 1);
 
-
+            ElementProperities(_thisComponent);
             if (_thisComponent.EventSub) {
                 _thisComponent.EventSub.unsubscribe();
                 _thisComponent.IsClickedOnce = false;
