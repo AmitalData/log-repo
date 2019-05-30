@@ -165,14 +165,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         itemRow.MinutesFromOffice = item_TMEmployeeTime.Where(d => d.LocationCode == "O").Sum(s => s.TimeInMinutes);
                         itemRow.MinutesFromHome = item_TMEmployeeTime.Where(d => d.LocationCode == "H").Sum(s => s.TimeInMinutes);
                         itemRow.MinutesFromClient = item_TMEmployeeTime.Where(d => d.LocationCode == "C").Sum(s => s.TimeInMinutes);
+                        itemRow.MinutesFromDayOff = item_TMEmployeeTime.Where(d => d.LocationCode == "D").Sum(s => s.TimeInMinutes);
                         itemRow.MinutesDifference = itemRow.MinutesFromOffice - itemRow.MinutesFromClock;
-                        itemRow.MinutesTotalWork = itemRow.MinutesFromClock + itemRow.MinutesFromHome + itemRow.MinutesFromClient;
+                        itemRow.MinutesTotalWork = itemRow.MinutesFromClock + itemRow.MinutesFromHome + itemRow.MinutesFromClient+ itemRow.MinutesFromDayOff;
                         itemRow.MinutesOverTime = itemRow.MinutesTotalWork - (itemRow.RequiredWorkMins);
 
                         itemRow.TimeFromClock = this.GetTimeFormatFromMinutes(itemRow.MinutesFromClock);
                         itemRow.TimeFromOffice = this.GetTimeFormatFromMinutes(itemRow.MinutesFromOffice);
                         itemRow.TimeFromHome = this.GetTimeFormatFromMinutes(itemRow.MinutesFromHome);
                         itemRow.TimeFromClient = this.GetTimeFormatFromMinutes(itemRow.MinutesFromClient);
+                        itemRow.TimeFromDayOff = this.GetTimeFormatFromMinutes(itemRow.MinutesFromDayOff);
                         itemRow.DifferenceTime = this.GetTimeFormatFromMinutes(itemRow.MinutesDifference);
                         itemRow.TotalWorkHrs = this.GetTimeFormatFromMinutes(itemRow.MinutesTotalWork);
                         itemRow.OverTime = this.GetTimeFormatFromMinutes(itemRow.MinutesOverTime);
@@ -187,6 +189,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             myDataProvider.Total_TimeFromOffice = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesFromOffice));
             myDataProvider.Total_TimeFromHome = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesFromHome));
             myDataProvider.Total_TimeFromClient = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesFromClient));
+            myDataProvider.Total_TimeFromDayOff = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesFromDayOff));
             myDataProvider.Total_DifferenceTime = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesDifference));
             myDataProvider.Total_TotalWorkHrs = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesTotalWork));
             myDataProvider.Total_OverTime = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesOverTime));
