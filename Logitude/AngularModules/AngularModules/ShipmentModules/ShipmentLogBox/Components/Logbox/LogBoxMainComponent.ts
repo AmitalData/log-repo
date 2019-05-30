@@ -656,8 +656,13 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     GridAfterViewInitCompleted($event) {
         this.LoadImporterShipments();
     }
+    timerToken: any;
     RefreshBtnClick() {
-        this.LoadImporterShipments();
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+        this.timerToken = setTimeout(() => this.LoadImporterShipments(), 500);
+        
     }
 
     AddNewEntity() {

@@ -72,7 +72,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
 
         // Records Types
         this.RecordsTypesFilterList = [];
-        this.RecordsTypesFilterList.push(new CodeNameClass("S", "Salesmen Records"));
+        this.RecordsTypesFilterList.push(new CodeNameClass("S", "Salesman Records"));
         this.RecordsTypesFilterList.push(new CodeNameClass("C", "Created By Records"));
         this.RecordsTypeFilterCode = LastFilterClass.GetFilterValue(this.filterControlNameSpace, this.filterName_RecordsType);
         if (AppTool.IsNullOrEmpty(this.RecordsTypeFilterCode)) {

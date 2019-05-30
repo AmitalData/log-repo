@@ -1931,7 +1931,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<CustomerPM> GetCustomerPMsByTenant(int tenant)
         {
-            IQueryable<CustomerPM> customers = from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator")
+            IQueryable<CustomerPM> customers = from a in repository.context.Customers.Include("Card").Include("BillToCard").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("AccountManagerUser.Contact").Include("Card.SharedLogisticsInvitationStatus").Include("Rank").Include("Collector.Contact").Include("Classifier.Contact").Include("Freelancer.Contact").Include("Forwarder").Include("CustomsAgent").Include("Mediator").Include("LeadSource")
                                                where a.Tenant == tenant
                                                select new CustomerPM()
                                                {
@@ -2328,6 +2328,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   RankId = customer.RankId,
                                                   IndustryId = customer.IndustryId,
                                                   LeadSourceId = customer.LeadSourceId,
+                                                  LeadSourceName = customer.LeadSourceName,
                                                   InvoiceCurrencyCode = customer.InvoiceCurrencyCode,
                                                   KnownConsignor = customer.KnownConsignor,
                                                   KCExpirationDate = customer.KCExpirationDate,
@@ -2461,6 +2462,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              RankId = customer.RankId,
                                              IndustryId = customer.IndustryId,
                                              LeadSourceId = customer.LeadSourceId,
+                                             LeadSourceName = customer.LeadSource != null ? customer.LeadSource.Name : null,
                                              InvoiceCurrencyCode = customer.Card.InvoiceCurrency == null ? null : customer.Card.InvoiceCurrency.Code,
                                              KnownConsignor = customer.KnownConsignor,
                                              KCExpirationDate = customer.KCExpirationDate,

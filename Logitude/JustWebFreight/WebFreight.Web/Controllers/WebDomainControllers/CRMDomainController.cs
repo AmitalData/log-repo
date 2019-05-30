@@ -707,12 +707,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         if (!string.IsNullOrEmpty(ownerId))
                         {
-                            iQueryable = iQueryable.Where(d => d.Customer.SalesmanUser == null || d.Customer.SalesmanUserId == ownerId);
+                            iQueryable = iQueryable.Where(d =>  d.Customer.SalesmanUserId == ownerId);
                         }
 
                         if (!string.IsNullOrEmpty(businessUnitId))
                         {
-                            iQueryable = iQueryable.Where(d => d.Customer.SalesmanUser == null || d.Customer.SalesmanUser.BusinessUnitId == businessUnitId);
+                            iQueryable = iQueryable.Where(d =>  d.Customer.SalesmanUser.BusinessUnitId == businessUnitId);
                         }
                     }
 
