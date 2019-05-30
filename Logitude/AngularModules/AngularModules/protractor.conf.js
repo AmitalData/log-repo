@@ -47,6 +47,11 @@ exports.config = {
       browser.params.Login.Email = "protractor@test.com";
       browser.params.Login.Password = "!P123t456";
     }
+    else if (browser.params.Env == "logboxtest") {
+        browser.params.Link = "https://test.logitudeworld.com/test";
+        browser.params.Login.Email = "ahmadb@logbox.com";
+        browser.params.Login.Password = "ahmed!A123";
+    }
     else if (browser.params.Env == "logbox") {
       browser.params.Link = "https://system.logbox.co.il";
       browser.params.Login.Email = "ahmadb@test.com";
@@ -68,8 +73,8 @@ exports.config = {
     //  CRM: 'e2e/CRM/**/CRMModule-spec.ts',
     //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
 
-    NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
-    // NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
+   // NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+     NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
     //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
 
     //EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
