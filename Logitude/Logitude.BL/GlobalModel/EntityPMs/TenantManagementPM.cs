@@ -337,5 +337,8 @@ namespace Logitude.BL.GlobalModel.EntityPMs
                 addOns = value;
             }
         }
+
+        public bool IsTestTenant { get; set; }
+
     }
 }
