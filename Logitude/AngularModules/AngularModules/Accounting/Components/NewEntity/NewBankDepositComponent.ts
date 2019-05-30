@@ -47,7 +47,7 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
         this.GetClosedMonth();
 
-              
+
     }
 
     SetWindowArgs(args: any) {
@@ -69,6 +69,8 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {
             this.EntityPM.AccountingDate = value;
+
+            this.EntityPM.DepositDate = value;
         }
     }
 
@@ -109,14 +111,14 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
 
     OkButtonClicked() {
         var errors: string[] = [];
-        
+
 
         // Required check
         if (AppTool.IsNullOrEmpty(this.DepositBankAccountId) || AppTool.IsNullOrEmpty(this.CashBookId)) {
             errors.push(TextCodeTranslator.Translate("Accounting.General.O.AllFieldsRequired"));
         }
         if (this.EntityPM.DepositCurrencyId != SessionLocator.TenantPM.CurrencyId) {
-            //check rate 
+            //check rate
             this.CurrentSession.CurrentWindow.StartBusyIndicator("...");
             this.ratesTableExtendedListService.getClosestRate(SessionLocator.TenantPM.CurrencyId, this.EntityPM.DepositCurrencyId).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {
@@ -195,14 +197,14 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
             }
         });
 
-        
+
     }
 
     SubmitChanges() {
 
         var errors: string[] = [];
 
-        
+
         //#region currency check
         if (this.bankAccount.GLAccountCurrencyId != null && this.bankAccount.GLAccountCurrencyId != "multi") {
             if (this.bankAccount.GLAccountCurrencyId != this.cashbook.CurrencyId) {
@@ -212,12 +214,12 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
             console.warn("maybe the glaccount of bank account is multi or null!");
         }
         this.EntityPM.IsCashDeposit = this.CashBook.CashBookTypeCode == "1";
-        //#endregion 
+        //#endregion
 
         //closed month check
         var isValid = this.IsMonthOpenForAccountingDate();
         if (!isValid) errors.push(TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth")); // closed month
-        
+
 
         if (errors.length == 0) {
 
@@ -264,14 +266,14 @@ export class NewBankDepositComponent extends BaseComponent implements OnInit {
             //errorsList.Add(transText);
         }
         else {
-            var accountingDateMonth = this.EntityPM.AccountingDate.getMonth() + 1; 
+            var accountingDateMonth = this.EntityPM.AccountingDate.getMonth() + 1;
 
             if (accountingDateMonth > this.accountingPeriod.ClosedMonth) {
                 //Valid ... AccountingDateMonth must be greater than close Mounth
             }
             else {
                 //Not Valid ... AccountingDateMonth must be greater than close Mounth
-                //not valid  8>=8 
+                //not valid  8>=8
                 //not valid  0>=1 - Must Open mounth before work on year !!
                 valid = false;
                 //errorsList.Add(transText); //ClosedMonth Must B

@@ -257,6 +257,18 @@
                                                                         </td>
                                                                     </tr>
 
+
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'IsTestTenant'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <LogCheckBox [HideColumns]="true" [ObjectFieldName]="'IsTestTenant'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                        </td>
+                                                                    </tr>
+
+
                                                                     <!--<tr class="FormFieldRow">
                                             <td>
                                                 <label style="margin-left: 10px;color: rgb(110, 113, 114);">Document Share As Default</label>
@@ -789,7 +801,7 @@
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
-                                                                   
+
 
                                                                     <tr class="FormFieldRow" *ngIf="false">
                                                                         <td>
@@ -811,7 +823,7 @@
                                                                         </td>
                                                                     </tr>
 
-                                                                  
+
 
                                                                     <tr class="FormFieldRow">
                                                                         <td>

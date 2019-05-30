@@ -155,6 +155,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                         tenant.RegulatedAgentRegimeActivated = false;
 
                     }
+                    tenant.IsTestTenant = entityPM.IsTestTenant;
 
                     tenantRepository.Update(tenant);
                     tenantRepository.SubmitChanges();

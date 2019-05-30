@@ -221,6 +221,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
     // SetUIProperties
     public IsEditingEnabled: boolean = false;
+    public IsStockEnabled: boolean = false;
     public RateIsEnabled: boolean = false;
     public VatTypeFilterIsEnabled: boolean = false;
     public AllowManualInvoiceNumber: boolean = false;
@@ -228,7 +229,12 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public PaymentTermDisplayInLOV: boolean = true;
     SetUIProperties() {
         var isEditingEnabled = InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
+        var isInvoiceDateEnabled = isEditingEnabled;
         
+        if (this.EntityPM.IsAutoCredit && AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+            isInvoiceDateEnabled = true;
+        }
+
         if (!AppTool.IsNullOrEmpty(this.BillToAddressId)) {
             this.UIProperties.SetEnabled("BillToAddressId", this.ObjectTableName, isEditingEnabled);
         }
@@ -237,7 +243,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.UIProperties.SetEnabled("PaymentTermId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, isInvoiceDateEnabled);
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, isEditingEnabled);
 
         // Generated General Tab
@@ -334,15 +340,17 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
     SetUIProperties_InvoiceNumber() {
         var isFieldEnabled = false;
+        this.IsStockEnabled = false;
 
-        if (this.IsEditingEnabled) {
+        if (this.IsEditingEnabled || (this.EntityPM.IsAutoCredit && AppTool.IsNullOrEmpty(this.EntityPM.Id))) {
+            this.IsStockEnabled = true;
+
             if (this.IsInvoiceNumberManuallySet) {
                 isFieldEnabled = true;
             }
         }
 
         this.UIProperties.SetEnabled("InvoiceNumber", this.ObjectTableName, isFieldEnabled);
-
     }
     SetUIProperties_VatTypeFilter() {
         var isFieldtEnabled = this.IsEditingEnabled;
@@ -1529,7 +1537,9 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
             else if (value.Code == "STK") {
                 this.IsInvoiceNumberFromStock = true;
-            }            
+            }
+
+            this.SetUIProperties_InvoiceNumber();
         }
     }
 
@@ -1547,7 +1557,11 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.InvoiceNumberFilterList.push(new CodeNameClass("MAS", "Manually Set"));
         }
 
-        if (!AppTool.IsNullOrEmpty(this.EntityPM != null && this.EntityPM.ARInvoiceStockId)) {
+        if (this.EntityPM != null && !AppTool.IsNullOrEmpty(this.EntityPM.ARInvoiceStockId)) {
+            this.selectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "STK")[0];
+        }
+
+        else if (this.EntityPM != null && this.EntityPM.IsInvoiceNumberFromStock && this.EntityPM.IsAutoCredit) {
             this.selectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "STK")[0];
         }
 

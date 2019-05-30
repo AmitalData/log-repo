@@ -1061,6 +1061,10 @@
     <Compile Include="Migrations\201905271323372_AddFieldsToTenantAndShippingLine_Maheera.Designer.cs">
       <DependentUpon>201905271323372_AddFieldsToTenantAndShippingLine_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905300653344_NewFields_IsTestTenant_Tenant.cs" />
+    <Compile Include="Migrations\201905300653344_NewFields_IsTestTenant_Tenant.Designer.cs">
+      <DependentUpon>201905300653344_NewFields_IsTestTenant_Tenant.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1798,6 +1802,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905271323372_AddFieldsToTenantAndShippingLine_Maheera.resx">
       <DependentUpon>201905271323372_AddFieldsToTenantAndShippingLine_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905300653344_NewFields_IsTestTenant_Tenant.resx">
+      <DependentUpon>201905300653344_NewFields_IsTestTenant_Tenant.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

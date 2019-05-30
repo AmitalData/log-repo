@@ -4710,7 +4710,7 @@
 							"    ",
 							"    ",
 							"        if (id1exist & id2exist & id3exist & id4exist & id5exist & id6exist & id7exist & id8exist & id9exist & id10exist)  {",
-							"             postman.setNextRequest(null); ",
+							"            //  postman.setNextRequest(null); ",
 							"    ",
 							"    ",
 							"}});",
@@ -5064,6 +5064,541 @@
 					"raw": "{\n  \"Tenant\": {{Tenant}},\n  \"MoveTypeEnglishName\": \"TestMoveTypeIdInlandMTI\",\n  \"MoveTypeLocalName\": \"TestMoveTypeIdInlandMTI\",\n  \"TransportModeId\": \"I\",\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"Code\": \"MTI\",\n  \"SearchFields\": null,\n  \"IsAir\": false,\n  \"IsInland\": true,\n  \"IsOcean\": false\n}"
 				},
 				"url": "{{LogitudeURL}}/api/movetypes"
+			},
+			"response": []
+		},
+		{
+			"name": "GetVesselIdPT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22fbcb2f-42dd-43fe-9f51-6f9e6ac32bff",
+						"exec": [
+							"pm.test(\"GetVesselIdPT\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"\r",
+							"    pm.environment.set(\"VesselIdPT\", idvalue);\r",
+							"    if (idexist) {\r",
+							"        postman.setNextRequest(\"CreateVesselIdPT\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/vesselviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=VesselIdPT&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"vesselviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "VesselIdPT"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateVesselIdPT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"IsSecured\": false,\n  \"Code\": null,\n  \"EnglishName\": \"VesselIdPT \",\n  \"LocalName\": \"VesselIdPT\",\n  \"Notes\": null,\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IMOCode\": \"IMOCode PT\",\n  \"CountryId\": null\n}"
+				},
+				"url": "{{LogitudeURL}}/api/vessels"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPackageTypeIdContainerPC1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22fbcb2f-42dd-43fe-9f51-6f9e6ac32bff",
+						"exec": [
+							"pm.test(\"GetPackageTypeIdPC1\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"\r",
+							"    pm.environment.set(\"ContainerTypePC\", idvalue);\r",
+							"    if (idexist) {\r",
+							"        postman.setNextRequest(\"GetPackageTypeIdContainerPC2\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/packagetypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=ContainerIdPC1&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"packagetypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "ContainerIdPC1"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePackageTypeIdContainerPC1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"Code\": \"PC1\",\n  \"EnglishName\": \"ContainerIdPC1\",\n  \"LocalName\": null,\n  \"IsOcean\": true,\n  \"IsAir\": false,\n  \"IsInland\": true,\n  \"Notes\": null,\n  \"IsContainer\": true,\n  \"TEU\": 0,\n  \"ContainerSize\": 0,\n  \"Volume\": 0,\n  \"PrintAs\": \"PC'1\",\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"MeasurementId\": \"1-56758\",\n  \"MeasurementCode\": null,\n  \"MeasurementShortName\": null,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IsRefrigerated\": false,\n  \"IsVehicle\": false\n}"
+				},
+				"url": "{{LogitudeURL}}/api/packagetypes"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPackageTypeIdContainerPC2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22fbcb2f-42dd-43fe-9f51-6f9e6ac32bff",
+						"exec": [
+							"pm.test(\"GetPackageTypeIdContainerPC2\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"\r",
+							"    pm.environment.set(\"ContainerTypePC2\", idvalue);\r",
+							"    if (idexist) {\r",
+							"        postman.setNextRequest(\"GetPackageTypeIdPackagePP1\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/packagetypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=ContainerIdPC2&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"packagetypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "ContainerIdPC2"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePackageTypeIdContainerPC2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"Code\": \"PC2\",\n  \"EnglishName\": \"ContainerIdPC2\",\n  \"LocalName\": null,\n  \"IsOcean\": true,\n  \"IsAir\": false,\n  \"IsInland\": true,\n  \"Notes\": null,\n  \"IsContainer\": true,\n  \"TEU\": 0,\n  \"ContainerSize\": 0,\n  \"Volume\": 0,\n  \"PrintAs\": \"PC'1\",\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"MeasurementId\": \"1-56758\",\n  \"MeasurementCode\": null,\n  \"MeasurementShortName\": null,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IsRefrigerated\": false,\n  \"IsVehicle\": false\n}"
+				},
+				"url": "{{LogitudeURL}}/api/packagetypes"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPackageTypeIdPackagePP1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22fbcb2f-42dd-43fe-9f51-6f9e6ac32bff",
+						"exec": [
+							"pm.test(\"GetPackageTypeIdPackagePP1\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"\r",
+							"    pm.environment.set(\"PackageTypePP1\", idvalue);\r",
+							"    if (idexist) {\r",
+							"        postman.setNextRequest(\"GetPackageTypeIdPackagePP2\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/packagetypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PackageTypePP1&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"packagetypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "PackageTypePP1"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePackageTypeIdPackagePP1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"Code\": \"PP1\",\n  \"EnglishName\": \"PackageTypePP1\",\n  \"LocalName\": null,\n  \"IsOcean\": true,\n  \"IsAir\": false,\n  \"IsInland\": true,\n  \"Notes\": null,\n  \"IsContainer\": false,\n  \"TEU\": 0,\n  \"ContainerSize\": 0,\n  \"Volume\": 0,\n  \"PrintAs\": \"PP'1\",\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"MeasurementId\": \"1-56758\",\n  \"MeasurementCode\": null,\n  \"MeasurementShortName\": null,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IsRefrigerated\": false,\n  \"IsVehicle\": false\n}"
+				},
+				"url": "{{LogitudeURL}}/api/packagetypes"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPackageTypeIdPackagePP2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22fbcb2f-42dd-43fe-9f51-6f9e6ac32bff",
+						"exec": [
+							"pm.test(\"GetPackageTypeIdPackagePP2\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"\r",
+							"    pm.environment.set(\"PackageTypePP2\", idvalue);\r",
+							"    // if (idexist) {\r",
+							"    //     postman.setNextRequest(\"GetPackageTypeIdContainerPC2\");\r",
+							"    // }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/packagetypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PackageTypePP2&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"packagetypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "PackageTypePP2"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePackageTypeIdPackagePP2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"Code\": \"PP2\",\n  \"EnglishName\": \"PackageTypePP2\",\n  \"LocalName\": null,\n  \"IsOcean\": true,\n  \"IsAir\": false,\n  \"IsInland\": true,\n  \"Notes\": null,\n  \"IsContainer\": false,\n  \"TEU\": 0,\n  \"ContainerSize\": 0,\n  \"Volume\": 0,\n  \"PrintAs\": \"PC'1\",\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"MeasurementId\": \"1-56758\",\n  \"MeasurementCode\": null,\n  \"MeasurementShortName\": null,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IsRefrigerated\": false,\n  \"IsVehicle\": false\n}"
+				},
+				"url": "{{LogitudeURL}}/api/packagetypes"
 			},
 			"response": []
 		}

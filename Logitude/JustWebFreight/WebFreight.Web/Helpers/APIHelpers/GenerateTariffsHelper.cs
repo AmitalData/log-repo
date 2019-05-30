@@ -96,7 +96,7 @@ namespace WebFreight.Web.Helpers.APIHelpers
                         IsDraft = false,
                         CreateDate = todayDate,
                         CreatedByUserId = loggedUser.Id,
-                        StartDate = todayDate,
+                        StartDate = todayDate.AddMonths(-1),
                         ExpirationDate = todayDate.AddMonths(2),
                         Tenant = parameterArgs.Tenant,
                         ApproveDate = todayDate,
@@ -118,13 +118,14 @@ namespace WebFreight.Web.Helpers.APIHelpers
                             IsDraft = false,
                             CreateDate = todayDate,
                             CreatedByUserId = loggedUser.Id,
-                            StartDate = todayDate,
+                            StartDate = todayDate.AddMonths(-(j - 1)),
                             ExpirationDate = todayDate.AddMonths(-j),
                             Tenant = parameterArgs.Tenant,
                             ApproveDate = todayDate,
                             ApprovedByUserId = loggedUser.Id,
                             ParentVersionNumber = j - 1,
                         };
+
                         iContext.TariffVersions.Add(version);
                         myCount++;
 
@@ -173,15 +174,8 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     iContext.Tariffs.Add(tariff);
                     airlines.Remove(airline);
 
-                    //if (myCount == 1000)
-                    //{
-                    //    iContext.SaveChanges();
-                    //    myCount = 0;
-                    //}
-
+                    iContext.SaveChanges();
                 }
-
-                iContext.SaveChanges();
             }
         }
 

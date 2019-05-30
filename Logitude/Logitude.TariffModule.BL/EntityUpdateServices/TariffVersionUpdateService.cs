@@ -79,10 +79,10 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     line.ErrorText = null;
                 }
 
-                if (iUniqueKey == null)
-                {
-                    iUniqueKey = "";
-                }
+                //if (iUniqueKey == null)
+                //{
+                //    iUniqueKey = "";
+                //}
 
                 line.LineUniqueKey = iUniqueKey;
                 line.LineUniqueKeyText = iUniqueKey;
@@ -94,7 +94,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             }
 
             var groupd = (from d in entityPM.TariffLines
-                          where d.LineUniqueKey != null && d.ChangeSetOp != ChangeSetOperation.Delete
+                          where d.ChangeSetOp != ChangeSetOperation.Delete
                           group d by d.LineUniqueKey into g
                           select new
                           {
@@ -112,9 +112,18 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     foreach (TariffLinePM line in entityPM.TariffLines.Where(d => d.LineUniqueKey == item.LineUniqueKey))
                     {
                         index++;
-                        line.HasErrors = true;
-                        line.ErrorText = "Line is a duplicate";
-                        line.LineUniqueKeyText = line.LineUniqueKey + index;
+
+                        if (line.LineUniqueKey == null)
+                        {
+                            line.LineUniqueKeyText = "" + line.Index + index;
+                        }
+
+                        else
+                        {
+                            line.HasErrors = true;
+                            line.ErrorText = "Line is a duplicate";
+                            line.LineUniqueKeyText = line.LineUniqueKey + line.Index + index;
+                        }
 
                         if (line.ChangeSetOp == ChangeSetOperation.None)
                         {
