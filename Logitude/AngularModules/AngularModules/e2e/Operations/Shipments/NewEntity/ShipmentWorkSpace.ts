@@ -40,7 +40,7 @@ export class ShipmentWorkSpace {
 
     this.ShipmentMenuButtons = new ShipmentHelper();
   }
-
+  
   CreateShipment(ShipmentLevelCode: string, Direction: string, TransportMode: string, ShipmentType: string) {
     this.DirectShipment.CreateAndCloseNewShipment('NEWDIRECT','ShipmentCancelbtn');
 

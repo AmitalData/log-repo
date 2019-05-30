@@ -2280,6 +2280,7 @@
     <Compile Include="Helpers\APIHelpers\APIReceivablePayableHelper.cs" />
     <Compile Include="Helpers\APIHelpers\GenerateTariffsHelper.cs" />
     <Compile Include="Helpers\APIHelpers\TMProjectsHelper.cs" />
+    <Compile Include="Helpers\DataProviderHelpers\AutomationTestReportDataProvider.cs" />
     <Compile Include="Helpers\DataProviderHelpers\ShipmentsEventsListDataProvider.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
     <Compile Include="Helpers\AgentSharedManifestHelper.cs" />
@@ -5053,6 +5054,7 @@
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\VehiclesManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\AccountingLedgerManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\ArchivoExportadoManager.cs" />

@@ -1304,6 +1304,17 @@ namespace WebFreight.Web.Helpers
                     }
 
 
+                case "ATRE":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(AutomationTestReportDataProvider));
+                        AutomationTestReportDataProvider reportDataProvider = (AutomationTestReportDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "AutomationTestReport", Name = "AutomationTestReportDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
+
             }
             return urlImage;
         }
@@ -1430,6 +1441,13 @@ namespace WebFreight.Web.Helpers
             switch (reportFliter.ReportCode)
             {
                 #region
+
+
+                case "ATRE":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadAutomationTestReportDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
 
                 case "SHEL":
                     {

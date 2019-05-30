@@ -85,6 +85,41 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+
+
+        public HttpResponseMessage GetAvailableAirlineFreightTariffs(string FromPort,string ToPort,string BetweenDate,double Weight)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
+                DateTime? BetweenDateOBJ = DateHelper.GetDate(BetweenDate);
+                if (BetweenDateOBJ == null)
+                {
+                    BetweenDateOBJ = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                }
+
+
+
+                TariffQueryService tariffQueryService = new TariffQueryService(tenant);
+
+                List<TariffSearchSummary> myResult = tariffQueryService.GetTariffSearchSummary(FromPort,ToPort, BetweenDateOBJ, Weight, tenant);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetTenantTariffSetting()
         {
             try
