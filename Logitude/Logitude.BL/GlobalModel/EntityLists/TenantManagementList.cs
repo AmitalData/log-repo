@@ -135,6 +135,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
 
         public string PackageCodeSearchField { get; set; }
         public bool IsINTTRAOnlyDemo { get; set; }
+        public bool IsTestTenant { get; set; }
 
     }
 }
