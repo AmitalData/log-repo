@@ -80,6 +80,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID").HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.FacilitationTypeCode).HasColumnName("FacilitationTypeCode").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.NationalIdentificationNumber).HasColumnName("NationalIdentificationNumber").HasMaxLength(25).IsUnicode(false);
         }
     }
 }
