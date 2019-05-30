@@ -4000,13 +4000,13 @@ namespace Logitude.Accounting.BL.CoreBL
             myStringBuilder.Append(' ', 50);
 
 
-            ARinvoiceTotalAmount = ARC100.Where(d=> d.TotalDocumentsAmountAfterDiscount >= 0).Sum(D =>(decimal) D.DocumentAmountAndVATAmount );
-            CreditARinvoiceTotalAmount = ARC100.Where(d => d.TotalDocumentsAmountAfterDiscount < 0).Sum(d => (decimal)d.DocumentAmountAndVATAmount);
+            ARinvoiceTotalAmount = ARC100.Where(d=> d.DocumentType =="305" ).Sum(D =>(decimal) D.TotalDocumentsAmountAfterDiscount);
+            CreditARinvoiceTotalAmount = ARC100.Where(d => d.DocumentType =="330" ).Sum(d => (decimal)d.TotalDocumentsAmountAfterDiscount);
             ARpaymentTotalAmount = ARPAymentC100.Sum(d => (decimal)d.DocumentAmountAndVATAmount);
             DepositTotalAmount = DepositC100.Sum(d => (decimal)d.DocumentAmountAndVATAmount);
-            APinvoiceTotalAmount = APC100.Sum(d => (decimal)d.DocumentAmountAndVATAmount);
-            ARinvoiceTotalRecords = ARC100.Where(d => d.TotalDocumentsAmountAfterDiscount >= 0).Count();
-            CreditARinvoiceTotalRecords = ARC100.Where(d => d.TotalDocumentsAmountAfterDiscount < 0).Count();
+            APinvoiceTotalAmount = APC100.Sum(d => (decimal)d.TotalDocumentsAmountAfterDiscount );
+            ARinvoiceTotalRecords = ARC100.Where(d => d.DocumentType =="305").Count();
+            CreditARinvoiceTotalRecords = ARC100.Where(d => d.DocumentType =="330" ).Count();
             ARpaymentTotalRecords = ARPAymentC100.Count();
             DepositTotalRecords = DepositC100.Count();
             APinvoiceTotalRecords = APC100.Count();
@@ -4072,7 +4072,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private   DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines, OpenFormatReportPM openFormatReport, bool isFromWR = false)
         {
             // prepare file string
-            string file = lines.ToString();// string.Join(Environment.NewLine, lines);
+            string file =  string.Join(Environment.NewLine, lines);
           
             // create document
             int tenant = openFormatReport.Tenant;
@@ -4130,23 +4130,23 @@ namespace Logitude.Accounting.BL.CoreBL
                 SecurityId = "100",
                 FileName = "BKMVDATA",
             };
-          
-            MemoryStream memstream = new MemoryStream();
-           
-            StreamReader sr = new StreamReader(file);
-            StreamWriter sw = new StreamWriter(memstream,  Encoding.Default);
-         
 
-            sw.WriteLine(sr.ReadToEnd());
+            //MemoryStream memstream = new MemoryStream();
 
-          
-   
-            sw.Close();
-            sr.Close();
+            //StreamReader sr = new StreamReader(file);
+            //StreamWriter sw = new StreamWriter(memstream,  Encoding.Default);
+
+
+            //sw.WriteLine(sr.ReadToEnd());
 
 
 
-            byte[] bytearray =  memstream.ToArray(); 
+            //sw.Close();
+            //sr.Close();
+
+
+
+            byte[] bytearray = Encoding.Unicode.GetBytes(file);// memstream.ToArray(); 
             document.FileData = bytearray;
 
 

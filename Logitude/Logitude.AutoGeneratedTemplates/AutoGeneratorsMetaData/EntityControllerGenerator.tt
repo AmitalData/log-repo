@@ -410,6 +410,13 @@ if(enableSecurity)
 	<#+
 }
 
+if(hasTenant && enableSecurity)
+{
+	#>
+                        SecurityUtility.AuthenticationOnEntityTenant("<#= tableName #>", entityPM.Tenant, authToken.Tenant);
+	<#+
+}
+
 #>
                     
                         I<#= contextName #> MyContext = <#= contextName #>.GetContext(entityPM.Tenant);
@@ -474,7 +481,12 @@ if(enableSecurity)
                         SecurityUtility.CheckContactFeature("<#= entity.ObjectTableName.Trim('"') #>", "UPDATE", authToken.Tenant);
 	<#+
 }
-
+if(hasTenant && enableSecurity)
+{
+	#>
+                        SecurityUtility.AuthenticationOnEntityTenant("<#= tableName #>", entityPM.Tenant, authToken.Tenant);
+	<#+
+}
 #>
 
                         I<#= contextName #> MyContext = <#= contextName #>.GetContext(entityPM.Tenant);
