@@ -96,21 +96,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                     else
                     {
-
-
-                        var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
-                        if (chars.Count == 0)
+                        if (entityPM.LineTypeCode == "K" && entityPM.VatNumber == "000000000")
                         {
-                            var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
-                            if (digit != 0)
-                            {
-                                entityPM.StatusCode = "2";
-                            }
-                           
+                            entityPM.StatusCode = "6";
+                            return;
                         }
                         else
                         {
-                            entityPM.StatusCode = "2";
+                            var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
+                            if (chars.Count == 0)
+                            {
+                                var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
+                                if (digit != 0)
+                                {
+                                    entityPM.StatusCode = "2";
+                                }
+
+                            }
+                            else
+                            {
+                                entityPM.StatusCode = "2";
+                            }
                         }
                         
                     }
@@ -159,20 +165,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     else
                     {
 
-
-                        var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
-                        if (chars.Count == 0)
+                        if (entityPM.LineTypeCode == "K" && entityPM.VatNumber == "000000000")
                         {
-                            var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
-                            if (digit != 0)
-                            {
-                                entityPM.StatusCode = "2";
-                            }
-                          
+                            entityPM.StatusCode = "6";
+                            return;
                         }
                         else
                         {
-                            entityPM.StatusCode = "2";
+                            var chars = Regex.Matches(entityPM.VatNumber, @"[^\d{9}$]");
+                            if (chars.Count == 0)
+                            {
+                                var digit = LuhnAlgorithm.CalculateLuhnAlgorithm(entityPM.VatNumber);
+                                if (digit != 0)
+                                {
+                                    entityPM.StatusCode = "2";
+                                }
+
+                            }
+                            else
+                            {
+                                entityPM.StatusCode = "2";
+                            }
                         }
                        
                     }

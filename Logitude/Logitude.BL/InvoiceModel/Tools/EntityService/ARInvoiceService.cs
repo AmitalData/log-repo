@@ -217,7 +217,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.ValidateInvoiceConnected();
-
             this.InitializeComponent();
 
             ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
@@ -268,8 +267,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 invoiceRepository.Update(invoice);
                 invoiceRepository.SubmitChanges();
             }
-        }
 
+            if (entityPM.IsAutoCredit)
+            {
+                this.CreateAutoCredit();
+            }
+        }
 
         private void ValidateInvoiceConnected()
         {
@@ -327,7 +330,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
-
 
         private bool isUpdatingPayments = false;
         private List<ARInvoiceLinePM> invoiceLinesChangeSet;
@@ -795,9 +797,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             invoice.UpdateDate = entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             invoice.UpdatedByUserId = entityPM.UpdatedByUserId = loggedContactId;
         }
-        public string CreateAutoCredit(string entityId, bool IsInvoiceNumberManuallySet, string AutoCreditManualNumber, DateTime? AutoCreditDate)
+        public void CreateAutoCredit()
         {
-            ARInvoice entityPOCO = invoiceRepository.GetSingleInvoice(entityId);
+            ARInvoice entityPOCO = invoiceRepository.GetSingleInvoice(this.entityPM.CreditedByARInvoiceId);
 
             if (entityPOCO.StatusCode == "AR")
             {
@@ -807,133 +809,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             else
             {
                 ARInvoiceQuery entityQuery = new ARInvoiceQuery(invoiceRepository);
-                ARInvoicePM oldEntityPM = entityQuery.GetSinglePM(entityId, tenant);
-
-                // Build New Invoice
-                ARInvoicePM newInvoicePM = new ARInvoicePM()
-                {
-                    #region
-                    Tenant = tenant,
-                    StatusCode = "AC",
-                    IsAutoCredit = true,
-                    ARInvoiceTypeCode = oldEntityPM.ARInvoiceTypeCode == "CI" ? "CC" : "CD",
-                    DebitAccount = oldEntityPM.DebitAccount,
-                    TransferStatusCode = oldEntityPM.TransferStatusCode,
-                    BillToAddressId = oldEntityPM.BillToAddressId,
-                    BillToId = oldEntityPM.BillToId,
-                    InternalNotes = oldEntityPM.InternalNotes,
-                    InvoiceCurrencyExchangeRate = oldEntityPM.InvoiceCurrencyExchangeRate,
-                    InvoiceCurrencyId = oldEntityPM.InvoiceCurrencyId,
-                    PrintNotes = oldEntityPM.PrintNotes,
-                    PaymentTermId = oldEntityPM.PaymentTermId,
-                    PrepaidCollectId = oldEntityPM.PrepaidCollectId,
-                    LocalCurrencyId = oldEntityPM.LocalCurrencyId,
-                    VatNumber = oldEntityPM.VatNumber,
-                    CreatedByUserId = oldEntityPM.CreatedByUserId,
-                    IssuedByUserId = oldEntityPM.IssuedByUserId,
-                    PrintByUserId = oldEntityPM.PrintByUserId,
-                    InvoiceDate = AutoCreditDate != null ? AutoCreditDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant).Date,
-                    DueDate = oldEntityPM.DueDate,
-                    PrintDate = oldEntityPM.PrintDate,
-                    Sent = oldEntityPM.Sent,
-                    ExchangeRateDate = oldEntityPM.ExchangeRateDate,
-                    BranchId = oldEntityPM.BranchId,
-                    ExpectedPaymentDate = oldEntityPM.ExpectedPaymentDate,
-                    ProfitCurrencyId = oldEntityPM.ProfitCurrencyId,
-                    ProfitCurrencyExchangeRate = oldEntityPM.ProfitCurrencyExchangeRate,
-                    MainEntityId = oldEntityPM.MainEntityId,
-                    MainEntityReference = oldEntityPM.MainEntityReference,
-                    MainEntityStatus = oldEntityPM.MainEntityStatus,
-                    AccountingExternalCode = oldEntityPM.AccountingExternalCode,                    
-                    IsConstituentInvoice = oldEntityPM.IsConstituentInvoice,
-                    IsConsolidationInvoice = oldEntityPM.IsConsolidationInvoice,
-                    SubTotalInInvoiceCurrency = oldEntityPM.SubTotalInInvoiceCurrency * -1,
-                    SubTotalInLocalCurrency = oldEntityPM.SubTotalInLocalCurrency * -1,
-                    AmountInInvoiceCurrency = oldEntityPM.AmountInInvoiceCurrency * -1,
-                    AmountInLocalCurrency = oldEntityPM.AmountInLocalCurrency * -1,
-                    AmountInProfitCurrency = oldEntityPM.AmountInProfitCurrency * -1,
-                    AmountDue = 0,
-                    AmountDueInLocalCurrency = 0,
-                    AmountDueInProfitCurrency = 0,
-                    CreditedByARInvoiceId = entityId,
-                    IsGeneralInvoice = oldEntityPM.IsGeneralInvoice,
-                    SalesmanUserId = oldEntityPM.SalesmanUserId,
-                    SATPaymentMethodCode = oldEntityPM.SATPaymentMethodCode,
-                    MetodoPagoCode = oldEntityPM.MetodoPagoCode,
-                    #endregion
-                };
-
-                if (newInvoicePM.IsConsolidationInvoice)
-                {
-                    newInvoicePM.MainEntityId = null;
-                    newInvoicePM.MainEntityReference = null;
-                    newInvoicePM.MainEntityStatus = null;
-                }
-
-                if (newInvoicePM.IsConstituentInvoice)
-                {
-                    newInvoicePM.IsClosed = true;
-                    newInvoicePM.ConsolidationInvoiceId = null;
-                }
-
-                if (IsInvoiceNumberManuallySet)
-                {
-                    newInvoicePM.IsInvoiceNumberManuallySet = true;
-                    newInvoicePM.InvoiceNumber = AutoCreditManualNumber;
-                }
-
-                int i = 1;
-                foreach (ARInvoiceLinePM item in oldEntityPM.InvoiceLines)
-                {
-                    #region
-                    ARInvoiceLinePM newInvoiceLine = new ARInvoiceLinePM()
-                    {
-                        Tenant = item.Tenant,
-                        ChargesTypeId = item.ChargesTypeId,
-                        CreditAccount = item.CreditAccount,
-                        Description = item.Description,
-                        ForiegnCurrencyId = item.ForiegnCurrencyId,
-                        ForiegnExchangeRate = item.ForiegnExchangeRate,
-                        VatTypeId = item.VatTypeId,
-                        LineNumber = i,
-                        MeasurementId = item.MeasurementId,
-                        EntityId = item.EntityId,
-                        EntityReference = item.EntityReference,
-                        ViewOrder = item.ViewOrder,
-                        ExternalTAXItemId = item.ExternalTAXItemId,
-                        ExternalVATCard = item.ExternalVATCard,
-                        ForiegnCurrencyCode = item.ForiegnCurrencyCode,
-                        InvoiceCurrencyCode = item.InvoiceCurrencyCode,
-                        InvoiceLocalCurrencyCode = item.InvoiceLocalCurrencyCode,
-                        MeasurementCode = item.MeasurementCode,
-                        VatTypeName = item.VatTypeName,
-                        IsExchangeRateFixed = item.IsExchangeRateFixed,
-                        LocalDescription = item.LocalDescription,
-                        PrepaidCollectId = item.PrepaidCollectId,
-                        VatPercentage = item.VatPercentage,
-                        Quantity = item.Quantity,
-                        UnitPrice = item.UnitPrice * -1,
-                        ForiegnCurrencyAmount = item.ForiegnCurrencyAmount * -1,
-                        LocalCurrencyAmount = item.LocalCurrencyAmount * -1,
-                        ProfitCurrencyAmount = item.ProfitCurrencyAmount * -1,
-                        InvoiceCurrencyAmount = item.InvoiceCurrencyAmount * -1,
-                        IsExpense = item.IsExpense,
-                        GLAccountId = item.GLAccountId,
-                    };
-
-                    newInvoicePM.InvoiceLines.Add(newInvoiceLine);
-                    i++;
-                    #endregion
-                }
-
-                this.Create(newInvoicePM);
-                this.AddARInvoiceJournalAndJournalLines(newInvoicePM, true);
+                ARInvoicePM oldEntityPM = entityQuery.GetSinglePM(this.entityPM.CreditedByARInvoiceId, tenant);
+                
+                this.AddARInvoiceJournalAndJournalLines(this.entityPM, true);
 
                 // Update Old Invoice
                 if (oldEntityPM.IsConsolidationInvoice)
                 {
                     #region
-                    List<ARInvoice> iConstituentInvoices = invoiceRepository.GetConnectedInvoices(tenant, entityId).ToList();
+                    List<ARInvoice> iConstituentInvoices = invoiceRepository.GetConnectedInvoices(tenant, this.entityPM.CreditedByARInvoiceId).ToList();
 
                     foreach (ARInvoice item in iConstituentInvoices)
                     {
@@ -971,7 +855,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         shipmentReceivableRepository.SubmitChanges();
                     }
 
-                    List<ARInvoiceLine> lines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(entityId, this.tenant).ToList();
+                    List<ARInvoiceLine> lines = invoiceLineRepository.GetInvoiceLinesByInvoiceId(this.entityPM.CreditedByARInvoiceId, this.tenant).ToList();
                     foreach (ARInvoiceLine line in lines)
                     {
                         line.ReceivableId = null;
@@ -981,14 +865,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 entityPOCO.IsCancelled = true;
-                entityPOCO.CancelledByARInvoiceId = newInvoicePM.Id;
+                entityPOCO.CancelledByARInvoiceId = this.entityPM.Id;
                 entityPOCO.StatusCode = "AR";
                 entityPOCO.AmountDue = 0;
                 entityPOCO.AmountDueInLocalCurrency = 0;
                 entityPOCO.AmountDueInProfitCurrency = 0;
                 invoiceRepository.Update(entityPOCO);
-                invoiceRepository.SubmitChanges();            
-                return newInvoicePM.Id;
+                invoiceRepository.SubmitChanges();
             }
         }
 
@@ -1212,8 +1095,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
-
-
 
         private void InitializeDueDate()
         {

@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.DataContract;
@@ -572,18 +573,22 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (lines.Count > 0)
             {
-                taxReportPM.TaxableOutputAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
-                taxReportPM.OutputTaxAmount = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount != 0).Sum(d => d.VatAmount);
-                taxReportPM.ExemptTaxableOutput = lines.Where(d => d.OutputOrInput == "O" && d.VatAmount == 0 && d.StatusCode == "6").Sum(d => d.VatableInvoiceAmount);
-                taxReportPM.OutputLinesCount = lines.Where(d => d.OutputOrInput == "O").Count();
-                taxReportPM.OtherInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == false).Sum(d => d.VatAmount);
-                taxReportPM.InputLinesCount = lines.Where(d => d.OutputOrInput == "I" && d.TransmitStatusCode == "1").Count();
-                taxReportPM.EquipmentInputsTaxAmount = lines.Where(d => d.OutputOrInput == "I" && d.StatusCode == "6" && d.IsEquipment == true).Sum(d => d.VatAmount);
+                var outputLines = lines.Where(d => d.OutputOrInput == "O");
+                var inputLines = lines.Where(d => d.OutputOrInput == "I");
+
+                // OUTPUT
+                taxReportPM.TaxableOutputAmount = outputLines.Where(d => d.VatAmount != 0).Sum(d => d.VatableInvoiceAmount);
+                taxReportPM.OutputTaxAmount = outputLines.Where(d => d.VatAmount != 0).Sum(d => d.VatAmount);
+                taxReportPM.ExemptTaxableOutput = outputLines.Where(d => d.VatAmount == 0 && d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Sum(d => d.VatableInvoiceAmount);
+                taxReportPM.OutputLinesCount = outputLines.Count();
+
+                // INPUTS
+                taxReportPM.OtherInputsTaxAmount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && d.IsEquipment == false).Sum(d => d.VatAmount);
+                taxReportPM.EquipmentInputsTaxAmount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&  d.IsEquipment == true).Sum(d => d.VatAmount);
+                taxReportPM.InputLinesCount = inputLines.Count();
+
                 taxReportPM.AmountForPayRefund = taxReportPM.OutputTaxAmount - (taxReportPM.OtherInputsTaxAmount + taxReportPM.EquipmentInputsTaxAmount);
-                if (taxReportPM.AmountForPayRefund == null)
-                {
-                    taxReportPM.AmountForPayRefund = 0;
-                }
+                if (taxReportPM.AmountForPayRefund == null) taxReportPM.AmountForPayRefund = 0;
 
             }
         }
