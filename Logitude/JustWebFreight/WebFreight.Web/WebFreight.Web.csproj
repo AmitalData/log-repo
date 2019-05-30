@@ -2240,8 +2240,7 @@
     <Compile Include="DataProviders\ShipmentInventoryDataProvider.cs" />
     <Compile Include="DataProviders\ShipmentProfitVSQuoteEstimateDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ShipmentsStocksDataProvider.cs" />
-    <Compile Include="DataProviders\TasksWithoutProjectsDataProvider.cs" />
-    <Compile Include="DataProviders\UnicargoExportDataProvider.Shared.cs" />
+    <Compile Include="DataProviders\TasksWithoutProjectsDataProvider.cs" /> 
     <Compile Include="DataProviders\UsersByTenantDataProvider.cs" />
     <Compile Include="DataProviders\VehiclesDataProvider.Shared.cs" />
     <Compile Include="DataProviders\VDKDataProvider.Shared.cs" />
