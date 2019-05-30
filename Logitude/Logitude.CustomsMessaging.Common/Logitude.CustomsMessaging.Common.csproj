@@ -76,6 +76,7 @@
     <Compile Include="RequestParams\SendALLCorrectRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLStorageSiteRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendPayReadyLowRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\SendUnCorrectDocumentsRequestParams.Shared.cs" />
     <Compile Include="RequestParams\StorageEntranceUnloadingRequestParams.Shared.cs" />
     <Compile Include="RequestParams\TPG_NG_8244_ClaimFileFilterRequestParams.Shared.cs" />
     <Compile Include="RequestParams\TSH_NG_8285_Web01_PaymentRequestParams.Shared.cs" />

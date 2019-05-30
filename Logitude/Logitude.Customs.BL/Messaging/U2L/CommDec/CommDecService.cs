@@ -1043,7 +1043,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
                 if (!string.IsNullOrWhiteSpace(transpValItem.TRANSP_VALUE_L) && transpValItem.TRANSP_VALUE_L != "0")
                 {
                     var SupplierInvoiceFreightAmountPM = new SupplierInvoiceFreightAmountPM();
-                    
+                   
                     if (!String.IsNullOrWhiteSpace(transpValItem.TRANSP_VALUE_CURR_L))
                     {
                         var freightCurrency = new CurrencyTypeRepository(ResolvedTenant());

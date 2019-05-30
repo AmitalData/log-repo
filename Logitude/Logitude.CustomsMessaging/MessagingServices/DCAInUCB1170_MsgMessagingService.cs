@@ -191,6 +191,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 SelectedStatusValue = requestParamsData.SelectedStatusValue,
                 SelectedTotalInvoiceValue = requestParamsData.SelectedTotalInvoiceValue,
                 SelectedFastIndividualProcessValue = requestParamsData.SelectedFastIndividualProcessValue,
+                SelectedCustomStatusValue = requestParamsData.SelectedCustomStatusValue,
                 DeclarationsList = requestParamsData.Declarations,
 
                 tenant = tenant,
@@ -296,6 +297,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string SelectedAvailableValue { get; set; }
         public string SelectedTotalInvoiceValue { get; set; }
         public string SelectedFastIndividualProcessValue { get; set; }
+        public string SelectedCustomStatusValue { get; set; }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }

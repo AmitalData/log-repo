@@ -45,16 +45,17 @@
                         <LogLabel [ObjectFieldName]="'AirlinePrefix'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td colspan="2" style="width:180px">
+                    <td style="width:150px">
                         <LogLov [ObjectFieldName]="'AirlineId'"
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
-                                [HideColumns]="false"
+                                [HideColumns]="true"
                                 [SelectedValue]="AirlineId"
-                                [LookUpTableName]="'Customs.CustomsAirline'"
-                                [DependencyFilter1Value]="'AL'">
+                                [LookUpTableName]="'Customs.CustomsAirline'">
+                            <!--[DependencyFilter1Value]="'AL'"-->
                         </LogLov>
                     </td>
+                    <td style="width:30px"></td>
                 </tr>
             </table>
         </td>
@@ -336,6 +337,31 @@
                         </LogLov>
                     </td>
                     <td style="width:30px"></td>
+                </tr>
+            </table>
+        </td>
+
+        <td>
+            <table>
+                <tr>
+                    <td style="width:110px">
+                        <LogLabel [ObjectFieldName]="'IntegratorCode'" [ObjectTableName]="ObjectTableName"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:150px">
+                        <LogTextBox [ObjectFieldName]="'IntegratorName'" [InputType]="'text'" [DataContext]="DataContext"
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        <!--
+    <LogLov [ObjectFieldName]="'IntegratorCode'"
+            [ObjectTableName]="ObjectTableName"
+            [DataContext]="DataContext"
+            [SelectedValue]="IntegratorCode"
+            [HideColumns]="true"
+            [LookUpTableName]="'Card'">
+        [DependencyFilter1Value]="'CS'"
+                        </LogLov>
+                        -->
+                    </td>
                 </tr>
             </table>
         </td>

@@ -16,90 +16,84 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using UnifreightIIG.Common.CommonIIGInterface;
+using UnifreightIIG.Common.MessageLib.PhysicalCheck;
 using UnifreightIIG.Common.SystemTableServiceReference;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
-    public class DCAInUCBStorageSite_MsgMessagingService: MessagingServiceBase<
+    public class DCAInUCB2715_MsgMessagingService : MessagingServiceBase<
         GenericRequestParams,
         INF_MSG_GenericResponseData,
         SYSTBL_NG_9000_MSG_SystemTableRequest,
-        DCAInUCBCMSSWithResponseContentHeader,
+        DCAInUCB2715WithResponseContentHeader,
         DCAInCustomReturnNullRequestService,
-        UniCourierBatchSendUCBCMSS_MsgResponseService, RequestHeader>
-
+        UniCourierBatchSend2715_MsgResponseService, RequestHeader>
     {
-        
+
         public override string MainInterfaceCode
         {
-            get { return "UCBCMSS"; }
+            get { return "UCB2715"; }
         }
 
-        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCBCMSSWithResponseContentHeader customsResponse)
+        protected override GenericRequestParams CreateDefaultRequestParamsFromCustomsResponse(DCAInUCB2715WithResponseContentHeader customsResponse)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-
-            
             var genericRequestParams = new GenericRequestParams()
             {
                 Tenant = customsResponse.tenant,
                 AppicationId = customsResponse.CourierMasterId,
+                //RequestVIA = SendRequestVIA.WebServiceBatch,
                 LoggingEnabled = true,
                 InterfaceTypeCode = this.MainInterfaceCode,
                 MainInterfaceCode = this.MainInterfaceCode,
+
+
                 LoggingObjectTableId = objectTableId,
                 LoggingEntityId = customsResponse.CourierMasterId,
-                LoggingEntityReference = customsResponse.HAWB,
+                LoggingEntityReference = customsResponse.master,
 
                 LoggingUserId = customsResponse.LoggingUserId,
-                RequestName = $" {customsResponse.HAWB} שידור שינוי אתר איחסון לבלדר ",
-                
+                RequestName = $" שידור מסמכים שגויים " + customsResponse.master + " "
             };
-            if (customsResponse.DeclarationIdList == null || (customsResponse.DeclarationIdList != null && customsResponse.DeclarationIdList.Count == 0))
-
-            {
-                genericRequestParams.RequestName += " ראשי - מפצל";
-                genericRequestParams.SplitterModeLetCreateMyType = false;
-
-            }
-            else
-            {
-                genericRequestParams.RequestName += " מפוצל";
-                genericRequestParams.SplitterModeLetCreateMyType = true;
-
-            }
             return genericRequestParams;
         }
 
-        protected override DCAInUCBCMSSWithResponseContentHeader CallWS(SYSTBL_NG_9000_MSG_SystemTableRequest customRequest, GenericRequestParams requestParams, out string exceptionMessage)
+        protected override DCAInUCB2715WithResponseContentHeader CallWS(SYSTBL_NG_9000_MSG_SystemTableRequest customRequest, GenericRequestParams requestParams, out string exceptionMessage)
         {
             throw new NotImplementedException();
         }
 
-
-        public string CreateCRS(int tenant, string LoggingUserId, SendALLStorageSiteRequestParams mySendALLStorageSiteRequestParams)
+        public string CreateCRS(int tenant, string LoggingUserId, SendUnCorrectDocumentsRequestParams mySendUnCorrectDocumentsRequestParams)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendALLStorageSiteRequestParams.CourierMasterId, null, null, null, true);
+            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendUnCorrectDocumentsRequestParams.CourierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
+                ///throw new System.Exception("Requestsheet  with Interface Type  = UCB2715  already in progress  !!!");
                 return "קיים מסר זהה בתהליך";
             }
-            LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBCMSS  !!!");
+            LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCB2715  !!!");
 
             string uniComm = null;
             string fileName = null;
             var transmitionDateTime = DateTime.Now;
             string xmlESBResponseXmlClass = null;
 
-            var myDCAInUCBCMSSWithResponseContentHeader = new DCAInUCBCMSSWithResponseContentHeader()
+            var myDCAInUCB2715WithResponseContentHeader = new DCAInUCB2715WithResponseContentHeader()
             {
-                CourierMasterId = mySendALLStorageSiteRequestParams.CourierMasterId,
+                CourierMasterId = mySendUnCorrectDocumentsRequestParams.CourierMasterId,
                 LoggingUserId = LoggingUserId,
-                HAWB = mySendALLStorageSiteRequestParams.HAWB,
-                StorageSiteCode = mySendALLStorageSiteRequestParams.StorageSiteCode,
+                master = mySendUnCorrectDocumentsRequestParams.HAWB,
+                DeclarationsList = mySendUnCorrectDocumentsRequestParams.Declarations,
+                SelectedAvailableValue = mySendUnCorrectDocumentsRequestParams.SelectedAvailableValue,
+                SelectedBOLValue = mySendUnCorrectDocumentsRequestParams.SelectedBOLValue,
+                SelectedStatusValue = mySendUnCorrectDocumentsRequestParams.SelectedStatusValue,
+                SelectedTotalInvoiceValue = mySendUnCorrectDocumentsRequestParams.SelectedTotalInvoiceValue,
+                SelectedFastIndividualProcessValue = mySendUnCorrectDocumentsRequestParams.SelectedFastIndividualProcessValue,
+                SelectedCustomStatusValue = mySendUnCorrectDocumentsRequestParams.SelectedCustomStatusValue,
+
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
@@ -108,7 +102,27 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 },
             };
 
-            var body = XmlGenericUtil<DCAInUCBCMSSWithResponseContentHeader>.SerializeObject(myDCAInUCBCMSSWithResponseContentHeader);
+
+
+            //var genericRequestParams = new GenericRequestParams()
+            //{
+            //    Tenant = mySendUnCorrectDocumentsRequestParams.Tenant,
+            //    AppicationId = mySendUnCorrectDocumentsRequestParams.CourierMasterId,
+            //    LoggingEnabled = true,
+            //    InterfaceTypeCode = this.MainInterfaceCode,
+            //    MainInterfaceCode = this.MainInterfaceCode,
+            //    LoggingObjectTableId = objectTableId,
+            //    LoggingEntityId = mySendUnCorrectDocumentsRequestParams.CourierMasterId,
+            //    LoggingEntityReference = mySendUnCorrectDocumentsRequestParams.CourierMasterId,
+            //    LoggingUserId = mySendUnCorrectDocumentsRequestParams.LoggingUserId,
+            //    RequestName = $" שידור מסמכים שגויים " + mySendUnCorrectDocumentsRequestParams.CourierMasterId + " "
+            //};
+            //UniCourierBatchSend2715_MsgResponseService ser = new UniCourierBatchSend2715_MsgResponseService();
+            //ser.Update(myDCAInUCB2715WithResponseContentHeader, genericRequestParams);
+            //return "מסמכים שגויים";
+
+
+            var body = XmlGenericUtil<DCAInUCB2715WithResponseContentHeader>.SerializeObject(myDCAInUCB2715WithResponseContentHeader);
             body = body.Substring(body.IndexOf(Environment.NewLine));
             var myESBResponseXmlClass = new ESBResponseXmlClass();
             var extrenalId = "62833ff7-1cd3-4faa-85a6-a4312ae4797a";
@@ -121,8 +135,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
             transTime += transmitionDateTime.Millisecond.ToString();
 
             fileName = "DcaPrefixName.IL941079089." + transTime + "." + extrenalId + ".PLT.xml";
-            //var messService = new Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService();
-            //var responseData = messService.SendSheet(genericRequestParams);
 
             var ourRef = "";
             using (var trans = TransactionFactory.GetNewTransaction())
@@ -147,24 +159,26 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
                     {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCBCMSS SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCB2715 SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
                     }
                     else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
                     {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBCTML SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
+                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCB2715 SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
                     return "קיים מסר זהה בתהליך";
                 }
             }
         }
 
-
     }
 
-    [XmlRoot(Namespace = "http://amital.com/customs/Prod/DCAInUCBCMSSWithResponseContentHeader", IsNullable = false)]
-    [XmlType(AnonymousType = true, Namespace = "http://amital.com/customs/Prod/DCAInUCBCMSSWithResponseContentHeader")]
-    public class DCAInUCBCMSSWithResponseContentHeader : IINF_MSG_Generic
+
+
+    [XmlRoot(Namespace = "http://amital.com/customs/Prod/DCAInUCB2715WithResponseContentHeader", IsNullable = false)]
+    [XmlType(AnonymousType = true, Namespace = "http://amital.com/customs/Prod/DCAInUCB2715WithResponseContentHeader")]
+    public class DCAInUCB2715WithResponseContentHeader : IINF_MSG_Generic
     {
+
         public IResponseContentHeader GetResponseContentHeader()
         {
             return ResponseContentHeader;
@@ -174,10 +188,18 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public int tenant { get; set; }
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
-        public string HAWB { get; set; }
-        public string StorageSiteCode { get; set; }
+        public string master { get; set; }
+        public string CourierDeclarationStatusCode { get; set; }
+        public List<string> DeclarationsList { get; set; }
         public string MyMoreParams { get; set; }
+
+        public string SelectedBOLValue { get; set; }
+        public string SelectedStatusValue { get; set; }
+        public string SelectedAvailableValue { get; set; }
+        public string SelectedTotalInvoiceValue { get; set; }
+        public string SelectedFastIndividualProcessValue { get; set; }
+        public string SelectedCustomStatusValue { get; set; }
+
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        public List<string> DeclarationIdList { get; set; }
     }
 }
