@@ -245,15 +245,23 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
 
         [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SATForeignRFC { get; set; }
 
         [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MetodoPagoCode { get; set; }
 
         [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string UsoCFDICode { get; set; }
 
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CBSA { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CAAT { get; set; }
     }
 }

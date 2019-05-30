@@ -48,6 +48,26 @@ export class TariffDomainService {
         });
     }
 
+
+    GetAvailableAirlineFreightTariffs(FromPort: string, ToPort: string, BetweenDate: Date, Weight: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetAvailableAirlineFreightTariffs?FromPort=' + FromPort + "&ToPort=" + ToPort + "&BetweenDate=" + ServiceHelper.GetDateString(BetweenDate) + "&Weight=" + Weight;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var myJsonResult = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myJsonResult;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    
+
     GenerateTariffs() {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -213,6 +233,18 @@ export class TariffFilterParameter {
     TariffId: string;
     Version: number;
     TariffType: string
+}
+
+
+
+export class TariffSearchSummary {
+    Id: string;
+    price: string;
+    EffictiveDate: Date;
+    Remarks: string;
+    ImageId: string;
+    Name: string;
+
 }
 
 export class ExcelTariffLines {
