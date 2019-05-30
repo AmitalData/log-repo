@@ -261,15 +261,15 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                                 tariffsSummary.Remarks = result.Description;
                     tariffsSummary.decimalprice = item.price;
                     byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
-
+                    string resultImage = "";
                     if (filedata != null)
                     {
 
-                           string resultImage = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
+                            resultImage = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
                         
                     }
 
-                    tariffsSummary.ImageId = filedata+"";
+                    tariffsSummary.ImageId = resultImage;
 
                     tariffSearchSummaries.Add(tariffsSummary);
 
