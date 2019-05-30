@@ -281,7 +281,7 @@
                                 </tr>
 
                                 <!-- BankAccountLiteId -->
-                                <tr class="FormFieldRow">
+                                <tr class="FormFieldRow" *ngIf="!accountingActivated">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'BankAccountLiteId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                     </td>
