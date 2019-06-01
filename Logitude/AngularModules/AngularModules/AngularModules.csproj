@@ -722,8 +722,6 @@
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\New\NewGLAccount.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Helpers\FieldsHelper.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Helpers\GeneralFunctions.ts" />
-    <TypeScriptCompile Include="e2e\LogBox\Login\Login.e2e-spec.ts" />
-    <TypeScriptCompile Include="e2e\LogBox\Login\Login.po.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Shipments\CreateLogboxShipment.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Shipments\ShipmentSearch.e2e-spec.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Shipments\ShipmentSearch.ts" />
