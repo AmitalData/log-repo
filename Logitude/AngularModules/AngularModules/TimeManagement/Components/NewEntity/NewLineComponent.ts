@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {TMEmployeeTimePM} from '../../EntityPMs/TMEmployeeTimePM'; 
+import { TMEmployeeTimePM } from '../../EntityPMs/TMEmployeeTimePM';
+import { TMProjectPM } from '../../EntityPMs/TMProjectPM'; 
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {DateTool, AppTool} from '../../../Infrastructure/Tools';
@@ -106,6 +107,17 @@ export class NewLineComponent extends BaseComponent {
             this.EntityPM.ProjectId = value;
         }
         this.SetUIProperties();
+    }
+
+    project: TMProjectPM;
+    get Project() { return this.project; }
+    set Project(value: TMProjectPM) {
+        if (this.project != value) {
+            this.project = value;
+            if (this.project != null && !AppTool.IsNullOrEmpty(this.project.DayOffTypeCode)) {
+                this.LocationCode = "D";
+            }
+        }
     }
 
     get EmployeeUserId() {
@@ -221,6 +233,11 @@ export class NewLineComponent extends BaseComponent {
 
         if (this.SprintId == null) {
             errors.push("Sprint is required");
+        }
+
+        if ((this.Project != null && !AppTool.IsNullOrEmpty(this.Project.DayOffTypeCode) && this.LocationCode != "D") ||
+            (this.LocationCode == "D" && this.Project != null && AppTool.IsNullOrEmpty(this.Project.DayOffTypeCode))) {
+            errors.push("Project with a Day Off type requires a Day off Location");
         }
 
         this.ValidationErrorsList = errors;

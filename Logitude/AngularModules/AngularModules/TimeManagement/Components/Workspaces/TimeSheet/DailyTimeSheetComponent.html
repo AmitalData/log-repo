@@ -89,7 +89,7 @@
                                             <LogLabel [Text]="'Location'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogLabel>
                                         </td>
 
-                                        <td style="width:165px;">
+                                        <td style="width:220px;">
                                             <LocationsFilter (SelectedValueChanged)="SelectedLocationFilter = $event" [SelectedValue]="SelectedLocationFilter"></LocationsFilter>
                                         </td>
 
@@ -255,7 +255,7 @@
                                                         [ObjectTableName]="'TMEmployeeTime'"
                                                         [ObjectFieldName]="'ProjectId'"
                                                         [SelectedValue]="item.ProjectId"
-                                                        [LookUpTableName]="'TMProject'"
+                                                        [LookUpTableName]="'TMProject'" (SelectedItemChanged)="item.Project = $event"
                                                         [HideColumns]="true">
                                                 </LogLov>
                                             </div>
@@ -272,7 +272,18 @@
                                     <!-- Location  -->
                                     <log-column [Alignment]="'left'" [width]="'120'" [header]="'Location'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            {{item.LocationName}}
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                                {{item.LocationName}}
+                                            </div>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [FocusOnMe]="'true'" [ObjectFieldName]="'LocationCode'"
+                                                        [DataContext]="item.DataContext"
+                                                        [ObjectTableName]="'TMEmployeeTime'"
+                                                        [SelectedValue]="itemLocationCode"
+                                                        [LookUpTableName]="'TMLocation'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
