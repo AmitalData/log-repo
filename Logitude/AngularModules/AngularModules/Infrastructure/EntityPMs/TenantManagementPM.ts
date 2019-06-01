@@ -770,7 +770,12 @@ export class TenantManagementPM {
         }
     }
 	    //public AddOns: Array<TenantAddOnPMPM>= [];
- 
+     private isTestTenant: boolean;
+    public get IsTestTenant() { return this.isTestTenant; }
+    public set IsTestTenant(newValue: boolean) { if (this.isTestTenant != newValue) { this.isTestTenant = newValue; this.MarkAsDirty("IsTestTenant"); } }
+       
+	 
+
     public OldEntityPM: TenantManagementPM;
 		
     public IsDirty: boolean;

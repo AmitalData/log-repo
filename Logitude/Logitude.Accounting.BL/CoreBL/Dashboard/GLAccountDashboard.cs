@@ -21,8 +21,10 @@ namespace Logitude.Accounting.BL.CoreBL.Dashboard
             var myChartOfAccountsTypeRepository = new ChartOfAccountsTypeRepository(context);
             var myGLAccountRepository = new GLAccountRepository(context);
             var allCOATCloseTableWithoutTenant = myChartOfAccountsTypeRepository.GetAll();//CloseTableWithoutTenant
-
-            IQueryable<GLAccountAndMoreDTO> qGLAccountAndMoreDTO = myGLAccountRepository.GetQAllCards(tenant);
+            string AllAccountTypeCode = "";
+            IQueryable<GLAccountAndMoreDTO> qGLAccountAndMoreDTO = myGLAccountRepository
+                //.GetQAllCards(tenant); -- return null
+                .GetQAllByAccountTypeCode(tenant, AllAccountTypeCode);
             if (!String.IsNullOrWhiteSpace(CollectorId))
             {
                 var qs =new GLAccountQueryService(tenant);
@@ -35,8 +37,10 @@ namespace Logitude.Accounting.BL.CoreBL.Dashboard
             }
             var qAllCards_SumBalnceInLocalGroupByCOATCode =
                 (
-                from a in myGLAccountRepository.GetQAllCards(tenant)
-                group a by a.ChartOfAccountsTypeCode into g
+                from a in myGLAccountRepository
+                //.GetQAllCards(tenant)
+                .GetQAllByAccountTypeCode(tenant, AllAccountTypeCode)
+            group a by a.ChartOfAccountsTypeCode into g
 
                 select new  //GLAccount() { EnglishName
                 //Tuple<string, decimal>()

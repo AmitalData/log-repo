@@ -1,4 +1,4 @@
-﻿
+
 
 <!--<table style="height:60px;width:650px;">
 
@@ -100,18 +100,7 @@
         <td>
             <table>
                 <tr>
-                    <!-- User -->
-                    <td style="width: 65px;" class="Label">User:</td>
-                    <td style="width: 180px;">
-                        <LogLov [NoObjectField]="true"
-                                [ObjectFieldName]="'UserId'"
-                                [SelectedValue]="UserId"
-                                [DataContext]="DataContext"
-                                [LookUpTableName]="'User'">
-                        </LogLov>
-                    </td>
-
-
+                 
                     <!-- From Date -->
                     <td style="width: 70px; padding-right: 5px;" class="Label">From Date:</td>
                     <td style="width: 180px;">
@@ -124,8 +113,19 @@
                         <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [SelectedDateValue]="ToDate" [DataContext]="DataContext"></LogDatePicker>
                     </td>
 
+               
+                    <!-- User -->
+                    <td style="width: 50px;" class="Label">User:</td>
+                    <td style="width: 180px;">
+                        <LogLov [NoObjectField]="true"
+                                [ObjectFieldName]="'UserId'"
+                                [SelectedValue]="UserId"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'User'">
+                        </LogLov>
+                    </td>
 
-                    <td style="width:20px"></td>
+                    <td style="width:10px"></td>
                     <!--ManuallyAddedEventsOnly-->
                     <td style="width: 220px;">
                         <CheckBox [IsChecked]="ManuallyAddedEventsOnly" (Checked)="ManuallyAddedEventsOnly = $event" [Text]="'Manually Added Events Only'"></CheckBox>

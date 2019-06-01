@@ -46,7 +46,9 @@ namespace Logitude.CRM.Data
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
 			string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             CRMContext context = new CRMContext(connection);
             return context;
         }

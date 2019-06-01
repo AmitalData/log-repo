@@ -11,6 +11,7 @@ using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
@@ -722,15 +723,17 @@ namespace WebFreight.Web.Helpers
         {
             QueryOperations queryOperations = new QueryOperations();
             queryOperations.QueryFilterItems = new System.Collections.Generic.List<QueryFilterItem>();
-
-            foreach (QueryFilterItem filterItem in queryFilterItemLists)
+            if (queryFilterItemLists != null)
             {
-                if (filterItem.FieldDataType == "Date")
+                foreach (QueryFilterItem filterItem in queryFilterItemLists)
                 {
-                    if (filterItem.FieldValue != null)
-                        filterItem.FieldValue = DateTime.Parse(filterItem.FieldValue.ToString());
+                    if (filterItem.FieldDataType == "Date")
+                    {
+                        if (filterItem.FieldValue != null)
+                            filterItem.FieldValue = DateTime.Parse(filterItem.FieldValue.ToString());
+                    }
+                    queryOperations.QueryFilterItems.Add(filterItem);
                 }
-                queryOperations.QueryFilterItems.Add(filterItem);
             }
 
             FilterSerializer filterSeriazlizer = new FilterSerializer();
@@ -1519,6 +1522,7 @@ namespace WebFreight.Web.Helpers
 
                 case "COTR":
                     {
+
                         dataProvider = logitudeReportsWebService.LoadContainerTruckingData(filters, reportFliter.tenant);
                         break;
                     }
@@ -1792,6 +1796,13 @@ namespace WebFreight.Web.Helpers
                 case "LTRP":
                     {
                         dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
+
+                case "UNER":
+                    {
+                        UnicargoExportManager myDataManager = new UnicargoExportManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
                         break;
                     }
 

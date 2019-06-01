@@ -148,6 +148,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 NumberFormatCode = a.NumberFormatCode,
                                                 CAAT = a.CAAT,
                                                 CBSA = a.CBSA,
+                                                IsTestTenant = a.IsTestTenant,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -305,6 +306,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         EcommerceSupportEmail = tt.EcommerceSupportEmail,
                         CAAT = tt.CAAT,
                         CBSA = tt.CBSA,
+                        IsTestTenant = tt.IsTestTenant,
 
                     };
 
@@ -469,6 +471,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EcommerceSupportEmail = tt.EcommerceSupportEmail,
                     CAAT = tt.CAAT,
                     CBSA = tt.CBSA,
+                    IsTestTenant = tt.IsTestTenant,
+
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -614,6 +618,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
                                            CAAT = a.CAAT,
                                            CBSA = a.CBSA,
+                                           IsTestTenant = a.IsTestTenant,
+
 
                                        }).FirstOrDefault();
 
@@ -759,6 +765,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
                                        CAAT = a.CAAT,
                                        CBSA = a.CBSA,
+                                       IsTestTenant = a.IsTestTenant,
+
 
                                    }).FirstOrDefault();
 
@@ -908,6 +916,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EcommerceSupportEmail = a.EcommerceSupportEmail,
                                                CAAT = a.CAAT,
                                                CBSA = a.CBSA,
+                                               IsTestTenant = a.IsTestTenant,
+
 
                                            }).FirstOrDefault();
 
@@ -1056,6 +1066,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
                                            CAAT = a.CAAT,
                                            CBSA = a.CBSA,
+                                           IsTestTenant = a.IsTestTenant,
+
 
                                        }).FirstOrDefault();
 
@@ -1196,6 +1208,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
                                        CAAT = a.CAAT,
                                        CBSA = a.CBSA,
+                                       IsTestTenant = a.IsTestTenant,
+
 
                                    }).FirstOrDefault();
                 if (tenant != null)
@@ -1371,6 +1385,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EcommerceSupportEmail = myPOCO.EcommerceSupportEmail,
                     CAAT = myPOCO.CAAT,
                     CBSA = myPOCO.CBSA,
+                    IsTestTenant = myPOCO.IsTestTenant,
+
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1501,6 +1517,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 NumberFormatCode = a.NumberFormatCode,
                                                 CAAT = a.CAAT,
                                                 CBSA = a.CBSA,
+                                                IsTestTenant = a.IsTestTenant,
+
 
                                             };
             return result;

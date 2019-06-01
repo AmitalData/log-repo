@@ -5,7 +5,7 @@ using System.Linq;
 namespace WebFreight.Web.DataProviders
 {
     public class ContainerTruckingDataProvider : BaseDataProvider
-    {
+    { 
         public string CustomerFilter { get; set; }
         public string DirectionFilter { get; set; }
         public string AgentFilter { get; set; }
