@@ -284,6 +284,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 #region Routing Section
 
+
+
+                //ShipmentPickUpDelivery myFirstPickup
+                //  = (from d in shipmentsContext.ShipmentPickUpDeliveries
+                //     where d.ShipmentId == shipment.Id && d.PickUpDeliveryTypeCode == "PICK"
+                //     select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+
+
+
                 //Shipment.PickupFromPartner= 
                 //Shipment.PickupFromPartnerAddress
                 //Shipment.PickupToPartner
