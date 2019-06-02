@@ -75,6 +75,11 @@ namespace Logitude.TimeManagement.Data.EntityPOCOs
 	    public string ExternalProjectNumber { get; set; }
         [Column("ExcludeFromProrating")]
 	    public bool ExcludeFromProrating { get; set; }
+        [ForeignKey("DayOffType")]
+        [Column("DayOffTypeCode")]
+	    public string DayOffTypeCode { get; set; }
+	      
+        public virtual TMDayOffType DayOffType { get; set; }
     }
 }
 	 

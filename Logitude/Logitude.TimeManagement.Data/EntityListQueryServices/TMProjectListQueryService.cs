@@ -46,6 +46,7 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
                                                    CategoryId = a.CategoryId,
                                                    IsProrated = a.IsProrated, 
                                                    CategoryName=a.TMProjectCategory!=null?a.TMProjectCategory.Name:null,
+                                                   DayOffTypeCode = a.DayOffTypeCode,
                                                });
             return query;
         }
