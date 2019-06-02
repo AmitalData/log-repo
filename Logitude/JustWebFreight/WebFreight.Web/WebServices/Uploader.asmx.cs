@@ -1284,9 +1284,9 @@ namespace WebFreight.Web.WebServices
             message = "";
             try
             {
-
+                PdfReader.debugmode = true;
                 using (PdfReader reader = new PdfReader(filedata))
-                {
+                { 
                     AcroFields af = reader.AcroFields;
                     var names = af.GetSignatureNames();
                     for (int i = 0; i < names.Count; ++i)

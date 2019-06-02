@@ -129,5 +129,6 @@ export class TenantManagementList {
 		IsINTTRAStockPrepaid: boolean;
 		PackageCodeSearchField: string;
 		IsINTTRAOnlyDemo: boolean;
+		IsTestTenant: boolean;
 	
 }

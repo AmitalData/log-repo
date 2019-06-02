@@ -300,8 +300,8 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
             }
 
             ARInvoiceService service = new ARInvoiceService(objectContext, tenant);
-            string AutoCreditId = service.CreateAutoCredit(entityId, IsInvoiceNumberManuallySet, AutoCreditManualNumber, AutoCreditDate);
-            return AutoCreditId;
+            //string AutoCreditId = service.CreateAutoCredit(entityId, IsInvoiceNumberManuallySet, AutoCreditManualNumber, AutoCreditDate);
+            return "";
         }
 
         private string GetLoggedContact(int tenant)

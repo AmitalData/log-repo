@@ -28,5 +28,6 @@ export class AnalyzeQueueList {
 		TenantName: string;
 		AWBNumber: string;
 		AckReason: string;
+		Log: string;
 	
 }

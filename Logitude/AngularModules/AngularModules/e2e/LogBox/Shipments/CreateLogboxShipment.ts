@@ -11,97 +11,133 @@ export class LogboxShipment {
         this.GeneralFun = new GeneralFunctions();
     }
 
-
-     ClickNewShipment() {
-
-        
-         this.helper.WaitByIdAndClick('LogBoxNEWSHIP');
-        }
-
-     ChooseTransportMode() {
-       
+    CreateShip(orderNumber) {
+        this.helper.WaitBusyIndicator();
+        this.helper.WaitByIdAndClick('LogBoxNEWSHIP');
         this.helper.WaitByIdAndFill('TransportModeId', 'Air');
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-        }
-
-     InsertOrderNumber() {
-
-        var orderNumber = this.GeneralFun.RandomNum();
         this.helper.WaitByIdAndFill('CustomerReference1', orderNumber);
-        }
-
-
-     InsertAgent() {
-        this.helper.WaitByIdAndFill('ForwarderPartnerId', 'Simplog LTD AH Baker');
+        this.helper.WaitByIdAndFill('ForwarderPartnerId', 'Ahmad');
         this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
-         }
-
-
-     SaveShipment() {
-
         this.helper.WaitByIdAndClick('OKButton');
         this.helper.WaitBusyIndicator();
-        }
+        this.helper.WaitWindowClosed();
 
-    //SearchForCreatedShipment(orderNumber: string) {
+    }
 
-               
-    //    this.helper.WaitByIdAndFill('SearchFieldsId_0_0', orderNumber);
-        
+    SearchForCreatedShipment(searchFeildId: string, orderNumber: string) {
 
-    //}
-
-    SelectShipment() {
-        this.helper.WaitByIdAndClick('LogGrid_0_0row0');
+        this.helper.WaitByIdAndFill(searchFeildId, orderNumber);
         this.helper.WaitBusyIndicator();
     }
 
-    CreateDocument() {
+    AddDocument() {
+
+        this.helper.WaitByIdAndClick('LogGrid_0_0row0');
+        this.helper.WaitBusyIndicator();
         this.helper.WaitByIdAndClick('AddLogboxDocument');
         this.helper.WaitByIdAndClick('DocumentTypeCode');
         this.helper.WaitByIdAndFill('Description', 'Test Document');
         this.helper.WaitByIdAndFill('Notes', 'Logbox test scenario');
         this.helper.WaitByIdAndClick('OK');
         this.helper.WaitBusyIndicator();
-        browser.sleep(2000);
 
     }
+
+    //  ClickNewShipment() {
+
+
+    //      this.helper.WaitByIdAndClick('LogBoxNEWSHIP');
+    //     }
+
+    //  ChooseTransportMode() {
+
+    //     this.helper.WaitByIdAndFill('TransportModeId', 'Air');
+    //     this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+    //     }
+
+    //  InsertOrderNumber() {
+
+    //     var orderNumber = this.GeneralFun.RandomNum();
+    //     this.helper.WaitByIdAndFill('CustomerReference1', orderNumber);
+    //     }
+
+
+    //  InsertAgent() {
+    //      //this.helper.WaitByIdAndFill('ForwarderPartnerId', 'Test Env 5.6');
+    //      this.helper.WaitByIdAndFill('ForwarderPartnerId', 'Ahmad');
+    //     this.helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+
+    //      }
+
+
+    //  SaveShipment() {
+
+    //     this.helper.WaitByIdAndClick('OKButton');
+    //      this.helper.WaitBusyIndicator();
+    //      browser.sleep(4000);
+    //     }
+
+
+
+
+
+    // //SearchForCreatedShipment() {
+    // //    this.helper.WaitByIdAndFill('SearchFieldsId_0_0', '1009');
+    // //    browser.sleep(4000);
+    // //    }
+
+    //SelectShipment() {
+    //    this.helper.WaitByIdAndClick('LogGrid_0_0row0');
+    //    this.helper.WaitBusyIndicator();
+    //}
+
+    //CreateDocument() {
+    //    this.helper.WaitByIdAndClick('AddLogboxDocument');
+    //    this.helper.WaitByIdAndClick('DocumentTypeCode');
+    //    this.helper.WaitByIdAndFill('Description', 'Test Document');
+    //    this.helper.WaitByIdAndFill('Notes', 'Logbox test scenario');
+    //    this.helper.WaitByIdAndClick('OK');
+    //    this.helper.WaitBusyIndicator();
+    //    browser.sleep(4000);
+
+    //}
 
 
 
     //////--------------------------------------------------------------
 
 
-//    InsertGetway() {
+    //    InsertGetway() {
 
-//        // this.helper.WaitByCssAndClick_FromTagInsideList('.ToggleButton', 0)
+    //        // this.helper.WaitByCssAndClick_FromTagInsideList('.ToggleButton', 0)
 
-//        this.helper.WaitByIdAndClick('SaveExcelToggleButton');
-//        //save as execl file 
-//        this.helper.WaitByIdAndClick('SaveExcelFileButton');
-
-
-//    }
+    //        this.helper.WaitByIdAndClick('SaveExcelToggleButton');
+    //        //save as execl file 
+    //        this.helper.WaitByIdAndClick('SaveExcelFileButton');
 
 
-//    FillSupplierName() {
-
-//        this.helper.WaitByIdAndClick('RunUnpaidInvoicesReportbtn');
-//    }
+    //    }
 
 
+    //    FillSupplierName() {
 
-//    FillMyReference() {
+    //        this.helper.WaitByIdAndClick('RunUnpaidInvoicesReportbtn');
+    //    }
 
-//        this.helper.WaitByIdAndClick('RunUnpaidInvoicesReportbtn');
-//    }
 
-//    FillDestination() {
 
-//        this.helper.WaitByIdAndClick('RunUnpaidInvoicesReportbtn');
-//    }
+    //    FillMyReference() {
 
+    //        this.helper.WaitByIdAndClick('RunUnpaidInvoicesReportbtn');
+    //    }
+
+    //    FillDestination() {
+
+    //        this.helper.WaitByIdAndClick('RunUnpaidInvoicesReportbtn');
+    //    }
+
+
+
+    //this.Helper.WaitWindowClosed();
 }
-
-//this.Helper.WaitWindowClosed();

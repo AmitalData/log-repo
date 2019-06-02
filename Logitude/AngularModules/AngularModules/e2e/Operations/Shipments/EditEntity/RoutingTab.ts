@@ -13,13 +13,10 @@ export class RoutingTabComponent {
     if (Direction == 'Domestic' && ShipmentType == 'FTL') {
       // var mainCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'Trucker1London');
       // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-
       this.Helper.WaitByIdAndFill('Shipment_Driver', 'Driver, Protractor ... ');
       this.Helper.WaitByIdAndFill('Shipment_TruckNumber', '985');
-
     }
     else {
-
       this.AddPickup();
       this.Helper.WaitBusyIndicator();
       if (LogitudeShipType == 'D' || LogitudeShipType == 'H') {
@@ -94,7 +91,7 @@ export class RoutingTabComponent {
       }
       else if (ShipmentType == 'FCL' || ShipmentType == 'LCL') {
         // First leg details
-        var mainCarriageVessel = this.Helper.WaitByIdAndFill('Shipment_MainCarriageVesselId', 'log');
+        var mainCarriageVessel = this.Helper.WaitByIdAndFill('Shipment_MainCarriageVesselId', 'VesselIdPT');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndFill('date_Shipment_MainCarriageATD', '1');
@@ -245,7 +242,7 @@ export class RoutingTabComponent {
       var preCarriageToPort = this.Helper.WaitByIdAndFill('Shipment_PreCarriageToPortId', 'SOU');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'aerol');
+      var preCarriageCarrier = this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierId', 'Maersk lines');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       this.Helper.WaitByIdAndFill('Shipment_PreCarriageCarrierNumber', '985');

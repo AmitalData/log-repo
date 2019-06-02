@@ -722,8 +722,6 @@
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\New\NewGLAccount.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Helpers\FieldsHelper.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Helpers\GeneralFunctions.ts" />
-    <TypeScriptCompile Include="e2e\LogBox\Login\Login.e2e-spec.ts" />
-    <TypeScriptCompile Include="e2e\LogBox\Login\Login.po.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Shipments\CreateLogboxShipment.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Shipments\ShipmentSearch.e2e-spec.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Shipments\ShipmentSearch.ts" />
@@ -902,6 +900,7 @@
     <Content Include="InvoiceModules\InvoiceStocks\Components\NewEntity\NewARInvoiceStockLinesComponent.html" />
     <Content Include="InvoiceModules\InvoiceStocks\Components\StockSelection\ARInvoiceStockSelectionComponent.html" />
     <Content Include="Invoice\Components\AccountingTab\AccountingTab_AccountingPaymentMethod.html" />
+    <Content Include="Report\Components\FilterReportComponent\AutomationTestReportFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\VDKFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.html" />
     <Content Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.html" />
@@ -2025,6 +2024,7 @@
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
     <Content Include="TariffModule\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.html" />
+    <Content Include="TariffModule\Components\Workspaces\TariffSearchAirFreightPricesComponent.html" />
     <Content Include="TariffModule\Components\Workspaces\TariffSettingComponent.html" />
     <Content Include="TimeManagement\Components\Connections\ConnectToParentComponent.html" />
     <Content Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.html" />
@@ -3340,6 +3340,7 @@
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentComponent.ts" />
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureDocuments\Components\SharedDocument\SharedDocumentsPermissionsComponent.ts" />
     <TypeScriptCompile Include="Quote\Services\StandardPMs\QuoteTemplateSectionPMService.ts" />
+    <TypeScriptCompile Include="Report\Components\FilterReportComponent\AutomationTestReportFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\VDKFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentDetailsFilterComponent.ts" />
     <TypeScriptCompile Include="Report\Components\FilterReportComponent\ShipmentsStocksFiltersComponent.ts" />
@@ -6392,6 +6393,7 @@
     <TypeScriptCompile Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Templates\FieldTemplateComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffModuleWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffSearchAirFreightPricesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\Workspaces\TariffSettingComponent.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffList.ts" />
     <TypeScriptCompile Include="TariffModule\EntityLists\TariffSettingList.ts" />

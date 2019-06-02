@@ -42,10 +42,20 @@ exports.config = {
       browser.params.Login.Email = "razantest@protractor.com";
       browser.params.Login.Password = "!R123j456";
     }
+    else if (browser.params.Env == "staging") {
+      browser.params.Link = "https://staging.logitudeworld.com";
+      browser.params.Login.Email = "protractor@test.com";
+      browser.params.Login.Password = "!P123t456";
+    }
     else if (browser.params.Env == "test") {
       browser.params.Link = "https://test.logitudeworld.com/test";
       browser.params.Login.Email = "protractor@test.com";
       browser.params.Login.Password = "!P123t456";
+    }
+    else if (browser.params.Env == "logboxtest") {
+        browser.params.Link = "https://test.logitudeworld.com/test";
+        browser.params.Login.Email = "ahmadb@logbox.com";
+        browser.params.Login.Password = "ahmed!A123";
     }
     else if (browser.params.Env == "logbox") {
       browser.params.Link = "https://system.logbox.co.il";
@@ -57,7 +67,6 @@ exports.config = {
       browser.params.Login.Email = "angular@fnarsoft.com";
       browser.params.Login.Password = "1";
     }
-    // browser.params.ShipParams.LogitudeShipType="D",
 
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   },
@@ -68,8 +77,8 @@ exports.config = {
     //  CRM: 'e2e/CRM/**/CRMModule-spec.ts',
     //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
 
-    NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
-    // NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
+   // NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+     NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
     //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
 
     //EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',

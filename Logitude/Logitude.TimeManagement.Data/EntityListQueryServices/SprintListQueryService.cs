@@ -40,6 +40,7 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
 					                          ToDate = a.ToDate,
 					
 					                          Name = a.Name,
+                                              IsCompleted = a.IsCompleted,
 					
 		                    	            });
             return query;

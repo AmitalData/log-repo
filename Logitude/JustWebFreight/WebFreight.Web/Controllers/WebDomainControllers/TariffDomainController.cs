@@ -85,6 +85,41 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+
+
+        public HttpResponseMessage GetAvailableAirlineFreightTariffs(string FromPort,string ToPort,string BetweenDate,double Weight)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Tariff", "READ", tenant);
+                DateTime? BetweenDateOBJ = DateHelper.GetDate(BetweenDate);
+                if (BetweenDateOBJ == null)
+                {
+                    BetweenDateOBJ = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                }
+
+
+
+                TariffQueryService tariffQueryService = new TariffQueryService(tenant);
+
+                List<TariffSearchSummary> myResult = tariffQueryService.GetTariffSearchSummary(FromPort,ToPort, BetweenDateOBJ, Weight, tenant);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetTenantTariffSetting()
         {
             try
@@ -175,6 +210,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private byte[] ExportAirFreightCostLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant, string type)
         {
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            tariffLines = tariffLines.OrderBy(P => P.Index).ToList();
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
@@ -302,6 +338,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private byte[] ExportAirSurchargesCostLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant, string type)
         {
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            tariffLines = tariffLines.OrderBy(P => P.Index).ToList();
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
             IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
