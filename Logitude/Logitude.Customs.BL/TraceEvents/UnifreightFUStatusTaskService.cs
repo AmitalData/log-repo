@@ -55,6 +55,24 @@ namespace Logitude.Customs.BL.TraceEvents
                     StatusRemarks = "",
 
                 });
+                string unifrieghtEvent = "INAD";
+                string eventRemarks = "";
+                var MyUnifreightEventParam = new UnifreightEventParam()
+                {
+                    Code = unifrieghtEvent,
+                    Mode = UnifreightEventMode.@new,
+                    EventDateTime = DateTime.Now,
+                    Entname = "CFIFILEM",
+                    PrimaryNum = CustomFileNo,
+                    EventRemarks = eventRemarks,
+                };
+
+                var myOpenUnifreighTask = new UnifreightEventTaskService();
+                myOpenUnifreighTask.UpsertEventLE2U(
+                    Tenant,
+                    loggedContactId,
+                    MyUnifreightEventParam);
+
             }
 
         }
