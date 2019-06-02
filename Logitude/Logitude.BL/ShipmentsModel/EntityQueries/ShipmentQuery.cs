@@ -10293,6 +10293,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Transshipment2VesselId = m.Transshipment2VesselId,
                      Transshipment3VesselId = m.Transshipment3VesselId,
                      BookingConfirmationNumber = m.BookingConfirmationNumber,
+                     IncotermId = shipment.IncotermId,
+                     ShipperAddressId = shipment.ShipperAddressId,
+                     ConsigneeAddressId = shipment.ConsigneeAddressId,
+                     Volume = shipment.Volume,
                  });
 
             return dataList;
