@@ -253,11 +253,13 @@ export class ReceivablePageComponent {
     public NewGeneralARInvoice(type: string) {
         //var str = TextCodeTranslator.Translate("General.O.NewEntity");
         //str = str.replace("%Entity", "General Invoice");
-        var str = TextCodeTranslator.Translate("Accounting.General.O.NewGeneralInvoice");
+        var str_NewGeneralInvoice = TextCodeTranslator.Translate("Accounting.General.O.NewGeneralInvoice");
+        var str_NewCreditNote = TextCodeTranslator.Translate("Accounting.General.O.NewCreditNote");
 
+        var windowTitle = (type == 'IN' ? str_NewGeneralInvoice : str_NewCreditNote);
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { InvoiceTypeCode: type };
-        logWindow.Title = str;
+        logWindow.Title = windowTitle;
         logWindow.Width = 550;
         logWindow.Height = 450;
 
