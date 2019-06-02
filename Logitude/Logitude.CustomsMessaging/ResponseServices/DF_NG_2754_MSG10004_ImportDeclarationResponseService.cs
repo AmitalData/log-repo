@@ -679,7 +679,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!(!string.IsNullOrWhiteSpace(paymentOrderNumber) && paymentStatusCode != "5") && !(_IsSubmitDeclarationResponse == true && string.IsNullOrWhiteSpace(paymentOrderNumber) && _MyDeclarationPM.DeclarationStatusTypeCode == "5" && _MyDeclarationPM.TotalTax <= 5))
             {
                 _MyDeclarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst;
-                if (_MyDeclarationPM.IsCourierDeclaration && declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue && _IsSubmitDeclarationResponse == true)
+                if (_MyDeclarationPM.IsCourierDeclaration && declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue && _IsSubmitDeclarationResponse == true && _MyDeclarationPM.DeclarationStatusTypeCode == "5")
                 {
                     _MyDeclarationPM.PaymentDate = declarationPaymentsPM.PaymentDate;
                 }
