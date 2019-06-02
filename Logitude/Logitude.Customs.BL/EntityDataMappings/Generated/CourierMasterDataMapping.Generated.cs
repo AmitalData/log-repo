@@ -94,7 +94,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StorageSiteName, 
 	         TruckerId, 
 	         IntegratorCode, 
-	         IntegratorName,
+	         IntegratorName, 
+	         IntegratorNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -56,7 +56,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          BirthDate = a.BirthDate,
                                                          IsImporter = a.IsImporter,
                                                          IsExporter = a.IsExporter,
-                                               
+                                                         FacilitationTypeCode = a.FacilitationTypeCode,
+                                                         NationalIdentificationNumber = a.NationalIdentificationNumber,
 
 
                                                        });

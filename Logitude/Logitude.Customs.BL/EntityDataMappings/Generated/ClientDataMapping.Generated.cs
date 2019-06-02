@@ -50,7 +50,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsImporter, 
 	         IsExporter, 
 	         ConcurrencyGUID, 
-	         FacilitationTypeCode,
+	         FacilitationTypeCode, 
+	         NationalIdentificationNumber,
 	      }
 
 
@@ -90,7 +91,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsExporter, 
 	         ConcurrencyGUID, 
 	         NewConcurrencyGUID, 
-	         FacilitationTypeCode,
+	         FacilitationTypeCode, 
+	         NationalIdentificationNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -237,6 +239,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FacilitationTypeCode))
             {
 				entityPOCO.FacilitationTypeCode = entityPM.FacilitationTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NationalIdentificationNumber))
+            {
+				entityPOCO.NationalIdentificationNumber = entityPM.NationalIdentificationNumber;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -390,6 +397,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.FacilitationTypeCode = entityPOCO.FacilitationTypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NationalIdentificationNumber))
+            {
+					entityPM.NationalIdentificationNumber = entityPOCO.NationalIdentificationNumber;
+            }
+
 		}
 
 		public void PMToOldPM(ClientPM entityPM, ClientPM oldEntityPM)
@@ -534,6 +546,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FacilitationTypeCode))
             {
                 oldEntityPM.FacilitationTypeCode = entityPM.FacilitationTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NationalIdentificationNumber))
+            {
+                oldEntityPM.NationalIdentificationNumber = entityPM.NationalIdentificationNumber;
             }
 			
 		}

@@ -394,7 +394,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="DeleteImporterDetailsButtonClicked()" *ngIf="ImporterVisibility  && isCourierDeclaration">נקה נתונים</button>
+                        <button class="Button" (click)="DeleteImporterDetailsButtonClicked()" *ngIf="ImporterVisibility  && isCourierDeclaration" [disabled]="IsDisplayOnly">נקה נתונים</button>
                     </td>
                     <td style="width: 5px;">
                         <div></div>
@@ -409,7 +409,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="IsDisplayOnly">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
