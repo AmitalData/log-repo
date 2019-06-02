@@ -16,41 +16,47 @@ export class PayablesTabComponent {
 
         this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
         // this.Helper.WaitByIdAndClick('ATDSPayable-payable');
+        this.Helper.WaitByIdAndClick('ATDSPayable-payable');//Auto-display 
+     
 
-        var InvoiceAmount: any;
+        this.Helper.WaitByCssButtonClick('RedButton','Yes');
+        //var InvoiceAmount: any;
         this.amount1 = this.AddPayables('Air Frei', '10', '10');
-        this.amount2 = this.AddPayables('Order', '10', '20');
-        InvoiceAmount = this.amount1 + this.amount2
-        // this.AddAPInvoice('' + InvoiceAmount, shipperRef1);
+        //this.amount2 = this.AddPayables('Order', '10', '20');
+        //InvoiceAmount = this.amount1 + this.amount2
+        this.AddAPInvoice(shipperRef1);
     }
 
     AddPayables(ChargeType: string, quantity: any, unitPrice: any) {
 
         var amount: any = 0;
         this.Helper.WaitByIdAndClick('Add');
-        amount = parseInt(quantity) * parseInt(unitPrice);
-        console.log(amount);
+        
+        //console.log(amount);
         this.Helper.WaitByIdAndFill('ShipmentPayable_ChargesTypeId', ChargeType);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndFill('ShipmentPayable_Quantity', quantity);
         this.Helper.WaitByIdAndFill('ShipmentPayable_UnitPrice', unitPrice);
-
+        amount = parseInt(quantity) * parseInt(unitPrice);
+        
         this.Helper.WaitByIdAndFill('ShipmentPayable_CurrencyId', 'EU');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndClick('Ok-AddPayableBtn');
         return amount;
     }
-    AddAPInvoice(Amount: any, shipperRef1: string) {
+    AddAPInvoice(shipperRef1: string ) {
+        this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('ReceiveInvoice');
 
-        this.Helper.WaitByIdAndFill('APInvoice_VendorId', 'Razan Ve');
+        this.Helper.WaitByIdAndFill('APInvoice_VendorId', 'TestVendorId');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
         this.Helper.WaitByIdAndFill('APInvoice_InvoiceNumber', shipperRef1);
-        this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency', Amount);
+       // this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency', Amount);
 
+        this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency',this.amount1);
         this.Helper.WaitByIdAndFill('APInvoice_InvoiceCurrencyId', 'EUR');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
@@ -75,7 +81,7 @@ export class PayablesTabComponent {
         this.Helper.WaitByIdAndClick('VATApplyToAll');
 
         this.Helper.WaitByIdAndFill('APInvoiceLine_ForiegnCurrencyAmount', this.amount1);
-        this.Helper.WaitByIdAndFill('APInvoiceLine_ForiegnCurrencyAmount_1', this.amount2);
+       // this.Helper.WaitByIdAndFill('APInvoiceLine_ForiegnCurrencyAmount_1', this.amount2);
 
         // this.Helper.WaitByIdAndClick('APInvoice.B.Save');
 

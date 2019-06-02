@@ -52,13 +52,13 @@ export class EditTabsComponent {
 
 
     this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
-    this.GeneralTabScenario.GeneralTab(ShipmentLevelCode);
+    // this.GeneralTabScenario.GeneralTab(ShipmentLevelCode);
     // this.OrderTabScenario.OrderTab(ShipmentLevelCode,ShipmentType);
     // this.PartnersTabScenario.PartnersTab(ShipmentLevelCode);
     // this.PackagesTabScenario.PackagesTab(ShipmentLevelCode,ShipmentType);
     // this.RoutingTabScenario.RoutingTab(ShipmentLevelCode,ShipmentType,Direction);
     this.PayablesTabScenario.PayablesTab(shipperRef1);
-    this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode);
+    // this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode);
     // this.DocsOutTabScenario.DocsOutTab();
     if(ShipmentLevelCode=='M'){
       this.ShipmentsTabScenario.ShipmentsTab();
