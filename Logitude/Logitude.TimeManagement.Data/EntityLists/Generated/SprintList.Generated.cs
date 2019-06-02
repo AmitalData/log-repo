@@ -30,6 +30,8 @@ namespace Logitude.TimeManagement.Data.EntityLists
        public DateTime? ToDate  { get; set; }
        [DataMember]
        public string Name  { get; set; }
+       [DataMember]
+       public bool IsCompleted  { get; set; }
    }
 
 }

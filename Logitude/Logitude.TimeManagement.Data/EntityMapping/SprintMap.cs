@@ -38,6 +38,8 @@ namespace Logitude.TimeManagement.Data.EntityMapping
             this.Property(t => t.ToDate).HasColumnName("ToDate").IsRequired();
 
             this.Property(t => t.Name).HasColumnName("Name").IsRequired().HasMaxLength(100).IsUnicode(true);
+
+            this.Property(t => t.IsCompleted).HasColumnName("IsCompleted");
         }
     }
 }

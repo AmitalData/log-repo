@@ -258,7 +258,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             //        }).Average(x => x.Duration);
         }
 
-
         public IQueryable<TasksSchedulerList> GetIQueryableEntityList(IQueryable<TasksScheduler> iQueryable)
         {
             IQueryable<TasksSchedulerList> result = from a in iQueryable

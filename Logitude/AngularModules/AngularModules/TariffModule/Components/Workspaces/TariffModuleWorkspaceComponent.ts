@@ -1,8 +1,9 @@
-import {Component, ViewChildren, QueryList,OnInit} from '@angular/core';
+import {Component, ViewChildren, QueryList,OnInit, OnDestroy} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { TariffDomainService, TariffSummery } from '../../Services/TariffDomainService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
@@ -17,7 +18,7 @@ import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/Batc
     providers: [EntityResourceService, TariffDomainService],
 })
 
-export class TariffModuleWorkspaceComponent implements OnInit {
+export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService, private tariffDomainService: TariffDomainService) {
@@ -48,6 +49,9 @@ export class TariffModuleWorkspaceComponent implements OnInit {
         if (this.CurrentSession == null)
             this.CurrentSession = SessionLocator.SelectedSession;
         this.InitComponent();
+    }
+    ngOnDestroy() {
+        this.StopTimer();
     }
 
     LoadAllScreenData() {
@@ -212,50 +216,71 @@ export class TariffModuleWorkspaceComponent implements OnInit {
     }
 
     private timer: any;
-    private timerInterval: number = 1000;
+    private timerInterval: number = 5000;
+    private IsLoading: boolean = false;
     private batchEntity: BatchTaskExecutionPM;
     GenerateTariffsClicked() {
         this.CurrentSession.StartBusyIndicator("Generating...");
 
-        this.tariffDomainService.GenerateTariffs().subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                var mm: ServiceResponse = response;
-                this.batchEntity = mm.Result;
+        this.tariffDomainService.GenerateTariffs().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+
+                this.batchEntity = myResponse.Result;
 
                 if (this.batchEntity != null) {
                     this.timer = setInterval(() => { this.GetBTE(); }, this.timerInterval);
                 }
             }
-        });
-    }
 
-    GetBTE() {
-        var bteList: BatchTaskExecutionList;
-        var myService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-        myService.getSingle(this.batchEntity.Id).subscribe(myResult => {            
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-                bteList = mm.Result;
-
-                if (bteList.StatusCode == "D")
-                {                    
-                    this.LoadQueriesCounts();
-
-                    this.CurrentSession.StopBusyIndicator();                  
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-                }
-
-                else if (bteList.StatusCode == "F")
-                {
-                    this.CurrentSession.StopBusyIndicator();
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-                }
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                var window = new MessageWindow();
+                window.Show(myResponse.ErrorsArray[0]);
             }
         });
+    }
+    
+    GetBTE() {
+        if (!this.IsLoading) {
+            this.IsLoading = true;
+
+            var bteList: BatchTaskExecutionList;
+            var myService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+
+            myService.getSingle(this.batchEntity.Id).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    bteList = myResponse.Result;
+
+                    if (bteList.StatusCode == "D") {
+                        this.LoadQueriesCounts();
+                        this.CurrentSession.StopBusyIndicator();
+                        this.StopTimer();
+                    }
+
+                    else if (bteList.StatusCode == "F") {
+                        this.CurrentSession.StopBusyIndicator();
+                        this.StopTimer();                       
+                    }
+                }
+
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.StopTimer();
+
+                    var window = new MessageWindow();
+                    window.Show(myResponse.ErrorsArray[0]);
+
+                }
+
+                this.IsLoading = false;
+            });
+        }
+    }
+
+    StopTimer() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
     }
 }
 

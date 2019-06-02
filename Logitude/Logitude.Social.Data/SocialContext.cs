@@ -46,7 +46,9 @@ namespace Logitude.Social.Data
             GlobalDB currentDb;
             currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             SocialContext context = new SocialContext(connection);
             return context;
         }

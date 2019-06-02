@@ -545,7 +545,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
     //Spot Light
     private SpotlightData: DailySpotlightClass;
     private LoadSpotLightData() {
-        this.myDomainService.GetCRMDailySpotlightCounts(this.OwnerId, SessionLocator.LoggedUserPM.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
+        this.myDomainService.GetCRMDailySpotlightCounts(this.OwnerId, this.BusinessUnitId, this.RecordsTypeFilterCode).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResponse.HasError) {
                 this.SpotlightData = myResponse.Result;
@@ -643,8 +643,8 @@ export class OverviewWorkspaceComponent extends BaseComponent {
         }
 
         var myBusinessUnitId = null;
-        if (!AppTool.IsNullOrEmpty(SessionLocator.LoggedUserPM.BusinessUnitId)) {
-            myBusinessUnitId = SessionLocator.LoggedUserPM.BusinessUnitId;
+        if (!AppTool.IsNullOrEmpty(this.BusinessUnitId)) {
+            myBusinessUnitId = this.BusinessUnitId;
         }
 
         var filters = new ApiQueryFilters();
@@ -735,7 +735,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;
@@ -758,7 +758,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;
@@ -781,7 +781,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;
@@ -804,7 +804,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;
@@ -827,7 +827,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;
@@ -850,7 +850,7 @@ export class OverviewWorkspaceComponent extends BaseComponent {
                     }
 
                     else {
-                        filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
+                            filters.addAdditionalFilter("CustomersBusinessUnitFilter", myOwnerId == null ? "null" : myOwnerId, myBusinessUnitId, null, "Equals", true, false, false, "string");
                     }
 
                     break;

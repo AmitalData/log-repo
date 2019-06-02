@@ -51,7 +51,9 @@ namespace Simplog.Data.InvoiceModel
                 currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             //}
             string dbConnectionInfo = currentDb.DBConnection;/*"Logitude2-4_Main,sa,Saas256,.";*/
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             InvoiceContext context = new InvoiceContext(connection);
             return context;            
         }

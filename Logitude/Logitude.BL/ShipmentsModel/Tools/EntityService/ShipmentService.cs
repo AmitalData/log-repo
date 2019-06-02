@@ -2584,15 +2584,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 }
 
 
-                if (entityPM.CustomsClearanceDate != null)
-                {
-                    entityComputedFields.IsDigitalSignRequired = false;
-                }
 
                 if (entityPM.IsShipmentComputedFieldChange)
                 {
                     entityComputedFields.IsDepositionRequired = entityPM.IsDepositionRequired;
                 }
+
+                if (entityPM.CustomsClearanceDate != null)
+                {
+                    entityComputedFields.IsDigitalSignRequired = false;
+                    entityComputedFields.IsDepositionRequired = false;
+                }
+
 
                 entityComputedFields.LastDocumentDateTime = null;// new DateTime(1900, 1, 1);
                 shipmentComputedFieldsRepository.Add(entityComputedFields);
@@ -2891,7 +2894,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         entityComputedFields.ImporterDepositionRequestDetails = entityPM.ImporterDepositionRequestDetails;
                     }
 
-
                     if (entityPM.IsOperationalClosed)
                     {
                         entityComputedFields.IsMissingDocuments = false;
@@ -2899,7 +2901,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         entityComputedFields.IsDigitalSignRequired = false;
                         entityComputedFields.MissingDocumentsCount = 0;
                         entityComputedFields.MissingDocumentsNames = "";
-
                     }
 
                     else
@@ -2917,19 +2918,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             entityComputedFields.IsMissingDocuments = true;
                         }
                     }
+
                     if (entityPM.CustomsClearanceDate != null)
                     {
                         entityComputedFields.IsMissingDocuments = false;
                         entityComputedFields.IsRequestedDocuments = false;
                         entityComputedFields.IsDigitalSignRequired = false;
+                        entityComputedFields.IsDepositionRequired = false;
                     }
 
-                    //abed
-
-                    entityPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
                     entityPM.IsRequestedDocuments = entityComputedFields.IsRequestedDocuments;
                     entityPM.IsDigitalSignRequired = entityComputedFields.IsDigitalSignRequired;
-
+                    entityPM.IsDepositionRequired = entityComputedFields.IsDepositionRequired;
                 }
 
 
