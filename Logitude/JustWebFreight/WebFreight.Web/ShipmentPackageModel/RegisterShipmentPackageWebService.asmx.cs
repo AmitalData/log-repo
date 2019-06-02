@@ -193,6 +193,15 @@ namespace WebFreight.Web.ShipmentPackageModel
                 provider.Ramp = shipment.OnCarriageToPortCode;
                 provider.BookingConfirmationNumber = shipment.BookingConfirmationNumber;
 
+                if (shipment.IncotermId != null)
+                {
+                    Incoterm myIncoterm = (from d in commonContext.Incoterms where d.Id == shipment.IncotermId select d).FirstOrDefault();
+                    if (myIncoterm != null)
+                    {
+                        provider.Incoterm = myIncoterm.Name;
+                    }
+                }
+
                 if (myPackageItems.Count > 0)
                 {
                     string desc = null;
@@ -378,6 +387,7 @@ namespace WebFreight.Web.ShipmentPackageModel
 
                 if (myLastDelivery != null)
                 {
+                    provider.DeliveryATD = myLastDelivery.ATD;
                     provider.DeliveryATA = myLastDelivery.ATA;
 
                     switch (myLastDelivery.PickUpDeliveryToTypeCode)
