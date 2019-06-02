@@ -366,7 +366,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    select new TraceEventPM() 
                                                    {
                                                        EventTypeCode = a.EventType != null? a.EventType.Code:null,
-                                                       EventTypeEnglishName = a.EventType != null ?  a.EventType.Code:null,
+                                                       EventTypeEnglishName = a.EventType != null ?  a.EventType.EnglishName:null,
                                                        EventDateTime = a.EventDateTime,
                                                        LogDateTime = a.LogDateTime,
                                                        EntityId = a.EntityId,
