@@ -196,7 +196,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 DWObjectTablePM dWObjectTablePM = dWObjectTableQuery.GetSinglePM(Tabel, authToken.Tenant);
                 bool IsClosed = dWObjectTablePM.IsClosed;
                 string WhereStmt = " where " + Field + " is not null";
-                string PagingString = " ORDER BY " + Field;//+ " OFFSET " + filters.PageIndex + " ROWS FETCH NEXT " + filters.PageSize + " ROWS ONLY";
+                string PagingString = " ORDER BY " + Field + " OFFSET " + filters.PageIndex + " ROWS FETCH NEXT " + filters.PageSize + " ROWS ONLY";
 
                 if (!string.IsNullOrEmpty(SearchData))
                 {
