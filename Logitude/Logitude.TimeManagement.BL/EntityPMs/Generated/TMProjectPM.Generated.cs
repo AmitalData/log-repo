@@ -526,6 +526,29 @@ namespace Logitude.TimeManagement.BL.EntityPMs
 			
 		 }
 	   }
+	  private string dayOffTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DayOffTypeCode  
+	   {
+	    
+	     get
+		{
+		   return dayOffTypeCode;
+		 }
+		 set
+		 {
+		   if(dayOffTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DayOffTypeCode",OldValue=dayOffTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   dayOffTypeCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

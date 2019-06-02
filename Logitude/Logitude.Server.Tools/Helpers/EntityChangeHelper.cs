@@ -1178,8 +1178,7 @@ namespace Logitude.Server.Tools.Helpers
             {
                 #region Fill Data
                 string userId = GetSystemContactIdByTenant(entityChange.Tenant);
-                if (string.IsNullOrEmpty(userId)) userId = entityChange.CreateByUserId;
-
+    
                 string ownerId = automationFollowUp.OwnerValue;
                 string note = automationFollowUp.NoteValue;
                 string eventTypeId = automationFollowUp.EventTypeId;
@@ -1308,7 +1307,8 @@ namespace Logitude.Server.Tools.Helpers
                 UserId = userId,
                 EntityId = entityChange.EntityId,
                 ObjectTableName = "Shipment",
-                Notes = automationFollowUp.FollowUpEnglishName,
+                Notes = automationFollowUp.FollowUpEnglishName + "\n" + "Resulted from Automation",
+               
             });
 
 

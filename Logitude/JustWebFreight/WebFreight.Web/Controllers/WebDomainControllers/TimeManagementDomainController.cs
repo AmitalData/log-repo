@@ -117,7 +117,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         foreach (TMEmployeeTimePM itemChanged in args.ItemsPM)
                         {
                             TMEmployeeTimePM itemPOCO = queryService.GetSingle(itemChanged.Id, true, false);
-                            if (itemPOCO != null && !(itemPOCO.SprintId == itemChanged.SprintId && itemPOCO.ProjectId == itemChanged.ProjectId && itemPOCO.Description == itemChanged.Description && itemPOCO.WINumber == itemChanged.WINumber))
+                            if (itemPOCO != null && !(itemPOCO.LocationCode == itemChanged.LocationCode && itemPOCO.SprintId == itemChanged.SprintId && itemPOCO.ProjectId == itemChanged.ProjectId && itemPOCO.Description == itemChanged.Description && itemPOCO.WINumber == itemChanged.WINumber))
                             {
                                 itemPOCO.ProjectId = itemChanged.ProjectId;
                                 itemPOCO.SprintId = itemChanged.SprintId;

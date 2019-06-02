@@ -134,6 +134,11 @@ export class TMProjectPM {
     public set ExcludeFromProrating(newValue: boolean) { if (this.excludeFromProrating != newValue) { this.excludeFromProrating = newValue; this.MarkAsDirty("ExcludeFromProrating"); } }
        
 	 
+    private dayOffTypeCode: string;
+    public get DayOffTypeCode() { return this.dayOffTypeCode; }
+    public set DayOffTypeCode(newValue: string) { if (this.dayOffTypeCode != newValue) { this.dayOffTypeCode = newValue; this.MarkAsDirty("DayOffTypeCode"); } }
+       
+	 
 
     public OldEntityPM: TMProjectPM;
 		

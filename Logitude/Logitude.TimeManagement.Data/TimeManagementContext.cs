@@ -47,9 +47,7 @@ namespace Logitude.TimeManagement.Data
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
             TimeManagementContext context = new TimeManagementContext(connection);
             return context;
         }
@@ -73,6 +71,8 @@ namespace Logitude.TimeManagement.Data
             modelBuilder.Configurations.Add(new SprintMap());
 	
             modelBuilder.Configurations.Add(new TMBudgetMap());
+	
+            modelBuilder.Configurations.Add(new TMDayOffTypeMap());
 	
             modelBuilder.Configurations.Add(new TMEmployeeTimeMap());
 	
@@ -372,6 +372,12 @@ namespace Logitude.TimeManagement.Data
 	 }
 	
 	 public IDbSet<TMBudget> TMBudgets 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TMDayOffType> TMDayOffTypes 
 	 {
 	      get; set;
 	 
