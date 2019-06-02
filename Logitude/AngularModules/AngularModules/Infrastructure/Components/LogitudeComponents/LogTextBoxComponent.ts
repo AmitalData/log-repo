@@ -19,7 +19,26 @@ import 'rxjs/add/observable/fromEvent';
 import { FormGroup } from '@angular/forms';
 import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+import { timer } from 'rxjs/observable/timer';
+import { take } from 'rxjs/operator/take';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
+
+interface BeforeOnDestroy {
+    ngxBeforeOnDestroy();
+}
+
+type NgxInstance = BeforeOnDestroy & Object;
+type Descriptor = TypedPropertyDescriptor<Function>;
+type Key = string | symbol;
+
+function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descriptor) {
+    return {
+        value: async function (...args: any[]) {
+            await target.ngxBeforeOnDestroy();
+            return descriptor.value.apply(target, args);
+        }
+    }
+}
 
 @Component({
     moduleId: module.id,
@@ -239,7 +258,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 }
                             });
                             //this.TextValueChanges(this.TextValue);
-                            if (this.cd) {
+                            var isDestroyed: boolean = this.cd["destroyed"]; 
+                            if (this.cd && isDestroyed == false) {
                                 this.cd.detectChanges();
                             }
                         }
@@ -519,6 +539,15 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
+    public ngxBeforeOnDestroy() {
+        //console.log('1. BEFORE ONDESTROY INVOKE METHOD (await 2 sec)');
+        return new Promise((resolve) => {
+            setTimeout(() => this.WaitFunction(resolve), 2000);
+        });
+    }
+
+
+    @BeforeOnDestroy
     ngOnDestroy() {
         console.log("LogTextBox:ngOnDestroy");
         this.cd = null;
@@ -529,6 +558,17 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             this.CopyValueSubs.unsubscribe();
             this.CopyValueSubs = null;
         }
+    }
+
+    private WaitFunction(resolve) {
+        //console.log('2. EXECUTE HEAVY FUNCTION (3 sec)');
+
+        const sourcef = timer(3000)
+            //.pipe(take(1))
+            .subscribe(() => {
+                resolve();
+            });
+
     }
 
     onFocus() {
