@@ -10296,6 +10296,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      IncotermId = shipment.IncotermId,
                      ShipperAddressId = shipment.ShipperAddressId,
                      ConsigneeAddressId = shipment.ConsigneeAddressId,
+                     Volume = shipment.Volume,
                  });
 
             return dataList;

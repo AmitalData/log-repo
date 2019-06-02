@@ -140,5 +140,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string IncotermId { get; set; }
         public string ShipperAddressId { get; set; }
         public string ConsigneeAddressId { get; set; }
+        public double? Volume { get; set; }
     }
 }
