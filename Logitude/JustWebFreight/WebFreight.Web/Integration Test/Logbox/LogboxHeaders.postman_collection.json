@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "a54bcb88-bcae-484b-9077-02b8c47d7766",
+		"name": "Logbox",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CheckLogboxHeaders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f11b7e7b-bde0-4fe0-8bd9-4389870fe03a",
+						"exec": [
+							"pm.test(\"AuthSuccessfullOnTenant106\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"     var idvalue1 = pm.response.to.have.header(\"Server\");",
+							"     var idvalue2 = pm.response.to.have.header(\"Strict-Transport-Security\");",
+							"     var idvalue3 = pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"     var idvalue4 = pm.response.to.have.header(\"x-frame-options\");",
+							"     var idvalue5 = pm.response.to.have.header(\"x-xss-protection\");",
+							"     var idvalue6 = pm.response.to.not.have.header(\"X-AspNet-Version\");",
+							"     var idvalue7 = pm.response.to.not.have.header(\"X-Powered-By\");",
+							"    ",
+							"     ",
+							"     var id1exist = idvalue1 !== null;",
+							"     var id2exist = idvalue2 !== null;",
+							"     var id3exist = idvalue3 !== null;",
+							"     var id4exist = idvalue4 !== null;",
+							"     var id5exist = idvalue5 !== null;",
+							"     var id6exist = idvalue6 === null;",
+							"     var id7exist = idvalue7 === null;",
+							"     ",
+							"     pm.expect(pm.response.headers.get('Server')).to.eql('nginx');",
+							"     pm.expect(pm.response.headers.get('Strict-Transport-Security')).to.eql('max-age=31536000 ; includeSubDomains');",
+							"     pm.expect(pm.response.headers.get('Access-Control-Allow-Origin')).to.eql('https://system.logbox.co.il');",
+							"     pm.expect(pm.response.headers.get('x-frame-options')).to.eql('SAMEORIGIN');",
+							"     pm.expect(pm.response.headers.get('x-xss-protection')).to.eql('1; mode=block');",
+							"",
+							"     ",
+							"     ",
+							"   tests[\"Headers as expected : \" + id1exist] = responseBody.has(id1exist);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "ASP.NET_SessionId=1lwibkldwdi5wfzdgqumvbwh; email_cookie=ahmadb@fnarsoft.com"
+					},
+					{
+						"key": "Origin",
+						"value": "https://system.logbox.co.il"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36 OPR/60.0.3255.95"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Referer",
+						"value": "https://system.logbox.co.il/Login.aspx"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "TwoFactorkey",
+						"value": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"ahmadb@fnarsoft.com\",\"Password\":\"!A123456\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"CaptchaCode\":\"\",\"Tenant\":106}\n\n"
+				},
+				"url": {
+					"raw": "https://system.logbox.co.il/api/authentication?tenant=106",
+					"protocol": "https",
+					"host": [
+						"system",
+						"logbox",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "106"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
