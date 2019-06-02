@@ -22,6 +22,10 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Simplog.Data.Helpers;
 //using Logitude.BL.CommonDataModel.EntityPMs;
 //using Logitude.BL.CommonDataModel.EntityQueries;
 //using Logitude.BL.Security;
@@ -38,7 +42,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(AccountingPeriodPM entityPM, AccountingPeriod entityPOCO)
         {
-            if(entityPM.ClosedMonth > entityPOCO.ClosedMonth) // Closed Month incremented
+            if (entityPM.ClosedMonth > entityPOCO.ClosedMonth) // Closed Month incremented
             {
                 //check
                 JournalRepository repo = new JournalRepository(entityPM.Tenant);
@@ -47,6 +51,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (exist)
                 {
                     throw new ApplicationException(TextCodesTranslator.TranslateText("AccountingPeriods.O.therearejournalsdidnottranslated", entityPM.Tenant));
+                }
+            }
+
+            if (entityPM.OpenMonth < entityPOCO.OpenMonth) // Open Month decremented
+            {
+                LedgerTransactionQueryService ledgerTransactionQuery = new LedgerTransactionQueryService(entityPM.Tenant);
+                IQueryable<LedgerTransaction> monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonth(entityPOCO.Year, entityPOCO.OpenMonth, entityPOCO.Tenant);
+                bool monthHasTransactions = monthTransactions.Any();
+                if (monthHasTransactions)
+                {
+                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                    string msg = TextCodesTranslator.TranslateText("AccountingPeriod.O.CantCancelOpenMonth", 0, showLocal);
+                    throw new ApplicationException(msg);
                 }
             }
         }
@@ -192,6 +209,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
 
 
+        public virtual DateTime GetCurrentDateTime(int tenant)
+        {
+            return TenantServerConfigration.GetCurrentDateTime(tenant);
+        }
 
 
         public virtual ContactPM GetLoggedContact(int tenant)
