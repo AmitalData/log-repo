@@ -192,6 +192,14 @@
                                             <div></div>
                                         </td>
 
+                                        <td style="height:25px;width:25px; vertical-align: middle;" >
+                                            <button class="Button" style="height:25px;width:25px;" (click)="btnExcelCLicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                                        </td>
+
+                                        <td style="width:5px;">
+                                            <div></div>
+                                        </td>
+
                                         <td style="width: 70px;">
                                             <button class="Button" style="height:25px;" (click)="AddLineClicked()">
                                                 <img class="LeftCenter" style="margin-left: 5px;" src="./Images/Buttons/AddGreenSolid.png" />
@@ -319,7 +327,7 @@
                                                         [DataContext]="item.DataContext"
                                                         [ObjectTableName]="'TMEmployeeTime'"
                                                         [ObjectFieldName]="'SprintId'"
-                                                        [SelectedValue]="item.SprintId" 
+                                                        [SelectedValue]="item.SprintId" [IsDecendingSort]="true"
                                                         [LookUpTableName]="'Sprint'"
                                                         [DependencyFilter1Value]="false"
                                                         [HideColumns]="true">

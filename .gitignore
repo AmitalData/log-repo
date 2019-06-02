@@ -401,3 +401,5 @@ __pycache__/
 /Logitude/Logitude.IntegrationTests/FTPFiles/1_MyDoc_2134.xml
 /Logitude/Logitude.IntegrationTests/FTPFiles/1-2010_2060.pdf
 /Logitude/Logitude.IntegrationTests/FTPFiles
+/Logitude/automation (logbox).sql
+/Logitude/update report to all tenants.sql
