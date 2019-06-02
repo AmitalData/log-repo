@@ -92,7 +92,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 string inList = String.Join(",", list100.Select(r => $"'{r.DeclarationId}'").ToArray());
 string updateSql = $"Update DeclarationCourierStatuses set COURIERMANIFESTSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
 
-(context as CustomContext).CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
 });
 
                 }
