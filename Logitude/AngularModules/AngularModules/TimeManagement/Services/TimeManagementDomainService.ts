@@ -238,6 +238,20 @@ export class TimeManagementDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    DownloadEmployeesTimesToExcel(employeeUserId: string, locationCode: string, startDate: Date, endDate: Date) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetDownloadEmployeesTimesToExcel?employeeUserId=' + employeeUserId + "&locationCode=" + locationCode + "&startDate=" + ServiceHelper.GetDateString(startDate) + "&endDate=" + ServiceHelper.GetDateString(endDate);
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var myResult = response.json();
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
 }
 export class TimeManagementAPIHelper {
     public Id: number;
