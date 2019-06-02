@@ -1423,10 +1423,14 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (this.IsDecendingSort == true) {
             filters.SortDirection = "Decending";
         }
+        if (this.IsDecendingSort == true) {
+            filters.SortDirection = "Decending";
+        }
         else {
-            filters.SortDirection = "Acending";
+            filters.SortDirection = "Ascending";
 
         }
+
         if (this.IsTenantZeroSearch) {
             filters.Tenant = 0;
         }
@@ -1479,6 +1483,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
             else {
                 tenantZeroFilters.SortDirection = "Acending";
+
+            if (this.IsDecendingSort == true) {
+                tenantZeroFilters.SortDirection = "Decending";
+            }
+            else {
+                tenantZeroFilters.SortDirection = "Ascending";
 
             }
             if (this.LookUpTable.SortingByObjectField) {
