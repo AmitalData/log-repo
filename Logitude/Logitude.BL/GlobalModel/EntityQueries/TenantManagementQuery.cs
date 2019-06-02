@@ -167,6 +167,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                                      PackageCodeSearchField = a.PackageCodeSearchField,
                                                      IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
+
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -183,6 +184,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                             tenant.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                             tenant.DocumentShareAsDefault = ten.DocumentShareAsDefault;
                             tenant.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
+                            tenant.IsTestTenant = ten.IsTestTenant;
                         }
 
                         GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -351,6 +353,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         tenant1.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                         tenant1.DocumentShareAsDefault = ten.DocumentShareAsDefault;
                         tenant1.AutoArchiveOnInvoice = ten.AutoArchiveOnInvoice;
+                        tenant1.IsTestTenant = ten.IsTestTenant;
                     }
 
                     GlobalTenantRepository globalTenRep = new GlobalTenantRepository();

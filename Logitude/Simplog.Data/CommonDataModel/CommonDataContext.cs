@@ -44,7 +44,9 @@ namespace Simplog.Data.CommonDataModel
                 currentDb = GlobalDbHelper.GetSingleGlobalDB();
                 //}
                 string dbConnectionInfo = currentDb.DBConnection;
-                DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+                string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+                DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
                 return connection;
             }
             else
@@ -79,7 +81,9 @@ namespace Simplog.Data.CommonDataModel
             currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             //}
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             CommonDataContext context = new CommonDataContext(connection);
 
             return context;
@@ -94,7 +98,9 @@ namespace Simplog.Data.CommonDataModel
             currentDb = GlobalDbHelper.GetGlobalDBById(dbId);
             //}
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             CommonDataContext context = new CommonDataContext(connection);
 
             return context;

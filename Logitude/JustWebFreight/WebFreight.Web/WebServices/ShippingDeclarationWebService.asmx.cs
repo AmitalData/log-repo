@@ -98,8 +98,8 @@ namespace WebFreight.Web.WebServices
                     }
                 }
 
-                myDataProvider.CarrierCAAT = currentTenant.CAAT;
-                myDataProvider.CarrierCBSA = currentTenant.CBSA;
+                myDataProvider.TenantCAAT = currentTenant.CAAT;
+                myDataProvider.TenantCBSA = currentTenant.CBSA;
             }
 
             ContactQuery contactQuery = new ContactQuery(tenant);

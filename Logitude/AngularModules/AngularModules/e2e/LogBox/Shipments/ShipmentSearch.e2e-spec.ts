@@ -6,6 +6,7 @@ import { GeneralFunctions } from '../Helpers/GeneralFunctions';
 describe('Shipment search', () => {
     let shipmentSearch: ShipmentSearch = new ShipmentSearch();
     let logboxShipment = new LogboxShipment();
+    let GeneralFun = new GeneralFunctions();
 
   beforeEach(() => {
       browser.driver.manage().window().maximize();
@@ -16,14 +17,19 @@ describe('Shipment search', () => {
  
   it('Create Shipment successfully', function () {
       shipmentSearch.QuickSearch();
-      logboxShipment.ClickNewShipment();
-      logboxShipment.ChooseTransportMode();
-      logboxShipment.InsertOrderNumber();
-      logboxShipment.InsertAgent();
-      logboxShipment.SaveShipment();
-      //logboxShipment.SearchForCreatedShipment();
-      logboxShipment.SelectShipment();
-      logboxShipment.CreateDocument();
+      var orderNumber = GeneralFun.RandomNum();
+
+      logboxShipment.CreateShip(orderNumber);
+      logboxShipment.SearchForCreatedShipment('SearchFieldsId_0_0', orderNumber);
+      logboxShipment.AddDocument();
+      //logboxShipment.ClickNewShipment();
+      //logboxShipment.ChooseTransportMode();
+      //var orderNo= logboxShipment.InsertOrderNumber();
+      //logboxShipment.InsertAgent();
+      //logboxShipment.SaveShipment();
+      ////logboxShipment.SearchForCreatedShipment();
+      //logboxShipment.SelectShipment();
+      //logboxShipment.CreateDocument();
 
       
 

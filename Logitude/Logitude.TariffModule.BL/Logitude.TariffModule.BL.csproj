@@ -49,6 +49,7 @@
     <Reference Include="Logitude.TariffModule.MetaData">
       <HintPath>..\Logitude.TariffModule.MetaData\bin\Debug\Logitude.TariffModule.MetaData.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Simplog.Data">
       <HintPath>..\Simplog.Data\bin\Debug\Simplog.Data.dll</HintPath>
     </Reference>
@@ -81,6 +82,7 @@
   <ItemGroup>
     <Compile Include="CloseTables\DetailsClassesGenerated\TariffTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TariffTypeStruct.Generated.cs" />
+    <Compile Include="DataContracts\TariffSearchSummary.cs" />
     <Compile Include="DataContracts\TariffsSummary.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TariffLineDataMapping.Generated.cs" />

@@ -21,7 +21,29 @@ namespace Logitude.TariffModule.Data.Repositories
 			throw new NotImplementedException();
         }
 
-   }
+
+        public IQueryable<TariffLine> GetAllTariffLines(int tenant)
+        {
+            return from a in context.TariffLines
+                   where a.Tenant == tenant
+                   select a;
+        }
+
+        public IQueryable<Tariff> GetAllTariff(string[] Ids,int tenant)
+        {
+            return from a in context.Tariffs
+                   where a.Tenant == tenant && Ids.Contains(a.Id)
+                   select a;
+        }
+
+        public IQueryable<TariffVersion> GetAllTariffVersionsByTariffIds(string[] Ids, int tenant)
+        {
+            return from a in context.TariffVersions
+                   where a.Tenant == tenant && Ids.Contains(a.TariffId) && a.IsDraft==false 
+                   select a;
+        }
+
+    }
 
 }
    

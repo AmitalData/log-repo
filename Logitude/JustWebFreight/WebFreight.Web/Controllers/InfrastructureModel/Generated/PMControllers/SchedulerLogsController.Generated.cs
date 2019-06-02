@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("SchedulerLogs", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("SchedulerLogs", entityPM.Tenant, authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         SchedulerLogsService service = new SchedulerLogsService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("SchedulerLogs", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("SchedulerLogs", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "SchedulerLogs" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "SchedulerLogsPM" + entityPM.Id + entityPM.Tenant;

@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TenantLoginPolicy", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TenantLoginPolicy", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         TenantLoginPolicyService service = new TenantLoginPolicyService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TenantLoginPolicy", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TenantLoginPolicy", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "TenantLoginPolicy" + entityPM.Tenant + entityPM.Tenant;
                         string entityPmName = "TenantLoginPolicyPM" + entityPM.Tenant + entityPM.Tenant;

@@ -70,10 +70,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloseTables\DetailsClassesGenerated\TMDayOffTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TMLocationDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TMDayOffTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TMLocationStruct.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SprintDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TMBudgetDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TMDayOffTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TMEmployeeTimeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TMLocationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TMOfficeHourDataMapping.Generated.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="EntityDataMappings\Generated\TMReleaseDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\SprintDataMapping.cs" />
     <Compile Include="EntityDataMappings\TMBudgetDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TMDayOffTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TMEmployeeTimeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TMLocationDataMapping.cs" />
     <Compile Include="EntityDataMappings\TMOfficeHourDataMapping.cs" />
@@ -90,6 +94,7 @@
     <Compile Include="EntityDataMappings\TMReleaseDataMapping.cs" />
     <Compile Include="EntityPMs\Generated\SprintPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TMBudgetPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TMDayOffTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TMEmployeeTimePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TMLocationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TMOfficeHourPM.Generated.cs" />
@@ -98,6 +103,7 @@
     <Compile Include="EntityPMs\Generated\TMReleasePM.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SprintQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TMBudgetQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TMDayOffTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TMEmployeeTimeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TMLocationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TMOfficeHourQueryService.Generated.cs" />
@@ -109,6 +115,7 @@
     <Compile Include="EntityQueryServices\TMOfficeHourQuery.cs" />
     <Compile Include="EntityUpdateServices\Generated\SprintUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TMBudgetUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TMDayOffTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TMEmployeeTimeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TMLocationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TMOfficeHourUpdateService.Generated.cs" />

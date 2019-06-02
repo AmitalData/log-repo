@@ -16,7 +16,7 @@ export class InvoiceTool {
         var myResult = false;
 
         if (entityPM != null) {
-            if (AppTool.IsNullOrEmpty(entityPM.Id)) {
+            if (AppTool.IsNullOrEmpty(entityPM.Id) && !entityPM.IsAutoCredit) {
                 myResult = true;
             }
 

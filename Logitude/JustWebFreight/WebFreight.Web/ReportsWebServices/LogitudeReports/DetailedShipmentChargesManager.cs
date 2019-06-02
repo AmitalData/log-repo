@@ -869,6 +869,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.Profit = this.IsLocalCurrency ? myShipment.ProfitInLocalCurrency : myShipment.ProfitInProfitCurrency;
                                 
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
+                                customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, invoice, myRecord);
 
                                 if (myCurrency != null)
                                 {

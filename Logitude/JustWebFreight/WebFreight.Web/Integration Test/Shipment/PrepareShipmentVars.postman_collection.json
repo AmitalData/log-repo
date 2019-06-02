@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "77e4137a-0836-469a-9220-56df9ced80ed",
+		"_postman_id": "ae5f90dd-2440-4b25-a382-f5bffd27c16c",
 		"name": "PrepareShipmentVars",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -646,7 +646,7 @@
 							"     //console.log(jsonData.Result[0].Code);",
 							"   ",
 							"    if (idexist)  {",
-							"    postman.setNextRequest(\"GetPortIdJFK\"); ",
+							"    postman.setNextRequest(\"GetPortIdAirJFK\"); ",
 							"    ",
 							"}});",
 							"",
@@ -837,7 +837,7 @@
 							"   ",
 							"  ",
 							" if (idexist)  {",
-							"    postman.setNextRequest(\"GetPortIdJFK\");  ",
+							"    postman.setNextRequest(\"GetPortIdAirJFK\");  ",
 							"    } ",
 							"    ",
 							"});",
@@ -920,7 +920,7 @@
 							"    pm.environment.set(\"PortIdAirJFK\",idvalue);",
 							"     //console.log(jsonData.Result[0].Code);",
 							"    if (idexist)  {",
-							"    postman.setNextRequest(\"GetPortIdSOU\"); ",
+							"    postman.setNextRequest(\"GetPortIdOceanSOU\"); ",
 							"    ",
 							"}});",
 							"",
@@ -1016,7 +1016,7 @@
 							"    pm.environment.set(\"PortIdJFK\",idvalue);",
 							"    ",
 							" if (idexist)  {",
-							"    postman.setNextRequest(\"GetPortIdJFKToTenant1\");  ",
+							"    postman.setNextRequest(\"GetPortIdAirJFKToTenant1\");  ",
 							"    } ",
 							"    ",
 							"});",
@@ -1111,7 +1111,7 @@
 							"   ",
 							"  ",
 							" if (idexist)  {",
-							"    postman.setNextRequest(\"GetPortIdSOU\");  ",
+							"    postman.setNextRequest(\"GetPortIdOceanSOU\");  ",
 							"    } ",
 							"    ",
 							"});",
@@ -1184,7 +1184,7 @@
 					"script": {
 						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
 						"exec": [
-							"pm.test(\"GetPortIdSOU\", function () {",
+							"pm.test(\"GetPortIdOceanSOU\", function () {",
 							"     pm.response.to.have.status(200);",
 							"     ",
 							"     ",
@@ -1195,7 +1195,7 @@
 							"     //console.log(jsonData.Result[0].Code);",
 							"   ",
 							"    if (idexist)  {",
-							"    postman.setNextRequest(\"GetPortIdNYC\"); ",
+							"    postman.setNextRequest(\"GetPortIdInlandNYC\"); ",
 							"    ",
 							"}});",
 							"",
@@ -1291,7 +1291,7 @@
 							"    pm.environment.set(\"PortIdOceanSOU\",idvalue);",
 							"    ",
 							" if (idexist)  {",
-							"    postman.setNextRequest(\"CopyPortIdSOUToTenant1\");  ",
+							"    postman.setNextRequest(\"GetPortIdOceanSOUToTenant1\");  ",
 							"    } ",
 							"    ",
 							"});",
@@ -1386,7 +1386,7 @@
 							"   ",
 							"  ",
 							" if (idexist)  {",
-							"    postman.setNextRequest(\"GetPortIdNYC\");  ",
+							"    postman.setNextRequest(\"GetPortIdInlandNYC\");  ",
 							"    } ",
 							"    ",
 							"});",
@@ -1566,7 +1566,7 @@
 							"    pm.environment.set(\"PortIdInlandNYC\",idvalue);",
 							"    ",
 							" if (idexist)  {",
-							"    postman.setNextRequest(\"CopyPortIdNYCToTenant1\");  ",
+							"    postman.setNextRequest(\"GetPortIdInlandNYCNYCToTenant1\");  ",
 							"    } ",
 							"    ",
 							"});",
@@ -2284,22 +2284,26 @@
 					"script": {
 						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
 						"exec": [
-							"pm.test(\"GetAgentIdTest\", function () {",
-							"   pm.response.to.have.status(200);",
-							"   ",
-							"    var idvalue = (pm.response.json().Result.filter(a => a.VatNumber == 'TestAgentUnique')[0].Id);",
-							"    var idexist = idvalue !== null;",
-							"    pm.expect(idexist);",
-							"    pm.environment.set(\"AgentIdTest\",idvalue);",
-							"    ",
-							"        if (idexist)  {",
-							"    postman.setNextRequest(\"GetShipperIdTestShipperExport1\"); ",
-							"    ",
-							"}});",
-							"     ",
-							"",
-							"",
-							"",
+							"pm.test(\"CreateAgentIdTestExport1\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"    var value1 = pm.response.json().Result.filter(a => a.EnglishName == 'TestAgentExport1')[0].Id;\r",
+							"    var value2 = pm.response.json().Result.filter(a => a.EnglishName == 'TestAgentExport1')[0].EnglishName;\r",
+							"\r",
+							"    var test = value1 !== null;\r",
+							"    var test2 = value2 !== null;\r",
+							"\r",
+							"    pm.expect(test);\r",
+							"    pm.expect(test2);\r",
+							"\r",
+							"    pm.environment.set(\"AgentIdTestExport1\", value1);\r",
+							"    pm.environment.set(\"AgentNameTestExport1\", value2);\r",
+							"    if (idexist) {\r",
+							"        postman.setNextRequest(\"GetShipperIdTestShipperExport1\");\r",
+							"    }\r",
+							"})\r",
+							"\r",
+							"\r",
 							""
 						],
 						"type": "text/javascript"
@@ -2339,7 +2343,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{LogitudeURL}}/api/agentviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=TestAgentExport1&PageSize=22",
+					"raw": "{{LogitudeURL}}/api/agentviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=TestAgentIDExport1&PageSize=22",
 					"host": [
 						"{{LogitudeURL}}"
 					],
@@ -2359,7 +2363,7 @@
 						},
 						{
 							"key": "Filter1Value",
-							"value": "TestAgentExport1"
+							"value": "TestAgentIDExport1"
 						},
 						{
 							"key": "PageSize",
@@ -2423,7 +2427,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"$id\": \"1\",\r\n  \"Tenant\":{{Tenant}},\r\n  \"PartnerTypeId\": \"AG\",\r\n  \"IsAddressDirty\": false,\r\n  \"IsContactDirty\": false,\r\n  \"IsPartnerDirty\": false,\r\n  \"Address\": {\r\n    \"Tenant\": {{Tenant}},\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"Nablus\",\r\n    \"StateId\": null,\r\n    \"ZipCode\": null,\r\n    \"FaxNumber\": null,\r\n    \"PhoneNumber\": null,\r\n    \"ATTN\": null,\r\n    \"AddressTypeId\": \"M\",\r\n    \"Address1\": null,\r\n    \"Address2\": null,\r\n    \"Name\": \"TestAgentExport1\",\r\n    \"CountryId\": \"1-326\",\r\n    \"CarrierId\": null,\r\n    \"StateEnglishName\": null,\r\n    \"StateCode\": null,\r\n    \"ExternalId\": null,\r\n    \"InActive\": false,\r\n    \"IsLocalLanguage\": false,\r\n    \"IsHybrid\": false,\r\n    \"VatNumber\": null,\r\n    \"SalesmanUserId\": null,\r\n    \"Signature\": null,\r\n    \"CityCode\": null,\r\n    \"CardCode\": \"new\",\r\n    \"ContactEmail\": null,\r\n    \"ContactName\": null,\r\n    \"ContactPosition\": null,\r\n    \"ContactBusinessPhone\": null,\r\n    \"ContactMobile\": null,\r\n    \"ContactFax\": null,\r\n    \"IsCreatedWithPartner\": true,\r\n    \"CardEnglishName\": null,\r\n    \"HasStates\": false,\r\n    \"IsStateRequired\": false,\r\n    \"BranchId\": null\r\n  },\r\n  \"Contact\": null,\r\n  \"Agent\": {\r\n    \"Tenant\": {{Tenant}},\r\n    \"IsSecured\": false,\r\n    \"IsHybrid\": false,\r\n    \"BankName\": null,\r\n    \"BankAddress\": null,\r\n    \"Swift\": null,\r\n    \"AccountNumber\": null,\r\n    \"IBANNumber\": null,\r\n    \"EnglishName\": \"TestAgentExport1\",\r\n    \"Website\": null,\r\n    \"VatNumber\": null,\r\n    \"LocalName\": \"TestAgentExport1\",\r\n    \"InActive\": false,\r\n    \"PaymentTermId\": null,\r\n    \"ReceivablesAccountingCard\": null,\r\n    \"PayablesAccountingCard\": null,\r\n    \"Notes\": null,\r\n    \"InvoiceCurrencyId\": null,\r\n    \"VatTypeId\": null,\r\n    \"TenantAddressId\": null,\r\n    \"FieldsChanged\": false,\r\n    \"CardPMId\": null,\r\n    \"ExistedContactId\": null,\r\n    \"ComputedLocalName\": null,\r\n    \"PartnerTypeId\": \"AG\",\r\n    \"SharedLogisticsInvitationStatusName\": null,\r\n    \"LastLoginDate\": null,\r\n    \"IsExternal\": false,\r\n    \"PrimaryContactId\": null,\r\n    \"IsFirstContactToAdd\": false,\r\n    \"EnableConsolidationInvoices\": false,\r\n    \"CityName\": \"Nablus\",\r\n    \"CountryId\": \"1-326\",\r\n    \"CountryCode\": \"PS\",\r\n    \"CountryName\": \"State Of Palestine\",\r\n    \"CASSCode\": null,\r\n    \"IATACode\": null,\r\n    \"RegulatedAgentCode\": null,\r\n    \"IRSPlace\": null,\r\n    \"IRSNumber\": null,\r\n    \"AgentSharedLogisticsKey\": null,\r\n    \"PrimaryContactName\": null,\r\n    \"PrimaryContactEmail\": null,\r\n    \"PrimaryContactPhone\": null,\r\n    \"CardExternalCodeByCurrencies\": [],\r\n    \"ExternalAccountingBusinessArea\": null,\r\n    \"PaymentMethodCode\": null,\r\n    \"IsCreditLimitEnabled\": false,\r\n    \"BlockNewInvoiceCreation\": false,\r\n    \"BlockNewShipmentCreation\": false,\r\n    \"ExternalId2\": null,\r\n    \"SATForeignRFC\": null,\r\n    \"MetodoPagoCode\": null,\r\n    \"UsoCFDICode\": null\r\n  },\r\n  \"Customer\": null,\r\n  \"CustomAgent\": null,\r\n  \"ShippingAgent\": null,\r\n  \"Vendor\": null,\r\n  \"Warehouse\": null,\r\n  \"Airline\": null,\r\n  \"ShippingLine\": null,\r\n  \"Trucker\": null\r\n}"
+					"raw": "{\r\n  \"$id\": \"1\",\r\n  \"Tenant\":{{Tenant}},\r\n  \"PartnerTypeId\": \"AG\",\r\n  \"IsAddressDirty\": false,\r\n  \"IsContactDirty\": false,\r\n  \"IsPartnerDirty\": false,\r\n  \"Address\": {\r\n    \"Tenant\": {{Tenant}},\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"Nablus\",\r\n    \"StateId\": null,\r\n    \"ZipCode\": null,\r\n    \"FaxNumber\": null,\r\n    \"PhoneNumber\": null,\r\n    \"ATTN\": null,\r\n    \"AddressTypeId\": \"M\",\r\n    \"Address1\": null,\r\n    \"Address2\": null,\r\n    \"Name\": \"TestAgentIDExport1\",\r\n    \"CountryId\": \"1-326\",\r\n    \"CarrierId\": null,\r\n    \"StateEnglishName\": null,\r\n    \"StateCode\": null,\r\n    \"ExternalId\": null,\r\n    \"InActive\": false,\r\n    \"IsLocalLanguage\": false,\r\n    \"IsHybrid\": false,\r\n    \"VatNumber\": null,\r\n    \"SalesmanUserId\": null,\r\n    \"Signature\": null,\r\n    \"CityCode\": null,\r\n    \"CardCode\": \"new\",\r\n    \"ContactEmail\": null,\r\n    \"ContactName\": null,\r\n    \"ContactPosition\": null,\r\n    \"ContactBusinessPhone\": null,\r\n    \"ContactMobile\": null,\r\n    \"ContactFax\": null,\r\n    \"IsCreatedWithPartner\": true,\r\n    \"CardEnglishName\": null,\r\n    \"HasStates\": false,\r\n    \"IsStateRequired\": false,\r\n    \"BranchId\": null\r\n  },\r\n  \"Contact\": null,\r\n  \"Agent\": {\r\n    \"Tenant\": {{Tenant}},\r\n    \"IsSecured\": false,\r\n    \"IsHybrid\": false,\r\n    \"BankName\": null,\r\n    \"BankAddress\": null,\r\n    \"Swift\": null,\r\n    \"AccountNumber\": null,\r\n    \"IBANNumber\": null,\r\n    \"EnglishName\": \"TestAgentIDExport1\",\r\n    \"Website\": null,\r\n    \"VatNumber\": null,\r\n    \"LocalName\": \"TestAgentIDExport1\",\r\n    \"InActive\": false,\r\n    \"PaymentTermId\": null,\r\n    \"ReceivablesAccountingCard\": null,\r\n    \"PayablesAccountingCard\": null,\r\n    \"Notes\": null,\r\n    \"InvoiceCurrencyId\": null,\r\n    \"VatTypeId\": null,\r\n    \"TenantAddressId\": null,\r\n    \"FieldsChanged\": false,\r\n    \"CardPMId\": null,\r\n    \"ExistedContactId\": null,\r\n    \"ComputedLocalName\": null,\r\n    \"PartnerTypeId\": \"AG\",\r\n    \"SharedLogisticsInvitationStatusName\": null,\r\n    \"LastLoginDate\": null,\r\n    \"IsExternal\": false,\r\n    \"PrimaryContactId\": null,\r\n    \"IsFirstContactToAdd\": false,\r\n    \"EnableConsolidationInvoices\": false,\r\n    \"CityName\": \"Nablus\",\r\n    \"CountryId\": \"1-326\",\r\n    \"CountryCode\": \"PS\",\r\n    \"CountryName\": \"State Of Palestine\",\r\n    \"CASSCode\": null,\r\n    \"IATACode\": null,\r\n    \"RegulatedAgentCode\": null,\r\n    \"IRSPlace\": null,\r\n    \"IRSNumber\": null,\r\n    \"AgentSharedLogisticsKey\": null,\r\n    \"PrimaryContactName\": null,\r\n    \"PrimaryContactEmail\": null,\r\n    \"PrimaryContactPhone\": null,\r\n    \"CardExternalCodeByCurrencies\": [],\r\n    \"ExternalAccountingBusinessArea\": null,\r\n    \"PaymentMethodCode\": null,\r\n    \"IsCreditLimitEnabled\": false,\r\n    \"BlockNewInvoiceCreation\": false,\r\n    \"BlockNewShipmentCreation\": false,\r\n    \"ExternalId2\": null,\r\n    \"SATForeignRFC\": null,\r\n    \"MetodoPagoCode\": null,\r\n    \"UsoCFDICode\": null\r\n  },\r\n  \"Customer\": null,\r\n  \"CustomAgent\": null,\r\n  \"ShippingAgent\": null,\r\n  \"Vendor\": null,\r\n  \"Warehouse\": null,\r\n  \"Airline\": null,\r\n  \"ShippingLine\": null,\r\n  \"Trucker\": null\r\n}"
 				},
 				"url": "{{LogitudeURL}}/api/PartnersDomain"
 			},
@@ -4706,7 +4710,7 @@
 							"    ",
 							"    ",
 							"        if (id1exist & id2exist & id3exist & id4exist & id5exist & id6exist & id7exist & id8exist & id9exist & id10exist)  {",
-							"             postman.setNextRequest(null); ",
+							"            //  postman.setNextRequest(null); ",
 							"    ",
 							"    ",
 							"}});",
@@ -5060,6 +5064,541 @@
 					"raw": "{\n  \"Tenant\": {{Tenant}},\n  \"MoveTypeEnglishName\": \"TestMoveTypeIdInlandMTI\",\n  \"MoveTypeLocalName\": \"TestMoveTypeIdInlandMTI\",\n  \"TransportModeId\": \"I\",\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"Code\": \"MTI\",\n  \"SearchFields\": null,\n  \"IsAir\": false,\n  \"IsInland\": true,\n  \"IsOcean\": false\n}"
 				},
 				"url": "{{LogitudeURL}}/api/movetypes"
+			},
+			"response": []
+		},
+		{
+			"name": "GetVesselIdPT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22fbcb2f-42dd-43fe-9f51-6f9e6ac32bff",
+						"exec": [
+							"pm.test(\"GetVesselIdPT\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"\r",
+							"    pm.environment.set(\"VesselIdPT\", idvalue);\r",
+							"    if (idexist) {\r",
+							"        postman.setNextRequest(\"CreateVesselIdPT\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/vesselviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=VesselIdPT&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"vesselviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "VesselIdPT"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateVesselIdPT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"IsSecured\": false,\n  \"Code\": null,\n  \"EnglishName\": \"VesselIdPT \",\n  \"LocalName\": \"VesselIdPT\",\n  \"Notes\": null,\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IMOCode\": \"IMOCode PT\",\n  \"CountryId\": null\n}"
+				},
+				"url": "{{LogitudeURL}}/api/vessels"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPackageTypeIdContainerPC1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22fbcb2f-42dd-43fe-9f51-6f9e6ac32bff",
+						"exec": [
+							"pm.test(\"GetPackageTypeIdPC1\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"\r",
+							"    pm.environment.set(\"ContainerTypePC\", idvalue);\r",
+							"    if (idexist) {\r",
+							"        postman.setNextRequest(\"GetPackageTypeIdContainerPC2\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/packagetypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=ContainerIdPC1&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"packagetypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "ContainerIdPC1"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePackageTypeIdContainerPC1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"Code\": \"PC1\",\n  \"EnglishName\": \"ContainerIdPC1\",\n  \"LocalName\": null,\n  \"IsOcean\": true,\n  \"IsAir\": false,\n  \"IsInland\": true,\n  \"Notes\": null,\n  \"IsContainer\": true,\n  \"TEU\": 0,\n  \"ContainerSize\": 0,\n  \"Volume\": 0,\n  \"PrintAs\": \"PC'1\",\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"MeasurementId\": \"1-56758\",\n  \"MeasurementCode\": null,\n  \"MeasurementShortName\": null,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IsRefrigerated\": false,\n  \"IsVehicle\": false\n}"
+				},
+				"url": "{{LogitudeURL}}/api/packagetypes"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPackageTypeIdContainerPC2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22fbcb2f-42dd-43fe-9f51-6f9e6ac32bff",
+						"exec": [
+							"pm.test(\"GetPackageTypeIdContainerPC2\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"\r",
+							"    pm.environment.set(\"ContainerTypePC2\", idvalue);\r",
+							"    if (idexist) {\r",
+							"        postman.setNextRequest(\"GetPackageTypeIdPackagePP1\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/packagetypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=ContainerIdPC2&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"packagetypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "ContainerIdPC2"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePackageTypeIdContainerPC2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"Code\": \"PC2\",\n  \"EnglishName\": \"ContainerIdPC2\",\n  \"LocalName\": null,\n  \"IsOcean\": true,\n  \"IsAir\": false,\n  \"IsInland\": true,\n  \"Notes\": null,\n  \"IsContainer\": true,\n  \"TEU\": 0,\n  \"ContainerSize\": 0,\n  \"Volume\": 0,\n  \"PrintAs\": \"PC'1\",\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"MeasurementId\": \"1-56758\",\n  \"MeasurementCode\": null,\n  \"MeasurementShortName\": null,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IsRefrigerated\": false,\n  \"IsVehicle\": false\n}"
+				},
+				"url": "{{LogitudeURL}}/api/packagetypes"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPackageTypeIdPackagePP1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22fbcb2f-42dd-43fe-9f51-6f9e6ac32bff",
+						"exec": [
+							"pm.test(\"GetPackageTypeIdPackagePP1\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"\r",
+							"    pm.environment.set(\"PackageTypePP1\", idvalue);\r",
+							"    if (idexist) {\r",
+							"        postman.setNextRequest(\"GetPackageTypeIdPackagePP2\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/packagetypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PackageTypePP1&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"packagetypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "PackageTypePP1"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePackageTypeIdPackagePP1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"Code\": \"PP1\",\n  \"EnglishName\": \"PackageTypePP1\",\n  \"LocalName\": null,\n  \"IsOcean\": true,\n  \"IsAir\": false,\n  \"IsInland\": true,\n  \"Notes\": null,\n  \"IsContainer\": false,\n  \"TEU\": 0,\n  \"ContainerSize\": 0,\n  \"Volume\": 0,\n  \"PrintAs\": \"PP'1\",\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"MeasurementId\": \"1-56758\",\n  \"MeasurementCode\": null,\n  \"MeasurementShortName\": null,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IsRefrigerated\": false,\n  \"IsVehicle\": false\n}"
+				},
+				"url": "{{LogitudeURL}}/api/packagetypes"
+			},
+			"response": []
+		},
+		{
+			"name": "GetPackageTypeIdPackagePP2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22fbcb2f-42dd-43fe-9f51-6f9e6ac32bff",
+						"exec": [
+							"pm.test(\"GetPackageTypeIdPackagePP2\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var idvalue = (pm.response.json().Result[0].Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"\r",
+							"    pm.environment.set(\"PackageTypePP2\", idvalue);\r",
+							"    // if (idexist) {\r",
+							"    //     postman.setNextRequest(\"GetPackageTypeIdContainerPC2\");\r",
+							"    // }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/packagetypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PackageTypePP2&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"packagetypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "PackageTypePP2"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePackageTypeIdPackagePP2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"Tenant\": {{Tenant}},\n  \"Code\": \"PP2\",\n  \"EnglishName\": \"PackageTypePP2\",\n  \"LocalName\": null,\n  \"IsOcean\": true,\n  \"IsAir\": false,\n  \"IsInland\": true,\n  \"Notes\": null,\n  \"IsContainer\": false,\n  \"TEU\": 0,\n  \"ContainerSize\": 0,\n  \"Volume\": 0,\n  \"PrintAs\": \"PC'1\",\n  \"ComputedLocalName\": null,\n  \"AddedManually\": true,\n  \"InActive\": false,\n  \"MeasurementId\": \"1-56758\",\n  \"MeasurementCode\": null,\n  \"MeasurementShortName\": null,\n  \"SearchFields\": null,\n  \"IsHybrid\": false,\n  \"IsRefrigerated\": false,\n  \"IsVehicle\": false\n}"
+				},
+				"url": "{{LogitudeURL}}/api/packagetypes"
 			},
 			"response": []
 		}

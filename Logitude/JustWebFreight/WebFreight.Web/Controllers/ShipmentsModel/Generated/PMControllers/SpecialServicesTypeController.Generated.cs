@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("SpecialServicesType", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("SpecialServicesType", entityPM.Tenant, authToken.Tenant);
                 
                         IShipmentsContext MyContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         SpecialServicesTypeService service = new SpecialServicesTypeService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("SpecialServicesType", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("SpecialServicesType", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "SpecialServicesType" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "SpecialServicesTypePM" + entityPM.Id + entityPM.Tenant;

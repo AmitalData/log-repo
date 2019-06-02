@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("QuoteStage", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("QuoteStage", entityPM.Tenant, authToken.Tenant);
                 
                         IQuotesContext MyContext = QuotesContext.GetContext(entityPM.Tenant);
                         QuoteStageService service = new QuoteStageService(MyContext, entityPM.Tenant);
@@ -137,6 +138,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("QuoteStage", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("QuoteStage", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "QuoteStage" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "QuoteStagePM" + entityPM.Id + entityPM.Tenant;

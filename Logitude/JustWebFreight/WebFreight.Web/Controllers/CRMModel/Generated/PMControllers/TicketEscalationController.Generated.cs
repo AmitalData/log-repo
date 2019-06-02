@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TicketEscalation", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TicketEscalation", entityPM.Tenant, authToken.Tenant);
 	                    
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         TicketEscalationUpdateService service = new TicketEscalationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("TicketEscalation", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("TicketEscalation", entityPM.Tenant, authToken.Tenant);
 	
                         ICRMContext MyContext = CRMContext.GetContext(entityPM.Tenant);
                         TicketEscalationUpdateService service = new TicketEscalationUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

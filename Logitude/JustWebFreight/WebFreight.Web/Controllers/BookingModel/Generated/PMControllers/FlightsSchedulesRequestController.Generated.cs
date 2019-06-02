@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("FlightsSchedulesRequest", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("FlightsSchedulesRequest", entityPM.Tenant, authToken.Tenant);
 	                    
                         IBookingContext MyContext = BookingContext.GetContext(entityPM.Tenant);
                         FlightsSchedulesRequestUpdateService service = new FlightsSchedulesRequestUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("FlightsSchedulesRequest", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("FlightsSchedulesRequest", entityPM.Tenant, authToken.Tenant);
 	
                         IBookingContext MyContext = BookingContext.GetContext(entityPM.Tenant);
                         FlightsSchedulesRequestUpdateService service = new FlightsSchedulesRequestUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
