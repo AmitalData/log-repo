@@ -41,6 +41,9 @@ export class ARInvoiceMenuButtonsHandler {
                             {
                                 myButtonIsDisabled = !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
                                 button.LabelTextCodeCode = (this.EntityPM.IsConstituentInvoice) ? "General.B.Save" : "ARInvoice.B.SaveAsDraft";
+
+                                //if()
+
                                 break;
                             }
 
@@ -211,8 +214,6 @@ export class ARInvoiceMenuButtonsHandler {
 
                                 break;
                             }
-
-
 
                         case "SendToQBO":
                             {
@@ -428,6 +429,12 @@ export class ARInvoiceMenuButtonsHandler {
 
             if (isLoadSuccess) {
                 this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+
+                if (this.IsAutoCreditConsolidation) {
+                    this.IsAutoCreditConsolidation = false;
+
+                    this.CurrentSession.FireEvent("ResetARInvoiceBaseDeailsTab");
+                }
             }
 
             this.StopFlags();
@@ -770,6 +777,7 @@ export class ARInvoiceMenuButtonsHandler {
     }
 
     // AutoCredit
+    IsAutoCreditConsolidation: boolean = false;
     AutoCreditId: string = null;
     AutoCreditDate: Date = null;
     AutoCreditManualNumber: string = null;
@@ -840,6 +848,12 @@ export class ARInvoiceMenuButtonsHandler {
 
                 cmpRef.instance.BackCompleted.subscribe(bk => {
                     if (isEditComponentSaved) {
+
+                        if (this.EntityPM.IsConsolidationInvoice) {
+                            this.IsAutoCreditConsolidation = true;
+                        }
+
+                        this.entityArgs.EditComponent.IsReloadNeeded = true;
                         this.entityArgs.EditComponent.ReloadEntityPM();
                     }
                 });
