@@ -11,9 +11,11 @@ export class ReportSearch {
     this.logitudeTab = new GeneralFunctions();
   }
 
-  QuickSearch() {
+  QuickSearch(reportName) {
     this.logitudeTab.GoToMainMenu('General.MH.Reports');
-    this.UseSearchBox('null_Search', 'Unpaid Invoices');
+   // this.UseSearchBox('null_Search', 'Unpaid Invoices');
+    this.UseSearchBox('null_Search',reportName);
+
   }
 
   UseSearchBox(searchFeildId: string, searchByRef: string) {
