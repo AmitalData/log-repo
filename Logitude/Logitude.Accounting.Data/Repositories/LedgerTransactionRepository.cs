@@ -1096,6 +1096,20 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return records;
         }
 
+        public IQueryable<LedgerTransaction> GetTransactionsForMonth(int year, int month, int tenant)
+        {
+            DateTime monthStart = new DateTime(year, month, 1, 0, 0, 0);
+            DateTime monthEnd = new DateTime(year, month, DateTime.DaysInMonth(year, month), 23, 59, 59);
+
+
+            IQueryable<LedgerTransaction> pocos =
+                (from a in context.LedgerTransactions
+                 where a.AccountingDate >= monthStart
+                    && a.AccountingDate <= monthEnd 
+                    && a.Tenant == tenant
+                 select a).OrderByDescending(a => a.AccountingDate);
+            return pocos;
+        }
     }
     public class GLAccountTotalByMonthsKey
     {

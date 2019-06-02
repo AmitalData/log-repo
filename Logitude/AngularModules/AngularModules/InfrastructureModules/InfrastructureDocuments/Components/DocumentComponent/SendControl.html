@@ -1,4 +1,4 @@
-﻿
+
 <style>
   
 
@@ -281,7 +281,7 @@
                                                                         <td style="width:8px"><div></div></td>
                                                                         <td style="width:40px;text-align:left;height:22px"><p style="width:40px;font-size:11px;margin-right:10px;height:22px">Subject</p></td>
                                                                         <td style="width:5px"><div></div></td>
-                                                                        <td><input [disabled]="!IsSendEditMode" type="text" [(ngModel)]="Subject" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;color:black" /></td>
+                                                                        <td><input id="{{'EmailSubject' | IdGeneratorPipe}}" [disabled]="!IsSendEditMode" type="text" [(ngModel)]="Subject" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;color:black" /></td>
                                                                         <td style="width:10px"><div></div></td>
                                                                     </tr>
 

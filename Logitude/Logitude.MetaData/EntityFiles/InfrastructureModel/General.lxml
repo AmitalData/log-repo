@@ -518,7 +518,7 @@
     <TextCode Code="&quot;Accounting.General.O.LastXMonth&quot;" DefaultText="&quot;Last #number Month&quot;" LocalDefaultText="&quot;#number חודשים אחרונים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Accounting.General.O.BalanceDue&quot;" DefaultText="&quot;Balance Due&quot;" LocalDefaultText="&quot;יתרה חייבת&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Accounting.General.O.AccountingBalance&quot;" DefaultText="&quot;Accounting Balance&quot;" LocalDefaultText="&quot;יתרה חשבונאית&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;Accounting.General.O.NewInvoice&quot;" DefaultText="&quot;New General Invoice&quot;" LocalDefaultText="&quot;חשבונית הכלליות חדשה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;Accounting.General.O.NewInvoice&quot;" DefaultText="&quot;New General Invoice&quot;" LocalDefaultText="&quot;חשבונית כללית חדשה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Accounting.General.O.NewCreditNote&quot;" DefaultText="&quot;New Credit Note&quot;" LocalDefaultText="&quot;זיכוי חדש&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Accounting.General.O.Collector&quot;" DefaultText="&quot;Collector&quot;" LocalDefaultText="&quot;גובה&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Accounting.General.O.Salesman&quot;" DefaultText="&quot;Salesman&quot;" LocalDefaultText="&quot;איש מכירות&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
