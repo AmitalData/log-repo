@@ -5,6 +5,9 @@ using Logitude.TimeManagement.Data.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -70,7 +73,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
              Shipments   = new List<UnicargoExport>()
             };
 
-            List<Shipment> shipments = shipmentsContext.Shipments.Where(p=>p.Tenant==tenant && p.IsOperationalClosed==false).Include("CreatedByUser").Include("CreatedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").ToList();
+            //List<Shipment> shipments = shipmentsContext.Shipments.Where(p=>p.Tenant==tenant && p.IsOperationalClosed==false).Include("CreatedByUser").Include("CreatedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").ToList();
            Dictionary<string,string> incoterms= commonDataContext.Incoterms.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
             Dictionary<string, string> ShipmentTypes = shipmentsContext.ShipmentTypes.ToDictionary(a => a.Id, b => b.Name);
             Dictionary<string, string> transportmodes = webFreightContext.TransportModes.ToDictionary(a => a.Id, b => b.Name);
