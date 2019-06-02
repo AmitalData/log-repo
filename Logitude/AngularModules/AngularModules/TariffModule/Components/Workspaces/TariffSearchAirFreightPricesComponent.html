@@ -105,11 +105,12 @@
                                                 <LogLov [ObjectFieldName]="'DestinationPortId'"
                                                         [ObjectTableName]="ObjectTableName"
                                                         [LookUpTableName]="'Port'"
-                                                        [DisplayMemberPath]="'Code'"
                                                         [DataContext]="DataContext"
-                                                        (SelectedItemChanged)="DestinationPort = $event"
+                                                        (SelectedItemChanged)="DestinationPortId"
+                                                        [DisplayMemberPath]="'Code'"
                                                         [SelectedValue]="DestinationPortId">
                                                 </LogLov>
+                                           
                                             </td>
                                             <td style="width:100px">
                                                 <div>
