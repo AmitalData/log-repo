@@ -262,7 +262,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p=>!p.InActive).ToList();
             List<TariffVersion> TariffVersionList = this.repository.GetAllTariffVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), tenant).ToList();
-            Dictionary<string, string> Currencies = myCommonContext.Currencies.Where(p => p.Tenant == tenant).ToList();
+            Dictionary<string, string> Currencies = myCommonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p=>p.Id,p=>p.Code);
 
 
 
@@ -292,8 +292,10 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                     tariffsSummary.ImageId = resultImage;
 
+                    if (!string.IsNullOrEmpty(result.CurrencyId)) {
+                        tariffsSummary.Currency =Currencies.Keys.Contains(result.CurrencyId)? Currencies[result.CurrencyId]:null;
 
-                    tariffsSummary.Currency=result.CurrencyId
+                            }
                     tariffSearchSummaries.Add(tariffsSummary);
 
                 }
