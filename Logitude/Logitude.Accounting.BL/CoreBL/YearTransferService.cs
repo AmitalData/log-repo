@@ -47,7 +47,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     string transText = "";
                     bool useLocal = true;
-                    transText = TranslateTextsClassTranslate("General.MC.ACC.YearTransfer", 0, useLocal);
+                    transText = TranslateTextsClassTranslate("Accounting.O.AccountingPeriodClosed", 0, useLocal);
                     if (String.IsNullOrWhiteSpace(transText))
                     {
                         transText = "Closed Month";
