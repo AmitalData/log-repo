@@ -9,6 +9,7 @@ using Logitude.TariffModule.Data.EntityKeys;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
 using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -22,6 +23,9 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 {
     public partial class TariffQueryService
    {
+
+
+
         public override void GetComposition(EntityKeyFields entityKeys, TariffPM entityPM)
         {
             ITariffModuleContext context = MainContext as ITariffModuleContext; 
@@ -30,6 +34,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             TariffVersionQueryService tariffVersionQueryService = new TariffVersionQueryService(context);
             entityPM.TariffVersions = tariffVersionQueryService.GetMulti(tariffKeys, true);
         }
+
+
 
         public TariffsSummary GetCount(int tenant)
         {
@@ -50,6 +56,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
             List<TariffSetting> setting = tariffSettingRepository.GetAll(tenant).ToList();
             List<string> Steps = new List<string>();
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+
             int propIndex = -1;
             if (setting != null)
             {
@@ -59,11 +67,18 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     int index = 0;
                     Steps.ForEach(item =>
                     {
-                        if (float.Parse(item) >= weight)
+                        if (float.Parse(item) > weight)
                         {
                             propIndex = index;
                             return;
                         }
+
+                        else if (float.Parse(item) == weight)
+                        {
+                            propIndex = ++index;
+                            return;
+                        }
+
                         else
                         {
                             index++;
@@ -75,6 +90,11 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     {
                         propIndex = Steps.Count;
             }
+                    else if (propIndex == 0)
+                    {
+                        propIndex = 1;
+                    }
+
                 }
           
             }
@@ -242,12 +262,13 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p=>!p.InActive).ToList();
             List<TariffVersion> TariffVersionList = this.repository.GetAllTariffVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), tenant).ToList();
+            Dictionary<string, string> Currencies = myCommonContext.Currencies.Where(p => p.Tenant == tenant).ToList();
 
 
 
             foreach (Tariff result in TariffList)
             {
-                List<TariffResult> resultItems = items.Where(x =>  x.tariffid==result.Id && TariffVersionList.Where(a=>a.Version==x.TariffVersion).FirstOrDefault()!=null).ToList();
+                List<TariffResult> resultItems = items.Where(x =>  x.tariffid==result.Id && TariffVersionList.Where(a=>a.Version==x.TariffVersion && a.TariffId==result.Id).FirstOrDefault()!=null).ToList();
                 TariffResult item = resultItems.Where(x => x.price == resultItems.Min(y => y.price)).FirstOrDefault();
                 if (item != null)
                 {
@@ -271,6 +292,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
                     tariffsSummary.ImageId = resultImage;
 
+
+                    tariffsSummary.Currency=result.CurrencyId
                     tariffSearchSummaries.Add(tariffsSummary);
 
                 }
@@ -290,6 +313,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 FolderName = fileLocation,
                 Extension = "jpg",
                 Tenant = tenant,
+                
 
 
             };
