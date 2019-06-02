@@ -136,7 +136,10 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Transshipment2VesselId { get; set; }
         public string Transshipment1VesselId { get; set; }
         public string MainCarriageVesselId { get; set; }
-
         public string BookingConfirmationNumber { get; set; }
+        public string IncotermId { get; set; }
+        public string ShipperAddressId { get; set; }
+        public string ConsigneeAddressId { get; set; }
+        public double? Volume { get; set; }
     }
 }
