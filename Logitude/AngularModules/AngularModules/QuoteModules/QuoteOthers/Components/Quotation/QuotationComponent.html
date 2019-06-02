@@ -233,8 +233,8 @@
                                                         <ScrollViewer>
                                                             <ul [class.FiltersMenuDisabled]="!IsEditEnabled" style="margin:5px;">
 
-                                                                <li (click)="SelectedQuoteTemplateList = item" [class.RowSelected]="item === SelectedQuoteTemplateList" class="SessionItem"
-                                                                    [class.SelectedSessionItem]="item === SelectedQuoteTemplateList"
+                                                                <li (click)="SelectedQuoteTemplate = item" [class.RowSelected]="item === SelectedQuoteTemplate" class="SessionItem"
+                                                                    [class.SelectedSessionItem]="item === SelectedQuoteTemplate"
                                                                     *ngFor="let item of QuotationTemplates">
                                                                     <table>
                                                                         <tr>

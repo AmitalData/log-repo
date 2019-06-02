@@ -1045,6 +1045,38 @@
     <Compile Include="Migrations\201905160948101_IncreaseQuoteSubjectField.Designer.cs">
       <DependentUpon>201905160948101_IncreaseQuoteSubjectField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs" />
+    <Compile Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.Designer.cs">
+      <DependentUpon>201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905281236539_AddCompletedToSprint_Maheera.cs" />
+    <Compile Include="Migrations\201905281236539_AddCompletedToSprint_Maheera.Designer.cs">
+      <DependentUpon>201905281236539_AddCompletedToSprint_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.cs" />
+    <Compile Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.Designer.cs">
+      <DependentUpon>201905260647064_TariffContractNumberConvertedToString_Samar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905261011040_TariffLine_Index_Add.cs" />
+    <Compile Include="Migrations\201905261011040_TariffLine_Index_Add.Designer.cs">
+      <DependentUpon>201905261011040_TariffLine_Index_Add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905271323372_AddFieldsToTenantAndShippingLine_Maheera.cs" />
+    <Compile Include="Migrations\201905271323372_AddFieldsToTenantAndShippingLine_Maheera.Designer.cs">
+      <DependentUpon>201905271323372_AddFieldsToTenantAndShippingLine_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905300653344_NewFields_IsTestTenant_Tenant.cs" />
+    <Compile Include="Migrations\201905300653344_NewFields_IsTestTenant_Tenant.Designer.cs">
+      <DependentUpon>201905300653344_NewFields_IsTestTenant_Tenant.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290737417_AddTMDayOffTypeTable_Maheera.cs" />
+    <Compile Include="Migrations\201905290737417_AddTMDayOffTypeTable_Maheera.Designer.cs">
+      <DependentUpon>201905290737417_AddTMDayOffTypeTable_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290758311_AddDayOffTypeToTMProjectTable_Maheera.cs" />
+    <Compile Include="Migrations\201905290758311_AddDayOffTypeToTMProjectTable_Maheera.Designer.cs">
+      <DependentUpon>201905290758311_AddDayOffTypeToTMProjectTable_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1768,8 +1800,32 @@
     <EmbeddedResource Include="Migrations\201905160948101_IncreaseQuoteSubjectField.resx">
       <DependentUpon>201905160948101_IncreaseQuoteSubjectField.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.resx">
+      <DependentUpon>201905261123515_AddingLastRunStartAndEndDateTimesToScheduler_Rabaia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905281236539_AddCompletedToSprint_Maheera.resx">
+      <DependentUpon>201905281236539_AddCompletedToSprint_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.resx">
       <DependentUpon>201905160752247_NewFields_GLAccount_CreatedAndUpdatedBy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905260647064_TariffContractNumberConvertedToString_Samar.resx">
+      <DependentUpon>201905260647064_TariffContractNumberConvertedToString_Samar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905261011040_TariffLine_Index_Add.resx">
+      <DependentUpon>201905261011040_TariffLine_Index_Add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905271323372_AddFieldsToTenantAndShippingLine_Maheera.resx">
+      <DependentUpon>201905271323372_AddFieldsToTenantAndShippingLine_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905300653344_NewFields_IsTestTenant_Tenant.resx">
+      <DependentUpon>201905300653344_NewFields_IsTestTenant_Tenant.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290737417_AddTMDayOffTypeTable_Maheera.resx">
+      <DependentUpon>201905290737417_AddTMDayOffTypeTable_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290758311_AddDayOffTypeToTMProjectTable_Maheera.resx">
+      <DependentUpon>201905290758311_AddDayOffTypeToTMProjectTable_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

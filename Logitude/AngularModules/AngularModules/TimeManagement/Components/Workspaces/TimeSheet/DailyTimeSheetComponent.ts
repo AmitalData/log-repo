@@ -3,6 +3,7 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TMProjectListService } from '../../../Services/StandardLists/TMProjectListService';
+import { TMLocationListService } from '../../../Services/StandardLists/TMLocationListService';
 import { SprintListService } from '../../../Services/StandardLists/SprintListService';
 import {TimeManagementDomainService, TimeManagementAPIHelper } from '../../../Services/TimeManagementDomainService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
@@ -13,6 +14,8 @@ import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {DateTimePipe} from '../../../../Controls/Pipes/DateTimePipe';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {TMEmployeeTimePM} from '../../../EntityPMs/TMEmployeeTimePM';
+import { TMProjectPM } from '../../../EntityPMs/TMProjectPM'; 
+import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 
 @Component({
     selector: 'DailyTimeSheetComponent',
@@ -218,6 +221,9 @@ export class DailyTimeSheetComponent extends BaseComponent {
 
     }
     AddLineClicked() {
+        this.SaveClicked(null,"Add");
+    }
+    ShowAddScreen() {
         var args: any = {};
         args.IsNew = true;
         args.LocationCode = this.LocationCodeFilter != "A" ? this.LocationCodeFilter : "O";
@@ -246,6 +252,10 @@ export class DailyTimeSheetComponent extends BaseComponent {
         logWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
     }
     CopyLineClicked(item: ItemSourceItem) {
+        this.SaveClicked(item, "Copy");
+    }
+
+    ShowCopyScreen(item: ItemSourceItem) {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Copy Line";
         var args: any = {};
@@ -266,6 +276,24 @@ export class DailyTimeSheetComponent extends BaseComponent {
         logWindow.Show('./TimeManagement/Components/NewEntity/NewLineComponent');
         logWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
     }
+
+    EditLineClicked(item: ItemSourceItem) {
+        this.SaveClicked(item,"Edit");
+    }
+
+    ShowEditScreen(item: ItemSourceItem) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Edit Line";
+        var args: any = {};
+        args.EntityPM = item.entityPM;
+        args.Father = this;
+        args.IsNew = false;
+        args.LocationCode = item.LocationCode;
+        logWindow.WindowArgs = args;
+        logWindow.Show('./TimeManagement/Components/NewEntity/NewLineComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
+    }
+
     OnWindowClosed(arg: any) {
         if (arg == 'OK') {
             this.LoadDailyTimeSheetList();
@@ -281,7 +309,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
     }
 
     private IsValid = true;
-    SaveClicked() {
+    SaveClicked(item = null, params = null) {
         this.IsValid = true;
         var items: ItemSourceItem[] = this.ItemSource.Collection;
         var itemsChanges: ItemSourceItem[] = this.ItemSource.Collection.filter(f => f.HasChanges == true);
@@ -289,23 +317,29 @@ export class DailyTimeSheetComponent extends BaseComponent {
             var msg = "";
             var requiredSprints = items.filter(f => f.SprintId == null).length;
             var requiredDescriptions = items.filter(f => AppTool.IsNullOrEmpty(f.Description)).length;
+            var dayOffValidation = items.filter(f => (f.Project != null && !AppTool.IsNullOrEmpty(f.Project.DayOffTypeCode) && f.LocationCode != "D") || (f.LocationCode == "D" && f.Project != null && AppTool.IsNullOrEmpty(f.Project.DayOffTypeCode))).length;
+
             if (requiredSprints > 0 && requiredDescriptions) {
                 msg = "Sprint and Description fields are required for each line.";
             }
             else {
-                if (requiredSprints > 0 ) {
+                if (requiredSprints > 0) {
                     msg = "Sprint field is required for each line.";
                 }
                 if (requiredDescriptions > 0) {
                     msg = "Description field is required for each line.";
                 }
             }
-           
+
+            if (dayOffValidation > 0) {
+                msg = "Project with a Day Off type requires a Day off Location for each line.";
+            }
+
             if (!AppTool.IsNullOrEmpty(msg)) {
                 this.IsValid = false;
                 this.ShowMessage(msg);
             }
-           
+
             if (this.IsValid) {
                 this.CurrentSession.StartBusyIndicatorSaving();
                 this.HasChanges = false;
@@ -327,8 +361,43 @@ export class DailyTimeSheetComponent extends BaseComponent {
                     this.CurrentSession.StopBusyIndicator();
                     if (!myResponse.HasError) {
                         this.OnDataLoaded(myResponse.Result);
+                        if (!myResponse.HasError) {
+                            this.LoadDailyTimeSheetList();
+                            if (params != null) {
+                                switch (params) {
+                                    case "Edit":
+                                        this.ShowEditScreen(item);
+                                        break;
+                                    case "Add":
+                                        this.ShowAddScreen();
+                                        break;
+                                    case "Copy":
+                                        this.ShowCopyScreen(item);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
                     }
                 });
+            }
+        }
+        else {
+            if (params != null) {
+                switch (params) {
+                    case "Edit":
+                        this.ShowEditScreen(item);
+                        break;
+                    case "Add":
+                        this.ShowAddScreen();
+                        break;
+                    case "Copy":
+                        this.ShowCopyScreen(item);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
@@ -355,9 +424,6 @@ export class DailyTimeSheetComponent extends BaseComponent {
 
                 this.myDomainService.UpdateTimeSheetList(myServiceHelper).subscribe((myResponse: ServiceResponse) => {
                     this.CurrentSession.StopBusyIndicator();
-                    if (!myResponse.HasError) {
-                        this.LoadDailyTimeSheetList();
-                    }
                 });
             }
         }
@@ -410,18 +476,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
             }
         });
     }
-    EditLineClicked(item: ItemSourceItem) {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Edit Line";
-        var args: any = {};
-        args.EntityPM = item.entityPM;
-        args.Father = this;
-        args.IsNew = false;
-        args.LocationCode = item.LocationCode;
-        logWindow.WindowArgs = args;
-        logWindow.Show('./TimeManagement/Components/NewEntity/NewLineComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
-    }
+  
     RefreshButtonClicked(){
         this.RefreshTab();
     }
@@ -446,6 +501,25 @@ export class DailyTimeSheetComponent extends BaseComponent {
             }
         });
     }
+
+    btnExcelCLicked() {
+        this.DownloadExcel();
+    }
+
+    // Download Excel 
+    DownloadExcel() {
+        this.myDomainService.DownloadEmployeesTimesToExcel(this.EmployeeUserId, this.LocationCodeFilter, this.StartDate, this.EndDate).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var fileName = myResponse.Result;
+                var tempDate = new Date();
+                var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
+                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + "Tariffs" + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007";
+                {
+                    window.open(url);
+                }
+            }
+        });
+    }
 }
 
 export class ItemSourceItem extends BaseComponent {
@@ -454,6 +528,7 @@ export class ItemSourceItem extends BaseComponent {
     public entityPM: TMEmployeeTimePM;
     public IsCopy: boolean = false;
     private TMProjectListService: TMProjectListService;
+    private TMLocationListService: TMLocationListService;
     private SprintListService: SprintListService;
     constructor(public entity: TMEmployeeTimePM, private father: DailyTimeSheetComponent, index: number) {
         super();
@@ -500,8 +575,18 @@ export class ItemSourceItem extends BaseComponent {
         if (this.entity.ProjectId != value) {
             this.entity.ProjectId = value;
             this.HasChanges = true;
-            //this.entity.IsHeaderUpdated = true;
             this.getProjectName(value);
+        }
+    }
+
+    project: TMProjectPM;
+    get Project() { return this.project; }
+    set Project(value: TMProjectPM) {
+        if (this.project != value) {
+            this.project = value;
+            if (this.project != null && !AppTool.IsNullOrEmpty(this.project.DayOffTypeCode)) {
+                this.LocationCode = "D";
+            }
         }
     }
 
@@ -513,8 +598,37 @@ export class ItemSourceItem extends BaseComponent {
             var project = myResult.Result;
             if (project != null) {
                 this.ProjectName = project.Name;
+                if (this.project != null && !AppTool.IsNullOrEmpty(this.project.DayOffTypeCode)) {
+                    this.LocationCode = "D";
+                }
             } else {
                 this.ProjectName = null;
+            }
+        });
+    }
+
+    private getLocationName(value: string) {
+        if (this.TMLocationListService == null) {
+            this.TMLocationListService = new TMLocationListService();
+        }
+        if (this.TMProjectListService == null) {
+            this.TMProjectListService = new TMProjectListService();
+        }
+        this.TMLocationListService.getSingle(value).subscribe((myResult: ServiceResponse) => {
+            var location = myResult.Result;
+            if (location != null) {
+                this.LocationName = location.Name;
+            } else {
+                this.LocationName = null;
+            }
+        });
+
+        this.TMProjectListService.getSingle(this.ProjectId).subscribe((myResult: ServiceResponse) => {
+            var project = myResult.Result;
+            if (project != null) {
+                this.project = project;
+            } else {
+                this.project = null;
             }
         });
     }
@@ -559,6 +673,12 @@ export class ItemSourceItem extends BaseComponent {
     }
     
     get LocationName() { return this.entity.LocationName; }
+    set LocationName(value: string) {
+        if (this.entity.LocationName != value) {
+            this.entity.LocationName = value;
+            this.HasChanges = true;
+        }
+    }
 
     get Description() { return this.entity.Description; }
     set Description(value: string) {
@@ -579,6 +699,13 @@ export class ItemSourceItem extends BaseComponent {
 
     get EmployeeUserId() { return this.entity.EmployeeUserId; }
     get LocationCode() { return this.entity.LocationCode; }
+    set LocationCode(value: string) {
+        if (this.entity.LocationCode != value) {
+            this.entity.LocationCode = value;
+            this.HasChanges = true;
+            this.getLocationName(value);
+        }
+    }
 
     private showText = true;
     get ShowText() {
@@ -624,20 +751,6 @@ export class ItemSourceItem extends BaseComponent {
             this.entity.DateOfWork = value;
         }
     }
-
-    //public get DayMinutes() {
-    //    if (this.DayDate != null) {
-    //        return this.entity.TimeInMinutes;
-    //    }
-    //}
-    //public set DayMinutes(value: number) {
-    //    if (this.DayDate.Minuts != value) {
-    //        this.DayDate.Minuts = value;
-    //        this.HasChanges = true;
-    //        this.DayDateFormat = this.ApplyTimeFormat(value);
-    //        this.father.SetTotalDatesOfList();
-    //    }
-    //}
 
     public ViewWI(wiNumber: string) {
         var url = "https://logitudeteam.visualstudio.com/DefaultCollection/LogitudeWorld/_workitems/edit/" + wiNumber;

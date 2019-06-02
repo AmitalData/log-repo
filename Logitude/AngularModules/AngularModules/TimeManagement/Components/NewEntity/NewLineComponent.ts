@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {TMEmployeeTimePM} from '../../EntityPMs/TMEmployeeTimePM'; 
+import { TMEmployeeTimePM } from '../../EntityPMs/TMEmployeeTimePM';
+import { TMProjectPM } from '../../EntityPMs/TMProjectPM'; 
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {DateTool, AppTool} from '../../../Infrastructure/Tools';
@@ -8,6 +9,7 @@ import {TimeManagementDomainService, TimeManagementAPIHelper, TimeSheetItem, Tim
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {DailyTimeSheetComponent, ItemSourceItem} from '../Workspaces/TimeSheet/DailyTimeSheetComponent';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
+import { TMProjectListService } from '../../Services/StandardLists/TMProjectListService';
 
 @Component({
     selector: 'NewLineComponent',
@@ -21,12 +23,14 @@ export class NewLineComponent extends BaseComponent {
     public EntityPM: TMEmployeeTimePM;
     private myDomainService: TimeManagementDomainService = new TimeManagementDomainService();
     Father: DailyTimeSheetComponent;
+    private TMProjectListService: TMProjectListService;
 
     public DateOfWorkDate: TimeSheetItemDay = new TimeSheetItemDay();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.myDomainService = new TimeManagementDomainService();
+        this.TMProjectListService = new TMProjectListService();
         this.EntityPM = new TMEmployeeTimePM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
@@ -108,6 +112,17 @@ export class NewLineComponent extends BaseComponent {
         this.SetUIProperties();
     }
 
+    project: TMProjectPM;
+    get Project() { return this.project; }
+    set Project(value: TMProjectPM) {
+        if (this.project != value) {
+            this.project = value;
+            if (this.project != null && !AppTool.IsNullOrEmpty(this.project.DayOffTypeCode)) {
+                this.LocationCode = "D";
+            }
+        }
+    }
+
     get EmployeeUserId() {
         if (this.EntityPM != null) {
             return this.EntityPM.EmployeeUserId;
@@ -140,7 +155,22 @@ export class NewLineComponent extends BaseComponent {
     set LocationCode(value: string) {
         if (this.EntityPM.LocationCode != value) {
             this.EntityPM.LocationCode = value;
+            this.setProject(value);
         }
+    }
+
+    private setProject(value: string) {
+        if (this.TMProjectListService == null) {
+            this.TMProjectListService = new TMProjectListService();
+        }
+        this.TMProjectListService.getSingle(this.ProjectId).subscribe((myResult: ServiceResponse) => {
+            var project = myResult.Result;
+            if (project != null) {
+                this.project = project;
+            } else {
+                this.project = null;
+            }
+        });
     }
 
 
@@ -221,6 +251,11 @@ export class NewLineComponent extends BaseComponent {
 
         if (this.SprintId == null) {
             errors.push("Sprint is required");
+        }
+
+        if ((this.Project != null && !AppTool.IsNullOrEmpty(this.Project.DayOffTypeCode) && this.LocationCode != "D") ||
+            (this.LocationCode == "D" && this.Project != null && AppTool.IsNullOrEmpty(this.Project.DayOffTypeCode))) {
+            errors.push("Project with a Day Off type requires a Day off Location");
         }
 
         this.ValidationErrorsList = errors;

@@ -1,12 +1,15 @@
-import {Component, ViewChildren, QueryList,OnInit} from '@angular/core';
-import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import {Component, ViewChildren, QueryList,OnInit, OnDestroy} from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { TariffDomainService, TariffSummery } from '../../Services/TariffDomainService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
+import { BatchTaskExecutionPM } from '../../../Infrastructure/EntityPMs/BatchTaskExecutionPM';
+import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
+import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
 
 @Component({
     selector: 'TariffModuleWorkspaceComponent',
@@ -15,7 +18,7 @@ import { ListComponentArgs } from '../../../Infrastructure/Args';
     providers: [EntityResourceService, TariffDomainService],
 })
 
-export class TariffModuleWorkspaceComponent implements OnInit {
+export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService, private tariffDomainService: TariffDomainService) {
@@ -47,12 +50,13 @@ export class TariffModuleWorkspaceComponent implements OnInit {
             this.CurrentSession = SessionLocator.SelectedSession;
         this.InitComponent();
     }
+    ngOnDestroy() {
+        this.StopTimer();
+    }
 
     LoadAllScreenData() {
         this.LoadQueriesCounts();
     }
-
-
     LoadQueriesCounts() {
         this.tariffDomainService.GetTariffsCounts().subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {
@@ -68,6 +72,15 @@ export class TariffModuleWorkspaceComponent implements OnInit {
                 }
             });
         
+    }
+    CheckAirfreightCost() {
+        this._entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
+            var logWindow = new LogitudeWindow();
+            logWindow.Width = 900;
+            logWindow.Height = 500;
+            logWindow.Title = "Search Air Freight Prices";
+            logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
+        });      
     }
 
     public NewTariff(code: string) {
@@ -119,7 +132,6 @@ export class TariffModuleWorkspaceComponent implements OnInit {
             }
         }       
     }
-
     public ViewTariffs(code: string) {
 
         switch (code) {
@@ -190,14 +202,81 @@ export class TariffModuleWorkspaceComponent implements OnInit {
             this.selectedItem = newValue;
         }
     }
-
-
+    
     TariffSettingsClicked() {
         var logWindow = new LogitudeWindow();
         logWindow.Width = 600;
         logWindow.Height = 400;
         logWindow.Title = "Tariff Settings";
         logWindow.Show('./TariffModule/Components/Workspaces/TariffSettingComponent');
+    }
+
+    private timer: any;
+    private timerInterval: number = 5000;
+    private IsLoading: boolean = false;
+    private batchEntity: BatchTaskExecutionPM;
+    GenerateTariffsClicked() {
+        this.CurrentSession.StartBusyIndicator("Generating...");
+
+        this.tariffDomainService.GenerateTariffs().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+
+                this.batchEntity = myResponse.Result;
+
+                if (this.batchEntity != null) {
+                    this.timer = setInterval(() => { this.GetBTE(); }, this.timerInterval);
+                }
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                var window = new MessageWindow();
+                window.Show(myResponse.ErrorsArray[0]);
+            }
+        });
+    }
+    
+    GetBTE() {
+        if (!this.IsLoading) {
+            this.IsLoading = true;
+
+            var bteList: BatchTaskExecutionList;
+            var myService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+
+            myService.getSingle(this.batchEntity.Id).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    bteList = myResponse.Result;
+
+                    if (bteList.StatusCode == "D") {
+                        this.LoadQueriesCounts();
+                        this.CurrentSession.StopBusyIndicator();
+                        this.StopTimer();
+                    }
+
+                    else if (bteList.StatusCode == "F") {
+                        this.CurrentSession.StopBusyIndicator();
+                        this.StopTimer();                       
+                    }
+                }
+
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.StopTimer();
+
+                    var window = new MessageWindow();
+                    window.Show(myResponse.ErrorsArray[0]);
+
+                }
+
+                this.IsLoading = false;
+            });
+        }
+    }
+
+    StopTimer() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
     }
 }
 

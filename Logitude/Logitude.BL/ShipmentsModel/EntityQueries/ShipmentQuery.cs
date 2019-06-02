@@ -10293,6 +10293,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Transshipment2VesselId = m.Transshipment2VesselId,
                      Transshipment3VesselId = m.Transshipment3VesselId,
                      BookingConfirmationNumber = m.BookingConfirmationNumber,
+                     IncotermId = shipment.IncotermId,
+                     ShipperAddressId = shipment.ShipperAddressId,
+                     ConsigneeAddressId = shipment.ConsigneeAddressId,
+                     Volume = shipment.Volume,
                  });
 
             return dataList;
@@ -12352,6 +12356,24 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return shipmentsList;
         }
+
+        public IQueryable<ShipmentList> GetShipmentListsByFromCreateDateAndToCreateDate(DateTime fromCreateDate , DateTime toCreateDate , int tenant)
+        {
+
+            IQueryable<ShipmentList> shipmentsLists = from s in repository.context.Shipments
+                                                     where s.Tenant == tenant &&   s.CreateDateTime >= fromCreateDate && s.CreateDateTime <= toCreateDate
+                                                      select new ShipmentList
+                                                     {
+                                                         Id= s.Id ,
+                                                         Tenant = s.Tenant ,
+                                                         ShipmentNumber = s.ShipmentNumber,
+                                                     };
+            return shipmentsLists;
+        }
+
+
+
+
     }
 
     public class DeparturesArrivalsDataItem

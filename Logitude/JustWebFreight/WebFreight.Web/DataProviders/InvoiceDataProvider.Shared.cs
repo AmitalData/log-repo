@@ -506,6 +506,12 @@ namespace WebFreight.Web.DataProviders
 
         public string AgentReference1 { get; set; }
         public string AgentReference2 { get; set; }
+
+
+        public string TenantCBSA { get; set; }
+        public string TenantCAAT { get; set; }
+        public string CarrierCBSA { get; set; }
+        public string CarrierCAAT { get; set; }
     }
 
     public class SAT

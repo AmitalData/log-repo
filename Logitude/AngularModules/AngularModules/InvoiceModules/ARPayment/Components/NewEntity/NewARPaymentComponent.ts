@@ -52,7 +52,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     public IsCreatedFromInvoiceSide: boolean = false;
     get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetARPayments == true && this.AccountingPaymentMethodCode == "FS" ? true : false; }
     public isRTL: boolean = false;
-
+    public accountingActivated: boolean;
     private _glaService: GLAccountListService = new GLAccountListService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
@@ -68,7 +68,7 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (this.invoicePm == null) {
             this.invoicePm = new ARInvoicePM();
         }
-
+        this.accountingActivated = SessionLocator.TenantPM.AccountingActivated;
 
         if(SessionLocator.TenantPM.AccountingActivated)
             this.invoicePm.IsFullAccounting = true;

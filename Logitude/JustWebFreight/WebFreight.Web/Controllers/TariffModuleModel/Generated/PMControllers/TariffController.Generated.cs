@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Tariff", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("Tariff", entityPM.Tenant, authToken.Tenant);
 	                    
                         ITariffModuleContext MyContext = TariffModuleContext.GetContext(entityPM.Tenant);
                         TariffUpdateService service = new TariffUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Tariff", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("Tariff", entityPM.Tenant, authToken.Tenant);
 	
                         ITariffModuleContext MyContext = TariffModuleContext.GetContext(entityPM.Tenant);
                         TariffUpdateService service = new TariffUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

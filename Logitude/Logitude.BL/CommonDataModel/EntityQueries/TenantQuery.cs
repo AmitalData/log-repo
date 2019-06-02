@@ -146,6 +146,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 DefaultSLAId = a.DefaultSLAId,
                                                 AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
                                                 NumberFormatCode = a.NumberFormatCode,
+                                                CAAT = a.CAAT,
+                                                CBSA = a.CBSA,
+                                                IsTestTenant = a.IsTestTenant,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -300,7 +303,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         StockTypeCode = tt.StockTypeCode,
                         AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice,
                         NumberFormatCode = tt.NumberFormatCode,
-                        EcommerceSupportEmail = tt.EcommerceSupportEmail
+                        EcommerceSupportEmail = tt.EcommerceSupportEmail,
+                        CAAT = tt.CAAT,
+                        CBSA = tt.CBSA,
+                        IsTestTenant = tt.IsTestTenant,
 
                     };
 
@@ -462,7 +468,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StockTypeCode = tt.StockTypeCode,
                     AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice,
                     NumberFormatCode = tt.NumberFormatCode,
-                    EcommerceSupportEmail = tt.EcommerceSupportEmail
+                    EcommerceSupportEmail = tt.EcommerceSupportEmail,
+                    CAAT = tt.CAAT,
+                    CBSA = tt.CBSA,
+                    IsTestTenant = tt.IsTestTenant,
 
                 };
 
@@ -606,7 +615,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            StockTypeCode = a.StockTypeCode,
                                            AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
                                            NumberFormatCode = a.NumberFormatCode,
-                                           EcommerceSupportEmail = a.EcommerceSupportEmail
+                                           EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                           CAAT = a.CAAT,
+                                           CBSA = a.CBSA,
+                                           IsTestTenant = a.IsTestTenant,
+
 
                                        }).FirstOrDefault();
 
@@ -749,7 +762,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        StockTypeCode = a.StockTypeCode,
                                        AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
                                        NumberFormatCode = a.NumberFormatCode,
-                                       EcommerceSupportEmail = a.EcommerceSupportEmail
+                                       EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                       CAAT = a.CAAT,
+                                       CBSA = a.CBSA,
+                                       IsTestTenant = a.IsTestTenant,
+
 
                                    }).FirstOrDefault();
 
@@ -896,7 +913,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                StockTypeCode = a.StockTypeCode,
                                                AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
                                                NumberFormatCode = a.NumberFormatCode,
-                                               EcommerceSupportEmail = a.EcommerceSupportEmail
+                                               EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                               CAAT = a.CAAT,
+                                               CBSA = a.CBSA,
+                                               IsTestTenant = a.IsTestTenant,
+
 
                                            }).FirstOrDefault();
 
@@ -1042,7 +1063,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            StockTypeCode = a.StockTypeCode,
                                            AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
                                            NumberFormatCode = a.NumberFormatCode,
-                                           EcommerceSupportEmail = a.EcommerceSupportEmail
+                                           EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                           CAAT = a.CAAT,
+                                           CBSA = a.CBSA,
+                                           IsTestTenant = a.IsTestTenant,
+
 
                                        }).FirstOrDefault();
 
@@ -1180,7 +1205,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        StockTypeCode = a.StockTypeCode,
                                        AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
                                        NumberFormatCode = a.NumberFormatCode,
-                                       EcommerceSupportEmail = a.EcommerceSupportEmail
+                                       EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                       CAAT = a.CAAT,
+                                       CBSA = a.CBSA,
+                                       IsTestTenant = a.IsTestTenant,
+
 
                                    }).FirstOrDefault();
                 if (tenant != null)
@@ -1353,7 +1382,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StockTypeCode = myPOCO.StockTypeCode,
                     AutoArchiveOnInvoice = myPOCO.AutoArchiveOnInvoice,
                     NumberFormatCode = myPOCO.NumberFormatCode,
-                    EcommerceSupportEmail = myPOCO.EcommerceSupportEmail
+                    EcommerceSupportEmail = myPOCO.EcommerceSupportEmail,
+                    CAAT = myPOCO.CAAT,
+                    CBSA = myPOCO.CBSA,
+                    IsTestTenant = myPOCO.IsTestTenant,
+
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1482,6 +1515,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 TemperatureUnitCode = a.TemperatureUnitCode,
                                                 DefaultSLAId = a.DefaultSLAId,
                                                 NumberFormatCode = a.NumberFormatCode,
+                                                CAAT = a.CAAT,
+                                                CBSA = a.CBSA,
+                                                IsTestTenant = a.IsTestTenant,
+
 
                                             };
             return result;

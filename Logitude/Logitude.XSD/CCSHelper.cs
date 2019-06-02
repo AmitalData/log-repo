@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InfrastructureModel.EntityQueries;
+﻿using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -866,7 +867,7 @@ namespace Logitude.XSD
                 EntityReference = Shipment.ShipmentNumber,
                 SearchFields = Shipment.ShipmentNumber + "," + xmlTarget + "," + "O" + "," + xmlSubject,
                 CreateDateUTC = DateTime.UtcNow,
-                AWBNumber = MasterData.Master,
+                AWBNumber = EntityFieldsHelper.GetLongMasterField(Shipment, MasterData),
             };
 
             if (IsDemoTenant)

@@ -125,9 +125,9 @@ export class TariffPM {
     public set LastVersion(newValue: number) { if (this.lastVersion != newValue) { this.lastVersion = newValue; this.MarkAsDirty("LastVersion"); } }
        
 	 
-    private contractNumber: number;
+    private contractNumber: string;
     public get ContractNumber() { return this.contractNumber; }
-    public set ContractNumber(newValue: number) { if (this.contractNumber != newValue) { this.contractNumber = newValue; this.MarkAsDirty("ContractNumber"); } }
+    public set ContractNumber(newValue: string) { if (this.contractNumber != newValue) { this.contractNumber = newValue; this.MarkAsDirty("ContractNumber"); } }
        
 	 
     private setAsInActive: boolean;

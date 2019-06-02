@@ -89,7 +89,7 @@
                                             <LogLabel [Text]="'Location'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogLabel>
                                         </td>
 
-                                        <td style="width:165px;">
+                                        <td style="width:220px;">
                                             <LocationsFilter (SelectedValueChanged)="SelectedLocationFilter = $event" [SelectedValue]="SelectedLocationFilter"></LocationsFilter>
                                         </td>
 
@@ -192,6 +192,14 @@
                                             <div></div>
                                         </td>
 
+                                        <td style="height:25px;width:25px; vertical-align: middle;" >
+                                            <button class="Button" style="height:25px;width:25px;" (click)="btnExcelCLicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                                        </td>
+
+                                        <td style="width:5px;">
+                                            <div></div>
+                                        </td>
+
                                         <td style="width: 70px;">
                                             <button class="Button" style="height:25px;" (click)="AddLineClicked()">
                                                 <img class="LeftCenter" style="margin-left: 5px;" src="./Images/Buttons/AddGreenSolid.png" />
@@ -255,7 +263,7 @@
                                                         [ObjectTableName]="'TMEmployeeTime'"
                                                         [ObjectFieldName]="'ProjectId'"
                                                         [SelectedValue]="item.ProjectId"
-                                                        [LookUpTableName]="'TMProject'"
+                                                        [LookUpTableName]="'TMProject'" (SelectedItemChanged)="item.Project = $event"
                                                         [HideColumns]="true">
                                                 </LogLov>
                                             </div>
@@ -272,7 +280,18 @@
                                     <!-- Location  -->
                                     <log-column [Alignment]="'left'" [width]="'120'" [header]="'Location'">
                                         <log-cell-template template="let item" #logcelltemplate>
-                                            {{item.LocationName}}
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
+                                                {{item.LocationName}}
+                                            </div>
+                                            <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [FocusOnMe]="'true'" [ObjectFieldName]="'LocationCode'"
+                                                        [DataContext]="item.DataContext"
+                                                        [ObjectTableName]="'TMEmployeeTime'"
+                                                        [SelectedValue]="itemLocationCode"
+                                                        [LookUpTableName]="'TMLocation'"
+                                                        [HideColumns]="true">
+                                                </LogLov>
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
@@ -308,8 +327,9 @@
                                                         [DataContext]="item.DataContext"
                                                         [ObjectTableName]="'TMEmployeeTime'"
                                                         [ObjectFieldName]="'SprintId'"
-                                                        [SelectedValue]="item.SprintId"
+                                                        [SelectedValue]="item.SprintId" [IsDecendingSort]="true"
                                                         [LookUpTableName]="'Sprint'"
+                                                        [DependencyFilter1Value]="false"
                                                         [HideColumns]="true">
                                                 </LogLov>
                                             </div>

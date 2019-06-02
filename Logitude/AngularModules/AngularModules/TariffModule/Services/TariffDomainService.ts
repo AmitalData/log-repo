@@ -48,6 +48,43 @@ export class TariffDomainService {
         });
     }
 
+
+    GetAvailableAirlineFreightTariffs(FromPort: string, ToPort: string, BetweenDate: Date, Weight: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetAvailableAirlineFreightTariffs?FromPort=' + FromPort + "&ToPort=" + ToPort + "&BetweenDate=" + ServiceHelper.GetDateString(BetweenDate) + "&Weight=" + Weight;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var myJsonResult = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myJsonResult;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+    
+
+    GenerateTariffs() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetGenerateTariffs';
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var listJason = response.json();
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = listJason;
+                return myResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     GetTenantTariffSetting() {
 
         var authHeader = new Headers();
@@ -198,6 +235,18 @@ export class TariffFilterParameter {
     TariffType: string
 }
 
+
+
+export class TariffSearchSummary {
+    Id: string;
+    price: string;
+    EffictiveDate: Date;
+    Remarks: string;
+    ImageId: string;
+    Name: string;
+
+}
+
 export class ExcelTariffLines {
     FromPortId: string;
     FromPortCode: string;
@@ -251,4 +300,5 @@ export class ExcelTariffLines {
     Surcharge8PriceText: string;
     Surcharge9PriceText: string;
     Surcharge10PriceText: string;
+    Index: number;
 }

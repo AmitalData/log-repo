@@ -3436,6 +3436,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<TMDayOffType> TMDayOffTypes
+        {
+            get;
+            set;
+
+        }
+
         public IDbSet<TMProject> TMProjects
         {
             get;
@@ -4287,6 +4294,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             #region Time Management
             modelBuilder.Configurations.Add(new TMEmployeeTimeMap());
             modelBuilder.Configurations.Add(new TMLocationMap());
+            modelBuilder.Configurations.Add(new TMDayOffTypeMap());
             modelBuilder.Configurations.Add(new TMProjectMap());
             modelBuilder.Configurations.Add(new TMOfficeHourMap());
             modelBuilder.Configurations.Add(new TMReleaseMap());

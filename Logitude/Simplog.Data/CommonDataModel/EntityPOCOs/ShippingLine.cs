@@ -23,5 +23,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("ShippingAgentId")]
         public virtual ShippingAgent ShippingAgent { get; set; }
 
+        public string CBSA { get; set; }
+        public string CAAT { get; set; }
     }
 }

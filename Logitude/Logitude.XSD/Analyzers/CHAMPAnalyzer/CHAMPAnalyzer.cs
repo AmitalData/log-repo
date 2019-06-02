@@ -48,6 +48,7 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
         private CHAMP17.Envelope myEnvelope;
         private string myPrefix;
         private string myMaster;
+        private string myLongMaster;
         private string myHouse;        
         private bool isTechnicalFNA;
         private string myTechnicalIdentifier;
@@ -544,11 +545,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                 commlog.EntityId = myBooking.Id;
                                 commlog.EntityReference = myBooking.BookingNumber;
                                 commlog.ObjectTableId = objectTabelId;
-                                commlog.AWBNumber = myMaster;
+                                commlog.AWBNumber = this.GetAWBNumber();
                                 myCommunicationLogRepository.Update(commlog);
                                 myCommunicationLogRepository.SubmitChanges();
 
-                                myAnalyzeQueue.AWBNumber = myMaster;
+                                myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
                                 myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
                                 myAnalyzeQueue.ObjectTableName = myObjectTableName;
                             }
@@ -578,11 +579,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                     commlog.EntityId = myShipment.Id;
                                     commlog.EntityReference = myShipment.ShipmentNumber;
                                     commlog.ObjectTableId = objectTabelId;
-                                    commlog.AWBNumber = myMaster;
+                                    commlog.AWBNumber = this.GetAWBNumber();
                                     myCommunicationLogRepository.Update(commlog);
                                     myCommunicationLogRepository.SubmitChanges();
 
-                                    myAnalyzeQueue.AWBNumber = myMaster;
+                                    myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
                                     myAnalyzeQueue.EntityReference = myShipment.ShipmentNumber;
                                     myAnalyzeQueue.ObjectTableName = myObjectTableName;
 
@@ -623,11 +624,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                         commlog.EntityId = myBooking.Id;
                                         commlog.EntityReference = myBooking.BookingNumber;
                                         commlog.ObjectTableId = objectTabelId;
-                                        commlog.AWBNumber = myMaster;
+                                        commlog.AWBNumber = this.GetAWBNumber();
                                         myCommunicationLogRepository.Update(commlog);
                                         myCommunicationLogRepository.SubmitChanges();
 
-                                        myAnalyzeQueue.AWBNumber = myMaster;
+                                        myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
                                         myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
                                         myAnalyzeQueue.ObjectTableName = myObjectTableName;
                                     }
@@ -687,11 +688,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                 commlog.EntityId = myShipment.Id;
                                 commlog.EntityReference = myShipment.ShipmentNumber;
                                 commlog.ObjectTableId = objectTabelId;
-                                commlog.AWBNumber = myMaster;
+                                commlog.AWBNumber = this.GetAWBNumber();
                                 myCommunicationLogRepository.Update(commlog);
                                 myCommunicationLogRepository.SubmitChanges();
 
-                                myAnalyzeQueue.AWBNumber = myMaster;
+                                myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
                                 myAnalyzeQueue.EntityReference = myShipment.ShipmentNumber;
                                 myAnalyzeQueue.ObjectTableName = myObjectTableName;
                             }
@@ -710,11 +711,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                     commlog.EntityId = myBooking.Id;
                                     commlog.EntityReference = myBooking.BookingNumber;
                                     commlog.ObjectTableId = objectTabelId;
-                                    commlog.AWBNumber = myMaster;
+                                    commlog.AWBNumber = this.GetAWBNumber();
                                     myCommunicationLogRepository.Update(commlog);
                                     myCommunicationLogRepository.SubmitChanges();
 
-                                    myAnalyzeQueue.AWBNumber = myMaster;
+                                    myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
                                     myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
                                     myAnalyzeQueue.ObjectTableName = myObjectTableName;
                                 }
@@ -784,11 +785,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                     commlog.EntityId = myShipment.Id;
                                     commlog.EntityReference = myShipment.ShipmentNumber;
                                     commlog.ObjectTableId = objectTabelId;
-                                    commlog.AWBNumber = myMaster;
+                                    commlog.AWBNumber = this.GetAWBNumber();
                                     myCommunicationLogRepository.Update(commlog);
                                     myCommunicationLogRepository.SubmitChanges();
 
-                                    myAnalyzeQueue.AWBNumber = myMaster;
+                                    myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
                                     myAnalyzeQueue.EntityReference = myShipment.ShipmentNumber;
                                     myAnalyzeQueue.ObjectTableName = myObjectTableName;
 
@@ -831,11 +832,11 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                         commlog.EntityId = myBooking.Id;
                                         commlog.EntityReference = myBooking.BookingNumber;
                                         commlog.ObjectTableId = objectTabelId;
-                                        commlog.AWBNumber = myMaster;
+                                        commlog.AWBNumber = this.GetAWBNumber();
                                         myCommunicationLogRepository.Update(commlog);
                                         myCommunicationLogRepository.SubmitChanges();
 
-                                        myAnalyzeQueue.AWBNumber = myMaster;
+                                        myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
                                         myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
                                         myAnalyzeQueue.ObjectTableName = myObjectTableName;
                                     }
@@ -882,13 +883,13 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
                                 commlog.EntityId = myBooking.Id;
                                 commlog.EntityReference = myBooking.BookingNumber;
                                 commlog.ObjectTableId = objectTabelId;
-                                commlog.AWBNumber = myMaster;
+                                commlog.AWBNumber = this.GetAWBNumber();
                                 myCommunicationLogRepository.Update(commlog);
                                 myCommunicationLogRepository.SubmitChanges();
 
                                 myAnalyzeQueue.EntityReference = myBooking.BookingNumber;
                                 myAnalyzeQueue.ObjectTableName = myObjectTableName;
-                                myAnalyzeQueue.AWBNumber = myMaster;
+                                myAnalyzeQueue.AWBNumber = commlog.AWBNumber;
                             }
 
                             else
@@ -1274,6 +1275,17 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
             analyzeQueueRepository.Update(myAnalyzeQueue);
             analyzeQueueRepository.SubmitChanges();
         }
+        private string GetAWBNumber()
+        {
+            if (string.IsNullOrEmpty(this.myLongMaster))
+            {
+                return this.myLongMaster;
+            }
 
+            else
+            {
+                return this.myMaster;
+            }
+        }
     }
 }

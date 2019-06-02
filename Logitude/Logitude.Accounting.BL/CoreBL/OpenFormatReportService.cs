@@ -30,6 +30,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -354,8 +355,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(LocalAmountDebit.PadLeft(14, '0'));
                     }
 
-                  
+                   
                 }
+                
                 else
                 {
 
@@ -376,8 +378,16 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (LocalAmountCredit.Length > 14) { LocalAmountCredit= LocalAmountCredit.Substring(0, 14); }
                         myStringBuilder.Append(LocalAmountCredit.PadLeft(14, '0'));
                     }
-                 
+
+                    else if (item.LocalAmountCredit == 0 && item.LocalAmountDebit == 0)
+                    {
+                        myStringBuilder.Append("+");
+
+                        myStringBuilder.Append('0', 14);
+                    }
+
                 }
+
 
 
                 if (item.LocalAmountDebit != 0)
@@ -400,6 +410,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(ForeignAmountDebit.PadLeft(14, '0'));
 
                     }
+                    else if(item.ForeignAmountCredit == 0 && item.ForeignAmountDebit==0)
+                    {
+                        myStringBuilder.Append("+");
+                     
+                        myStringBuilder.Append('0',14);
+                    }
                 }
                 else
                 {
@@ -420,6 +436,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (ForeignAmountCredit.Length > 14) { ForeignAmountCredit = ForeignAmountCredit.Substring(0, 14); }
                         myStringBuilder.Append(ForeignAmountCredit.PadLeft(14, '0'));
 
+                    }
+                    else if (item.ForeignAmountCredit == 0 && item.ForeignAmountDebit == 0)
+                    {
+                        myStringBuilder.Append("+");
+
+                        myStringBuilder.Append('0', 14);
                     }
                 }
 
@@ -3999,13 +4021,13 @@ namespace Logitude.Accounting.BL.CoreBL
             myStringBuilder.Append(' ', 50);
 
 
-            ARinvoiceTotalAmount = ARC100.Where(d=> d.TotalDocumentsAmountAfterDiscount >= 0).Sum(D =>(decimal) D.DocumentAmountAndVATAmount );
-            CreditARinvoiceTotalAmount = ARC100.Where(d => d.TotalDocumentsAmountAfterDiscount < 0).Sum(d => (decimal)d.DocumentAmountAndVATAmount);
+            ARinvoiceTotalAmount = ARC100.Where(d=> d.DocumentType =="305" ).Sum(D =>(decimal) D.TotalDocumentsAmountAfterDiscount);
+            CreditARinvoiceTotalAmount = ARC100.Where(d => d.DocumentType =="330" ).Sum(d => (decimal)d.TotalDocumentsAmountAfterDiscount);
             ARpaymentTotalAmount = ARPAymentC100.Sum(d => (decimal)d.DocumentAmountAndVATAmount);
             DepositTotalAmount = DepositC100.Sum(d => (decimal)d.DocumentAmountAndVATAmount);
-            APinvoiceTotalAmount = APC100.Sum(d => (decimal)d.DocumentAmountAndVATAmount);
-            ARinvoiceTotalRecords = ARC100.Where(d => d.TotalDocumentsAmountAfterDiscount >= 0).Count();
-            CreditARinvoiceTotalRecords = ARC100.Where(d => d.TotalDocumentsAmountAfterDiscount < 0).Count();
+            APinvoiceTotalAmount = APC100.Sum(d => (decimal)d.TotalDocumentsAmountAfterDiscount );
+            ARinvoiceTotalRecords = ARC100.Where(d => d.DocumentType =="305").Count();
+            CreditARinvoiceTotalRecords = ARC100.Where(d => d.DocumentType =="330" ).Count();
             ARpaymentTotalRecords = ARPAymentC100.Count();
             DepositTotalRecords = DepositC100.Count();
             APinvoiceTotalRecords = APC100.Count();
@@ -4071,7 +4093,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private   DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines, OpenFormatReportPM openFormatReport, bool isFromWR = false)
         {
             // prepare file string
-            string file = string.Join(Environment.NewLine, lines);
+            string file =  string.Join(Environment.NewLine, lines);
           
             // create document
             int tenant = openFormatReport.Tenant;
@@ -4130,7 +4152,22 @@ namespace Logitude.Accounting.BL.CoreBL
                 FileName = "BKMVDATA",
             };
 
-            byte[] bytearray = Encoding.Default.GetBytes(file);
+            //MemoryStream memstream = new MemoryStream();
+
+            //StreamReader sr = new StreamReader(file);
+            //StreamWriter sw = new StreamWriter(memstream,  Encoding.Default);
+
+
+            //sw.WriteLine(sr.ReadToEnd());
+
+
+
+            //sw.Close();
+            //sr.Close();
+
+
+
+            byte[] bytearray = Encoding.Unicode.GetBytes(file);// memstream.ToArray(); 
             document.FileData = bytearray;
 
 
@@ -4700,7 +4737,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 FileName = "INI",
             };
 
-            byte[] bytearray = Encoding.Default.GetBytes(file);
+            byte[] bytearray = Encoding.Unicode.GetBytes(file);
             document.FileData = bytearray;
             docService.Create(document, document.FileData, contact.Id);
 
@@ -4919,6 +4956,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             string formated = Math.Abs(value).ToString().Replace(".", string.Empty);
             string[] sub = value.ToString().Split('.');
+          
             if (quantity)
             {
                 formated = formated + "00";
@@ -4932,9 +4970,9 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 formated = "0"+ formated  ;
             }
-            else if ((sub.Count() > 1) && !isVat && sub[1] != "00")
+            else if (sub.Length > 1 && sub[1].Length == 1)
             {
-                formated =  formated + "0";
+                formated = formated + "0";
             }
 
 

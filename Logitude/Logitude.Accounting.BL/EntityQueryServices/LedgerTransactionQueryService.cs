@@ -793,6 +793,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return reconciledAmount;
         }
 
+        public IQueryable<LedgerTransaction> GetLedgerTransactionsForMonth(int year, int month, int tenant)
+        {
+            IQueryable<LedgerTransaction> pocos = repository.GetTransactionsForMonth(year, month, tenant);
+            return pocos;
+        }
 
     }
     public class JournalLineLedgerDTO

@@ -46,7 +46,9 @@ namespace Logitude.Social.Data
             GlobalDB currentDb;
             currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
             SocialContext context = new SocialContext(connection);
             return context;
         }
@@ -345,7 +347,7 @@ namespace Logitude.Social.Data
 			modelBuilder.Configurations.Add(new ParticipantMap());
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
 			modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
-            modelBuilder.Configurations.Add(new CustomsShipperMap());
+			modelBuilder.Configurations.Add(new CustomsShipperMap());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -441,4 +443,4 @@ namespace Logitude.Social.Data
  }
 
 
-}
+}

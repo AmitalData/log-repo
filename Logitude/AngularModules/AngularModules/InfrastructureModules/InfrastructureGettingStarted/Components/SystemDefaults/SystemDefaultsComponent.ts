@@ -408,6 +408,20 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
     }
 
+    get CBSA() { return this.TenantPm.CBSA; }
+    set CBSA(value: string) {
+        if (this.TenantPm.CBSA != value) {
+            this.TenantPm.CBSA = value;
+        }
+    }
+
+    get CAAT() { return this.TenantPm.CAAT; }
+    set CAAT(value: string) {
+        if (this.TenantPm.CAAT != value) {
+            this.TenantPm.CAAT = value;
+        }
+    }
+
     get FMCNumber() { return this.TenantPm.FMCNumber; }
     set FMCNumber(value: string) {
         if (this.TenantPm.FMCNumber != value) {

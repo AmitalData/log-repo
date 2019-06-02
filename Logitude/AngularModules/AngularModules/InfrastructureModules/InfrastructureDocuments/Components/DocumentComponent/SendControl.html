@@ -1,4 +1,4 @@
-﻿
+
 <style>
   
 
@@ -214,7 +214,7 @@
                                 <!--Test-->
 
                                 <td style="width:100%;height:100%">
-
+                                 
                                     <table>
                                         <tr style="vertical-align:top">
                                             <td style="background-color:#F5F5F5;">
@@ -223,6 +223,8 @@
                                                     <table style="margin-top:8px">
                                                         <tr>
                                                             <td [style.display]="IsSendEditMode == true?'':'none'" style="width:70px;vertical-align:top;">
+                                                                <div id="{{'SendDocumentSucceededDiv ' | IdGeneratorPipe}}" *ngIf="IsSendDocumentSucceeded" style="width:0px;height:0px;"></div>
+                                                                <div id="{{'SendDocumentFailedDiv ' | IdGeneratorPipe}}" *ngIf="IsSendDocumentFailed" style="width:0px;height:0px;"></div>
 
                                                                 <button id="{{'SendMessagebtn' | IdGeneratorPipe}}" (click)="SendDocumentHtml()" class="EntityChangesButton" _ngcontent-wsn-31="" _ngcontent-mof-31="" style="margin-left: 10px;width: 60px; height: 60px;margin-top:0px">
                                                                     <div _ngcontent-wsn-31="" _ngcontent-mof-31="" style="margin-right: 2px; margin-top: 2px;">
@@ -279,7 +281,7 @@
                                                                         <td style="width:8px"><div></div></td>
                                                                         <td style="width:40px;text-align:left;height:22px"><p style="width:40px;font-size:11px;margin-right:10px;height:22px">Subject</p></td>
                                                                         <td style="width:5px"><div></div></td>
-                                                                        <td><input [disabled]="!IsSendEditMode" type="text" [(ngModel)]="Subject" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;color:black" /></td>
+                                                                        <td><input id="{{'EmailSubject' | IdGeneratorPipe}}" [disabled]="!IsSendEditMode" type="text" [(ngModel)]="Subject" style="height:22px;border-radius:3px;border:1px solid #ccc9c9;width:100%;color:black" /></td>
                                                                         <td style="width:10px"><div></div></td>
                                                                     </tr>
 

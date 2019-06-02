@@ -19,6 +19,7 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 
 export class TaskSchedulerComponent implements OnInit  {
     public ItemsSource: TaskSchedulerItemClass[] = [];
+    public FixedItemsSource: TaskSchedulerItemClass[] = [];
     public HistoryItemsSource: TaskSchedulerHistoryList[] = []; 
     private loadedDataList: TasksSchedulerPM[] = [];
     private infraDomainService: InfrastructureDomainService;
@@ -61,6 +62,7 @@ export class TaskSchedulerComponent implements OnInit  {
         this.infraDomainService.GetAllTasksSchedulerPMs(this.SchedulerType).subscribe(myResult => {
             if (myResult == null) {
                 this.ItemsSource = [];
+                this.FixedItemsSource = [];
             }
 
             else {
@@ -90,9 +92,10 @@ export class TaskSchedulerComponent implements OnInit  {
 
     BuildItemsSource() {
         this.ItemsSource = [];
-
+        this.FixedItemsSource = [];
         this.loadedDataList.forEach(item => {
             this.ItemsSource.push(new TaskSchedulerItemClass(item, this));
+            this.FixedItemsSource.push(new TaskSchedulerItemClass(item, this));
         });
 
         this.CurrentSession.StopBusyIndicator();
@@ -134,14 +137,14 @@ export class TaskSchedulerComponent implements OnInit  {
 
     NewTaskClicked() {
         var newItem: TasksSchedulerPM = new TasksSchedulerPM();
-        newItem.CreatedBy = SessionLocator.LoggedUserId;
-        newItem.UpdatedBy = SessionLocator.LoggedUserId;
+        newItem.CreatedBy = SessionLocator.LoggedUserPM.EnglishName;
+        newItem.UpdatedBy = SessionLocator.LoggedUserPM.EnglishName;
         newItem.TriggerType = "O";
         newItem.Tenant = SessionLocator.Tenant;
         
         newItem.Type = this.SchedulerType;
         var logWindow = new LogitudeWindow();
-        logWindow.Height = this.SchedulerType == "FTP" ? 645 : 570;
+        logWindow.Height = this.SchedulerType == "FTP" ? 730 : 620;
         logWindow.Width = 800;
         logWindow.Title = this.SchedulerType + " Scheduler Details";
         logWindow.DataContext = new TaskSchedulerItemClass(newItem, this, true);
@@ -157,7 +160,7 @@ export class TaskSchedulerComponent implements OnInit  {
         var logWindow = new LogitudeWindow();
         logWindow.Title = this.SchedulerType  + " Scheduler Details";
         logWindow.DataContext = item;
-        logWindow.Height = this.SchedulerType == "FTP" ? 645 : 570;
+        logWindow.Height = this.SchedulerType == "FTP" ? 730 : 620;
         logWindow.Width = 800;
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
         logWindow.WindowClosed.subscribe(s => {
@@ -375,6 +378,23 @@ export class TaskSchedulerComponent implements OnInit  {
         }
         this.LoadTaskHistories();
     }
+
+    private filterTypeCode: string = "AL";
+    public get FilterTypeCode() { return this.filterTypeCode; }
+    public set FilterTypeCode(value: string) {
+        if (this.filterTypeCode != value) {
+            this.filterTypeCode = value;
+            if (value == "AC") {
+                this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);
+            }
+            else if (value == "IN") {
+                this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == true);
+            }
+            else {
+                this.ItemsSource = this.FixedItemsSource;
+            }
+        }
+    }
 }
 
 export class TaskSchedulerItemClass extends BaseComponent {
@@ -395,14 +415,22 @@ export class TaskSchedulerItemClass extends BaseComponent {
 
     get Id() { return this.EntityPM.Id; }
     get CreateDate() { return this.EntityPM.CreateDateTime; }
+    get UpdateDate() { return this.EntityPM.UpdateDateTime; }
     get NextRunTime() { return this.EntityPM.NextRunTime; }
-    get LastRunTime() { return this.EntityPM.LastRunTime; }
+    get LastRunTime() { return this.EntityPM.LastRunStartTime; }
     get NextRunTimeUTC() { return this.EntityPM.NextRunTimeUTC; }
-    get LastRunTimeUTC() { return this.EntityPM.LastRunTimeUTC; }
+    get LastRunTimeUTC() { return this.EntityPM.LastRunStartTimeUTC; }
     get LastRunResult() { return this.EntityPM.LastRunResult; }
     get StartDate() { return this.EntityPM.StartDateTime; }
     get StartDateUTC() { return this.EntityPM.StartDateTimeUTC; }
     get Status() { return this.EntityPM.Status; }
+    get UpdatedBy() { return this.EntityPM.UpdatedBy; }
+    get CreatedBy() { return this.EntityPM.CreatedBy; }
+    get Duration() { return this.EntityPM.Duration; }
+    get LastRunEndTime() { return this.EntityPM.LastRunEndTime; }
+    get LastRunEndTimeUTC() { return this.EntityPM.LastRunEndTimeUTC; }
+
+   
 
     get Name() { return this.EntityPM.Name; }
     set Name(newValue: string) {

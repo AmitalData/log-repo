@@ -89,6 +89,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ShippingAgent", "NEW", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ShippingAgent", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         ShippingAgentService service = new ShippingAgentService(MyContext, entityPM.Tenant);
@@ -136,6 +137,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("ShippingAgent", "UPDATE", authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ShippingAgent", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "ShippingAgent" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ShippingAgentPM" + entityPM.Id + entityPM.Tenant;

@@ -19,6 +19,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
+import { DatePipe } from '@angular/common';
 
 declare var ResultAsArray: any;
 
@@ -38,6 +39,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
+    public IsVersionsComboBoxEnabled: boolean = true;
     public CurrentVersion: TariffVersionPM;
     private CurrentSession = SessionLocator.SelectedSession;
     private ChargesTypeListService: ChargesTypeListService;
@@ -92,6 +94,12 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
+
+        if (this.IsDraftVersion) {
+            this.IsComparToChecked = true;
+        }
+
+        this.BuildVersionsList();
 
         this.SetUIProperties();
         this.SetSurchargesLabelsAndVisibility();
@@ -196,6 +204,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
 
+    get VersionNumber() {
+        return this.CurrentVersion.Version;
+    }
+
     get StartDate() {
         return this.CurrentVersion.StartDate;
     }
@@ -236,15 +248,116 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
 
+    private ItemsCollection: TariffLineData[] = [];
+    public DeletedTariffsLines: TariffLineData[] = [];
     FillTariffLines() {
         this.TariffsLinesSource.Clear();
-        var itemsCollection: TariffLineData[] = [];
+        this.ItemsCollection = [];
+        this.DeletedTariffsLines = [];
 
-        this.CurrentVersion.TariffLines.forEach(item => {
-            itemsCollection.push(new TariffLineData(item, this));
+        this.CurrentVersion.TariffLines.sort(p => p.Index).forEach(item => {
+            this.ItemsCollection.push(new TariffLineData(item, this));
         });
 
-        this.TariffsLinesSource.InsertCollection(itemsCollection);
+        this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
+
+        if (this.IsComparToChecked && this.ComparedToVersionPM != null) {
+            this.ComaredLines();
+            this.BuildDeletedLines();
+        }
+    }
+
+    ComaredLines() {
+        this.ItemsCollection.forEach((item: TariffLineData) => {
+            var line = this.ComparedToVersionPM.TariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            if (line) {
+                item.ComparedEntity = line;
+                item.SetCellsComparingText();
+            }
+
+            else {
+                item.IsNewEntity = true;
+            }
+        });
+    }
+    BuildDeletedLines() {
+        this.ComparedToVersionPM.TariffLines.sort(p => p.Index).forEach(item => {
+            var line = this.CurrentVersion.TariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            if (line == null) {
+                this.DeletedTariffsLines.push(new TariffLineData(item, this));// Deleted 
+            }
+        });
+    }
+
+    public isComparToChecked = false;
+    get IsComparToChecked() {
+        return this.isComparToChecked;
+    }
+    set IsComparToChecked(value: boolean) {
+        if (this.isComparToChecked != value) {
+            this.isComparToChecked = value;
+            this.ComparingCalculations();
+        }
+    }
+
+    public warningPercentage: number;
+    get WarningPercentage() {
+        return this.warningPercentage;
+    }
+    set WarningPercentage(value: number) {
+        if (this.warningPercentage != value) {
+            this.warningPercentage = value;
+            this.ComparingCalculations();
+        }
+    }
+
+    public VersionsList: VersionClass[];
+    public ComparedToVersionPM: TariffVersionPM;
+    private BuildVersionsList() {
+        this.VersionsList = [];
+        var datePipe: DatePipe = new DatePipe("en-US");
+
+        this.EntityPM.TariffVersions.filter(a => a.Version != this.CurrentVersion.Version).forEach(item => {
+            var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
+            var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+            var newVersion: VersionClass = new VersionClass();
+            newVersion.Version = item.Version;
+            newVersion.ParentVersionNumber = item.ParentVersionNumber;
+            newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+            newVersion.Id = item.TariffId;
+            this.VersionsList.push(newVersion);
+        });
+        this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
+
+        if (this.SelectedVersion == null) {
+            this.isComparToChecked = false;
+            this.IsVersionsComboBoxEnabled = true;
+            this.UIProperties.SetEnabled("IsComparToChecked", null, false);
+            this.UIProperties.SetEnabled("WarningPercentage", null, false);
+        }
+        else {
+            this.IsVersionsComboBoxEnabled = false;
+            this.UIProperties.SetEnabled("IsComparToChecked", null, true);
+            this.UIProperties.SetEnabled("WarningPercentage", null, true);
+        }
+    }
+
+    private selectedVersion: VersionClass;
+    get SelectedVersion() { return this.selectedVersion; }
+    set SelectedVersion(value: VersionClass) {
+        if (this.selectedVersion != value) {
+            this.selectedVersion = value;
+            this.ComparedToVersionPM = this.EntityPM.TariffVersions.filter(d => d.Version == this.SelectedVersion.Version)[0];
+            this.ComparingCalculations();
+        }
+    }
+
+    ComparingCalculations() {
+        this.FillTariffLines();
+    }
+
+    CompareClicked() {
+        this.ComparingCalculations();
     }
 
     AddTariffLine() {
@@ -254,6 +367,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         itemPM.ExpirationDate = this.ExpirationDate;
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
+
+        var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
+        if (Version) {
+            if (Version.TariffLines.length > 0) {
+                var index = Math.max.apply(Math, Version.TariffLines.map(function (o) { return o.Index; })) + 1;
+                if (index) {
+                    itemPM.Index = index;
+                }
+            }
+        }
+
         var itemComponent = new TariffLineData(itemPM, this, true);
         logWindow.DataContext = itemComponent;
         logWindow.Title = "New Tariff Line";
@@ -358,6 +482,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.DestinationPortText = item.ToPortText;
             tariffLine.HasErrors = item.HasErrors;
             tariffLine.ErrorText = item.ErrorText;
+            tariffLine.Index = item.Index;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
@@ -439,19 +564,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
             errors.push("Invalid Tariff Lines");
         }
-
-        this.CurrentVersion.TariffLines.forEach(item => {
-            this.CurrentVersion.TariffLines.forEach(item => {
-                if (AppTool.IsNullOrEmpty(item.OriginPortId)) {
-                    errors.push("Missing Origin Port");
-                }
-
-                if (AppTool.IsNullOrEmpty(item.DestinationPortId)) {
-                    errors.push("Missing Destination Port");
-                }
-            });
-        });
-
+        
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
@@ -506,7 +619,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         this.EntityPM.AddTariffVersion(copiedVersion);
 
-        this.CurrentVersion.TariffLines.forEach(item => {
+        this.CurrentVersion.TariffLines.sort(p => p.Index).forEach(item => {
             var tariffLine = new TariffLinePM(copiedVersion);
             tariffLine.StartDate = this.StartDate;
             tariffLine.ExpirationDate = this.ExpirationDate;
@@ -528,6 +641,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge8Price = item.Surcharge8Price;
             tariffLine.Surcharge9Price = item.Surcharge9Price;
             tariffLine.Surcharge10Price = item.Surcharge10Price;
+            tariffLine.Index = item.Index;
 
             copiedVersion.AddTariffLine(tariffLine);
         });
@@ -542,12 +656,12 @@ export class TariffLineData extends BaseComponent {
     private ObjectTableName = "TariffLine";
     public IsNewEntity: boolean = false;
     public IsEditEnabled: boolean = false;
+    public ComparedEntity: TariffLinePM;
     constructor(entity: TariffLinePM, public FatherComponent: SurchargeVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
-
         this.SetUIProperties();
     }
     
@@ -566,6 +680,17 @@ export class TariffLineData extends BaseComponent {
                 errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
             }
         }
+        else if (AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Missing Origin Port";
+            }
+
+            else {
+                errorText = errorText + ", Missing Origin Port"
+            }
+        }
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
             error = true;
@@ -576,6 +701,17 @@ export class TariffLineData extends BaseComponent {
 
             else {
                 errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
+            }
+        }
+        else if (AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+            error = true;
+
+            if (AppTool.IsNullOrEmpty(errorText)) {
+                errorText = "Missing Destination Port";
+            }
+
+            else {
+                errorText = errorText + ", Missing Destination Port"
             }
         }
 
@@ -706,6 +842,188 @@ export class TariffLineData extends BaseComponent {
     private SetUIProperties() {
         this.UIProperties.SetRequired("OriginPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.OriginPortId));
         this.UIProperties.SetRequired("DestinationPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.DestinationPortId));
+    }
+
+    public Surcharge1ComparingPrice: number;
+    public Surcharge1ComparingTextColor: string = null;
+    public Surcharge2ComparingPrice: number;
+    public Surcharge2ComparingTextColor: string = null;
+    public Surcharge3ComparingPrice: number;
+    public Surcharge3ComparingTextColor: string = null;
+    public Surcharge4ComparingPrice: number;
+    public Surcharge4ComparingTextColor: string = null;
+    public Surcharge5ComparingPrice: number;
+    public Surcharge5ComparingTextColor: string = null;
+    public Surcharge6ComparingPrice: number;
+    public Surcharge6ComparingTextColor: string = null;
+    public Surcharge7ComparingPrice: number;
+    public Surcharge7ComparingTextColor: string = null;
+    public Surcharge8ComparingPrice: number;
+    public Surcharge8ComparingTextColor: string = null;
+    public Surcharge9ComparingPrice: number;
+    public Surcharge9ComparingTextColor: string = null;
+    public Surcharge10ComparingPrice: number;
+    public Surcharge10ComparingTextColor: string = null;
+    private DefaultColor = "blue";
+
+    SetCellsComparingText() {
+
+        this.CompareSurcharge1Price();
+        this.CompareSurcharge2Price();
+        this.CompareSurcharge3Price();
+        this.CompareSurcharge4Price();
+        this.CompareSurcharge5Price();
+        this.CompareSurcharge6Price();
+        this.CompareSurcharge7Price();
+        this.CompareSurcharge8Price();
+        this.CompareSurcharge9Price();
+        this.CompareSurcharge10Price();
+
+    }
+
+    private CompareSurcharge1Price() {
+        if (this.ComparedEntity != null) {
+            var surcharge1ComparingValue = this.Surcharge1Price - this.ComparedEntity.Surcharge1Price;
+            if (!AppTool.IsNullOrZero(surcharge1ComparingValue)) {
+                this.Surcharge1ComparingPrice = (surcharge1ComparingValue / this.ComparedEntity.Surcharge1Price) * 100;
+                this.Surcharge1ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge1ComparingPrice);
+            }
+            else {
+                this.Surcharge1ComparingPrice = null;
+                this.Surcharge1ComparingTextColor = this.DefaultColor;
+            }
+        }
+    }
+    private CompareSurcharge2Price() {
+        if (this.ComparedEntity != null) {
+            var surcharge2ComparingValue = this.Surcharge2Price - this.ComparedEntity.Surcharge2Price;
+            if (!AppTool.IsNullOrZero(surcharge2ComparingValue)) {
+                this.Surcharge2ComparingPrice = (surcharge2ComparingValue / this.ComparedEntity.Surcharge2Price) * 100;
+                this.Surcharge2ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge2ComparingPrice);
+            }
+            else {
+                this.Surcharge2ComparingPrice = null;
+                this.Surcharge2ComparingTextColor = this.DefaultColor;
+            }
+        }
+    }
+    private CompareSurcharge3Price() {
+        if (this.ComparedEntity != null) {
+            var surcharge3ComparingValue = this.Surcharge3Price - this.ComparedEntity.Surcharge3Price;
+            if (!AppTool.IsNullOrZero(surcharge3ComparingValue)) {
+                this.Surcharge3ComparingPrice = (surcharge3ComparingValue / this.ComparedEntity.Surcharge3Price) * 100;
+                this.Surcharge3ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge3ComparingPrice);
+            }
+            else {
+                this.Surcharge3ComparingPrice = null;
+                this.Surcharge3ComparingTextColor = this.DefaultColor;
+            }
+        }
+    }
+    private CompareSurcharge4Price() {
+        if (this.ComparedEntity != null) {
+            var surcharge4ComparingValue = this.Surcharge4Price - this.ComparedEntity.Surcharge4Price;
+            if (!AppTool.IsNullOrZero(surcharge4ComparingValue)) {
+                this.Surcharge4ComparingPrice = (surcharge4ComparingValue / this.ComparedEntity.Surcharge4Price) * 100;
+                this.Surcharge4ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge4ComparingPrice);
+            }
+            else {
+                this.Surcharge4ComparingPrice = null;
+                this.Surcharge4ComparingTextColor = this.DefaultColor;
+            }
+        }
+    }
+    private CompareSurcharge5Price() {
+        if (this.ComparedEntity != null) {
+            var surcharge5ComparingValue = this.Surcharge5Price - this.ComparedEntity.Surcharge5Price;
+            if (!AppTool.IsNullOrZero(surcharge5ComparingValue)) {
+                this.Surcharge5ComparingPrice = (surcharge5ComparingValue / this.ComparedEntity.Surcharge5Price) * 100;
+                this.Surcharge5ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge5ComparingPrice);
+            }
+            else {
+                this.Surcharge5ComparingPrice = null;
+                this.Surcharge5ComparingTextColor = this.DefaultColor;
+            }
+        }
+    }
+    private CompareSurcharge6Price() {
+        if (this.ComparedEntity != null) {
+            var surcharge6ComparingValue = this.Surcharge6Price - this.ComparedEntity.Surcharge6Price;
+            if (!AppTool.IsNullOrZero(surcharge6ComparingValue)) {
+                this.Surcharge6ComparingPrice = (surcharge6ComparingValue / this.ComparedEntity.Surcharge6Price) * 100;
+                this.Surcharge6ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge6ComparingPrice);
+            }
+            else {
+                this.Surcharge6ComparingPrice = null;
+                this.Surcharge6ComparingTextColor = this.DefaultColor;
+            }
+        }
+    }
+    private CompareSurcharge7Price() {
+        if (this.ComparedEntity != null) {
+            var surcharge7ComparingValue = this.Surcharge7Price - this.ComparedEntity.Surcharge7Price;
+            if (!AppTool.IsNullOrZero(surcharge7ComparingValue)) {
+                this.Surcharge7ComparingPrice = (surcharge7ComparingValue / this.ComparedEntity.Surcharge7Price) * 100;
+                this.Surcharge7ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge7ComparingPrice);
+            }
+            else {
+                this.Surcharge7ComparingPrice = null;
+                this.Surcharge7ComparingTextColor = this.DefaultColor;
+            }
+        }
+    }
+    private CompareSurcharge8Price() {
+        if (this.ComparedEntity != null) {
+            var surcharge8ComparingValue = this.Surcharge8Price - this.ComparedEntity.Surcharge8Price;
+            if (!AppTool.IsNullOrZero(surcharge8ComparingValue)) {
+                this.Surcharge8ComparingPrice = (surcharge8ComparingValue / this.ComparedEntity.Surcharge8Price) * 100;
+                this.Surcharge8ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge8ComparingPrice);
+            }
+            else {
+                this.Surcharge8ComparingPrice = null;
+                this.Surcharge8ComparingTextColor = this.DefaultColor;
+            }
+        }
+    }
+    private CompareSurcharge9Price() {
+        if (this.ComparedEntity != null) {
+            var surcharge9ComparingValue = this.Surcharge9Price - this.ComparedEntity.Surcharge9Price;
+            if (!AppTool.IsNullOrZero(surcharge9ComparingValue)) {
+                this.Surcharge9ComparingPrice = (surcharge9ComparingValue / this.ComparedEntity.Surcharge9Price) * 100;
+                this.Surcharge9ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge9ComparingPrice);
+            }
+            else {
+                this.Surcharge9ComparingPrice = null;
+                this.Surcharge9ComparingTextColor = this.DefaultColor;
+            }
+        }
+    }
+    private CompareSurcharge10Price() {
+        if (this.ComparedEntity != null) {
+            var surcharge10ComparingValue = this.Surcharge10Price - this.ComparedEntity.Surcharge10Price;
+            if (!AppTool.IsNullOrZero(surcharge10ComparingValue)) {
+                this.Surcharge10ComparingPrice = (surcharge10ComparingValue / this.ComparedEntity.Surcharge10Price) * 100;
+                this.Surcharge10ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge10ComparingPrice);
+            }
+            else {
+                this.Surcharge10ComparingPrice = null;
+                this.Surcharge10ComparingTextColor = this.DefaultColor;
+            }
+        }
+    }
+    ComputeWarningPercentageColor(price: number) {
+        var color = "blue";
+        if (this.FatherComponent.WarningPercentage == null) {
+            color = "blue";
+        }
+        else {
+
+            var price_abs = Math.abs(price);
+            if (price_abs > this.FatherComponent.WarningPercentage) {
+                color = "red";
+            }
+        }
+        return color;
     }
 
     get HasErrors() {
@@ -842,6 +1160,7 @@ export class TariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge1Price != value) {
             this.EntityPM.Surcharge1Price = value;
             this.CheckIfLineHasError();
+            this.CompareSurcharge1Price();
         }
     }
 
@@ -873,6 +1192,7 @@ export class TariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge2Price != value) {
             this.EntityPM.Surcharge2Price = value;
             this.CheckIfLineHasError();
+            this.CompareSurcharge2Price();
         }
     }
 
@@ -904,6 +1224,7 @@ export class TariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge3Price != value) {
             this.EntityPM.Surcharge3Price = value;
             this.CheckIfLineHasError();
+            this.CompareSurcharge3Price();
         }
     }
 
@@ -935,6 +1256,7 @@ export class TariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge4Price != value) {
             this.EntityPM.Surcharge4Price = value;
             this.CheckIfLineHasError();
+            this.CompareSurcharge4Price();
         }
     }
 
@@ -966,6 +1288,7 @@ export class TariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge5Price != value) {
             this.EntityPM.Surcharge5Price = value;
             this.CheckIfLineHasError();
+            this.CompareSurcharge5Price();
         }
     }
 
@@ -997,6 +1320,7 @@ export class TariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge6Price != value) {
             this.EntityPM.Surcharge6Price = value;
             this.CheckIfLineHasError();
+            this.CompareSurcharge6Price();
         }
     }
 
@@ -1028,6 +1352,7 @@ export class TariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge7Price != value) {
             this.EntityPM.Surcharge7Price = value;
             this.CheckIfLineHasError();
+            this.CompareSurcharge7Price();
         }
     }
 
@@ -1059,6 +1384,7 @@ export class TariffLineData extends BaseComponent {
         if (this.EntityPM.Surcharge8Price != value) {
             this.EntityPM.Surcharge8Price = value;
             this.CheckIfLineHasError();
+            this.CompareSurcharge8Price();
         }
     }
 
@@ -1084,12 +1410,13 @@ export class TariffLineData extends BaseComponent {
 
     // Surcharge 9
     get Surcharge9Price() {
-        return this.EntityPM.Surcharge8Price;
+        return this.EntityPM.Surcharge9Price;
     }
     set Surcharge9Price(value: number) {
         if (this.EntityPM.Surcharge9Price != value) {
             this.EntityPM.Surcharge9Price = value;
             this.CheckIfLineHasError();
+            this.CompareSurcharge9Price();
         }
     }
 
@@ -1115,12 +1442,13 @@ export class TariffLineData extends BaseComponent {
 
     // Surcharge 10
     get Surcharge10Price() {
-        return this.EntityPM.Surcharge8Price;
+        return this.EntityPM.Surcharge10Price;
     }
     set Surcharge10Price(value: number) {
         if (this.EntityPM.Surcharge10Price != value) {
             this.EntityPM.Surcharge10Price = value;
             this.CheckIfLineHasError();
+            this.CompareSurcharge10Price();
         }
     }
 
@@ -1145,3 +1473,10 @@ export class TariffLineData extends BaseComponent {
     }
 }
 
+export class VersionClass {
+    public Code: number;
+    public Name: string;
+    public Id: string;
+    public Version: number;
+    public ParentVersionNumber: number;
+}

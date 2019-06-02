@@ -83,6 +83,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature VehiclesReportFeature = tenantFeatures.Where(d => d.Code == "Vehicles" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature UnicargoExportReportFeature = tenantFeatures.Where(d => d.Code == "UNER" && d.FeatureTypeCode == "AREA").FirstOrDefault();
 
+            Feature shipmentsEventsListReportFeature = tenantFeatures.Where(d => d.Code == "SHEL" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+
 
             AddReports.AddReport(new ReportDetails() { Code = "CASS", Description = "CASS Report", Name = "CASS Report", FilterControlName = "CASSReportFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = cassReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/CASSReportFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "CODT", Description = "Container Details by Voyage", Name = "Container Details by Voyage", FilterControlName = "ContainerDetailsVoyageFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = containerDetailsVoyageReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/ContainerDetailsVoyageFilterComponent" }, reportRepository, tenantReports);
@@ -96,6 +98,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddReports.AddReport(new ReportDetails() { Code = "VDK", Description = "VDK Report Templates", Name = "VDK Report Templates", FilterControlName = "VDKFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = VDKReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/VDKFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "VEHI", Description = "Vehicles Shipping", Name = "Vehicles Shipping", FilterControlName = "VehiclesFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = VehiclesReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Operational/VehiclesFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "UNER", Description = "Unicargo Export Report", Name = "Unicargo Export Report", FilterControlName = "UnicargoExportReportFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = UnicargoExportReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/Operational/UnicargoExportReportFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "SHEL", Description = "Shipments Events List", Name = "Shipments Events List", FilterControlName = "ShipmentsEventsListFilterControl", Tenant = 0, ReportGroupId = operationalGroup.Id, FeatureId = shipmentsEventsListReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/Operational/ShipmentsEventsListFilterComponent" }, reportRepository, tenantReports);
 
         }
         private void LoadReports_Accounting(ReportGroup accountingGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
@@ -119,6 +122,9 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature vendorChargesReportFeature = tenantFeatures.Where(d => d.Code == "Report.Features.VendorCharges" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature feature_DetailedShipmentCharges = tenantFeatures.Where(d => d.Code == "Report.Features.DetailedShipmentCharges" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature feature_LTReport = tenantFeatures.Where(d => d.Code == "Report.Features.LTReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            Feature feature_AutomationTestReport = tenantFeatures.Where(d => d.Code == "ATRE" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+
+
 
             AddReports.AddReport(new ReportDetails() { Code = "RACL", Description = "Accounting Ledger", Name = "Accounting Ledger", FilterControlName = "AccountingLedgerFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = accountingLedgerFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/AccountingLedgerFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "RAAR", Description = "AgedAccountsReceivable", Name = "Aging report - Statement summarized", FilterControlName = "AgedAccountsReceivableFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = agedAccountsReceivableFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/AgedAccountsReceivableFilterComponent" }, reportRepository, tenantReports);
@@ -139,6 +145,9 @@ namespace WebFreight.Web.MetaDataUpdate
             AddReports.AddReport(new ReportDetails() { Code = "DSCA", Description = "Detailed Shipment Charges Analysis", Name = "Detailed Shipment Charges Analysis", FilterControlName = "DetailedShipmentChargesAnalysisFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = feature_ArchivoExportado.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Accounting/DetailedShipmentChargesAnalysisComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "VDCA", Description = "Vendor Charges Analysis", Name = "Vendor Charges Analysis", FilterControlName = "VendorChargesAnalysisFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = vendorChargesReportFeature.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Accounting/VendorChargesAnalysisFilterComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "LTRP", Description = "Ledger Transactions Report", Name = "GL Account Transactions Report", LocalName= "דוח כרטסת", FilterControlName = "LedgerTransactionsFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = feature_LTReport.Id, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Accounting/LedgerTransactionsFilterControl" }, reportRepository, tenantReports);
+
+            AddReports.AddReport(new ReportDetails() { Code = "ATRE", Description = "Automation Test Report", Name = "Automation Test Report", LocalName = "Automation Test Report", FilterControlName = "AutomationTestReportFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = feature_AutomationTestReport.Id, FilterHtmlComponentUrl = "./Report/Components/FilterReportComponent/AutomationTestReportFilterComponent" }, reportRepository, tenantReports);
+
         }
         private void LoadReports_Quotes(ReportGroup quotesGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
         {

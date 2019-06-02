@@ -97,6 +97,9 @@ namespace WebFreight.Web.WebServices
                         myDataProvider.TenantPhone = address.PhoneNumber;
                     }
                 }
+
+                myDataProvider.TenantCAAT = currentTenant.CAAT;
+                myDataProvider.TenantCBSA = currentTenant.CBSA;
             }
 
             ContactQuery contactQuery = new ContactQuery(tenant);
@@ -925,6 +928,15 @@ namespace WebFreight.Web.WebServices
                         {
                             myDataProvider.MainCarriageCarrierAddress = myDataProvider.MainCarriageCarrierAddress + Environment.NewLine + (mainCarriageCarrierAddress.PhoneNumber != null ? "Tel: " + mainCarriageCarrierAddress.PhoneNumber + " " : "") + (mainCarriageCarrierAddress.FaxNumber != null ? "Fax: " + mainCarriageCarrierAddress.FaxNumber + " " : "");
                         }
+                    }
+
+
+                    if (mainCarriageCarrier.PartnerTypeId == "SL")
+                    {
+                        ShippingLineRepository shippingLineRepository = new ShippingLineRepository(tenant);
+                        ShippingLine shippingLine = shippingLineRepository.GetSingleShippingLine(mainCarriageCarrier.Id, tenant);
+                        myDataProvider.CarrierCAAT = shippingLine != null ? shippingLine.CAAT : null;
+                        myDataProvider.CarrierCBSA = shippingLine != null ? shippingLine.CBSA : null;
                     }
                 }
 

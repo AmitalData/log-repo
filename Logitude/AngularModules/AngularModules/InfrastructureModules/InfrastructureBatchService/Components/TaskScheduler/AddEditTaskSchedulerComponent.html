@@ -102,7 +102,7 @@
 
                                                                     <td style="width:50%">
 
-                                                                        <div  class="MediaFillAbsolute" >
+                                                                        <div class="MediaFillAbsolute">
                                                                             <div #GeneralSectionLocation class="LocationDirective"></div>
                                                                         </div>
 
@@ -368,17 +368,87 @@
                                         </td>
                                     </tr>
 
+                                    <tr style="height:25px"><td></td></tr>
+
+                                    <tr style="height:70px">
+                                        <td>
+                                            <div style="height:100%;width:100%; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:6px;vertical-align:top">
+                                                <table style="border :none;">
+
+                                                    <tr style="height:25px">
+                                                        <td>
+                                                            <div style="background-color:#EDEDED;height:25px;border-top:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-top-Right-radius:6px; border-top-left-radius:6px;color:black">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width:300px">
+                                                                            <p style="font-size:11px;margin-left:5px;margin-top:1px;color:#1B90CB">Create\Update Details</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:3px">
+                                                        <td>
+                                                            <div></div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="height:60px">
+                                                        <td style="vertical-align:top;">
+                                                            <table style="margin-left:5px;">
+                                                                <tr>
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:80px;"><label class="Label">Created By:</label></td>
+                                                                                <td><label>{{DataContext.CreatedBy}}</label></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:80px;"><label class="Label">Updated By:</label></td>
+                                                                                <td><label>{{DataContext.UpdatedBy}}</label></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:80px;"><label class="Label">Create Date:</label></td>
+                                                                                <td><label>{{DataContext.CreateDate | DateTimePipe:'DTLL12'}}</label></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td style="width:80px;"><label class="Label">Update Date:</label></td>
+                                                                                <td><label>{{DataContext.UpdateDate | DateTimePipe:'DTLL12'}}</label></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     <tr><td></td></tr>
                                 </table>
                             </ScrollViewer>
                         </td>
                     </tr>
-
-
                 </table>
             </td>
        </tr>
-
         <!--Close And Cancel Area-->
         <tr style="height: 32px;">
             <td style="vertical-align: bottom">
@@ -387,15 +457,12 @@
                         <td>
                             <div></div>
                         </td>
-
                         <td style="width: 57px;">
                             <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
                         </td>
-
                         <td style="width: 5px;">
                             <div></div>
                         </td>
-
                         <td style="width: 57px;">
                             <button [disabled]="!IsEnableSaveButton" class="RedButton" (click)="OKButtonClicked()">Ok</button>
                         </td>
@@ -403,6 +470,5 @@
                 </table>
             </td>
         </tr>
-
 </table>
 

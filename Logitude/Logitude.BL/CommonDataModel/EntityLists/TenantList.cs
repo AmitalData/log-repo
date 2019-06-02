@@ -101,6 +101,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string DefaultSLAId { get; set; }
         public string NumberFormatCode { get; set; }
 
-
+        public string CBSA { get; set; }
+        public string CAAT { get; set; }
+        public bool IsTestTenant { get; set; }
     }
 }

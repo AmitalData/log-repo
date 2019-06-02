@@ -621,7 +621,7 @@
                                         <!-- 6 -->
                                         <div class="credit-limit-row" style="">
                                             <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
-                                                {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
+                                                {{ 'GLAccount.O.CreditStatus ' | TextCodeTranslationPipe }}
                                             </div>
                                             <div style="font-weight: bold;font-size: 18px;" class="amount" float-start [style.text-align]="isRTL ? 'right' : 'right'" [class.red]="IsOverCredit()" >
                                                 {{accountCardlist.CreditLimitAmount | NumbersPipe:'N2'}}

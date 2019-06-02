@@ -175,7 +175,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public string EcommerceSupportEmail { get; set; }
 
-
-
+        public string CBSA { get; set; }
+        public string CAAT { get; set; }
+        public bool IsTestTenant { get; set; }
     }
 }

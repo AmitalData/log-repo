@@ -27,6 +27,9 @@ import {ProfitByShipmentFilterConmponent} from './Components/FilterReportCompone
 import {InventoryReportFilterConmponent} from './Components/FilterReportComponent/InventoryReportFilterConmponent';
 import {OpenShipmentsByCustomerFilterComponent} from './Components/FilterReportComponent/OpenShipmentsByCustomerFilterComponent';
 import { UnicargoExportReportFilterComponent } from './Components/FiltersComponent/Operational/UnicargoExportReportFilterComponent';
+import { ShipmentsEventsListFilterComponent } from './Components/FiltersComponent/Operational/ShipmentsEventsListFilterComponent';
+
+
 
 // Accounting
 import {AccountingLedgerFilterComponent} from './Components/FilterReportComponent/AccountingLedgerFilterComponent';
@@ -46,6 +49,9 @@ import { TrailBalanceFiltersComponent } from './Components/FilterReportComponent
 import { ShipmentsStocksFiltersComponent } from './Components/FilterReportComponent/ShipmentsStocksFiltersComponent';
 import { DetailedShipmentChargesAnalysisComponent } from './Components/FiltersComponent/Accounting/DetailedShipmentChargesAnalysisComponent';
 import { VendorChargesAnalysisFilterComponent } from './Components/FiltersComponent/Accounting/VendorChargesAnalysisFilterComponent';
+import { AutomationTestReportFilterComponent } from './Components/FilterReportComponent/AutomationTestReportFilterComponent';
+
+
 
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
@@ -141,6 +147,8 @@ export const Components =
         VDKFilterComponent,
         VehiclesFilterComponent,
         UnicargoExportReportFilterComponent,
+        ShipmentsEventsListFilterComponent,
+        AutomationTestReportFilterComponent,
     ];
 
 export class ModuleDeclarations {
@@ -208,7 +216,10 @@ export class ModuleDeclarations {
             case "VendorChargesAnalysisFilterComponent": { myResult = VendorChargesAnalysisFilterComponent; break; }
             case "VDKFilterComponent": { myResult = VDKFilterComponent; break; }
             case "VehiclesFilterComponent": { myResult = VehiclesFilterComponent; break; }
-            case "UnicargoExportReportFilterComponent": { myResult = UnicargoExportReportFilterComponent; break; }                
+            case "UnicargoExportReportFilterComponent": { myResult = UnicargoExportReportFilterComponent; break; }   
+            case "ShipmentsEventsListFilterComponent": { myResult = ShipmentsEventsListFilterComponent; break; }   
+            case "AutomationTestReportFilterComponent": { myResult = AutomationTestReportFilterComponent; break; }  
+          
         }
 
         return myResult;

@@ -19,7 +19,26 @@ import 'rxjs/add/observable/fromEvent';
 import { FormGroup } from '@angular/forms';
 import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+import { timer } from 'rxjs/observable/timer';
+import { take } from 'rxjs/operator/take';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
+
+interface BeforeOnDestroy {
+    ngxBeforeOnDestroy();
+}
+
+type NgxInstance = BeforeOnDestroy & Object;
+type Descriptor = TypedPropertyDescriptor<Function>;
+type Key = string | symbol;
+
+function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descriptor) {
+    return {
+        value: async function (...args: any[]) {
+            await target.ngxBeforeOnDestroy();
+            return descriptor.value.apply(target, args);
+        }
+    }
+}
 
 @Component({
     moduleId: module.id,
@@ -72,7 +91,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() Max: number;
     @Input() Min: number;
     @Input() RowsCount: number;
-
+    private firstDigit: string = ",";
+    private secondDigit: string = ".";
     isFirstTime: boolean = true;
     private text: any;
     @Input() public get Text() {
@@ -170,6 +190,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
+        this.setDigits();
         //this.CurrentSession.isShiftClicked = false;
         //this.CurrentSession.isTabWithShiftClicked = false;
     }
@@ -237,7 +258,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 }
                             });
                             //this.TextValueChanges(this.TextValue);
-                            if (this.cd) {
+                            var isDestroyed: boolean = this.cd["destroyed"]; 
+                            if (this.cd && isDestroyed == false) {
                                 this.cd.detectChanges();
                             }
                         }
@@ -316,6 +338,36 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if (this.Retries < 3) {
             this.timerTokenComponent = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+
+    private setDigits() {
+        switch (SessionLocator.TenantPM.NumberFormatCode) {
+            case "CD": {
+                this.firstDigit = ",";
+                this.secondDigit = ".";
+                break;
+            }
+
+            case "DC": {
+                this.firstDigit = ".";
+                this.secondDigit = ",";
+                break;
+            }
+
+            case "AD": {
+                this.firstDigit = "'";
+                this.secondDigit = ".";
+                break;
+            }
+
+            default:
+                {
+                    this.firstDigit = ",";
+                    this.secondDigit = ".";
+                    break;
+                }
         }
     }
 
@@ -487,6 +539,15 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
+    public ngxBeforeOnDestroy() {
+        //console.log('1. BEFORE ONDESTROY INVOKE METHOD (await 2 sec)');
+        return new Promise((resolve) => {
+            setTimeout(() => this.WaitFunction(resolve), 2000);
+        });
+    }
+
+
+    @BeforeOnDestroy
     ngOnDestroy() {
         console.log("LogTextBox:ngOnDestroy");
         this.cd = null;
@@ -497,6 +558,17 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             this.CopyValueSubs.unsubscribe();
             this.CopyValueSubs = null;
         }
+    }
+
+    private WaitFunction(resolve) {
+        //console.log('2. EXECUTE HEAVY FUNCTION (3 sec)');
+
+        const sourcef = timer(3000)
+            //.pipe(take(1))
+            .subscribe(() => {
+                resolve();
+            });
+
     }
 
     onFocus() {
@@ -1160,18 +1232,20 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 if (this.DataContext[this.ObjectFieldName] != txtNum) {
                                     this.TextValueChanges(this.TextValue);
                                 }
-                                var textWithCommas: string = numberWithCommas(this.TextValue);
-                                if (textWithCommas.indexOf('.') > -1) {
-                                    var textWithCommasArr: string[] = textWithCommas.split('.');
-                                    var beforeDot: string = textWithCommasArr[0];
-                                    var afterDot: string = textWithCommasArr[1];
-                                    if (afterDot.indexOf(',') > -1) {
-                                        afterDot = afterDot.replace(',', "");
+                                if (this.firstDigit == ",") {
+                                    var textWithCommas: string = numberWithCommas(this.TextValue);
+                                    if (textWithCommas.indexOf('.') > -1) {
+                                        var textWithCommasArr: string[] = textWithCommas.split('.');
+                                        var beforeDot: string = textWithCommasArr[0];
+                                        var afterDot: string = textWithCommasArr[1];
+                                        if (afterDot.indexOf(',') > -1) {
+                                            afterDot = afterDot.replace(',', "");
+                                        }
+                                        textWithCommas = beforeDot + '.' + afterDot;
                                     }
-                                    textWithCommas = beforeDot + '.' + afterDot;
-                                }
 
-                                this.TextValue = textWithCommas;
+                                    this.TextValue = textWithCommas;
+                                }
                             }
 
                             break;

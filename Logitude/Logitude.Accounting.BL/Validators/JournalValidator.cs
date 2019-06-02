@@ -30,10 +30,10 @@ namespace Logitude.Accounting.BL.Validators
 
         public const string M_YouShouldHaveOneLineAtLeast = "Journal.M.YouShouldHaveOneLineAtLeast";
         public const string M_ClosedMonth = "ARInvoice.M.ClosedMonth"; //"AccountingPeriod.F.ClosedMonth";
-        public const string M_ExternalNoAlreadyExists_1 = "Journals.O.ExternalNoAlreadyExists_1";
-        public const string M_ExternalNoAlreadyExists_2 = "Journals.O.ExternalNoAlreadyExists_2";
-        public const string M_ExternalNoAlreadyExists_3 = "Journals.O.ExternalNoAlreadyExists_3";
-        public const string M_ExternalNoAlreadyExists_4 = "Journals.O.ExternalNoAlreadyExists_4";
+        public const string M_ExternalNoAlreadyExists_1 = /*"Journals.O.ExternalNoAlreadyExists_1"*/"There is a Journal(";
+        public const string M_ExternalNoAlreadyExists_2 = /*"Journals.O.ExternalNoAlreadyExists_2"*/ ") with the same ExternalNo And ExternalSystem";
+        //public const string M_ExternalNoAlreadyExists_3 = "Journals.O.ExternalNoAlreadyExists_3";
+        //public const string M_ExternalNoAlreadyExists_4 = "Journals.O.ExternalNoAlreadyExists_4";
         public const string M_ExchangeRateEmpty = "Journal.M.ExchangeRateEmpty";
         // ForeignAmount Allowed ...  public const string M_ForeignAmountNotZero = "Journal.M.ForeignAmountNotZero";
         public const string M_LocalAmountNotZero = "Allowed  !!!Journal.M.LocalAmountNotZero"; // LocalAmountNotZero   Allowed  
@@ -51,9 +51,13 @@ namespace Logitude.Accounting.BL.Validators
         public const string M_BlockedGLAccount = "Journal.M.AccountIsBlocked";//"Blocked GLAccounts(Inactive=True)";
 
         public const string M_GLAccountIsControl = "GLAccount IsControl=True";
-        public const string M_ButAccountCurrencyisDifferent =
-            ///" But Account Currency is Different ";
-            "Accounting.General.O.ButAccountCurrencyDifferent";
+        
+        //public const string M_ButAccountCurrencyisDifferent =
+        //    ///" But Account Currency is Different ";
+        //    "Accounting.General.O.ButAccountCurrencyDifferent";
+
+        public const string M_PaymentBankAccountCurrencyDifferent =
+        "Accounting.General.O.PaymentBankAccountCurrencyDifferent";
 
         public const string M_JLAccountingDateMustWithinJournalMonth = "Journal.M.JLAccountingDateMustWithinJournalMonth";
 
@@ -158,7 +162,9 @@ namespace Logitude.Accounting.BL.Validators
 
                 if (clientExists == true)
                 {
-                    string basic_text_ExternalExist = "There is a Journal ("+ journalNumber + ") with the same ExternalNo And ExternalSystem";
+                    string basic_text_ExternalExist =
+                        //"There is a Journal ("+ journalNumber + ") with the same ExternalNo And ExternalSystem";
+                        M_ExternalNoAlreadyExists_1 + journalNumber + M_ExternalNoAlreadyExists_2;
                     errorsList.Add(basic_text_ExternalExist);
                     //TranslateMyTextCode(M_ExternalNoAlreadyExists_1, myJournalPM.Tenant)
                     //    + myJournalPM.ExternalNo

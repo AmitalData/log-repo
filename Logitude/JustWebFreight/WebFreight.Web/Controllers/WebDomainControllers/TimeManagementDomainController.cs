@@ -35,6 +35,11 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Security;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.StorageService;
+using Microsoft.Practices.Unity;
+using Syncfusion.XlsIO;
+using System.Data;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -117,7 +122,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         foreach (TMEmployeeTimePM itemChanged in args.ItemsPM)
                         {
                             TMEmployeeTimePM itemPOCO = queryService.GetSingle(itemChanged.Id, true, false);
-                            if (itemPOCO != null && !(itemPOCO.SprintId == itemChanged.SprintId && itemPOCO.ProjectId == itemChanged.ProjectId && itemPOCO.Description == itemChanged.Description && itemPOCO.WINumber == itemChanged.WINumber))
+                            if (itemPOCO != null && !(itemPOCO.LocationCode == itemChanged.LocationCode && itemPOCO.SprintId == itemChanged.SprintId && itemPOCO.ProjectId == itemChanged.ProjectId && itemPOCO.Description == itemChanged.Description && itemPOCO.WINumber == itemChanged.WINumber))
                             {
                                 itemPOCO.ProjectId = itemChanged.ProjectId;
                                 itemPOCO.SprintId = itemChanged.SprintId;
@@ -1065,6 +1070,103 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public HttpResponseMessage GetDownloadEmployeesTimesToExcel(string employeeUserId, string locationCode, string startDate, string endDate)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("TMEmployeeTime", "READ", tenant);
+
+                DateTime? myStartDate = startDate == "null" ? null : DateHelper.GetDate(startDate);
+                DateTime? myEndDate = endDate == "null" ? null : DateHelper.GetDate(endDate);
+
+                TimeManagementAPIHelper myResult = this.FillDataEntryTimeSheetList(employeeUserId, locationCode, myStartDate, myEndDate, tenant);
+                List<TMEmployeeTimePM> ItemsPM = myResult.ItemsPM;
+
+
+                byte[] data = this.ExportToExcel(ItemsPM, tenant);
+
+                string fileName = "EmployeesTime" + DateTime.Now.ToShortDateString();
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = fileName,
+                    FolderName = "others",
+                    Extension = "xls",
+                    Tenant = tenant,
+                    FileSize = data.Length,
+                };
+
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                storageservice.Write(data, fileInfo);
+
+                return Request.CreateResponse(HttpStatusCode.OK, fileName);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private byte[] ExportToExcel(List<TMEmployeeTimePM> employeeTimeLines, int tenant)
+        {
+            System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+            IWorksheet sheet1 = workbook.Worksheets[0];
+
+            // Build excel headers 
+            DataTable table = new DataTable();
+            table.Columns.Add("Project Name");
+            table.Columns.Add("Location Name");
+            table.Columns.Add("Hours");
+            table.Columns.Add("WI Number");
+            table.Columns.Add("Sprint");
+            table.Columns.Add("Description");
+
+            if (employeeTimeLines != null && employeeTimeLines.Count > 0)
+            {
+                foreach (var item in employeeTimeLines)
+                {
+                    DataRow row = table.NewRow();
+                    row[0] = item.ProjectName ?? null;
+                    row[1] = item.LocationName ?? null;
+                   
+                    if (item.TimeInMinutes != 0)
+                    {
+                        TimeSpan iTimeSpan = TimeSpan.FromMinutes(Math.Abs(item.TimeInMinutes));
+
+                        string iResult = (int)iTimeSpan.TotalHours + "." + iTimeSpan.Minutes.ToString("00");
+
+                        if (item.TimeInMinutes < 0)
+                        {
+                            iResult = "- " + iResult;
+                        }
+                        row[2] = iResult;
+                    }
+                    else
+                    {
+                        row[2] = 0;
+                    }
+
+                    row[3] = item.WINumber ?? null;
+                    row[4] = item.SprintName ?? null;
+                    row[5] = item.Description ?? null;
+                    table.Rows.Add(row);
+                }
+            }
+            sheet1.ImportDataTable(table, true, 1, 1);
+            workbook.Version = ExcelVersion.Excel2007;
+            workbook.SaveAs(memory);
+            return memory.ToArray();
         }
     }
 

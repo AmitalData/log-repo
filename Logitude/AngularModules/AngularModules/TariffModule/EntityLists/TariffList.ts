@@ -26,7 +26,7 @@ export class TariffList {
 	TypeCode: string;
 	TypeName: string;
 	LastVersion: number;
-	ContractNumber: number;
+	ContractNumber: string;
 	CreatedByUserName: string;
 	SellerName: string;
 	UpdatedByUserName: string;

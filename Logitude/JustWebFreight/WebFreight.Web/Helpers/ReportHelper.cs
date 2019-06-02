@@ -11,6 +11,7 @@ using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
@@ -23,6 +24,7 @@ using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
@@ -721,15 +723,17 @@ namespace WebFreight.Web.Helpers
         {
             QueryOperations queryOperations = new QueryOperations();
             queryOperations.QueryFilterItems = new System.Collections.Generic.List<QueryFilterItem>();
-
-            foreach (QueryFilterItem filterItem in queryFilterItemLists)
+            if (queryFilterItemLists != null)
             {
-                if (filterItem.FieldDataType == "Date")
+                foreach (QueryFilterItem filterItem in queryFilterItemLists)
                 {
-                    if (filterItem.FieldValue != null)
-                        filterItem.FieldValue = DateTime.Parse(filterItem.FieldValue.ToString());
+                    if (filterItem.FieldDataType == "Date")
+                    {
+                        if (filterItem.FieldValue != null)
+                            filterItem.FieldValue = DateTime.Parse(filterItem.FieldValue.ToString());
+                    }
+                    queryOperations.QueryFilterItems.Add(filterItem);
                 }
-                queryOperations.QueryFilterItems.Add(filterItem);
             }
 
             FilterSerializer filterSeriazlizer = new FilterSerializer();
@@ -1280,6 +1284,40 @@ namespace WebFreight.Web.Helpers
                         urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
                         break;
                     }
+
+                case "UNER":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(UnicargoExportDataProvider));
+                        UnicargoExportDataProvider reportDataProvider = (UnicargoExportDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "UnicargoExport", Name = "UnicargoExportDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
+
+                case "SHEL":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ShipmentsEventsListDataProvider));
+                        ShipmentsEventsListDataProvider reportDataProvider = (ShipmentsEventsListDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "ShipmentsEventsList", Name = "ShipmentsEventsListDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
+
+                case "ATRE":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(AutomationTestReportDataProvider));
+                        AutomationTestReportDataProvider reportDataProvider = (AutomationTestReportDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        CurrentBusinessObject = new StiBusinessObject() { Category = "AutomationTestReport", Name = "AutomationTestReportDataProvider", BusinessObjectValue = reportDataProvider };
+                        urlImage = SetStiViewer(reportFliter, CurrentBusinessObject, template, null);
+                        break;
+                    }
+
+
             }
             return urlImage;
         }
@@ -1407,6 +1445,20 @@ namespace WebFreight.Web.Helpers
             {
                 #region
 
+
+                case "ATRE":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadAutomationTestReportDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
+
+                case "SHEL":
+                    {
+                        DatabaseInitializer.RunOnSeconderyDB = true;
+                        dataProvider = logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
+
                 case "SHST":
                     {
                         dataProvider = logitudeReportsWebService.LoadShipmentsStocksData(filters, reportFliter.tenant);
@@ -1471,6 +1523,7 @@ namespace WebFreight.Web.Helpers
 
                 case "COTR":
                     {
+
                         dataProvider = logitudeReportsWebService.LoadContainerTruckingData(filters, reportFliter.tenant);
                         break;
                     }
@@ -1744,6 +1797,13 @@ namespace WebFreight.Web.Helpers
                 case "LTRP":
                     {
                         dataProvider = logitudeReportsWebService.LoadLedgerTransactionDataProvider(filters, reportFliter.tenant);
+                        break;
+                    }
+
+                case "UNER":
+                    {
+                        UnicargoExportManager myDataManager = new UnicargoExportManager(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
                         break;
                     }
 
