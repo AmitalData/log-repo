@@ -27,7 +27,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
     {
         private int tenant;
         private IShipmentsContext shipmentsContext;
-        private ICommonDataContext commonDataContext;
+       private  ICommonDataContext commonDataContext;
         private EntityStatusRepository entityStatusRepository;
         private IWebFreightContext webFreightContext;
         private TransportModeRepository transportModeRepository;
@@ -40,7 +40,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             this.tenant = tenant;
             customFieldResolver = new CustomFieldResolver();
             shipmentsContext = ShipmentsContext.GetContext(tenant);
-            ContactRepository = new ContactRepository(CommonDataContext.GetContext(tenant));
+            ContactRepository =new ContactRepository( CommonDataContext.GetContext(tenant));
             commonDataContext = CommonDataContext.GetContext(tenant);
             webFreightContext = WebFreightContext.GetContext(tenant);
             cardRepository = new CardRepository(tenant);
@@ -70,11 +70,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         {
             UnicargoExportDataProvider myDataProvider = new UnicargoExportDataProvider()
             {
-                Shipments = new List<UnicargoExport>()
+             Shipments   = new List<UnicargoExport>()
             };
 
-            List<Shipment> shipments = shipmentsContext.Shipments.Where(p => p.Tenant == tenant && p.IsOperationalClosed == false).Include("CreatedByUser").Include("CreatedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").ToList();
-            Dictionary<string, string> incoterms = commonDataContext.Incoterms.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
+            //List<Shipment> shipments = shipmentsContext.Shipments.Where(p=>p.Tenant==tenant && p.IsOperationalClosed==false).Include("CreatedByUser").Include("CreatedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").ToList();
+           Dictionary<string,string> incoterms= commonDataContext.Incoterms.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
             Dictionary<string, string> ShipmentTypes = shipmentsContext.ShipmentTypes.ToDictionary(a => a.Id, b => b.Name);
             Dictionary<string, string> transportmodes = webFreightContext.TransportModes.ToDictionary(a => a.Id, b => b.Name);
             Dictionary<string, string> Directions = webFreightContext.Directions.ToDictionary(a => a.Id, b => b.Name);
@@ -84,6 +84,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             Dictionary<string, string> SpeicalServices = webFreightContext.SpecialServices.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.SpecialServiceEnglishName);
 
 
+            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            List<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant).ToList();
             shipments.ForEach(item =>
             {
                 UnicargoExport Shipment = new UnicargoExport();
@@ -92,18 +94,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 Shipment.House = item.House;
                 if (!string.IsNullOrEmpty(item.IncotermId))
                 {
-                    Shipment.Incoterms = incoterms.ContainsKey(item.IncotermId) ? incoterms[item.IncotermId] != null ? incoterms[item.IncotermId] : null : null;
+                    Shipment.Incoterms = incoterms.ContainsKey(item.IncotermId)?incoterms[item.IncotermId]!=null? incoterms[item.IncotermId]:null:null;
                 }
 
                 Shipment.MainHarmonize = item.MainHarmonize;
                 if (!string.IsNullOrEmpty(item.ShipmentTypeId))
                 {
-                    Shipment.Type = ShipmentTypes.ContainsKey(item.ShipmentTypeId) ? ShipmentTypes[item.ShipmentTypeId] != null ? ShipmentTypes[item.ShipmentTypeId] : null : null;
+                    Shipment.Type = ShipmentTypes.ContainsKey(item.ShipmentTypeId) ? ShipmentTypes[item.ShipmentTypeId] != null ? ShipmentTypes[item.ShipmentTypeId] : null:null;
                 }
 
                 if (!string.IsNullOrEmpty(item.StatusId))
                 {
-                    EntityStatus status = entityStatusRepository.GetSingleEntityStatus(item.StatusId, tenant);
+                    EntityStatus status= entityStatusRepository.GetSingleEntityStatus(item.StatusId, tenant);
                     if (status != null)
                     {
                         Shipment.Status = status.Name;
@@ -113,24 +115,24 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.TransportModeId))
                 {
-                    Shipment.TransportMode = transportmodes.ContainsKey(item.TransportModeId) ? transportmodes[item.TransportModeId] != null ? transportmodes[item.TransportModeId] : null : null;
+                    Shipment.TransportMode = transportmodes.ContainsKey(item.TransportModeId) ?transportmodes[item.TransportModeId] != null ? transportmodes[item.TransportModeId] : null:null;
                 }
 
                 if (!string.IsNullOrEmpty(item.DirectionId))
                 {
-                    Shipment.Direction = Directions.ContainsKey(item.DirectionId) ? Directions[item.DirectionId] != null ? Directions[item.DirectionId] : null : null;
+                    Shipment.Direction = Directions.ContainsKey(item.DirectionId) ?Directions[item.DirectionId] != null ? Directions[item.DirectionId] : null:null;
                 }
 
                 Shipment.FileNumber = item.CustomFileNumber; // Check
 
                 if (!string.IsNullOrEmpty(item.ShipmentLevelCode))
                 {
-                    Shipment.ShipmentLevel = ShipmentLevels.ContainsKey(item.ShipmentLevelCode) ? ShipmentLevels[item.ShipmentLevelCode] != null ? ShipmentLevels[item.ShipmentLevelCode] : null : null;
+                    Shipment.ShipmentLevel = ShipmentLevels.ContainsKey(item.ShipmentLevelCode) ?ShipmentLevels[item.ShipmentLevelCode] != null ? ShipmentLevels[item.ShipmentLevelCode] : null:null;
                 }
 
-                if (!string.IsNullOrEmpty(item.CreatedByUserId))
+                if(!string.IsNullOrEmpty(item.CreatedByUserId))
                 {
-                    Contact contact = ContactRepository.GetSingleContactByIdAndTenant(item.CreatedByUserId, tenant, true);
+                    Contact contact=ContactRepository.GetSingleContactByIdAndTenant(item.CreatedByUserId, tenant, true);
                     if (contact != null)
                     {
                         Shipment.Openedby = contact.EnglishName;
@@ -149,12 +151,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.DepartmentId))
                 {
-                    Shipment.Department = departments.ContainsKey(item.DepartmentId) ? departments[item.DepartmentId] != null ? departments[item.DepartmentId] : null : null;
+                    Shipment.Department = departments.ContainsKey(item.DepartmentId) ?departments[item.DepartmentId] != null ? departments[item.DepartmentId] : null:null;
                 }
 
                 if (!string.IsNullOrEmpty(item.BranchId))
                 {
-                    Shipment.Branch = branches.ContainsKey(item.BranchId) ? branches[item.BranchId] != null ? branches[item.BranchId] : null : null;
+                    Shipment.Branch = branches.ContainsKey(item.BranchId) ?branches[item.BranchId] != null ? branches[item.BranchId] : null:null;
                 }
 
 
@@ -169,12 +171,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.SpecialServicesTypeId))
                 {
-                    Shipment.SpecialServiceType = SpeicalServices.ContainsKey(item.SpecialServicesTypeId) ? SpeicalServices[item.SpecialServicesTypeId] != null ? SpeicalServices[item.SpecialServicesTypeId] : null : null;
+                    Shipment.SpecialServiceType = SpeicalServices.ContainsKey(item.SpecialServicesTypeId) ?SpeicalServices[item.SpecialServicesTypeId] != null ? SpeicalServices[item.SpecialServicesTypeId] : null:null;
                 }
                 Shipment.CreateDate = item.CreateDateTime;
                 Shipment.ValueofGoods = item.ValueOfGoods;
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, Shipment, item);
-
+               
                 #endregion
 
 
@@ -271,7 +273,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 #region Packages Section
                 //Shipment.PackageType = item.PackageType; // Check
-                Shipment.TotalPieces = item.NumberOfPackages; // Add
+                 Shipment.TotalPieces = item.NumberOfPackages; // Add
                 Shipment.Volume = item.Volume;
                 Shipment.GrossWeight = item.GrossWeight;
                 Shipment.VolumetricWeight = item.VolumetricWeight;

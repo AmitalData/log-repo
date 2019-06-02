@@ -725,5 +725,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ARInvoices { get; set; }
         public string ReleasingAgentId { get; set; }
         public string ReleasingAgentName { get; set; }
+
+        public string ColoaderId { get; set; }
     }
 }
