@@ -141,6 +141,8 @@ namespace DW_Editor_Tool.Helpers
                             }
                         }
 
+                        AddAllCustomFields(tableViewModel, fieldsList);
+
                         tableViewModel.BuildObsList(fieldsList);
                     }
                     else
@@ -162,6 +164,30 @@ namespace DW_Editor_Tool.Helpers
                 tableViewModel.Code = FileName;
                 
                 return tableViewModel;
+            }
+        }
+
+        private static void AddAllCustomFields(DWObjectTableViewModel tableViewModel, List<DWObjectFieldViewModel> fieldsList)
+        {
+            if (tableViewModel.Name == "Fact_Shipments")
+            {
+                var customField = fieldsList.Where(d => d.Name == "Field1").FirstOrDefault();
+                if (customField == null)
+                {
+                    int i = 1;
+                    while (i <= 6)
+                    {
+                        DWObjectFieldViewModel dWObjectFieldViewModel = new DWObjectFieldViewModel(tableViewModel, true);
+                        dWObjectFieldViewModel.Name = "Field" + i;
+                        dWObjectFieldViewModel.Code = "[" + dWObjectFieldViewModel.Name + "]";
+                        dWObjectFieldViewModel.Category1 = "CustomFields";
+                        dWObjectFieldViewModel.DisplayInQueryBuilder = true;
+                        dWObjectFieldViewModel.IsCustom = true;
+                        dWObjectFieldViewModel.DataTypeCode = "SqlVariant";
+                        fieldsList.Add(dWObjectFieldViewModel);
+                        i += 1;
+                    }
+                }
             }
         }
 
