@@ -900,7 +900,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                 if (AppTool.IsNullOrZero(row.LocalAmountCredit)) {
                     return row.LocalAmountDebit;
                 } else {
-                    return -1 * row.LocalAmountCredit;
+                    return  row.LocalAmountCredit; //-1 *
                 }
 
             } else if (this.GLAccountPM.ReconcileMethodCode == "1") { // 1-foreign currency
@@ -908,7 +908,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                 if (AppTool.IsNullOrZero(row.ForeignAmountCredit)) {
                     return row.ForeignAmountDebit;
                 } else {
-                    return -1 * row.ForeignAmountCredit;
+                    return row.ForeignAmountCredit; //-1 *
                 }
 
             }
