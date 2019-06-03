@@ -18,7 +18,7 @@ namespace WarehouseData.Helper
         long timeOut = 10000000000000000;
         string AppName = string.Empty;
         string Mode = string.Empty;
-
+        int CustomFieldsCount = 6;
         List<TableClass> tableLists = new List<TableClass>();
         public WarehouseHelper(string appName = "WarehouseData", string mode = "Debug")
         {
@@ -43,7 +43,7 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Branch", DBTableName = "Branches", Dw_TableName = "dw_Branches", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Branches", BuildScriptName = "BuildBrancheDimensionTable", IncrementalScriptName = "UpdateBrancheDimensionTable" });
             tableNameLists.Add(new TableClass() { TableName = "EntityStatus", DBTableName = "EntityStatus", Dw_TableName = "dw_ShipmentStatuses", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_ShipmentStatuses", BuildScriptName = "BuildEntityStatusDimensionTable", IncrementalScriptName = "UpdateEntityStatusDimensionTable" });
             tableNameLists.Add(new TableClass() { TableName = "Rank", DBTableName = "Ranks", Dw_TableName = "dw_Ranks", KeyName = "Id", });
-            tableNameLists.Add(new TableClass() { TableName = "Shipment", DWObjectTableCode = "Fact_Shipments", FieldsDBName = "ToPortId,FromPortId,Field1,Field2,Field3,Field4,Field5,Field6", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
+            tableNameLists.Add(new TableClass() { TableName = "Shipment", DWObjectTableCode = "Fact_Shipments", FieldsDBName = "ToPortId,FromPortId", KeyName = "Id", DBTableName = "Shipments", Dw_TableName = "dw_Shipments", HasConstraint = true, HasFactTable = true, BuildScriptName = "BuildFactShipmentTable", IncrementalScriptName = "UpdateFactShipmentTable", DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "ShipmentMasterData", FieldsDBName = "MasterShipmentNumber", DBTableName = "ShipmentMasterDatas", Dw_TableName = "dw_ShipmentMasterDatas", KeyName = "Id", HasNotSpecifiedValue = true, HasConstraint = true, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Card", DBTableName = "Cards", Dw_TableName = "dw_Partners", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Partners", BuildScriptName = "BuildCardsDimensionTable", IncrementalScriptName = "UpdateCardDimensionTable", HasConstraint = true, DispayInScreen = true });
             tableNameLists.Add(new TableClass() { TableName = "Port", DBTableName = "Ports", Dw_TableName = "dw_Ports", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Ports", BuildScriptName = "BuildPortsDimensionTable", IncrementalScriptName = "UpdatePortsDimensionTable", HasConstraint = true, DispayInScreen = true });
@@ -58,12 +58,22 @@ namespace WarehouseData.Helper
             tableNameLists.Add(new TableClass() { TableName = "Vessel", DBTableName = "Vessels", Dw_TableName = "dw_Vessels", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_Vessels", BuildScriptName = "BuildVesselDimensionTable", IncrementalScriptName = "UpdateVesselDimensionTable", HasConstraint = true });
             tableNameLists.Add(new TableClass() { TableName = "SpecialServicesType", DBTableName = "SpecialServicesTypes", Dw_TableName = "dw_SpecialServicesTypes", KeyName = "Id", HasDimensionTable = true, DWObjectTableCode = "DIM_SpecialServicesTypes", BuildScriptName = "BuildSpecialServicesTypeDimensionTable", IncrementalScriptName = "UpdateSpecialServicesTypeDimensionTable", HasConstraint = true });
             tableNameLists.Add(new TableClass() { TableName = "WaterMark", DBTableName = "WaterMarks", Dw_TableName = "dw_WaterMarks", KeyName = "TableName", FieldsDBName = "TableName,LastUpdateDate" });
-
+            FullShipmentCustomFields(tableNameLists.Where(d => d.TableName == "Shipment").FirstOrDefault());
             tableLists = tableNameLists;
             return tableNameLists;
 
         }
-        
+
+        private void FullShipmentCustomFields(TableClass tableClass)
+        {
+            int i = 1;
+            while (i <= CustomFieldsCount)
+            {
+                tableClass.FieldsDBName += (",Field" + i);
+                i += 1;
+            }
+        }
+
         public void BuildDWObjectFieldDB(List<TableClass> tableNameLists, string connectionString)
         {
 
@@ -263,63 +273,116 @@ namespace WarehouseData.Helper
         {
             if (!string.IsNullOrEmpty(sql))
             {
-                int i = 1;
-                int customFieldsCount = 6;
-                string result = string.Empty;
-                if (sql.Contains("--@[DeclareCustomFields]"))
-                {
-                    while (i <= customFieldsCount)
-                    {
-                        result += "   declare @Field"+ i + " as varchar(2000) \r\n";
-                        result += "   declare @Field" + i + "DataTypeCode as varchar(100) \r\n";
-                        i += 1;
-                    }
-                    //DataTypeCode
-                    sql = sql.Replace("--@[DeclareCustomFields]", result);
-                }
+                sql = ResolveCustomFieldDataTypeCodeVariable(sql);
+                sql = ResolveCustomFieldNamesVariable(sql);
+                sql = ResolveCustomFieldValuesVariable(sql);
+                sql = ResolveShipmentsCustomFieldsVariable(sql);
+                sql = ResolveCursorCustomFieldsVariable(sql);
 
-                if (sql.Contains("--@[ResolveCustomFieldDataTypeCode]"))
-                {
-                    i = 1;
-                    result = string.Empty;
-                    while (i <= customFieldsCount)
-                    {
-                        result += " if(@Field" + i + " is not null) begin   set @Field" + i + "DataTypeCode =( select DataTypeCode from #TempObjectFields where FieldName = 'Field" + i + "' and Tenant =@SourceTenant )end \r\n";
-
-                        i += 1;
-                    }
-
-                    sql = sql.Replace("--@[ResolveCustomFieldDataTypeCode]", result);
-                }
-
-                if (sql.Contains("[CustomFieldNames]"))
-                {
-                    i = 1;
-                    result = string.Empty;
-                    while (i <= customFieldsCount)
-                    {
-                        result += "[Field"+i+"]" + (i < customFieldsCount ? ",":"");
-                        i += 1;
-                    }
-
-                    sql = sql.Replace("[CustomFieldNames]", result);
-                }
-
-                if (sql.Contains("[CustomFieldValues]"))
-                {
-                    i = 1;
-                    result = string.Empty;
-                    while (i <= customFieldsCount)
-                    {
-                        result += "dbo.ResolveCustomFieldValue(@Field" + i+ ",@Field"+ i + "DataTypeCode)" + (i < customFieldsCount ? "," : ""); ;
-                        i += 1;
-                    }
-
-                    sql = sql.Replace("[CustomFieldValues]", result);
-                }
             }
+
             return sql;
 
+        }
+
+        private string ResolveCursorCustomFieldsVariable(string sql)
+        {
+            int i = 1;
+            string result = string.Empty;
+            if (sql.Contains("@CursorCustomFieldsVariable"))
+            {
+                i = 1;
+                result = string.Empty;
+                while (i <= CustomFieldsCount)
+                {
+                    result += "@Field" + i + ",";
+                    i += 1;
+                }
+                result += "^";
+                result = result.Replace(",^", "");
+                sql = sql.Replace("@CursorCustomFieldsVariable", result);
+            }
+            return sql;
+        }
+
+        private string ResolveShipmentsCustomFieldsVariable(string sql)
+        {
+            int i = 1;
+            string result = string.Empty;
+            if (sql.Contains("@dw_Shipments.CustomFieldsVariable"))
+            {
+                i = 1;
+                result = string.Empty;
+                while (i <= CustomFieldsCount)
+                {
+                    result += "dw_Shipments.Field" + i + ",";
+                    i += 1;
+                }
+                result += "^";
+                result = result.Replace(",^", "");
+                sql = sql.Replace("@dw_Shipments.CustomFieldsVariable", result);
+            }
+            return sql;
+        }
+
+        private string ResolveCustomFieldValuesVariable(string sql)
+        {
+            int i = 1;
+            string result = string.Empty;
+
+            if (sql.Contains("[CustomFieldValuesVariable]"))
+            {
+                i = 1;
+                result = string.Empty;
+                while (i <= CustomFieldsCount)
+                {
+                    result += "dbo.ResolveCustomFieldValue(@Field" + i + ",@Field" + i + "DataTypeCode)" + (i < CustomFieldsCount ? "," : ""); ;
+                    i += 1;
+                }
+
+                sql = sql.Replace("[CustomFieldValuesVariable]", result);
+            }
+            return sql;
+        }
+
+        private string ResolveCustomFieldNamesVariable(string sql)
+        {
+            int i = 1;
+            string result = string.Empty;
+            if (sql.Contains("[CustomFieldNamesVariable]"))
+            {
+                i = 1;
+                result = string.Empty;
+                while (i <= CustomFieldsCount)
+                {
+                    result += "[Field" + i + "]" + (i < CustomFieldsCount ? "," : "");
+                    i += 1;
+                }
+
+                sql = sql.Replace("[CustomFieldNamesVariable]", result);
+            }
+
+            return sql;
+        }
+
+        private string ResolveCustomFieldDataTypeCodeVariable(string sql)
+        {
+            int i = 1;
+            string result = string.Empty;
+
+            if (sql.Contains("--@[DeclareCustomFieldsVariable]"))
+            {
+                while (i <= CustomFieldsCount)
+                {
+                    result += "   declare @Field" + i + " as varchar(2000) \r\n";
+                    result += "   declare @Field" + i + "DataTypeCode as varchar(100) \r\n";
+                    i += 1;
+                }
+                //DataTypeCode
+                sql = sql.Replace("--@[DeclareCustomFieldsVariable]", result);
+            }
+
+            return sql;
         }
 
         public void ExecuteScript(string forderName, string connectionString, string scriptName )
@@ -646,6 +709,9 @@ namespace WarehouseData.Helper
             if (!isPrivateDB) CreateWaterMarksTable("WaterMarks", sourceConnectionString);
 
             List<TableClass> tableNameLists = FillTable();
+
+
+
             BuildWarehouseObjectField(tableNameLists, sourceConnectionString);
             BuildDWObjectFieldDB(tableNameLists, sourceConnectionString);
             foreach (TableClass table in tableNameLists)
