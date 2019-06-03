@@ -20,7 +20,8 @@ import { FormGroup } from '@angular/forms';
 import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { timer } from 'rxjs/observable/timer';
-import { take } from 'rxjs/operator/take';
+//import { timer } from 'rxjs';
+import { timeInterval, pluck, take } from 'rxjs/operators';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
 
 interface BeforeOnDestroy {
@@ -31,7 +32,7 @@ type NgxInstance = BeforeOnDestroy & Object;
 type Descriptor = TypedPropertyDescriptor<Function>;
 type Key = string | symbol;
 
-function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descriptor) {
+export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descriptor) {
     return {
         value: async function (...args: any[]) {
             await target.ngxBeforeOnDestroy();
@@ -50,7 +51,7 @@ function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descriptor) 
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
+export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewInit, OnDestroy {
     public AllowPercentage: boolean;
     public IsAccumulative: boolean;
     public ShowHelp: boolean = false;
@@ -564,7 +565,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         //console.log('2. EXECUTE HEAVY FUNCTION (3 sec)');
 
         const sourcef = timer(3000)
-            //.pipe(take(1))
+            .pipe(take(1))
             .subscribe(() => {
                 resolve();
             });
