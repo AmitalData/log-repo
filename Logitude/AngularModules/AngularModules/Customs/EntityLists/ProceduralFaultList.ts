@@ -41,6 +41,7 @@ export class ProceduralFaultList {
 	CustomerName: string;
 	DeclarationNumber: string;
 	SignedByUserId: string;
+	SignedByUserName: string;
 	
 }
  

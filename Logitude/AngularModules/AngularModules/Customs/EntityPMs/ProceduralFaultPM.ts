@@ -224,6 +224,11 @@ export class ProceduralFaultPM {
     public set SignedByUserId(newValue: string) { if (this.signedByUserId != newValue) { this.signedByUserId = newValue; this.MarkAsDirty("SignedByUserId"); } }
        
 	 
+    private signedByUserName: string;
+    public get SignedByUserName() { return this.signedByUserName; }
+    public set SignedByUserName(newValue: string) { if (this.signedByUserName != newValue) { this.signedByUserName = newValue; this.MarkAsDirty("SignedByUserName"); } }
+       
+	 
 
     public OldEntityPM: ProceduralFaultPM;
 		

@@ -612,10 +612,10 @@
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckOperationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckStatusMessageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PointerLevelDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ProceduralFaultDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ProceduralFaultInProcessTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ProceduralFaultInSourceTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ProceduralFaultsConnEntityDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\ProceduralFaultsDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ProceduralFaultStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ProceduralFaultTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ProcessingReasonDataMapping.Generated.cs" />

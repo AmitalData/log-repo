@@ -80,6 +80,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string DeclarationNumber  { get; set; }
        [DataMember]
        public string SignedByUserId  { get; set; }
+       [DataMember]
+       public string SignedByUserName  { get; set; }
    }
 
 }

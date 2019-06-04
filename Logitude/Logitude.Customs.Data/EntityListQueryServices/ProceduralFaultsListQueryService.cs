@@ -77,7 +77,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                                ProceduralFaultTypeName = a.ProceduralFaultTypeName,
                                                                                ProceduralFaultStatuseName = a.ProceduralFaultStatuseName,
                                                                                RansomViolationTypeName = a.RansomViolationTypeName,
-                                                                               
+                                                                               SignedByUserId = a.SignedByUserId,
+                                                                               SignedByUserName = a.SignedByUserName,
 
                                                                            };
 
@@ -295,6 +296,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ProceduralFaultName = a.ProceduralFaultTypeName,
                                                          ProceduralFaultStatusName = a.ProceduralFaultStatuseName,
                                                          RansomViolationTypeName = a.RansomViolationTypeName,
+                                                         SignedByUserId = a.SignedByUserId,
+                                                         SignedByUserName = a.SignedByUserName,
                                                      });
             return query;
         }

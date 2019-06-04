@@ -84,7 +84,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CustomFileNo, 
 	         CustomerName, 
 	         DeclarationNumber, 
-	         SignedByUserId,
+	         SignedByUserId, 
+	         SignedByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
