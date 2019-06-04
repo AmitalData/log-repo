@@ -21,6 +21,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 {
     public partial class JournalLineQueryService : EntityQueryService<JournalLine, JournalLineKeys, JournalLinePM, JournalPM, JournalKeys>
     {
+        private IQueryable<IGrouping<string, JournalLineLedgerTransactionDTO>> _1;
+
         public IQueryable<JournalLine> GetQJournalLineByAcountingDate(DateTime fromDate, DateTime toDate, int tenant)
         {
             return this.repository.GetAll(tenant)
@@ -29,19 +31,28 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
 
 
-        //public IQueryable< IGrouping<String,JournalLine>> GetQGJournalLinesByExternalReco(int tenant)
-        //{
-        //    return this.repository.GetAll(tenant)
-        //        .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != "" 
-        //            && rec.ExternalReconcileNumber != "0" && rec.ExternalReconcileNumber != "0.00").OrderBy(rec => rec.ExternalReconcileNumber).GroupBy(rec => rec.ExternalReconcileNumber);
-        //}
-
-        public IQueryable<IGrouping<String, JournalLine>> GetQGJournalLinesByExternalRecoFromTo(int tenant, string fromExtNum, string toExtNum)
+        public IQueryable<IGrouping<String, JournalLineLedgerTransactionDTO>>
+            GetQGJournalLinesByExternalRecoFromTo(int tenant, string fromExtNum, string toExtNum)
         {
-            return this.repository.GetAll(tenant)
-                .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
-                    && rec.ExternalReconcileNumber != "0" && rec.ExternalReconcileNumber != "0.00" && rec.ExternalReconcileNumber.CompareTo(fromExtNum) >= 0 && rec.ExternalReconcileNumber.CompareTo(toExtNum) <= 0)
-                    .OrderBy(rec => rec.ExternalReconcileNumber).GroupBy(rec => rec.ExternalReconcileNumber);
+
+            var q = (from jl in this.repository.GetAll(tenant)
+                         .Where(rec => rec.ExternalReconcileNumber != null && rec.ExternalReconcileNumber != ""
+                         && rec.ExternalReconcileNumber != "0"
+                         && rec.ExternalReconcileNumber != "0.00"
+                         && rec.ExternalReconcileNumber.CompareTo(fromExtNum) >= 0
+                         && rec.ExternalReconcileNumber.CompareTo(toExtNum) <= 0)
+                     join trans in (context as AccountingContext).LedgerTransactions.Where(r => r.Tenant == tenant && r.IsReconciled == false)
+                     on new { jl.JournalId, jl.Line }
+                     equals new { trans.JournalId, Line = trans.JournalLineNumber }
+                     into joinT
+                     from joinr in joinT
+                     select new JournalLineLedgerTransactionDTO
+                     {
+                         JournalLine = jl,
+                         LedgerTransaction = joinr,
+                     });
+            return q.OrderBy(rec => rec.JournalLine.ExternalReconcileNumber).GroupBy(rec => rec.JournalLine.ExternalReconcileNumber);
+
         }
 
 

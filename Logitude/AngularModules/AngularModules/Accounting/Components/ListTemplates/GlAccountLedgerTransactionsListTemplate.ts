@@ -198,7 +198,7 @@ export class GlAccountLedgerTransactionsListTemplate {
                 if (this.rowData["LocalAmountCredit"] == 0) {
                     return this.rowData["LocalAmountDebit"];
                 } else {
-                    return -1 * this.rowData["LocalAmountCredit"];
+                    return this.rowData["LocalAmountCredit"]; // -1 *
                 }
             } else if (
                 ReconcileEventManager.GLAccountReconcileMethodCode == "1"
@@ -208,7 +208,7 @@ export class GlAccountLedgerTransactionsListTemplate {
                 if (this.rowData["ForeignAmountCredit"] == 0) {
                     return this.rowData["ForeignAmountDebit"];
                 } else {
-                    return -1 * this.rowData["ForeignAmountCredit"];
+                    return this.rowData["ForeignAmountCredit"];  // -1 *
                 }
             }
         }

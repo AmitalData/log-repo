@@ -5,6 +5,7 @@ import { OperationsComp } from './NewEntity/Operations.po';
 
 import { SendMailPopup } from '../SendMailPopup/SendMailPopup';
 import { PrintDocOut } from '../PrintDocOut/PrintDocOut';
+import { send } from 'q';
 
 describe('DocsOut', () => {
 
@@ -22,13 +23,17 @@ describe('DocsOut', () => {
 
 
   it('Send Docs Out of Shipment To A User Successfully', function () {
-    login.navigateTo('https://test.logitudeworld.com/test');
-    login.DoLogin('raghad@protractor.com', '!RS123Rs');
     NewDirectShipment.DoOperations();
     docsOutTab.DocsOutTab();
     docsOutTab.QuickSearchDocOut('BRCL-S-DocsOut', 'BRCL-L-DocsOut', 'BOOKING REQUEST ');
-    sendMailPopup.sendEmailToFirstUser();
-  //  sendMailPopup.isSendingCompleted('SendDocumentSucceededDiv');
+    sendMailPopup.sendEmailToFirstUser('Booking request', 'SearchFieldsId_0_1');
+  });
+
+  it('Failing Sending Email', function () {
+    //add subject to doc 
+    docsOutTab.QuickSearchDocOut('BRCL-S-DocsOut', 'BRCL-L-DocsOut', 'BOOKING REQUEST ');
+    sendMailPopup.sendEmailToFirstUser('ExceptionTest', 'SearchFieldsId_0_2');
+    sendMailPopup.isSendingFailed('SendDocumentFailedDiv');
   });
 
   it('Successfully Printing Document', function () {
@@ -39,6 +44,6 @@ describe('DocsOut', () => {
   it('Failing Printing Document', function () {
     docsOutTab.QuickSearchDocOut('FTDT-P-DocsOut', 'FTDT-L-DocsOut', 'Failure Test Document');
     printDocOut.isPrintingCompleted('BuildDocumentFailedDiv', false);
-  });
 
+  });
 });

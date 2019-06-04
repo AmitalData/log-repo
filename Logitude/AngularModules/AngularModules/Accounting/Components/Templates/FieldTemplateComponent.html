@@ -15,7 +15,7 @@
                 <!-- GLAccount -->
                 <div *ngIf="ObjectTableName == 'GLAccount'">
                     <div *ngIf="FieldName == 'BalanceInLocalCurrency'">
-                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;"
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
                             {{
                             FieldValue | NumbersPipe:'n2'
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div *ngIf="FieldName == 'LocalBalanceInDue'">
-                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;"
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
                             {{
                             FieldValue | NumbersPipe:'n2'

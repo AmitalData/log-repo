@@ -106,7 +106,8 @@ namespace WebFreight.Web.Helpers
                 VssServiceException vssex = aex.InnerException as VssServiceException;
                 if (vssex != null)
                 {
-                    Console.WriteLine(vssex.Message);
+                    //Console.WriteLine(vssex.Message);
+                    throw new Exception(vssex.Message);
                 }
             }
 

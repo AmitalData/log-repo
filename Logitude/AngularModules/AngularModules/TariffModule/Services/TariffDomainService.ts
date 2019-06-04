@@ -244,7 +244,7 @@ export class TariffSearchSummary {
     Remarks: string;
     ImageId: string;
     Name: string;
-
+    Currency: string;
 }
 
 export class ExcelTariffLines {
