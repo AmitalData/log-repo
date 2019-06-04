@@ -896,7 +896,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<PointerLevel> PointerLevel { get; set; }
         public IDbSet<ClientDrivingLicense> ClientDrivingLicense { get; set; }
         public IDbSet<ClientDrivingLicenseType> ClientDrivingLicenseType { get; set; }
-        public IDbSet<PendingErrorPlace> PendingErrorPlace { get; set; }
+        public IDbSet<PendingErrorPlace> PendingErrorPlaces { get; set; }
         public IDbSet<DecisionType> DecisionType { get; set; }
         public IDbSet<SeizureMethodType> SeizureMethodType { get; set; }
         public IDbSet<ClaimsRelatedEntitiesSeizure> ClaimsRelatedEntitiesSeizure { get; set; }

@@ -2936,7 +2936,10 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<TPGFileType> TPGFileTypes { get; set; }
         public IDbSet<DecCargoSplitCargoIdentifier> DecCargoSplitCargoIdentifiers { get; set; }
 
-
+        public IDbSet<PendingErrorPlace> PendingErrorPlaces { get; set; }
+        public IDbSet<MamanSpecialAction> MamanSpecialAction { get; set; }
+        public IDbSet<MamanSpecialActionStatus> MamanSpecialActionStatus { get; set; }
+        public IDbSet<DeclarationMamanSpecialAction> PendingDeclarationMamanSpecialActionErrorPlace { get; set; }
         #endregion
 
         #region CRM Context
@@ -3643,6 +3646,11 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             #endregion
 
             #region customs
+            modelBuilder.Configurations.Add(new MamanSpecialActionMap());
+            modelBuilder.Configurations.Add(new MamanSpecialActionStatusMap());
+            modelBuilder.Configurations.Add(new DeclarationMamanSpecialActionMap());
+
+            modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
             modelBuilder.Configurations.Add(new MamanStatusMap());
             modelBuilder.Configurations.Add(new AcceptanceStatusMap());
 

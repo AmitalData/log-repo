@@ -661,7 +661,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!(!string.IsNullOrWhiteSpace(paymentOrderNumber) && paymentStatusCode != "5") && !(_IsSubmitDeclarationResponse == true && string.IsNullOrWhiteSpace(paymentOrderNumber) && _MyDeclarationPM.DeclarationStatusTypeCode == "5" && _MyDeclarationPM.TotalTax <= 5))
             {
                 _MyDeclarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst;
-                if (_MyDeclarationPM.IsCourierDeclaration && declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue && _IsSubmitDeclarationResponse == true)
+                if (_MyDeclarationPM.IsCourierDeclaration && declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue && _IsSubmitDeclarationResponse == true && _MyDeclarationPM.DeclarationStatusTypeCode == "5")
                 {
                     _MyDeclarationPM.PaymentDate = declarationPaymentsPM.PaymentDate;
                 }
@@ -856,7 +856,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             MyResponseData.Succeeded = true;
             if (_MyDeclarationPM.CurrentContextTag == Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.CreateUnifreightPaymentConst) // moran 28.1.15 - Task 10005
             {
-                SendDeclarationPrint(_MyDeclarationPM, SendRequestVIA.WebServiceBatch, requestParams);
+                if (!_MyDeclarationPM.IsCourierDeclaration)
+                {
+                    SendDeclarationPrint(_MyDeclarationPM, SendRequestVIA.WebServiceBatch, requestParams);
+                }
             }
             if (requestParams.InterfaceTypeCode == "8373")
             {

@@ -682,9 +682,25 @@
     <Compile Include="Migrations\201905061035125_VendorCommissionMigration.Designer.cs">
       <DependentUpon>201905061035125_VendorCommissionMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905290802314_missingcustoms2905.cs" />
+    <Compile Include="Migrations\201905290802314_missingcustoms2905.Designer.cs">
+      <DependentUpon>201905290802314_missingcustoms2905.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290831281_missingcustoms2905_2.cs" />
+    <Compile Include="Migrations\201905290831281_missingcustoms2905_2.Designer.cs">
+      <DependentUpon>201905290831281_missingcustoms2905_2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.cs" />
     <Compile Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.Designer.cs">
       <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905290957208_missingcustoms2905_3.cs" />
+    <Compile Include="Migrations\201905290957208_missingcustoms2905_3.Designer.cs">
+      <DependentUpon>201905290957208_missingcustoms2905_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905291020154_missingcustoms2905_4.cs" />
+    <Compile Include="Migrations\201905291020154_missingcustoms2905_4.Designer.cs">
+      <DependentUpon>201905291020154_missingcustoms2905_4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -1142,8 +1158,20 @@
     <EmbeddedResource Include="Migrations\201905061035125_VendorCommissionMigration.resx">
       <DependentUpon>201905061035125_VendorCommissionMigration.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290802314_missingcustoms2905.resx">
+      <DependentUpon>201905290802314_missingcustoms2905.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290831281_missingcustoms2905_2.resx">
+      <DependentUpon>201905290831281_missingcustoms2905_2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902111356250_NewField_EnableFullscreenTextBox.resx">
       <DependentUpon>201902111356250_NewField_EnableFullscreenTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290957208_missingcustoms2905_3.resx">
+      <DependentUpon>201905290957208_missingcustoms2905_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905291020154_missingcustoms2905_4.resx">
+      <DependentUpon>201905291020154_missingcustoms2905_4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
