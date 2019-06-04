@@ -133,7 +133,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             else
             {
                 //Send interactive declaration Status request
-                SendDeclarationStatus();
+                if (!_MyDeclarationPM.IsCourierDeclaration)
+                {
+                    SendDeclarationStatus();
+                }
             }
             return this._MyDefaultResponseData;
         }

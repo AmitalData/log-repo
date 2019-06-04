@@ -856,7 +856,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             MyResponseData.Succeeded = true;
             if (_MyDeclarationPM.CurrentContextTag == Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.CreateUnifreightPaymentConst) // moran 28.1.15 - Task 10005
             {
-                SendDeclarationPrint(_MyDeclarationPM, SendRequestVIA.WebServiceBatch, requestParams);
+                if (!_MyDeclarationPM.IsCourierDeclaration)
+                {
+                    SendDeclarationPrint(_MyDeclarationPM, SendRequestVIA.WebServiceBatch, requestParams);
+                }
             }
             if (requestParams.InterfaceTypeCode == "8373")
             {
