@@ -40,6 +40,7 @@ export class ProceduralFaultList {
 	CustomFileNo: string;
 	CustomerName: string;
 	DeclarationNumber: string;
+	SignedByUserId: string;
 	
 }
  
