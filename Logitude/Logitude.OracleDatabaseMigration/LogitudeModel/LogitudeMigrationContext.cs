@@ -4168,7 +4168,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             //modelBuilder.Entity<SupplierInvoiceItemsTaxesMod>().Property(x => x.Amount).HasPrecision(16, 2);
 
-            modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(12, 10);
+            //modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(12, 10);
 
             modelBuilder.Entity<Deposit>().Property(x => x.DepositAmount).HasPrecision(16, 2);
 

@@ -308,6 +308,10 @@
     <Compile Include="Migrations\201906041017285_AddMigrationSignedByUser.Designer.cs">
       <DependentUpon>201906041017285_AddMigrationSignedByUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.cs" />
+    <Compile Include="Migrations\201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.Designer.cs">
+      <DependentUpon>201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -525,6 +529,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906041017285_AddMigrationSignedByUser.resx">
       <DependentUpon>201906041017285_AddMigrationSignedByUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.resx">
+      <DependentUpon>201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

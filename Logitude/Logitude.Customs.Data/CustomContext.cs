@@ -679,7 +679,7 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<CustomsCollateralsAnswer>().Property(x => x.RequestFileAmount).HasPrecision(18, 2);
 				
-			modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(12, 10);
+			modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(15, 10);
 				
 			modelBuilder.Entity<Declaration>().Property(x => x.LoadingFactor).HasPrecision(18, 10);
 				
