@@ -1,14 +1,17 @@
-﻿
+﻿using Microsoft.Practices.Unity;
+using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Testers.Messages;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -20,6 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.SystemTableServiceReference;
+using Logitude.CustomsMessaging.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -38,39 +42,69 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
-            var qs = new DeclarationCourierStatusQueryService(context);
-            List<DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
-            if (customResponse.DeclarationsList != null && customResponse.DeclarationsList.Count > 0)
+            //var qs = new DeclarationCourierStatusQueryService(context);
+            var repo = new DeclarationCourierStatusRepository(context);
+            var listPoco = new List<DeclarationCourierStatus>();
+            if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
-                listPM = qs.GetDeclarationsByIds(customResponse.DeclarationsList, requestParams.Tenant);
+                mess.AppendLine($"מפוצל כבר !!!");
+                listPoco = repo.GetDeclarationsByIds(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
+                Send2715WhereDocumentStatusCodeIs2(mess, context, myCustomsDocumentUpdateService, listPoco);
             }
             else
             {
-                listPM = qs.GetByMasterIDCourierDocumentStatus(requestParams.Tenant, requestParams.AppicationId, "X",
-                    customResponse.SelectedBOLValue,
-                    customResponse.SelectedStatusValue,
-                    customResponse.SelectedTotalInvoiceValue,
-                    customResponse.SelectedFastIndividualProcessValue,
-                    customResponse.SelectedCustomStatusValue);
+                mess.AppendLine($"ראשי - מפצל");
+                mess.AppendLine($"כל ההצהרות יפוצלו.....");
 
-            }
-            if (listPM.Count == 0)
-            {
-                mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Declaration) send  for master {requestParams.AppicationId} ");
-            }
-            //else // to check?!!!!
-            //{
-            //    listPM = listPM.Where(r => (r.CourierPaymentStatusCode == "R" || string.IsNullOrWhiteSpace(r.CourierPaymentStatusCode))).ToList();
-            //    if (listPM.Count == 0)
-            //    {
-            //        mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");
-            //    }
-            //}
+                if (customResponse.ClientFilterDeclarationsList != null && customResponse.ClientFilterDeclarationsList.Count > 0)
+                {
+                    mess.AppendLine($"סומנו בצד הלקוח ");
+                    listPoco = repo.GetDeclarationsByIds(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
+                }
+                else
+                {
+                    mess.AppendLine($"GetByMasterIDCourierDocumentStatus");
 
-            foreach (var itemPM in listPM)
+                    listPoco = repo.GetByMasterIDCourierDocumentStatus(requestParams.Tenant, requestParams.AppicationId, "X",
+                        customResponse.SelectedBOLValue,
+                        customResponse.SelectedStatusValue,
+                        customResponse.SelectedTotalInvoiceValue,
+                        customResponse.SelectedFastIndividualProcessValue,
+                        customResponse.SelectedCustomStatusValue);
+
+                }
+                if (listPoco.Count == 0)
+                {
+                    mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Declaration) send  for master {requestParams.AppicationId} ");
+                }
+
+                //Send2715WhereDocumentStatusCodeIs2(mess, context, myCustomsDocumentUpdateService, listPoco);
+                listPoco.Select(r => r.DeclarationId).ToList().ChunkBy(100)
+    .ForEach(list100 =>
+    {
+        customResponse.ServerSplitDeclarationsList = list100;
+        //CreateDCAInUCB2715_MsgMessagingService(customResponse, requestParams);
+        var CreateDCAInUCB2715_MsgMessagingService = new CRSUtil();
+        CreateDCAInUCB2715_MsgMessagingService
+        .CreateCRS_DCAIn<DCAInUCB2715WithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
+
+    });
+            }
+            this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
+
+            this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
+            this.MyResponseData.UserMessage = mess.ToString();
+            this.MyResponseData.Succeeded = true;
+        }
+
+    
+
+        private static void Send2715WhereDocumentStatusCodeIs2(StringBuilder mess, ICustomContext context, CustomsDocumentUpdateService myCustomsDocumentUpdateService, List<DeclarationCourierStatus> listPoco)
+        {
+            foreach (var itemPoco in listPoco)
             {
                 var customsDocumentQueryService = new CustomsDocumentQueryService(context);
-                var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = itemPM.DeclarationId, ParentEntityCode = "Declaration" }, itemPM.Tenant);
+                var customsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = itemPoco.DeclarationId, ParentEntityCode = "Declaration" }, itemPoco.Tenant);
 
                 foreach (var customsDocumentPMItem in customsDocumentPMList)
                 {
@@ -82,23 +116,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             customsDocumentPMItem.IsSendToQueue = true;
                             myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                             myCustomsDocumentUpdateService.Update(customsDocumentPMItem, true);
-                            LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
-                            mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                            LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
+                            mess.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
                         }
                         catch (System.Exception ee1)
                         {
-                            LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
-                            mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
+                            LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPoco.DeclarationId}) : {ee1.Message}");
+                            mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPoco.DeclarationId}) : {ee1.Message}");
                         }
                     }
                 }
             }
-
-            this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
-
-            this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
-            this.MyResponseData.UserMessage = mess.ToString();
-            this.MyResponseData.Succeeded = true;
         }
 
         public override INF_MSG_GenericResponseData GetResponse(DCAInUCB2715WithResponseContentHeader customResponse, GenericRequestParams requestParams)

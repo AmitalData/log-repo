@@ -11,6 +11,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Testers.Messages;
+using Logitude.CustomsMessaging.Utils;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -41,85 +42,88 @@ namespace Logitude.CustomsMessaging.ResponseServices
             
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
-
-
-
             var amitalContext = AmitalContext.GetContext(requestParams.Tenant);
             var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
             var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
             def.DEFDATA = def.DEFDATA ?? "";
 
-            var list = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
-            if (def.DEFDATA.Contains("ILMMN") ) // Maman
+            var port2SendList = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
+            if (def.DEFDATA.Contains("ILMMN")) // Maman
             {
-                list.Add("ILMMN");
+                port2SendList.Add("ILMMN");
             }
-            if (def.DEFDATA.Contains("ILOVL") ) // OVS
+            if (def.DEFDATA.Contains("ILOVL")) // OVS
             {
-                list.Add("ILOVL");
+                port2SendList.Add("ILOVL");
             }
 
 
 
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-            var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-            var qs = new DeclarationCourierStatusQueryService(context);
-            var listPM = new List<KeyValuePair<string, string>>();
-
-
-            if (list.Count == 0)
+            if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
-                mess.AppendLine($"UniCourierBatchSendUCBCTML_MsgResponseService:default CGO_CUST_MAMAN no ILMMN/+ILOVL !!!!!!!!!!!!!! ");
+
+                mess.AppendLine($"מפוצל כבר !!!");
+                foreach (var itemDeclarationIdStorageSiteCode in customResponse.ServerSplitDeclarationsList)
+                {
+
+                    BuildQueueSendWebAPIMethod(requestParams, mess, def, itemDeclarationIdStorageSiteCode);
+
+                }
+
             }
             else
             {
-                listPM = qs.GetByMasterIDStorageSiteCode(requestParams.Tenant, requestParams.AppicationId, list);
 
-            }
 
-            if (listPM.Count == 0)
-            {
-                mess.AppendLine($"There ARE  NOT any Declarations GetByMasterIDStorageSiteCode {requestParams.AppicationId } where storage {def.DEFDATA}");
-            }
-            var decSend = new HashSet<string>();
-            foreach (var itemPM in listPM)
-            {
+                var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+                var qs = new DeclarationCourierStatusQueryService(context);
+                var listKeyValuePair = new List<KeyValuePair<string, string>>();
 
-                if (decSend.Contains(itemPM.Key))//GetByMasterIDStorageSiteCode can return few by consigenment !
+
+                if (port2SendList.Count == 0)
                 {
-                    continue;
+                    mess.AppendLine($"UniCourierBatchSendUCBCTML_MsgResponseService:default CGO_CUST_MAMAN no ILMMN/+ILOVL !!!!!!!!!!!!!! ");
                 }
-                decSend.Add(itemPM.Key);
-                try
+                else
                 {
-                    string response = "";
-                    using (var scope= TransactionFactory.GetNewTransaction())
+                    listKeyValuePair = qs.GetByMasterIDStorageSiteCode(requestParams.Tenant, requestParams.AppicationId, port2SendList);
+
+                }
+
+                if (listKeyValuePair.Count == 0)
+                {
+                    mess.AppendLine($"There ARE  NOT any Declarations GetByMasterIDStorageSiteCode {requestParams.AppicationId } where storage {def.DEFDATA}");
+                }
+                var list2split = new List<KeyValuePair<string, string>>();
+
+                var decSend = new HashSet<string>();
+                foreach (var itemDeclarationIdStorageSiteCode in listKeyValuePair)
+                {
+
+                    if (decSend.Contains(itemDeclarationIdStorageSiteCode.Key))//GetByMasterIDStorageSiteCode can return few by consigenment !
                     {
-
-                        if (def.DEFDATA.Contains("ILMMN") && itemPM.Value == "ILMMN") // Maman
-                        {
-                            var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
-                            response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(itemPM.Key, requestParams.Tenant);
-                        }
-                        else if (def.DEFDATA.Contains("ILOVL") && itemPM.Value == "ILOVL") // OVS
-                        {
-                            var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
-                            response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(itemPM.Key, requestParams.Tenant);
-                        }
-
-                        scope.Complete();
+                        continue;
                     }
-                    mess.AppendLine($" BuildQueueSendWebAPI({itemPM.Key}) respons {response}");
+                    decSend.Add(itemDeclarationIdStorageSiteCode.Key);
+
+                    ///BuildQueueSendWebAPIMethod(requestParams, mess, def, itemDeclarationIdStorageSiteCode);
+
+                    list2split.Add(itemDeclarationIdStorageSiteCode);
 
                 }
-                catch (System.Exception ee1)
-                {
+                list2split.ToList().ChunkBy(100)
+        .ForEach(list100 =>
+        {
+            customResponse.ServerSplitDeclarationsList = list100;
+        //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
+        var CreateDCAInUCB1170_MsgMessagingService = new CRSUtil();
+            CreateDCAInUCB1170_MsgMessagingService
+            .CreateCRS_DCAIn<DCAInUCBCTMLWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
 
-                    LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.Key}) : {ee1.Message}");
-                    mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.Key}) : {ee1.Message}");
-                }
+        });
+
             }
-
             this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
 
             //this.MyRequestSheetParam.RequestDescription = "Build Custom Zip File";
@@ -128,6 +132,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
             this.MyResponseData.UserMessage = mess.ToString();
             this.MyResponseData.Succeeded = true;
+        }
+
+        private object KeyValuePair<T1, T2>()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void BuildQueueSendWebAPIMethod(GenericRequestParams requestParams, StringBuilder mess, Unifreight.BL.EntityPMs.UGenerated.GDFDATAPM def, KeyValuePair<string, string> itemDeclarationIdStorageSiteCode)
+        {
+            try
+            {
+                string response = "";
+                using (var scope = TransactionFactory.GetNewTransaction())
+                {
+
+                    if (def.DEFDATA.Contains("ILMMN") && itemDeclarationIdStorageSiteCode.Value == "ILMMN") // Maman
+                    {
+                        var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
+                        response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(itemDeclarationIdStorageSiteCode.Key, requestParams.Tenant);
+                    }
+                    else if (def.DEFDATA.Contains("ILOVL") && itemDeclarationIdStorageSiteCode.Value == "ILOVL") // OVS
+                    {
+                        var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
+                        response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(itemDeclarationIdStorageSiteCode.Key, requestParams.Tenant);
+                    }
+
+                    scope.Complete();
+                }
+                mess.AppendLine($" BuildQueueSendWebAPI({itemDeclarationIdStorageSiteCode.Key}) respons {response}");
+
+            }
+            catch (System.Exception ee1)
+            {
+
+                LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({itemDeclarationIdStorageSiteCode.Key}) : {ee1.Message}");
+                mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemDeclarationIdStorageSiteCode.Key}) : {ee1.Message}");
+            }
         }
 
         public override INF_MSG_GenericResponseData GetResponse(DCAInUCBCTMLWithResponseContentHeader customResponse, GenericRequestParams requestParams)
