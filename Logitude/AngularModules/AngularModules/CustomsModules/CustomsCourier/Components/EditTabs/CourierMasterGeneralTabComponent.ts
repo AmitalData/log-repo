@@ -66,7 +66,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
                 SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "COGN") {
-
+                            this.SetScreenFieldsEditability();
                         }
                     }
                 })
@@ -244,9 +244,9 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
                     this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                    this.SetScreenFieldsEditability();
                 }
             }
-            this.SetScreenFieldsEditability();
         });
     }
 
@@ -264,6 +264,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("PackageQuantity", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("GrossMassMeasure", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("WeightValueCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("TruckerId", this.ObjectTableName, !this.IsDisplayOnly);
     }
 
     RefreshEntity() {
