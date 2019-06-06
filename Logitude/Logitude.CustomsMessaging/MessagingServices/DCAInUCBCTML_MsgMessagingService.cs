@@ -210,7 +210,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
         public string MyMoreParams { get; set; }
-        public List<KeyValuePair<string, string>> ServerSplitDeclarationsList { get; internal set; }
+        public List<string> ServerSplitDeclarationsList { get;  set; }
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }

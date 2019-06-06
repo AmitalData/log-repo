@@ -63,7 +63,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
 
                 mess.AppendLine($"מפוצל כבר !!!");
-                foreach (var itemDeclarationIdStorageSiteCode in customResponse.ServerSplitDeclarationsList)
+                var DeclarationIdStorageSiteCodeList= customResponse.ServerSplitDeclarationsList.Select(keyVal =>
+                new KeyValuePair<string, string>(keyVal.Split(',')[0], keyVal.Split(',')[1])).ToList();
+                
+                foreach (var itemDeclarationIdStorageSiteCode in DeclarationIdStorageSiteCodeList)
                 {
 
                     BuildQueueSendWebAPIMethod(requestParams, mess, def, itemDeclarationIdStorageSiteCode);
@@ -115,7 +118,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 list2split.ToList().ChunkBy(100)
         .ForEach(list100 =>
         {
-            customResponse.ServerSplitDeclarationsList = list100;
+            customResponse.ServerSplitDeclarationsList = 
+            list100.Select(r => r.Key + "," + r.Value).ToList();
         //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
         var CreateDCAInUCB1170_MsgMessagingService = new CRSUtil();
             CreateDCAInUCB1170_MsgMessagingService
