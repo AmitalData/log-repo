@@ -50,7 +50,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 List<DeclarationCourierStatus> ServerSplitDeclarationsList
                     = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
-                CreateCRS2755WithoutPending_UpdatePayment2InProgress(customResponse, requestParams, mess, objectTableId, objectTableIdCourierMaster, listPoco);
+                CreateCRS2755WithoutPending_UpdatePayment2InProgress(customResponse, requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList);
             }
             else
             {
