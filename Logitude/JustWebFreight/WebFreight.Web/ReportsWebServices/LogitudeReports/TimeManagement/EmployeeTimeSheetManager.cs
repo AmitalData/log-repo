@@ -85,7 +85,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
         {
             EmployeeTimeSheetDataProvider myDataProvider = new EmployeeTimeSheetDataProvider()
             {
-                EmployeeTimeSheetList = new List<EmployeeTimeSheetData>()
+                EmployeeTimeSheetList = new List<EmployeeTimeSheetData>(),
+                EmployeeTimeDaysOff = new List<EmployeeTimeDayOff>(),
             };
 
             if(this.fromDate != null && this.toDate != null && this.employeeUserId != null)
@@ -181,6 +182,35 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                         myDataProvider.EmployeeTimeSheetList.Add(itemRow);
                     }
+
+
+                    myDataProvider.EmployeeTimeDaysOff = (from d in list_TMEmployeeTime
+                                                          where d.LocationCode == "D"
+                                                          group d by d.ProjectId into g
+                                                          select new EmployeeTimeDayOff
+                                                          {
+                                                              ProjectId = g.Key,
+                                                              TimeInMinutes = g.Sum(s => s.TimeInMinutes),
+                                                          }).ToList();
+
+                    foreach (EmployeeTimeDayOff item in myDataProvider.EmployeeTimeDaysOff)
+                    {
+                        item.TimeInHours = this.GetTimeFormatFromMinutes(item.TimeInMinutes);
+
+                        if (item.ProjectId == null)
+                        {
+                            item.ProjectName = "No Project";
+                        }
+
+                        else
+                        {
+                            TMProject iProject = (from d in iContext.TMProjects where d.Id == item.ProjectId select d).FirstOrDefault();
+                            if (iProject != null)
+                            {
+                                item.ProjectName = iProject.Name;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -193,7 +223,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             myDataProvider.Total_DifferenceTime = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesDifference));
             myDataProvider.Total_TotalWorkHrs = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesTotalWork));
             myDataProvider.Total_OverTime = GetTimeFormatFromMinutes(myDataProvider.EmployeeTimeSheetList.Sum(a => a.MinutesOverTime));
-
             return myDataProvider;
         }
 

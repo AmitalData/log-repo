@@ -12,11 +12,11 @@ exports.config = {
       Email: null,
       Password: null,
     },
-    ShipParams:{
-      ShipmentLevelCode:null,
-      Direction:null,
-      TransportMode:null,
-      ShipmentType:null,
+    ShipParams: {
+      ShipmentLevelCode: null,
+      Direction: null,
+      TransportMode: null,
+      ShipmentType: null,
     },
   },
   capabilities: {
@@ -67,6 +67,11 @@ exports.config = {
       browser.params.Login.Email = "angular@fnarsoft.com";
       browser.params.Login.Password = "1";
     }
+    else if (browser.params.Env == "test_951") {
+      browser.params.Link = "https://test.logitudeworld.com/test";
+      browser.params.Login.Email = "raghad@protractor.com";
+      browser.params.Login.Password = "!RS123Rs";
+    }
 
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   },
@@ -74,10 +79,11 @@ exports.config = {
   suites: {
     // ********************* Login **********************************
     login: 'e2e/Login/**/Login.e2e-spec.ts',
+
     //  CRM: 'e2e/CRM/**/CRMModule-spec.ts',
     //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
 
-   // NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+    //NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
      NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
     //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
 
@@ -86,7 +92,12 @@ exports.config = {
 
     // ********************* FullAccounting **********************************
     //  NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
-    // Reports: 'e2e/Report/**/Report-spec.ts',
+
+    //*************Report******************* */
+     //Reports: 'e2e/Report/**/Report-spec.ts',
+
+    //*************DocOutTab************** */
+   // DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
 
 
   },

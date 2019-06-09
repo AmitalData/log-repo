@@ -1454,6 +1454,7 @@ namespace WebFreight.Web.Helpers
 
                 case "SHEL":
                     {
+                        DatabaseInitializer.RunOnSeconderyDB = true;
                         dataProvider = logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
                         break;
                     }

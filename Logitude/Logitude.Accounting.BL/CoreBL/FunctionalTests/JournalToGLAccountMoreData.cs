@@ -1,17 +1,21 @@
 ﻿
+using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 {
@@ -19,7 +23,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
     {
         private int _Tenant;
 
-        public void BuildJournals(int tenant ,byte[] byteArrayXLS, string WorksheetName)
+        public void LoadXLSBuildTest(int tenant ,byte[] byteArrayXLS, string WorksheetName)
         {
             _Tenant = tenant;
             var util = new XLSUtil();
@@ -42,23 +46,103 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
             var GLAccountOutputRows = list
                 .Where(r => !String.IsNullOrWhiteSpace(r.Field<String>("GLA")))
                 .ToList()
-                ;
+               ;
+            List<GLAccountPM> expectedGLAccount =
+            GLAccountOutputRows.Select(gLAccountOutput => 
+            GetGLAccount(tenant, gLAccountOutput)).ToList();
 
-            List<string> res = GLAccountOutputRows.Select(gLAccountOutput => CheckGLAccount(gLAccountOutput)).ToList();
-            
+            bool checkGLAccount = false;
+            if (checkGLAccount)
+            {
+                List<string> res = expectedGLAccount.Select(gLAccountOutput => CheckGLAccount(tenant, gLAccountOutput)).ToList();
+
+            }
+            var args = new BatchFunctionalTestTaskArg()
+            {
+                Tenant = tenant,
+                MyState = BatchAccFunctionalTestTask.AccFunctionalState.ClearAccountingDB.ToString(),
+                JournalInput = JournalInput,
+                ExpectedGLAccount = expectedGLAccount,
+
+            };
+            using (var scope = TransactionFactory.GetTransaction())
+            {
+                using (var memStream = new MemoryStream())
+                {
+                    var serializer = new XmlSerializer(typeof(BatchFunctionalTestTaskArg));
+                    serializer.Serialize(/*stringwriter*/memStream, args);
+
+                    var communicationLogId = Communications.AddCommunicationLog(new CommunicationsParams()
+                    {
+                        Tenant = tenant,
+                        CommunicationLogTypeCode = "Q",
+                        QueueName = "externaltasksqueue" + tenant + 1,
+                        Priority = 1,
+                        InOut = "O",
+                        Status = "D",
+                        FileExtension = "xml",
+                        //LoggingUserId = loggedUserId,
+                        //LoggingObjectTableId = table.Id,
+                        //LoggingEntityId = extDocPM.Id,
+
+                        FolderName = "BatchTaskExecutionsQueue",
+
+                        To = "BatchAccFunctionalTestTask",
+
+                        //EntityId = declarationId,
+                        //ObjectTableId = objectTableId,
+                        Subject = "BatchAccFunctionalTestTask holder ",
+                        ByteData = memStream.ToArray()
+
+
+                    });
+                    args.CommunicationLogId = communicationLogId;
+                    args.ExpectedGLAccount = null;
+                    args.JournalInput = null;
+
+                }
+
+                BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask( args);
+
+
+                scope.Complete();
+            }
         }
-
-        private string CheckGLAccount(DataRow gLAccountOutput)
+        private GLAccountPM GetGLAccount(int tenant, DataRow gLAccountOutput)
         {
-            var DisplayNumber  = gLAccountOutput.Field<string>("GLA");
-            var BalanceNIS=toDecimal(gLAccountOutput.Field<string>("BalanceNIS"));
+            var DisplayNumber = gLAccountOutput.Field<string>("GLA");
+            var BalanceNIS = toDecimal(gLAccountOutput.Field<string>("BalanceNIS"));
             var BalanceNISDue = toDecimal(gLAccountOutput.Field<string>("BalanceNISDue"));
-            
-            var qs = new GLAccountQueryService(_Tenant);
-            var glAccountPM = qs.GetSinglePMByDisplayNumber(DisplayNumber, _Tenant); ;
+            var qs = new GLAccountQueryService(tenant);
+            var glAccountPM = qs.GetSinglePMByDisplayNumber(DisplayNumber, tenant); ;
             if (glAccountPM == null)
             {
-                throw new Exception($"GetGLAccountByDisplayNumber({DisplayNumber}, {_Tenant}) return null");
+                throw new Exception($"GetGLAccountByDisplayNumber({DisplayNumber}, {tenant}) return null");
+            }
+            return glAccountPM;
+            return new GLAccountPM()
+            {
+                
+                 DisplayNumber = DisplayNumber,
+                  BalanceInLocalCurrency=BalanceNIS,
+                  LocalBalanceInDue= BalanceNISDue
+            };
+
+        }
+        public static string CheckGLAccount(int tenant , GLAccountPM gLAccountOutput)
+        {
+            var DisplayNumber = gLAccountOutput.DisplayNumber; //gLAccountOutput.Field<string>("GLA");
+            var BalanceNIS = gLAccountOutput.BalanceInLocalCurrency;// toDecimal(gLAccountOutput.Field<string>("BalanceNIS"));
+            var BalanceNISDue = gLAccountOutput.LocalBalanceInDue;//toDecimal(gLAccountOutput.Field<string>("BalanceNISDue"));
+
+
+            var qs = new GLAccountQueryService(tenant);
+            var glAccountPM = qs
+                //.GetSinglePMByDisplayNumber(DisplayNumber, tenant); ;
+                .GetSingle(gLAccountOutput.Id,false,false); ;
+            if (glAccountPM == null)
+            {
+                throw new Exception($"GetGLAccountByDisplayNumber({DisplayNumber}, {tenant}) return null");
             }
             string res = null;
             if (glAccountPM.LocalBalanceInDue!= BalanceNISDue)
@@ -72,7 +156,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
             return $"Card {DisplayNumber}:" + (res ?? " Totals r equal");
         }
 
-        private static void BuildJournals(int tenant, List<JournalPM> JournalInput)
+        public static void BuildJournals(int tenant, List<JournalPM> JournalInput)
         {
             using (var scope = TransactionFactory.GetTransaction())
             {
@@ -166,7 +250,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
             return glAccountPM.Id;
         }
 
-        private decimal toDecimal(string v)
+        private static decimal toDecimal(string v)
         {
             decimal d;
             var done = decimal.TryParse(v, out d);

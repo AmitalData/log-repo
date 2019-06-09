@@ -13,6 +13,8 @@ namespace WebFreight.Web.DataProviders
         public DateTime ToDate { get; set; }
         public DateTime? Today_DateTime { get; set; }
         public List<EmployeeTimeSheetData> EmployeeTimeSheetList { get; set; }
+        public List<EmployeeTimeDayOff> EmployeeTimeDaysOff { get; set; }
+
         public string Total_RequiredWorkHours { get; set; }
         public string Total_TimeFromClock { get; set; }
         public string Total_TimeFromOffice { get; set; }
@@ -48,5 +50,12 @@ namespace WebFreight.Web.DataProviders
         public string TimeFromDayOff { get; set; }
         public string TotalWorkHrs { get; set; }
         public string OverTime { get; set; }
+    }
+    public class EmployeeTimeDayOff
+    {
+        public string ProjectId { get; set; }
+        public string ProjectName { get; set; }
+        public string TimeInHours { get; set; }
+        public double TimeInMinutes { get; set; }
     }
 }

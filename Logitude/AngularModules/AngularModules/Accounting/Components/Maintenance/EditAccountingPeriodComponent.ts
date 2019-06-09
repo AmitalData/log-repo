@@ -151,7 +151,7 @@ export class EditAccountingPeriodComponent extends BaseComponent {
 
         if (!AppTool.IsNullOrEmpty(this.OpenMonth)) {
 
-            if (this.OpenMonth > 0 && this.OpenMonth > this.ClosedMonth + 1) {
+            if (this.OpenMonth > 0 && (this.OpenMonth > this.ClosedMonth + 1 || this.ClosedMonth == undefined)) {
 
 
                 var endDayNumber: number = new Date(new Date().getFullYear(), this.OpenMonth + 1, 0).getDate();
@@ -177,7 +177,7 @@ export class EditAccountingPeriodComponent extends BaseComponent {
 
                             if (myResult.length > 0) { // transactions exist
                                 this.ValidationErrorsList = [];
-                                this.ValidationErrorsList.push("Can’t cancel opening this month, Transaction registered already");
+                                this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingPeriod.O.CantCancelOpenMonth"));
                             } else {
                                 //if (this.OpenMonth > 0 && this.OpenMonth > this.ClosedMonth + 1) {
                                     this.OpenMonth--;
