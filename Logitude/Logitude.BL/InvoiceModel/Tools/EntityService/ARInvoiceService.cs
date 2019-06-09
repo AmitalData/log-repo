@@ -2062,6 +2062,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #endregion
 
         #region Total Vats
+        List<InvoiceTotalsClass> group_data;
         private void UpdateTotalVats()
         {
             if (isUpdateTotalVats)
@@ -2176,7 +2177,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         #endregion
                     }
 
-                    List<InvoiceTotalsClass> group_data
+                     group_data
                         = (from items in group_Source
                            group items by new { items.VatTypeId, items.VatTypePercentage, items.ExternalVatCard, items.ExternalTAXItemId } into g
                            select new InvoiceTotalsClass()
@@ -2211,7 +2212,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         record.InvoiceCurrencyVATAmount = MethodHelper.Roundd((record.InvoiceCurrencyVatableAmount * record.VatPercent / 100), 2);
                         record.ProfitCurrencyVATAmount = MethodHelper.Roundd((record.ProfitVatableAmount * record.VatPercent / 100), 2);
                         invoiceTotalVatRepository.Add(record);
-
+                      
                         sumOfVATsAmounts += record.InvoiceCurrencyVATAmount;
                         sumOfVATsAmounts_Local += record.LocalVATAmount;
                         sumOfVATsAmounts_Profit += record.ProfitCurrencyVATAmount;
@@ -3304,6 +3305,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     if(ARInvoiceTotalVATs != null && ARInvoiceTotalVATs.Count() > 0)
                     {
                         theEntityPm.TotalVAT = (decimal)ARInvoiceTotalVATs.Sum(a=>a.LocalVATAmount);
+                    }
+                    else if ( group_data != null &&  group_data.Count() >0)
+                    {
+                        theEntityPm.TotalVAT = (decimal)group_data.Sum(a => a.LocalCurrencyAmount);
                     }
                 }
             }
