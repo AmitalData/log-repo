@@ -491,6 +491,15 @@ namespace Logitude.XSD.INTTRA.BL
 
             else
             {
+                if (this.ShipmentPackages.Where(d => d.IsDangerous).Any())
+                {
+                    if (string.IsNullOrEmpty(this.Shipment.EmergencyContactId))
+                    {
+                        string msg = TranslateTextsClass.Translate("Shipment.F.EmergencyContactId", this.Tenant) + " is required";
+                        this.Errors.Add(msg);
+                    }
+                }
+
                 List<string> ShipmentPackagesIds = this.ShipmentPackages.Select(s => s.Id).ToList();
 
                 this.InsidePackages = (from d in shipmentContext.InsideShipmentPackages
@@ -1887,7 +1896,7 @@ namespace Logitude.XSD.INTTRA.BL
                     if (myShipmentPackage.IsDangerous)
                     {
                         #region
-                        if (myShipmentPackage.IMDGCode != null)
+                        if (!string.IsNullOrEmpty(myShipmentPackage.IMDGCode))
                         {
                             List<INTTRA_Out.HazardousGoods> HazardousGoodsList = new List<INTTRA_Out.HazardousGoods>();
 
@@ -1896,7 +1905,7 @@ namespace Logitude.XSD.INTTRA.BL
                                 IMOClassCode = this.FormatString(myShipmentPackage.ClassNumber, 7),                                 
                             };
 
-                            if (myShipmentPackage.IMDGCode != null)
+                            if (!string.IsNullOrEmpty(myShipmentPackage.IMDGCode))
                             {
                                 HazardousGoodsItem.IMDGPageNumber = this.FormatString(myShipmentPackage.IMDGCode, 7);
                             }
