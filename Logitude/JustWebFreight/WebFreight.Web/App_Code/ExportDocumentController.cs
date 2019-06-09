@@ -209,9 +209,8 @@ namespace WebFreight.Web.App_Code
                     {
                         if (templatedata.Length != 0)
                         {
-                            StiReport report = new StiReport();
-
-                            report = exportDocumentHelper.GetReportDocument(documentType, filter.EntityId, filter.ObjectTableId, filter.ChildEntityId, filter.ChildObjectTableId, documentTypeCopy, report, templatedata, template, filter.Tenant, theT1, theT2, theA1, theA2, filter.LoggedContactId);
+        
+                            StiReport  report = exportDocumentHelper.GetReportDocument(documentType, filter.EntityId, filter.ObjectTableId, filter.ChildEntityId, filter.ChildObjectTableId, documentTypeCopy,  templatedata, template, filter.Tenant, theT1, theT2, theA1, theA2, filter.LoggedContactId);
 
                             string mdc = report.SaveDocumentToString();
 

@@ -62,7 +62,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
                 if (templatedata.Length != 0)
                 {
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                    report = exportDocumentHelper.LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
+                    report = exportDocumentHelper.LoadandRender(report, defaulttemplate, currentBusinessObject, tenant);
                 }
             }
 
