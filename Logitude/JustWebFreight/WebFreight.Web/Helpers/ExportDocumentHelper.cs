@@ -87,13 +87,15 @@ namespace WebFreight.Web.Helpers
 
                         LoadEditableFields(documentOut, report);
 
+                       byte[] reportDdf = ExportDocumentReportToPDF(report, tenant, documentType.Code);
+
                         DocumentOutCopy documentOutCopy = documentOutCopyRep.GetDocumentOutCopyByDocumentOutAndType(documentOutId, documentTypeCopyId, tenant);
 
                         string calculatedFileName = GetCalculatedDocumentFileName(entityId, entityObjectTableId, childEntityId, tenant, userId, documentTypeCopy, documentType);
 
                         Document document = CreateOrUpdateDocument(documentOutId, tenant, documentTypeCopyId, docRepository, documentOutCopyRep, documentOut, documentTypeCopy, documentType, ref documentOutCopy, calculatedFileName);
 
-                        SaveSTIDocumentInStorage(document, report, tenant, documentType.Code);
+                        SaveSTIDocumentInStorage(document, reportDdf , tenant);
 
                         var docFiling = documentsFilingRepository.GetSingleDocumentsFiling(documentOutId);
                         if (docFiling != null)
@@ -1049,65 +1051,46 @@ namespace WebFreight.Web.Helpers
         private long t1;
         long t2;
 
-        private void SaveSTIDocumentInStorage(Document document, StiReport report, int tenant, string documenttypecode)
+
+        private byte[] ExportDocumentReportToPDF(StiReport report, int tenant, string documenttypecode)
         {
-       
-                string filename = document.Id + "." + document.Extension;
-
-                StiPdfExportSettings pdfSettings = new StiPdfExportSettings();
-                if (documenttypecode == "740L" || documenttypecode == "740HL" || documenttypecode == "LCLL")
-                {
-                    pdfSettings.ImageFormat = StiImageFormat.Monochrome;
-                    pdfSettings.ImageResolution = 100;
-                    pdfSettings.ImageQuality = 75;
-                    pdfSettings.ImageCompressionMethod = StiPdfImageCompressionMethod.Jpeg;
+            byte[] reprotPdfData = null;
+            StiPdfExportSettings pdfSettings = new StiPdfExportSettings();
+            if (documenttypecode == "740L" || documenttypecode == "740HL" || documenttypecode == "LCLL")
+            {
+                pdfSettings.ImageFormat = StiImageFormat.Monochrome;
+                pdfSettings.ImageResolution = 100;
+                pdfSettings.ImageQuality = 75;
+                pdfSettings.ImageCompressionMethod = StiPdfImageCompressionMethod.Jpeg;
 
 
-                }
-                else
-                {
-                    pdfSettings.ImageResolution = 300;
-                    pdfSettings.ImageQuality = 100;
-                    pdfSettings.ImageCompressionMethod = StiPdfImageCompressionMethod.Jpeg;
-                }
+            }
+            else
+            {
+                pdfSettings.ImageResolution = 300;
+                pdfSettings.ImageQuality = 100;
+                pdfSettings.ImageCompressionMethod = StiPdfImageCompressionMethod.Jpeg;
+            }
 
 
 
+            //Clara's tenant : 497
+            if (tenant == 497)
+            {
+                pdfSettings.EmbeddedFonts = true;
+            }
 
-                //Clara's tenant : 497
-                if (tenant == 497)
-                {
-                    pdfSettings.EmbeddedFonts = true;
-                }
+            using (MemoryStream memStream = new MemoryStream())
+            {
+                report.ExportDocument(StiExportFormat.Pdf, memStream, pdfSettings);
+                reprotPdfData = memStream.ToArray(); ;
+            }
 
-                using (MemoryStream memStream = new MemoryStream())
-                {
-                    report.ExportDocument(StiExportFormat.Pdf, memStream, pdfSettings);
-
-
-                    //byte[] data = memStream.ToArray();
-                    document.FileSize = (int)memStream.Length;
-
-
-                    string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
-                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                    BlobFileInfo fileInfo = new BlobFileInfo()
-                    {
-                        FileName = document.Id,
-                        FolderName = document.Folder,
-                        Extension = document.Extension,
-                        Tenant = tenant,
-                        FileSize = memStream.ToArray().Length,
-
-                    };
-                    storageservice.Write(memStream.ToArray(), fileInfo);
-                }
+            return reprotPdfData;
 
 
 
-
-
-                //}
+            //}
             //}
             //catch (Exception e)
             //{
@@ -1118,6 +1101,32 @@ namespace WebFreight.Web.Helpers
             //    }
             //    ExceptionHandler.HandleException(e, DateTime.Now, tenant, HttpContext.Current.User != null ? HttpContext.Current.User.Identity.Name : "", HttpContext.Current.User != null ? HttpContext.Current.User.Identity.Name : "", "ExportDocument : SaveSTIDocumentInStorage Method", ip);
             //}
+        }
+
+        private void SaveSTIDocumentInStorage(Document document, byte[] reportPdfData , int tenant)
+        {
+            if (reportPdfData != null)
+            {
+                string filename = document.Id + "." + document.Extension;
+
+                //byte[] data = memStream.ToArray();
+                document.FileSize = (int)reportPdfData.Length;
+
+
+                string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(filename.ToLower(), document.Folder);
+                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = reportPdfData.Length,
+
+                };
+                storageservice.Write(reportPdfData, fileInfo);
+            }
+
         }
 
         public void SaveRichDocumentInStorage(Document document, byte[] data, int tenant)
