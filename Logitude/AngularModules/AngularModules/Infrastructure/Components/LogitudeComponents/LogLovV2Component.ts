@@ -48,7 +48,7 @@ import { SessionInfo } from '../../Utilities/SessionInfo';
     providers: [EntityListService, ServiceArgs, EntityResourceService],
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'LookUpTableName', 'DisplayMemberPath', 'SelectedValuePath',
         'PlaceHolder', 'DependencyFilter1Value', 'DependencyFilter2Value', 'DependencyFilter3Value', "HideColumns", "HideLastColumn", "DependencyFilter1IsList",
-        "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact", "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck"],
+        "DependencyFilter2IsList", "DependencyFilter3IsList", "DependencyFilter1IsListExact", "DependencyFilter2IsListExact", "DependencyFilter3IsListExact", "AutoFocus", "IsTenantZeroSearch", "ShowInActive", "FocusOnMe", "IsFreeText", "AlwaysEnabled", "IgnoreCustomFieldCheck", "IsDecendingSort"],
 })
 
 export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
@@ -112,6 +112,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     isFirstTime: boolean = true;
     imgNgStyle: any;
     private isDisabled: boolean;
+    public IsDecendingSort: boolean = false;
   public UseCompactSearch: boolean;
 
 
@@ -1420,8 +1421,14 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, this.LookUpTable.CacheOnClient);
             }
         }
+        if (this.IsDecendingSort == true) {
+            filters.SortDirection = "Decending";
+        }
+        else {
+            filters.SortDirection = "Ascending";
 
-        filters.SortDirection = "Ascending";
+        }
+
         if (this.IsTenantZeroSearch) {
             filters.Tenant = 0;
         }
@@ -1470,7 +1477,13 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             }
             }
 
-            tenantZeroFilters.SortDirection = "Ascending";
+            if (this.IsDecendingSort == true) {
+                tenantZeroFilters.SortDirection = "Decending";
+            }
+            else {
+                tenantZeroFilters.SortDirection = "Ascending";
+
+            }
             if (this.LookUpTable.SortingByObjectField) {
                 tenantZeroFilters.SortBy = this.LookUpTable.SortingByObjectField;
             }
