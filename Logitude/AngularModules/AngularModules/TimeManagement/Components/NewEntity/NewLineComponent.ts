@@ -258,6 +258,10 @@ export class NewLineComponent extends BaseComponent {
             errors.push("Project with a Day Off type requires a Day off Location");
         }
 
+        if (AppTool.IsNullOrEmpty(this.ProjectId) && this.LocationCode == "D") {
+            errors.push("Project is required for Day Off location");
+        }
+
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
             this.InsertTMEmployeeTime();
