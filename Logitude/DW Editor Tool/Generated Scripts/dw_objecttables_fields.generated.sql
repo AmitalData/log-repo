@@ -787,3 +787,105 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsField6NewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsField6NewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField6NewId,0,'Fact_Shipments','[Field6]','Field6','SqlVariant','false',0,2000,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField7NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField7NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField7NewId,0,'Fact_Shipments','[Field7]','Field7','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField8NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField8NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField8NewId,0,'Fact_Shipments','[Field8]','Field8','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField9NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField9NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField9NewId,0,'Fact_Shipments','[Field9]','Field9','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField10NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField10NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField10NewId,0,'Fact_Shipments','[Field10]','Field10','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField11NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField11NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField11NewId,0,'Fact_Shipments','[Field11]','Field11','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField12NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField12NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField12NewId,0,'Fact_Shipments','[Field12]','Field12','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField13NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField13NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField13NewId,0,'Fact_Shipments','[Field13]','Field13','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField14NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField14NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField14NewId,0,'Fact_Shipments','[Field14]','Field14','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField15NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField15NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField15NewId,0,'Fact_Shipments','[Field15]','Field15','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField16NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField16NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField16NewId,0,'Fact_Shipments','[Field16]','Field16','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField17NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField17NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField17NewId,0,'Fact_Shipments','[Field17]','Field17','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField18NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField18NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField18NewId,0,'Fact_Shipments','[Field18]','Field18','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField19NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField19NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField19NewId,0,'Fact_Shipments','[Field19]','Field19','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField20NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField20NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField20NewId,0,'Fact_Shipments','[Field20]','Field20','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField21NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField21NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField21NewId,0,'Fact_Shipments','[Field21]','Field21','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField22NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField22NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField22NewId,0,'Fact_Shipments','[Field22]','Field22','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField23NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField23NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField23NewId,0,'Fact_Shipments','[Field23]','Field23','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField24NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField24NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField24NewId,0,'Fact_Shipments','[Field24]','Field24','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField25NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField25NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField25NewId,0,'Fact_Shipments','[Field25]','Field25','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField26NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField26NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField26NewId,0,'Fact_Shipments','[Field26]','Field26','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField27NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField27NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField27NewId,0,'Fact_Shipments','[Field27]','Field27','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField28NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField28NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField28NewId,0,'Fact_Shipments','[Field28]','Field28','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField29NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField29NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField29NewId,0,'Fact_Shipments','[Field29]','Field29','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField30NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField30NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField30NewId,0,'Fact_Shipments','[Field30]','Field30','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField31NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField31NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField31NewId,0,'Fact_Shipments','[Field31]','Field31','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField32NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField32NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField32NewId,0,'Fact_Shipments','[Field32]','Field32','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField33NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField33NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField33NewId,0,'Fact_Shipments','[Field33]','Field33','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField34NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField34NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField34NewId,0,'Fact_Shipments','[Field34]','Field34','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField35NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField35NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField35NewId,0,'Fact_Shipments','[Field35]','Field35','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField36NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField36NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField36NewId,0,'Fact_Shipments','[Field36]','Field36','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField37NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField37NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField37NewId,0,'Fact_Shipments','[Field37]','Field37','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField38NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField38NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField38NewId,0,'Fact_Shipments','[Field38]','Field38','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField39NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField39NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField39NewId,0,'Fact_Shipments','[Field39]','Field39','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
+declare @Fact_ShipmentsField40NewId varchar(15)
+execute usp_GetNextTableIdValue @Fact_ShipmentsField40NewId OUTPUT,'DWObjectField' 
+insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsField40NewId,0,'Fact_Shipments','[Field40]','Field40','SqlVariant','false',0,0,'false','false','true','CustomFields','false','false','true')  
