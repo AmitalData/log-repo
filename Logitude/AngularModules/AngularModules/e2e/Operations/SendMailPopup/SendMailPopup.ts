@@ -23,8 +23,8 @@ export class SendMailPopup {
         browser.executeScript('arguments[0].click();', element(by.id('SendMessageToCheckBox')).getWebElement());
         this.helper.WaitByIdAndClick('SaveSendMessageTobtn');
         //this is to write exception test in subject field 
-        browser.driver.sleep(20000);
-        // this.helper.WaitByNameAndFill('Subject', emailSubject);
+      //  browser.driver.sleep(20000);
+    this.helper.WaitByIdAndFill('EmailSubject', emailSubject);
         this.helper.WaitByIdAndClick('SendMessagebtn');
 
 

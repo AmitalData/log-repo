@@ -97,7 +97,7 @@ exports.config = {
      Reports: 'e2e/Report/**/Report-spec.ts',
 
     //*************DocOutTab************** */
-   // DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
+   //DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
 
 
   },
