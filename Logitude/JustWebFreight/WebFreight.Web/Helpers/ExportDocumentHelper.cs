@@ -61,8 +61,7 @@ namespace WebFreight.Web.Helpers
                 long theA2 = new long();
                 theA1 = System.DateTime.Now.Ticks;
                 Byte[] templatedata = null;
-                //try
-                //{
+            
                 DocumentTypeRepository repository = new DocumentTypeRepository(tenant);
                 DocumentOutRepository documentOutRepository = new DocumentOutRepository(tenant);
                 DocumentRepository docRepository = new DocumentRepository(tenant);
@@ -74,217 +73,44 @@ namespace WebFreight.Web.Helpers
                 DocumentTypeCopy documentTypeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(documentTypeCopyId);
                 DocumentType documentType = repository.GetSingleDocumentTypes(documentTypeId, tenant);
                 DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(tenant);
-                bool isJsonBody = false;
+
                 if (defaulttemplate != null)
                 {
-                    if (defaulttemplate.TemplateBodyjson != null)
-                    {
-                        templatedata = defaulttemplate.TemplateBodyjson;
-                        isJsonBody = true;
-                    }
-                    else
-                    {
-                        templatedata = defaulttemplate.TemplateBody;
-                    }
+                    templatedata = defaulttemplate.TemplateBody;
                 }
 
                 if (templatedata != null)
                 {
                     if (templatedata.Length != 0)
                     {
-                        StiReport report = new StiReport();
+                        StiReport report = GetReportDocument(documentType, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, templatedata, defaulttemplate, tenant, theT1, theT2, theA1, theA2, userId);
 
-                        report = GetReportDocument(documentType, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, report, templatedata, defaulttemplate, tenant, theT1, theT2, theA1, theA2, userId, isJsonBody);
-
-
-                        using (MemoryStream memstr = new MemoryStream())
-                        {
-                            if (documentOut.EditableFields != null)
-                            {
-                                // FileStream fileStream = new FileStream(@"C:\temp\Editable.txt", FileMode.Open, FileAccess.Read);
-                                memstr.Write(documentOut.EditableFields, 0, documentOut.EditableFields.Length);
-                                memstr.Seek(0, SeekOrigin.Begin);
-                                report.LoadEditableFields(memstr);
-                            }
-                        }
-
-                        #region some Comment code
-                        //// string documentid = IdCounter.GetNumber().ToString();
-                        // string extension = ".pdf";
-                        // //Check if InAzure 
-                        // if (!WebFreightEntryPoint.UsingAzure)
-                        // {
-                        //   string file = Server.MapPath(".");                        
-                        //     file += "\\UserUploads\\";
-                        //     file += DocumentOutId;
-                        //     file += extension;
-                        //     // report.Save("\\UserUploads");
-                        //     // report.Design();
-                        //     t1 = System.DateTime.Now.Ticks;
-                        //     report.ExportDocument(StiExportFormat.Pdf, file);
-                        //     t2 = System.DateTime.Now.Ticks;
-                        //     AzureLog.SaveLogsInStorage("Report.ExportDocument :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond),"P");                            
-                        // }
-                        // else // In Azure = true
-                        // {
-                        //     //Get Fonts From AzureStorage
-                        //     //var StiFontsContainer = StorageAcountDetails.BlobClient.GetContainerReference("stifonts");
-                        //     //StiFontsContainer.CreateIfNotExists();
-                        //     //foreach (CloudBlockBlob font in StiFontsContainer.ListBlobs())
-                        //     //{
-                        //     //    string FontName = font.Uri.AbsolutePath.Split('/').Last().Split('.').First();
-                        //     //    byte[] Fontbyte = font.DownloadByteArray();
-                        //     //    Stimulsoft.Report.Export.FontsInfoStore.LoadFontInfoToStore(FontName, Fontbyte);
-                        //     //}
-                        //     string filename = DocumentOutId + extension;
-                        //     var blobContainer = StorageAcountDetails.BlobClient.GetContainerReference("useruploads");
-                        //     var blobfile = blobContainer.GetBlockBlobReference(filename);
-                        //     int filesize;
-                        //     using (Stream blobstream = blobfile.OpenWrite())
-                        //     {
-                        //         t1 = System.DateTime.Now.Ticks;
-                        //         MemoryStream memStream = new MemoryStream();
-                        //         report.ExportDocument(StiExportFormat.Pdf, memStream);
-                        //         blobstream.Write(memStream.ToArray(), 0,(int) memStream.Length);
-                        //         t2 = System.DateTime.Now.Ticks;
-                        //         AzureLog.SaveLogsInStorage("Report.ExportDocument :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond),"P");
-                        //         filesize = (Convert.ToInt32(blobstream.Length) ); // File size in KByte
-                        //     }
-                        // }
-                        #endregion
+                        LoadEditableFields(documentOut, report);
 
                         DocumentOutCopy documentOutCopy = documentOutCopyRep.GetDocumentOutCopyByDocumentOutAndType(documentOutId, documentTypeCopyId, tenant);
-                        Document document = null;
 
-                        HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-                        string calculatedFileName = "";
-              
-                        if (!string.IsNullOrEmpty(documentType.FileName))
-                        {
-                       
-                            if (documentType.FileName.Contains("["))
-                            {
-                                string id = entityId;
-                                string tableId = entityObjectTableId;
-                                if (!string.IsNullOrEmpty(childEntityId)) id = childEntityId;
-                                string htmlResolve = htmlEditorHelper.ResolveHtmlString(id, documentType.ObjectTableId, documentType.FileName, userId, tenant);
-                                if (!string.IsNullOrEmpty(htmlResolve))
-                                {
-                                    if (htmlResolve.Length > 120)
-                                    {
-                                        calculatedFileName = htmlResolve.Substring(0, 119);
-                                    } else calculatedFileName = htmlResolve;
-                                }
+                        string calculatedFileName = GetCalculatedDocumentFileName(entityId, entityObjectTableId, childEntityId, tenant, userId, documentTypeCopy, documentType);
 
-                            }
-                            else calculatedFileName = documentType.FileName;
-                        }
-
-                        if (string.IsNullOrEmpty(calculatedFileName)) calculatedFileName = documentType.Name;
-
-                        if (documentTypeCopy != null && documentType.Name != documentTypeCopy.Name)
-                        {
-                            calculatedFileName += "_" + documentTypeCopy.Name;
-                        }
-                        
-                        if (documentOutCopy == null)
-                        {
-                            using (TransactionScope scop = TransactionFactory.GetTransaction())
-                            {
-                                string copyId = IdCounter.GetNumber("Document", tenant).ToString();
-                                documentOutCopy = new DocumentOutCopy()
-                                {
-                                    Id = copyId,
-                                    Tenant = tenant,
-                                    DocumentTypeCopyId = documentTypeCopyId,
-                                    DocumentOutId = documentOutId,
-                                    //DocumentId = copyId,
-                                };
-
-                                document = new Document()
-                                {
-                                    CreateDate = DateTime.Now,
-                                    Extension = "pdf",
-                                    //FileSize = 999,
-                                    Tenant = Convert.ToInt32(documentOut.Tenant),
-                                    Id = documentOutCopy.Id,
-                                    HasFile = true,
-                                    Folder = "docsout",
-                                    FileName = documentType.Name,
-                                    CalculatedFileName = calculatedFileName,
-
-                                };
-                                docRepository.Add(document);
-                                documentOutCopyRep.Add(documentOutCopy);
-                                documentOutCopyRep.SubmitChanges();
-                                docRepository.SubmitChanges();
-                                scop.Complete();
-                            }
-                        }
-                        else
-                        {
-                            document = docRepository.GetSingleDocument(tenant, documentOutCopy.Id);
-                            document.CreateDate = DateTime.Now;
-                            document.Extension = "pdf";
-                            //document.FileSize = 999;
-                            document.FileName = documentTypeCopy.Name;
-                            document.HasFile = true;
-                            document.Folder = "docsout";
-                            document.IsEncrypted = true;
-                            document.CalculatedFileName = calculatedFileName;
-                            docRepository.Update(document);
-                            docRepository.SubmitChanges();
-                        }
-
-
-                        documentOutCopy.DocumentId = document.Id;
-                        documentOutCopyRep.Update(documentOutCopy);
-                        documentOutCopyRep.SubmitChanges();
+                        Document document = CreateOrUpdateDocument(documentOutId, tenant, documentTypeCopyId, docRepository, documentOutCopyRep, documentOut, documentTypeCopy, documentType, ref documentOutCopy, calculatedFileName);
 
                         SaveSTIDocumentInStorage(document, report, tenant, documentType.Code);
-                  
+
                         var docFiling = documentsFilingRepository.GetSingleDocumentsFiling(documentOutId);
                         if (docFiling != null)
                         {
                             docFiling.DocumentId = document.Id;
                             documentsFilingRepository.Update(docFiling);
                             documentsFilingRepository.SubmitChanges();
-
-
                             if (docFiling.IsSharedOut)
                             {
-                               if(documentType.SharedDocumentTypeCopyId == documentTypeCopyId)
-                                {
-                                    
-                                    IQueueService queueservice = new DbQueueService();
-                                    queueservice.InitializeQueue("ResharedAgentDocumentQueue", tenant);
-                                    queueservice.Send(new Dictionary<string, string>() { { "EntityId", docFiling.EntityId }, { "Tenant", docFiling.Tenant.ToString() }, { "DocumentTypeCode", documentType.Code } , { "SecurityId", docFiling.SecurityId } }, null, null, null, null);
-                                
-                                }
+                                ResharedAgentDocumentQueue(tenant, documentTypeCopyId, documentType, docFiling);
                             }
-
-
                         }
-                        //documentOut.DocumentId = document.Id;
-                        //_DocumentOutRepository.Update(documentOut);
-                        //_DocumentOutRepository.SubmitChanges();
-                        //report.ExportDocument(
-                        // System.Diagnostics.Process.Start(file);
+
                         theA2 = System.DateTime.Now.Ticks;
-
-
-                        ////SharingUpdate
-                        //if(documentType.SharedDocumentTypeCopyId == documentTypeCopyId)
-                        //{
-                        //    //documentOutId -> DocumentFilingId
-                        //    //documentTypeCode
-                        //    //entityId
-
-                        //}
-
-                        // AzureLog.SaveLogsInStorage("All :" + Convert.ToString((a2 - a1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
                         return document.Id;
                     }
+
                     else
                         return null;
                 }
@@ -321,10 +147,130 @@ namespace WebFreight.Web.Helpers
 
         }
 
-        public StiReport GetReportDocument(DocumentType documentType, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, DocumentTypeCopy documentTypeCopy, StiReport report, Byte[] templatedata, DocumentTypeTemplate defaulttemplate, int tenant, long theT1, long theT2, long theA1, long theA2, string userId=null, bool isJsonBody = false)
+        private static void LoadEditableFields(DocumentOut documentOut, StiReport report)
+        {
+            using (MemoryStream memstr = new MemoryStream())
+            {
+                if (documentOut.EditableFields != null)
+                {
+                    // FileStream fileStream = new FileStream(@"C:\temp\Editable.txt", FileMode.Open, FileAccess.Read);
+                    memstr.Write(documentOut.EditableFields, 0, documentOut.EditableFields.Length);
+                    memstr.Seek(0, SeekOrigin.Begin);
+                    report.LoadEditableFields(memstr);
+                }
+            }
+        }
+
+        private  Document CreateOrUpdateDocument(string documentOutId, int tenant, string documentTypeCopyId, DocumentRepository docRepository, DocumentOutCopyRepository documentOutCopyRep, DocumentOut documentOut, DocumentTypeCopy documentTypeCopy, DocumentType documentType, ref DocumentOutCopy documentOutCopy, string calculatedFileName)
+        {
+            Document document;
+            if (documentOutCopy == null)
+            {
+                using (TransactionScope scop = TransactionFactory.GetTransaction())
+                {
+                    string copyId = IdCounter.GetNumber("Document", tenant).ToString();
+                    documentOutCopy = new DocumentOutCopy()
+                    {
+                        Id = copyId,
+                        Tenant = tenant,
+                        DocumentTypeCopyId = documentTypeCopyId,
+                        DocumentOutId = documentOutId,
+                        //DocumentId = copyId,
+                    };
+
+                    document = new Document()
+                    {
+                        CreateDate = DateTime.Now,
+                        Extension = "pdf",
+                        //FileSize = 999,
+                        Tenant = Convert.ToInt32(documentOut.Tenant),
+                        Id = documentOutCopy.Id,
+                        HasFile = true,
+                        Folder = "docsout",
+                        FileName = documentType.Name,
+                        CalculatedFileName = calculatedFileName,
+
+                    };
+                    docRepository.Add(document);
+                    documentOutCopyRep.Add(documentOutCopy);
+                    documentOutCopyRep.SubmitChanges();
+                    docRepository.SubmitChanges();
+                    scop.Complete();
+                }
+            }
+            else
+            {
+                document = docRepository.GetSingleDocument(tenant, documentOutCopy.Id);
+                document.CreateDate = DateTime.Now;
+                document.Extension = "pdf";
+                //document.FileSize = 999;
+                document.FileName = documentTypeCopy.Name;
+                document.HasFile = true;
+                document.Folder = "docsout";
+                document.IsEncrypted = true;
+                document.CalculatedFileName = calculatedFileName;
+                docRepository.Update(document);
+                docRepository.SubmitChanges();
+            }
+
+            documentOutCopy.DocumentId = document.Id;
+            documentOutCopyRep.Update(documentOutCopy);
+            documentOutCopyRep.SubmitChanges();
+            return document;
+        }
+
+        private static void ResharedAgentDocumentQueue(int tenant, string documentTypeCopyId, DocumentType documentType, DocumentsFiling docFiling)
+        {
+            if (documentType.SharedDocumentTypeCopyId == documentTypeCopyId)
+            {
+
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ResharedAgentDocumentQueue", tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "EntityId", docFiling.EntityId }, { "Tenant", docFiling.Tenant.ToString() }, { "DocumentTypeCode", documentType.Code }, { "SecurityId", docFiling.SecurityId } }, null, null, null, null);
+
+            }
+        }
+
+        private  string GetCalculatedDocumentFileName(string entityId, string entityObjectTableId, string childEntityId, int tenant, string userId, DocumentTypeCopy documentTypeCopy, DocumentType documentType)
+        {
+            string calculatedFileName = string.Empty;
+            if (!string.IsNullOrEmpty(documentType.FileName))
+            {
+
+                if (documentType.FileName.Contains("["))
+                {
+                    string id = entityId;
+                    string tableId = entityObjectTableId;
+                    if (!string.IsNullOrEmpty(childEntityId)) id = childEntityId;
+                    HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                    string htmlResolve = htmlEditorHelper.ResolveHtmlString(id, documentType.ObjectTableId, documentType.FileName, userId, tenant);
+                    if (!string.IsNullOrEmpty(htmlResolve))
+                    {
+                        if (htmlResolve.Length > 120)
+                        {
+                            calculatedFileName = htmlResolve.Substring(0, 119);
+                        }
+                        else calculatedFileName = htmlResolve;
+                    }
+
+                }
+                else calculatedFileName = documentType.FileName;
+            }
+
+            if (string.IsNullOrEmpty(calculatedFileName)) calculatedFileName = documentType.Name;
+
+            if (documentTypeCopy != null && documentType.Name != documentTypeCopy.Name)
+            {
+                calculatedFileName += "_" + documentTypeCopy.Name;
+            }
+
+            return calculatedFileName;
+        }
+
+        public StiReport GetReportDocument(DocumentType documentType, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, DocumentTypeCopy documentTypeCopy,  Byte[] templatedata, DocumentTypeTemplate defaulttemplate, int tenant, long theT1, long theT2, long theA1, long theA2, string userId=null, bool isJsonBody = false)
         {
 
-
+            StiReport report = new StiReport();
             string documentTypeCopyId = documentTypeCopy != null ? documentTypeCopy.Id : "";
 
             DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
@@ -359,7 +305,7 @@ namespace WebFreight.Web.Helpers
                         StiBusinessObject shipmentPmBusinessObject = new StiBusinessObject() { Category = "ShipmentPM", Name = "ShipmentPMDataProvider", BusinessObjectValue = shipmentPm };
                         RegBusinessObject(report, shipmentPmBusinessObject);
                         //-----------
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject, tenant);
                     }
                     break;
 
@@ -376,7 +322,7 @@ namespace WebFreight.Web.Helpers
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "HAWB", Name = "AWBDataProvider", BusinessObjectValue = awbDataProvider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject, tenant);
                     }
 
                     break;
@@ -392,7 +338,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "FORM", Name = "DeclarationFormsDataProvider", BusinessObjectValue = formsDataProvider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject, tenant);
                     }
 
                     break;
@@ -404,7 +350,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "JRPR", Name = "JournalDataProvider", BusinessObjectValue = journalDP };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
 
                     }
 
@@ -417,7 +363,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "BDPR", Name = "BankDepositDataProvider", BusinessObjectValue = bankDepositDP };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
 
                     }
 
@@ -430,7 +376,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "PCDR", Name = "PaymentChequeDataProvider", BusinessObjectValue = paymentChequeDP };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -441,7 +387,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "TDDP", Name = "TaxDeductionReportData", BusinessObjectValue = taxDeductionDP };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
 
                     }
 
@@ -454,7 +400,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "OFDP", Name = "OpenFormatReportDataProvider", BusinessObjectValue = OpenFormatReporDP };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
 
                     }
 
@@ -490,7 +436,7 @@ namespace WebFreight.Web.Helpers
                         currentBusinessObject.BusinessObjects.Add(packageLinesBusinessObject);
                         currentBusinessObject.BusinessObjects.Add(attachmentListBusinessObject);
 
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -567,7 +513,7 @@ namespace WebFreight.Web.Helpers
                         currentBusinessObject.BusinessObjects.Add(packageLinesBusinessObject);
                         currentBusinessObject.BusinessObjects.Add(attachmentListBusinessObject);
 
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -582,7 +528,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(List<AWBLabelsDataProvider>));
                         List<AWBLabelsDataProvider> awblabelsdataprovider = (List<AWBLabelsDataProvider>)serializer.Deserialize(memorystream);
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "AWB Labels", Name = "AWBLabelsDataProvider", BusinessObjectValue = awblabelsdataprovider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -624,7 +570,7 @@ namespace WebFreight.Web.Helpers
                         currentBusinessObject.BusinessObjects.Add(attachmentListBusinessObject);
                         currentBusinessObject.BusinessObjects.Add(insidePackagesLinesBusinessObject);
 
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -658,7 +604,7 @@ namespace WebFreight.Web.Helpers
                         currentBusinessObject.BusinessObjects.Add(packageLinesBusinessObject);
                         currentBusinessObject.BusinessObjects.Add(attachmentListBusinessObject);
 
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -690,7 +636,7 @@ namespace WebFreight.Web.Helpers
 
                         report.Dictionary.BusinessObjects.Clear();
                         currentBusinessObject.BusinessObjects.Add(reportInvoiceLinesBusinessObject);
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
 
                         break;
                     }
@@ -755,7 +701,7 @@ namespace WebFreight.Web.Helpers
                         report.Dictionary.BusinessObjects.Clear();
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject1);
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject2);
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -777,7 +723,7 @@ namespace WebFreight.Web.Helpers
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "CMR", Name = "CMRDataProvider", BusinessObjectValue = cmrDataProvider };
                         StiBusinessObject StiBusinessObject1 = new StiBusinessObject() { Name = "ContainersList", Alias = "ContainersList", ParentBusinessObject = currentBusinessObject, Columns = containerColumnsCollection };
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject1);
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -798,7 +744,7 @@ namespace WebFreight.Web.Helpers
                         //report.Dictionary.BusinessObjects.Add(currentBusinessObject);
                         //report.RegBusinessObject(currentBusinessObject.Category, currentBusinessObject.Name, currentBusinessObject.BusinessObjectValue);
                         //report.Dictionary.SynchronizeBusinessObjects();
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -820,7 +766,7 @@ namespace WebFreight.Web.Helpers
                         //report.Dictionary.BusinessObjects.Add(currentBusinessObject);
                         //report.RegBusinessObject(currentBusinessObject.Category, currentBusinessObject.Name, currentBusinessObject.BusinessObjectValue);
                         //report.Dictionary.SynchronizeBusinessObjects();
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -842,7 +788,7 @@ namespace WebFreight.Web.Helpers
                         //report.Dictionary.BusinessObjects.Add(currentBusinessObject);
                         //report.RegBusinessObject(currentBusinessObject.Category, currentBusinessObject.Name, currentBusinessObject.BusinessObjectValue);
                         //report.Dictionary.SynchronizeBusinessObjects();
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -856,7 +802,7 @@ namespace WebFreight.Web.Helpers
                         ShipmentProfitDataProvider shipmentProfitProvider = (ShipmentProfitDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Shipment Profit", Name = "ShipmentProfitDataProvider", BusinessObjectValue = shipmentProfitProvider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -876,7 +822,7 @@ namespace WebFreight.Web.Helpers
                         PreAlertDataProvider preAlertProvider = (PreAlertDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Pre Alert", Name = "PreAlertDataProvider", BusinessObjectValue = preAlertProvider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
 
                     break;
@@ -891,7 +837,7 @@ namespace WebFreight.Web.Helpers
                         //PaymentDataProvider paymentProvider = (PaymentDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Paymant", Name = "paymentDataProvider", BusinessObjectValue = paymentProvider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
 
                     break;
@@ -906,7 +852,7 @@ namespace WebFreight.Web.Helpers
                         APPaymentDataProvider apPaymentProvider = (APPaymentDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "APPaymant", Name = "APPaymentDataProvider", BusinessObjectValue = apPaymentProvider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                     }
 
                     break;
@@ -921,7 +867,7 @@ namespace WebFreight.Web.Helpers
                         ShipmentPackingDataProvider shipmentPackingProvider = (ShipmentPackingDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Packing List", Name = "ShipmentPackingDataProvider", BusinessObjectValue = shipmentPackingProvider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -935,7 +881,7 @@ namespace WebFreight.Web.Helpers
                         ShipmentProfitInvoicesDataProvider shipmentProfitProvider = (ShipmentProfitInvoicesDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Shipment Profit Invoice", Name = "ShipmentProfitInvoicesDataProvider", BusinessObjectValue = shipmentProfitProvider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -963,7 +909,7 @@ namespace WebFreight.Web.Helpers
 
                         report.Dictionary.BusinessObjects.Clear();
                         currentBusinessObject.BusinessObjects.Add(reportInvoiceLinesBusinessObject);
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
 
                         break;
                     }
@@ -990,7 +936,7 @@ namespace WebFreight.Web.Helpers
 
                         report.Dictionary.BusinessObjects.Clear();
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject2);
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
 
                         break;
                     }
@@ -1037,7 +983,7 @@ namespace WebFreight.Web.Helpers
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject2);
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject3);
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject4);
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
 
                         break;
                     }
@@ -1054,7 +1000,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "CrossDockEntry", Name = "CrossDockEntryDataProvider", BusinessObjectValue = crossDockEntryDataProvider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -1071,7 +1017,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "CrossDockRelease", Name = "CrossDockReleaseDataProvider", BusinessObjectValue = crossDockReleaseDataProvider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -1088,7 +1034,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Shipment Inventory", Name = "ShipmentInventoryDataProvider", BusinessObjectValue = shipmentInventoryDataProvider };
-                        report = LoadandRender(report, templatedata, defaulttemplate, currentBusinessObject, documentTypeTemplaterep, tenant, isJsonBody);
+                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -1105,54 +1051,8 @@ namespace WebFreight.Web.Helpers
 
         private void SaveSTIDocumentInStorage(Document document, StiReport report, int tenant, string documenttypecode)
         {
-           // try
-           // {
-                //Check if InAzure 
-                //if (!WebFreightEntryPoint.UsingAzure)
-                //{
-                //    string file = Server.MapPath(".");
-                //    file += "\\UserUploads\\";
-                //    file += document.Id;
-                //    file += ".";
-                //    file += document.Extension;
-                //    t1 = System.DateTime.Now.Ticks;
-                //    StiPdfExportSettings pdfSettings = new StiPdfExportSettings();
-                //    pdfSettings.ImageResolution = 300;
-                //    pdfSettings.ImageQuality = 100;
-                //    pdfSettings.ImageCompressionMethod = StiPdfImageCompressionMethod.Jpeg;                    
-                //    report.ExportDocument(StiExportFormat.Pdf, file, pdfSettings);
-                //    t2 = System.DateTime.Now.Ticks;
-                //    //AzureLog.SaveLogsInStorage("Report.ExportDocument :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
-                //}
-                //else // In Azure = true
-                //{
-
+       
                 string filename = document.Id + "." + document.Extension;
-                //var blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
-                //var blobfile = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder));
-                //int filesize;
-
-                //using (Stream blobstream = blobfile.OpenWrite())
-                //{
-                //    //t1 = System.DateTime.Now.Ticks;
-                //    StiPdfExportSettings pdfSettings = new StiPdfExportSettings();
-                //    pdfSettings.ImageResolution = 300;
-                //    pdfSettings.ImageQuality = 100;
-                //    pdfSettings.ImageCompressionMethod = StiPdfImageCompressionMethod.Jpeg;
-
-                //    using (MemoryStream memStream = new MemoryStream())
-                //    {
-                //        report.ExportDocument(StiExportFormat.Pdf, memStream, pdfSettings);
-                //        document.FileSize =(int) memStream.Length;
-                //        blobstream.Write(memStream.ToArray(), 0, (int)memStream.Length);
-                //    }
-
-
-                //}
-
-
-
-                //t1 = System.DateTime.Now.Ticks;
 
                 StiPdfExportSettings pdfSettings = new StiPdfExportSettings();
                 if (documenttypecode == "740L" || documenttypecode == "740HL" || documenttypecode == "LCLL")
@@ -1441,18 +1341,15 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        public StiReport LoadandRender(StiReport report, byte[] template, DocumentTypeTemplate defaulttemplate, StiBusinessObject currentBusinessObject, DocumentTypeTemplateRepository documentTypeTemplateRepository, int tenant, bool IsJsonBody = false)
+        public StiReport LoadandRender(StiReport report,  DocumentTypeTemplate defaulttemplate, StiBusinessObject currentBusinessObject, int tenant)
         {
-            long theT1;
-            long theT2;
+            long theT1 = System.DateTime.Now.Ticks;
+            long theT2 = System.DateTime.Now.Ticks;
 
-            //Calculate HashCode
-            theT1 = System.DateTime.Now.Ticks;
+            byte[] template = defaulttemplate.TemplateBody;
+              
             string dllName = GetDllName(template, report);
-            theT2 = System.DateTime.Now.Ticks;
-            //AzureLog.SaveLogsInStorage("Report.GetDllName() :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
-
-            // get logo
+     
             Uploader uploaderservice = new Uploader();
             byte[] logodata = uploaderservice.DownloadFile("logo" + tenant, "jpg", "logos", tenant);
 
@@ -1462,39 +1359,23 @@ namespace WebFreight.Web.Helpers
 
                 byte[] dllData = GetDllFromStorage(dllName, tenant);
                 theT2 = System.DateTime.Now.Ticks;
-                //AzureLog.SaveLogsInStorage("Report.GetDllFromStorage() :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
 
                 if (dllData != null && dllData.Count() != 0)
                 {
                     theT1 = System.DateTime.Now.Ticks;
                     report = StiReport.GetReportFromAssembly(dllData);
-
-                    #region Add report to Cache
-                    //HttpContext  httpContext = HttpContext.Current;
-                    //if (httpContext.Cache.Get(dllName) == null)
-                    //{
-                    //    _report = StiReport.GetReportFromAssembly(dll_data);
-                    //    httpContext.Cache.Insert(dllName, _report, null, System.DateTime.UtcNow.AddSeconds(60), TimeSpan.Zero);
-                    //}
-                    //else
-                    //{
-                    //    _report = (StiReport) httpContext.Cache.Get(dllName);
-                    //}
-                    #endregion
-
+                    
                     theT2 = System.DateTime.Now.Ticks;
-                    //AzureLog.SaveLogsInStorage("Report.GetReportFromAssembly() :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
 
                     RegBusinessObject(report, currentBusinessObject);
                     report.NeedsCompiling = false;
                     report.ReportUnit = StiReportUnitType.Millimeters;
-                    //Vertical and Horizontal shift
                     if (defaulttemplate.HorizontalShift != null && defaulttemplate.VerticalShift != null)
                     {
                         foreach (StiPage page in report.Pages)
                         {
-                            page.Margins.Left = 10; //default value
-                            page.Margins.Top = 10; // default value
+                            page.Margins.Left = 10;
+                            page.Margins.Top = 10; 
                             page.Margins = new StiMargins(page.Margins.Left + defaulttemplate.HorizontalShift.Value, page.Margins.Right, page.Margins.Top + defaulttemplate.VerticalShift.Value, page.Margins.Bottom);
                         }
                     }
@@ -1506,20 +1387,9 @@ namespace WebFreight.Web.Helpers
                     RegBusinessObject(report, currentBusinessObject);
 
                     theT1 = System.DateTime.Now.Ticks;
-                    if (IsJsonBody)
-                    {
-                        string jsonString = System.Text.Encoding.UTF8.GetString(template);
-                        report.LoadFromJson(jsonString);
-                    }
-                    else
-                    {
-                        report.Load(template);
-                    }
+                    report.Load(template);
                     theT2 = System.DateTime.Now.Ticks;
-                    //AzureLog.SaveLogsInStorage("Report.Load() :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
-
                     report.ReportUnit = StiReportUnitType.Millimeters;
-                    //Vertical and Horizontal shift
                     if (defaulttemplate.HorizontalShift != null && defaulttemplate.VerticalShift != null)
                     {
                         foreach (StiPage page in report.Pages)
@@ -1527,6 +1397,7 @@ namespace WebFreight.Web.Helpers
                             page.Margins = new StiMargins(page.Margins.Left + defaulttemplate.HorizontalShift.Value, page.Margins.Right, page.Margins.Top + defaulttemplate.VerticalShift.Value, page.Margins.Bottom);
                         }
                     }
+
                     AddLogo(report, logodata);
                     SaveDllFileInStorage(template, report, tenant);
                 }
@@ -1538,10 +1409,9 @@ namespace WebFreight.Web.Helpers
                 theT1 = System.DateTime.Now.Ticks;
                 report.Load(template);
                 theT2 = System.DateTime.Now.Ticks;
-                //AzureLog.SaveLogsInStorage("Report.Load() :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
-
+            
                 report.ReportUnit = StiReportUnitType.Millimeters;
-                //Vertical and Horizontal shift
+    
                 if (defaulttemplate.HorizontalShift != null && defaulttemplate.VerticalShift != null)
                 {
                     foreach (StiPage page in report.Pages)
@@ -1551,10 +1421,7 @@ namespace WebFreight.Web.Helpers
                 }
 
                 AddLogo(report, logodata);
-                //t1 = System.DateTime.Now.Ticks;
-                //_report.Render();
-                //t2 = System.DateTime.Now.Ticks;
-                //AzureLog.SaveLogsInStorage("Report.Render() :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P");
+
             }
 
             report.AutoLocalizeReportOnRun = true;
@@ -1562,7 +1429,6 @@ namespace WebFreight.Web.Helpers
             report.Render(false);
 
             theT2 = System.DateTime.Now.Ticks;
-            //AzureLog.SaveLogsInStorage("Report.Render() :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
 
             return report;
         }
@@ -1616,26 +1482,16 @@ namespace WebFreight.Web.Helpers
                 {
                     if (templatedata.Length != 0)
                     {
-                        StiReport report = new StiReport();
-
-                        report = GetReportDocument(documentType, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, report, templatedata, defaulttemplate, tenant, theT1, theT2, theA1, theA2);
 
 
+                        StiReport report = GetReportDocument(documentType, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, templatedata, defaulttemplate, tenant, theT1, theT2, theA1, theA2);
                         theA2 = System.DateTime.Now.Ticks;
 
                         StiPdfExportSettings pdfSettings = new StiPdfExportSettings();
-
-
-
-
-                        //else
-                        //{
-
                         pdfSettings.ImageResolution = 300;
                         pdfSettings.ImageQuality = 100;
                         pdfSettings.ImageCompressionMethod = StiPdfImageCompressionMethod.Jpeg;
-                        //}
-
+            
 
                         using (MemoryStream memStream = new MemoryStream())
                         {
