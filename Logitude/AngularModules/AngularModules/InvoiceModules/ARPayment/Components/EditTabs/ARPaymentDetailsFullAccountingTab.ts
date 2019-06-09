@@ -511,7 +511,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     SetBankRequired() {
 
-        if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
+        if (this.EntityPM.AccountingPaymentMethodCode == "CH" && this.Bank == null) {
 
             this.UIProperties.SetRequired("Bank", this.ObjectTableName, true);
         }

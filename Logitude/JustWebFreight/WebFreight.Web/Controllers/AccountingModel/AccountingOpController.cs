@@ -130,7 +130,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     var response = new ServiceResponse();
                     //response.Result = bankAccountPageAnalyzer.MyResultLoadBankPage;
                     var journalToGLAccountMoreData = new JournalToGLAccountMoreData();
-                    journalToGLAccountMoreData.BuildJournals(authToken.Tenant, dosBytes, "Journals");
+                    journalToGLAccountMoreData.LoadXLSBuildTest(authToken.Tenant, dosBytes, "Journals");
 
 
                     return Request.CreateResponse(HttpStatusCode.OK, new { Message = "Done" });

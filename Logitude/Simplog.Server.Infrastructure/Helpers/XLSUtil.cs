@@ -30,7 +30,7 @@ namespace Simplog.Server.Infrastructure.Helpers
             //Loads or open an existing workbook through Open method of IWorkbooks
             IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
             workbook.CalculationOptions.CalculationMode = ExcelCalculationMode.Automatic;
-            var JournalsWorksheet = workbook.Worksheets[WorksheetName];
+            var JournalsWorksheet = workbook.Worksheets[WorksheetName]?? workbook.Worksheets[0];
             int headerRow = 1;
             //
             JournalsWorksheet.EnableSheetCalculations();
