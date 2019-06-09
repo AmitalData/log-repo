@@ -99,6 +99,31 @@ namespace WebFreight.Web.DataProviders
         public string DeliveryExpectedDeparture { get; set; }
         public string DeliveryExpectedArrival { get; set; }
         public string DeliveryActualDeparture { get; set; }
-        public string DeliveryActualArrival { get; set; }        
+        public string DeliveryActualArrival { get; set; }
+
+
+
+
+        public string ShipmentField1 { get; set; }
+        public string ShipmentField2 { get; set; }
+        public string ShipmentField3 { get; set; }
+        public string ShipmentField4 { get; set; }
+        public string ShipmentField5 { get; set; }
+        public string ShipmentField6 { get; set; }
+        public string ShipmentField7 { get; set; }
+        public string ShipmentField8 { get; set; }
+        public string ShipmentField9 { get; set; }
+        public string ShipmentField10 { get; set; }
+        public string ShipmentField11 { get; set; }
+        public string ShipmentField12 { get; set; }
+        public string ShipmentField13 { get; set; }
+        public string ShipmentField14 { get; set; }
+        public string ShipmentField15 { get; set; }
+        public string ShipmentField16 { get; set; }
+        public string ShipmentField17 { get; set; }
+        public string ShipmentField18 { get; set; }
+        public string ShipmentField19 { get; set; }
+        public string ShipmentField20 { get; set; }
+
     }
 }

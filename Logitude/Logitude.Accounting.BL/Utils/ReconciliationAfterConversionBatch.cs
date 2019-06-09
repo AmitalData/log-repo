@@ -42,21 +42,20 @@ namespace Logitude.Accounting.BL.Utils
                 IAccountingContext context = AccountingContext.GetContext(tenant);
                 JournalLineQueryService journalLineQueryService = new JournalLineQueryService(context);
 
-                //IQueryable<IGrouping<String, JournalLine>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalReco(tenant);
-                IQueryable<IGrouping<String, JournalLine>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
+                IQueryable<IGrouping<String, JournalLineLedgerTransactionDTO>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
                 LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(context);
                 List<ReconciableGroup> reconciableGroupList = new List<ReconciableGroup>();
                 List<string> badList = new List<string>();
                 List<string> goodList = new List<string>();
-                List<Int32> madeList = new List<Int32>();
+                List<Int64> madeList = new List<Int64>();
 
-                foreach (IGrouping<String, JournalLine> group in journalLineGroups)
+                foreach (IGrouping<String, JournalLineLedgerTransactionDTO> group in journalLineGroups)
                 {
                     string groupKey = group.Key;
                     List<JournalLineReco> journalLineList = new List<JournalLineReco>();
-                    foreach (JournalLine journalLine in group)
+                    foreach (JournalLineLedgerTransactionDTO journalLineLedgerTransactionDTO in group)
                     {
-                        journalLineList.Add(new JournalLineReco(journalLine, ledgerTransactionQueryService));
+                        journalLineList.Add(new JournalLineReco(journalLineLedgerTransactionDTO.JournalLine, journalLineLedgerTransactionDTO.LedgerTransaction));
                     }
                     if (IsGroupReconciable(journalLineList))
                     {
@@ -75,7 +74,7 @@ namespace Logitude.Accounting.BL.Utils
                     string gLAccountId = GetGroupGLAccountId(recoGroup._LineGroup);
                     if (!String.IsNullOrWhiteSpace(gLAccountId))
                     {
-                        ReconcileOneRef(recoGroup._LineGroup, gLAccountId);
+                        ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
                         madeList.Add(recoGroup._Ref);
                     }
                 });
@@ -88,12 +87,13 @@ namespace Logitude.Accounting.BL.Utils
         }
 
 
-        private List<LedgerTransactionPM> GetLedger(List<JournalLineReco> journalLineRecoList)
+        private List<LedgerTransaction> GetLedger(List<JournalLineReco> journalLineRecoList)
         {
-            List<LedgerTransactionPM> rv = new List<LedgerTransactionPM>();
+            List<LedgerTransaction> rv = new List<LedgerTransaction>();
             journalLineRecoList.ForEach(journalLineReco =>
             {
-                rv.AddRange(journalLineReco._oneLineLedger);
+               // rv.AddRange(journalLineReco._oneLineLedger);
+                rv.Add(journalLineReco._oneLineLedger);
             });
             return rv;
         }
@@ -102,7 +102,19 @@ namespace Logitude.Accounting.BL.Utils
         {
 
             string rv = "";
-            rv = journalLineRecoList.Where(line => line._journalLine.ActionCode == "1").FirstOrDefault()._journalLine.CreditAccountId;
+            JournalLineReco creditLine = journalLineRecoList.Where(line => line._journalLine.ActionCode == "1").FirstOrDefault();
+            if (creditLine != null)
+            {
+                rv = creditLine._journalLine.CreditAccountId;
+            }
+            else
+            {
+                JournalLineReco debitLine = journalLineRecoList.Where(line => line._journalLine.ActionCode == "2").FirstOrDefault();
+                if (debitLine != null)
+                {
+                    rv = debitLine._journalLine.DebitAccountId;
+                }
+            }
             if (!String.IsNullOrWhiteSpace(rv) && journalLineRecoList.Exists(line => line._journalLine.ActionCode == "1" && line._journalLine.CreditAccountId != rv))
             {
                 rv = "";
@@ -125,15 +137,12 @@ namespace Logitude.Accounting.BL.Utils
             {
                 rv = false;
             }
-            else if (!journalLineRecoList.Exists(line => line._journalLine.ActionCode == "1") ||  !journalLineRecoList.Exists(line => line._journalLine.ActionCode == "2"))
+            //           else if (!journalLineRecoList.Exists(line => line._journalLine.ActionCode == "1") ||  !journalLineRecoList.Exists(line => line._journalLine.ActionCode == "2"))
+            else if ((journalLineRecoList.Sum(line => line._journalLine.LocalAmount) != 0m))
             {
                 rv = false;
             }
-            else if (journalLineRecoList.Exists(line => line._oneLineLedger == null || line._oneLineLedger.Count == 0))
-            {
-                rv = false;
-            }
-            else if (journalLineRecoList.Exists(line => line._oneLineLedger.Exists(lt => lt.IsReconciled)))
+            else if (journalLineRecoList.Exists(line => line._oneLineLedger == null))
             {
                 rv = false;
             }
@@ -149,15 +158,16 @@ namespace Logitude.Accounting.BL.Utils
             return rv;
         }
 
-        private void ReconcileOneRef(List<JournalLineReco> journalLineRecoList, string gLAccountId)
+        private void ReconcileOneRef(List<JournalLineReco> journalLineRecoList, string gLAccountId, LedgerTransactionQueryService ledgerTransactionQueryService)
         {
             using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
             {
                 try
                 {
-                    List<LedgerTransactionPM> ledger = GetLedger(journalLineRecoList);
+                    List<LedgerTransaction> ledger = GetLedger(journalLineRecoList);
+                    List<LedgerTransactionPM> ledgerPMs = ledger.Select(poco => ledgerTransactionQueryService.GetEntityPM(poco)).ToList();
                     CreateReconciliationService createReconciliationService = new CreateReconciliationService();
-                    ReconciliationPM reconciliationPM = createReconciliationService.GetReconciliation(ledger);
+                    ReconciliationPM reconciliationPM = createReconciliationService.GetReconciliation(ledgerPMs);
                     CreateReconciliationService service = new CreateReconciliationService();
                     RecoCallback recoCallback = service.CreateReconciliation(reconciliationPM);
                     scope.Complete();
@@ -172,12 +182,12 @@ namespace Logitude.Accounting.BL.Utils
 
         private class ReconciableGroup
         {
-            public Int32 _Ref { get; set; }
+            public Int64 _Ref { get; set; }
             public List<JournalLineReco> _LineGroup { get; set; }
             public ReconciableGroup(string reference, List<JournalLineReco> lineGroup)
             {
                 _LineGroup = lineGroup;
-                _Ref = Int32.Parse(reference);
+                _Ref = Int64.Parse(reference);
             }
         }
 
@@ -187,8 +197,8 @@ namespace Logitude.Accounting.BL.Utils
 
             public Decimal _valueToMatch { get; set; }
             public JournalLine _journalLine { get; set; }
-            public List<LedgerTransactionPM> _oneLineLedger { get; set; }
-            public JournalLineReco(JournalLine journalLine, LedgerTransactionQueryService ledgerTransactionQueryService)
+            public LedgerTransaction _oneLineLedger { get; set; }
+            public JournalLineReco(JournalLine journalLine, LedgerTransaction ledgerTransaction) // LedgerTransactionQueryService ledgerTransactionQueryService)
             {
                 this._journalLine = journalLine;
                 this._valueToMatch = 0m;
@@ -200,7 +210,7 @@ namespace Logitude.Accounting.BL.Utils
                 {
                     this._valueToMatch = - (journalLine.LocalAmount - (journalLine.ExternalOpenAmount ?? 0m));
                 }
-                this._oneLineLedger = ledgerTransactionQueryService.GetByJournalLineIdAndLine(journalLine.JournalId, journalLine.Line, journalLine.Tenant);
+                this._oneLineLedger = ledgerTransaction; // ledgerTransactionQueryService.GetByJournalLineIdAndLine(journalLine.JournalId, journalLine.Line, journalLine.Tenant);
             }
         }
     }

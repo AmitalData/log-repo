@@ -137,7 +137,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             if (IncludeRelatedCurrenciesAccount)
             {
                 var myGLAccountCurrencyRepository = new GLAccountCurrencyRepository(this.context);
-                var relatedCurrenciesAccountByCustomerGLAccount = myGLAccountCurrencyRepository.GetRelatedCurrenciesAccountByCustomerGLAccount(tenant, GLAccountId)
+                var relatedCurrenciesAccountByCustomerGLAccount = myGLAccountCurrencyRepository.GetRelatedCurrenciesAccountByCustomerGLAccountActive(tenant, GLAccountId)
                     .Select(ca => ca.GLAccountId).ToList();
                 allIdAccounts.AddRange(relatedCurrenciesAccountByCustomerGLAccount);
             }
@@ -159,7 +159,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             if (IncludeRelatedCurrenciesAccount)
             {
                 var myGLAccountCurrencyRepository = new GLAccountCurrencyRepository(this.context);
-                var relatedCurrenciesAccountByCustomerGLAccount = myGLAccountCurrencyRepository.GetRelatedCurrenciesAccountByCustomerGLAccount(tenant, GLAccountId)
+                var relatedCurrenciesAccountByCustomerGLAccount = myGLAccountCurrencyRepository.
+                    GetRelatedCurrenciesAccountByCustomerGLAccountAll(tenant, GLAccountId)
                     .Select(ca => ca.GLAccountId).AsQueryable<string>();// ToList();
                 ////i decided to add this due unittest :Run_IncludeRelatedCurrenciesAccount_AllCurrencies
                 allIdAccounts =

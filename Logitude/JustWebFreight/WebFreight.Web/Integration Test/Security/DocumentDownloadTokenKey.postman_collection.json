@@ -1,0 +1,254 @@
+{
+	"info": {
+		"_postman_id": "6f017912-8642-4845-b703-3dc5354b3a85",
+		"name": "DocumentDownloadTokenKey",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AuthSuccessfull",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4920ea14-b99c-407f-9682-a626c98d1e74",
+						"exec": [
+							"pm.test(\"AuthSuccessfullOnTenant1\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"   ",
+							"    var idvalue1 = (pm.response.json().Token);",
+							"    var idvalue2 = (pm.response.json().Tenant);",
+							"    var idvalue3 = (pm.response.json().UserId);",
+							"    var idvalue4 = (pm.response.json().DocumentDownloadToken);",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"    var id3exist = idvalue3 !== null;",
+							"    var id4exist = idvalue4 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    pm.expect(id3exist);",
+							"    pm.expect(id4exist);",
+							"    pm.globals.set(\"Token\",idvalue1);",
+							"    pm.globals.set(\"Tenant\",idvalue2);",
+							"    pm.globals.set(\"LoggedUserId\",idvalue3);",
+							"    pm.globals.set(\"DocumentDownloadToken\",idvalue4);",
+							"    ",
+							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "80382ca3-511a-4d54-8c44-3148e0f553f8",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"ahmadb@fnarsoft.com\",\"Password\":\"ahmed13!A15\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1}\n"
+				},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDocumentDownloadToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8e46774f-c1f7-438b-be91-4a200ae8bece",
+						"exec": [
+							"pm.test(\"GetDocumentDownloadToken\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"   ",
+							"    var idvalue1 = (pm.response.json());",
+							"    //var id1exist = idvalue1 !== null;",
+							"    pm.expect(idvalue1).to.not.equal(null);",
+							"",
+							"   // pm.expect(id1exist);",
+							"",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/api/Authentication/GetDocumentDownloadToken?documentToken={{DocumentDownloadToken}}",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"Authentication",
+						"GetDocumentDownloadToken"
+					],
+					"query": [
+						{
+							"key": "documentToken",
+							"value": "{{DocumentDownloadToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PrintDocument Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/WebPages/DownloadPage.aspx?securityId={{DocumentSecurityId}}&tempId={{DocumentDownloadToken}}",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"WebPages",
+						"DownloadPage.aspx"
+					],
+					"query": [
+						{
+							"key": "securityId",
+							"value": "{{DocumentSecurityId}}"
+						},
+						{
+							"key": "tempId",
+							"value": "{{DocumentDownloadToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

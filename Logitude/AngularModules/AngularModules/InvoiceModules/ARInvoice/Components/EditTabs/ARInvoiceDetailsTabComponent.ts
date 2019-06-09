@@ -90,12 +90,14 @@ export class ARInvoiceDetailsTabComponent implements OnInit, OnDestroy {
                     });
             }
         }
+
         else if (this.EntityPM.IsGeneralInvoice) {
             SessionLocator.DynamicLoader.Load("./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceDetailsTabGeneral", this.viewContainerRef)
                 .then(cmpRef => {
                     //cmpRef.instance
                 });
         }
+
         else {
             SessionLocator.DynamicLoader.Load("./InvoiceModules/ARInvoice/Components/EditTabs/ARInvoiceDetailsTabNormal", this.viewContainerRef)
                 .then(cmpRef => {
