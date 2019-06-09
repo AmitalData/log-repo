@@ -18,7 +18,7 @@ namespace WarehouseData.Helper
         long timeOut = 10000000000000000;
         string AppName = string.Empty;
         string Mode = string.Empty;
-        int CustomFieldsCount = 6;
+        int CustomFieldsCount = 40;
         List<TableClass> tableLists = new List<TableClass>();
         public WarehouseHelper(string appName = "WarehouseData", string mode = "Debug")
         {
