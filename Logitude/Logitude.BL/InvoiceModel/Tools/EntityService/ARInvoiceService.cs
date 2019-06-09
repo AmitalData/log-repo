@@ -1936,6 +1936,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 case "NT":
                 case "CN":
+                    {
+                        if (this.isNewEntity)
+                        {
+                            myResult = "OAMT";
+                        }
+
+                        break;
+                    }
+
                 case "AD":
                 case "PD":
                 case "PP":

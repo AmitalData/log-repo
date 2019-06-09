@@ -22,7 +22,7 @@ BEGIN
 	ARInvoiceEntities.EntityId = @ShipmentId
 	AND ARInvoices.StatusCode <> 'DR'
 	AND ARInvoices.StatusCode <> 'VD'
-	AND ARInvoices.IsConstituentInvoice = 0
+	--AND ARInvoices.IsConstituentInvoice = 0
 	OPEN EntitiesCursor FETCH NEXT FROM EntitiesCursor INTO @InvoiceNumber
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
