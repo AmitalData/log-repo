@@ -75,8 +75,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
              Shipments   = new List<UnicargoExport>()
             };
 
-            //List<Shipment> shipments = shipmentsContext.Shipments.Where(p=>p.Tenant==tenant && p.IsOperationalClosed==false).Include("CreatedByUser").Include("CreatedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").ToList();
-           Dictionary<string,string> incoterms= commonDataContext.Incoterms.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
+            List<Shipment> shipments = shipmentsContext.Shipments.Where(p => p.Tenant == tenant && p.IsOperationalClosed == false).Include("CreatedByUser").Include("CreatedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").ToList();
+            Dictionary<string,string> incoterms= commonDataContext.Incoterms.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.Name);
             List<string> shipmentdelevriesIds = shipments.Select(d => d.Id).ToList();
             List<ShipmentMasterData> shipmentMasterDatas = shipmentsContext.ShipmentMasterDatas.Where(p => p.Tenant == tenant && shipmentdelevriesIds.Contains(p.Id)).ToList();
 
@@ -105,8 +105,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
 
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
-            List<ShipmentDataView> shipments = shipmentRepository.GetShipmentViewsByTenant(tenant).ToList();
-            shipments.ForEach(item =>
+            List<ShipmentDataView> shipmentsView = shipmentRepository.GetShipmentViewsByTenant(tenant).ToList();
+            shipmentsView.ForEach(item =>
             {
                 UnicargoExport Shipment = new UnicargoExport();
 
