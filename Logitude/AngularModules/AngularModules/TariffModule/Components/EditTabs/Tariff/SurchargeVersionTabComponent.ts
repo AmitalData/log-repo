@@ -483,6 +483,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.HasErrors = item.HasErrors;
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
+            tariffLine.Notes = item.Notes;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
@@ -564,7 +565,11 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
             errors.push("Invalid Tariff Lines");
         }
-        
+
+        if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+            errors.push("Approving past version is not allowed, please update the dates");
+        }
+
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
@@ -642,7 +647,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge9Price = item.Surcharge9Price;
             tariffLine.Surcharge10Price = item.Surcharge10Price;
             tariffLine.Index = item.Index;
-
+            tariffLine.Notes = item.Notes;
             copiedVersion.AddTariffLine(tariffLine);
         });
 
@@ -1151,7 +1156,16 @@ export class TariffLineData extends BaseComponent {
             return FontTool.Red;
         }
     }
-    
+
+    get Notes() {
+        return this.EntityPM.Notes;
+    }
+    set Notes(value: string) {
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
+        }
+    }
+
     // Surcharge 1
     get Surcharge1Price() {
         return this.EntityPM.Surcharge1Price;

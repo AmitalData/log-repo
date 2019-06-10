@@ -55,7 +55,7 @@ namespace Logitude.BL.GlobalModel
                                                        ConnectedToTenant = a.ConnectedToTenant,
                                                        CreateDate = a.CreateDate,
                                                        ErrorMessage = a.ErrorMessage,
-                                                       Log=a.Log,
+                                                       Log = a.Log,
                                                        MessageBody = a.MessageBody,
                                                        Retries = a.Retries,
                                                        Status = a.AnalyzeQueueStatus.Name,
@@ -86,37 +86,38 @@ namespace Logitude.BL.GlobalModel
                         analyzeQueue.ObjectTableName = commLog.ObjectTable != null ? commLog.ObjectTable.Name : null;
                     }
 
-					bool displayFileBody = true;
-					if (!string.IsNullOrEmpty(analyzeQueue.FileName)) {
-						string extention = Path.GetExtension(analyzeQueue.FileName);
-						if (extention != ".txt" && extention != ".xml")
-							displayFileBody = false;
- 					}
-					if (analyzeQueue.FileSize > 20000)
-					{
-						displayFileBody = false;
-					}
-					if (displayFileBody)
-					{
-						string str = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
-						analyzeQueue.MessageBodyString = str;
-					}
-					else
-					{
-						analyzeQueue.MessageBodyString = "File body can't be displayed, please click View to download it.";
-					}
+                    bool displayFileBody = true;
+                    if (!string.IsNullOrEmpty(analyzeQueue.FileName))
+                    {
+                        string extention = Path.GetExtension(analyzeQueue.FileName);
+                        if (extention != ".txt" && extention != ".xml")
+                        {
+                            displayFileBody = false;
+                            analyzeQueue.MessageBodyString = "File body can't be displayed, please click View to download it.";
+                        }
+                    }
+                    if (analyzeQueue.FileSize > 20000)
+                    {
+                        displayFileBody = false;
+                        analyzeQueue.MessageBodyString = "The file size is too big, please click View to download it.";
+                    }
+                    if (displayFileBody)
+                    {
+                        string str = System.Text.Encoding.UTF8.GetString(analyzeQueue.MessageBody);
+                        analyzeQueue.MessageBodyString = str;
+                    }
+
                     SecuredMapping.GetMappedPM(analyzeQueue, securedPm, "AnalyzeQueue", analyzeQueue.Tenant);
 
-					securedPm.MessageBody = null;
+                    securedPm.MessageBody = null;
 
-					return securedPm;
+                    return securedPm;
                 }
                 else
                 {
                     securedPm = (AnalyzeQueuePM)CacheManager.CacheWrapper.Get(entityName);
                 }
             }
-
             else
             {
                 AnalyzeQueuePM analyzeQueuepm = (from a in repository.context.AnalyzeQueues.Include("AnalyzeQueueStatus").Include("TenantManagement")

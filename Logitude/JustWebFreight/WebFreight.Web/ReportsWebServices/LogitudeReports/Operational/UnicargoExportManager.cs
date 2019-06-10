@@ -82,6 +82,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             Dictionary<string, string> departments = commonDataContext.Departments.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
             Dictionary<string, string> branches = commonDataContext.Branches.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
             Dictionary<string, string> SpeicalServices = webFreightContext.SpecialServices.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.SpecialServiceEnglishName);
+            Dictionary<string, string> ShipmentPackagesTypes = commonDataContext. PackageTypes.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
 
 
             ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
@@ -272,19 +273,71 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 #endregion
 
                 #region Packages Section
-                //Shipment.PackageType = item.PackageType; // Check
-                 Shipment.TotalPieces = item.NumberOfPackages; // Add
-                Shipment.Volume = item.Volume;
-                Shipment.GrossWeight = item.GrossWeight;
-                Shipment.VolumetricWeight = item.VolumetricWeight;
+                List<ShipmentPackage> shipmentPackages = (from d in shipmentsContext.ShipmentPackages where d.ShipmentId== item.Id select d).ToList();
+                string packageType = "";
+                string shipperSeal = "";
+                string containerNumber = "";
+
+                shipmentPackages.ForEach(package =>
+                {
+
+                    if (!string.IsNullOrEmpty(package.PackageTypeId))
+                    {
+                        string type = ShipmentPackagesTypes.ContainsKey(package.PackageTypeId) ? ShipmentPackagesTypes[package.PackageTypeId] != null ? ShipmentPackagesTypes[package.PackageTypeId] : null : null;
+                        if (!string.IsNullOrEmpty(type))
+                        {
+                            packageType += type+",";
+                        }
+                    }
+
+
+                    if (!string.IsNullOrEmpty(package.ShipperSeal))
+                    {
+                        shipperSeal += package.ShipperSeal + ",";
+                    }
+
+                    if (!string.IsNullOrEmpty(package.ContainerNumber))
+                    {
+                        containerNumber += package.ContainerNumber + ",";
+                    }
+
+                });
+
+                if (packageType.EndsWith(","))
+                    packageType = packageType.Substring(0, packageType.Length - 1);
+
+
+                if (shipperSeal.EndsWith(","))
+                    shipperSeal = shipperSeal.Substring(0, shipperSeal.Length - 1);
+
+
+                if (containerNumber.EndsWith(","))
+                    containerNumber = containerNumber.Substring(0, containerNumber.Length - 1);
+
+                Shipment.PackageType = packageType; 
+                Shipment.ShipperSeal = shipperSeal; 
+                Shipment.ContinerNumber = containerNumber; 
+
+                Shipment.TotalPieces = item.NumberOfPackages; 
+                Shipment.Volume = shipmentPackages.Sum(p => p.Volume);
+                Shipment.GrossWeight = shipmentPackages.Sum(p => p.Weight);
+                Shipment.VolumetricWeight = shipmentPackages.Sum(p => p.VolumetricWeight);
                 Shipment.Ratio = item.Ratio;
-                // Shipment.ShipperSeal = item.s; //Check
                 Shipment.DescriptionofGoods = item.DescriptionOfGoods;
-                // Shipment.ContinerNumber = item.NumberOfContainers; // Check  the array implode that you did for us (for the email template variable)
                 #endregion
 
 
                 #region Routing Section
+
+
+
+                //ShipmentPickUpDelivery myFirstPickup
+                //  = (from d in shipmentsContext.ShipmentPickUpDeliveries
+                //     where d.ShipmentId == shipment.Id && d.PickUpDeliveryTypeCode == "PICK"
+                //     select d).OrderBy(s => s.PickUpDeliveryNumber).FirstOrDefault();
+
+
+
 
                 //Shipment.PickupFromPartner= 
                 //Shipment.PickupFromPartnerAddress

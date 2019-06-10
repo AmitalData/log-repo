@@ -317,6 +317,11 @@ export class TariffLinePM {
     public set Index(newValue: number) { if (this.index != newValue) { this.index = newValue; this.MarkAsDirty("Index"); } }
        
 	 
+    private notes: string;
+    public get Notes() { return this.notes; }
+    public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	

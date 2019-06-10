@@ -301,4 +301,5 @@ export class ExcelTariffLines {
     Surcharge9PriceText: string;
     Surcharge10PriceText: string;
     Index: number;
+    Notes: string;
 }
