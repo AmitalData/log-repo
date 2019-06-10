@@ -3308,7 +3308,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else if ( group_data != null &&  group_data.Count() >0)
                     {
-                        theEntityPm.TotalVAT = (decimal)group_data.Sum(a => a.LocalCurrencyAmount);
+                        theEntityPm.TotalVAT = (decimal)group_data.Sum(a => MethodHelper.Roundd((a.LocalCurrencyAmount * MethodHelper.Roundd(a.VatTypePercentage, 2) / 100), 2));
                     }
                 }
             }
