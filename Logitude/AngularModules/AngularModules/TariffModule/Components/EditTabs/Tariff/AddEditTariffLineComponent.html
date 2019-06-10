@@ -374,6 +374,24 @@
                     </td>
                 </tr>
 
+                <tr class="FormFieldRow">
+                    <td style="vertical-align:top;">
+                        <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td style="width: 220px; top:5px;">
+                        <table>
+                            <tr>
+                                <td style="width:230px;height:60px;">
+                                    <div class="MediaFill">
+                                        <LogTextBox [ObjectFieldName]="'Notes'" [Text]="DataContext.Notes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
                 <tr>
                     <td>
                         <div></div>

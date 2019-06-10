@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ae5f90dd-2440-4b25-a382-f5bffd27c16c",
+		"_postman_id": "17b14875-9e31-442c-a10d-793013a1036b",
 		"name": "PrepareShipmentVars",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -646,7 +646,7 @@
 							"     //console.log(jsonData.Result[0].Code);",
 							"   ",
 							"    if (idexist)  {",
-							"    postman.setNextRequest(\"GetPortIdAirJFK\"); ",
+							"    postman.setNextRequest(\"GetPortIdLASDomestic\"); ",
 							"    ",
 							"}});",
 							"",
@@ -880,7 +880,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"$id\": \"1\",\n  \"InActive\": false,\n  \"Notes\": null,\n  \"CountryId\": null,\n  \"IsAir\": false,\n  \"IsOcean\": true,\n  \"IsInland\": true,\n  \"AddedManually\": false,\n  \"StateId\": null,\n  \"CountryEC\": false,\n  \"InUse\": false,\n  \"RecentlyAdded\": null,\n  \"StateName\": null\n}"
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{LogitudeURL}}/api/CommonDomain/GetPortCopyToCurrentTenant?entityId={{PortIdLHR}}",
@@ -896,6 +896,606 @@
 						{
 							"key": "entityId",
 							"value": "{{PortIdLHR}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdLASDomestic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdLASDomestic\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"     ",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdLAS\",idvalue);",
+							"     //console.log(jsonData.Result[0].Code);",
+							"   ",
+							"    if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdMIADomestic\"); ",
+							"    ",
+							"}});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/PortViews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=LAS&Filter2Name=CountryCode&Filter2Operator=contains&Filter2Value=us&PageSize=22",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"PortViews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "LAS"
+						},
+						{
+							"key": "Filter2Name",
+							"value": "CountryCode"
+						},
+						{
+							"key": "Filter2Operator",
+							"value": "contains"
+						},
+						{
+							"key": "Filter2Value",
+							"value": "us"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdLASFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdLASFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    // var idvalue = (pm.response.json().Result.Id);",
+							"     var idvalue = (pm.response.json().Result.filter(a => a.EnglishName == 'Las Vegas')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdLAS\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdLASToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/PortViews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=LAS&Filter2Name=CountryCode&Filter2Operator=contains&Filter2Value=us&PageSize=13",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"PortViews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "LAS"
+						},
+						{
+							"key": "Filter2Name",
+							"value": "CountryCode"
+						},
+						{
+							"key": "Filter2Operator",
+							"value": "contains"
+						},
+						{
+							"key": "Filter2Value",
+							"value": "us"
+						},
+						{
+							"key": "PageSize",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdLASToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdLHRToTenant1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   ",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdLAS\",idvalue);",
+							"",
+							"   ",
+							"  ",
+							"//  if (idexist)  {",
+							"//     postman.setNextRequest(\"GetPortIdMIA\");  ",
+							"//     } ",
+							"    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"$id\": \"1\",\n  \"InActive\": false,\n  \"Notes\": null,\n  \"CountryId\": null,\n  \"IsAir\": false,\n  \"IsOcean\": true,\n  \"IsInland\": true,\n  \"AddedManually\": false,\n  \"StateId\": null,\n  \"CountryEC\": false,\n  \"InUse\": false,\n  \"RecentlyAdded\": null,\n  \"StateName\": null\n}"
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/CommonDomain/GetPortCopyToCurrentTenant?entityId={{PortIdLAS}}",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"CommonDomain",
+						"GetPortCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{PortIdLAS}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdMIADomestic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdMIADomestic\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"     ",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdMIA\",idvalue);",
+							"     //console.log(jsonData.Result[0].Code);",
+							"   ",
+							"    if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdAirJFK\"); ",
+							"    }",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/PortViews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=MIA&Filter2Name=CountryCode&Filter2Operator=contains&Filter2Value=us&PageSize=22",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"PortViews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "MIA"
+						},
+						{
+							"key": "Filter2Name",
+							"value": "CountryCode"
+						},
+						{
+							"key": "Filter2Operator",
+							"value": "contains"
+						},
+						{
+							"key": "Filter2Value",
+							"value": "us"
+						},
+						{
+							"key": "PageSize",
+							"value": "22"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdMIAFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdMIAFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    // var idvalue = (pm.response.json().Result.Id);",
+							"     var idvalue = (pm.response.json().Result.filter(a => a.EnglishName == 'Miami')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdMIA\",idvalue);",
+							"    ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdMIAToTenant1\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/PortViews/getTenantImportByFilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=MIA&Filter2Name=CountryCode&Filter2Operator=contains&Filter2Value=us&PageSize=13",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"PortViews",
+						"getTenantImportByFilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "MIA"
+						},
+						{
+							"key": "Filter2Name",
+							"value": "CountryCode"
+						},
+						{
+							"key": "Filter2Operator",
+							"value": "contains"
+						},
+						{
+							"key": "Filter2Value",
+							"value": "us"
+						},
+						{
+							"key": "PageSize",
+							"value": "13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPortIdMIAToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetPortIdLHRToTenant1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   ",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"PortIdMIA\",idvalue);",
+							"",
+							"   ",
+							"  ",
+							" if (idexist)  {",
+							"    postman.setNextRequest(\"GetPortIdAirJFK\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/CommonDomain/GetPortCopyToCurrentTenant?entityId={{PortIdMIA}}",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"CommonDomain",
+						"GetPortCopyToCurrentTenant"
+					],
+					"query": [
+						{
+							"key": "entityId",
+							"value": "{{PortIdMIA}}"
 						}
 					]
 				}
