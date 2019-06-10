@@ -4361,6 +4361,7 @@
     <Content Include="WebServices\CommunicationLogsAzureService.asmx" />
     <Content Include="WebServices\ConvertDataProgramWebService.asmx" />
     <Content Include="WebServices\DashBoardWebService.asmx" />
+    <Content Include="WebServices\DocOutBuildWebService.asmx" />
     <Content Include="WebServices\DownloadTransferFileWebService.asmx" />
     <Content Include="WebServices\ExcelExportService.asmx" />
     <Content Include="WebServices\ExportDocument.asmx" />
@@ -6055,6 +6056,10 @@
     </Compile>
     <Compile Include="WebServices\DashBoardWebService.asmx.cs">
       <DependentUpon>DashBoardWebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\DocOutBuildWebService.asmx.cs">
+      <DependentUpon>DocOutBuildWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\DownloadTransferFileWebService.asmx.cs">
