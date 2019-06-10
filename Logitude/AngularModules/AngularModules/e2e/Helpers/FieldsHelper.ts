@@ -7,7 +7,7 @@ export class FieldsHelper {
 
   WaitByCssStringAndClick(className: string, Text: string) {
     var EC = protractor.ExpectedConditions;
-    browser.wait(EC.elementToBeClickable(element(by.cssContainingText(className, Text))), 100000000).then(a => {
+    browser.wait(EC.elementToBeClickable(element(by.cssContainingText(className, Text))), 100000).then(a => {
       var Button = element(by.cssContainingText(className, Text)).click();
 
     });
@@ -46,7 +46,7 @@ export class FieldsHelper {
 
   WaitWindowClosed() {
     var EC = protractor.ExpectedConditions;
-    browser.wait(EC.invisibilityOf(element(by.css(".LogitudeWindow"))), 100000000).then(a => {
+    browser.wait(EC.invisibilityOf(element(by.css(".LogitudeWindow"))), 100000).then(a => {
     });
   }
 
@@ -61,7 +61,7 @@ export class FieldsHelper {
 
   WaitByIdAndFill(Id: string, Value: string) {
     var EC = protractor.ExpectedConditions;
-    browser.wait(EC.elementToBeClickable(element(by.id(Id))), 1000000).then(a => {
+    browser.wait(EC.elementToBeClickable(element(by.id(Id))), 100000).then(a => {
       var input = element(by.id(Id));
       input.clear();
       browser.wait(EC.textToBePresentInElementValue(element(by.id(Id)), ''), 100000).then(a => { });
@@ -72,7 +72,7 @@ export class FieldsHelper {
 
   WaitByCssAndClick_SelectItemFromList(className: string, index: number) {
     var EC = protractor.ExpectedConditions;
-    browser.wait(EC.visibilityOf(element(by.css(className))), 100000000).then(a => {
+    browser.wait(EC.visibilityOf(element(by.css(className))), 100000).then(a => {
       var shipment = element(by.css(className)).all(by.tagName('li'));
       shipment.get(index).click();
     });
@@ -80,7 +80,7 @@ export class FieldsHelper {
 
   WaitByCssAndClick_FromTagInsideList(className: string, index: number) {// the item exists in a tag inside li
     var EC = protractor.ExpectedConditions;
-    browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000000).then(a => {
+    browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000).then(a => {
       element.all(by.css(className)).get(index).click();
     });
   }
@@ -94,7 +94,7 @@ export class FieldsHelper {
 
   public ButtonClick(BtnId: string) {
     var EC = protractor.ExpectedConditions;
-    browser.wait(EC.elementToBeClickable(element(by.id(BtnId))), 100000000).then(a => {
+    browser.wait(EC.elementToBeClickable(element(by.id(BtnId))), 100000).then(a => {
       var button = element(by.id(BtnId)).click();
       console.log("Button Clicked");
     });
@@ -102,10 +102,10 @@ export class FieldsHelper {
   WaitByNameAndFill = (name: string, value: string) => {
 
     var EC = protractor.ExpectedConditions;
-    browser.wait(EC.elementToBeClickable(element(by.name(name))), 100000000).then(() => {
+    browser.wait(EC.elementToBeClickable(element(by.name(name))), 100000).then(() => {
         var input = element(by.name(name));
         input.clear();
-        browser.wait(EC.textToBePresentInElementValue(element(by.name(name)), ''), 10000000).then(a => { });
+        browser.wait(EC.textToBePresentInElementValue(element(by.name(name)), ''), 100000).then(a => { });
         input.clear();
         input.sendKeys(value);
   
@@ -117,14 +117,14 @@ export class FieldsHelper {
   
   waitByCss(className: string) {
     var EC = protractor.ExpectedConditions;
-    browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000000).then(a => {
+    browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000).then(a => {
       return true;
     });
   }
 
   public waitElementByIDPresence(id: string) {
     var EC = protractor.ExpectedConditions;
-    browser.wait(EC.presenceOf(element(by.id(id))), 100000000).then(a => {
+    browser.wait(EC.presenceOf(element(by.id(id))), 100000).then(a => {
       expect(element(by.id(id)).isPresent()).toBeTruthy();
     });
   }
