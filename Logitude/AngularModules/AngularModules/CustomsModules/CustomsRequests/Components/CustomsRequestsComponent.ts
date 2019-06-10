@@ -37,7 +37,7 @@ export class CustomsRequestsComponent implements OnInit {
     //private CustomsRequestMenuItems: CustomsMenuItem[];
     private _CustomsRequestMenuService: CustomsRequestMenuService;
     public ItemsSource: CustomsMenuItem[];
-
+    public IsFromWindow:boolean=false;
     constructor(private _entityResourceService: EntityResourceService) {
     }
 
@@ -79,7 +79,13 @@ export class CustomsRequestsComponent implements OnInit {
             switch (item.ScreenName) {
                 case 'Vendors':
                 case 'Clients': { // Query 
+                    if(this.IsFromWindow){
+
+                        this.OpenListComponentFromTheWindow(item.objectTableName);
+                    }
+                    else{
                     this.OpenListQueryByObjectTable(item.objectTableName); // Abdullah: fill objectTableName when u build the item
+                    }
                     break;
                 }
                 case 'SearchVendor': {
@@ -215,6 +221,34 @@ export class CustomsRequestsComponent implements OnInit {
                 });
         });
     }
+    OpenListComponentFromTheWindow(objectTableName: string){
+        var listArgs = new ListComponentArgs();
+        var objectTablePM = window.ObjectTables.filter(d => d.Name == objectTableName)[0];
+        var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === objectTablePM.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        var SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0))[0];
+        listArgs.QueryCode = SelectedQuery.Code;
+        listArgs.ObjectTableName = objectTablePM.Name;
 
+        listArgs.BackButtonTitle = TextCodeTranslator.Translate("Customs.General.O.Customs");
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, SessionLocator.Tenant).subscribe(response => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.FinishedLoading());
+                });
+        });
+    }
+    SetWindowArgs(args: any) {
+        if (args != null) {
+            this.IsFromWindow=true;
+            console.log(this.IsFromWindow+"i am from the window");
+        }
+            
+    }
+
+    FinishedLoading(){
+        console.log("hola from the buttom of my heart");
+    }
    
 }

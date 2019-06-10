@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     {
                         VendorId = a.VendorId,
                         CustomerId = a.CustomerId,
-                        //ModificationsTypeCode = a.ModificationsTypeCode,
+                        ModificationsTypeCode = a.ModificationsTypeCode,
                         CommisionPercentage = a.CommisionPercentage,
 
                     }).ToList();

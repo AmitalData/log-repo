@@ -291,6 +291,7 @@
     <Compile Include="EntityLists\Generated\PendingByKeywordList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PendingErrorPlaceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PointerLevelList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ProceduralFaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RefundCustomerActivityTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureFactorTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SeizureMethodTypeList.Generated.cs" />
@@ -393,6 +394,7 @@
     <Compile Include="EntityPOCOs\PendingByKeyword.cs" />
     <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
     <Compile Include="EntityPOCOs\PointerLevel.cs" />
+    <Compile Include="EntityPOCOs\ProceduralFault.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
     <Compile Include="EntityPOCOs\SeizureFactorType.cs" />
     <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
@@ -1419,7 +1421,6 @@
     <Compile Include="EntityLists\Generated\ProceduralFaultInProcessTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultInSourceTypeListQueryService.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultsConnEntityList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ProceduralFaultsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProcessingReasonList.Generated.cs" />
@@ -1899,7 +1900,6 @@
     <Compile Include="EntityPOCOs\PhysicalCheckStatusMessage.cs" />
     <Compile Include="EntityPOCOs\ProceduralFaultInProcessType.cs" />
     <Compile Include="EntityPOCOs\ProceduralFaultInSourceType.cs" />
-    <Compile Include="EntityPOCOs\ProceduralFaults.cs" />
     <Compile Include="EntityPOCOs\ProceduralFaultsConnEntity.cs" />
     <Compile Include="EntityPOCOs\ProceduralFaultDeclarationView.cs" />
     <Compile Include="EntityPOCOs\ProceduralFaultStatus.cs" />

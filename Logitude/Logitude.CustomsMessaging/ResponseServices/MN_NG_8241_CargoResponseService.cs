@@ -221,6 +221,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     customResponse.Cargo.CargoAdditionalData = customResponse.Cargo.CargoAdditionalData ?? new MN_NG_8241_Cargo_MessageCargoCargoAdditionalData[] { new MN_NG_8241_Cargo_MessageCargoCargoAdditionalData() };
 
                     Boolean _IsRunOver = false;
+                    Boolean _IsChanged = false;
                     if (_MyDeclarationPM.Consignments != null && _MyDeclarationPM.Consignments.Count() > 0)
                     {
                         string defValue = GetDefault("ISRAEL", "CGG_MAN_RUNOVR", "NON", "NON", _MyDeclarationPM.Tenant);
@@ -228,25 +229,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             _IsRunOver = true;
                         }
-                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].UnloadPortCode) || _IsRunOver)
+                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].UnloadPortCode) || _IsRunOver) && _MyDeclarationPM.Consignments[0].UnloadPortCode != customResponse.Cargo.CargoAdditionalData.First().unloadingLocationID)
                         {
                             _MyDeclarationPM.Consignments[0].UnloadPortCode = customResponse.Cargo.CargoAdditionalData.First().unloadingLocationID;
-                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update; 
+                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            if(!_IsChanged)_IsChanged = true;
                         }
-                        if (String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].StorageSiteCode) || _IsRunOver)
+                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].StorageSiteCode) || _IsRunOver) && _MyDeclarationPM.Consignments[0].StorageSiteCode != customResponse.Cargo.CargoAdditionalData.First().acceptedArrivalSiteID)
                         {
                             _MyDeclarationPM.Consignments[0].StorageSiteCode = customResponse.Cargo.CargoAdditionalData.First().acceptedArrivalSiteID;
-                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update; 
+                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            if (!_IsChanged) _IsChanged = true;
                         }
-                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].LoadingPortCode) || _IsRunOver) && !String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite))
+                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].LoadingPortCode) || _IsRunOver) && (!String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite) && _MyDeclarationPM.Consignments[0].LoadingPortCode != customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0, 5)))
                         {
                             _MyDeclarationPM.Consignments[0].LoadingPortCode = customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0,5);
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            if (!_IsChanged) _IsChanged = true;
                         }
-                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].OriginCountryCode) || _IsRunOver) && !String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite))
+                        if ((String.IsNullOrWhiteSpace(_MyDeclarationPM.Consignments[0].OriginCountryCode) || _IsRunOver) && (!String.IsNullOrWhiteSpace(customResponse.Cargo.CargoAdditionalData.First().LoadingSite) && _MyDeclarationPM.Consignments[0].OriginCountryCode != customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0, 2)))
                         {
                             _MyDeclarationPM.Consignments[0].OriginCountryCode = customResponse.Cargo.CargoAdditionalData.First().LoadingSite.Substring(0, 2);
                             _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            if (!_IsChanged) _IsChanged = true;
                         }
                         //If there are NO packages OR If there is one DUMMY package (without wight, quantity and pack type)
                         if (_MyDeclarationPM.Consignments[0].ConsignmentPackages == null || _MyDeclarationPM.Consignments[0].ConsignmentPackages.Count() == 0 ||
@@ -272,7 +277,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             {
                                 _MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(consignmentPackageInsert); 
                             }
-                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update; 
+                            _MyDeclarationPM.Consignments[0].ChangeSetOp = ChangeSetOperation.Update;
+                            if (!_IsChanged) _IsChanged = true;
                         }
                     }
                     if (_MyDeclarationPM.Consignments[0].ChangeSetOp == ChangeSetOperation.None)
@@ -284,6 +290,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         myDeclarationUpdateService.SuppressNewConcurrencyGUID = false;
                     }
                     _MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+                    if (_IsChanged)this._MyDeclarationPM.MarkAsChanged = true;
                     //_MyDeclarationPM.CurrentContextTag = GetCFIPACKSXML(customResponse);
                     var myCFIPACKS = GetCFIPACKSXML(customResponse);
                     var myFileAdditionalData = GetFileAdditionalDataXML(customResponse);

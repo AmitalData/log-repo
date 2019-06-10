@@ -321,7 +321,7 @@ export class MaintenanceComponent {
                 item.Icon = "List"
                 item.Code = "WHKS";
                 item.ObjectTableName = "WebhookKeys";
-                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0].Id
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0]?window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0].Id:null;
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
             if (FeatureLocator.HasFeaturePermession("APILogs", "APILogs")) {
