@@ -216,6 +216,7 @@
     <Content Include="2018.R2\06 - 2018\Day 25 [Samar] Add new event type set as potential.sql" />
     <Content Include="DataViews And Procedures\DataViews\MessagingStockDataView.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateAllTenantsCustomersActualData.sql" />
+    <Content Include="DataViews And Procedures\Stored Procedures\UpdateConstituentShipment.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateCustomerActualData.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateTenantCustomersActualData.sql" />
     <Content Include="Main Branch\2018\02 - 2018\Day 04 [Khalid] Computing Partner Code Adjustment.sql" />

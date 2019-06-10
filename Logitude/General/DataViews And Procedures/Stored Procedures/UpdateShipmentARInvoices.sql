@@ -5,12 +5,16 @@ GO
 
 Create PROCEDURE [dbo].[usp_UpdateShipmentARInvoices]
 (
-	@ShipmentId varchar(15)
+	@ShipmentId varchar(15),
+	@ConsolidationNumber varchar(50)
 )
 AS
 
 declare @InvoiceNumber as varchar(50)
 declare @ShipmentARInvoices as varchar(1000)
+
+if (@ConsolidationNumber is not null)
+set @ShipmentARInvoices = @ConsolidationNumber
 
 BEGIN
 
