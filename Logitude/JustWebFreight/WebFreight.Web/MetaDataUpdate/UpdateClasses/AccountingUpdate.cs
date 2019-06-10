@@ -1225,6 +1225,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
             #endregion
             #endregion
+            #region MyRegion1000
+
+
+            Feature GEN1000FeatureMenu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GEN1000MENU",
+                ObjectTableId = gLAccountObjectTable.Id, Tenant = tenant, NameTextCodeCode = "YearTransfer.Features.GEN1000MENU", NameTextCodeDefaultText = "Generate a vendor file for the system 1000", FeatureTypeCode = "MENU", FullLocalDefaultText = "הפקת קובץ ספקים למערכת 1000", Packagable = true }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+
+
+            Feature Receiving1000FeatureMenu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails()
+            {
+                Code = "RECV1000MENU",
+                ObjectTableId = gLAccountObjectTable.Id,
+                Tenant = tenant,
+                NameTextCodeCode = "YearTransfer.Features.Recv1000MENU",
+                NameTextCodeDefaultText = "Receiving file withholding tax system 1000",
+                FeatureTypeCode = "MENU",
+                FullLocalDefaultText = "קליטת קובץ ניכוי מס מערכת 1000",
+                Packagable = true
+            }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            #endregion
 
             textCodeRep.SubmitChanges();
             FeaturesRepository.SubmitChanges();
