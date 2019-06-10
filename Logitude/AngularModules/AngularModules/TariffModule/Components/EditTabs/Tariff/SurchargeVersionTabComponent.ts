@@ -565,7 +565,11 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
             errors.push("Invalid Tariff Lines");
         }
-        
+
+        if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+            errors.push("Approving past version is not allowed, please update the dates");
+        }
+
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
         if (errors.length == 0) {

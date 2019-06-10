@@ -430,6 +430,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
             errors.push("Invalid Tariff Lines");
         }
+
+        if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+            errors.push("Approving past version is not allowed, please update the dates");
+        }
         
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
@@ -445,7 +449,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             }
         }
     }
-
 
     private DoApprove() {
         this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
