@@ -312,6 +312,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }
+        this.originalItemSource.InsertCollection(this.connectedItems.Collection);
     }
 
 
@@ -634,7 +635,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
             }
         }
-
+        this.originalItemSource.InsertCollection(this.connectedItems.Collection);
         if (this.SelectedItemsCount > 0) {
             this.IsVisible = true;
         }
@@ -865,6 +866,51 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     {
         this.confirmationTypeCode = value;
     }
+    //this.connectedItems
+    originalItemSource: ObservableCollection = new ObservableCollection([]);
+    ItemsSource: ObservableCollection = new ObservableCollection([]);
+    Search(text: string) {
+        var itemsSource: any = this.originalItemSource;
+        var itemSourceByItemPrice: any = this.originalItemSource;
+        if (AppTool.IsNullOrEmpty(text)) {
+            this.LoadConnectedItems(null);
+        }
+        else {
+            itemsSource = itemsSource.Collection.filter(f => f.ClassificationCode != null || f.ItemCode != null);
+            itemSourceByItemPrice = itemSourceByItemPrice.Collection.filter(f => f.ItemPrice != null);
+            var TempItemSource: ObservableCollection = new ObservableCollection([]);
+
+            TempItemSource = itemsSource.filter(f => (!AppTool.IsNullOrEmpty(f.ClassificationCode) ? f.ClassificationCode.toUpperCase().includes(text.toUpperCase()) : null) || (!AppTool.IsNullOrEmpty(f.ItemCode) ? f.ItemCode.toUpperCase().includes(text.toUpperCase()) : null));
+            this.ItemsSource.InsertCollection(TempItemSource.Collection);
+            if (itemSourceByItemPrice) {
+                itemSourceByItemPrice = this.originalItemSource.Collection.filter(f => f.ItemPrice == (text));
+                if (itemSourceByItemPrice.length > 0) {
+                    if (this.ItemsSource.Length > 0) {
+                        for (let item of itemSourceByItemPrice) {
+                            var exist = TempItemSource.Collection.filter(d => d.LineNumber == item.LineNumber)[0];
+                            if (!exist) {
+                                TempItemSource.Collection.push(item);
+                            }
+
+                        } this.ItemsSource.InsertCollection(TempItemSource.Collection);
+                    }
+                    else {
+                        this.ItemsSource.InsertCollection(itemSourceByItemPrice);
+                    }
+                }
+            }
+            this.connectedItems.InsertCollection(this.ItemsSource.Collection);
+
+        }
+        if (!AppTool.IsNullOrEmpty(text)) {
+            this.SearchFilterChangedEvent = SessionLocator.CurrentSession.SearchFilterChangedEvent.emit({ count: this.ItemsSource.Length });
+        }
+        else {
+            this.SearchFilterChangedEvent = SessionLocator.CurrentSession.SearchFilterChangedEvent.emit({ count: null });
+        }
+    }
+    public SearchFilterChangedEvent: any;
+
 }
 
 export class CertificateTicketListItem extends BaseComponent {
