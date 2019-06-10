@@ -647,7 +647,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.Surcharge9Price = item.Surcharge9Price;
             tariffLine.Surcharge10Price = item.Surcharge10Price;
             tariffLine.Index = item.Index;
-
+            tariffLine.Notes = item.Notes;
             copiedVersion.AddTariffLine(tariffLine);
         });
 

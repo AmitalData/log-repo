@@ -512,6 +512,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.Step7Price = item.Step7Price;
             tariffLine.Step8Price = item.Step8Price;
             tariffLine.Index = item.Index;
+            tariffLine.Notes = item.Notes;
             copiedVersion.AddTariffLine(tariffLine);
         });
 
