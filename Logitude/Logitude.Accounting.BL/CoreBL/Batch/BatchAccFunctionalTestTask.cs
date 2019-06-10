@@ -2,6 +2,7 @@
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
@@ -49,9 +50,16 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             XmlSerializer serializer = new XmlSerializer(typeof(BatchFunctionalTestTaskArg));
             var parameterArgs = serializer.Deserialize(stringReader) as BatchFunctionalTestTaskArg;
 
-            string  CommunicationsData =GetCommunicationsData(parameterArgs.Tenant, parameterArgs.CommunicationLogId);
+
+            string CommunicationsData =GetCommunicationsData(parameterArgs.Tenant, parameterArgs.CommunicationLogId);
             var parameterArgsFromCommunicationsData = serializer.Deserialize(new System.IO.StringReader(CommunicationsData)) as BatchFunctionalTestTaskArg;
-            
+
+            var tenantQuery = new TenantQuery(parameterArgs.Tenant);
+            TenantPM tenant = tenantQuery.GetTenantFromDB(parameterArgs.Tenant);
+            if (!tenant.IsTestTenant)
+            {
+                throw new Exception("!tenant.IsTestTenant");
+            }
             try
             {
                 AccFunctionalState accFunctionalState;
