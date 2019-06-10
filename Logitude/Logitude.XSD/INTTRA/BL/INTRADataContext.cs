@@ -540,6 +540,16 @@ namespace Logitude.XSD.INTTRA.BL
 
                     if (item.IsDangerous)
                     {
+                        if (item.IMDGCode != null)
+                        {
+                            item.IMDGCode = item.IMDGCode.Trim();
+                        }
+
+                        if (item.FlashPoint != null)
+                        {
+                            item.FlashPoint = item.FlashPoint.Trim();
+                        }
+
                         if (string.IsNullOrEmpty(item.IMDGCode))
                         {
                             string msg = TranslateTextsClass.Translate("ShipmentPackage.F.IMDGCode", this.Tenant) + " is required";
