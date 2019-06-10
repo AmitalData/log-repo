@@ -434,6 +434,7 @@
     <Compile Include="InvoiceModel\EntityQueries\ARInvoiceStocksStatusQuery.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARInvoiceStockMapping.cs" />
     <Compile Include="InvoiceModel\Tools\EntityService\ARInvoiceStockService.cs" />
+    <Compile Include="InvoiceModel\Tools\EntityService\ConsolidationService.cs" />
     <Compile Include="InvoiceModel\Tools\TraceEvents\ARInvoiceStockTracing.cs" />
     <Compile Include="InvoiceModel\Tools\Validating\ARInvoiceStockValidating.cs" />
     <Compile Include="Helpers\ShipmentComputedFieldsHelper.cs" />
