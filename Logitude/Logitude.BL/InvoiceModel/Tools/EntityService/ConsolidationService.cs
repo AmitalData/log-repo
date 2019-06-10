@@ -1,5 +1,10 @@
 ﻿using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.QueueService;
+using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
@@ -8,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Xml.Serialization;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
@@ -41,7 +47,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.RunBatchService(items, entityPM.InvoiceNumber);
         }
-
         public void OnVoid(List<ARInvoice> allConnectedInvoices)
         {
             List<ConsolidationServiceArgsItem> items
@@ -54,9 +59,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.RunBatchService(items);
         }
-
-
-
         public void OnCreatingAutoCredit(List<ARInvoice> allConnectedInvoices)
         {
             List<ConsolidationServiceArgsItem> items
@@ -74,63 +76,87 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (allConstituents.Count > 0)
             {
-                foreach (var item in allConstituents)
+                string url = HttpContext.Current.Request.Url.AbsoluteUri;
+
+                bool isLocalHost = false;
+                if(url != null)
                 {
-                    UpdateShipmentProfitClass.UpdateConstituentShipment(entityPM.Id, item.ConstituentId, tenant);
+                    if (url.ToLower().Contains("localhost"))
+                    {
+                        isLocalHost = true;
+                    }
                 }
 
-                var allShipmentsIds = (from d in allConstituents group d by d.ShipmentId into g select g.Key).ToList();
-
-                foreach (var iShipmentId in allShipmentsIds)
+                if (isLocalHost)
                 {
-                    UpdateShipmentProfitClass.UpdateShipmentARInvoices(iShipmentId, tenant, ConsolidationNumber);
-                    UpdateShipmentProfitClass.UpdateProfit(iShipmentId, tenant);
+                    foreach (ConsolidationServiceArgsItem item in allConstituents)
+                    {
+                        UpdateShipmentProfitClass.UpdateConstituentShipment(entityPM.Id, item.ConstituentId, tenant);
+                    }
+
+                    List<string> allShipmentsIds = (from d in allConstituents group d by d.ShipmentId into g select g.Key).ToList();
+
+                    foreach (string iShipmentId in allShipmentsIds)
+                    {
+                        UpdateShipmentProfitClass.UpdateShipmentARInvoices(iShipmentId, tenant, ConsolidationNumber);
+                        UpdateShipmentProfitClass.UpdateProfit(iShipmentId, tenant);
+                    }
+                }
+
+                else
+                {
+                    ConsolidationServiceArgs args = new ConsolidationServiceArgs()
+                    {
+                        Tenant = tenant,
+                        ConsolidationId = this.entityPM.Id,
+                        ConsolidationNumber = ConsolidationNumber,
+                        Items = allConstituents,
+                    };
+
+                    var stringwriter = new System.IO.StringWriter();
+                    var serializer = new XmlSerializer(typeof(ConsolidationServiceArgs));
+                    serializer.Serialize(stringwriter, args);
+                    string xmlParameters = stringwriter.ToString();
+
+                    BatchTaskExecutionRepository iRepository = new BatchTaskExecutionRepository(tenant);
+
+                    BatchTaskExecution iBatchTaskExecution = new BatchTaskExecution()
+                    {
+                        Id = IdCounter.GetNumber("BatchTaskExecution", tenant),
+                        Subject = "Update Consolidation Shipments",
+                        Tenant = tenant,
+                        ClassName = "WebFreight.Web.Helpers.APIHelpers.ConsolidationServiceBatch,WebFreight.Web",
+
+                        CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                        CreatedByUserId = this.entityPM.UpdatedByUserId,
+                        PrametersXml = xmlParameters,
+                        StatusCode = "C",
+                    };
+
+                    iRepository.Add(iBatchTaskExecution);
+                    iRepository.SubmitChanges();
+
+                    IQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+                    queueservice.Send(new Dictionary<string, string>()
+                    {
+                        { "BatchTaskExecutionId", iBatchTaskExecution.Id },
+                        { "Tenant", tenant.ToString() }
+                    });
+
+                    this.entityPM.BatchTaskExecutionId = iBatchTaskExecution.Id;
                 }
             }
         }
-
-        private void RunBatchService()
-        {
-            ConsolidationServiceArgs args = new ConsolidationServiceArgs()
-            {
-                //LoggedUserEmail = entityPM,
-                //Tenant = tenant
-            };
-
-            var stringwriter = new System.IO.StringWriter();
-            var serializer = new XmlSerializer(typeof(ConsolidationServiceArgs));
-            serializer.Serialize(stringwriter, args);
-            string xmlParameters = stringwriter.ToString();
-
-            //BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
-            //{
-            //    Subject = "Generate Tariffs",
-            //    Tenant = tenant,
-            //    ChangeSetOp = ChangeSetOperation.Insert,
-            //    ClassName = "WebFreight.Web.Helpers.APIHelpers.GenerateTariffsHelper,WebFreight.Web",
-            //    CreateDate = DateTime.Now,
-            //    PrametersXml = xmlParameters,
-            //    StatusCode = "C",
-            //};
-
-            //IInfrastructureContext MyContext = InfrastructureContext.GetContext(tenant);
-            //BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-            //bteUpdateService.Update(taskExe, true);
-
-            //IQueueService queueservice = new DbQueueService();
-            //queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
-            //queueservice.Send(new Dictionary<string, string>()
-            //    {
-            //        { "BatchTaskExecutionId", taskExe.Id },
-            //        { "Tenant", tenant.ToString() }
-            //    });
-        }
     }
+
     public class ConsolidationServiceArgs
     {
-
+        public int Tenant { get; set; }
+        public string ConsolidationId { get; set; }
+        public string ConsolidationNumber { get; set; }
+        public List<ConsolidationServiceArgsItem> Items { get; set; }
     }
-
     public class ConsolidationServiceArgsItem
     {
         public string ShipmentId { get; set; }

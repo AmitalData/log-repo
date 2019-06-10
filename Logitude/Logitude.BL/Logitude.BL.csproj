@@ -2558,6 +2558,10 @@
       <Project>{89132340-6f21-4ce1-8de4-1ca45e2cd9f3}</Project>
       <Name>Logitude.Customs.Def</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{B02E4D92-9226-4F3F-990F-66C7F66E9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>
