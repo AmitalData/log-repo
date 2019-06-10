@@ -567,7 +567,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                     if (!string.IsNullOrEmpty(MasterData.Transshipment1VesselId))
                     {
-                        string vessel = Vessels.ContainsKey(MasterData.Transshipment1AdditionalMAWBOBLBL) ? Vessels[MasterData.Transshipment1AdditionalMAWBOBLBL] != null ? Vessels[MasterData.Transshipment1AdditionalMAWBOBLBL] : null : null;
+                        string vessel = Vessels.ContainsKey(MasterData.Transshipment1VesselId) ? Vessels[MasterData.Transshipment1VesselId] != null ? Vessels[MasterData.Transshipment1VesselId] : null : null;
 
                         Shipment.Transshipment1Vessel = vessel;
                     }
@@ -592,77 +592,79 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         Shipment.Transshipment1ATA = MasterData.Transshipment1ATA;
                     }
 
-
-                    if (myLastDelivery.PickUpDeliveryFromTypeCode == "PART")
+                    if (myLastDelivery != null)
                     {
-                        if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
+                        if (myLastDelivery.PickUpDeliveryFromTypeCode == "PART")
                         {
-                            Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.Id == myLastDelivery.ToPartnerCardId).FirstOrDefault();
-                            if (myPartnerAddress != null)
+                            if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
                             {
-                                Shipment.DeliveryToPatnerAddress = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                                Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.Id == myLastDelivery.ToPartnerCardId).FirstOrDefault();
+                                if (myPartnerAddress != null)
+                                {
+                                    Shipment.DeliveryToPatnerAddress = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                                }
+
+                                Card card = cardRepository.GetSingleCardByCode(myLastDelivery.ToPartnerCardId, tenant, true);
+
+                                if (card != null)
+                                {
+                                    Shipment.DeliveryToPartner = card.EnglishName;
+                                }
                             }
 
-                            Card card = cardRepository.GetSingleCardByCode(myLastDelivery.ToPartnerCardId, tenant, true);
 
-                            if (card != null)
+
+                            if (!string.IsNullOrEmpty(myLastDelivery.FromPartnerCardId))
                             {
-                                Shipment.DeliveryToPartner = card.EnglishName;
+
+                                Card card = cardRepository.GetSingleCardByCode(myLastDelivery.FromPartnerCardId, tenant, true);
+
+                                if (card != null)
+                                {
+                                    Shipment.DeliveryFromPartner = card.EnglishName;
+                                }
                             }
                         }
 
 
-
-                        if (!string.IsNullOrEmpty(myLastDelivery.FromPartnerCardId))
+                        if (myLastDelivery.PickUpDeliveryToTypeCode == "PORT")
                         {
-
-                            Card card = cardRepository.GetSingleCardByCode(myLastDelivery.FromPartnerCardId, tenant, true);
-
-                            if (card != null)
+                            if (!string.IsNullOrEmpty(myLastDelivery.FromPortId))
                             {
-                                Shipment.DeliveryFromPartner = card.EnglishName;
+                                PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.FromPortId, true);
+                                if (myPort != null)
+                                {
+                                    Shipment.DeliveryFromPort = myPort.StateName + " , " + myPort.CountryName;
+                                }
                             }
                         }
-                    }
 
 
-                    if (myLastDelivery.PickUpDeliveryToTypeCode == "PORT")
-                    {
-                        if (!string.IsNullOrEmpty(myLastDelivery.FromPortId))
+                        if (!string.IsNullOrEmpty(myLastDelivery.TransportModeCode))
                         {
-                            PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.FromPortId, true);
-                            if (myPort != null)
-                            {
-                                Shipment.DeliveryFromPort = myPort.StateName + " , " + myPort.CountryName;
-                            }
+                            Shipment.DeliveryTransportMode = transportmodes.ContainsKey(myLastDelivery.TransportModeCode) ? transportmodes[myLastDelivery.TransportModeCode] != null ? transportmodes[myLastDelivery.TransportModeCode] : null : null;
                         }
-                    }
 
 
-                    if (!string.IsNullOrEmpty(myLastDelivery.TransportModeCode))
-                    {
-                        Shipment.DeliveryTransportMode = transportmodes.ContainsKey(myLastDelivery.TransportModeCode) ? transportmodes[myLastDelivery.TransportModeCode] != null ? transportmodes[myLastDelivery.TransportModeCode] : null : null;
-                    }
+                        if (myLastDelivery.ETD != null)
+                        {
+                            Shipment.DeliveryExpectedDeparture = myLastDelivery.ETD;
+                        }
 
+                        if (myLastDelivery.ETA != null)
+                        {
+                            Shipment.DeliveryExpectedArrival = myLastDelivery.ETA;
+                        }
 
-                    if (myLastDelivery.ETD != null)
-                    {
-                        Shipment.DeliveryExpectedDeparture = myLastDelivery.ETD;
-                    }
+                        if (myLastDelivery.ATA != null)
+                        {
+                            Shipment.DeliveryActualArrival = myLastDelivery.ATA;
+                        }
 
-                    if (myLastDelivery.ETA != null)
-                    {
-                        Shipment.DeliveryExpectedArrival = myLastDelivery.ETA;
-                    }
-
-                    if (myLastDelivery.ATA != null)
-                    {
-                        Shipment.DeliveryActualArrival = myLastDelivery.ATA;
-                    }
-
-                    if (myLastDelivery.ATD != null)
-                    {
-                        Shipment.DeliveryActualDeparture = myLastDelivery.ATD;
+                        if (myLastDelivery.ATD != null)
+                        {
+                            Shipment.DeliveryActualDeparture = myLastDelivery.ATD;
+                        }
                     }
                     
 
