@@ -126,7 +126,7 @@
                                             <div class="QueriesSection">
                                                 <div>{{'Accounting.General.O.APInvoices' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button class="Button" (click)="NewGeneralAPInvoice()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button id="{{'NewAPInvoice' | IdGeneratorPipe}}" class="Button" (click)="NewGeneralAPInvoice()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <!--<div>
                                                     <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Draft General APInvoices')">{{'APInvoice.Q.DraftGeneralInvoices' | TextCodeTranslationPipe}}</p>
@@ -146,7 +146,7 @@
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{'Accounting.General.O.APPayments' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button class="Button" (click)="NewAPPaymentMethod()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button id="{{'NewAPPayment' | IdGeneratorPipe}}" class="Button" (click)="NewAPPaymentMethod()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>
