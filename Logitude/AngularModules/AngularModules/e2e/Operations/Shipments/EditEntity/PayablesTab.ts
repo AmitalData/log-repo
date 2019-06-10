@@ -15,24 +15,22 @@ export class PayablesTabComponent {
     public PayablesTab(shipperRef1: string) {
 
         this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
-        // this.Helper.WaitByIdAndClick('ATDSPayable-payable');
+        this.Helper.ItemsVisibility('ATDSPayable-payable');
         this.Helper.WaitByIdAndClick('ATDSPayable-payable');//Auto-display 
-     
 
-        this.Helper.WaitByCssButtonClick('RedButton','Yes');
+        // this.Helper.WaitByCssButtonClick('RedButton','Yes');
         //var InvoiceAmount: any;
         this.amount1 = this.AddPayables('Air Frei', '10', '10');
-        //this.amount2 = this.AddPayables('Order', '10', '20');
+        this.amount2 = this.AddPayables('Order', '10', '20');
         //InvoiceAmount = this.amount1 + this.amount2
-        this.AddAPInvoice(shipperRef1);
+        // this.AddAPInvoice(shipperRef1);
     }
 
     AddPayables(ChargeType: string, quantity: any, unitPrice: any) {
 
         var amount: any = 0;
-        this.Helper.WaitByIdAndClick('Add');
+        this.Helper.WaitByIdAndClick('AddPayable');
         
-        //console.log(amount);
         this.Helper.WaitByIdAndFill('ShipmentPayable_ChargesTypeId', ChargeType);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 

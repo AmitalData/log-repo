@@ -6,7 +6,8 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ListComponentArgs } from '../../../../Infrastructure/Args';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
-
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+declare var window: any;
 @Component({
     moduleId: module.id,
     templateUrl: './MiscPageComponent.html',
@@ -18,12 +19,20 @@ export class MiscPageComponent implements AfterViewInit {
     @Output() ReloadUserQueries = new EventEmitter();
     public isRTL: boolean = false;
     public isScreenLoaded: boolean = false;
+    IsYEARTRANSFERVisibile: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("OpenFormatReport").subscribe((response: any) => {
             this._entityResourceService.getEntityResourceByTableName("TaxReport").subscribe((response: any) => {
                 this._entityResourceService.getEntityResourceByTableName("TaxDeductionReport").subscribe((response: any) => {
+
+                    var yearTransFeature = FeatureLocator.HasFeaturePermession("GLAccount", "YEARTRANSFERMENU");
+                    console.log("YEARTRANSFERMENU Feature:" + yearTransFeature);
+                    if (yearTransFeature) {
+                        this.IsYEARTRANSFERVisibile = true;
+                    }
+
          this.isScreenLoaded = true;
          this.CurrentSession.StopBusyIndicator();
                 });
@@ -130,6 +139,8 @@ export class MiscPageComponent implements AfterViewInit {
     }
 
     Generate1000() {
+
+
         this._entityResourceService.getEntityResourceByTableName("GLAccount", 0).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
