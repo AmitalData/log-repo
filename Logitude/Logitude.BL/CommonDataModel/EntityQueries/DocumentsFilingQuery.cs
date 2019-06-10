@@ -2647,13 +2647,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
-        public bool GetIfIsRequestedForEntity(string entityId, int tenant)
+        public bool GetIfIsRequestedForEntity(string entityId, int tenant,DocumentsFilingPM entityPM = null)
         {
 
-
-            var temp = (from a in repository.context.DocumentsFilings.Include("Document")
+            IQueryable<DocumentsFiling> temp = null;
+            if (entityPM != null && entityPM.IsDeleted)
+            {
+                temp = (from a in repository.context.DocumentsFilings.Include("Document")
+                        where a.Tenant == tenant && a.EntityId == entityId && a.IsRequested == true && !a.IsDeleted && a.Id != entityPM.Id
+                        select a);
+            }
+            else
+            {
+                temp = (from a in repository.context.DocumentsFilings.Include("Document")
                         where a.Tenant == tenant && a.EntityId == entityId && a.IsRequested == true && !a.IsDeleted
                         select a);
+            }
+            //var temp = (from a in repository.context.DocumentsFilings.Include("Document")
+            //            where a.Tenant == tenant && a.EntityId == entityId && a.IsRequested == true && !a.IsDeleted
+            //            select a);
 
             if (temp.Count() > 0)
             {
@@ -2665,11 +2677,22 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
         }
-        public int GetRequestedDocCountForEntity(string entityId, int tenant)
+        public int GetRequestedDocCountForEntity(string entityId, int tenant,DocumentsFilingPM entityPM = null)
         {
-            var temp = (from a in repository.context.DocumentsFilings.Include("Document")
-                        where a.Tenant == tenant && a.EntityId == entityId && a.IsRequested == true && !a.IsDeleted
-                        select a);
+            IQueryable<DocumentsFiling> temp = null;
+            if (entityPM != null && entityPM.IsDeleted)
+            {
+                temp = (from a in repository.context.DocumentsFilings.Include("Document")
+                            where a.Tenant == tenant && a.EntityId == entityId && a.IsRequested == true && !a.IsDeleted && a.Id != entityPM.Id
+                            select a);
+            }
+            else
+            {
+                temp = (from a in repository.context.DocumentsFilings.Include("Document")
+                            where a.Tenant == tenant && a.EntityId == entityId && a.IsRequested == true && !a.IsDeleted
+                            select a);
+            }
+            
             return temp.Count();
         }
 
