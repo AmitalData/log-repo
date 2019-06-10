@@ -614,12 +614,12 @@ namespace CommunicationWorkerRole
                                     }
                                     else
                                     {
-                                        queueservice.CompleteAsFailed();
+                                        queueservice.Complete();
                                     }
                                 }
                                 else
                                 {
-                                    queueservice.CompleteAsFailed();
+                                    queueservice.Complete();
                                 }
 
                             }
