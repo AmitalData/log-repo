@@ -252,7 +252,7 @@
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemSource">
 
                                     <!-- ProjectName -->
-                                    <log-column [width]="'150'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.ProjectName' | TextCodeTranslationPipe">
+                                    <log-column [width]="'200'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.ProjectName' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
                                                 {{item.ProjectName}}
@@ -317,7 +317,7 @@
 
 
                                     <!-- SprintId -->
-                                    <log-column [width]="'150'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.SprintId' | TextCodeTranslationPipe">
+                                    <log-column [width]="'200'" [Alignment]="'left'" [header]="'TMEmployeeTime.F.SprintId' | TextCodeTranslationPipe">
                                         <log-cell-template template="let item" #logcelltemplate>
                                             <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsDisplayMode">
                                                 {{item.SprintName}}

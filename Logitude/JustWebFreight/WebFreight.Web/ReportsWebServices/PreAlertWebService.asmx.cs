@@ -173,6 +173,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.ISFDate = shipmentpm.ISFDate;
                 prealertDataProvider.ITNumber = shipmentpm.ITNumber;
                 prealertDataProvider.ITDate = shipmentpm.ITDate;
+                prealertDataProvider.BookingConfirmationNumber = shipmentpm.BookingConfirmationNumber;
 
                 if (shipmentpm.DocumentsClosingDate != null)
                 {
