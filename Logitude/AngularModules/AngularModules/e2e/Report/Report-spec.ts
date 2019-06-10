@@ -32,9 +32,10 @@ describe('Report', () => {
     //browser.driver.sleep(5000);
   });
 
-  
+
   it('Run Report Faield', function () {
     reportGenerator.RunReportFailed('RunReportFailedDiv');
+   
 
   });
 });
