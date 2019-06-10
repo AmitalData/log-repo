@@ -385,6 +385,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.HasErrors = item.HasErrors;
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
+            tariffLine.Notes = item.Notes;
 
             if (this.PriceSteps.indexOf(',') > -1) {
                 var steps: string[] = this.PriceSteps.split(",");
@@ -429,6 +430,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
             errors.push("Invalid Tariff Lines");
         }
+
+        if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+            errors.push("Approving past version is not allowed, please update the dates");
+        }
         
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
@@ -444,7 +449,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             }
         }
     }
-
 
     private DoApprove() {
         this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
@@ -508,6 +512,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.Step7Price = item.Step7Price;
             tariffLine.Step8Price = item.Step8Price;
             tariffLine.Index = item.Index;
+            tariffLine.Notes = item.Notes;
             copiedVersion.AddTariffLine(tariffLine);
         });
 
@@ -1004,6 +1009,15 @@ export class TariffLineData extends BaseComponent {
 
         else {
             return FontTool.Red;
+        }
+    }
+
+    get Notes() {
+        return this.EntityPM.Notes;
+    }
+    set Notes(value: string) {
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
         }
     }
 

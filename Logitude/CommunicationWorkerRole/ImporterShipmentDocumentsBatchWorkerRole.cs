@@ -774,7 +774,14 @@ namespace CommunicationWorkerRole
                                     }
                                     if (response.RetryNumber >= 3)
                                     {
-                                        queueservice.CompleteAsFailed();
+                                        if (ex.Message == "EntityNumber is null Or Document has No file")
+                                        { 
+                                            queueservice.Complete();
+                                        }
+                                        else
+                                        {
+                                            queueservice.CompleteAsFailed();
+                                        }
                                         if (ex.Message != "Customer Has No Access To send Document")
                                         {
                                             if (IsNewLog)

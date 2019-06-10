@@ -65,9 +65,9 @@ namespace WebFreight.Web.DataProviders
         public string PickupToPartnerAddress { get; set; }
         public DateTime? PickupExpectedDeparture { get; set; }
         public DateTime? PickupExpectedArrival { get; set; }
-        public string PickupActualDeparture { get; set; }
+        public DateTime? PickupActualDeparture { get; set; }
         public string PickupToPort { get; set; }
-        public string PickupActualArrival { get; set; }
+        public DateTime? PickupActualArrival { get; set; }
         public string MainCarriageLeg1LoadingPort { get; set; }
         public string MainCarriageLeg1ViaPort1  { get; set; }
         public string MainCarriageLeg1ViaPort2 { get; set; }

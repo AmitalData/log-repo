@@ -133,6 +133,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string LineUniqueKeyText { get; set; }
         [Column("Index")]
 	    public int Index { get; set; }
+        [Column("Notes")]
+	    public string Notes { get; set; }
     }
 }
 	 

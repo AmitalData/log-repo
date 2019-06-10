@@ -162,7 +162,7 @@
                                                                             <p class="QueryLink" (click)="ViewAccountingQuery('ACPD')"> {{'Accounting.General.O.AccountingPeriodsDefinition' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr *ngIf="IsYEARTRANSFERVisibile" >
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" (click)="ViewAccountingQuery('ACYT')"> {{'Accounting.O.YearTransfer' | TextCodeTranslationPipe}} </p>
                                                                         </td>

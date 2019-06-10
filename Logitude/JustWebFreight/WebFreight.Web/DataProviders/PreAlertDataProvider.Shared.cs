@@ -222,6 +222,7 @@ namespace WebFreight.Web.DataProviders
         public DateTime? WarehouseLegEntryDate { get; set; }
         public DateTime? WarehouseLegReleaseDate { get; set; }
         public string ProjectNumber { get; set; }
+        public string BookingConfirmationNumber { get; set; }
     }
 
     public class Packages
