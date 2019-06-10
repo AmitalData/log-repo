@@ -3103,6 +3103,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     LastStatusDateUTC = DateTime.UtcNow,
                     QueueName = "externaltasksqueue" + entityPM.Tenant + 1,
                     Priority = 1,
+                    EntityReference = entityPM.ShipmentNumber
 
                 };
 
