@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnifreightIIG.Common.MessageLib.PhysicalCheck;
+using UnifreightIIG.Common.MessageLib.PhysicalCheck190;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
