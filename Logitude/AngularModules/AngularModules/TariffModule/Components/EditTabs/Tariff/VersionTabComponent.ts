@@ -385,6 +385,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.HasErrors = item.HasErrors;
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
+            tariffLine.Notes = item.Notes;
 
             if (this.PriceSteps.indexOf(',') > -1) {
                 var steps: string[] = this.PriceSteps.split(",");
@@ -1004,6 +1005,15 @@ export class TariffLineData extends BaseComponent {
 
         else {
             return FontTool.Red;
+        }
+    }
+
+    get Notes() {
+        return this.EntityPM.Notes;
+    }
+    set Notes(value: string) {
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
         }
     }
 

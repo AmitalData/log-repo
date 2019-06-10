@@ -483,6 +483,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.HasErrors = item.HasErrors;
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
+            tariffLine.Notes = item.Notes;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
@@ -1151,7 +1152,16 @@ export class TariffLineData extends BaseComponent {
             return FontTool.Red;
         }
     }
-    
+
+    get Notes() {
+        return this.EntityPM.Notes;
+    }
+    set Notes(value: string) {
+        if (this.EntityPM.Notes != value) {
+            this.EntityPM.Notes = value;
+        }
+    }
+
     // Surcharge 1
     get Surcharge1Price() {
         return this.EntityPM.Surcharge1Price;
