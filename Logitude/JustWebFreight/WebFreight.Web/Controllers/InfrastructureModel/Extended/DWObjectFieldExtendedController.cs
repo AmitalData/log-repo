@@ -104,8 +104,17 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 
                         if (MyGroup.FieldsList != null && MyGroup.FieldsList.Count > 0)
                         {
-                            ResolveDWCustomObjectFields(objectFieldPMs , MyGroup , authToken.Tenant);
-                            MyGroups.Add(MyGroup);
+                            if (MyGroup.Key == "Custom Fields")
+                            {
+                                ResolveDWCustomObjectFields(objectFieldPMs, MyGroup, authToken.Tenant);
+
+                                if (MyGroup.FieldsList.Where(d => d.DisplayInQueryBuilder).Any())
+                                {
+                                    MyGroups.Add(MyGroup);
+                                }
+                            }
+                           else MyGroups.Add(MyGroup);
+
 
                         }
 

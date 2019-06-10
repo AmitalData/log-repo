@@ -102,7 +102,19 @@ namespace Logitude.Accounting.BL.Utils
         {
 
             string rv = "";
-            rv = journalLineRecoList.Where(line => line._journalLine.ActionCode == "1").FirstOrDefault()._journalLine.CreditAccountId;
+            JournalLineReco creditLine = journalLineRecoList.Where(line => line._journalLine.ActionCode == "1").FirstOrDefault();
+            if (creditLine != null)
+            {
+                rv = creditLine._journalLine.CreditAccountId;
+            }
+            else
+            {
+                JournalLineReco debitLine = journalLineRecoList.Where(line => line._journalLine.ActionCode == "2").FirstOrDefault();
+                if (debitLine != null)
+                {
+                    rv = debitLine._journalLine.DebitAccountId;
+                }
+            }
             if (!String.IsNullOrWhiteSpace(rv) && journalLineRecoList.Exists(line => line._journalLine.ActionCode == "1" && line._journalLine.CreditAccountId != rv))
             {
                 rv = "";
@@ -125,7 +137,8 @@ namespace Logitude.Accounting.BL.Utils
             {
                 rv = false;
             }
-            else if (!journalLineRecoList.Exists(line => line._journalLine.ActionCode == "1") ||  !journalLineRecoList.Exists(line => line._journalLine.ActionCode == "2"))
+            //           else if (!journalLineRecoList.Exists(line => line._journalLine.ActionCode == "1") ||  !journalLineRecoList.Exists(line => line._journalLine.ActionCode == "2"))
+            else if ((journalLineRecoList.Sum(line => line._journalLine.LocalAmount) != 0m))
             {
                 rv = false;
             }

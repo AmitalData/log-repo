@@ -446,6 +446,16 @@
                                         </log-cell-template>
                                     </log-column>
 
+                                    <!-- Notes -->
+                                    <log-column [width]="'40'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
+                                            <div style="height: 100%; width: 100%; left:5px;">
+                                                <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
+                                                <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
                                     <!-- Tools Button -->
                                     <log-column [width]="'80'" [Editable]="true" [Alignment]="'right'">
                                         <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>
@@ -462,8 +472,8 @@
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                    </div>
                                                 </div>
+                                            </div>
                                         </log-cell-template>
                                     </log-column>
 
@@ -481,7 +491,7 @@
             </td>
         </tr>
 
-        <tr>
+        <tr *ngIf="IsComparToChecked">
             <td>
                 <table>
                     <tr>
@@ -510,31 +520,31 @@
                                                 <td class="CellDisabled" style="width: 70px; text-align: left;">
                                                     {{item.DestinationPortValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.MinPriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Step1PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Step2PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Step3PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Step4PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Step5PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Step6PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Step7PriceValue}}
                                                 </td>
-                                                <td class="CellDisabled" style="width: 70px; text-align: right;">
+                                                <td class="CellDisabled" style="width: 120px; text-align: right;">
                                                     {{item.Step8PriceValue}}
                                                 </td>
                                                 <td>

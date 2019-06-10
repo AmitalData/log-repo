@@ -1420,12 +1420,12 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                     filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType, filter.IgnoreFilter, this.LookUpTable.CacheOnClient);
             }
         }
-
         if (this.IsDecendingSort == true) {
             filters.SortDirection = "Decending";
         }
         else {
             filters.SortDirection = "Ascending";
+
         }
 
         if (this.IsTenantZeroSearch) {
@@ -1483,7 +1483,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
                 tenantZeroFilters.SortDirection = "Ascending";
 
             }
-
             if (this.LookUpTable.SortingByObjectField) {
                 tenantZeroFilters.SortBy = this.LookUpTable.SortingByObjectField;
             }
