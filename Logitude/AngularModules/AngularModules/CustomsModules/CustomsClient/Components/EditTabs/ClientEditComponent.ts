@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList}  from '@angular/core';
+import {Component, ViewChildren, QueryList}  from '@angular/core';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -323,7 +323,8 @@ export class ClientEditComponent extends BaseComponent{
                 currRequestParams.PassportIssueDate = this.CurrentEntity.PassportIssueDate;
                 currRequestParams.PassportLastName = this.CurrentEntity.PassportLastName;
                 currRequestParams.PassportNumber = this.CurrentEntity.PassportNumber;
-                currRequestParams.PassportTypeCode = this.CurrentEntity.PassportTypeCode;
+            currRequestParams.PassportTypeCode = this.CurrentEntity.PassportTypeCode;
+            currRequestParams.NationalIdentificationNumber = this.CurrentEntity.NationalIdentificationNumber;
 
                 currRequestParams.BirthDate = this.CurrentEntity.BirthDate;
                 currRequestParams.IsImporter = this.CurrentEntity.IsImporter;
