@@ -1463,6 +1463,7 @@ implements OnDestroy
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = false;
+        this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
 
         //Check if changing StorageSiteCode
         this._CourierMasterValidator.SetEntityPM(this.entityPM);
@@ -1473,6 +1474,7 @@ implements OnDestroy
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
                     this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                    this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
         });

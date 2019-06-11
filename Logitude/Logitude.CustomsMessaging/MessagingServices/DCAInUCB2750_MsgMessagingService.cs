@@ -59,6 +59,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" שידור הצהרות בלדר " + customsResponse.master + " "
             };
+            if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
+
+            {
+                genericRequestParams.RequestName += " ראשי - מפצל";
+                genericRequestParams.SplitterModeLetCreateMyType = false;
+
+            }
+            else
+            {
+                genericRequestParams.RequestName += " מפוצל";
+                genericRequestParams.SplitterModeLetCreateMyType = true;
+
+            }
             return genericRequestParams;
         }
 
@@ -71,86 +84,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
 
-        public string  CreateCRS_OLD(int tenant, string LoggingUserId,string CourierMasterId,string master)
-        {
-
-            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-            var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
-            var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, CourierMasterId, null, null, null, true);
-            if (RequestInProgressList != null && RequestInProgressList.Count > 0)
-            {
-
-                //   throw new System.Exception("Requestsheet  with Interface Type  = UCB2750  already in progress  !!!");
-                return "קיים מסר זהה בתהליך";
-
-            }
-            LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCB2750  !!!");
-
-
-
-
-
-            var genericRequestParams = new GenericRequestParams()
-            {
-                Tenant = tenant,
-                AppicationId = CourierMasterId,
-                RequestVIA = SendRequestVIA.WebServiceBatch,
-                LoggingEnabled = true,
-                InterfaceTypeCode = "UCB2750",
-                MainInterfaceCode = "UCB2750",
-
-
-                LoggingObjectTableId = objectTableId,
-                LoggingEntityId = CourierMasterId,
-                LoggingEntityReference = master,
-                
-                LoggingUserId = LoggingUserId,
-                RequestName =  $" שידור הצהרות בלדר " + master + " "
-            };
-            //var messService = new Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService();
-            //var responseData = messService.SendSheet(genericRequestParams);
-
-
-            using (var trans = TransactionFactory.GetNewTransaction())
-            {
-                try
-                {
-                    bool test = false;
-                    if (test)
-                    {
-                        genericRequestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
-                        var res =this.Send(genericRequestParams);
-                    }
-                    else
-                    {
-                        SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.GenericRequestParams>(genericRequestParams
-                            , false//, DateTime.Now.AddMinutes(5)
-                            );
-                    }
-
-                    trans.Complete();
-                    return "המסר נבנה בהצלחה וישלח בתהליך רקע";
-                }
-                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-                {
-                    if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
-                    {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCB2750 SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
-
-                    }
-                    else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
-                    {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCB2750 SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
-                    }
-                    return "קיים מסר זהה בתהליך";
-                    //throw;
-                }
-            }
-
-
-
-        }
-
+     
 
 
         public string CreateCRS(int tenant, string LoggingUserId,
@@ -183,7 +117,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = LoggingUserId,
                 master = mySendALLCorrectRequestParams.HAWB,
                 CourierDeclarationStatusCode = mySendALLCorrectRequestParams.CourierDeclarationStatusCode,
-                DeclarationsList = mySendALLCorrectRequestParams.Declarations,
+                ClientFilterDeclarationsList = mySendALLCorrectRequestParams.Declarations,
                 SelectedAvailableValue = mySendALLCorrectRequestParams.SelectedAvailableValue,
                 SelectedBOLValue= mySendALLCorrectRequestParams.SelectedBOLValue,
                 SelectedStatusValue = mySendALLCorrectRequestParams.SelectedStatusValue,
@@ -285,7 +219,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string CourierMasterId { get; set; }
         public string master { get; set; }
         public string CourierDeclarationStatusCode { get; set; }
-        public List<string> DeclarationsList { get; set; }
+        public List<string> ClientFilterDeclarationsList { get; set; }
+        public List<string> ServerSplitDeclarationsList { get; set; }
         public string MyMoreParams { get; set; }
 
         //public SendALLCorrectRequestParams MySendALLCorrectRequestParams { get; set; }
