@@ -343,5 +343,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string NewConcurrencyGUID { get; set; }
         public string ARInvoiceStockId { get; set; }
         public bool IsInvoiceNumberFromStock { get; set; }
+
+        public string BatchTaskExecutionId { get; set; }
     }
 }

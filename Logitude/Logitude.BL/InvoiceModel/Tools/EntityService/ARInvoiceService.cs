@@ -259,19 +259,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.GetForeignFields();
             this.RunStoredProcedures();
-            this.OnApprovingInvoice();
-          
-            if (this.isApprovingInvoice || entityPM.IsAutoCredit)
-            {
-                this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
-                invoiceRepository.Update(invoice);
-                invoiceRepository.SubmitChanges();
-            }
-
-            if (entityPM.IsAutoCredit)
-            {
-                this.CreateAutoCredit();
-            }
+            this.AfterServiceFinished();
         }
 
         private void ValidateInvoiceConnected()
@@ -509,9 +497,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.GetForeignFields();
             this.RunStoredProcedures();
-            this.UpdatePaymentsNumbers();
-            this.OnVoidingInvoise();
-            this.OnApprovingInvoice();
+            this.AfterServiceFinished();
         }
 
         private void ARInvoiceStockNumber()
@@ -797,7 +783,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             invoice.UpdateDate = entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             invoice.UpdatedByUserId = entityPM.UpdatedByUserId = loggedContactId;
         }
-        public void CreateAutoCredit()
+        public void OnCreatingAutoCredit()
         {
             ARInvoice entityPOCO = invoiceRepository.GetSingleInvoice(this.entityPM.CreditedByARInvoiceId);
 
@@ -817,9 +803,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (oldEntityPM.IsConsolidationInvoice)
                 {
                     #region
-                    List<ARInvoice> iConstituentInvoices = invoiceRepository.GetConnectedInvoices(tenant, this.entityPM.CreditedByARInvoiceId).ToList();
+                    this.allConnectedInvoices = invoiceRepository.GetConnectedInvoices(tenant, this.entityPM.CreditedByARInvoiceId).ToList();
 
-                    foreach (ARInvoice item in iConstituentInvoices)
+                    foreach (ARInvoice item in allConnectedInvoices)
                     {
                         item.IsClosed = false;
                         item.StatusCode = "NT";
@@ -834,6 +820,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             EventTypeCode = "INDS",
                         });
                     }
+
+                    if (this.entityPM.IsConsolidationInvoice)
+                    {
+
+                    }
+
+                    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
+                    iConsolidationService.OnCreatingAutoCredit(this.allConnectedInvoices);
+
                     #endregion
                 }
 
@@ -1320,9 +1315,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
 
+        List<ARInvoice> allConnectedInvoices;
         private void DisconnectAllConnectedInvoices()
         {
-            List<ARInvoice> allConnectedInvoices = invoiceRepository.GetConnectedInvoices(tenant, entityPM.Id).ToList();
+            this.allConnectedInvoices = invoiceRepository.GetConnectedInvoices(tenant, entityPM.Id).ToList();
 
             if (allConnectedInvoices.Count > 0)
             {
@@ -1936,6 +1932,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 case "NT":
                 case "CN":
+                    {
+                        if (this.isNewEntity)
+                        {
+                            myResult = "OAMT";
+                        }
+
+                        break;
+                    }
+
                 case "AD":
                 case "PD":
                 case "PP":
@@ -3308,7 +3313,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else if ( group_data != null &&  group_data.Count() >0)
                     {
-                        theEntityPm.TotalVAT = (decimal)group_data.Sum(a => a.LocalCurrencyAmount);
+                        theEntityPm.TotalVAT = (decimal)group_data.Sum(a => MethodHelper.Roundd((a.LocalCurrencyAmount * MethodHelper.Roundd(a.VatTypePercentage, 2) / 100), 2));
                     }
                 }
             }
@@ -3379,16 +3384,46 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         // allActiveShipmentIds
 
-                        UpdateShipmentProfitClass.UpdateARInvoices(entityPM.MainEntityId, entityPM.Tenant);
+                        UpdateShipmentProfitClass.UpdateShipmentARInvoices(entityPM.MainEntityId, entityPM.Tenant);
                     }
 
-                    else if(isNewEntity && this.entityPM.IsAutoCredit)
+                    else if (isNewEntity)
                     {
-                        UpdateShipmentProfitClass.UpdateARInvoices(entityPM.MainEntityId, entityPM.Tenant);
+                        if (this.entityPM.IsAutoCredit || this.entityPM.IsConstituentInvoice)
+                        {
+                            UpdateShipmentProfitClass.UpdateShipmentARInvoices(entityPM.MainEntityId, entityPM.Tenant);
+                        }
                     }
                 }
             }
         }
+        private void AfterServiceFinished()
+        {
+            if (this.isNewEntity)
+            {
+                this.OnApprovingInvoice();
+
+                if (this.isApprovingInvoice || entityPM.IsAutoCredit)
+                {
+                    this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
+                    invoiceRepository.Update(invoice);
+                    invoiceRepository.SubmitChanges();
+                }
+
+                if (entityPM.IsAutoCredit)
+                {
+                    this.OnCreatingAutoCredit();
+                }
+            }
+
+            else
+            {
+                this.UpdatePaymentsNumbers();
+                this.OnApprovingInvoice();
+                this.OnVoidingInvoise();
+            }
+        }
+
         private void UpdatePaymentsNumbers()
         {
             if (this.isUpdatingPayments)
@@ -3439,11 +3474,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
-
         private void OnVoidingInvoise()
         {
             if (this.isVoidingInvoice)
             {
+                if (this.entityPM.IsConsolidationInvoice)
+                {
+                    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
+                    iConsolidationService.OnVoid(this.allConnectedInvoices);
+                }
+
                 this.UpdateShipmentRegistryDate();
             }
         }
@@ -3462,6 +3502,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     // Approval on Create is handled inside the Create Method
                     this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
+                }
+
+                if (this.entityPM.IsConsolidationInvoice)
+                {
+                    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
+                    iConsolidationService.OnApprove();
                 }
 
                 this.UpdateShipmentRegistryDate();

@@ -977,6 +977,11 @@ export class ARInvoicePM {
     public set IsInvoiceNumberFromStock(newValue: boolean) { if (this.isInvoiceNumberFromStock != newValue) { this.isInvoiceNumberFromStock = newValue; this.MarkAsDirty("IsInvoiceNumberFromStock"); } }
        
 	 
+    private batchTaskExecutionId: string;
+    public get BatchTaskExecutionId() { return this.batchTaskExecutionId; }
+    public set BatchTaskExecutionId(newValue: string) { if (this.batchTaskExecutionId != newValue) { this.batchTaskExecutionId = newValue; this.MarkAsDirty("BatchTaskExecutionId"); } }
+       
+	 
 
     public OldEntityPM: ARInvoicePM;
 		
