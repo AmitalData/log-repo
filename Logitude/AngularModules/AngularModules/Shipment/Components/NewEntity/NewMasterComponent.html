@@ -78,7 +78,9 @@
 <table>
     <tr>
         <td>
-            <div class="FillParent CurvedArea" *ngIf="IsResourcesReady">
+
+            <!-- *ngIf="IsResourcesReady" -->
+            <div class="FillParent CurvedArea">
                 <table>
                     <tr>
                         <td style="width: 155px; vertical-align: top" class="AppLeftMenuBackground">
@@ -207,7 +209,7 @@
                                                             <td>
                                                                 <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.Partners' | TextCodeTranslationPipe}}</div>
                                                                 <CheckBox [Top]="5" *ngIf="SourceEntityPM.AgentId" [IsChecked]="IsCopyAgent" (Checked)="IsCopyAgent = $event" [IsEnabled]="IsCopyAgentEnabled" [Text]="'Shipment.S.NewShipment.Agent' | TextCodeTranslationPipe"></CheckBox>
-                                                                
+
                                                                 <div style="margin-top: 10px;" *ngIf="IsCopyOtherPartnersVisible">
                                                                     <div style="font-size: 13px; color: #6E7172;">{{'Shipment.S.NewShipment.OtherPartners' | TextCodeTranslationPipe}}</div>
                                                                     <CheckBox [Top]="5" *ngIf="SourceEntityPM.ShipperId" [IsChecked]="IsCopyShipper" (Checked)="IsCopyShipper = $event" [Text]="'Shipment.F.Shipper' | TextCodeTranslationPipe"></CheckBox>
@@ -359,7 +361,7 @@
                                                                         <td>
                                                                             <div style="margin-left: 2px;">
                                                                                 <!--<IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditAddressClicked('S')" [disabled]="!AgentAddressId"></IconButton>
-                                                                                <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')"></IconButton>-->
+                                                                        <IconButton [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddAddressClicked('S')"></IconButton>-->
                                                                             </div>
                                                                         </td>
                                                                         <td [style.width.px]="LabelColumnWidth">
@@ -445,8 +447,7 @@
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
                                                                                     [LookUpTableName]="'Port'"
-                                                                                    [DependencyFilter1Value]="TransportModeId"
-                                                                                    >
+                                                                                    [DependencyFilter1Value]="TransportModeId">
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
@@ -461,8 +462,7 @@
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
                                                                                     [LookUpTableName]="'Port'"
-                                                                                    [DependencyFilter1Value]="TransportModeId"
-                                                                                    >
+                                                                                    [DependencyFilter1Value]="TransportModeId">
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
@@ -616,9 +616,9 @@
                                                         <tr>
                                                             <td style="width: 330px; vertical-align: middle;">
                                                                 <!--<div *ngIf="IsLCLEntity" class="FillParent" style="text-indent: 40px;">
-                                                                    <span style="font-family: Arial; font-size: 11px; color: Gray; font-style:italic;">Please insert totals or </span>
-                                                                    <span class="hyperlink" [class.HyperlinkDisabled]="!IsScreenEnabled" (mousedown)="FillDimensionsClicked()">Fill Dimensions</span>
-                                                                </div>-->
+                                                            <span style="font-family: Arial; font-size: 11px; color: Gray; font-style:italic;">Please insert totals or </span>
+                                                            <span class="hyperlink" [class.HyperlinkDisabled]="!IsScreenEnabled" (mousedown)="FillDimensionsClicked()">Fill Dimensions</span>
+                                                        </div>-->
 
                                                                 <div *ngIf="IsFCLEntity" class="FillParent">
                                                                     <table>
