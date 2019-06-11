@@ -68,7 +68,7 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
                 if (templatedata.Length != 0)
                 {
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                    report = exportDocumentHelper.LoadandRender(report, defaulttemplate, currentBusinessObject, tenant);
+                    report = exportDocumentHelper.LoadandRender( defaulttemplate, currentBusinessObject, tenant);
                 }
             }
 

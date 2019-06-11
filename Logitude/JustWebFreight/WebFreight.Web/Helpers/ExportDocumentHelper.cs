@@ -44,6 +44,8 @@ using WebFreight.Web.AccountingModel.Reports.PaymentCheque;
 using WebFreight.Web.AccountingModel.Reports.TaxDeductionReport;
 using Logitude.Accounting.BL.DataContract;
 using WebFreight.Web.AccountingModel.Reports.OpenFormatReport;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace WebFreight.Web.Helpers
 {
@@ -305,9 +307,9 @@ namespace WebFreight.Web.Helpers
                         ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                         ShipmentPM shipmentPm = shipmentQuery.GetSinglePM(entityId, tenant);
                         StiBusinessObject shipmentPmBusinessObject = new StiBusinessObject() { Category = "ShipmentPM", Name = "ShipmentPMDataProvider", BusinessObjectValue = shipmentPm };
-                        RegBusinessObject(report, shipmentPmBusinessObject);
+                      
                         //-----------
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject, tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject, tenant, shipmentPmBusinessObject);
                     }
                     break;
 
@@ -324,7 +326,7 @@ namespace WebFreight.Web.Helpers
                         theT2 = System.DateTime.Now.Ticks;
                         //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P", tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "");
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "HAWB", Name = "AWBDataProvider", BusinessObjectValue = awbDataProvider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject, tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject, tenant);
                     }
 
                     break;
@@ -340,7 +342,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "FORM", Name = "DeclarationFormsDataProvider", BusinessObjectValue = formsDataProvider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject, tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject, tenant);
                     }
 
                     break;
@@ -352,7 +354,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "JRPR", Name = "JournalDataProvider", BusinessObjectValue = journalDP };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
 
                     }
 
@@ -365,7 +367,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "BDPR", Name = "BankDepositDataProvider", BusinessObjectValue = bankDepositDP };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
 
                     }
 
@@ -378,7 +380,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "PCDR", Name = "PaymentChequeDataProvider", BusinessObjectValue = paymentChequeDP };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -389,7 +391,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "TDDP", Name = "TaxDeductionReportData", BusinessObjectValue = taxDeductionDP };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
 
                     }
 
@@ -402,7 +404,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "OFDP", Name = "OpenFormatReportDataProvider", BusinessObjectValue = OpenFormatReporDP };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
 
                     }
 
@@ -438,7 +440,7 @@ namespace WebFreight.Web.Helpers
                         currentBusinessObject.BusinessObjects.Add(packageLinesBusinessObject);
                         currentBusinessObject.BusinessObjects.Add(attachmentListBusinessObject);
 
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -515,7 +517,7 @@ namespace WebFreight.Web.Helpers
                         currentBusinessObject.BusinessObjects.Add(packageLinesBusinessObject);
                         currentBusinessObject.BusinessObjects.Add(attachmentListBusinessObject);
 
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -530,7 +532,7 @@ namespace WebFreight.Web.Helpers
                         XmlSerializer serializer = new XmlSerializer(typeof(List<AWBLabelsDataProvider>));
                         List<AWBLabelsDataProvider> awblabelsdataprovider = (List<AWBLabelsDataProvider>)serializer.Deserialize(memorystream);
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "AWB Labels", Name = "AWBLabelsDataProvider", BusinessObjectValue = awblabelsdataprovider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -572,7 +574,7 @@ namespace WebFreight.Web.Helpers
                         currentBusinessObject.BusinessObjects.Add(attachmentListBusinessObject);
                         currentBusinessObject.BusinessObjects.Add(insidePackagesLinesBusinessObject);
 
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -606,7 +608,7 @@ namespace WebFreight.Web.Helpers
                         currentBusinessObject.BusinessObjects.Add(packageLinesBusinessObject);
                         currentBusinessObject.BusinessObjects.Add(attachmentListBusinessObject);
 
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -638,7 +640,7 @@ namespace WebFreight.Web.Helpers
 
                         report.Dictionary.BusinessObjects.Clear();
                         currentBusinessObject.BusinessObjects.Add(reportInvoiceLinesBusinessObject);
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
 
                         break;
                     }
@@ -703,7 +705,7 @@ namespace WebFreight.Web.Helpers
                         report.Dictionary.BusinessObjects.Clear();
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject1);
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject2);
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -725,7 +727,7 @@ namespace WebFreight.Web.Helpers
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "CMR", Name = "CMRDataProvider", BusinessObjectValue = cmrDataProvider };
                         StiBusinessObject StiBusinessObject1 = new StiBusinessObject() { Name = "ContainersList", Alias = "ContainersList", ParentBusinessObject = currentBusinessObject, Columns = containerColumnsCollection };
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject1);
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -746,7 +748,7 @@ namespace WebFreight.Web.Helpers
                         //report.Dictionary.BusinessObjects.Add(currentBusinessObject);
                         //report.RegBusinessObject(currentBusinessObject.Category, currentBusinessObject.Name, currentBusinessObject.BusinessObjectValue);
                         //report.Dictionary.SynchronizeBusinessObjects();
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -768,7 +770,7 @@ namespace WebFreight.Web.Helpers
                         //report.Dictionary.BusinessObjects.Add(currentBusinessObject);
                         //report.RegBusinessObject(currentBusinessObject.Category, currentBusinessObject.Name, currentBusinessObject.BusinessObjectValue);
                         //report.Dictionary.SynchronizeBusinessObjects();
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -790,7 +792,7 @@ namespace WebFreight.Web.Helpers
                         //report.Dictionary.BusinessObjects.Add(currentBusinessObject);
                         //report.RegBusinessObject(currentBusinessObject.Category, currentBusinessObject.Name, currentBusinessObject.BusinessObjectValue);
                         //report.Dictionary.SynchronizeBusinessObjects();
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -804,7 +806,7 @@ namespace WebFreight.Web.Helpers
                         ShipmentProfitDataProvider shipmentProfitProvider = (ShipmentProfitDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Shipment Profit", Name = "ShipmentProfitDataProvider", BusinessObjectValue = shipmentProfitProvider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
                     break;
 
@@ -824,7 +826,7 @@ namespace WebFreight.Web.Helpers
                         PreAlertDataProvider preAlertProvider = (PreAlertDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Pre Alert", Name = "PreAlertDataProvider", BusinessObjectValue = preAlertProvider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
 
                     break;
@@ -839,7 +841,7 @@ namespace WebFreight.Web.Helpers
                         //PaymentDataProvider paymentProvider = (PaymentDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Paymant", Name = "paymentDataProvider", BusinessObjectValue = paymentProvider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
 
                     break;
@@ -854,7 +856,7 @@ namespace WebFreight.Web.Helpers
                         APPaymentDataProvider apPaymentProvider = (APPaymentDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "APPaymant", Name = "APPaymentDataProvider", BusinessObjectValue = apPaymentProvider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                     }
 
                     break;
@@ -869,7 +871,7 @@ namespace WebFreight.Web.Helpers
                         ShipmentPackingDataProvider shipmentPackingProvider = (ShipmentPackingDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Packing List", Name = "ShipmentPackingDataProvider", BusinessObjectValue = shipmentPackingProvider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -883,7 +885,7 @@ namespace WebFreight.Web.Helpers
                         ShipmentProfitInvoicesDataProvider shipmentProfitProvider = (ShipmentProfitInvoicesDataProvider)serializer.Deserialize(memorystream);
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Shipment Profit Invoice", Name = "ShipmentProfitInvoicesDataProvider", BusinessObjectValue = shipmentProfitProvider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -911,7 +913,7 @@ namespace WebFreight.Web.Helpers
 
                         report.Dictionary.BusinessObjects.Clear();
                         currentBusinessObject.BusinessObjects.Add(reportInvoiceLinesBusinessObject);
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
 
                         break;
                     }
@@ -938,7 +940,7 @@ namespace WebFreight.Web.Helpers
 
                         report.Dictionary.BusinessObjects.Clear();
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject2);
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
 
                         break;
                     }
@@ -985,7 +987,7 @@ namespace WebFreight.Web.Helpers
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject2);
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject3);
                         currentBusinessObject.BusinessObjects.Add(StiBusinessObject4);
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
 
                         break;
                     }
@@ -1002,7 +1004,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "CrossDockEntry", Name = "CrossDockEntryDataProvider", BusinessObjectValue = crossDockEntryDataProvider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -1019,7 +1021,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "CrossDockRelease", Name = "CrossDockReleaseDataProvider", BusinessObjectValue = crossDockReleaseDataProvider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -1036,7 +1038,7 @@ namespace WebFreight.Web.Helpers
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "Shipment Inventory", Name = "ShipmentInventoryDataProvider", BusinessObjectValue = shipmentInventoryDataProvider };
-                        report = LoadandRender(report,  defaulttemplate, currentBusinessObject,  tenant);
+                        report = LoadandRender(  defaulttemplate, currentBusinessObject,  tenant);
                         break;
                     }
 
@@ -1350,15 +1352,27 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        public StiReport LoadandRender(StiReport report,  DocumentTypeTemplate defaulttemplate, StiBusinessObject currentBusinessObject, int tenant)
+        public StiReport LoadandRender(DocumentTypeTemplate defaulttemplate, StiBusinessObject currentBusinessObject, int tenant , StiBusinessObject otherstiBusinessObject = null)
         {
+            return LoadandRenderStiReportViaWebService(defaulttemplate, currentBusinessObject, tenant, otherstiBusinessObject);
+        }
+
+        public StiReport LoadandRenderStiReport( DocumentTypeTemplate defaulttemplate, StiBusinessObject currentBusinessObject, int tenant , StiBusinessObject otherstiBusinessObject = null)
+        {
+            StiReport report = new StiReport();
+            if (otherstiBusinessObject != null)
+            {
+                RegBusinessObject(report, otherstiBusinessObject);
+            }
+
+
             long theT1 = System.DateTime.Now.Ticks;
             long theT2 = System.DateTime.Now.Ticks;
 
             byte[] template = defaulttemplate.TemplateBody;
-              
+
             string dllName = GetDllName(template, report);
-     
+
             Uploader uploaderservice = new Uploader();
             byte[] logodata = uploaderservice.DownloadFile("logo" + tenant, "jpg", "logos", tenant);
 
@@ -1373,7 +1387,7 @@ namespace WebFreight.Web.Helpers
                 {
                     theT1 = System.DateTime.Now.Ticks;
                     report = StiReport.GetReportFromAssembly(dllData);
-                    
+
                     theT2 = System.DateTime.Now.Ticks;
 
                     RegBusinessObject(report, currentBusinessObject);
@@ -1384,7 +1398,7 @@ namespace WebFreight.Web.Helpers
                         foreach (StiPage page in report.Pages)
                         {
                             page.Margins.Left = 10;
-                            page.Margins.Top = 10; 
+                            page.Margins.Top = 10;
                             page.Margins = new StiMargins(page.Margins.Left + defaulttemplate.HorizontalShift.Value, page.Margins.Right, page.Margins.Top + defaulttemplate.VerticalShift.Value, page.Margins.Bottom);
                         }
                     }
@@ -1418,9 +1432,9 @@ namespace WebFreight.Web.Helpers
                 theT1 = System.DateTime.Now.Ticks;
                 report.Load(template);
                 theT2 = System.DateTime.Now.Ticks;
-            
+
                 report.ReportUnit = StiReportUnitType.Millimeters;
-    
+
                 if (defaulttemplate.HorizontalShift != null && defaulttemplate.VerticalShift != null)
                 {
                     foreach (StiPage page in report.Pages)
@@ -1442,12 +1456,63 @@ namespace WebFreight.Web.Helpers
             return report;
         }
 
+   
+        private StiReport LoadandRenderStiReportViaWebService( DocumentTypeTemplate defaulttemplate , StiBusinessObject currentBusinessObject,  int tenant, StiBusinessObject otherstiBusinessObject = null)
+        {
+            StiReport stiReport = new StiReport();
+
+            try
+            {
+                string stiBusinessObjectJsonString = LogitudeXmlSerializer.SerializeObjectToXmlString(currentBusinessObject);
+
+               // string stiBusinessObjectJsonString = JsonConvert.SerializeObject(currentBusinessObject);
+                string otherstiBusinessObjectJsonString = null; //otherstiBusinessObject != null ? JsonConvert.SerializeObject(otherstiBusinessObject, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore }) : null;
+
+
+                string soap = @"<?xml version=""1.0"" encoding=""utf-8""?>
+<soap:Envelope xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
+ 
+xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" 
+xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
+  <soap:Body>
+    <HelloWorld xmlns=""http://tempuri.org/"">
+     <stiBusinessObjectJsonString>" + stiBusinessObjectJsonString + "</stiBusinessObjectJsonString><documentTypeTemplateId>" + defaulttemplate.Id + "</documentTypeTemplateId><otherstiBusinessObjectJsonString>" + otherstiBusinessObjectJsonString + "</otherstiBusinessObjectJsonString></HelloWorld></soap:Body></soap:Envelope>";
+  
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://localhost:9996/WebServices/DocOutBuildWebService.asmx");
+                req.ContentType = "application/soap+xml;";
+                req.Method = "POST";
+                using (Stream stm = req.GetRequestStream())
+                {
+                    using (StreamWriter stmw = new StreamWriter(stm))
+                    {
+                        stmw.Write(soap);
+                    }
+                }
+                using (WebResponse Serviceres = req.GetResponse())
+                {
+                    using (StreamReader rd = new StreamReader(Serviceres.GetResponseStream()))
+                    {
+                        var serviceResult = rd.ReadToEnd();
+
+
+                        stiReport = JsonConvert.DeserializeObject<StiReport>(serviceResult, new JsonSerializerSettings() { ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore });
+                    }
+                }
+
+                return stiReport;
+            }
+
+            catch (Exception ex)
+            {
+                return LoadandRenderStiReport( defaulttemplate, currentBusinessObject, tenant, otherstiBusinessObject);
+            }
+
+        }
+
         public void RegBusinessObject(StiReport report, StiBusinessObject currentBusinessObject)
         {
             report.RegBusinessObject(currentBusinessObject.Category, currentBusinessObject.Name, currentBusinessObject.BusinessObjectValue);
         }
-
-
 
 
         public byte[] GetDocumentTypebyte(string documentTypeTemplateId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, int tenant)
