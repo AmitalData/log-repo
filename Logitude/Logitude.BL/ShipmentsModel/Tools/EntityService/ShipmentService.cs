@@ -462,7 +462,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     shipmentAdditionalCloudDataRepository.SubmitChanges();
                     followUpRepository.SubmitChanges();
                     shipmentPickUpDeliveryRepository.SubmitChanges();
-                    
+
                     this.ApplyUpdatingMasterHouses();
 
                     RunStoredProcedures();
@@ -1015,7 +1015,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
 
                     //&& !entityPM.IsCancelled // for LogBox
-                    if (IsShipmentMatchLogBoxConditions(loggedTenant,entityPM))
+                    if (IsShipmentMatchLogBoxConditions(loggedTenant, entityPM))
                     {
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
@@ -1056,7 +1056,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
 
-                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant,entityPM))
+                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant, entityPM))
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
@@ -1111,15 +1111,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant))
             {
                 return false;
-            } 
+            }
             else
             {
                 return true;
             }
         }
-        private bool IsShipmentMatchLogBoxConditions(Tenant loggedTenant,ShipmentPM entityPM)
+        private bool IsShipmentMatchLogBoxConditions(Tenant loggedTenant, ShipmentPM entityPM)
         {
-            if (!entityPM.DontAddToImportersQueue && !loggedTenant.IsDocumentsArchive && !entityPM.IsCancelled && loggedTenant.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(loggedTenant,entityPM) || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM)))
+            if (!entityPM.DontAddToImportersQueue && !loggedTenant.IsDocumentsArchive && !entityPM.IsCancelled && loggedTenant.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(loggedTenant, entityPM) || IsExportShipmentsAllowedForLogBox(loggedTenant, entityPM)))
             {
                 return true;
             }
@@ -2453,7 +2453,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             entityPM.CalculateStatus = false;
 
             this.ComputeShipmentStatus();
-            this.UpdateCustomerWorkingDates();            
+            this.UpdateCustomerWorkingDates();
 
             if (isNewEntity)
             {
@@ -2773,18 +2773,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             entityPM.ShipmentTypeId = "LCLD";
                         }
 
-                        else if(entityPM.ConvertShipmentToFCL)
+                        else if (entityPM.ConvertShipmentToFCL)
                         {
                             entityPM.ShipmentTypeId = "FCLD";
                         }
                     }
-                    
+
                     if (entityPM.ConvertFromDirectToHouse)
                     {
                         #region
                         entityPM.ShipmentLevelCode = "H";
                         entityPM.MasterShipmentDataId = null;
-                        entityPoco.ComputedShipmentNumber =null ;
+                        entityPoco.ComputedShipmentNumber = null;
                         entityPM.ComputedShipmentNumber = null;
                         entityPoco.MasterShipmentDataId = null;
 
@@ -2964,6 +2964,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         shipmentAdditionalCloudData.ApproveDateTime = null;
                         shipmentAdditionalCloudData.DenyReason = null;
                         shipmentAdditionalCloudData.VersionApproved = null;
+                        if (loggedTenant.IsDocumentsArchive)
+                        { 
+                            AddImporterApprovalReceivedQueue();
+                        }
                     }
 
                     if (entityPM.DeclarationWCOXml != shipmentAdditionalCloudData.DeclarationWCOXml && !string.IsNullOrEmpty(entityPM.DeclarationWCOXml))
@@ -2989,7 +2993,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         shipmentAdditionalCloudData.PaymentDateTime = entityPM.PaymentDateTime;
                         AddPaymentReceivedToQueue();
                     }
+                    if (true)
+                    {
 
+                    }
                     shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
                     //shipmentAdditionalCloudDataRepository.SubmitChanges();
                 }
@@ -3042,9 +3049,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 //this.InitializeBookingData();
             }
 
-          
+
         }
 
+        private void AddImporterApprovalReceivedQueue()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ImporterApprovalReceivedQueue", 0);
+            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() } }, null, null);
+        }
+         
         private void AddPaymentReceivedToQueue()
         {
             if (LogitudeSettings.EnableHybridQueue)
@@ -4557,17 +4571,17 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     }
                 }
 
-                if(list1!= null &&  list1.Count > 0)
+                if (list1 != null && list1.Count > 0)
                 {
                     foreach (InsideShipmentPackagePM item in list1)
                     {
                         var itemVehicleDetails = "";
-                        itemVehicleDetails += string.IsNullOrEmpty(item.Make)? "" : item.Make ;
-                        itemVehicleDetails += string.IsNullOrEmpty(item.Model) ? "" : "/ " +item.Model ;
-                        itemVehicleDetails += string.IsNullOrEmpty(item.Year)? "" : "/ " + item.Year ;
-                        itemVehicleDetails += string.IsNullOrEmpty(item.Color) ? "" : "/ " + item.Color ;
-                        itemVehicleDetails += string.IsNullOrEmpty(item.ChassisNumber)  ? "" : "/ " + item.ChassisNumber ;
-                        itemVehicleDetails += string.IsNullOrEmpty(item.RegistrationNumber) ? "" : "/ " + item.RegistrationNumber ;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.Make) ? "" : item.Make;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.Model) ? "" : "/ " + item.Model;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.Year) ? "" : "/ " + item.Year;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.Color) ? "" : "/ " + item.Color;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.ChassisNumber) ? "" : "/ " + item.ChassisNumber;
+                        itemVehicleDetails += string.IsNullOrEmpty(item.RegistrationNumber) ? "" : "/ " + item.RegistrationNumber;
                         itemVehicleDetails += string.IsNullOrEmpty(item.CountryCode) ? "" : "/ " + item.CountryCode;
                         myNumberOfInsidePackagesDetails = string.IsNullOrEmpty(myNumberOfInsidePackagesDetails) ? itemVehicleDetails : myNumberOfInsidePackagesDetails + "\n " + itemVehicleDetails;
                     }
@@ -4724,7 +4738,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             item.NextETD = this.entityPoco.NextETD;
                             item.NextLeg = this.entityPoco.NextLeg;
                             item.NextLegCode = this.entityPoco.NextLegCode;
-                            if(string.IsNullOrEmpty(item.AgentId))
+                            if (string.IsNullOrEmpty(item.AgentId))
                             {
                                 item.AgentComputed = entityPM.AgentId;
                             }
@@ -6776,7 +6790,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             }
 
             //Export
-            else if (entityPM.DirectionId == "E" )
+            else if (entityPM.DirectionId == "E")
             {
                 bool Assigned = false;
                 if (myLastDelivery != null)
@@ -6866,7 +6880,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         }
                     }
                 }
-                
+
             }
 
             //Domestic
@@ -6942,7 +6956,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                 {
                     fromId = entityPM.MainCarriageFromPortId;
                 }
-                
+
                 PortPM portFrom = PortQuery.GetSinglePort(tenant, fromId, true);
                 if (portFrom != null)
                 {
@@ -6994,7 +7008,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                         toId = this.entityPM.MainCarriageToPortId;
                     }
                 }
-                
+
                 PortPM portTo = PortQuery.GetSinglePort(tenant, toId, true);
                 if (portTo != null)
                 {

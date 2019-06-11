@@ -12,6 +12,7 @@ namespace WebFreight.Web.DataProviders
 
     public class UnicargoExport
     {
+        public string ShipmentNumber { get; set; }
         public string House { get; set; }
         public string Incoterms { get; set; }
         public string MainHarmonize { get; set; }
@@ -79,27 +80,27 @@ namespace WebFreight.Web.DataProviders
         public DateTime? MainCarriageLeg1OBLDate { get; set; }
         public DateTime? MainCarriageLeg1CutoffDate { get; set; }
         public string MainCarriageLeg1Vessel { get; set; }
-        public string MainCarriageLeg1ETD { get; set; }
-        public string MainCarriageLeg1ETA { get; set; }
-        public string MainCarriageLeg1ATD { get; set; }
-        public string MainCarriageLeg1ATA { get; set; }
+        public DateTime? MainCarriageLeg1ETD { get; set; }
+        public DateTime? MainCarriageLeg1ETA { get; set; }
+        public DateTime? MainCarriageLeg1ATD { get; set; }
+        public DateTime? MainCarriageLeg1ATA { get; set; }
         public string Transshipment1ShippingLine { get; set; }
         public string Transshipment1VoyageNo { get; set; }
         public string Transshipment1OBL { get; set; }
         public string Transshipment1Vessel { get; set; }
-        public string Transshipment1ETD { get; set; }
-        public string Transshipment1ETA { get; set; }
-        public string Transshipment1ATD { get; set; }
-        public string Transshipment1ATA { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+        public DateTime? Transshipment1ETA { get; set; }
+        public DateTime? Transshipment1ATD { get; set; }
+        public DateTime? Transshipment1ATA { get; set; }
         public string DeliveryFromPort { get; set; }
         public string DeliveryToPartner { get; set; }
         public string DeliveryToPatnerAddress { get; set; }
         public string DeliveryFromPartner { get; set; }
         public string DeliveryTransportMode { get; set; }
-        public string DeliveryExpectedDeparture { get; set; }
-        public string DeliveryExpectedArrival { get; set; }
-        public string DeliveryActualDeparture { get; set; }
-        public string DeliveryActualArrival { get; set; }
+        public DateTime? DeliveryExpectedDeparture { get; set; }
+        public DateTime? DeliveryExpectedArrival { get; set; }
+        public DateTime? DeliveryActualDeparture { get; set; }
+        public DateTime? DeliveryActualArrival { get; set; }
 
 
 
