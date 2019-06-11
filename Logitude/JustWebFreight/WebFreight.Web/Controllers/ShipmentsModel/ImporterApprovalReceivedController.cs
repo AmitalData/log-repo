@@ -45,7 +45,7 @@ using Logitude.SystemLogs;
 
 namespace WebFreight.Web.Controllers.ShipmentsModel
 {
-    public class PrivateLabelApprovalController : ApiController
+    public class ImporterApprovalReceivedController : ApiController
     {
 
 
@@ -53,7 +53,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
         {
             try
             {
-                SecurityUtility.AuthenticationOnTenant(Data.Tenant);
+                //SecurityUtility.AuthenticationOnTenant(Data.Tenant);
                 ICommonDataContext commonContext = CommonDataContext.GetContext(Data.Tenant);
                 CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
                 DocumentRepository documentrepository = new DocumentRepository(commonContext);
@@ -63,13 +63,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 objectTable = objecttableRep.GetObjectTableByName("Shipment", 0, true);
 
                 List<QueueTask> tasks = new List<QueueTask>();
-                tasks.Add(new QueueTask() { Action = "StatusUpdate", Parameters = new List<Logitude.Server.Tools.Parameter>() {
+                tasks.Add(new QueueTask() { Action = "ApprovalTaskReceived", Parameters = new List<Logitude.Server.Tools.Parameter>() {
                 new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = Data.ShipmentNumber},    
-                new Logitude.Server.Tools.Parameter { Name = "Code", Value = Data.Code},
-                new Logitude.Server.Tools.Parameter { Name = "Date", Value = Data.Date},
-                new Logitude.Server.Tools.Parameter { Name = "Time", Value = Data.Time},
-                new Logitude.Server.Tools.Parameter { Name = "Remarks", Value = Data.Remarks}, 
-                new Logitude.Server.Tools.Parameter { Name = "Direction", Value = Data.Direction}
+                new Logitude.Server.Tools.Parameter { Name = "Code", Value = Data.Code}
                 } });
                 var ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
                 Document document = new Document()
@@ -91,7 +87,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     InOut = "O",
                     //EntityId = OceanInsightsRequest.Id,
                     ObjectTableId = (objectTable != null && !string.IsNullOrEmpty(objectTable.Id)) ? objectTable.Id : null,
-                    Subject = "Status Update",
+                    Subject = "Approval Task Received",
                     Tenant = Data.Tenant,
                     CommunicationLogTypeCode = "Q",
                     CommunicationStatusTypeCode = "W",
@@ -126,9 +122,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 {
                     try
                     {
-                        Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "Before adding message to queue PrivateLabelApproval " + DateTime.Now.ToString(), null);
+                        Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "Before adding message to queue ImporterApprovalReceived " + DateTime.Now.ToString(), null);
                         SendCommunicationLogMessageToQueue(commLog.QueueName, commLog.Id, Data.Tenant);
-                        Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "after adding message to queue  PrivateLabelApproval " + DateTime.Now.ToString(), null);
+                        Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "after adding message to queue  ImporterApprovalReceived " + DateTime.Now.ToString(), null);
                        
                     }
                     catch (Exception ex)
@@ -140,7 +136,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                             errorMessage += Environment.NewLine + ex.StackTrace;
                         }
 
-                        Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "Exception occured while adding message to queue PrivateLabelApproval " + DateTime.Now.ToString(), errorMessage);
+                        Communications.UpdateCommunicationLogStatus(commLog.Id, Data.Tenant, null, commLog.CommunicationStatusTypeCode, "Exception occured while adding message to queue ImporterApprovalReceived " + DateTime.Now.ToString(), errorMessage);
                         return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
 
                     }
@@ -161,44 +157,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(queueName, 0);
                 queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() }});
-                //BrokeredMessage message = new BrokeredMessage();
-
-                //message.Properties["CommunicationLogId"] = communicationLogId;
-                //message.Properties["Tenant"] = tenant;
-                //QueueClient client = GetQueueClient(queueName);// StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
-                //using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())//TransactionFactory.GetNewTransaction())
-                //{
-                //    client.Send(message);
-                //    scope.Complete();
-                //}
+                
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "SendCommunicationLogMessageToQueue Forwarder Shipment", null, null);
             }
         }
-
-        private QueueClient GetQueueClient(string queuename)
-        {
-            queuename = WebFreightEntryPoint.GetQueueByEnviroment(queuename);
-
-            if (!StorageAcountDetails.NameSpaceManager.QueueExists(queuename))
-            {
-                QueueDescription queueDescription = new QueueDescription(queuename);
-                queueDescription.MaxSizeInMegabytes = 5120;
-                queueDescription.MaxDeliveryCount = 99999;
-                queueDescription.LockDuration = new TimeSpan(0, 5, 0);
-
-                //queueDescription.LockDuration
-                //queueDescription.DefaultMessageTimeToLive = new TimeSpan(3, 1, 0);
-
-                StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription);
-            }
-
-            QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(queuename, ReceiveMode.PeekLock);
-
-            return client;
-        }
-
+         
     }
 }

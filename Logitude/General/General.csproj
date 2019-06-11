@@ -575,6 +575,7 @@
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Abed] updateTasksSchedulerFieldType.sql" />
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman1] UpdateARInvoicesIsPrinted.sql" />
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman2] UpdateShipmentARInvoices.sql" />
+    <Content Include="Main Branch\2019\06 - 2019\Day 11 [Rabaia] AddImporterApprovalReceivedWRToBatchServices.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 15 [Khalid] delete Wrong QueryCode.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 21 [Rabaia]Trace Event Indexes.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 21 [Khalid] Fill ComputedShipmentFieldBackwards.sql" />
