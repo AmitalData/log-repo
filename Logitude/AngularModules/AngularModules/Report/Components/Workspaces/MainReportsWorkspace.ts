@@ -14,12 +14,17 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 export class MainReportsWorkspace implements OnInit {
     public IsMenuVisible: boolean = false;
     public IsBIItemVisible: boolean = false;
+    public IsReportItemVisible: boolean = false;
     public IsResourcesReady: boolean = false;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService) {
 
     }
     ngOnInit() {
+        if (FeatureLocator.HasEntityPermessions("Report", "Module", false)) {
+            this.IsReportItemVisible = true;
+        }
+
         this._entityResourceService.getEntityResourceByTableName("BIReportFolder", 0).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe(response => {
                 this.IsResourcesReady = true;
@@ -68,7 +73,12 @@ export class MainReportsWorkspace implements OnInit {
     }
 
     private SetSelectedItem() {
-        this.SelectedItem = "Report";
+        if (FeatureLocator.HasEntityPermessions("Report", "Module", false)) {
+            this.SelectedItem = "Report";
+        }
+        else {
+            this.SelectedItem = "BI";
+        }
     }
 
     private selectedItem: string;
@@ -79,7 +89,8 @@ export class MainReportsWorkspace implements OnInit {
             this.SelectionChanged();
         }
     }
-    
+
+
     private Page_BI: any = null;
     private Page_Report: any = null;
 
