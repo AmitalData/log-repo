@@ -71,6 +71,14 @@ export class CustomsRequestMenuService {
         //this._CustomsRequestMenuItems.push(new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasavPaymentsToAgentQuery"), "MasavPaymentsToAgentQuery", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/MasavPaymentsToAgentComponent', 830, 650, "8368"));
         var my8368 = new CustomsMenuItem(TextCodeTranslator.Translate("Customs.General.O.MasavPaymentsToAgentQuery"), "MasavPaymentsToAgentQuery", './CustomsModules/CustomsRequests/Components/PaymentOrderRequests/MasavPaymentsToAgentComponent', 830, 650, "8368")
         my8368.CanExportExcel = true;
+        //CustomMessageProgressComponent
+        //    .ShowProgressBar(currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
+        //    .then((res) => {
+        //        this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
+        //    }
+        //    ).catch((err) => {
+        //        this.ValidationErrorsList.push(err);
+        //    });
         this._CustomsRequestMenuItems.push(my8368);
 
 
