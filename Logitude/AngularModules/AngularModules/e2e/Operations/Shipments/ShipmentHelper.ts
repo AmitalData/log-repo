@@ -149,6 +149,12 @@ export class ShipmentHelper {
     }
   }
 
+  CreateAndCloseNewShipment(MasterDirectType: string, CancelBtnId: string) {
+    var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
+    this.Helper.WaitByIdAndClick(MasterDirectType);
+    this.Helper.WaitByIdAndClick(CancelBtnId);
+  }
+
   OperationalCloseShipment() {
     this.Helper.WaitByIdAndClick('MenuButtons');
     this.Helper.WaitByIdAndClick('Shipment.B.OperationalClose');
