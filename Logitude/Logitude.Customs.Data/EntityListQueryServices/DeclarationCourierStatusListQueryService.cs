@@ -101,6 +101,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   StorageSiteStatusCode = a.StorageSiteStatusCode,
                                                                   StorageSiteStatusName = a.MamanStatus != null ? a.MamanStatus.LocalName : null,
                                                                   StorageSiteErrorText = a.StorageSiteErrorText,
+                                                                  CourierPendingReasonList = a.CourierPendingReasonList,
                                                               });
 
 

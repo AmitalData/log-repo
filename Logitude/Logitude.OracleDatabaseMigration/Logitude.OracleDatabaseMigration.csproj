@@ -312,6 +312,10 @@
     <Compile Include="Migrations\201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.Designer.cs">
       <DependentUpon>201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.cs" />
+    <Compile Include="Migrations\201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.Designer.cs">
+      <DependentUpon>201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -532,6 +536,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.resx">
       <DependentUpon>201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.resx">
+      <DependentUpon>201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
