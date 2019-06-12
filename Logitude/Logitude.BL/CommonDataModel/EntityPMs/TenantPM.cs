@@ -374,7 +374,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CAAT { get; set; }
         public bool IsTestTenant { get; set; }
 
-
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public double? DefaultWarningPercentage { get; set; }
 
     }
 }

@@ -20,6 +20,8 @@ export class MiscPageComponent implements AfterViewInit {
     public isRTL: boolean = false;
     public isScreenLoaded: boolean = false;
     IsYEARTRANSFERVisibile: boolean = false;
+    IsGEN1000MENUVisibile: boolean = false;
+    IsRECV1000MENUVisibile: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -31,6 +33,16 @@ export class MiscPageComponent implements AfterViewInit {
                     console.log("YEARTRANSFERMENU Feature:" + yearTransFeature);
                     if (yearTransFeature) {
                         this.IsYEARTRANSFERVisibile = true;
+                    }
+                    var IsGEN1000MENUVisibile = FeatureLocator.HasFeaturePermession("GLAccount", "GEN1000MENU");
+                    console.log("GEN1000MENU Feature:" + IsGEN1000MENUVisibile);
+                    if (IsGEN1000MENUVisibile) {
+                        this.IsGEN1000MENUVisibile = true;
+                    }
+                    var IsRECV1000MENUVisibile = FeatureLocator.HasFeaturePermession("GLAccount", "RECV1000MENU");
+                    console.log("GEN1000MENU Feature:" + IsRECV1000MENUVisibile);
+                    if (IsRECV1000MENUVisibile) {
+                        this.IsRECV1000MENUVisibile = true;
                     }
 
          this.isScreenLoaded = true;

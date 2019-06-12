@@ -206,13 +206,19 @@ namespace CommunicationWorkerRole
 
         private void TestBatch()
         {
-            var myEmailsWorkerRole = new EmailsWorkerRole("EmailQueue","itzik");
-            var context = CommonDataContext.GetContext(989);
-            var communicationLogRep = new CommunicationLogRepository(context);
-            var cl = communicationLogRep.GetSingleCommunicationLog(id: "1-1075543", tenant: 989);
+            var batchTaskExecutionWR = new BatchTaskExecutionWR();
+            var dic=new Dictionary<string, string>();
+            
+            dic.Add("BatchTaskExecutionId", "1-5538");
+            dic.Add("Tenant", "1148");
+            batchTaskExecutionWR.ExecuteQueue(new Logitude.Server.Tools.QueueService.QueueResponse() { MessageValues = dic });
+            //var myEmailsWorkerRole = new EmailsWorkerRole("EmailQueue","itzik");
+            //var context = CommonDataContext.GetContext(989);
+            //var communicationLogRep = new CommunicationLogRepository(context);
+            //var cl = communicationLogRep.GetSingleCommunicationLog(id: "1-1075543", tenant: 989);
 
-            myEmailsWorkerRole.SendWaitingCommunicationLog(cl);
-            ///BatchAccountingLoadTestTask();
+            //myEmailsWorkerRole.SendWaitingCommunicationLog(cl);
+            /////BatchAccountingLoadTestTask();
         }
 
         private static void BatchAccountingLoadTestTask()

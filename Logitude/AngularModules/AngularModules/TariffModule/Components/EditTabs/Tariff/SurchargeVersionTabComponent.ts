@@ -87,20 +87,20 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 }
-            });            
+            });
         }
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
-    
+
     Intialize(args: any) {
         this.TariffsLinesSource = new ObservableCollection([]);
         this.EntityPM = this.EntityArgs.EntityPM;
         this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.TariffDomainService = new TariffDomainService();
-       
+
         this.CurrentVersion = args['CurrentVersion'];
 
         if (this.CurrentVersion != null) {
@@ -123,8 +123,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         else {
             this.LoadTariffLines("currentVersion");
         }
+
+        this.WarningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
     }
-    
+
     private loadedTariffLines: TariffLinePM[];
     private compareTariffLines: TariffLinePM[];
     private LoadTariffLines(type: string) {
@@ -165,14 +167,14 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         this.IsApproveVersionButtonVisible = isApproveVersionButtonVisible;
     }
 
-    public AllChargesTypes: ChargesTypeList[]; 
+    public AllChargesTypes: ChargesTypeList[];
     public GetAllChargesTypes() {
         this.ChargesTypeListService = new ChargesTypeListService();
         this.ChargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.AllChargesTypes = myResponse.Result;
                 if (this.AllChargesTypes != null) {
-                    this.AllChargesTypes = this.AllChargesTypes.filter(d=> d.InActive == false);
+                    this.AllChargesTypes = this.AllChargesTypes.filter(d => d.InActive == false);
                 }
             }
         });
@@ -300,7 +302,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     private ItemsCollection: TariffLineData[] = [];
     public DeletedTariffsLines: TariffLineData[] = [];
     FillTariffLines(tariffLines: TariffLinePM[]) {
-        this.TariffsLinesSource.Clear();
+        if (this.TariffsLinesSource != null) {
+            this.TariffsLinesSource.Clear();
+        }
+
         this.ItemsCollection = [];
         this.DeletedTariffsLines = [];
 
@@ -426,7 +431,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
 
         else {
-            if (this.CurrentVersion.IsDraft) {
+            if (this.CurrentVersion != null && this.CurrentVersion.IsDraft) {
                 this.FillTariffLines(this.CurrentVersion.TariffLines);
             }
 
@@ -435,7 +440,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             }
         }
     }
-    
+
     AddTariffLine() {
         var logWindow = new LogitudeWindow();
         var itemPM = new TariffLinePM(null);
@@ -681,53 +686,65 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     private isCopyButtonClicked: boolean = false;
     private DoCopy() {
-        this.isCopyButtonClicked = true;
+        var windowTitle = "New Copy Version";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 200;
+        logWindow.WindowArgs = this.CurrentVersion;
+        logWindow.Title = windowTitle;
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                if (s && d == "ok") {
+                    this.isCopyButtonClicked = true;
 
-        this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
-        this.EntityPM.LastStartDate = this.StartDate;
-        this.EntityPM.LastExpirationDate = this.ExpirationDate;
+                    this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
+                    this.EntityPM.LastStartDate = this.StartDate;
+                    this.EntityPM.LastExpirationDate = this.ExpirationDate;
 
-        var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
-        copiedVersion.TariffId = this.CurrentVersion.TariffId;
-        copiedVersion.Version = this.EntityPM.LastVersion;
-        copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
-        copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
-        copiedVersion.ExpirationDate = this.ExpirationDate;
-        copiedVersion.IsDraft = true;
-        copiedVersion.StartDate = this.StartDate;
-        copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
-        copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
+                    var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
+                    copiedVersion.TariffId = this.CurrentVersion.TariffId;
+                    copiedVersion.Version = this.EntityPM.LastVersion;
+                    copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
+                    copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
+                    copiedVersion.ExpirationDate = s.ExpirationDate;
+                    copiedVersion.IsDraft = true;
+                    copiedVersion.StartDate = s.StartDate;
+                    copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
+                    copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
+                    this.EntityPM.AddTariffVersion(copiedVersion);
+                    this.loadedTariffLines.sort(p => p.Index).forEach(item => {
+                        var tariffLine = new TariffLinePM(copiedVersion);
+                        tariffLine.StartDate = this.StartDate;
+                        tariffLine.ExpirationDate = this.ExpirationDate;
+                        tariffLine.Tenant = SessionLocator.Tenant;
+                        tariffLine.Version = copiedVersion.Version;
+                        tariffLine.OriginPortId = item.OriginPortId;
+                        tariffLine.OriginPortCode = item.OriginPortCode;
+                        tariffLine.OriginPortName = item.OriginPortName;
+                        tariffLine.DestinationPortId = item.DestinationPortId;
+                        tariffLine.DestinationPortCode = item.DestinationPortCode;
+                        tariffLine.DestinationPortName = item.DestinationPortName;
+                        tariffLine.Surcharge1Price = item.Surcharge1Price;
+                        tariffLine.Surcharge2Price = item.Surcharge2Price;
+                        tariffLine.Surcharge3Price = item.Surcharge3Price;
+                        tariffLine.Surcharge4Price = item.Surcharge4Price;
+                        tariffLine.Surcharge5Price = item.Surcharge5Price;
+                        tariffLine.Surcharge6Price = item.Surcharge6Price;
+                        tariffLine.Surcharge7Price = item.Surcharge7Price;
+                        tariffLine.Surcharge8Price = item.Surcharge8Price;
+                        tariffLine.Surcharge9Price = item.Surcharge9Price;
+                        tariffLine.Surcharge10Price = item.Surcharge10Price;
+                        tariffLine.Index = item.Index;
+                        tariffLine.Notes = item.Notes;
+                        copiedVersion.AddTariffLine(tariffLine);
+                    });
 
-        this.EntityPM.AddTariffVersion(copiedVersion);
-
-        this.loadedTariffLines.sort(p => p.Index).forEach(item => {
-            var tariffLine = new TariffLinePM(copiedVersion);
-            tariffLine.StartDate = this.StartDate;
-            tariffLine.ExpirationDate = this.ExpirationDate;
-            tariffLine.Tenant = SessionLocator.Tenant;
-            tariffLine.Version = copiedVersion.Version;
-            tariffLine.OriginPortId = item.OriginPortId;
-            tariffLine.OriginPortCode = item.OriginPortCode;
-            tariffLine.OriginPortName = item.OriginPortName;
-            tariffLine.DestinationPortId = item.DestinationPortId;
-            tariffLine.DestinationPortCode = item.DestinationPortCode;
-            tariffLine.DestinationPortName = item.DestinationPortName;
-            tariffLine.Surcharge1Price = item.Surcharge1Price;
-            tariffLine.Surcharge2Price = item.Surcharge2Price;
-            tariffLine.Surcharge3Price = item.Surcharge3Price;
-            tariffLine.Surcharge4Price = item.Surcharge4Price;
-            tariffLine.Surcharge5Price = item.Surcharge5Price;
-            tariffLine.Surcharge6Price = item.Surcharge6Price;
-            tariffLine.Surcharge7Price = item.Surcharge7Price;
-            tariffLine.Surcharge8Price = item.Surcharge8Price;
-            tariffLine.Surcharge9Price = item.Surcharge9Price;
-            tariffLine.Surcharge10Price = item.Surcharge10Price;
-            tariffLine.Index = item.Index;
-            tariffLine.Notes = item.Notes;
-            copiedVersion.AddTariffLine(tariffLine);
+                    this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
+                }
+            });
         });
 
-        this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
+        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/TariffDatesValidationComponent');
     }
 }
 
