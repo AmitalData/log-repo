@@ -45,6 +45,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityArgs = entityArgs;
+        this.WarningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
         this.Listen();        
     }
 

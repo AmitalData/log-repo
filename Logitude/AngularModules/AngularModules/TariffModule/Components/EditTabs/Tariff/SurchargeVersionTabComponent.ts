@@ -48,6 +48,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityArgs = entityArgs;
+        this.WarningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
         this.Listen();
     }
 

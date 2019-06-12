@@ -44,7 +44,29 @@
                                     <IconButton [ExternalId]="'Package_'+i" [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="item.DeleteClicked()" [IsEnabled]="item.Step != null"></IconButton>
                                 </td>
                             </tr>
+                            <tr style="height:10px;">
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="Label" style="width: 120px; min-width: 120px; max-width: 120px;">
+                                    Warning Percentage
+                                </td>
 
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:80px;">
+                                                <LogTextBox [InputType]="'UnsInteger'" [ObjectFieldName]="'DefaultWarningPercentage'" [ObjectTableName]="'Tenant'" [DataContext]="DataContext" [Text]="DefaultWarningPercentage"></LogTextBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
                             <tr>
                                 <td colspan="2">
                                     <div></div>
