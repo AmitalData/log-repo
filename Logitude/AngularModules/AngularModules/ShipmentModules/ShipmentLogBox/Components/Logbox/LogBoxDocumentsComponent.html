@@ -491,7 +491,7 @@
 
                                                 <div *ngFor="let item1 of externalDocs" style="padding:5px;float:left;width:100%;">
                                                     <span style="font-size:16px;border-bottom:1px solid #BCBEC0;width:100%;float:left;">{{item1.key}}</span>
-                                                    <div *ngFor="let item of item1.value let i = index" class="emptyticket" [class.SearchResult]="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" style="max-width:164px;margin-top:10px;">
+                                                    <div id="{{'EmptyTicket' | IdGeneratorPipe}}" *ngFor="let item of item1.value let i = index" class="emptyticket" [class.SearchResult]="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" style="max-width:164px;margin-top:10px;">
                                                         <table *ngIf="!item.hasFile" style="height:162px;width:162px;" (click)="DocumentClicked(item)">
                                                             <tr>
                                                                 <td style="height:40px;">
