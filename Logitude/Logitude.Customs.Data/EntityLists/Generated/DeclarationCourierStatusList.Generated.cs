@@ -120,6 +120,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string StorageSiteErrorText  { get; set; }
        [DataMember]
        public string StorageSiteStatusName  { get; set; }
+       [DataMember]
+       public string CourierPendingReasonList  { get; set; }
    }
 
 }

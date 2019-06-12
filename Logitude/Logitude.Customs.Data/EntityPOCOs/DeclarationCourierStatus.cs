@@ -70,6 +70,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual MamanStatus MamanStatus { get; set; }
         [Column("StorageSiteErrorText")]
 	    public string StorageSiteErrorText { get; set; }
+        [Column("CourierPendingReasonList")]
+	    public string CourierPendingReasonList { get; set; }
     }
 }
 	 

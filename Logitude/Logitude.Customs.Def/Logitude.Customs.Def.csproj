@@ -228,6 +228,7 @@
     <Compile Include="EntityPMs\Generated\DeclarationPaymentMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationPaymentPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationPaymentProtestPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DeclarationPendingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationStatementTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\DeclarationStatusTypePM.Generated.cs" />

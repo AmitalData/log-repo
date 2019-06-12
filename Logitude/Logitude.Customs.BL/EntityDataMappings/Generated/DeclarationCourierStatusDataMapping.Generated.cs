@@ -42,7 +42,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastMileStatusDate, 
 	         LastMileStatusRemarks, 
 	         StorageSiteStatusCode, 
-	         StorageSiteErrorText,
+	         StorageSiteErrorText, 
+	         CourierPendingReasonList,
 	      }
 
 
@@ -101,7 +102,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LastMileStatusRemarks, 
 	         StorageSiteStatusCode, 
 	         StorageSiteErrorText, 
-	         StorageSiteStatusName,
+	         StorageSiteStatusName, 
+	         CourierPendingReasonList,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -208,6 +210,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StorageSiteErrorText))
             {
 				entityPOCO.StorageSiteErrorText = entityPM.StorageSiteErrorText;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierPendingReasonList))
+            {
+				entityPOCO.CourierPendingReasonList = entityPM.CourierPendingReasonList;
 			}
 			}
 
@@ -319,6 +326,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.StorageSiteErrorText = entityPOCO.StorageSiteErrorText;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierPendingReasonList))
+            {
+					entityPM.CourierPendingReasonList = entityPOCO.CourierPendingReasonList;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationCourierStatusPM entityPM, DeclarationCourierStatusPM oldEntityPM)
@@ -425,6 +437,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.StorageSiteErrorText = entityPM.StorageSiteErrorText;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierPendingReasonList))
+            {
+                oldEntityPM.CourierPendingReasonList = entityPM.CourierPendingReasonList;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationCourierStatusPM entityPM)
@@ -445,6 +462,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.StorageSiteErrorText)) //T4 find type == nText 
             {
                 entityPM.StorageSiteErrorText = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StorageSiteErrorText));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CourierPendingReasonList)) //T4 find type == nText 
+            {
+                entityPM.CourierPendingReasonList = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CourierPendingReasonList));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

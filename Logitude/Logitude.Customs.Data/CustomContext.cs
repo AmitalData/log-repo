@@ -334,6 +334,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DeclarationPaymentProtestMap());
 	
+            modelBuilder.Configurations.Add(new DeclarationPendingMap());
+	
             modelBuilder.Configurations.Add(new DeclarationStatementTypeMap());
 	
             modelBuilder.Configurations.Add(new DeclarationStatusTypeMap());
@@ -1874,6 +1876,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationPaymentProtest> DeclarationPaymentProtests 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationPending> DeclarationPendings 
 	 {
 	      get; set;
 	 

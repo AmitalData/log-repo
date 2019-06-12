@@ -373,6 +373,7 @@
     <Compile Include="EntityDataMappings\DeclarationPaymentDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPaymentMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationPaymentProtestDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeclarationPendingDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationStatementTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationStatusTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeclarationTaxDataMapping.cs" />
@@ -530,6 +531,7 @@
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationPaymentProtestDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeclarationPendingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationStatementTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationStatusTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeclarationTaxDataMapping.Generated.cs" />
@@ -841,6 +843,7 @@
     <Compile Include="EntityQueryServices\ClientAddressQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientDrivingLicenseQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeclarationPendingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\PendingByKeywordQueryService.cs" />
     <Compile Include="EntityQueryServices\ConsignmentQueryService.cs" />
     <Compile Include="EntityQueryServices\CourierDeclarationQueryService.cs" />
@@ -1259,6 +1262,7 @@
     <Compile Include="EntityUpdateServices\CouriersVatUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CustomsDocumentsDefinitionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationConsAcceptanceUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DeclarationPendingUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.amital.cs" />
     <Compile Include="EntityUpdateServices\DeclarationCourierStatusUpdateService.cs" />
     <Compile Include="EntityUpdateServices\DeclarationMamanSpecialActionUpdateService.cs" />
@@ -1295,6 +1299,7 @@
     <Compile Include="EntityUpdateServices\Generated\DeclarationConsAcceptanceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationCourierStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DeclarationMamanSpecialActionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DeclarationPendingUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DocumentTypeCustomsDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FacilitationTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\FreightPaymentMethodUpdateService.Generated.cs" />

@@ -64,6 +64,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.StorageSiteStatusCode).HasColumnName("StorageSiteStatusCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.StorageSiteErrorText).HasColumnName("StorageSiteErrorText").HasMaxLength(1200).IsUnicode(true);
+
+            this.Property(t => t.CourierPendingReasonList).HasColumnName("CourierPendingReasonList").HasMaxLength(1000).IsUnicode(true);
         }
     }
 }
