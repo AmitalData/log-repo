@@ -216,6 +216,7 @@ export class TariffPMService {
             }
 			
                this.MapTariffVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapActiveVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -236,6 +237,22 @@ export class TariffPMService {
 					                 }
 							 
             entityPM.OldEntityPM.TariffVersions.push(newTariffVersionPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.ActiveVersions = [];
+            for (var item in entityPM.ActiveVersions) {
+            var myTariffVersionPM = entityPM.ActiveVersions[item];
+            var newTariffVersionPM: TariffVersionPM = this.clone(myTariffVersionPM);
+						
+                newTariffVersionPM.TariffLines = [];
+                for (var k in myTariffVersionPM.TariffLines) {
+				    var myTariffLinePM =myTariffVersionPM.TariffLines[k];
+				    var newTariffLinePM=this.clone(myTariffVersionPM.TariffLines[k]);
+                    newTariffVersionPM.TariffLines.push(newTariffLinePM);
+
+					                 }
+							 
+            entityPM.OldEntityPM.ActiveVersions.push(newTariffVersionPM);
             }
 			   
 		}
@@ -446,6 +463,206 @@ export class TariffPMService {
             }
         }
     }
+ 
+    MapActiveVersions(entityPM: TariffPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldActiveVersions: TariffVersionPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldActiveVersions = entityPM.OldEntityPM.ActiveVersions;
+        }
+
+        entityPM.ActiveVersions = new Array<TariffVersionPM>();
+        for (var item in jsonPM.ActiveVersions) {
+            var jItem = jsonPM.ActiveVersions[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newTariffVersionPM: TariffVersionPM;
+	  
+            if (mapParent) {
+                newTariffVersionPM = new TariffVersionPM(entityPM);
+            }
+            else
+            {
+                newTariffVersionPM = new TariffVersionPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newTariffVersionPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newTariffVersionPM.UniqueKey = Guid.newGuid();
+                newTariffVersionPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newTariffVersionPM.OldEntityPM = this.clone(newTariffVersionPM);
+ 
+
+                this.MapTariffLines(newTariffVersionPM, jItem, mapParent);
+                newTariffVersionPM.OldEntityPM.TariffLines = [];
+                for (var k in newTariffVersionPM.TariffLines) {
+                    //var clonedInside = this.clone(newTariffVersionPM.TariffLines[k]);
+                    newTariffVersionPM.OldEntityPM.TariffLines.push(newTariffVersionPM.TariffLines[k].OldEntityPM); // clone old TariffLines//
+                }
+
+				
+            }
+            else {
+                if (newTariffVersionPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newTariffVersionPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newTariffVersionPM.ChangeSetOp = "Insert";
+                }
+ 
+
+                this.MapTariffLines(newTariffVersionPM, jItem, mapParent);
+ 
+                newTariffVersionPM.OldEntityPM = null;
+                newTariffVersionPM.EntityParentPM = null;
+            }
+			
+			 newTariffVersionPM.IsDirty = false;
+            entityPM.ActiveVersions.push(newTariffVersionPM);
+        }
+        if (oldActiveVersions) {
+            
+            for (var itemKey in oldActiveVersions) {
+                if (entityPM.ActiveVersions.filter(p=> p.UniqueKey === oldActiveVersions[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldActiveVersions[itemKey]) {
+                        //oldActiveVersions[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ActiveVersions.push(oldActiveVersions[itemKey]);
+						var oldItemJson = oldActiveVersions[itemKey];
+                        var deletedPM: TariffVersionPM = new TariffVersionPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+ 
+
+                        this.MapTariffLines(deletedPM, oldItemJson, mapParent);
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ActiveVersions.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    //MapTariffLines(entityPM: TariffVersionPM, jsonPM: any, mapParent: boolean = true) {
+
+    //    var oldTariffLines: TariffLinePM[] = [];
+    //    if (entityPM.OldEntityPM && !mapParent) {
+    //        oldTariffLines = entityPM.OldEntityPM.TariffLines;
+    //    }
+
+    //    entityPM.TariffLines = new Array<TariffLinePM>();
+    //    for (var item in jsonPM.TariffLines) {
+    //        var jItem = jsonPM.TariffLines[item];
+    //        if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+    //            continue;
+    //        }
+    //        var newTariffLinePM: TariffLinePM;
+	  
+    //        if (mapParent) {
+    //            newTariffLinePM = new TariffLinePM(entityPM);
+    //        }
+    //        else
+    //        {
+    //            newTariffLinePM = new TariffLinePM(null);
+    //        }
+                
+    //        var pmKeysArray = Object.keys(jItem);
+    //        for (var pmKey in pmKeysArray) {
+    //            if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+    //                continue;
+    //            }
+    //            var pmProperty = pmKeysArray[pmKey];
+    //            newTariffLinePM[pmProperty] = jItem[pmProperty];
+    //        }
+           
+			 
+    //        if (mapParent) {
+    //            newTariffLinePM.UniqueKey = Guid.newGuid();
+    //            newTariffLinePM.ChangeSetOp = "None";
+    //            jItem.ChangeSetOp = "None";
+    //            newTariffLinePM.OldEntityPM = this.clone(newTariffLinePM);
+
+				
+    //        }
+    //        else {
+    //            if (entityPM.ChangeSetOp === "Delete") {
+    //                newTariffLinePM.ChangeSetOp = "Delete";
+    //            }
+    //            else {
+    //                if (newTariffLinePM.UniqueKey) {
+
+    //                if (jItem.IsDirty)
+    //                    newTariffLinePM.ChangeSetOp = "Update";
+    //                }
+    //            else {
+    //                    newTariffLinePM.ChangeSetOp = "Insert";
+    //                }
+    //            }
+ 
+    //            newTariffLinePM.OldEntityPM = null;
+    //            newTariffLinePM.EntityParentPM = null;
+    //        }
+			
+			 //newTariffLinePM.IsDirty = false;
+    //        entityPM.TariffLines.push(newTariffLinePM);
+    //    }
+    //    if (oldTariffLines) {
+            
+    //        for (var itemKey in oldTariffLines) {
+    //            if (entityPM.TariffLines.filter(p=> p.UniqueKey === oldTariffLines[itemKey].UniqueKey).length === 0) {
+				
+    //                if (oldTariffLines[itemKey]) {
+    //                    //oldTariffLines[itemKey].ChangeSetOp = "Delete";
+    //                    //entityPM.TariffLines.push(oldTariffLines[itemKey]);
+				//		var oldItemJson = oldTariffLines[itemKey];
+    //                    var deletedPM: TariffLinePM = new TariffLinePM(null);
+    //                    var pmKeys = Object.keys(oldItemJson);
+    //                    for (var key in pmKeys) {
+
+    //                        if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+    //                            continue;
+    //                        }
+
+    //                        var property = pmKeys[key];
+    //                        deletedPM[property] = oldItemJson[property];
+    //                    }
+
+                      
+    //                    deletedPM.IsDirty = false;
+    //                    deletedPM.ChangeSetOp = "Delete";
+                        
+    //                    deletedPM.OldEntityPM = null;
+    //                    entityPM.TariffLines.push(deletedPM);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
  
 
 	  public clone(jsonPM: any) {
