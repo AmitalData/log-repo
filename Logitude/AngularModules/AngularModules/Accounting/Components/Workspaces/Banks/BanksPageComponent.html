@@ -167,7 +167,7 @@
                                                                         </td>
                                                                     </tr>
 
-                                                                    <tr>
+                                                                    <tr *ngIf="LoadBankPageMENUVisibility" >
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" (click)="LoadBankPagesFromFile()"> {{'Accounting.General.O.LoadBankPage' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
