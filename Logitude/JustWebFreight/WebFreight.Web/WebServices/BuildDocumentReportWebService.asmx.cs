@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.WebServices
 {
@@ -26,6 +27,12 @@ namespace WebFreight.Web.WebServices
         [WebMethod]
         public string BuildDocumentReport(string buildDocumentParameterxml)
         {
+
+           
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
             StiReport stiReport = new StiReport();
 
             if (!string.IsNullOrEmpty(buildDocumentParameterxml))
@@ -33,7 +40,7 @@ namespace WebFreight.Web.WebServices
                 buildDocumentParameterxml = buildDocumentParameterxml.Replace("@TagOpen", "<");
                 BuildDocumentParameter buildDocumentParameter = LogitudeXmlSerializer.DeserializeObject<BuildDocumentParameter>(buildDocumentParameterxml);
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                stiReport = exportDocumentHelper.BuildReport(buildDocumentParameter.DocumentTypeCode, buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DefaulttemplateId, buildDocumentParameter.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
+                stiReport = exportDocumentHelper.BuildReport(buildDocumentParameter.DocumentTypeCode, buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DefaulttemplateId, authToken.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
 
             }
 
@@ -42,5 +49,27 @@ namespace WebFreight.Web.WebServices
 
         }
 
+        [WebMethod]
+        public string ExportDocument2Pdf(string buildDocumentParameterxml)
+        {
+            string result = "";
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+            if (!string.IsNullOrEmpty(buildDocumentParameterxml))
+            {
+                buildDocumentParameterxml = buildDocumentParameterxml.Replace("@TagOpen", "<");
+                BuildDocumentParameter buildDocumentParameter = LogitudeXmlSerializer.DeserializeObject<BuildDocumentParameter>(buildDocumentParameterxml);
+                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+                result = exportDocumentHelper.ExportDocument2Pdf( buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DocumentOutId, authToken.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
+
+            }
+
+            return result;
+
+        }
+
+        
     }
 }

@@ -280,8 +280,16 @@ namespace WebFreight.Web.Helpers
             string documentTypeCopyId = documentTypeCopy != null ? documentTypeCopy.Id : "";
             string documentTypeCode = !string.IsNullOrEmpty(documentType.Code) ? documentType.Code.ToUpper() : "";
             DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
+            StiReport report = new StiReport();
+            if (IsCallBuildDocumentReportWebService())
+            {
+                report = BuildReportViaWebService(new BuildDocumentParameter { DocumentTypeCode = documentType.Code, DocumentTypeId = documentType.Id, EntityId = entityId, EntityObjectTableId = entityObjectTableId, ChildEntityId = childEntityId, ChildObjectTableId = childObjectTableId, DefaulttemplateId = defaulttemplate.Id, Tenant = tenant, DocumentTypeCopyId = documentTypeCopyId });
+            }
+            else
+            {
+                return BuildReport(documentType.Code, documentType.Id, entityId, entityObjectTableId, childEntityId, childObjectTableId, defaulttemplate.Id, tenant, documentTypeCopyId, userId);
 
-            StiReport report = BuildReportViaWebService(new BuildDocumentParameter {DocumentTypeCode = documentType.Code,DocumentTypeId = documentType.Id, EntityId= entityId, EntityObjectTableId= entityObjectTableId, ChildEntityId= childEntityId , ChildObjectTableId = childObjectTableId ,DefaulttemplateId = defaulttemplate .Id, Tenant = tenant , DocumentTypeCopyId = documentTypeCopyId });
+            }
 
             return report;
         }
@@ -294,17 +302,11 @@ namespace WebFreight.Web.Helpers
                 string buildDocumentParameterxml = LogitudeXmlSerializer.SerializeObjectToXmlString(buildDocumentParameter);
                 buildDocumentParameterxml = buildDocumentParameterxml.Replace("<", "@TagOpen");
 
-
-                string soap = @"<?xml version=""1.0"" encoding=""utf-8""?>
-<soap:Envelope xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
- 
-xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" 
-xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
-  <soap:Body>
-    <BuildDocumentReport xmlns=""http://tempuri.org/"">
-     <buildDocumentParameterxml>" + buildDocumentParameterxml + "</buildDocumentParameterxml></BuildDocumentReport></soap:Body></soap:Envelope>";
+                string soap = GetSoapReportViaWebService(buildDocumentParameterxml);
                 StiReport stiReport = new StiReport();
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://localhost:9996/WebServices/BuildDocumentReportWebService.asmx");
+                string token = HttpContext.Current.Request.Headers["Token"];
+                req.Headers.Add("Token", token);
                 req.ContentType = "application/soap+xml;";
                 req.Method = "POST";
                 using (Stream stm = req.GetRequestStream())
@@ -323,8 +325,9 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
                         if (!string.IsNullOrEmpty(result))
                         {
-                            result=  HttpUtility.HtmlDecode(result);
+                            result = HttpUtility.HtmlDecode(result);
                             stiReport.LoadDocumentFromString(result);
+                            ExceptionDateBuildDocumentReportWebService = null;
                         }
 
                     }
@@ -334,8 +337,21 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             }
             catch (Exception ex)
             {
+                ExceptionDateBuildDocumentReportWebService = DateTime.Now;
                 return BuildReport(buildDocumentParameter.DocumentTypeCode, buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DefaulttemplateId, buildDocumentParameter.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
             }
+        }
+
+        private static string GetSoapReportViaWebService(string buildDocumentParameterxml)
+        {
+            return @"<?xml version=""1.0"" encoding=""utf-8""?>
+<soap:Envelope xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
+ 
+xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" 
+xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
+  <soap:Body>
+    <BuildDocumentReport xmlns=""http://tempuri.org/"">
+     <buildDocumentParameterxml>" + buildDocumentParameterxml + "</buildDocumentParameterxml></BuildDocumentReport></soap:Body></soap:Envelope>";
         }
 
         public StiReport BuildReport(string documentTypeCode, string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string defaulttemplateId, int tenant, string userId, string documentTypeCopyId)
@@ -1938,6 +1954,23 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
         }
 
 
+        public static DateTime? ExceptionDateBuildDocumentReportWebService { get; set; }
+        private bool IsCallBuildDocumentReportWebService()
+        {
+            bool result = false;
+            if (ExceptionDateBuildDocumentReportWebService == null) result = true;
+            else
+            {
+                DateTime nowDate = DateTime.Now;
+                DateTime endDate = (DateTime)ExceptionDateBuildDocumentReportWebService;
+                if (endDate.AddMinutes(5)< nowDate)
+                {
+                    result = true;
+                }
+            }
+            return result;
+
+        }
 
 
     }
@@ -1957,7 +1990,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
         public string DocumentTypeCopyId { get; set; }
         public long TheT1 { get; set; }
         public long TheT2 { get; set; }
-
+        public string DocumentOutId { get; set; }
     }
 
 }
