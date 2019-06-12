@@ -57,6 +57,7 @@ export class BanksPageComponent {
 
 
     //#region Queries Features
+    LoadBankPageMENUVisibility: boolean = false;
     public TodayDepositsVisibility: boolean = false;
     public cashDepositsVisibility: boolean = false;
     public chequeDepositVisibility: boolean = false;
@@ -111,6 +112,7 @@ export class BanksPageComponent {
         this.cashDepositsVisibility = FeatureLocator.HasFeaturePermession("BankDeposit", "CashBankDeposit") ? true : false;
         this.chequeDepositVisibility = FeatureLocator.HasFeaturePermession("BankDeposit", "ChequeBankDeposit") ? true : false;
         this.TodayDepositsVisibility = FeatureLocator.HasFeaturePermession("BankDeposit", "TodayBankDeposit") ? true : false;
+        this.LoadBankPageMENUVisibility = FeatureLocator.HasFeaturePermession("ReconcileExternalPage", "LOADBANKPAGEMENU") ? true : false;
     }
 
     LoadQueriesCounts() {

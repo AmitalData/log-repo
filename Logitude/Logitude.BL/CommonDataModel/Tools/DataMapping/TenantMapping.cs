@@ -115,6 +115,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
             poco.CBSA = entityPM.CBSA;
             poco.CAAT = entityPM.CAAT;
+            poco.DefaultWarningPercentage = entityPM.DefaultWarningPercentage;
 
             // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
             BuildSearchFields(entityPM, poco);
