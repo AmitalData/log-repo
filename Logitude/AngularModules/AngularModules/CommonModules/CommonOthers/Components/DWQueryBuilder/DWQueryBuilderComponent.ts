@@ -114,7 +114,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             this.SearchFieldsId = "DWQueryBuilderSearchFields_" + this.CurrentSession.GetNewId("DWQueryBuilderSearchFields");
         }
 
-
+        //this.ClearData();
         //this._DWQueryBuilderHelper.FillAllFactFields("Fact_Shipments");
         this._DWObjectTableListService.getAll().subscribe(myResult => {
             this.AllTables = myResult.Result;
@@ -1143,7 +1143,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     if (this.CurrentSession.CurrentWindow) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
-                    this.PreviewData(true, []);
+                    //this.PreviewData(true, []);
                     //////////////////////////////////////////
                 }
             });
@@ -1461,7 +1461,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.operators = newValue;
     }
 
-    private textValue: any;
+    private textValue: any = false;
     public get TextValue() {
         return this.textValue;
     }

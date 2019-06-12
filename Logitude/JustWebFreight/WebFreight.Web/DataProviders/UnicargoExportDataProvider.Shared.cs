@@ -52,7 +52,7 @@ namespace WebFreight.Web.DataProviders
         public string Agent { get; set; }
         public string ReleasingAgent { get; set; }
         public string PackageType { get; set; }
-        public int? TotalPieces { get; set; }
+        public string TotalPieces { get; set; }
         public double? Volume { get; set; }
         public double? GrossWeight { get; set; }
         public double? VolumetricWeight { get; set; }
