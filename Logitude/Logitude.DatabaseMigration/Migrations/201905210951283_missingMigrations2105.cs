@@ -7,6 +7,7 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
+            return;
             DropForeignKey("Customs.Declarations", "MamanStatusCode", "Customs.MamanStatuses");
             DropIndex("Customs.Declarations", new[] { "MamanStatusCode" });
             CreateTable(
