@@ -80,7 +80,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                             JournalToGLAccountMoreData.BuildJournals(parameterArgsFromCommunicationsData.Tenant, parameterArgsFromCommunicationsData.JournalInput);
                             parameterArgs.MyState = AccFunctionalState.CheckTrailReport.ToString();
-                            BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask(parameterArgs);
+                            BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask(parameterArgs, false);
                             scope.Complete();
                         }
                         break;
@@ -226,7 +226,7 @@ $"Expected:{r.ExpectedLocalCloseBalance.GetValueOrDefault()}!=Real{r.LocalCloseB
                 // 2- Send to queue
                 var queueservice = new DbQueueService();
                 queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
-                TimeSpan myTimeSpan = null;
+                TimeSpan? myTimeSpan = null;
                 if (delay2Min) { TimeSpan.FromMinutes(2); }
 
                 queueservice.Send(new Dictionary<string, string>()

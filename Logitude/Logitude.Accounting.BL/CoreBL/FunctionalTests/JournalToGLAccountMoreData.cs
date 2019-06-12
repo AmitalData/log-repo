@@ -111,7 +111,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 
                 }
 
-                BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask( args);
+                BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask( args, false);
 
 
                 scope.Complete();
