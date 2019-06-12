@@ -46,6 +46,9 @@ using Logitude.Accounting.BL.DataContract;
 using WebFreight.Web.AccountingModel.Reports.OpenFormatReport;
 using Newtonsoft.Json;
 using System.Net;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace WebFreight.Web.Helpers
 {
@@ -310,7 +313,9 @@ namespace WebFreight.Web.Helpers
 
                 string soap = GetSoapReportViaWebService(buildDocumentParameterxml);
                 StiReport stiReport = new StiReport();
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://localhost:9996/WebServices/BuildDocumentReportWebService.asmx");
+        //    
+                string url =   LogitudeSettings.CPUIntensiveWebServicesURL.TrimEnd('/') + "/WebServices/BuildDocumentReportWebService.asmx";
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 string token = HttpContext.Current.Request.Headers["Token"];
                 req.Headers.Add("Token", token);
                 req.ContentType = "application/soap+xml;";
@@ -1964,14 +1969,17 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
         private bool IsCallBuildDocumentReportWebService()
         {
             bool result = false;
-            if (ExceptionDateBuildDocumentReportWebService == null) result = true;
-            else
+            if (!string.IsNullOrEmpty(LogitudeSettings.CPUIntensiveWebServicesURL))
             {
-                DateTime nowDate = DateTime.Now;
-                DateTime endDate = (DateTime)ExceptionDateBuildDocumentReportWebService;
-                if (endDate.AddMinutes(5)< nowDate)
+                if (ExceptionDateBuildDocumentReportWebService == null) result = true;
+                else
                 {
-                    result = true;
+                    DateTime nowDate = DateTime.Now;
+                    DateTime endDate = (DateTime)ExceptionDateBuildDocumentReportWebService;
+                    if (endDate.AddMinutes(5) < nowDate)
+                    {
+                        result = true;
+                    }
                 }
             }
             return result;
