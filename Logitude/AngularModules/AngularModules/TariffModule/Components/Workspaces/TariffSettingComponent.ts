@@ -27,11 +27,11 @@ export class TariffSettingComponent extends BaseComponent {
     private myService: TariffSettingPMService;
     private myDomainService: TariffDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
-    private TenantPM: TenantPM;
+    private TenantPM: TenantPM = new TenantPM();
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
-        this.TenantPM = SessionLocator.TenantPM;
+        this.GetTenantPMMethod();
         this.myService = new TariffSettingPMService();
         this.myDomainService = new TariffDomainService();
 
@@ -55,6 +55,15 @@ export class TariffSettingComponent extends BaseComponent {
             });
         });
     }
+
+    private GetTenantPMMethod() {
+        var myService: TenantPMService = new TenantPMService();
+        myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
+            this.TenantPM = response.Result;
+           
+        });
+    }
+
 
     get DefaultWarningPercentage() {
         if (this.TenantPM != null) {
@@ -111,6 +120,7 @@ export class TariffSettingComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
+        this.TenantPM = null;
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {

@@ -301,7 +301,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     private ItemsCollection: TariffLineData[] = [];
     public DeletedTariffsLines: TariffLineData[] = [];
     FillTariffLines(tariffLines: TariffLinePM[]) {
-        this.TariffsLinesSource.Clear();
+        if (this.TariffsLinesSource != null) {
+             this.TariffsLinesSource.Clear();
+        }
+       
         this.ItemsCollection = [];
         this.DeletedTariffsLines = [];
 
@@ -427,7 +430,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
 
         else {
-            if (this.CurrentVersion.IsDraft) {
+            if (this.CurrentVersion != null && this.CurrentVersion.IsDraft) {
                 this.FillTariffLines(this.CurrentVersion.TariffLines);
             }
 
