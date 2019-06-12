@@ -134,6 +134,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.EcommerceSupportEmail).HasColumnName("EcommerceSupportEmail");
             this.Property(t => t.CBSA).HasColumnName("CBSA");
             this.Property(t => t.CAAT).HasColumnName("CAAT");
+            this.Property(t => t.DefaultWarningPercentage).HasColumnName("DefaultWarningPercentage");
 
 
             //#if ORACLE_DB

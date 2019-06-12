@@ -70,6 +70,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.DefaultExternalDiffGLAccountId).HasColumnName("DefaultExternalDiffGLAccountId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.SoftwareVersion).HasColumnName("SoftwareVersion").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.IsPaymentChequesActivated).HasColumnName("IsPaymentChequesActivated");
         }
     }
 }

@@ -45,6 +45,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityArgs = entityArgs;
+        this.WarningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
         this.Listen();        
     }
 
@@ -217,7 +218,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     private ItemsCollection: TariffLineData[] = [];
     FillTariffLines(tariffLines: TariffLinePM[]) {
-        this.TariffsLinesSource.Clear();
+        if (this.TariffsLinesSource != null) {
+            this.TariffsLinesSource.Clear();
+        }
+      
         this.ItemsCollection = [];  
         this.DeletedTariffsLines = [];
 
@@ -634,7 +638,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
 
         else {
-            if (this.CurrentVersion.IsDraft) {
+            if (this.CurrentVersion != null && this.CurrentVersion.IsDraft) {
                 this.FillTariffLines(this.CurrentVersion.TariffLines);
             }
 
