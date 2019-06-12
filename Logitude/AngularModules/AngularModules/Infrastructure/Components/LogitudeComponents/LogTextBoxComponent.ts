@@ -338,12 +338,19 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         var table = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
         if (table) {
             this.ObjectField = window.ObjectFields.filter(d => d.ObjectTableId === table.Id && d.FieldName === this.ObjectFieldName)[0];
-            console.log(
-                "LogTextBox Objectfield: ",
-                this.ObjectField.Id,
-                this.ObjectField.FieldName,
-                this.ObjectField.EnableFullscreenTextBox
-            );
+            if (AppTool.IsNullOrEmpty(this.ObjectField)) {
+                console.error(
+                    "LogTextBox Objectfield error: ",
+                    this.ObjectTableName,
+                    this.ObjectFieldName);
+            } else {
+                console.log(
+                    "LogTextBox Objectfield: ",
+                    this.ObjectField.Id,
+                    this.ObjectField.FieldName,
+                    this.ObjectField.EnableFullscreenTextBox
+                );
+            }
 
             if (!this.ObjectField) {
                 objectFieldAvailable = false;

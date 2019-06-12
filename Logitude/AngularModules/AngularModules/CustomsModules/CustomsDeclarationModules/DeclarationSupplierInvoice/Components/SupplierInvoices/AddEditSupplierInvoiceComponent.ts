@@ -2203,80 +2203,81 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             //var commission: VendorCommissionPM = response.Result;
 
-            var commission: VendorCommissionList = this.CustomerCommissionsList.filter(d => d.VendorId == this.EntityPM.VendorId && d.ModificationsTypeCode == "I10")[0];
-            if (commission) {
-                if (commission.CommisionPercentage) {
+            var commissionList: VendorCommissionList[] = this.CustomerCommissionsList.filter(d => d.VendorId == this.EntityPM.VendorId);
+            if (commissionList != null && commissionList.length > 0) {
+                for (let commission of commissionList) {
+                    if (commission) {
+                        if (commission.CommisionPercentage) {
 
-                    //init new mod values
-                    var newCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
-                    var newAmount = this.precisionRound((commission.CommisionPercentage / 100) * this.EntityPM.InvoiceAmount, 2);
+                            //init new mod values
+                            var newCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
+                            var newAmount = this.precisionRound((commission.CommisionPercentage / 100) * this.EntityPM.InvoiceAmount, 2);
 
-                    // if commission found:
-                    // 1- update Field VendorCommisionPercentage.SupplierInvoice
-                    this.EntityPM.VendorComissionPercentage = commission.CommisionPercentage;
-                    console.log("[!] invoice commission changed to:", this.EntityPM.VendorComissionPercentage);
+                            // if commission found:
+                            // 1- update Field VendorCommisionPercentage.SupplierInvoice
+                            this.EntityPM.VendorComissionPercentage = commission.CommisionPercentage;
+                            console.log("[!] invoice commission changed to:", this.EntityPM.VendorComissionPercentage);
 
-                    // 2- In case there’s mod record , update it
-                    var modTypeI10 = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == "I10")[0];
-                    if (modTypeI10) {
-                        // 3- In case there’s record with same type (I10) 
-                        //    and it's with different currency OR value ask user
-                        if (modTypeI10.Amount != newAmount || modTypeI10.CurrencyTypeCode != newCurrency) {
-                            //somthing changed, amount or currency
-                            //ask user to change it
-                            var confirm = new ConfirmWindow;
-                            var msgTxt = TextCodeTranslator.Translate("Customs.Declaration.O.CommissionChangedFromTo");
-                            msgTxt = msgTxt.replace("#oldValue", modTypeI10.Amount.toFixed(2).toString() + " " + modTypeI10.CurrencyTypeCode);
-                            msgTxt = msgTxt.replace("#newValue", newAmount.toFixed(2).toString() + " " + newCurrency); // new values
-                            confirm.Show(msgTxt);
+                            // 2- In case there’s mod record , update it
+                            var modTypeI10 = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == commission.ModificationsTypeCode)[0];
+                            if (modTypeI10) {
+                                // 3- In case there’s record with same type 
+                                //    and it's with different currency OR value ask user
+                                if (modTypeI10.Amount != newAmount || modTypeI10.CurrencyTypeCode != newCurrency) {
+                                    //somthing changed, amount or currency
+                                    //ask user to change it
+                                    var confirm = new ConfirmWindow;
+                                    var msgTxt = TextCodeTranslator.Translate("Customs.Declaration.O.CommissionChangedFromTo");
+                                    msgTxt = msgTxt.replace("#oldValue", modTypeI10.Amount.toFixed(2).toString() + " " + modTypeI10.CurrencyTypeCode);
+                                    msgTxt = msgTxt.replace("#newValue", newAmount.toFixed(2).toString() + " " + newCurrency); // new values
+                                    confirm.Show(msgTxt);
 
-                            confirm.WindowClosed.subscribe((event: any) => {
-                                if (confirm.Yes) {
-                                    //update record
-                                    modTypeI10.CurrencyTypeCode = newCurrency;
-                                    modTypeI10.CurrencyTypeName = this.invoiceCurrencyName;
-                                    modTypeI10.Amount = newAmount;
+                                    confirm.WindowClosed.subscribe((event: any) => {
+                                        if (confirm.Yes) {
+                                            //update record
+                                            modTypeI10.CurrencyTypeCode = newCurrency;
+                                            modTypeI10.CurrencyTypeName = this.invoiceCurrencyName;
+                                            modTypeI10.Amount = newAmount;
 
-                                    this.UpdateModificationsList();
+                                            this.UpdateModificationsList();
 
-                                    confirm.Close();
+                                            confirm.Close();
+                                        }
+                                        else {
+                                            //don't update
+                                            confirm.Close();
+                                        }
+                                    });
+
                                 }
                                 else {
-                                    //don't update
-                                    confirm.Close();
+                                    // same currency and amount
+                                    if (modTypeI10.Amount == newAmount && modTypeI10.CurrencyTypeCode == newCurrency) {
+                                        // no changes
+                                    }
                                 }
-                            });
 
-                        }
-                        else {
-                            // same currency and amount
-                            if (modTypeI10.Amount == newAmount && modTypeI10.CurrencyTypeCode == newCurrency) {
-                                // no changes
                             }
+                            else {
+                                //In case there’s no mod record I10, create a record in SupplierInvoiceModification 
+                                var newMod = new SupplierInvoiceModificationPM(this.EntityPM);
+                                newMod.Tenant = this.EntityPM.Tenant;
+                                newMod.DeclarationId = this.EntityPM.DeclarationId;
+                                newMod.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+                                newMod.TypeCode = commission.ModificationsTypeCode;
+                                newMod.TypeName = this.typeNameForI10;
+                                newMod.CurrencyTypeCode = newCurrency;
+                                newMod.CurrencyTypeName = this.invoiceCurrencyName;
+                                newMod.Amount = newAmount;
+
+                                this.EntityPM.SupplierInvoiceModifications.push(newMod);
+
+                                this.UpdateModificationsList();
+                            }
+
+
                         }
-
                     }
-                    else {
-                        //In case there’s no mod record I10, create a record in SupplierInvoiceModification 
-                        var newMod = new SupplierInvoiceModificationPM(this.EntityPM);
-                        newMod.Tenant = this.EntityPM.Tenant;
-                        newMod.DeclarationId = this.EntityPM.DeclarationId;
-                        newMod.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
-
-                        newMod.TypeCode = "I10";
-                        newMod.TypeName = this.typeNameForI10;
-
-                        newMod.CurrencyTypeCode = newCurrency;
-                        newMod.CurrencyTypeName = this.invoiceCurrencyName;
-
-                        newMod.Amount = newAmount;
-
-                        this.EntityPM.SupplierInvoiceModifications.push(newMod);
-
-                        this.UpdateModificationsList();
-                    }
-
-
                 }
             } else {
                 //No commission for this vendor , delete existing commission ?
