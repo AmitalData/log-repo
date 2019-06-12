@@ -2346,8 +2346,8 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent
     OnRowEnded($event) {
         //console.log("this.ItemsSource.Length : " + this.ItemsSource.Length);
         if (($event) == this.ItemsSource.Length) {
-            setTimeout(() => this.Add(), 1);
-            //this.Add();
+            //setTimeout(() => this.Add(), 1);
+            this.Add();
 
         }
     }
