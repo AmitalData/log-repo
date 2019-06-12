@@ -24,6 +24,11 @@ namespace Logitude.TariffModule.Data.Repositories
         {
             return (from a in context.TariffLines where a.TariffId == tariffId && a.Tenant == tenant select a).ToList();
         }
+
+        public List<TariffLine> GetTariffLinesByTariffAndVersion(string tariffId, int version, int tenant)
+        {
+            return (from a in context.TariffLines where a.TariffId == tariffId && a.Version == version && a.Tenant == tenant select a).ToList();
+        }
     }
 }
    

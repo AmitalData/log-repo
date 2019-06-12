@@ -131,8 +131,15 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.SetUIProperties();
         }
     }
-
-
+    
+    get IsPaymentChequesActivated() { return this.EntityPM.IsPaymentChequesActivated; }
+    set IsPaymentChequesActivated(value: boolean) {
+        if (this.EntityPM.IsPaymentChequesActivated != value) {
+            this.EntityPM.IsPaymentChequesActivated = value;
+            
+            this.SetUIProperties();
+        }
+    }
 
     get DeductionFileNumber() { return this.EntityPM.DeductionFileNumber; }
     set DeductionFileNumber(value: string) {

@@ -6,17 +6,18 @@ import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/Ex
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { PortPM } from '../../../../Common/EntityPMs/PortPM';
-import { TariffDomainService, TariffFilterParameter, ExcelTariffLines } from '../../../../TariffModule/Services/TariffDomainService';
+import { TariffDomainService, TariffFilterParameter, ExcelTariffLines } from '../../../Services/TariffDomainService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
-import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
-import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
-import { TariffVersionPM } from '../../../../TariffModule/EntityPMs/TariffVersionPM';
+import { TariffPM } from '../../../EntityPMs/TariffPM';
+import { TariffLinePM } from '../../../EntityPMs/TariffLinePM';
+import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
 import { AppTool, FontTool, DateTool, FormatTool } from '../../../../Infrastructure/Tools';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
+import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/TariffVersionExtendedPMService';
 import { DatePipe } from '@angular/common';
 declare var ResultAsArray: any;
 
@@ -44,6 +45,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityArgs = entityArgs;
+        this.WarningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
         this.Listen();        
     }
 
@@ -54,7 +56,19 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.CurrentVersion.Version)[0];
-                    this.FillTariffLines();
+
+                    if (this.CurrentVersion == null) {
+                        // after creating new version
+                        this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
+                    }
+
+                    if (this.CurrentVersion.IsDraft) {
+                        this.FillTariffLines(this.CurrentVersion.TariffLines);
+                    }
+
+                    else {
+                        this.LoadTariffLines("currentVersion");
+                    }
 
                     if (this.isApproveButtonClicked) {
                         this.isApproveButtonClicked = false;
@@ -95,11 +109,48 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.IsComparToChecked = true;
         }
 
-        this.BuildVersionsList();
+        this.LoadCompareToVersions();
 
         this.SetUIProperties();
         this.SetStepsLabelsAndVisibility();
-        this.FillTariffLines();
+
+        if (this.CurrentVersion.IsDraft) {
+            this.FillTariffLines(this.CurrentVersion.TariffLines);
+        }
+
+        else {
+            this.LoadTariffLines("currentVersion");
+        }
+    }
+
+    private loadedTariffLines: TariffLinePM[];
+    private compareTariffLines: TariffLinePM[];
+    private LoadTariffLines(type: string) {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        if (type == "currentVersion") {
+            this.TariffDomainService.GetTariffVersionLines(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    this.loadedTariffLines = response.Result;
+
+                    this.FillTariffLines(this.loadedTariffLines);
+                }
+
+                this.CurrentSession.StopBusyIndicator();
+            });
+        }
+
+        else if (type == "compareVersion") {
+            this.TariffDomainService.GetTariffVersionLines(this.EntityPM.Id, this.ComparedToVersionPM.Version).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    this.compareTariffLines = response.Result;
+
+                    this.FillTariffLines(this.compareTariffLines);
+                }
+
+                this.CurrentSession.StopBusyIndicator();
+            });
+        }        
     }
 
     SetUIProperties() {
@@ -113,11 +164,11 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     get VersionNumber() {
-        return this.CurrentVersion.Version;
+        return (this.CurrentVersion == null ? null : this.CurrentVersion.Version);
     }
 
     get StartDate() {
-        return this.CurrentVersion.StartDate;
+        return (this.CurrentVersion == null ? null : this.CurrentVersion.StartDate);
     }
     set StartDate(value: Date) {
         if (this.CurrentVersion.StartDate != value) {
@@ -128,7 +179,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     get ExpirationDate() {
-        return this.CurrentVersion.ExpirationDate;
+        return (this.CurrentVersion == null ? null : this.CurrentVersion.ExpirationDate);
     }
     set ExpirationDate(value: Date) {
         if (this.CurrentVersion.ExpirationDate != value) {
@@ -166,12 +217,15 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     private ItemsCollection: TariffLineData[] = [];
-    FillTariffLines() {
-        this.TariffsLinesSource.Clear();
+    FillTariffLines(tariffLines: TariffLinePM[]) {
+        if (this.TariffsLinesSource != null) {
+            this.TariffsLinesSource.Clear();
+        }
+      
         this.ItemsCollection = [];  
         this.DeletedTariffsLines = [];
 
-        this.CurrentVersion.TariffLines.sort(p => p.Index).forEach(item => {
+        tariffLines.sort(p => p.Index).forEach(item => {
             this.ItemsCollection.push(new TariffLineData(item, this));
         });
 
@@ -185,7 +239,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     ComaredLines() {
         this.ItemsCollection.forEach((item: TariffLineData) => {
-            var line = this.ComparedToVersionPM.TariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line) {
                 item.ComparedEntity = line;
                 item.SetCellsComparingText();
@@ -197,8 +251,16 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         });
     }
     BuildDeletedLines() {
-        this.ComparedToVersionPM.TariffLines.sort(p => p.Index).forEach(item => {
-            var line = this.CurrentVersion.TariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+        var lines: TariffLinePM[];
+        if (this.CurrentVersion.IsDraft) {
+            lines = this.CurrentVersion.TariffLines;
+        }
+        else {
+            lines = this.loadedTariffLines;
+        }
+
+        this.compareTariffLines.sort(p => p.Index).forEach(item => {
+            var line = lines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line == null) {
                 this.DeletedTariffsLines.push(new TariffLineData(item, this));// Deleted 
             }
@@ -212,7 +274,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     set IsComparToChecked(value: boolean) {
         if (this.isComparToChecked != value) {
             this.isComparToChecked = value;
-            this.ComparingCalculations();
+            this.ComparingCalculations(false);
         }
     }
 
@@ -223,11 +285,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     set WarningPercentage(value: number) {
         if (this.warningPercentage != value) {
             this.warningPercentage = value;
-            this.ComparingCalculations();
+            this.ComparingCalculations(false);
         }
     }
-
-
+    
     public Step1PriceLabel: string;
     public Step2PriceLabel: string;
     public Step3PriceLabel: string;
@@ -300,7 +361,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             if (confirmWindow.Yes) {
                 this.CurrentVersion.RemoveTariffLine(item.EntityPM);
                 this.TariffsLinesSource.Remove(item);
-                this.FillTariffLines();
+                this.FillTariffLines(this.CurrentVersion.TariffLines);
             }
         });
     }
@@ -490,7 +551,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         this.EntityPM.AddTariffVersion(copiedVersion);
 
-        this.CurrentVersion.TariffLines.forEach(item => {
+        this.loadedTariffLines.forEach(item => {
             var tariffLine = new TariffLinePM(copiedVersion);
             tariffLine.StartDate = this.StartDate;
             tariffLine.ExpirationDate = this.ExpirationDate;
@@ -518,14 +579,25 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
     }
-    
+
+    private compareToVersions: TariffVersionPM[];
+    private LoadCompareToVersions() {
+        var service: TariffVersionExtendedPMService = new TariffVersionExtendedPMService();
+        service.GetAllTariffVersionsForTariff(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.compareToVersions = response.Result;
+                this.BuildVersionsList();
+            }
+        });        
+    }
+
     public VersionsList: VersionClass[];
     public ComparedToVersionPM: TariffVersionPM;
     private BuildVersionsList() {
         this.VersionsList = [];
         var datePipe: DatePipe = new DatePipe("en-US");
 
-        this.EntityPM.TariffVersions.filter(a => a.Version != this.CurrentVersion.Version).forEach(item => {
+        this.compareToVersions.filter(a => a.Version != this.CurrentVersion.Version).forEach(item => {
             var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
             var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
             var newVersion: VersionClass = new VersionClass();
@@ -555,17 +627,25 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     set SelectedVersion(value: VersionClass) {
         if (this.selectedVersion != value) {
             this.selectedVersion = value;
-            this.ComparedToVersionPM = this.EntityPM.TariffVersions.filter(d => d.Version == this.SelectedVersion.Version)[0];
-            this.ComparingCalculations();
+            this.ComparedToVersionPM = this.compareToVersions.filter(d => d.Version == this.SelectedVersion.Version)[0];
+            this.ComparingCalculations(true);
         }
     }
 
-    ComparingCalculations() {
-        this.FillTariffLines();
-    }
+    ComparingCalculations(load: boolean) {
+        if (load) {
+            this.LoadTariffLines("compareVersion");
+        }
 
-    CompareClicked() {
-        this.ComparingCalculations();           
+        else {
+            if (this.CurrentVersion != null && this.CurrentVersion.IsDraft) {
+                this.FillTariffLines(this.CurrentVersion.TariffLines);
+            }
+
+            else {
+                this.FillTariffLines(this.loadedTariffLines);
+            }
+        }
     }
 }
 

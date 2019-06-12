@@ -229,6 +229,11 @@ export class FullAccountingSettingPM {
     public set SoftwareVersion(newValue: string) { if (this.softwareVersion != newValue) { this.softwareVersion = newValue; this.MarkAsDirty("SoftwareVersion"); } }
        
 	 
+    private isPaymentChequesActivated: boolean;
+    public get IsPaymentChequesActivated() { return this.isPaymentChequesActivated; }
+    public set IsPaymentChequesActivated(newValue: boolean) { if (this.isPaymentChequesActivated != newValue) { this.isPaymentChequesActivated = newValue; this.MarkAsDirty("IsPaymentChequesActivated"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		
