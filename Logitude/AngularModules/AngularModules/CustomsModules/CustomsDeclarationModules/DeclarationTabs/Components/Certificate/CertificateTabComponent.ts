@@ -312,6 +312,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
             this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
         }
+        
     }
 
 
@@ -634,7 +635,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
 
             }
         }
-
+        this.originalItemSource.InsertCollection(this.connectedItems.Collection);
         if (this.SelectedItemsCount > 0) {
             this.IsVisible = true;
         }
@@ -749,7 +750,9 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
         if (this.SelectedInvoiceNumber != null) {
             filters.addAdditionalFilter("InvoiceNumber", this.SelectedInvoiceNumber, null, null, "Equals", false, false, false, "string");
         }
-
+        if (!AppTool.IsNullOrEmpty(this.SearchText)){
+            filters.addAdditionalFilter("ClassificationCode", this.SearchText, null, null, "Contains", false, false, false, "string");            
+        }
         if (this.selecteCertificate) {
             if (this.ConfirmationType) {
                 return this.multiCertificatesService.getPromiseByFilters(filters, this.DeclarationPM.Id, this.selecteCertificate.AttachmentTypeCode, this.ConfirmationType.Code, this.selecteCertificate.CertificateExemptionTypeCode, this.selecteCertificate.CertificateNumber, this.selecteCertificate.ResConfirmationTypeCode);
@@ -865,6 +868,16 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     {
         this.confirmationTypeCode = value;
     }
+    //this.connectedItems
+    originalItemSource: ObservableCollection = new ObservableCollection([]);
+    ItemsSource: ObservableCollection = new ObservableCollection([]);
+    SearchText: string = "";
+    Search(SearchText: string) {
+        this.SearchText = SearchText;
+        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+    }
+    public SearchFilterChangedEvent: any;
+
 }
 
 export class CertificateTicketListItem extends BaseComponent {
