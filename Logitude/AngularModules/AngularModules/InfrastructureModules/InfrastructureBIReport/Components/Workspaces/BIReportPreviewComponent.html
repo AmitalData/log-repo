@@ -80,19 +80,17 @@
                             <td style="width: 1px;">
                                 <BackButton [Text]="'BI Reports'" (click)="BackButtonClicked()"></BackButton>
                             </td>
-                            <td style="width:10px"></td>
-
-                            <td style="width:20px">
-                                <IconButton [Name]="'Edit'" [Title]="'Edit report'" [disabled]="IsNewEntity" (click)="EditBIReportClicked()"></IconButton>
-                            </td>
 
                             <td style="width:10px"></td>
-                            <td>
-                                <div class="TabTitleRow">
-                                    {{BIReportName}}
+                            <td style="width:1px;">
+                                <div class="TabTitleRow TextTrimming">
+                                     {{BIReportName}}
                                 </div>
                             </td>
-
+                            <td style="width:3px"></td>
+                            <td style="width:20px;float:left;">
+                                <IconButton [Name]="'Edit'" [Title]="'Edit report'" [disabled]="IsNewEntity" (click)="EditBIReportClicked()"></IconButton>
+                            </td>
                             <td>
                                 <div></div>
                             </td>
@@ -176,16 +174,12 @@
                                 <div></div>
                             </td>
 
-                            <td style="float:right;width:230px; ">
+                            <td style="float:right;width:240px; ">
                                 <table>
                                     <tr>
                                         <td style="width: 25px;">
-                                            <button class="Button" style="width:25px;float:left;" (click)="onBIReportColumnsClick()"><img class="CenterCenter" title="Show/Hide/Reorder Column(s)" src="./Images/Columns.png" /></button>
+                                            <button class="Button" style="width:25px;float:left;" (click)="onBIReportColumnsClick()"><img style="width:18px;" class="CenterCenter" title="Show/Hide/Reorder Column(s)" src="./Images/Columns.png" /></button>
                                             <!--<img src="./Images/Columns.png" (click)="onBIReportColumnsClick()" title="Show/Hide/Reorder Column(s)" style="cursor: pointer; height:18px;" [className]="'LeftCenter'" />-->
-                                        </td>
-
-                                        <td style="width: 5px;">
-                                            <div></div>
                                         </td>
 
                                         <td [hidden]="!HasDeletionFeature" style="width: 25px;">
@@ -193,7 +187,7 @@
                                             <!--<img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer; height:18px;" (click)="onDeleteBIReportClick()" [className]="'LeftCenter'" />-->
                                         </td>
 
-                                        <td style="width: 5px;">
+                                        <td style="width: 2px;">
                                             <div></div>
                                         </td>
 
@@ -201,17 +195,17 @@
                                             <button [disabled]="IsNewEntity" class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
                                         </td>
 
-                                        <td style="width: 5px;">
+                                        <td style="width: 2px;">
                                             <div></div>
                                         </td>
 
-                                        <td style="width: 50px;">
+                                        <td style="width: 55px;">
                                             <button *ngIf="!HasChanges" class="Button" (click)="SaveBIReport()">
-                                                <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="'LeftCenter'" />
+                                                <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="'CenterCenter'" />
                                                 <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                             </button>
                                             <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveBIReport()">
-                                                <img src="./Images/Buttons/Save.Red.png" [className]="'LeftCenter'" [ngStyle]="{'margin-left': '2px'}" />
+                                                <img src="./Images/Buttons/Save.Red.png" [className]="'CenterCenter'" [ngStyle]="{'margin-left': '2px'}" />
                                                 <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
                                             </button>
                                         </td>
