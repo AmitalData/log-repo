@@ -1478,7 +1478,9 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         if (emptyItems != null && emptyItems.length > 0) {
             if (emptyItems.length == 1) {
-                errors.push( + emptyItems[0] + "ריקה");
+                var emptyMessage: string = "שים לב שורה  ";
+                emptyMessage = emptyMessage.concat(emptyItems[0] + " ריקה");
+                errors.push(emptyMessage);
             }
             else {
                 var emptyMessage: string = "שים לב שורות  ";
