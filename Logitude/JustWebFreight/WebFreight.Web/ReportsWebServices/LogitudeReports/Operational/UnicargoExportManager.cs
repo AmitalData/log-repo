@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
+using Logitude.Server.Tools.Helpers;
 using Logitude.TimeManagement.Data;
 using Logitude.TimeManagement.Data.EntityPOCOs;
 using Logitude.TimeManagement.Data.Repositories;
@@ -143,7 +144,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     Shipment.Direction = Directions.ContainsKey(item.DirectionId) ?Directions[item.DirectionId] != null ? Directions[item.DirectionId] : null:null;
                 }
 
-                Shipment.FileNumber = item.CustomFileNumber; // Check
 
                 if (!string.IsNullOrEmpty(item.ShipmentLevelCode))
                 {
@@ -205,7 +205,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 Shipment.Consignee = item.ConsigneeName;
                 if (!string.IsNullOrEmpty(item.Notify1Id))
                 {
-                    Card card = cardRepository.GetSingleCardByCode(item.Notify1Id, tenant, true);
+                    Card card = cardRepository.GetSingleCardByIdAndTenant(item.Notify1Id, tenant, true);
                     if (card != null)
                     {
                         Shipment.Notify1 = card.EnglishName;
@@ -214,16 +214,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.Notify2Id))
                 {
-                    Card card = cardRepository.GetSingleCardByCode(item.Notify2Id, tenant, true);
+                    Card card = cardRepository.GetSingleCardByIdAndTenant(item.Notify2Id, tenant, true);
                     if (card != null)
                     {
                         Shipment.Notify2 = card.EnglishName;
                     }
                 }
 
+
                 if (!string.IsNullOrEmpty(item.ColoaderId))
                 {
-                    Card card = cardRepository.GetSingleCardByCode(item.ColoaderId, tenant, true);
+                    Card card = cardRepository.GetSingleCardByIdAndTenant(item.ColoaderId, tenant, true);
                     if (card != null)
                     {
                         Shipment.CoLoader = card.EnglishName;
@@ -232,7 +233,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.FreightForwarderId))
                 {
-                    Card card = cardRepository.GetSingleCardByCode(item.FreightForwarderId, tenant, true);
+                    Card card = cardRepository.GetSingleCardByIdAndTenant(item.FreightForwarderId, tenant, true);
                     if (card != null)
                     {
                         Shipment.FreightForwarder = card.EnglishName;
@@ -242,7 +243,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.ConsolidatorId))
                 {
-                    Card card = cardRepository.GetSingleCardByCode(item.ConsolidatorId, tenant, true);
+                    Card card = cardRepository.GetSingleCardByIdAndTenant(item.ConsolidatorId, tenant, true);
                     if (card != null)
                     {
                         Shipment.Consolidator = card.EnglishName;
@@ -253,7 +254,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.CustomerId))
                 {
-                    Card card = cardRepository.GetSingleCardByCode(item.CustomerId, tenant, true);
+                    Card card = cardRepository.GetSingleCardByIdAndTenant(item.CustomerId, tenant, true);
                     if (card != null)
                     {
                         Shipment.Customer = card.EnglishName;
@@ -262,7 +263,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.ShipperNotExporterId))
                 {
-                    Card card = cardRepository.GetSingleCardByCode(item.ShipperNotExporterId, tenant, true);
+                    Card card = cardRepository.GetSingleCardByIdAndTenant(item.ShipperNotExporterId, tenant, true);
                     if (card != null)
                     {
                         Shipment.ShippernotExporter = card.EnglishName;
@@ -271,7 +272,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.AgentId))
                 {
-                    Card card = cardRepository.GetSingleCardByCode(item.AgentId, tenant, true);
+                    Card card = cardRepository.GetSingleCardByIdAndTenant(item.AgentId, tenant, true);
                     if (card != null)
                     {
                         Shipment.Agent = card.EnglishName;
@@ -281,7 +282,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.ReleasingAgentId))
                 {
-                    Card card = cardRepository.GetSingleCardByCode(item.ReleasingAgentId, tenant, true);
+                    Card card = cardRepository.GetSingleCardByIdAndTenant(item.ReleasingAgentId, tenant, true);
                     if (card != null)
                     {
                         Shipment.ReleasingAgent = card.EnglishName;
@@ -334,12 +335,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 Shipment.PackageType = packageType; 
                 Shipment.ShipperSeal = shipperSeal; 
-                Shipment.ContinerNumber = containerNumber; 
+                Shipment.ContinerNumber = containerNumber;
 
-                Shipment.TotalPieces = item.NumberOfPackages; 
-                Shipment.Volume = shipmentPackages.Sum(p => p.Volume);
-                Shipment.GrossWeight = shipmentPackages.Sum(p => p.Weight);
-                Shipment.VolumetricWeight = shipmentPackages.Sum(p => p.VolumetricWeight);
+                int numberofpackages = item.NumberOfPackages != null ? item.NumberOfPackages.Value : 0;
+                int numberofcontainers = item.NumberOfContainers != null ? item.NumberOfContainers.Value : 0;
+
+                Shipment.TotalPieces = MethodHelper.IsLCLEntity(item.TransportModeId, item.ShipmentTypeId) ? numberofpackages.ToString() : numberofcontainers.ToString();
+
+
+                Shipment.Volume = item.Volume;// shipmentPackages.Sum(p => p.Volume);
+                Shipment.GrossWeight = item.GrossWeight;// shipmentPackages.Sum(p => p.Weight);
+                Shipment.VolumetricWeight = item.VolumetricWeight;// shipmentPackages.Sum(p => p.VolumetricWeight);
                 Shipment.Ratio = item.Ratio;
                 Shipment.DescriptionofGoods = item.DescriptionOfGoods;
                 #endregion
@@ -355,13 +361,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         {
                                     if (!string.IsNullOrEmpty(myFirstPickup.FromPartnerCardId))
                                     {
-                                        Address myPartnerAddress = FromPartnerAddressLists.Where(d => d.Id == myFirstPickup.FromPartnerCardId).FirstOrDefault();
+                                        Address myPartnerAddress = FromPartnerAddressLists.Where(d => d.CardId == myFirstPickup.FromPartnerCardId).FirstOrDefault();
                                         if (myPartnerAddress != null)
                                         {
-                                            Shipment.PickupFromPartnerAddress = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                                Shipment.PickupFromPartnerAddress = DataProviders.General.GetAddress(myPartnerAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
                                         }
 
-                                Card card = cardRepository.GetSingleCardByCode(myFirstPickup.FromPartnerCardId, tenant, true);
+                                Card card = cardRepository.GetSingleCardByIdAndTenant(myFirstPickup.FromPartnerCardId, tenant, true);
 
                                 if (card != null)
                                 {
@@ -374,13 +380,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         {
                             if (!string.IsNullOrEmpty(myFirstPickup.ToPartnerCardId))
                             {
-                                Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.Id == myFirstPickup.ToPartnerCardId).FirstOrDefault();
+                                Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.CardId == myFirstPickup.ToPartnerCardId).FirstOrDefault();
                                 if (myPartnerAddress != null)
                                 {
-                                    Shipment.PickupToPartnerAddress = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                                Shipment.PickupToPartnerAddress = DataProviders.General.GetAddress(myPartnerAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
                                 }
 
-                                Card card = cardRepository.GetSingleCardByCode(myFirstPickup.ToPartnerCardId, tenant, true);
+                                Card card = cardRepository.GetSingleCardByIdAndTenant(myFirstPickup.ToPartnerCardId, tenant, true);
 
                                 if (card != null)
                                 {
@@ -396,7 +402,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                 PortPM myPort = PortQuery.GetSinglePort(tenant, myFirstPickup.FromPortId, true);
                                 if (myPort != null)
                                 {
-                                    Shipment.PickupToPort = myPort.StateName+" , "+ myPort.CountryName;
+                                Shipment.PickupToPort = myPort.Code + " " + myPort.EnglishName;// myPort.StateName+" , "+ myPort.CountryName;
                                 }
                             }
                         }
@@ -486,7 +492,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                     if (!string.IsNullOrEmpty(MasterData.MainCarriageCarrierId))
                     {
-                        Card card = cardRepository.GetSingleCardByCode(MasterData.MainCarriageCarrierId, tenant, true);
+                        Card card = cardRepository.GetSingleCardByIdAndTenant(MasterData.MainCarriageCarrierId, tenant, true);
                         if (card != null)
                         {
                             Shipment.MainCarriageLeg1ShippingLine = card.EnglishName;
@@ -547,7 +553,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                     if (!string.IsNullOrEmpty(MasterData.Transshipment1CarrierId))
                     {
-                        Card card = cardRepository.GetSingleCardByCode(MasterData.Transshipment1CarrierId, tenant, true);
+                        Card card = cardRepository.GetSingleCardByIdAndTenant(MasterData.Transshipment1CarrierId, tenant, true);
 
                         if (card != null)
                         {
@@ -601,10 +607,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                 Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.Id == myLastDelivery.ToPartnerCardId).FirstOrDefault();
                                 if (myPartnerAddress != null)
                                 {
-                                    Shipment.DeliveryToPatnerAddress = myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                                    Shipment.DeliveryToPatnerAddress = DataProviders.General.GetAddress(myPartnerAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
                                 }
 
-                                Card card = cardRepository.GetSingleCardByCode(myLastDelivery.ToPartnerCardId, tenant, true);
+                                Card card = cardRepository.GetSingleCardByIdAndTenant(myLastDelivery.ToPartnerCardId, tenant, true);
 
                                 if (card != null)
                                 {
@@ -617,7 +623,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                             if (!string.IsNullOrEmpty(myLastDelivery.FromPartnerCardId))
                             {
 
-                                Card card = cardRepository.GetSingleCardByCode(myLastDelivery.FromPartnerCardId, tenant, true);
+                                Card card = cardRepository.GetSingleCardByIdAndTenant(myLastDelivery.FromPartnerCardId, tenant, true);
 
                                 if (card != null)
                                 {
