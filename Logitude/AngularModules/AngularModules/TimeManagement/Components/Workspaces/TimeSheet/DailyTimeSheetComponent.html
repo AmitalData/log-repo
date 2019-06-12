@@ -263,6 +263,7 @@
                                                         [ObjectTableName]="'TMEmployeeTime'"
                                                         [ObjectFieldName]="'ProjectId'"
                                                         [SelectedValue]="item.ProjectId"
+                                                        [DependencyFilter1Value]="false"
                                                         [LookUpTableName]="'TMProject'" (SelectedItemChanged)="item.Project = $event"
                                                         [HideColumns]="true">
                                                 </LogLov>
