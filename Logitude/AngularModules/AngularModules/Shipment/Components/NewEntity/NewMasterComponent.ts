@@ -895,6 +895,13 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         }
     }
 
+    get Notes() { return this.EntityPM.Notes; }
+    set Notes(newValue: string) {
+        if (this.EntityPM.Notes != newValue) {
+            this.EntityPM.Notes = newValue;
+        }
+    }
+   
     get FreightPrepaidCollectId() { return this.EntityPM.FreightPrepaidCollectId; }
     set FreightPrepaidCollectId(newValue: string) {
         if (this.EntityPM.FreightPrepaidCollectId != newValue) {

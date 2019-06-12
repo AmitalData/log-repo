@@ -22,36 +22,31 @@ using System.Linq;
 namespace Logitude.TariffModule.BL.EntityQueryServices
 {
     public partial class TariffQueryService
-   {
-
-
-
+    {
         public override void GetComposition(EntityKeyFields entityKeys, TariffPM entityPM)
         {
-            ITariffModuleContext context = MainContext as ITariffModuleContext; 
+            ITariffModuleContext context = MainContext as ITariffModuleContext;
             TariffKeys tariffKeys = entityKeys as TariffKeys;
-            
+
             TariffVersionQueryService tariffVersionQueryService = new TariffVersionQueryService(context);
-            entityPM.TariffVersions = tariffVersionQueryService.GetMulti(tariffKeys, true);
+            entityPM.TariffVersions = tariffVersionQueryService.GetDraftVersion(tariffKeys, true);
+            entityPM.ActiveVersions = tariffVersionQueryService.GetActiveVersions(entityPM.Id, entityPM.Tenant);
         }
-
-
 
         public TariffsSummary GetCount(int tenant)
         {
             TariffsSummary tariffsSummary = new TariffsSummary() { Id = tenant };
-            tariffsSummary.AirFreightCount=this.repository.GetAll(tenant).Where(p => p.TypeCode == "AFC").Count();
+            tariffsSummary.AirFreightCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "AFC").Count();
             tariffsSummary.AirSurchargeCount = this.repository.GetAll(tenant).Where(p => p.TypeCode == "ASC").Count();
             return tariffsSummary;
         }
 
-
-        public List<TariffSearchSummary> GetTariffSearchSummary(string fromport,string toport,DateTime? BetweenDate,double weight,int tenant)
+        public List<TariffSearchSummary> GetTariffSearchSummary(string fromport, string toport, DateTime? BetweenDate, double weight, int tenant)
         {
             AirlineRepository airlineRepository = new AirlineRepository(tenant);
             AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
             List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();
-          IQueryable<TariffLine> iQueryable =  this.repository.GetAllTariffLines(tenant);
+            IQueryable<TariffLine> iQueryable = this.repository.GetAllTariffLines(tenant);
             iQueryable = iQueryable.Where(p => p.OriginPortId == fromport && p.DestinationPortId == toport && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= BetweenDate && System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= BetweenDate);
             TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
             List<TariffSetting> setting = tariffSettingRepository.GetAll(tenant).ToList();
@@ -83,44 +78,37 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                         {
                             index++;
                         }
-
                     });
 
                     if (propIndex == -1)
                     {
                         propIndex = Steps.Count;
-            }
+                    }
                     else if (propIndex == 0)
                     {
                         propIndex = 1;
                     }
-
                 }
-          
             }
 
-          
-
-            List<TariffResult> items = new List<TariffResult>() ;
+            List<TariffResult> items = new List<TariffResult>();
             if (propIndex == 1)
             {
-                 items = (from item in iQueryable 
-                                                       group iQueryable by new 
-                                                       {
-                                                           item.TariffId,
-                                                           item.Step1Price,
-                                                           item.Version,
-
-                                                       } into g 
-                                                       select new TariffResult()
-                                                       {
-                                                           price = g.Min(p=>g.Key.Step1Price),
-                                                           tariffid = g.Key.TariffId,
-                                                           TariffVersion = g.Key.Version,
-
-
-                                                       }).ToList();
+                items = (from item in iQueryable
+                         group iQueryable by new
+                         {
+                             item.TariffId,
+                             item.Step1Price,
+                             item.Version,
+                         } into g
+                         select new TariffResult()
+                         {
+                             price = g.Min(p => g.Key.Step1Price),
+                             tariffid = g.Key.TariffId,
+                             TariffVersion = g.Key.Version,
+                         }).ToList();
             }
+
             else if (propIndex == 2)
             {
                 items = (from item in iQueryable
@@ -129,17 +117,16 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              item.TariffId,
                              item.Step2Price,
                              item.Version,
-
                          } into g
                          select new TariffResult()
                          {
                              price = g.Min(p => g.Key.Step2Price),
                              tariffid = g.Key.TariffId,
-                             TariffVersion=g.Key.Version,
+                             TariffVersion = g.Key.Version,
                          }).ToList();
             }
 
-            else if(propIndex == 3)
+            else if (propIndex == 3)
             {
                 items = (from item in iQueryable
                          group iQueryable by new
@@ -147,15 +134,12 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              item.TariffId,
                              item.Step3Price,
                              item.Version,
-
                          } into g
                          select new TariffResult()
                          {
                              price = g.Min(p => g.Key.Step3Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
-
-
                          }).ToList();
             }
 
@@ -167,15 +151,12 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              item.TariffId,
                              item.Step4Price,
                              item.Version,
-
                          } into g
                          select new TariffResult()
                          {
                              price = g.Min(p => g.Key.Step4Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
-
-
                          }).ToList();
             }
 
@@ -187,15 +168,12 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              item.TariffId,
                              item.Step5Price,
                              item.Version,
-
                          } into g
                          select new TariffResult()
                          {
                              price = g.Min(p => g.Key.Step5Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
-
-
                          }).ToList();
             }
 
@@ -207,15 +185,12 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              item.TariffId,
                              item.Step6Price,
                              item.Version,
-
                          } into g
                          select new TariffResult()
                          {
                              price = g.Min(p => g.Key.Step6Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
-
-
                          }).ToList();
             }
 
@@ -227,15 +202,12 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              item.TariffId,
                              item.Step7Price,
                              item.Version,
-
                          } into g
                          select new TariffResult()
                          {
                              price = g.Min(p => g.Key.Step7Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
-
-
                          }).ToList();
             }
 
@@ -247,67 +219,60 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              item.TariffId,
                              item.Step8Price,
                              item.Version,
-
                          } into g
                          select new TariffResult()
                          {
                              price = g.Min(p => g.Key.Step8Price),
                              tariffid = g.Key.TariffId,
                              TariffVersion = g.Key.Version,
-
-
                          }).ToList();
             }
-
-
-            List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p=>!p.InActive).ToList();
+            
+            List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive).ToList();
             List<TariffVersion> TariffVersionList = this.repository.GetAllTariffVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), tenant).ToList();
-            Dictionary<string, string> Currencies = myCommonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p=>p.Id,p=>p.Code);
-
-
-
+            Dictionary<string, string> Currencies = myCommonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code);
+            
             foreach (Tariff result in TariffList)
             {
-                List<TariffResult> resultItems = items.Where(x =>  x.tariffid==result.Id && TariffVersionList.Where(a=>a.Version==x.TariffVersion && a.TariffId==result.Id).FirstOrDefault()!=null).ToList();
+                List<TariffResult> resultItems = items.Where(x => x.tariffid == result.Id && TariffVersionList.Where(a => a.Version == x.TariffVersion && a.TariffId == result.Id).FirstOrDefault() != null).ToList();
                 TariffResult item = resultItems.Where(x => x.price == resultItems.Min(y => y.price)).FirstOrDefault();
                 if (item != null)
                 {
-                        TariffSearchSummary tariffsSummary = new TariffSearchSummary() { Id = result.Id };
-                                tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
-
+                    TariffSearchSummary tariffsSummary = new TariffSearchSummary() { Id = result.Id };
+                    tariffsSummary.price = Math.Round((double)item.price, 2).ToString("0.00");
 
                     AirlinePM airline = airlineQuery.GetSinglePM(result.SellerId, tenant);
-                                tariffsSummary.Name = airline.Card!=null?airline.Card.EnglishName:"";
-                                tariffsSummary.EffictiveDate = result.ExpirationDate;
-                                tariffsSummary.Remarks = result.Description;
+                    tariffsSummary.Name = airline.Card != null ? airline.Card.EnglishName : "";
+                    tariffsSummary.EffictiveDate = result.ExpirationDate;
+                    tariffsSummary.Remarks = result.Description;
                     tariffsSummary.decimalprice = item.price;
                     byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
                     string resultImage = "";
                     if (filedata != null)
                     {
-
-                            resultImage = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
-                        
+                        resultImage = "data:image/" + "jpg" + ";base64," + Convert.ToBase64String(filedata);
                     }
 
                     tariffsSummary.ImageId = resultImage;
 
-                    if (!string.IsNullOrEmpty(result.CurrencyId)) {
-                        tariffsSummary.Currency =Currencies.Keys.Contains(result.CurrencyId)? Currencies[result.CurrencyId]:null;
+                    if (!string.IsNullOrEmpty(result.CurrencyId))
+                    {
+                        tariffsSummary.Currency = Currencies.Keys.Contains(result.CurrencyId) ? Currencies[result.CurrencyId] : null;
+                    }
 
-                            }
                     tariffSearchSummaries.Add(tariffsSummary);
-
                 }
-
             }
-            tariffSearchSummaries= tariffSearchSummaries.OrderBy(p => p.decimalprice).ToList();
+
+            tariffSearchSummaries = tariffSearchSummaries.OrderBy(p => p.decimalprice).ToList();
             return tariffSearchSummaries;
         }
 
-        private byte[] DownloadFile(string documentId,string type,int tenant,string fileLocation) {
+        private byte[] DownloadFile(string documentId, string type, int tenant, string fileLocation)
+        {
             string fileName = documentId + ".jpg";
             string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileName.ToLower(), "fileLocation");
+
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
@@ -315,10 +280,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                 FolderName = fileLocation,
                 Extension = "jpg",
                 Tenant = tenant,
-                
-
-
             };
+
             byte[] datainByte = storageservice.Read(fileInfo);
             return datainByte;
         }

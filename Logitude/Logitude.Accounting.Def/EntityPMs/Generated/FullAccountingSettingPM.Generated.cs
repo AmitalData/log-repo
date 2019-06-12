@@ -963,6 +963,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isPaymentChequesActivated ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsPaymentChequesActivated  
+	   {
+	    
+	     get
+		{
+		   return isPaymentChequesActivated;
+		 }
+		 set
+		 {
+		   if(isPaymentChequesActivated != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsPaymentChequesActivated",OldValue=isPaymentChequesActivated,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isPaymentChequesActivated=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

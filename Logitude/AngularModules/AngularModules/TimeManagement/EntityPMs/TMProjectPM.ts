@@ -139,6 +139,11 @@ export class TMProjectPM {
     public set DayOffTypeCode(newValue: string) { if (this.dayOffTypeCode != newValue) { this.dayOffTypeCode = newValue; this.MarkAsDirty("DayOffTypeCode"); } }
        
 	 
+    private blockedForDataEntry: boolean;
+    public get BlockedForDataEntry() { return this.blockedForDataEntry; }
+    public set BlockedForDataEntry(newValue: boolean) { if (this.blockedForDataEntry != newValue) { this.blockedForDataEntry = newValue; this.MarkAsDirty("BlockedForDataEntry"); } }
+       
+	 
 
     public OldEntityPM: TMProjectPM;
 		

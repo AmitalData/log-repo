@@ -1,7 +1,9 @@
 ﻿using Logitude.Accounting.BL.CoreBL.FunctionalTests;
+using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
@@ -49,9 +51,16 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             XmlSerializer serializer = new XmlSerializer(typeof(BatchFunctionalTestTaskArg));
             var parameterArgs = serializer.Deserialize(stringReader) as BatchFunctionalTestTaskArg;
 
-            string  CommunicationsData =GetCommunicationsData(parameterArgs.Tenant, parameterArgs.CommunicationLogId);
+
+            string CommunicationsData =GetCommunicationsData(parameterArgs.Tenant, parameterArgs.CommunicationLogId);
             var parameterArgsFromCommunicationsData = serializer.Deserialize(new System.IO.StringReader(CommunicationsData)) as BatchFunctionalTestTaskArg;
-            
+
+            var tenantQuery = new TenantQuery(parameterArgs.Tenant);
+            TenantPM tenant = tenantQuery.GetTenantFromDB(parameterArgs.Tenant);
+            if (!tenant.IsTestTenant)
+            {
+                throw new Exception("!tenant.IsTestTenant");
+            }
             try
             {
                 AccFunctionalState accFunctionalState;
@@ -84,6 +93,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
     .Select(gLAccountOutput =>
     JournalToGLAccountMoreData.CheckGLAccount(parameterArgs.Tenant, gLAccountOutput)).ToList();
                             string result = string.Join(Environment.NewLine, res.ToArray());
+
+                            CheckTrailReport(parameterArgsFromCommunicationsData.ExpectedGLAccount, parameterArgs);
                             this.ChangeStatus("D", null, result);
 
 
@@ -108,6 +119,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
         }
 
+        
+        
         string GetCommunicationsData(int tenant, string CommunicationLogId)
         {
             var _CommunicationLog = Communications.GetCommunicationLog(tenant, CommunicationLogId);
@@ -124,11 +137,54 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
         }
 
-
+        public string CheckTrailReport(List<GLAccountPM> expectedGLAccount, BatchFunctionalTestTaskArg parameterArgs)
         
+        {
+            ///{"Tenant":1148,"FromDate":"2016-06-10T00:00:00","ToDate":"2019-06-10T00:00:00+03:00","TrailReportLevelOption":"ChartofaccountType=1,Chartofaccount=2,GLAccount=3","MyTrailReportLevel":3,"CurrenciesDetailed":0,"Category1":"","Category5":"","DetailedControlClients":false,"DetailedControlVendors":false,"DetailedControlJob":false,"DetailedControlFile":false,"Suppress_DoNotShowCardWithoutActivity":0}
+
+            using (var trailReportService = TrailReportFactory.CreateNew(new TrailReportParam()
+            {
+                Tenant = parameterArgs.Tenant,
+                MyTrailReportLevel = ReportLevel.GLAccount,
+                FromDate = new DateTime(DateTime.Now.Year, 1, 1),
+                ToDate = DateTime.Now.Date,
+            }))
+            {
+
+                var res = trailReportService.Execute();
+                var myList = (
+                    from expRow in expectedGLAccount
+                    join trailRow in res
+                    on expRow.DisplayNumber equals trailRow.GLAccountNumber
+                    into trailRowJoin
+                    from subtrailRowJoin in trailRowJoin.DefaultIfEmpty()
+                    select new
+                    {
+                        expRow.DisplayNumber,
+                        ExpectedLocalCloseBalance = expRow.BalanceInLocalCurrency,
+                        subtrailRowJoin.LocalCloseBalance
+                    }
+                        ).ToList();
+
+                var sb = new StringBuilder().AppendLine("CheckTrailReport");
+                myList.ForEach(r => {
+                    sb.Append("DisplayNumber:").Append(r.DisplayNumber);
+                    if (r.LocalCloseBalance== r.ExpectedLocalCloseBalance)
+                    {
+                        sb.Append("equal:").AppendLine(r.ExpectedLocalCloseBalance.GetValueOrDefault().ToString());
+                    }
+                    else
+                    {
+                        sb.AppendLine(
+$"Expected:{r.ExpectedLocalCloseBalance.GetValueOrDefault()}!=Real{r.LocalCloseBalance}");
+                    }
+                });
+                return sb.ToString();
+            }
+        }
 
 
-        public static void CreateBatchFunctionalTestTask(BatchFunctionalTestTaskArg args)
+        public static void CreateBatchFunctionalTestTask(BatchFunctionalTestTaskArg args,bool delay2Min)
         {
 
             
@@ -149,7 +205,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 Subject = $"CreateBatchFunctionalTestTask({args.MyState.ToString()})",
                 Tenant = args.Tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
-                ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchFunctionalTestTask,Logitude.Accounting.BL",
+                ClassName = "Logitude.Accounting.BL.CoreBL.Batch.BatchAccFunctionalTestTask,Logitude.Accounting.BL",
                 CreateDate = DateTime.Now,
                 PrametersXml = xmlParameters,
                 StatusCode = "C",// wtf is "c" no alternative 
@@ -170,13 +226,14 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 // 2- Send to queue
                 var queueservice = new DbQueueService();
                 queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
-
+                TimeSpan myTimeSpan = null;
+                if (delay2Min) { TimeSpan.FromMinutes(2); }
 
                 queueservice.Send(new Dictionary<string, string>()
                 {
                     { "BatchTaskExecutionId", taskExe.Id },
                     { "Tenant", args.Tenant.ToString() }
-                });
+                }, myTimeSpan);
             }
             else
             {

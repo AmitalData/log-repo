@@ -273,6 +273,7 @@ namespace WarehouseData.Helper
         {
             if (!string.IsNullOrEmpty(sql))
             {
+                sql = ResolveDeclareCustomFieldsVariable(sql);
                 sql = ResolveCustomFieldDataTypeCodeVariable(sql);
                 sql = ResolveCustomFieldNamesVariable(sql);
                 sql = ResolveCustomFieldValuesVariable(sql);
@@ -284,6 +285,26 @@ namespace WarehouseData.Helper
             return sql;
 
         }
+
+        private string ResolveCustomFieldDataTypeCodeVariable(string sql)
+        {
+            int i = 1;
+            string result = string.Empty;
+
+            if (sql.Contains("--@[ResolveCustomFieldDataTypeCodeVariable]"))
+            {
+                result = string.Empty;
+                while (i <= CustomFieldsCount)
+                {
+                    result += "     set @Field" + i + "DataTypeCode =( select DataTypeCode from #TempObjectFields where FieldName = 'Field" + i + "' and Tenant =@SourceTenant )\r\n";
+                    i += 1;
+                }
+
+                sql = sql.Replace("--@[ResolveCustomFieldDataTypeCodeVariable]", result);
+            }
+            return sql;
+        }
+
 
         private string ResolveCursorCustomFieldsVariable(string sql)
         {
@@ -365,7 +386,7 @@ namespace WarehouseData.Helper
             return sql;
         }
 
-        private string ResolveCustomFieldDataTypeCodeVariable(string sql)
+        private string ResolveDeclareCustomFieldsVariable(string sql)
         {
             int i = 1;
             string result = string.Empty;

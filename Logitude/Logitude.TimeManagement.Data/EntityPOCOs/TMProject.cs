@@ -80,6 +80,8 @@ namespace Logitude.TimeManagement.Data.EntityPOCOs
 	    public string DayOffTypeCode { get; set; }
 	      
         public virtual TMDayOffType DayOffType { get; set; }
+        [Column("BlockedForDataEntry")]
+	    public bool BlockedForDataEntry { get; set; }
     }
 }
 	 

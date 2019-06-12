@@ -44,6 +44,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public IsCommodityNameVisible: boolean = false;
     public IsCommodityNumberVisible: boolean = false;
     public IsShippingInstructionsVisible: boolean = false;
+    public IsDeletePackagesButtonVisible: boolean = false;
+    public IsDownloadUploadPackagesVisible: boolean = false;
     @Output() ReloadDetails = new EventEmitter();
     warehouseReleasePackageListExtendedService: WarehouseReleasePackageListExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -125,7 +127,6 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.ChargeableWeightPasted = true;
     }
 
-
     private GrossWeightPasted: boolean = false;
     GrossWeightPaste($event) {
         this.GrossWeightPasted = true;
@@ -136,14 +137,21 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         AppTool.KillEventEmitter(this.TabSelectedEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
-        AppTool.KillEventEmitter(this.CrossDockReleasesEvent);
-        
+        AppTool.KillEventEmitter(this.CrossDockReleasesEvent);        
     }
 
     ngOnInit() {
         if (this.EntityPM != null) {
             this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+
+            if (FeatureLocator.HasFeaturePermession("Shipment", "DELETEPACKAGES")) {
+                this.IsDeletePackagesButtonVisible = true;
+            }
+
+            if (this.IsFCLEntity && FeatureLocator.HasFeaturePermession("Shipment", "DOWNUPLPACAKGES")) {
+                this.IsDownloadUploadPackagesVisible = true;
+            }
 
             if (FeatureLocator.HasFeaturePermession("Shipment", "COMMODITYNUMBER")) {
                 this.IsCommodityNumberVisible = true;
@@ -1474,8 +1482,94 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
+    DeletePackagesButtonClicked() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Are you sure you want to delete all packages?");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                for (var i = this.EntityPM.ShipmentPackages.length - 1; i >= 0; i--) {                    
+                    var shipmentPackage = this.EntityPM.ShipmentPackages[i];
+
+                    //Package items
+                    if (shipmentPackage.ShipmentPackageItems != null && shipmentPackage.ShipmentPackageItems.length > 0) {
+                        for (var j = shipmentPackage.ShipmentPackageItems.length - 1; j >= 0; j--) {
+                            shipmentPackage.RemoveShipmentPackageItemPM(shipmentPackage.ShipmentPackageItems[j]);
+                        }
+                    }
+                    
+                    // Inside packages
+                    if (shipmentPackage.InsideShipmentPackages != null && shipmentPackage.InsideShipmentPackages.length > 0) {
+                        for (var k = shipmentPackage.InsideShipmentPackages.length - 1; k >= 0; k--) {
+                            shipmentPackage.RemoveInsideShipmentPackagePM(shipmentPackage.InsideShipmentPackages[k]);
+                        }
+                    }
+
+                    // package harmonize
+                    if (shipmentPackage.ShipmentPackageHarmonizes != null && shipmentPackage.ShipmentPackageHarmonizes.length > 0) {
+                        for (var m = shipmentPackage.ShipmentPackageHarmonizes.length - 1; m >= 0; m--) {
+                            shipmentPackage.RemoveShipmentPackageHarmonizePM(shipmentPackage.ShipmentPackageHarmonizes[m]);
+                        }
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(shipmentPackage.DeliveryId)) {
+                        var delivery = this.EntityPM.ShipmentDeliveries.filter(f => f.Id == shipmentPackage.DeliveryId)[0];
+                        if (delivery) {
+                            if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.length > 0) {
+                                for (var n = delivery.ShipmentPickUpDeliveryPackages.length - 1; n >= 0; n--) {
+                                    var deliveryPackage = delivery.ShipmentPickUpDeliveryPackages[n]
+
+                                    if (deliveryPackage) {
+                                        if (deliveryPackage.PickUpDeliveryPackageHarmonizes != null && deliveryPackage.PickUpDeliveryPackageHarmonizes.length > 0) {
+                                            for (var f = deliveryPackage.PickUpDeliveryPackageHarmonizes.length - 1; f >= 0; f--) {
+                                                deliveryPackage.RemovePickUpDeliveryPackageHarmonizePM(deliveryPackage.PickUpDeliveryPackageHarmonizes[f]);
+                                            }
+                                        }
+
+                                        delivery.RemovePackage(deliveryPackage);
+                                    }
+                                }
+                            }
+
+                            this.EntityPM.RemoveDelivery(delivery);
+                        }
+                    }
+
+                    if (!AppTool.IsNullOrEmpty(shipmentPackage.EmptyContainerReturnId)) {
+                        var emptyContainer = this.EntityPM.ShipmentDeliveries.filter(f => f.Id == shipmentPackage.EmptyContainerReturnId)[0];
+                        if (emptyContainer) {
+                            if (emptyContainer.ShipmentPickUpDeliveryPackages != null && emptyContainer.ShipmentPickUpDeliveryPackages.length > 0) {
+                                for (var n = emptyContainer.ShipmentPickUpDeliveryPackages.length - 1; n >= 0; n--) {
+                                    var deliveryPackage = emptyContainer.ShipmentPickUpDeliveryPackages[n]
+
+                                    if (deliveryPackage) {
+                                        if (deliveryPackage.PickUpDeliveryPackageHarmonizes != null && deliveryPackage.PickUpDeliveryPackageHarmonizes.length > 0) {
+                                            for (var f = deliveryPackage.PickUpDeliveryPackageHarmonizes.length - 1; f >= 0; f--) {
+                                                deliveryPackage.RemovePickUpDeliveryPackageHarmonizePM(deliveryPackage.PickUpDeliveryPackageHarmonizes[f]);
+                                            }
+                                        }
+
+                                        emptyContainer.RemovePackage(deliveryPackage);
+                                    }
+                                }
+                            }
+
+                            this.EntityPM.RemoveDelivery(emptyContainer);
+                        }
+                    }
+                    
+                    this.EntityPM.RemovePackage(shipmentPackage);
+                }
+                
+                this.ItemsSource = new ObservableCollection([]);
+                this.ComputeTotals();
+                this.SetUIProperties();
+                this.SetGenerateData();
+            }
+        });
+    }
+    
     private dowonload: boolean = false;
-    DownloadPackagesClicked() {
+    DownloadClicked() {
         this.dowonload = true;
         this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
@@ -2625,8 +2719,7 @@ export class ShipmentPackageItem extends BaseComponent {
             this.SetUIProperties_ValidateActualDates_R();
         }
     }
-
-
+    
     get Make() { return this.EntityPM.Make; }
     set Make(newValue: string) {
         if (this.EntityPM.Make != newValue) {
@@ -2640,8 +2733,7 @@ export class ShipmentPackageItem extends BaseComponent {
             this.EntityPM.Model = newValue;
         }
     }
-
-
+    
     get Year() { return this.EntityPM.Year; }
     set Year(newValue: string) {
         if (this.EntityPM.Year != newValue) {

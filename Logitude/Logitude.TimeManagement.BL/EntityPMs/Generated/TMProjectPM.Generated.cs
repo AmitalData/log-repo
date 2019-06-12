@@ -549,6 +549,29 @@ namespace Logitude.TimeManagement.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool blockedForDataEntry ;
+	  	  
+       
+	   [CustomValidation(typeof(TimeManagementValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool BlockedForDataEntry  
+	   {
+	    
+	     get
+		{
+		   return blockedForDataEntry;
+		 }
+		 set
+		 {
+		   if(blockedForDataEntry != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BlockedForDataEntry",OldValue=blockedForDataEntry,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   blockedForDataEntry=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
