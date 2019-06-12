@@ -1247,6 +1247,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
             #endregion
 
+            #region MyRegionLoadBankPage
+            ObjectTable ReconcileExternalPageTable = objectContext.ObjectTables.Where(f => f.Name == "ReconcileExternalPage" && f.Tenant == 0).FirstOrDefault();
+
+            Feature LoadBankPageFeatureMenu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails()
+            {
+                Code = "LOADBANKPAGEMENU",
+                ObjectTableId = ReconcileExternalPageTable.Id,
+                Tenant = tenant,
+                NameTextCodeCode = "YearTransfer.Features.LoadBankPageMENU",
+                NameTextCodeDefaultText = "Load Bank Page",
+                FeatureTypeCode = "MENU",
+                FullLocalDefaultText = "טען דפי בנק מקובץ",
+                Packagable = true
+            }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+
+            #endregion
             textCodeRep.SubmitChanges();
             FeaturesRepository.SubmitChanges();
         }
