@@ -723,13 +723,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         {
                             ShipmentCompField.IsMissingDocuments = true;
                         }
-                        var IsRequested = documentsFilingQuery.GetIfIsRequestedForEntity(Poco.EntityId, tenant);
+                        var IsRequested = documentsFilingQuery.GetIfIsRequestedForEntity(Poco.EntityId, tenant,entityPM);
                         if (IsRequested == false && Poco.IsRequested && !Poco.IsDeleted)
                         {
                             IsRequested = true;
                         }
                         ShipmentCompField.IsRequestedDocuments = IsRequested;
-                        ShipmentCompField.RequestedDocumentsCount = documentsFilingQuery.GetRequestedDocCountForEntity(Poco.EntityId, tenant);
+                        ShipmentCompField.RequestedDocumentsCount = documentsFilingQuery.GetRequestedDocCountForEntity(Poco.EntityId, tenant, entityPM);
                         if (Poco.IsRequested && !Poco.IsDeleted)
                         {
                             ShipmentCompField.RequestedDocumentsCount++;

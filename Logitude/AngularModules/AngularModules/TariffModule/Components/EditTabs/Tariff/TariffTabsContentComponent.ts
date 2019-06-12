@@ -1,10 +1,12 @@
 import { Component, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
+import { TariffPM } from '../../../EntityPMs/TariffPM';
+import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM'
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
-import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
+import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/TariffVersionExtendedPMService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     moduleId: module.id,
@@ -17,13 +19,12 @@ export class TariffTabsContentComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private EditTabTariffType = "VR";
-    
-    constructor() {        
-    this.Listen();
 
+    constructor() {
+        this.Listen();
     }
 
-    private SaveCompletedEvent: any = null;    
+    private SaveCompletedEvent: any = null;
     private Listen() {
         if (this.CurrentSession.CurrentEditComponent != null) {
             this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -31,28 +32,28 @@ export class TariffTabsContentComponent implements OnDestroy {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     this.CurrentSession.FireEvent("LoadEventTabData");
                 }
-            });            
+            });
         }
     }
 
     ngOnDestroy() {
-        AppTool.KillEventEmitter(this.SaveCompletedEvent);        
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
 
     Run(args: any) {
         this.EntityPM = args['EntityPM'];
 
-    if (this.EntityPM.TypeCode == "ASC") {
-        this.EditTabTariffType = "SVR";
-    }
+        if (this.EntityPM.TypeCode == "ASC") {
+            this.EditTabTariffType = "SVR";
+        }
 
         this.BuildTabs();
-        this.RunComponent();
+        this.RunComponent();        
     }
     
     BuildTabs() {
         this.Tabs = [];
-        
+
         var datePipe: DatePipe = new DatePipe("en-US");
         var from: string = "";
         var to: string = "";
@@ -65,18 +66,16 @@ export class TariffTabsContentComponent implements OnDestroy {
         if (draftVersion != null) {
             from = datePipe.transform(draftVersion.StartDate, 'dd/MMM/yy');
             to = datePipe.transform(draftVersion.ExpirationDate, 'dd/MMM/yy');
-
-            //header = "Version " + draftVersion.Version + " (" + from + " - " + to + ")";
+            
             header = from + " - " + to;
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, draftVersion));
             index++;
         }
-
-        this.EntityPM.TariffVersions.filter(d => !d.IsDraft && DateTool.TruncateTime(d.ExpirationDate).valueOf() > todayDate.valueOf()).sort((a, b) => { return (a.Version === b.Version) ? 0 : (a.Version > b.Version) ? -1 : 1 }).forEach(item => {
+                
+        this.EntityPM.ActiveVersions.sort((a, b) => { return (a.Version === b.Version) ? 0 : (a.Version > b.Version) ? -1 : 1 }).forEach(item => {
             from = datePipe.transform(item.StartDate, 'dd/MMM/yy');
             to = datePipe.transform(item.ExpirationDate, 'dd/MMM/yy');
-
-            //header = "Version " + item.Version + " (" + from + " - " + to + ")";
+            
             header = from + " - " + to;
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, item));
             index++;
@@ -96,7 +95,7 @@ export class TariffTabsContentComponent implements OnDestroy {
                 this.RunComponentTimer();
             }
 
-            else {                
+            else {
                 this.SelectionChanged(this.Tabs[0]);
             }
         }

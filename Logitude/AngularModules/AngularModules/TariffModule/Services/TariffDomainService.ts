@@ -48,7 +48,6 @@ export class TariffDomainService {
         });
     }
 
-
     GetAvailableAirlineFreightTariffs(FromPort: string, ToPort: string, BetweenDate: Date, Weight: number) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -65,8 +64,7 @@ export class TariffDomainService {
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
-    }
-    
+    }    
 
     GenerateTariffs() {
         var authHeader = new Headers();
@@ -218,6 +216,23 @@ export class TariffDomainService {
 
         }
         return entityPM;
+    }
+
+    GetTariffVersionLines(tariffId: string, version: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetTariffVersionLines?tariffId=' + tariffId + "&version=" + version
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+                var allLists = response.json();
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
     }
 }
 

@@ -18,11 +18,14 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { ARInvoicePMService } from '../../Services/StandardPMs/ARInvoicePMService';
+import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
+import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 
 export class ARInvoiceMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
     public EntityPM: ARInvoicePM;
     public entityArgs: EntityArgs
+    private isRunningBatchTaskExecution: boolean = false;
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -415,9 +418,21 @@ export class ARInvoiceMenuButtonsHandler {
 
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    
+
                     if (this.isPrintRequested) {
                         this.InitializePrinting();
+                    }
+
+                    if (this.isRunningBatchTaskExecution) {
+
+                        this.isRunningBatchTaskExecution = false;
+
+                        if (this.EntityPM.BatchTaskExecutionId) {
+
+                            this.CurrentSession.StartBusyIndicator("Updating Shipments. It may take a few minutes...");
+
+                            this.CheckBatchTaskExecution(this.EntityPM.BatchTaskExecutionId);
+                        }
                     }
                 }
 
@@ -438,6 +453,41 @@ export class ARInvoiceMenuButtonsHandler {
             }
 
             this.StopFlags();
+        });
+    }
+
+    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
+
+        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+
+        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: BatchTaskExecutionList = myResponse.Result;
+
+                if (list.StatusCode == "D") {
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var window = new MessageWindow();
+                    window.Show("Shipments updated successfully");
+                }
+
+                else if (list.StatusCode == "F") {
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var window = new MessageWindow();
+                    window.Show("There was an error updating shipments and saving the invoice. Please try again later");
+                }
+
+                else {
+                    this.CheckBatchTaskExecution(BatchTaskExecutionId);
+                }
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                var window = new MessageWindow();
+                window.Show(myResponse.ErrorsArray[0]);
+            }
         });
     }
 
@@ -611,6 +661,11 @@ export class ARInvoiceMenuButtonsHandler {
         this.EntityPM.SetReTransfer = false;
         this.EntityPM.SetCancelDraft = false;
         this.EntityPM.SetReSendQBO = false;
+
+        if (this.EntityPM.IsConsolidationInvoice) {
+            this.isRunningBatchTaskExecution = true;
+        }
+
         this.entityArgs.EditComponent.SaveChanges(msg);
     }
 
@@ -755,6 +810,11 @@ export class ARInvoiceMenuButtonsHandler {
                 this.EntityPM.SetReTransfer = false;
                 this.EntityPM.SetCancelDraft = false;
                 this.EntityPM.SetReSendQBO = false;
+
+                if (this.EntityPM.IsConsolidationInvoice) {
+                    this.isRunningBatchTaskExecution = true;
+                }
+
                 this.entityArgs.EditComponent.SaveChanges("Voiding...");
             }
         });

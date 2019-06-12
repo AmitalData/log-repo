@@ -32,6 +32,7 @@ export class TMProjectList {
 	CategoryName: string;
 	ExcludeFromProrating: boolean;
 	DayOffTypeCode: string;
+	BlockedForDataEntry: boolean;
 	
 }
  

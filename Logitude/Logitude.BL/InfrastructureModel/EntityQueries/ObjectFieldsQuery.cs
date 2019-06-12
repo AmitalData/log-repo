@@ -1471,9 +1471,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TextCode fullnamecode = textCodes.Where(t => t.Id == objectField.FullNameTextCodeId).FirstOrDefault();
                         fullnamecode = fullnamecode ?? textcodesRepository.GetSingleTextCode(objectField.FullNameTextCodeId);
 
-                        objectField.FullNameTextCodeDefaultText = fullnamecode.DefaultText;
-                        objectField.FullNameTextCodeLocalDefaultText = fullnamecode.LocalDefaultText;
-                        objectField.FullNameTextCodeCode = fullnamecode.Code;
+                        if (fullnamecode != null)
+                        {
+                            objectField.FullNameTextCodeDefaultText = fullnamecode.DefaultText;
+                            objectField.FullNameTextCodeLocalDefaultText = fullnamecode.LocalDefaultText;
+                            objectField.FullNameTextCodeCode = fullnamecode.Code;
+                        }
+                       
                     }
 
                     if (objectField.ShortNameTextCodeId != null)
@@ -1481,8 +1485,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TextCode shortnamecode = textCodes.Where(t => t.Id == objectField.ShortNameTextCodeId).FirstOrDefault();
                         shortnamecode = shortnamecode ?? textcodesRepository.GetSingleTextCode(objectField.ShortNameTextCodeId);
 
-                        objectField.ShortNameTextCodeDefaultText = shortnamecode.DefaultText;
-                        objectField.ShortNameTextCodeCode = shortnamecode.Code;
+                        if (shortnamecode != null)
+                        {
+                            objectField.ShortNameTextCodeDefaultText = shortnamecode.DefaultText;
+                            objectField.ShortNameTextCodeCode = shortnamecode.Code;
+                        }
+                       
                     }
 
                     if (objectField.HelpTextCodeId != null)
@@ -1490,8 +1498,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TextCode helpcode = textCodes.Where(t => t.Id == objectField.HelpTextCodeId).FirstOrDefault();
                         helpcode = helpcode ?? textcodesRepository.GetSingleTextCode(objectField.HelpTextCodeId);
 
-                        objectField.HelpTextTextCodeCode = helpcode.Code;
-                        objectField.HelpTextCodeDefaultText = helpcode.DefaultText;
+                        if (helpcode != null)
+                        {
+                            objectField.HelpTextTextCodeCode = helpcode.Code;
+                            objectField.HelpTextCodeDefaultText = helpcode.DefaultText;
+                        }
+                       
                     }
 
                     if (objectField.ListTextCodeId != null)
@@ -1499,8 +1511,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         TextCode listcode = textCodes.Where(t => t.Id == objectField.ListTextCodeId).FirstOrDefault();
                         listcode = listcode ?? textcodesRepository.GetSingleTextCode(objectField.ListTextCodeId);
 
-                        objectField.ListTextCodeCode = listcode.Code;
-                        objectField.ListTextCodeDefaultText = listcode.DefaultText;
+                        if (listcode != null)
+                        {
+                            objectField.ListTextCodeCode = listcode.Code;
+                            objectField.ListTextCodeDefaultText = listcode.DefaultText;
+                        }
+                       
                     }
                 }
 

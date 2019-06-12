@@ -81,7 +81,7 @@ export class AddEditTariffLineComponent  {
                 }
             }
 
-            this.DataContext.FatherComponent.FillTariffLines();
+            this.DataContext.FatherComponent.FillTariffLines(this.DataContext.FatherComponent.CurrentVersion.TariffLines);
             this.CurrentSession.CloseCurrentWindow();
         }
     }
