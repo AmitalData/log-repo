@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -15,5 +16,8 @@ namespace WebFreight.Web.WcfApi
     {
         [OperationContract]
         Response Upsert(CurrencyPM entityPM, bool batch);
+
+        [OperationContract]
+        List<CurrencyList> GetList(ApiSearchFilters filters, int tenant, ref Response response);
     }
 }

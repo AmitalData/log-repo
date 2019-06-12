@@ -127,7 +127,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  true,
 			      				    IsLookUp =  false,
-			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "ARInvoice,ARInvoices,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);

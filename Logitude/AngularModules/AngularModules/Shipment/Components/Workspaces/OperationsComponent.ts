@@ -1,4 +1,4 @@
-﻿import {Component, ViewChildren, QueryList, OnInit} from '@angular/core';
+import {Component, ViewChildren, QueryList, OnInit} from '@angular/core';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
@@ -23,25 +23,27 @@ export class OperationsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(response => {
-            this.IsResourcesReady = true;
+        this._entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe(res1 => {
+            this._entityResourceService.getEntityResourceByTableName("Master", 0).subscribe(res2 => {
+                this.IsResourcesReady = true;
 
-            if (FeatureLocator.HasFeaturePermession("Booking", "Booking.Menu")) {
-                this.IsBookingItemVisible = true;
-                this.IsMenuVisible = true;
-            }
+                if (FeatureLocator.HasFeaturePermession("Booking", "Booking.Menu")) {
+                    this.IsBookingItemVisible = true;
+                    this.IsMenuVisible = true;
+                }
 
-            if (FeatureLocator.HasFeaturePermession("Shipment", "AgentSharedManifest")) {
-                this.IsSharedManifestItemVisible = true;
-                this.IsMenuVisible = true;
-            }
+                if (FeatureLocator.HasFeaturePermession("Shipment", "AgentSharedManifest")) {
+                    this.IsSharedManifestItemVisible = true;
+                    this.IsMenuVisible = true;
+                }
 
-            if (FeatureLocator.HasFeaturePermession("Shipment", "Area.ContainersFU")) {
-                this.IsContainersFUItemVisible = true;
-                this.IsMenuVisible = true;
-            }
+                if (FeatureLocator.HasFeaturePermession("Shipment", "Area.ContainersFU")) {
+                    this.IsContainersFUItemVisible = true;
+                    this.IsMenuVisible = true;
+                }
 
-            this.RunComponent();
+                this.RunComponent();
+            });
         });
     }
 

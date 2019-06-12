@@ -35,7 +35,7 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
             {
                 //log the exception.
                 this.ChangeStatus("F",ex);
-                throw;
+                //throw; Removed By Rabaia and Mohammad because it causes the WR to crash.
                     
             }
         }

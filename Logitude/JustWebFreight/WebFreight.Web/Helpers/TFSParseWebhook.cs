@@ -187,7 +187,7 @@ namespace WebFreight.Web.Helpers
                 createdByUser = userRepository.GetSingleUserByCodeOrEmail(null, createdByUserEmail, Tenant, true);
             }
 
-            var projectId = tmProjectRepository.GetTMProjectByNumber(Details.ProjectNumber, Tenant);
+            var projectId = tmProjectRepository.GetTMActiveProjectByNumber(Details.ProjectNumber, Tenant);
             if (assignedToUser != null && updatedByUser != null)
             {
                 if ((assignedToUser.Id == updatedByUser.Id) && Details.RemainingWork != null && (Details.TaskState == "In Progress" || Details.TaskState == "Committed" || Details.TaskState == "Done"))
@@ -255,7 +255,7 @@ namespace WebFreight.Web.Helpers
                     string iProjectNumber = GetWorkItemById(iWorkItemNumber, false);
                     if (!string.IsNullOrEmpty(iProjectNumber))
                     {
-                        string iProjectId = iTMProjectRepository.GetTMProjectByNumber(iProjectNumber, tenant);
+                        string iProjectId = iTMProjectRepository.GetTMActiveProjectByNumber(iProjectNumber, tenant);
 
                         if (!string.IsNullOrEmpty(iProjectId))
                         {

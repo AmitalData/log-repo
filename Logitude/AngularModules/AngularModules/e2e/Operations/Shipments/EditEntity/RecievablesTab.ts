@@ -23,11 +23,8 @@ export class ReceivablesTabComponent {
             this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD');
             this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
 
-            expect(element(by.id('ReceivableAmount')).getAttribute('textContent')).toBe(this.amount1 + this.amount2);
-
-            // this.AddReceivables('Air Frei', '10', '10', 'USD');
-            // this.AddReceivables('Order', '10', '20','EUR');
-            // InvoiceAmount = this.amount1 + this.amount2
+            // browser.driver.sleep(5000);
+            // expect(element(by.id('ReceivableAmount')).getAttribute('textContent')).toBe(this.amount1 + this.amount2);
 
             this.Helper.WaitByIdAndClick('Shipment-Save');
             this.Helper.WaitBusyIndicator();
@@ -39,20 +36,18 @@ export class ReceivablesTabComponent {
             this.AddReceivables('A', '5', '10', 'USD');
             // this.AddReceivables('Order', '10', '20');
             // InvoiceAmount = this.amount1 + this.amount2
-            this.AddARInvoice();
+            // this.AddARInvoice();
         }
     }
 
     AddReceivables(ChargeType: string, quantity: any, unitPrice: any, currency: any) {
         var amount: any = 0;
         var receivableCurrency = '';
-        // var testcurr = element(by.id('ProfitCurrency')).getAttribute('textContent').then(function (recCurrency) {
-         element(by.id('ProfitCurrency')).getAttribute('textContent').then(function (recCurrency) {            
+        element(by.id('ProfitCurrency')).getAttribute('textContent').then(function (recCurrency) {
             receivableCurrency = recCurrency.trim();
             if (receivableCurrency != null) {
                 console.log('Receivable  Profit Currency-ReceivableTab : ' + receivableCurrency);
             } else {
-
                 console.log('No Profit Currency in Receiavble Tab');
             }
             // return receivableCurrency;
@@ -98,9 +93,9 @@ export class ReceivablesTabComponent {
                 console.log('Exchange Rate is Changed : 4 ');
             }
         });
-        var lineAmount ;
-        lineAmount =  quantity * unitPrice;
-        expect(element(by.id('ShipmentReceivable_TotalAmount')).getAttribute('value')).toBe(lineAmount+'.00');
+        var lineAmount;
+        lineAmount = quantity * unitPrice;
+        expect(element(by.id('ShipmentReceivable_TotalAmount')).getAttribute('value')).toBe(lineAmount + '.00');
 
         element(by.id('ShipmentReceivable_TotalAmount')).getAttribute('value').then(function (recAmount) {
             receivableAmount = recAmount;

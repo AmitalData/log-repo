@@ -205,6 +205,7 @@
     <Content Include="2019.R2\04 - 2016\Day 28 [Samar] AddNewHelpResources.sql" />
     <Content Include="2019.R2\05 - 2019\Day 29 [Maheera] Time Management  Day Off Script.sql" />
     <Content Include="2019.R2\05 - 2019\Day 9 [Abed] UpdateMeasuremntsLocalName.sql" />
+    <Content Include="Accounting\2015 - 8\day 10 [alex] unique constraint in JournalActionTypes.sql" />
     <Content Include="Customs\2018 - 04\[Abdullah] Day 10 Delete forign keys for table CustomCountry.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
     <Content Include="2018.R2\05 - 2018\Day 07 [Ayman] Update Text Code Truck Number.sql" />
@@ -215,6 +216,7 @@
     <Content Include="2018.R2\06 - 2018\Day 25 [Samar] Add new event type set as potential.sql" />
     <Content Include="DataViews And Procedures\DataViews\MessagingStockDataView.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateAllTenantsCustomersActualData.sql" />
+    <Content Include="DataViews And Procedures\Stored Procedures\UpdateConstituentShipment.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateCustomerActualData.sql" />
     <Content Include="DataViews And Procedures\Stored Procedures\UpdateTenantCustomersActualData.sql" />
     <Content Include="Main Branch\2018\02 - 2018\Day 04 [Khalid] Computing Partner Code Adjustment.sql" />
@@ -576,6 +578,7 @@
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Abed] updateTasksSchedulerFieldType.sql" />
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman1] UpdateARInvoicesIsPrinted.sql" />
     <Content Include="Main Branch\2019\03 - 2019\Day 17 [Ayman2] UpdateShipmentARInvoices.sql" />
+    <Content Include="Main Branch\2019\06 - 2019\Day 11 [Rabaia] AddImporterApprovalReceivedWRToBatchServices.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 15 [Khalid] delete Wrong QueryCode.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 21 [Rabaia]Trace Event Indexes.sql" />
     <Content Include="Main Branch\2019\04 - 2019\Day 21 [Khalid] Fill ComputedShipmentFieldBackwards.sql" />
