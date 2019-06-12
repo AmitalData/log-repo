@@ -1089,6 +1089,10 @@
     <Compile Include="Migrations\201906120729395_PaymentChequeAPPaymentIdMigration.Designer.cs">
       <DependentUpon>201906120729395_PaymentChequeAPPaymentIdMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906120815160_IsPaymentChequesActivatedFullAccountingSettingMigration.cs" />
+    <Compile Include="Migrations\201906120815160_IsPaymentChequesActivatedFullAccountingSettingMigration.Designer.cs">
+      <DependentUpon>201906120815160_IsPaymentChequesActivatedFullAccountingSettingMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1847,6 +1851,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906120729395_PaymentChequeAPPaymentIdMigration.resx">
       <DependentUpon>201906120729395_PaymentChequeAPPaymentIdMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906120815160_IsPaymentChequesActivatedFullAccountingSettingMigration.resx">
+      <DependentUpon>201906120815160_IsPaymentChequesActivatedFullAccountingSettingMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
