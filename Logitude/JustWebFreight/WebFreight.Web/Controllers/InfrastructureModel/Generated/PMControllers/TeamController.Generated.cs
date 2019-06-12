@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Team", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("Team", entityPM.Tenant, authToken.Tenant);
 	                    
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         TeamUpdateService service = new TeamUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -141,6 +142,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("Team", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("Team", entityPM.Tenant, authToken.Tenant);
 	
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         TeamUpdateService service = new TeamUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("BatchTaskExecution", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("BatchTaskExecution", entityPM.Tenant, authToken.Tenant);
 	                    
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         BatchTaskExecutionUpdateService service = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -140,6 +141,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("BatchTaskExecution", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("BatchTaskExecution", entityPM.Tenant, authToken.Tenant);
 	
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         BatchTaskExecutionUpdateService service = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
