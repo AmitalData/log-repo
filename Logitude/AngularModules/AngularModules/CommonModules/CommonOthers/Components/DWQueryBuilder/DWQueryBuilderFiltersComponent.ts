@@ -125,7 +125,7 @@ export class DWQueryBuilderFiltersComponent implements OnInit {
 
     onDeleteFilterClick(item) {
         item.MyParentClass.SelectedFiltersDataSource = this.DeleteField(item, item.MyParentClass.SelectedFiltersDataSource);
-        item.MyParentClass.SaveChanges();
+        item.MyParentClass.ClearData();//SaveChanges();
         //var temp = this.SelectedFiltersDataSource;
         //this.SelectedFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a != item);
         //var temp = this.MyParentClass.SelectedFieldsDataSource;

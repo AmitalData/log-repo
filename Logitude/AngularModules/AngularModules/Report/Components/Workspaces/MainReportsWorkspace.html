@@ -3,7 +3,7 @@
     <tr style="height:21px;" *ngIf="IsMenuVisible">
         <td>
             <ul class="PagesMenu">
-                <li id="{{'Report' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'Report'" (click)="SelectedItem = 'Report'">Reports</li>
+                <li id="{{'Report' | IdGeneratorPipe}}"  [class.SelectedPageMenu]="SelectedItem == 'Report'" (click)="SelectedItem = 'Report'">Reports</li>
 
                 <li id="{{'BI' | IdGeneratorPipe}}" *ngIf="IsBIItemVisible" [class.SelectedPageMenu]="SelectedItem == 'BI'" (click)="SelectedItem = 'BI'">BI</li>               
             </ul>
