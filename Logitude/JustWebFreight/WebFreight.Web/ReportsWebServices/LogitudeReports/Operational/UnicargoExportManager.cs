@@ -82,12 +82,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             List<ShipmentMasterData> shipmentMasterDatas = shipmentsContext.ShipmentMasterDatas.Where(p => p.Tenant == tenant && shipmentdelevriesIds.Contains(p.Id)).ToList();
 
             Dictionary<string, string> ShipmentTypes = shipmentsContext.ShipmentTypes.ToDictionary(a => a.Id, b => b.Name);
-            Dictionary<string, string> transportmodes = webFreightContext.TransportModes.ToDictionary(a => a.Id, b => b.Name);
+            Dictionary<string, string> Shipmenttransportmodes = webFreightContext.TransportModes.ToDictionary(a => a.Id, b => b.Name);
+
+            Dictionary<string, string> transportmodes = shipmentsContext.PickUpDeliveryTransportModes.ToDictionary(a => a.Code, b => b.Name);
             Dictionary<string, string> Directions = webFreightContext.Directions.ToDictionary(a => a.Id, b => b.Name);
             Dictionary<string, string> ShipmentLevels = shipmentsContext.ShipmentLevels.ToDictionary(a => a.Code, b => b.Name);
             Dictionary<string, string> departments = commonDataContext.Departments.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
             Dictionary<string, string> branches = commonDataContext.Branches.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
-            Dictionary<string, string> SpeicalServices = webFreightContext.SpecialServices.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.SpecialServiceEnglishName);
+            Dictionary<string, string> SpeicalServices = shipmentsContext.SpecialServicesTypes.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
             Dictionary<string, string> ShipmentPackagesTypes = commonDataContext. PackageTypes.Where(p => p.Tenant == tenant).ToDictionary(a => a.Id, b => b.EnglishName);
             List<ShipmentPickUpDelivery> shipmentPickUpDeliveriesLists = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d).ToList();
             List<ShipmentPackage> shipmentPackages = (from d in shipmentsContext.ShipmentPackages where shipmentdelevriesIds.Contains(d.ShipmentId) select d).ToList();
@@ -112,7 +114,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 #region  General Section
                 Shipment.House = item.House;
-                Shipment.ShipmentNumber = item.ShipmentNumber;
+                Shipment.FileNumber = item.ShipmentNumber;
                 if (!string.IsNullOrEmpty(item.IncotermId))
                 {
                     Shipment.Incoterms = incoterms.ContainsKey(item.IncotermId)?incoterms[item.IncotermId]!=null? incoterms[item.IncotermId]:null:null;
@@ -136,7 +138,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                 if (!string.IsNullOrEmpty(item.TransportModeId))
                 {
-                    Shipment.TransportMode = transportmodes.ContainsKey(item.TransportModeId) ?transportmodes[item.TransportModeId] != null ? transportmodes[item.TransportModeId] : null:null;
+                    Shipment.TransportMode = Shipmenttransportmodes.ContainsKey(item.TransportModeId) ? Shipmenttransportmodes[item.TransportModeId] != null ? Shipmenttransportmodes[item.TransportModeId] : null:null;
                 }
 
                 if (!string.IsNullOrEmpty(item.DirectionId))
@@ -195,8 +197,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 }
                 Shipment.CreateDate = item.CreateDateTime;
                 Shipment.ValueofGoods = item.ValueOfGoods;
-                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, Shipment, item);
-               
+                customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, item, Shipment);
+
+
                 #endregion
 
 
@@ -397,9 +400,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                         if (myFirstPickup.PickUpDeliveryToTypeCode == "PORT")
                         {
-                            if (!string.IsNullOrEmpty(myFirstPickup.FromPortId))
+                            if (!string.IsNullOrEmpty(myFirstPickup.ToPortId))
                             {
-                                PortPM myPort = PortQuery.GetSinglePort(tenant, myFirstPickup.FromPortId, true);
+                                PortPM myPort = PortQuery.GetSinglePort(tenant, myFirstPickup.ToPortId, true);
                                 if (myPort != null)
                                 {
                                 Shipment.PickupToPort = myPort.Code + " " + myPort.EnglishName;// myPort.StateName+" , "+ myPort.CountryName;
@@ -425,7 +428,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.MainCarriageFromPortId, true);
                         if (myPort != null)
                         {
-                            Shipment.MainCarriageLeg1LoadingPort = myPort.StateName + " , " + myPort.CountryName;
+                            Shipment.MainCarriageLeg1LoadingPort = myPort.Code + " " + myPort.EnglishName;
                         }
 
                     }
@@ -436,7 +439,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.Transshipment1FromPortId, true);
                         if (myPort != null)
                         {
-                            Shipment.MainCarriageLeg1ViaPort1 = myPort.StateName + " , " + myPort.CountryName;
+                            Shipment.MainCarriageLeg1ViaPort1 = myPort.Code + " " + myPort.EnglishName;
                         }
 
                     }
@@ -447,7 +450,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.Transshipment2FromPortId, true);
                         if (myPort != null)
                         {
-                            Shipment.MainCarriageLeg1ViaPort2 = myPort.StateName + " , " + myPort.CountryName;
+                            Shipment.MainCarriageLeg1ViaPort2 = myPort.Code + " " + myPort.EnglishName;
                         }
 
                     }
@@ -459,7 +462,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.Transshipment3FromPortId, true);
                         if (myPort != null)
                         {
-                            Shipment.MainMainCarriageLeg1ViaPort3 = myPort.StateName + " , " + myPort.CountryName;
+                            Shipment.MainMainCarriageLeg1ViaPort3 = myPort.Code + " " + myPort.EnglishName;
                         }
 
                     }
@@ -472,7 +475,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.MainCarriageToPortId, true);
                         if (myPort != null)
                         {
-                            Shipment.MainCarriageLeg1DischargePort = myPort.StateName + " , " + myPort.CountryName;
+                            Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
                         }
 
                     }
@@ -484,7 +487,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                         PortPM myPort = PortQuery.GetSinglePort(tenant, MasterData.MainCarriageToPortId, true);
                         if (myPort != null)
                         {
-                            Shipment.MainCarriageLeg1DischargePort = myPort.StateName + " , " + myPort.CountryName;
+                            Shipment.MainCarriageLeg1DischargePort = myPort.Code + " " + myPort.EnglishName;
                         }
 
                     }
@@ -600,11 +603,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
                     if (myLastDelivery != null)
                     {
-                        if (myLastDelivery.PickUpDeliveryFromTypeCode == "PART")
+                        if (myLastDelivery.PickUpDeliveryToTypeCode == "PART")
                         {
                             if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
                             {
-                                Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.Id == myLastDelivery.ToPartnerCardId).FirstOrDefault();
+                                Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.CardId == myLastDelivery.ToPartnerCardId).FirstOrDefault();
                                 if (myPartnerAddress != null)
                                 {
                                     Shipment.DeliveryToPatnerAddress = DataProviders.General.GetAddress(myPartnerAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
@@ -620,6 +623,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
 
 
+
+                        }
+
+
+                        if (myLastDelivery.PickUpDeliveryFromTypeCode == "PART")
+
                             if (!string.IsNullOrEmpty(myLastDelivery.FromPartnerCardId))
                             {
 
@@ -630,20 +639,30 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                                     Shipment.DeliveryFromPartner = card.EnglishName;
                                 }
                             }
-                        }
 
 
-                        if (myLastDelivery.PickUpDeliveryToTypeCode == "PORT")
+                        if (myLastDelivery.PickUpDeliveryFromTypeCode == "PORT")
                         {
                             if (!string.IsNullOrEmpty(myLastDelivery.FromPortId))
                             {
                                 PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.FromPortId, true);
                                 if (myPort != null)
                                 {
-                                    Shipment.DeliveryFromPort = myPort.StateName + " , " + myPort.CountryName;
+                                    Shipment.DeliveryFromPort = myPort.Code + " " + myPort.EnglishName;
                                 }
                             }
                         }
+
+                    
+
+                
+
+
+
+
+
+
+
 
 
                         if (!string.IsNullOrEmpty(myLastDelivery.TransportModeCode))
