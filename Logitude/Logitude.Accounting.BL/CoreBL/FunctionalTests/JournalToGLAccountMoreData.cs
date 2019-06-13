@@ -33,7 +33,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
             {
                 throw new Exception("!tenant.IsTestTenant");
             }
-
+            
             _Tenant = tenant;
             var util = new XLSUtil();
             DataTable XLSTable = util.GetDataTableFromWorkSheet(byteArrayXLS, "Journals");
@@ -111,7 +111,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 
                 }
 
-                BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask( args, false);
+                BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask( args,false);
 
 
                 scope.Complete();

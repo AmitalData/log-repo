@@ -228,7 +228,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             List<string> listOfBankLinesIds = entityPM.ExternalReconciliationLines.FindAll(d => d.ExternalPageLineId != null).Select(d => d.ExternalPageLineId).ToList();
             List<ReconcileExternalPageLine> pageLines = query.GetBankPagesByIds(listOfBankLinesIds, entityPM.Tenant);
-            BankLinesSum = pageLines.Sum(a => a.Amount);
+            BankLinesSum = pageLines.Sum(a => a.CreditAmount > 0 ? a.CreditAmount : a.DebitAmount);
 
 
             var def = (BankLinesSum - LedgerLinesSum);
