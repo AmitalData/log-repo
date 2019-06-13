@@ -40,7 +40,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //entityPM.InternalNumber = CodeCounter.GetNumber("PaymentCheque.InternalNumber", entityPM.Tenant).ToString();
             //entityPM.PaymentChequeStatusCode = "1";
             //entityPM.UniqueField = entityPM.Id;
-            //ValidateEntity(entityPM);
+             ValidateEntity(entityPM);
             //TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             //TenantPM currentTenant = tenantQuery.GetSinglePM(entityPM.Tenant);
             //BankAccountQueryService bankQuery = new BankAccountQueryService(entityPM.Tenant);
@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     bankAccount.ChangeSetOp = ChangeSetOperation.Update;
                     bankAccountUpdateService.Update(bankAccount, true);
                 }
-                ValidateEntity(entityPM);
+              
                 TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
                 TenantPM currentTenant = tenantQuery.GetSinglePM(entityPM.Tenant);
                 entityPM.ForeignAmount = entityPM.LocalAmount;
@@ -163,7 +163,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 journalUpdateService.Update(journal, true);
                 entityPM.JournalNumber = journal.JournalNumber;
             }
-           
+            ValidateEntity(entityPM);
             entityPM.UpdateDate = DateTime.Now;
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
         }
@@ -245,21 +245,45 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             IAccountingContext context = MainContext as AccountingContext;
             PaymentChequeQueryService service = new PaymentChequeQueryService(context);
             bool exist = service.CheckIfPaymentChequeExists(entityPM.Id, entityPM.BankAccountId, entityPM.UniqueField, entityPM.Tenant);
+            showLocals= SetShowLocalLabels(entityPM);
             if (exist)
             {
-                ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
-                bool showLocals = !contact.DontShowLocal;
+                
+               
                 throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.PaymentChequeExist", entityPM.Tenant, showLocals));
-            }
 
+
+            }
+            ValidateGLAccountAccountType(entityPM);
+          
+          
         }
 
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        bool showLocals;
+        public bool SetShowLocalLabels(PaymentChequePM entityPM)
+        {
+            ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
+             showLocals = !contact.DontShowLocal;
+            return showLocals;
+        }
 
+        public void ValidateGLAccountAccountType(PaymentChequePM entityPM)
+        {
+            GLAccountPM account=  GetGLAccountById(entityPM);
+           
+            if (account.AccountTypeCode == "3")
+            {
+                throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.VendorsGLAccount", entityPM.Tenant, showLocals));
+            }
 
-
-
+        }
+        public GLAccountPM GetGLAccountById(PaymentChequePM entityPM)
+        {
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
+            return gLAccountQueryService.GetSingle(EntityPOCO.PayToGLAccountId, false, false);
+        }
         public static ContactPM GetLoggedContact(int tenant)
         {
             if (OverrideGetLoggedContactFunc != null)

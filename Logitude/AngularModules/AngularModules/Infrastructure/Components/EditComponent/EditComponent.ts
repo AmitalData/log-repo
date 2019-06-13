@@ -84,7 +84,7 @@ export class EditComponent implements OnDestroy {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
     }
-
+  
     private EntityFields: any[] = null;
     public Run(args: any) {
         this.EntityId = args['EntityId'];
@@ -101,7 +101,7 @@ export class EditComponent implements OnDestroy {
         this.IsTabsHidden = this.ObjectTable.IsTabsHidden;
         this.NavigationIds = args['NavigationIds'];
         this.EntityFields = args['EntityFields'];
-
+      
         if (this.NavigationIds) {
             this.NextPreviousVisible = true;
         }

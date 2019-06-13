@@ -29,7 +29,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.Amount).HasColumnName("Amount").HasPrecision(15, 2);
+            this.Property(t => t.DebitAmount).HasColumnName("DebitAmount").HasPrecision(15, 2);
 
             this.Property(t => t.ReferenceDate).HasColumnName("ReferenceDate");
 
@@ -55,6 +55,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ReconcileRemarks).HasColumnName("ReconcileRemarks").HasMaxLength(400).IsUnicode(true);
+
+            this.Property(t => t.CreditAmount).HasColumnName("CreditAmount").HasPrecision(15, 2);
         }
     }
 }

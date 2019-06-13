@@ -287,7 +287,7 @@
     <table>
         <tr>
             <td>
-                <div style="height:100%;">
+                <div class="MediaFill" style="height:100%;overflow:auto;">
                     <!--overflow:auto;-->
                     <table>
                         <tr>
@@ -715,12 +715,16 @@
                                                                                     <tr class="SimpleGridViewRow" *ngFor="let item of SampleData;">
 
                                                                                         <td *ngFor="let Column of SelectedFieldsDataSource; let i=index;" class="CellStretched  TextTrimming" style="width: 100px; max-width: 100px;min-width:100px;padding-left: 4px;">
-                                                                                            <div  [style.padding-right] ="Column.DataTypeCode == 'Integer' ? '4px':'0px'"    [style.text-align]="Column.DataTypeCode == 'Integer' ? 'right':'left'" *ngIf="Column.IsMeasurement == false && Column.DataTypeCode != 'Decimal' && Column.DataTypeCode != 'Double'">
+                                                                                            <div [style.padding-right]="Column.DataTypeCode == 'Integer' ? '4px':'0px'" [style.text-align]="Column.DataTypeCode == 'Integer' ? 'right':'left'" *ngIf="Column.IsMeasurement == false && Column.DataTypeCode != 'Decimal' && Column.DataTypeCode != 'Double' && Column.DataTypeCode == 'DateTime' && Column.DataTypeCode == 'Date'">
                                                                                                 {{item[Column.DisplayName.replace('[', '').replace(']','')]}}
                                                                                             </div>
 
                                                                                             <div *ngIf="Column.IsMeasurement == true || Column.DataTypeCode == 'Decimal' || Column.DataTypeCode == 'Double'" style="text-align:right;padding-right:4px;">
                                                                                                 {{item[Column.DisplayName.replace('[', '').replace(']','')] | NumbersPipe:'N2'}}
+                                                                                            </div>
+
+                                                                                            <div *ngIf="Column.DataTypeCode == 'DateTime' || Column.DataTypeCode == 'Date'" style="text-align:right;padding-right:4px;">
+                                                                                                {{item[Column.DisplayName.replace('[', '').replace(']','')] | DateTimePipe:'SD'}}
                                                                                             </div>
 
 

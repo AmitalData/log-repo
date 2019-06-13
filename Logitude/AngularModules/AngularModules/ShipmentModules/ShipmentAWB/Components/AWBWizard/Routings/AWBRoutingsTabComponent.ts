@@ -441,57 +441,60 @@ export class AWBRoutingsTabComponent extends BaseComponent {
     public ShowWarning_Transshipment1CarrierId: boolean = false;
     public ShowWarning_Transshipment2CarrierId: boolean = false;
     private FireWizardEvent() {
-        this.Wizard.ValidateScreen_PAR();
-        this.Wizard.ValidateScreen_ROU();
-        this.Wizard.ValidateScreen_GEN();
-        this.Wizard.ValidateScreen_PAC();
-        this.Wizard.ValidateScreen_OCI();
+            this.Wizard.ValidateScreen_PAR();
+            this.Wizard.ValidateScreen_ROU();
+            this.Wizard.ValidateScreen_GEN();
+            this.Wizard.ValidateScreen_PAC();
+            this.Wizard.ValidateScreen_OCI();
+        
     }
     private Validate() {
-        this.ShowWarning_MainCarriageCarrierId = false;
-        this.ShowWarning_MainCarriageCarrierNumber = false;
-        this.ShowWarning_Master = false;
-        this.ShowWarning_MAWBOBLDate = false;
-        this.ShowWarning_MainCarriageETD = false;
-        this.ShowWarning_Transshipment1CarrierId = false;
-        this.ShowWarning_Transshipment2CarrierId = false;
+        if (!this.Wizard.IsImportWizard) {
+            this.ShowWarning_MainCarriageCarrierId = false;
+            this.ShowWarning_MainCarriageCarrierNumber = false;
+            this.ShowWarning_Master = false;
+            this.ShowWarning_MAWBOBLDate = false;
+            this.ShowWarning_MainCarriageETD = false;
+            this.ShowWarning_Transshipment1CarrierId = false;
+            this.ShowWarning_Transshipment2CarrierId = false;
 
-        if (this.MainCarriageCarrierId == null) {
-            this.ShowWarning_MainCarriageCarrierId = true;
-        }
-
-        if (AppTool.IsNullOrEmpty(this.Master)) {
-            this.ShowWarning_Master = true;
-        }
-
-        if (this.MAWBOBLDate == null) {
-            this.ShowWarning_MAWBOBLDate = true;
-        }
-
-        if (this.MainCarriageETD == null) {
-            this.ShowWarning_MainCarriageETD= true;
-        }
-
-        if (this.Transshipment1CarrierId == null) {
-            this.ShowWarning_Transshipment1CarrierId = true;
-        }
-
-        if (this.Transshipment2CarrierId == null) {
-            this.ShowWarning_Transshipment2CarrierId = true;
-        }
-
-        var isCarrierNumberFormatValid = FormatTool.Validate_FlightNumber(this.MainCarriageCarrierNumber);
-        if (this.MainCarriageCarrierId == null) {
-            if (!isCarrierNumberFormatValid) {
-                this.ShowWarning_MainCarriageCarrierNumber = true;
+            if (this.MainCarriageCarrierId == null) {
+                this.ShowWarning_MainCarriageCarrierId = true;
             }
-        }
 
-        else {
-            var codePrefix: string = AppTool.IsNullOrEmpty(this.MainCarriageCarrierPrefix) ? this.MainCarriageCarrierPrefix : this.MainCarriageCarrierPrefix.trim();
-            var isValidcodePrefix = !AppTool.IsNullOrEmpty(codePrefix) && codePrefix.length == 2;
-            if (!isValidcodePrefix || !isCarrierNumberFormatValid) {
-                this.ShowWarning_MainCarriageCarrierNumber = true;
+            if (AppTool.IsNullOrEmpty(this.Master)) {
+                this.ShowWarning_Master = true;
+            }
+
+            if (this.MAWBOBLDate == null) {
+                this.ShowWarning_MAWBOBLDate = true;
+            }
+
+            if (this.MainCarriageETD == null) {
+                this.ShowWarning_MainCarriageETD = true;
+            }
+
+            if (this.Transshipment1CarrierId == null) {
+                this.ShowWarning_Transshipment1CarrierId = true;
+            }
+
+            if (this.Transshipment2CarrierId == null) {
+                this.ShowWarning_Transshipment2CarrierId = true;
+            }
+
+            var isCarrierNumberFormatValid = FormatTool.Validate_FlightNumber(this.MainCarriageCarrierNumber);
+            if (this.MainCarriageCarrierId == null) {
+                if (!isCarrierNumberFormatValid) {
+                    this.ShowWarning_MainCarriageCarrierNumber = true;
+                }
+            }
+
+            else {
+                var codePrefix: string = AppTool.IsNullOrEmpty(this.MainCarriageCarrierPrefix) ? this.MainCarriageCarrierPrefix : this.MainCarriageCarrierPrefix.trim();
+                var isValidcodePrefix = !AppTool.IsNullOrEmpty(codePrefix) && codePrefix.length == 2;
+                if (!isValidcodePrefix || !isCarrierNumberFormatValid) {
+                    this.ShowWarning_MainCarriageCarrierNumber = true;
+                }
             }
         }
     }

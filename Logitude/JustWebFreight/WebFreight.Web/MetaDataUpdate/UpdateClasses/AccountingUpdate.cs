@@ -1835,6 +1835,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.AuthoritiesReports", DefaultText = "Authorities Reports", LocalDefaultText = "דוחות לרשויות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.856Report", DefaultText = "856 Report", LocalDefaultText = "דוח 856", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OpenFormat", DefaultText = "Open Format", LocalDefaultText = "דוח מבנה אחיד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.VendorsGLAccount", DefaultText = "Internal Cheques can be created only from APPayment for vendors GLAccount", LocalDefaultText = "ניתן להפיק המחאה לכרטיס ספק רק באמצעות הוראת תשלום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             AddTextCodes.AddTextCode(new TextCodeDetails()

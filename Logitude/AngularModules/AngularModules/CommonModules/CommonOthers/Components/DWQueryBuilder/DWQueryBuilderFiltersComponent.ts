@@ -19,6 +19,7 @@ export class DWQueryBuilderFiltersComponent implements OnInit {
     //allFieldsWithChildrenDataSource: DWObjectFieldsDetails[] = [];
     public AndOrOps = ["And", "Or"];
     public Types = ["Fixed Filter", "Ask User"];
+    public BooleanValues = ["Yes", "No", "No Value"];
     DataContext: any;
     public _DWObjectTablePMService: DWObjectTablePMService;
     public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
@@ -37,7 +38,6 @@ export class DWQueryBuilderFiltersComponent implements OnInit {
     constructor(private cd: ChangeDetectorRef) {
         //this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         var ObsList = [];
-        
     }
 
     ngOnInit() {

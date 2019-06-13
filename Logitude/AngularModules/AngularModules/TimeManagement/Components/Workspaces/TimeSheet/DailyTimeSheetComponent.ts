@@ -318,6 +318,7 @@ export class DailyTimeSheetComponent extends BaseComponent {
             var requiredSprints = items.filter(f => f.SprintId == null).length;
             var requiredDescriptions = items.filter(f => AppTool.IsNullOrEmpty(f.Description)).length;
             var dayOffValidation = items.filter(f => (f.Project != null && !AppTool.IsNullOrEmpty(f.Project.DayOffTypeCode) && f.LocationCode != "D") || (f.LocationCode == "D" && f.Project != null && AppTool.IsNullOrEmpty(f.Project.DayOffTypeCode))).length;
+            var dayOffProjectValidation = items.filter(f => AppTool.IsNullOrEmpty(f.ProjectId) && f.LocationCode == "D").length;
 
             if (requiredSprints > 0 && requiredDescriptions) {
                 msg = "Sprint and Description fields are required for each line.";
@@ -333,6 +334,10 @@ export class DailyTimeSheetComponent extends BaseComponent {
 
             if (dayOffValidation > 0) {
                 msg = "Project with a Day Off type requires a Day off Location for each line.";
+            }
+
+            if (dayOffProjectValidation > 0) {
+                msg = "Project is required for Day Off location";
             }
 
             if (!AppTool.IsNullOrEmpty(msg)) {

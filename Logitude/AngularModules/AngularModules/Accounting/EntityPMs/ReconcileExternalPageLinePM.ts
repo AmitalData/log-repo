@@ -42,9 +42,9 @@ export class ReconcileExternalPageLinePM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private amount: number;
-    public get Amount() { return this.amount; }
-    public set Amount(newValue: number) { if (this.amount != newValue) { this.amount = newValue; this.MarkAsDirty("Amount"); } }
+    private debitAmount: number;
+    public get DebitAmount() { return this.debitAmount; }
+    public set DebitAmount(newValue: number) { if (this.debitAmount != newValue) { this.debitAmount = newValue; this.MarkAsDirty("DebitAmount"); } }
        
 	 
     private referenceDate: Date;
@@ -90,6 +90,16 @@ export class ReconcileExternalPageLinePM {
     private reconciliationNumber: string;
     public get ReconciliationNumber() { return this.reconciliationNumber; }
     public set ReconciliationNumber(newValue: string) { if (this.reconciliationNumber != newValue) { this.reconciliationNumber = newValue; this.MarkAsDirty("ReconciliationNumber"); } }
+       
+	 
+    private creditAmount: number;
+    public get CreditAmount() { return this.creditAmount; }
+    public set CreditAmount(newValue: number) { if (this.creditAmount != newValue) { this.creditAmount = newValue; this.MarkAsDirty("CreditAmount"); } }
+       
+	 
+    private amount: number;
+    public get Amount() { return this.amount; }
+    public set Amount(newValue: number) { if (this.amount != newValue) { this.amount = newValue; this.MarkAsDirty("Amount"); } }
        
 	 
 
