@@ -72,7 +72,9 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         CategoryName, 
 	         ExcludeFromProrating, 
 	         DayOffTypeCode, 
-	         BlockedForDataEntry,
+	         BlockedForDataEntry, 
+	         BudgetName, 
+	         DayOffTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
