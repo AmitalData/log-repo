@@ -325,19 +325,6 @@
                                             </log-cell-template>
                                         </log-column>
 
-                                        <!-- CreditAmount -->
-                                        <log-column [header]="CreditAmountColHeader" [width]="'130'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CreditAmount'">
-                                            <log-cell-template template="let item" #logcelltemplate>
-                                                <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span style="color:#00a24d;" [class.red]='item.CreditAmount<0'>{{ item.CreditAmount | NumbersPipe:'n2' }}</span>
-                                                </div>
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [ObjectFieldName]="'CreditAmount'" [InputType]="'sigdouble'" [DataContext]="item"
-                                                                [Text]="item.CreditAmount" [AlignTextToRight]="true"
-                                                                [ObjectTableName]="'ReconcileExternalPageLine'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
-                                                </div>
-                                            </log-cell-template>
-                                        </log-column>
 
 
                                         <!-- DebitAmount -->
@@ -353,6 +340,21 @@
                                                 </div>
                                             </log-cell-template>
                                         </log-column>
+
+                                        <!-- CreditAmount -->
+                                        <log-column [header]="CreditAmountColHeader" [width]="'130'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CreditAmount'">
+                                            <log-cell-template template="let item" #logcelltemplate>
+                                                <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                    <span style="color:#00a24d;" [class.red]='item.CreditAmount<0'>{{ item.CreditAmount | NumbersPipe:'n2' }}</span>
+                                                </div>
+                                                <div *ngIf="logcelltemplate.IsEditMode">
+                                                    <LogTextBox [ObjectFieldName]="'CreditAmount'" [InputType]="'sigdouble'" [DataContext]="item"
+                                                                [Text]="item.CreditAmount" [AlignTextToRight]="true"
+                                                                [ObjectTableName]="'ReconcileExternalPageLine'" [HideColumns]="true" [FocusOnMe]="true"></LogTextBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </log-column>
+
 
                                         <!-- Reference -->
                                         <log-column [header]="'ReconcileExternalPageLine.F.Reference' | TextCodeTranslationPipe" [width]="'160'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'Reference'">
