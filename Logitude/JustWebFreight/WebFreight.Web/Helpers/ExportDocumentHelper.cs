@@ -49,6 +49,7 @@ using System.Net;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.Helpers
 {
@@ -284,7 +285,7 @@ namespace WebFreight.Web.Helpers
             string documentTypeCode = !string.IsNullOrEmpty(documentType.Code) ? documentType.Code.ToUpper() : "";
             DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
             StiReport report = new StiReport();
-            if (IsCallBuildDocumentReportWebService())
+            if (IsCallBuildDocumentReportWebService(tenant))
             {
                 report = BuildReportViaWebService(new BuildDocumentParameter { DocumentTypeCode = documentType.Code, DocumentTypeId = documentType.Id, EntityId = entityId, EntityObjectTableId = entityObjectTableId, ChildEntityId = childEntityId, ChildObjectTableId = childObjectTableId, DefaulttemplateId = defaulttemplate.Id, Tenant = tenant, DocumentTypeCopyId = documentTypeCopyId });
             }
@@ -1960,10 +1961,10 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
 
         public static DateTime? ExceptionDateBuildDocumentReportWebService { get; set; }
-        private bool IsCallBuildDocumentReportWebService()
+        private bool IsCallBuildDocumentReportWebService(int tenant)
         {
             bool result = false;
-            if (!string.IsNullOrEmpty(LogitudeSettings.CPUIntensiveWebServicesURL))
+            if (!string.IsNullOrEmpty(LogitudeSettings.CPUIntensiveWebServicesURL) && FeatureToggleHelper.HasFeatureToggle("BDR", tenant))
             {
                 if (ExceptionDateBuildDocumentReportWebService == null) result = true;
                 else
