@@ -546,7 +546,22 @@ export class DWObjectFieldsDetails extends BaseComponent {
     @Output() ShowSampleDateCommand = new EventEmitter();
 
     onTextChange(value) {
-        this.TextValue = value;
+        //this.TextValue = value;
+        if (this.DataTypeCode == "Boolean") {
+            if (value == "Yes") {
+                this.TextValue = true;
+            }
+            else if (value == "No") {
+                this.TextValue = false;
+            }
+            else {
+                this.TextValue = null;
+            }
+
+        }
+        else {
+            this.TextValue = value;
+        }
         this.ShowSampleDateCommand.emit(this);
     }
     //onTextChange(value) {

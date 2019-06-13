@@ -22,6 +22,7 @@ export class DWAskUserFiltersComponent implements OnInit {
     AllFieldsWithChildrenDataSource: DWObjectFieldsDetails[];
     public AndOrOps = ["And", "Or"];
     public Types = ["Fixed Filter", "Ask User"];
+    public BooleanValues = ["Yes", "No", "No Value"];
     DataContext: any;
     ShowRunButton: boolean = false;
     public _DWObjectTablePMService: DWObjectTablePMService;
