@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppTool } from '../../../Infrastructure/Tools';
+import { AppTool,DateTool } from '../../../Infrastructure/Tools';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -26,6 +26,7 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
         this.myDomainService = new TariffDomainService();
         this.SetUIProperties();
+        this.Date = DateTool.GetCurrentDateAsUtc();
     }
 
     private originPortId: string;
