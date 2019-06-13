@@ -68,14 +68,24 @@ export class DWAskUserFiltersComponent implements OnInit {
     }
 
     private PageIndex = 0;
-    private PageSize = 10000;
+    private PageSize = 1000;
     private count = 0;
-    private rowData = []; 
+    private rowData = [];
+    private totalDataLoaded = 10000;
+    private loadingMsg = "Loading";
+    get LoadingMsg() {
+        return this.loadingMsg;
+    }
+    set LoadingMsg(value:string) {
+        if (this.loadingMsg != value) {
+            this.loadingMsg = value;
+        }
+    }
 
     RunReport(MyDWQueryData) {
         this.ValidationErrorsList = [];
         this.PageIndex = 0;
-        this.PageSize = 10000;
+        this.PageSize = 1000;
         this.count = 0;
         this.rowData = []; 
         if (MyDWQueryData.FirstTime == true) {
@@ -86,11 +96,7 @@ export class DWAskUserFiltersComponent implements OnInit {
         }
         this.CheckFiltersValidationsFilters(this.SelectedFiltersDataSource[0]);
         if (this.ValidationErrorsList.length == 0) {
-            var msg = "Loading";
-            if (this.count >= 10000) {
-                msg = "Loading 10,000 Records";
-            } 
-            this.CurrentSession.StartBusyIndicator(msg);
+            this.CurrentSession.StartBusyIndicator(this.LoadingMsg);
             this.GetRowDataRecursive();
         }
         else {
@@ -104,7 +110,7 @@ export class DWAskUserFiltersComponent implements OnInit {
         }
     }
     GetRowDataRecursive() {
-        if (this.count <50000) {
+        if (this.count < this.totalDataLoaded) {
             var QueryData = new DWQueryData();
             QueryData.Columns = this.DWQueryData.Columns;
             QueryData.Filters = this.SelectedFiltersDataSource[0];
@@ -123,7 +129,8 @@ export class DWAskUserFiltersComponent implements OnInit {
         this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
             if (!myResult.HasError) {
                 this.rowData = this.rowData.concat(myResult.Result.SQLDataResult);
-                this.PageIndex = this.PageIndex + 10000;
+                this.PageIndex = this.PageIndex + 1000;
+                this.LoadingMsg = "Loading " + this.count;
                 var dataSize = myResult.Result.SQLDataResult.length;
                 if (dataSize == 0) {
                     this.CurrentSession.StopBusyIndicator();
@@ -131,12 +138,13 @@ export class DWAskUserFiltersComponent implements OnInit {
                 }
                 else {
                     this.count = this.count + dataSize;
-                    if (this.count == 50000) {
+                    this.LoadingMsg = "Loading " + this.count;
+                    if (this.count == this.totalDataLoaded) {
                         this.PageIndex = this.PageIndex + 1;
                         this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
                             if (!myResult.HasError) {
                                 this.CurrentSession.StopBusyIndicator();
-                                this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count});// more than 50000
+                                this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count});// more than 10000
                             }
                             else {
                                 this.CurrentSession.StopBusyIndicator();
