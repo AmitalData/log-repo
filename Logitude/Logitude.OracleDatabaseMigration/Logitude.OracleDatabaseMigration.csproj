@@ -316,6 +316,10 @@
     <Compile Include="Migrations\201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.Designer.cs">
       <DependentUpon>201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906130950285_NewTableDeclarationPendings.cs" />
+    <Compile Include="Migrations\201906130950285_NewTableDeclarationPendings.Designer.cs">
+      <DependentUpon>201906130950285_NewTableDeclarationPendings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -539,6 +543,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.resx">
       <DependentUpon>201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906130950285_NewTableDeclarationPendings.resx">
+      <DependentUpon>201906130950285_NewTableDeclarationPendings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

@@ -2281,6 +2281,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
         }
 
+        public IDbSet<DeclarationPending> DeclarationPendings
+        {
+            get; set;
+
+        }
+
         public IDbSet<DeclarationStatusType> DeclarationStatusTypes
         {
             get;
@@ -3712,6 +3718,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DeclarationPaymentMethodMap());
 
             modelBuilder.Configurations.Add(new DeclarationPaymentProtestMap());
+
+            modelBuilder.Configurations.Add(new DeclarationPendingMap());
 
             modelBuilder.Configurations.Add(new DeclarationStatusTypeMap());
 
