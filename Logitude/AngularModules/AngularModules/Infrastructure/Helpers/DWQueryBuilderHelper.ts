@@ -150,6 +150,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.DWObjectTableCode = DWObjectField.DWObjectTableCode;
             this.DimensionTableCode = DWObjectField.DimensionTableCode;
             this.DataTypeCode = DWObjectField.DataTypeCode;
+            this.IsCustom = DWObjectField.IsCustom;
+
             if (DWObjectField.FilterItems.length == 0) {
                 this.DisplayName = this.ComputeDisplayName(DWObjectField);//(AppTool.IsNullOrEmpty(DWObjectField.DisplayName)) ? (DWObjectField.DWObjectTableCode + ' ' + DWObjectField.Code) : (DWObjectField.DisplayName);
             }
@@ -226,6 +228,12 @@ export class DWObjectFieldsDetails extends BaseComponent {
     private hasTree: boolean;
     public get HasTree() { return this.hasTree; }
     public set HasTree(newValue: boolean) { this.hasTree = newValue; }
+
+    
+
+    private isCustom: boolean;
+    public get IsCustom() { return this.isCustom; }
+    public set IsCustom(newValue: boolean) { this.isCustom = newValue; }
 
 
     private name: string;
@@ -538,7 +546,22 @@ export class DWObjectFieldsDetails extends BaseComponent {
     @Output() ShowSampleDateCommand = new EventEmitter();
 
     onTextChange(value) {
-        this.TextValue = value;
+        //this.TextValue = value;
+        if (this.DataTypeCode == "Boolean") {
+            if (value == "Yes") {
+                this.TextValue = true;
+            }
+            else if (value == "No") {
+                this.TextValue = false;
+            }
+            else {
+                this.TextValue = null;
+            }
+
+        }
+        else {
+            this.TextValue = value;
+        }
         this.ShowSampleDateCommand.emit(this);
     }
     //onTextChange(value) {

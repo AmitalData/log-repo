@@ -1093,6 +1093,10 @@
     <Compile Include="Migrations\201906120815160_IsPaymentChequesActivatedFullAccountingSettingMigration.Designer.cs">
       <DependentUpon>201906120815160_IsPaymentChequesActivatedFullAccountingSettingMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906120624059_AddDefaultWarningPercentageToTenant_Maheera.cs" />
+    <Compile Include="Migrations\201906120624059_AddDefaultWarningPercentageToTenant_Maheera.Designer.cs">
+      <DependentUpon>201906120624059_AddDefaultWarningPercentageToTenant_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1854,6 +1858,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906120815160_IsPaymentChequesActivatedFullAccountingSettingMigration.resx">
       <DependentUpon>201906120815160_IsPaymentChequesActivatedFullAccountingSettingMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906120624059_AddDefaultWarningPercentageToTenant_Maheera.resx">
+      <DependentUpon>201906120624059_AddDefaultWarningPercentageToTenant_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

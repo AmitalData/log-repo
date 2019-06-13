@@ -131,8 +131,8 @@
                                                         <label>{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</label>
                                                         <img src="./Images/ToggleIcon.png" />
                                                         <div  [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'" class="ToggleButtonMenu" style="width: 120px;">
-                                                            <button (click)="NewGeneralARInvoice('IN')">{{'Accounting.General.O.NewInvoice' | TextCodeTranslationPipe}} </button>
-                                                            <button (click)="NewGeneralARInvoice('CD')">{{'Accounting.General.O.NewCreditNote' | TextCodeTranslationPipe}} </button>
+                                                            <button  id="{{'NewGeneralInvoice' | IdGeneratorPipe}}" (click)="NewGeneralARInvoice('IN')">{{'Accounting.General.O.NewInvoice' | TextCodeTranslationPipe}} </button>
+                                                            <button  id="{{'NewCreditNote' | IdGeneratorPipe}}" (click)="NewGeneralARInvoice('CD')">{{'Accounting.General.O.NewCreditNote' | TextCodeTranslationPipe}} </button>
                                                         </div>
                                                     </div>
                                                 </div>

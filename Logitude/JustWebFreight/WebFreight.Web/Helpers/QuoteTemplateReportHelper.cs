@@ -2145,7 +2145,7 @@ namespace Logitude.BL.Helpers
             }
 
 
-            var alignment = RightToLeft ? ";text-align:right" : ";text-align:" + QuoteTemplateTextDesigGroupBy.Alignment;
+            var alignment = ";text-align:" + QuoteTemplateTextDesigGroupBy.Alignment;// RightToLeft ? ";text-align:right" : ";text-align:" + QuoteTemplateTextDesigGroupBy.Alignment;
 
 
             string style = "";
@@ -2544,7 +2544,7 @@ namespace Logitude.BL.Helpers
             string stylespan = GetSpanRowStyle(headerDesign, "");
             string result = "";
 
-            var alignment = CodeTypeTd == "FieldPrice" ? ";text-align:right" : ";text-align:" + headerDesign.Alignment;
+            var alignment = ";text-align:" + headerDesign.Alignment;//CodeTypeTd == "FieldPrice" ? ";text-align:right" : ";text-align:" + headerDesign.Alignment;
             if (CodeTypeTd == "Field") alignment = bodyRightToLeft ? ";text-align:right" : ";text-align:left";
             styleAlgiment = "style='" + "height:auto" + ";width:auto" + alignment + " '";
 
@@ -2567,7 +2567,7 @@ namespace Logitude.BL.Helpers
         private string GetSpanRowStyle(QuoteTemplateTextDesignPM Design, string type, string width = null, double per = 1)
         {
 
-            string alignment = type == "Lable" ? "right" : Design.Alignment;
+            string alignment = Design.Alignment;//type == "Lable" ? "right" : Design.Alignment;
 
             if (type == "PricingTableTitle") alignment = "";
 

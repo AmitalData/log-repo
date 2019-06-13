@@ -97,7 +97,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.EntityPM = this.EntityArgs.EntityPM;
         this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.TariffDomainService = new TariffDomainService();
-      
+
         this.CurrentVersion = args['CurrentVersion'];
 
         if (this.CurrentVersion != null) {
@@ -120,6 +120,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         else {
             this.LoadTariffLines("currentVersion");
         }
+
+        this.WarningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
     }
 
     private loadedTariffLines: TariffLinePM[];
@@ -217,7 +219,10 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     private ItemsCollection: TariffLineData[] = [];
     FillTariffLines(tariffLines: TariffLinePM[]) {
-        this.TariffsLinesSource.Clear();
+        if (this.TariffsLinesSource != null) {
+            this.TariffsLinesSource.Clear();
+        }
+      
         this.ItemsCollection = [];  
         this.DeletedTariffsLines = [];
 
@@ -528,52 +533,62 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     private isCopyButtonClicked: boolean = false;
     private DoCopy() {
-        this.isCopyButtonClicked = true;
+        var windowTitle = "New Copy Version";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 200;
+        logWindow.WindowArgs = this.CurrentVersion;
+        logWindow.Title = windowTitle;
+        logWindow.ComponentLoaded.subscribe(s => {
+            logWindow.WindowClosed.subscribe(d => {
+                if (s && d == "ok") {
+                    this.isCopyButtonClicked = true;
+                    this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
+                    this.EntityPM.LastStartDate = this.StartDate;
+                    this.EntityPM.LastExpirationDate = this.ExpirationDate;
+                    var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
+                    copiedVersion.TariffId = this.CurrentVersion.TariffId;
+                    copiedVersion.Version = this.EntityPM.LastVersion;
+                    copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
+                    copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
+                    copiedVersion.StartDate = s.StartDate;
+                    copiedVersion.ExpirationDate = s.ExpirationDate;
+                    copiedVersion.IsDraft = true;
+                    copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
+                    copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
+                    this.EntityPM.AddTariffVersion(copiedVersion);
+                    this.loadedTariffLines.forEach(item => {
+                        var tariffLine = new TariffLinePM(copiedVersion);
+                        tariffLine.StartDate = this.StartDate;
+                        tariffLine.ExpirationDate = this.ExpirationDate;
+                        tariffLine.Tenant = SessionLocator.Tenant;
+                        tariffLine.Version = copiedVersion.Version;
+                        tariffLine.OriginPortId = item.OriginPortId;
+                        tariffLine.OriginPortCode = item.OriginPortCode;
+                        tariffLine.OriginPortName = item.OriginPortName;
+                        tariffLine.DestinationPortId = item.DestinationPortId;
+                        tariffLine.DestinationPortCode = item.DestinationPortCode;
+                        tariffLine.DestinationPortName = item.DestinationPortName;
+                        tariffLine.MinPrice = item.MinPrice;
+                        tariffLine.Step1Price = item.Step1Price;
+                        tariffLine.Step2Price = item.Step2Price;
+                        tariffLine.Step3Price = item.Step3Price;
+                        tariffLine.Step4Price = item.Step4Price;
+                        tariffLine.Step5Price = item.Step5Price;
+                        tariffLine.Step6Price = item.Step6Price;
+                        tariffLine.Step7Price = item.Step7Price;
+                        tariffLine.Step8Price = item.Step8Price;
+                        tariffLine.Index = item.Index;
+                        tariffLine.Notes = item.Notes;
+                        copiedVersion.AddTariffLine(tariffLine);
+                    });
 
-        this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
-        this.EntityPM.LastStartDate = this.StartDate;
-        this.EntityPM.LastExpirationDate = this.ExpirationDate;
-
-        var copiedVersion: TariffVersionPM = new TariffVersionPM(this.EntityPM);
-        copiedVersion.TariffId = this.CurrentVersion.TariffId;
-        copiedVersion.Version = this.EntityPM.LastVersion;
-        copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
-        copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
-        copiedVersion.ExpirationDate = this.ExpirationDate;
-        copiedVersion.IsDraft = true;
-        copiedVersion.StartDate = this.StartDate;
-        copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
-        copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
-
-        this.EntityPM.AddTariffVersion(copiedVersion);
-
-        this.loadedTariffLines.forEach(item => {
-            var tariffLine = new TariffLinePM(copiedVersion);
-            tariffLine.StartDate = this.StartDate;
-            tariffLine.ExpirationDate = this.ExpirationDate;
-            tariffLine.Tenant = SessionLocator.Tenant;
-            tariffLine.Version = copiedVersion.Version;
-            tariffLine.OriginPortId = item.OriginPortId;
-            tariffLine.OriginPortCode = item.OriginPortCode;
-            tariffLine.OriginPortName = item.OriginPortName;
-            tariffLine.DestinationPortId = item.DestinationPortId;
-            tariffLine.DestinationPortCode = item.DestinationPortCode;
-            tariffLine.DestinationPortName = item.DestinationPortName;
-            tariffLine.MinPrice = item.MinPrice;
-            tariffLine.Step1Price = item.Step1Price;
-            tariffLine.Step2Price = item.Step2Price;
-            tariffLine.Step3Price = item.Step3Price;
-            tariffLine.Step4Price = item.Step4Price;
-            tariffLine.Step5Price = item.Step5Price;
-            tariffLine.Step6Price = item.Step6Price;
-            tariffLine.Step7Price = item.Step7Price;
-            tariffLine.Step8Price = item.Step8Price;
-            tariffLine.Index = item.Index;
-            tariffLine.Notes = item.Notes;
-            copiedVersion.AddTariffLine(tariffLine);
+                    this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
+                }
+            });
         });
 
-        this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
+        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/TariffDatesValidationComponent');
     }
 
     private compareToVersions: TariffVersionPM[];
@@ -634,7 +649,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
 
         else {
-            if (this.CurrentVersion.IsDraft) {
+            if (this.CurrentVersion != null && this.CurrentVersion.IsDraft) {
                 this.FillTariffLines(this.CurrentVersion.TariffLines);
             }
 
