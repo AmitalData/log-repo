@@ -18,6 +18,9 @@ namespace CommunicationWorkerRole
     {
         IQueueService batchTaskExecutionQueue;
         int tenant;
+
+        public bool SupressStartThread { get; internal set; }
+
         public override void Run()
         {
             while (IsRunning)
@@ -30,6 +33,7 @@ namespace CommunicationWorkerRole
                     if (response != null && response.MessageId != null)
                     {
                         ExecuteQueue(response);
+                        batchTaskExecutionQueue.Complete();
 
                     }
                 }
@@ -67,11 +71,17 @@ namespace CommunicationWorkerRole
                     string contextClassName = Assembly.CreateQualifiedName(assemblyName, className);
                     Type executedClassType = Type.GetType(contextClassName);
                     var batchTaskService = System.Activator.CreateInstance(executedClassType, ArrArgs) as BatchTaskExecutionsService;
-
-                    // open a new thread and call the class runcode.
-                    Thread thread = new Thread(batchTaskService.Execute);
-                    thread.Start();
-                    batchTaskExecutionQueue.Complete();
+                    if (!this.SupressStartThread)
+                    {
+                        // open a new thread and call the class runcode.
+                        Thread thread = new Thread(batchTaskService.Execute);
+                        thread.Start();
+                    }
+                    else
+                    {
+                        batchTaskService.Execute();
+                    }
+                    //batchTaskExecutionQueue.Complete();
 
                 }
 
