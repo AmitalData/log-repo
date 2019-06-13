@@ -632,6 +632,8 @@ export class PageLineModel extends BaseComponent {
         if (this.pageLinePM.CreditAmount != value) {
             this.pageLinePM.CreditAmount = value;
             this.parent.CalculateTotals();
+            if(value != 0)
+                this.DebitAmount = 0;
         }
     }
 
@@ -640,6 +642,8 @@ export class PageLineModel extends BaseComponent {
         if (this.pageLinePM.DebitAmount != value) {
             this.pageLinePM.DebitAmount = value;
             this.parent.CalculateTotals();
+            if(value != 0)
+                this.CreditAmount = 0;
         }
     }
 
