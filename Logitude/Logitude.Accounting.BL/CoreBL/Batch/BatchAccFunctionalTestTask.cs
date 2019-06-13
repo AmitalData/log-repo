@@ -80,7 +80,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                             JournalToGLAccountMoreData.BuildJournals(parameterArgsFromCommunicationsData.Tenant, parameterArgsFromCommunicationsData.JournalInput);
                             parameterArgs.MyState = AccFunctionalState.CheckTrailReport.ToString();
-                            BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask(parameterArgs, false);
+                            BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask(parameterArgs,true);
                             scope.Complete();
                         }
                         break;
@@ -94,6 +94,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
     JournalToGLAccountMoreData.CheckGLAccount(parameterArgs.Tenant, gLAccountOutput)).ToList();
                             string result = string.Join(Environment.NewLine, res.ToArray());
 
+                            result +=
                             CheckTrailReport(parameterArgsFromCommunicationsData.ExpectedGLAccount, parameterArgs);
                             this.ChangeStatus("D", null, result);
 
@@ -123,17 +124,26 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         
         string GetCommunicationsData(int tenant, string CommunicationLogId)
         {
-            var _CommunicationLog = Communications.GetCommunicationLog(tenant, CommunicationLogId);
-            if (_CommunicationLog == null)
+            try
             {
-                throw new Exception("Cannnot GetCommunicationLog");
+                var _CommunicationLog = Communications.GetCommunicationLog(tenant, CommunicationLogId);
+                if (_CommunicationLog == null)
+                {
+                    throw new Exception("Cannnot GetCommunicationLog");
+                }
+                var communicationsData = Communications.GetData(_CommunicationLog); ;
+                if (string.IsNullOrWhiteSpace(communicationsData))
+                {
+                    throw new Exception("communicationsData is null");
+                }
+                return communicationsData;
+
             }
-            var communicationsData = Communications.GetData(_CommunicationLog); ;
-            if (string.IsNullOrWhiteSpace(communicationsData))
+            catch (Exception ee)
             {
-                throw new Exception("communicationsData is null");
+
+                throw;
             }
-            return communicationsData;
 
         }
 
@@ -146,12 +156,33 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             {
                 Tenant = parameterArgs.Tenant,
                 MyTrailReportLevel = ReportLevel.GLAccount,
-                FromDate = new DateTime(DateTime.Now.Year, 1, 1),
+                FromDate = new DateTime(2015, 1, 1),
                 ToDate = DateTime.Now.Date,
             }))
             {
 
                 var res = trailReportService.Execute();
+                //var myListq = (
+                //    from expRow in expectedGLAccount
+                //    join trailRow in res
+                //    on expRow.DisplayNumber equals trailRow.GLAccountNumber
+                //    into trailRowJoin
+                //    from subtrailRowJoin in trailRowJoin.DefaultIfEmpty()
+                //    select new
+                //    {
+                //        expRow,
+
+                //        subtrailRowJoin
+                //    }
+                //        );
+                //var myList1=myListq.ToList();
+                //var myListQ = myList1.Select(r => new
+                //{
+                //    r.expRow.DisplayNumber,
+                //    ExpectedLocalCloseBalance = r.expRow.BalanceInLocalCurrency,
+                //    r.subtrailRowJoin.LocalCloseBalance
+                //});
+                //var myList = myListQ.ToList();
                 var myList = (
                     from expRow in expectedGLAccount
                     join trailRow in res
@@ -162,7 +193,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     {
                         expRow.DisplayNumber,
                         ExpectedLocalCloseBalance = expRow.BalanceInLocalCurrency,
-                        subtrailRowJoin.LocalCloseBalance
+                        LocalCloseBalance = subtrailRowJoin == null ? 0 : subtrailRowJoin.LocalCloseBalance
                     }
                         ).ToList();
 
@@ -227,7 +258,7 @@ $"Expected:{r.ExpectedLocalCloseBalance.GetValueOrDefault()}!=Real{r.LocalCloseB
                 var queueservice = new DbQueueService();
                 queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
                 TimeSpan? myTimeSpan = null;
-                if (delay2Min) { TimeSpan.FromMinutes(2); }
+                if (delay2Min) { myTimeSpan=TimeSpan.FromMinutes(2); }
 
                 queueservice.Send(new Dictionary<string, string>()
                 {
