@@ -33,6 +33,8 @@ export class TMProjectList {
 	ExcludeFromProrating: boolean;
 	DayOffTypeCode: string;
 	BlockedForDataEntry: boolean;
+	BudgetName: string;
+	DayOffTypeName: string;
 	
 }
  

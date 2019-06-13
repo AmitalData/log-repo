@@ -21,12 +21,10 @@ export class MainReportsWorkspace implements OnInit {
 
     }
     ngOnInit() {
-        if (FeatureLocator.HasEntityPermessions("Report", "Module", false)) {
-            this.IsReportItemVisible = true;
-        }
-
+      
         this._entityResourceService.getEntityResourceByTableName("BIReportFolder", 0).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("BIReport", 0).subscribe(response => {
+                this._entityResourceService.getEntityResourceByTableName("Report", 0).subscribe(response => {
                 this.IsResourcesReady = true;
 
                 if (FeatureLocator.HasFeaturePermession("BIReport", "BIReport.Menu")) {
@@ -34,7 +32,13 @@ export class MainReportsWorkspace implements OnInit {
                     this.IsMenuVisible = true;
                 }
 
+                    if (FeatureLocator.HasFeaturePermession("Report", "READ")) {
+                    this.IsReportItemVisible = true;
+                }
+
+
                 this.RunComponent();
+                });
             });
         });
     }
@@ -73,7 +77,7 @@ export class MainReportsWorkspace implements OnInit {
     }
 
     private SetSelectedItem() {
-        if (FeatureLocator.HasEntityPermessions("Report", "Module", false)) {
+        if (FeatureLocator.HasFeaturePermession("Report", "READ")) {
             this.SelectedItem = "Report";
         }
         else {

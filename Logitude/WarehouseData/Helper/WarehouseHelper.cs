@@ -296,7 +296,7 @@ namespace WarehouseData.Helper
                 result = string.Empty;
                 while (i <= CustomFieldsCount)
                 {
-                    result += "     set @Field" + i + "DataTypeCode =( select DataTypeCode from #TempObjectFields where FieldName = 'Field" + i + "' and Tenant =@SourceTenant )\r\n";
+                    result += " if(@Field" + i + " is not null) begin   set @Field" + i + "DataTypeCode =( select DataTypeCode from #TempObjectFields where FieldName = 'Field" + i + "' and Tenant =@SourceTenant )end \r\n";
                     i += 1;
                 }
 
