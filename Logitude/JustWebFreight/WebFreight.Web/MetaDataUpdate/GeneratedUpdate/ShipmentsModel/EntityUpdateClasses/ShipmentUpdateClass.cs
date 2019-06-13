@@ -128,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  true,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Shipment,Shipments,Simplog.ShipmentLib.NewShipmentCommand,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -38128,60 +38129,60 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
 
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
+			   //AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   //{
 					 
-					 						FieldName =  "IsDepositionRequired",
-					  						OldFieldName =  "IsDepositionRequired",
-					  						ObjectTableName =  "Shipment",
-					  						FieldsDataType =  "Boolean",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsDepositionRequired",
-					  						ListPropertyPath =  "IsDepositionRequired",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsDepositionRequired",
-					  						DefaultText =  "Is Deposition Required ",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
+					 //						FieldName =  "IsDepositionRequired",
+					 // 						OldFieldName =  "IsDepositionRequired",
+					 // 						ObjectTableName =  "Shipment",
+					 // 						FieldsDataType =  "Boolean",
+					 // 						MinLength =  0,
+					 // 						MaxLength =  0,
+					 // 						IsRequired =  false,
+					 // 						CopyToDW =  false,
+					 // 						DisplayOnLookUp =  false,
+					 // 						DisplayOnLookUpLocal =  false,
+					 // 						CanFilter =  false,
+					 // 						DisplayOnly =  false,
+					 // 						SystemRequired =  false,
+					 // 						SystemMaxLength =  0,
+					 // 						DisplayInList =  false,
+					 // 						IsCustomFilter =  false,
+					 // 						MultiLine =  false,
+					 // 						IsTimeFrameFilter =  false,
+					 // 						DisplayInSearchWindowList =  false,
+					 // 						PMPropertyPath =  "IsDepositionRequired",
+					 // 						ListPropertyPath =  "IsDepositionRequired",
+					 // 						DisplayInLookUpIndex =  0,
+					 // 						AutomaticField =  false,
+					 // 						UniqueField =  false,
+					 // 						DisplayInSearchWindowListIndex =  0,
+					 // 						IsMulti =  false,
+					 // 						DependencyFilter1IsList =  false,
+					 // 						DependencyFilter2IsList =  false,
+					 // 						DependencyFilter3IsList =  false,
+					 // 						IsRestrictable =  false,
+					 // 						DisplayInEntityVariables =  false,
+					 // 						AllowedInCustomerFieldsSettings =  false,
+					 // 						DisplayInSearchWindowFilters =  false,
+					 // 						DisplayInSearchWindowFiltersIndex =  0,
+					 // 						DisplayInDocumentReferences =  false,
+					 // 						InActive =  false,
+					 // 						DisplayLongName =  false,
+					 // 						FullFieldLable =  "IsDepositionRequired",
+					 // 						DefaultText =  "Is Deposition Required ",
+					 // 						IsMaxLength =  false,
+					 // 						IsFixedLength =  false,
+					 // 						EnableAutoFill =  false,
+					 // 						IncludeInSearchField =  false,
+					 // 						AllowedinAutomationConditions =  false,
+					 // 						AutomationEmailRecipient =  false,
+					 // 						CanAutomateSetValue =  false,
+					 // 						HasTemplate =  false,
+					 // 						IsCustom =  false,
+					 // 						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
+			   //},TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -39252,6 +39253,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 		   Feature ShipmentFeature_DOCSOUTDOWNLOADDOCUMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSOUTDOWNLOADDOCUMENTS", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.DOCSOUTDOWNLOADDOCUMENTS", NameTextCodeDefaultText = @"Docs Out Download Documents" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature ShipmentFeature_IMPORTAWBWIZARD = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IMPORTAWBWIZARD", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.IMPORTAWBWIZARD", NameTextCodeDefaultText = @"Show Import AWB Wizard" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_DELETEPACKAGES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DELETEPACKAGES", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.DELETEPACKAGES", NameTextCodeDefaultText = @"Delete Packages" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature ShipmentFeature_DOWNUPLPACAKGES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOWNUPLPACAKGES", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Shipment.Features.DOWNUPLPACAKGES", NameTextCodeDefaultText = @"Download/Upload Packages" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
@@ -42687,6 +42692,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
  		   TextCode ShipmentTextCode_ShipmentSNewShipmentCustomAgentExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.S.NewShipment.CustomAgentExport", DefaultText = "Customs Agent Export",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ShipmentTextCode_ShipmentMValueEditedByUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.M.ValueEditedByUser", DefaultText = "Value Edited by User, Double Click to Reset Calculated value",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesDeletePackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.DeletePackages", DefaultText = "Delete Packages",LocalDefaultText = @"Delete Packages", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesDownloadUpload = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.DownloadUpload", DefaultText = "Download/Upload",LocalDefaultText = @"Download/Upload", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesDownloadPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.DownloadPackages", DefaultText = "Download",LocalDefaultText = @"Download", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ShipmentTextCode_ShipmentBPackagesUploadPackages = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.B.Packages.UploadPackages", DefaultText = "Upload",LocalDefaultText = @"Upload", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -93,6 +93,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("BusinessProcessQueue", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("BusinessProcessQueue", entityPM.Tenant, authToken.Tenant);
 	                    
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         BusinessProcessQueueUpdateService service = new BusinessProcessQueueUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
@@ -141,6 +142,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         SecurityUtility.CheckContactFeature("BusinessProcessQueue", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("BusinessProcessQueue", entityPM.Tenant, authToken.Tenant);
 	
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         BusinessProcessQueueUpdateService service = new BusinessProcessQueueUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);

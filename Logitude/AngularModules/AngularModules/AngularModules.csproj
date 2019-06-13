@@ -2017,6 +2017,7 @@
     <Content Include="styles.css" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\SurchargeVersionTabComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDatesValidationComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffTabsContentComponent.html" />
@@ -6409,6 +6410,7 @@
     <TypeScriptCompile Include="TariffModule\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="TariffModule\ModuleProviders.ts" />
     <TypeScriptCompile Include="TariffModule\Module_Tariff.ts" />
+    <TypeScriptCompile Include="TariffModule\Services\ExtendedPMs\TariffVersionExtendedPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffSettingListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffSettingPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\TariffDomainService.ts" />
@@ -6416,7 +6418,6 @@
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffTypeListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffVersionListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffPMService.ts" />
-    <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffVersionPMService.ts" />
     <TypeScriptCompile Include="test.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Connections\ConnectToParentComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.ts" />
@@ -7204,6 +7205,9 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Invoice\EntityPMInitServices\ARInvoiceStockPMInitService.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffDatesValidationComponent.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

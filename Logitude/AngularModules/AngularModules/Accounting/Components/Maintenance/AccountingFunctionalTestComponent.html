@@ -88,7 +88,7 @@
 
                                 <td style="width:60px;text-align:left">
                                     <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="OpenUpLoadFile()">Upload</button>
-                                    <input accept=".xls,.XLS" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+                                    <input accept=".xlsx,.XLSX" [attr.id]="UploadFileId" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
                                 </td>
                                 <td style="width:30px;color:gray;">{{ProgressBarPercentText}}</td>
                                 <td style="width:4px;"></td>

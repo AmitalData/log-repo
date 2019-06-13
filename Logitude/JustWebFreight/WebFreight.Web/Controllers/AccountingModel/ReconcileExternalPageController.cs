@@ -49,7 +49,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class ReconcileExternalPagesController : ApiController
+    public partial class ReconcileExternalPagesExtendedController : ApiController
     {
         public HttpResponseMessage GetBankPageByPageNo(int pageNumber, string bankAccountId)
         {
@@ -287,8 +287,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
-
-        public HttpResponseMessage PutLoadBankPages(ImageParameter fileUploadParamerter)
+        
+        public HttpResponseMessage PostLoadBankPages(ImageParameter fileUploadParamerter)
         {
             try
             {

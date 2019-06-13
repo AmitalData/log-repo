@@ -31,15 +31,6 @@
                                 <tr>
                                     <td>{{'Shipment.TH.Packages' | TextCodeTranslationPipe}}</td>
 
-                                    <td style="width: 90px" *ngIf="false">
-                                        <!--*ngIf="IsFCLEntity"-->
-                                        <button class="Button" (click)="DownloadPackagesClicked()">Download</button>
-                                    </td>
-
-                                    <td style="width:5px;" *ngIf="IsFCLEntity">
-                                        <div></div>
-                                    </td>
-
                                     <td style="width: 90px">
                                         <button id="{{ 'AddPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackageClicked()">{{AddButtonLabel}}</button>
                                     </td>
@@ -66,6 +57,39 @@
 
                                     <td style="width: 1px" *ngIf="IsRebuildButtonVisible">
                                         <button id="{{ 'ReBuildPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="RebuildButtonClicked()">{{'Shipment.B.Packages.Rebuild' | TextCodeTranslationPipe}}</button>
+                                    </td>
+
+                                    <td style="width:5px;" *ngIf="IsDeletePackagesButtonVisible">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 1px" *ngIf="IsDeletePackagesButtonVisible">
+                                        <button id="{{ 'DeletePackages' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="DeletePackagesButtonClicked()">{{'Shipment.B.Packages.DeletePackages' | TextCodeTranslationPipe}}</button>
+                                    </td>
+
+
+                                    <td style="width:5px;" *ngIf="IsDownloadUploadPackagesVisible">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 120px" *ngIf="IsDownloadUploadPackagesVisible">
+                                        <div tabindex="0" class="ToggleButton">
+                                            <label>{{'Shipment.B.Packages.DownloadUpload' | TextCodeTranslationPipe}}</label>
+                                            <img src="./Images/ToggleIcon.png" />
+
+                                            <div class="ToggleButtonMenu">
+                                                <button (click)="DownloadClicked()">{{'Shipment.B.Packages.DownloadPackages' | TextCodeTranslationPipe}}</button>
+
+                                                <div>
+                                                    <input class="upload" style="display: none;width:65px"
+                                                           type="file" (change)="OnFileChanged($event)"
+                                                           #fileInput>
+                                                    <a href="#" style="text-decoration:none">
+                                                        <button (click)="fileInput.click()">{{'Shipment.B.Packages.UploadPackages' | TextCodeTranslationPipe}}</button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>

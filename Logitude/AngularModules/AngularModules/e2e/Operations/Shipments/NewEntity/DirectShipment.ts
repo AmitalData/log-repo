@@ -27,12 +27,7 @@ export class DirectShipment {
     this.Helper.WaitByIdAndClick('NEWSHIP');
 
   }
-  public CreateAndCloseNewShipment(MasterDirectType: string, CancelBtnId: string) {
-    var AWBToggle = this.Helper.WaitByIdAndClick('NEWSHIP');
-    this.Helper.WaitByIdAndClick(MasterDirectType);
-    this.Helper.WaitByIdAndClick(CancelBtnId);
-  }
-
+ 
   FillDirectShipmentFields(ShipperRef: string, TransportMode: string, Direction: string) {
     if (Direction == 'Domestic' && TransportMode == 'I') {
       this.Helper.WaitByIdAndFill('Shipment_ShipperId', 'TestShipper');

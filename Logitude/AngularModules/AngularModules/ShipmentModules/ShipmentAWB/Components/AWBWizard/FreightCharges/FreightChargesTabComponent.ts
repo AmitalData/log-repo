@@ -1,4 +1,4 @@
-﻿import {Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
@@ -111,60 +111,62 @@ export class FreightChargesTabComponent extends BaseComponent {
         this.Wizard.ValidateScreen_FRE();
     }
     private Validate() {
-        var isShowWarning_AWBCurrencyId = false;
-        var isShowWarning_RateClassCode = false;
-        var isShowWarning_AWBChargeRate = false;
-        var isShowWarning_ChargeableWeight = false;
-        var isShowWarning_AWBChargeAmount = false;
-        var isShowWarning_AWBChargesCodeCode = false;
+        if (!this.Wizard.IsImportWizard) {
+            var isShowWarning_AWBCurrencyId = false;
+            var isShowWarning_RateClassCode = false;
+            var isShowWarning_AWBChargeRate = false;
+            var isShowWarning_ChargeableWeight = false;
+            var isShowWarning_AWBChargeAmount = false;
+            var isShowWarning_AWBChargesCodeCode = false;
 
-        if (this.Wizard.IsFWB) {
-            if (AppTool.IsNullOrEmpty(this.AWBCurrencyId)) {
-                isShowWarning_AWBCurrencyId = true;
-            }
-
-            if (AppTool.IsNullOrEmpty(this.AWBChargesCodeCode)) {
-                isShowWarning_AWBChargesCodeCode = true;
-            }
-
-            if (!this.EntityPM.IsMultipleCommodities) {
-                if (AppTool.IsNullOrEmpty(this.RateClassCode)) {
-                    isShowWarning_RateClassCode = true;
+            if (this.Wizard.IsFWB) {
+                if (AppTool.IsNullOrEmpty(this.AWBCurrencyId)) {
+                    isShowWarning_AWBCurrencyId = true;
                 }
 
-                if (AppTool.IsNullOrZero(this.ChargeableWeight)) {
-                    isShowWarning_ChargeableWeight = true;
+                if (AppTool.IsNullOrEmpty(this.AWBChargesCodeCode)) {
+                    isShowWarning_AWBChargesCodeCode = true;
                 }
 
-                if (!this.AsAgreedFreight) {
+                if (!this.EntityPM.IsMultipleCommodities) {
+                    if (AppTool.IsNullOrEmpty(this.RateClassCode)) {
+                        isShowWarning_RateClassCode = true;
+                    }
 
-                    var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(this.RateClassCode);
-                    if (rateClassGroupCode != "S") {
-                        if (AppTool.IsNullOrZero(this.AWBChargeRate)) {
-                            isShowWarning_AWBChargeRate = true;
+                    if (AppTool.IsNullOrZero(this.ChargeableWeight)) {
+                        isShowWarning_ChargeableWeight = true;
+                    }
+
+                    if (!this.AsAgreedFreight) {
+
+                        var rateClassGroupCode = ShipmentTool.GetRateClassGroupCode(this.RateClassCode);
+                        if (rateClassGroupCode != "S") {
+                            if (AppTool.IsNullOrZero(this.AWBChargeRate)) {
+                                isShowWarning_AWBChargeRate = true;
+                            }
+                        }
+
+                        if (AppTool.IsNullOrZero(this.AWBChargeAmount)) {
+                            isShowWarning_AWBChargeAmount = true;
                         }
                     }
-
-                    if (AppTool.IsNullOrZero(this.AWBChargeAmount)) {
-                        isShowWarning_AWBChargeAmount = true;
-                    }
                 }
             }
-        }
 
-        else {
-            var myFieldRule = this.Wizard.AirlineRulesList.filter(d=> d.RuleFieldName == "AWBChargeRate")[0];
-            if (!ShipmentTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBChargeRate)) {
-                isShowWarning_AWBChargeRate = true;
+            else {
+                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBChargeRate")[0];
+                if (!ShipmentTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBChargeRate)) {
+                    isShowWarning_AWBChargeRate = true;
+                }
             }
-        }
 
-        this.ShowWarning_AWBCurrencyId = isShowWarning_AWBCurrencyId;
-        this.ShowWarning_RateClassCode = isShowWarning_RateClassCode;
-        this.ShowWarning_AWBChargeRate = isShowWarning_AWBChargeRate;
-        this.ShowWarning_ChargeableWeight = isShowWarning_ChargeableWeight;
-        this.ShowWarning_AWBChargeAmount = isShowWarning_AWBChargeAmount;
-        this.ShowWarning_AWBChargesCodeCode = isShowWarning_AWBChargesCodeCode;
+            this.ShowWarning_AWBCurrencyId = isShowWarning_AWBCurrencyId;
+            this.ShowWarning_RateClassCode = isShowWarning_RateClassCode;
+            this.ShowWarning_AWBChargeRate = isShowWarning_AWBChargeRate;
+            this.ShowWarning_ChargeableWeight = isShowWarning_ChargeableWeight;
+            this.ShowWarning_AWBChargeAmount = isShowWarning_AWBChargeAmount;
+            this.ShowWarning_AWBChargesCodeCode = isShowWarning_AWBChargesCodeCode;
+        }
     }
 
     // Properties

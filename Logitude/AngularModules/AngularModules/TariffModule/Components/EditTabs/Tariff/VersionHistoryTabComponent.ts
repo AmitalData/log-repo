@@ -1,13 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
-import { TariffPM } from '../../../../TariffModule/EntityPMs/TariffPM';
-import { TariffVersionPM } from '../../../../TariffModule/EntityPMs/TariffVersionPM';
-import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
+import { TariffPM } from '../../../EntityPMs/TariffPM';
+import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
+import { TariffLinePM } from '../../../EntityPMs/TariffLinePM';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
-import { TariffDomainService } from '../../../../TariffModule/Services/TariffDomainService';
+import { TariffDomainService } from '../../../Services/TariffDomainService';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -15,6 +15,7 @@ import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { ChargesTypeListService } from '../../../../Common/Services/StandardLists/ChargesTypeListService';
 import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
+import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/TariffVersionExtendedPMService';
 
 @Component({
     moduleId: module.id,
@@ -41,7 +42,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             this.GetAllChargesTypes();
         }
         
-        this.BuildVersionsList();
+        this.LoadVersions();
         this.Listen();
     }
 
@@ -273,13 +274,24 @@ export class VersionHistoryTabComponent implements OnDestroy {
         }
     }
 
+    private versions: TariffVersionPM[] = [];
+    private LoadVersions() {
+        var service: TariffVersionExtendedPMService = new TariffVersionExtendedPMService();
+        service.GetAllTariffVersionsForTariff(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.versions = response.Result;
+                this.BuildVersionsList();
+            }
+        });
+    }
+
     public VersionsList: CodeNameClass[];
     private BuildVersionsList() {
         this.VersionsList = [];
 
         var datePipe: DatePipe = new DatePipe("en-US");
 
-        this.EntityPM.TariffVersions.filter(d => !d.IsDraft).forEach(item => {
+        this.versions.filter(d => !d.IsDraft).forEach(item => {
             var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
             var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
 
@@ -302,16 +314,31 @@ export class VersionHistoryTabComponent implements OnDestroy {
         if (this.selectedVersion != value) {
             this.selectedVersion = value;
 
-            this.VersionPM = this.EntityPM.TariffVersions.filter(d => d.Version == value.Code_Int)[0];
-            this.FillLines();
+            this.VersionPM = this.versions.filter(d => d.Version == value.Code_Int)[0];
+            this.LoadTariffLines();
         }
+    }
+
+    private tariffLines: TariffLinePM[];
+    private LoadTariffLines() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
+        this.TariffDomainService.GetTariffVersionLines(this.EntityPM.Id, this.VersionPM.Version).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.tariffLines = response.Result;
+
+                this.FillLines();
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
 
     private FillLines() {
         this.VersionLinesSource.Clear();
         var itemsCollection: TariffLinePM[] = [];
 
-        this.VersionPM.TariffLines.forEach(item => {
+        this.tariffLines.forEach(item => {
             itemsCollection.push(item);
         });
 
@@ -365,7 +392,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
 
         this.EntityPM.AddTariffVersion(copiedVersion);
 
-        this.VersionPM.TariffLines.forEach(item => {
+        this.tariffLines.forEach(item => {
             var tariffLine = new TariffLinePM(copiedVersion);
             tariffLine.StartDate = this.VersionPM.StartDate;
             tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;

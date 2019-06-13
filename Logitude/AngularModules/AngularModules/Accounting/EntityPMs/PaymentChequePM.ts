@@ -289,6 +289,11 @@ export class PaymentChequePM {
     public set BankEnglishName(newValue: string) { if (this.bankEnglishName != newValue) { this.bankEnglishName = newValue; this.MarkAsDirty("BankEnglishName"); } }
        
 	 
+    private aPPaymentId: string;
+    public get APPaymentId() { return this.aPPaymentId; }
+    public set APPaymentId(newValue: string) { if (this.aPPaymentId != newValue) { this.aPPaymentId = newValue; this.MarkAsDirty("APPaymentId"); } }
+       
+	 
 
     public OldEntityPM: PaymentChequePM;
 		
