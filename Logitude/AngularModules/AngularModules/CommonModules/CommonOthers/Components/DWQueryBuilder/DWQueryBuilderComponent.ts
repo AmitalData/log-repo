@@ -1461,6 +1461,26 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.operators = newValue;
     }
 
+    
+    private boolValue: string = "No";
+    public get BoolValue() {
+        if (this.TextValue == true) {
+            this.boolValue = "Yes";
+        }
+        else if (this.TextValue == false) {
+            this.boolValue = "No";
+        }
+        else {
+            this.boolValue = "No Value";
+        }
+        return this.boolValue;
+    }
+    public set BoolValue(newValue: any) {
+        if (this.boolValue != newValue) {
+            this.boolValue = newValue; 
+        }
+    }
+
     private textValue: any = false;
     public get TextValue() {
         return this.textValue;
@@ -1736,7 +1756,21 @@ export class DWObjectFieldsDetails extends BaseComponent {
     @Output() ShowSampleDateCommand = new EventEmitter();
 
     onTextChange(value) {
-        this.TextValue = value;
+        if (this.DataTypeCode == "Boolean") {
+            if (value == "Yes") {
+                this.TextValue = true;
+            }
+            else if (value == "No") {
+                this.TextValue = false;
+            }
+            else {
+                this.TextValue = null;
+            }
+
+        }
+        else { 
+            this.TextValue = value;
+        }
         this.ShowSampleDateCommand.emit(this);
     }
 

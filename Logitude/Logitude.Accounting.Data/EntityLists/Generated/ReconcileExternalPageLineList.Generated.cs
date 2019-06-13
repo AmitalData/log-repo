@@ -19,7 +19,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
-       public decimal Amount  { get; set; }
+       public decimal DebitAmount  { get; set; }
        [DataMember]
        public DateTime ReferenceDate  { get; set; }
        [DataMember]
@@ -42,6 +42,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public int? GroupHash  { get; set; }
        [DataMember]
        public string ReconciliationNumber  { get; set; }
+       [DataMember]
+       public decimal CreditAmount  { get; set; }
+       [DataMember]
+       public decimal Amount  { get; set; }
    }
 
 }
