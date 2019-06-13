@@ -18,7 +18,7 @@ export class ReconcileExternalPageExtendedPMService {
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.Http;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPages';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReconcileExternalPagesExtended';
     }
 
 
@@ -65,14 +65,14 @@ export class ReconcileExternalPageExtendedPMService {
 
 
     }
-    
+
 
     LoadBankPages(fileUploadParamerter: ImageParameter) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return Observable.defer(() => {
-            return this._http.put(this._apiUrl + '/PutLoadBankPages', JSON.stringify(fileUploadParamerter), {
+            return this._http.post(this._apiUrl + '/PostLoadBankPages', JSON.stringify(fileUploadParamerter), {
                 headers: authHeader,
 
             }).map(response => {
@@ -220,6 +220,6 @@ export class ReconcileExternalPageExtendedPMService {
 
     //    return entityPM;
     //}
-    
+
 
 }

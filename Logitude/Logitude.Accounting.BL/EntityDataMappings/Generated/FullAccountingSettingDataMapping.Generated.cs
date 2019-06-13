@@ -45,7 +45,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CustomsGLAccountId, 
 	         DefaultDifferencesGLAccountId, 
 	         DefaultExternalDiffGLAccountId, 
-	         SoftwareVersion,
+	         SoftwareVersion, 
+	         IsPaymentChequesActivated,
 	      }
 
 
@@ -92,7 +93,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CustomsGLAccountId, 
 	         DefaultDifferencesGLAccountId, 
 	         DefaultExternalDiffGLAccountId, 
-	         SoftwareVersion,
+	         SoftwareVersion, 
+	         IsPaymentChequesActivated,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -214,6 +216,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SoftwareVersion))
             {
 				entityPOCO.SoftwareVersion = entityPM.SoftwareVersion;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentChequesActivated))
+            {
+				entityPOCO.IsPaymentChequesActivated = entityPM.IsPaymentChequesActivated;
 			}
 			}
 
@@ -340,6 +347,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.SoftwareVersion = entityPOCO.SoftwareVersion;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsPaymentChequesActivated))
+            {
+					entityPM.IsPaymentChequesActivated = entityPOCO.IsPaymentChequesActivated;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -459,6 +471,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SoftwareVersion))
             {
                 oldEntityPM.SoftwareVersion = entityPM.SoftwareVersion;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentChequesActivated))
+            {
+                oldEntityPM.IsPaymentChequesActivated = entityPM.IsPaymentChequesActivated;
             }
 			
 		}

@@ -4,6 +4,8 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -25,6 +27,13 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 
         public void LoadXLSBuildTest(int tenant ,byte[] byteArrayXLS, string WorksheetName)
         {
+            var tenantQuery = new TenantQuery(tenant);
+            TenantPM tenantPM = tenantQuery.GetTenantFromDB(tenant);
+            if (!tenantPM.IsTestTenant)
+            {
+                throw new Exception("!tenant.IsTestTenant");
+            }
+
             _Tenant = tenant;
             var util = new XLSUtil();
             DataTable XLSTable = util.GetDataTableFromWorkSheet(byteArrayXLS, "Journals");
@@ -102,7 +111,7 @@ namespace Logitude.Accounting.BL.CoreBL.FunctionalTests
 
                 }
 
-                BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask( args);
+                BatchAccFunctionalTestTask.CreateBatchFunctionalTestTask( args, false);
 
 
                 scope.Complete();
