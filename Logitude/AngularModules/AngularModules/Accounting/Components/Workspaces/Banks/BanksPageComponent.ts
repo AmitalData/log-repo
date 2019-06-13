@@ -452,7 +452,7 @@ export class BanksPageComponent {
         var windowTitle = TextCodeTranslator.Translate("Accounting.General.O.NewPaymentCheque");
 
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 600;
+        logWindow.Width = 650;
         logWindow.Height = 500;
         logWindow.Title = windowTitle;
         //logWindow.WindowArgs = windowArgs;
