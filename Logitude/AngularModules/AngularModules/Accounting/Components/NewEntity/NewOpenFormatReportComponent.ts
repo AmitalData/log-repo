@@ -9,7 +9,7 @@ import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameCla
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { AppTool } from '../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { UIProperties } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { error } from 'util';
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -71,6 +71,9 @@ export class NewOpenFormatReportComponent extends BaseComponent {
             this.entityPM.ToDate = value;
             if (this.FromDate > value) {
                 this.entityPM.UIProperties.SetValidity("ToDate", this.ObjectTableName,false, TextCodeTranslator.Translate("Accounting.O.MustBeLarger"));
+            }
+            if (value > DateTool.GetCurrentDateTimeAsUtc()) {
+                this.entityPM.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FutureDateNotAllowed"));
             }
         }
     }
