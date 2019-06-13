@@ -177,16 +177,18 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
             }
         }
     }
-
+   
     private account: GLAccountPM;
     get Account() { return this.account; }
     set Account(value: GLAccountPM) {
         if (this.account != value) {
             this.account = value;
             if (value != null) {
-                if (AppTool.IsNullOrEmpty(this.PayToName)) {
-                      this.PayToName = value.LocalName;
-                }
+             
+                    if (AppTool.IsNullOrEmpty(this.PayToName)) {
+                        this.PayToName = value.LocalName;
+                    }
+                
             }
         }
     }
