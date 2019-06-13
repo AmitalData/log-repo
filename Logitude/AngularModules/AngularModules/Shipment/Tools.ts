@@ -3404,8 +3404,12 @@ export class AWBHelper {
             //    }
             //}
 
-            if (AppTool.IsNullOrEmpty(shipmentPM.ShipperId)) {
+            if (AppTool.IsNullOrEmpty(shipmentPM.ShipperId) && shipmentPM.DirectionId!="I") {
                 errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate(table + ".F.ShipperId")));
+            }
+
+            if (AppTool.IsNullOrEmpty(shipmentPM.ConsigneeId) && shipmentPM.DirectionId == "I") {
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate(table + ".F.ConsigneeId")));
             }
 
             this.ValidateRoutings(shipmentPM, errors);
