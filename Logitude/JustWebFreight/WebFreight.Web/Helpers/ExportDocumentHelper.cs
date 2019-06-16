@@ -56,7 +56,7 @@ namespace WebFreight.Web.Helpers
     public class ExportDocumentHelper
     {
 
-        public  string ExportDocument2PdfViewWebService(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId, ExportDocumentHelper exportDocumentHelper, string token)
+        public  string ExportDocument2PdfViewWebService(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId, string token)
         {
             string result;
             try
@@ -84,7 +84,7 @@ namespace WebFreight.Web.Helpers
                     using (StreamReader rd = new StreamReader(Serviceres.GetResponseStream()))
                     {
                         var serviceResult = rd.ReadToEnd();
-                        result = exportDocumentHelper.getBetween(serviceResult, "<ExportDocument2PdfResult>", "</ExportDocument2PdfResult>");
+                        result = getBetween(serviceResult, "<ExportDocument2PdfResult>", "</ExportDocument2PdfResult>");
 
                     }
                 }
@@ -92,7 +92,7 @@ namespace WebFreight.Web.Helpers
             }
             catch (Exception ex)
             {
-                result = exportDocumentHelper.ExportDocument2Pdf(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
+                result = ExportDocument2Pdf(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId,false);
 
             }
 
