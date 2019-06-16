@@ -153,11 +153,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                string loggedUserEmail = authToken.Email;
 
                 ITariffModuleContext context = TariffModuleContext.GetContext(tenant);
                 TariffQueryService tariffQuery = new TariffQueryService(context);
                 TariffPM tariff = tariffQuery.GetSingle(tariffId, false, false);
-
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
                 string fileName = "";
                 if (tariff != null)
                 {
@@ -193,7 +195,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                             storageservice.Write(data, fileInfo);
+                           // this.EventTrace(tariff, type, loggedContact);
                         }
+
+
                     }
                 }
 
@@ -204,6 +209,34 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private void EventTrace(TariffPM tariffPM,string type,ContactPM loggedContact)
+        {
+            //if (type== "Template")
+            //{
+            //    EventTracer.CreateTraceEvent(new EventTracerArgs()
+            //    {
+            //        Tenant = tariffPM.Tenant,
+            //        EventTypeCode = "TDLD",
+            //        UserId = loggedContact.Id,
+            //        EntityId = tariffPM.Id,
+            //        ObjectTableName = "Tariff",
+            //        Notes = "Tariff Header exported"
+            //    });
+            //}
+            //else
+            //{
+            //    EventTracer.CreateTraceEvent(new EventTracerArgs()
+            //    {
+            //        Tenant = tariffPM.Tenant,
+            //        EventTypeCode = "TDLD",
+            //        UserId = loggedContact.Id,
+            //        EntityId = tariffPM.Id,
+            //        ObjectTableName = "Tariff",
+            //        Notes = "Tariff Lines exported"
+            //    });
+            //}
         }
         private byte[] ExportAirFreightCostLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant, string type)
         {
@@ -841,7 +874,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     tariffLine.Notes = rowData[count + 3];
                 }
-                 
+
+                tariffLine.IsUploaded = true;
                 myResult.Add(tariffLine);
                 rowIndex++;
             }
@@ -1028,8 +1062,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (rowData.Length > count + 2)
                 {
                     tariffLine.Notes = rowData[count + 2];
-                }                
+                }
 
+                tariffLine.IsUploaded = true;
                 myResult.Add(tariffLine);
                 rowIndex++;
             }
@@ -1725,7 +1760,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string Surcharge8PriceText { get; set; }
         public string Surcharge9PriceText { get; set; }
         public string Surcharge10PriceText { get; set; }
-
+        public bool IsUploaded { get; set; }
         public int Index { get; set; }
 
         public string Notes { get; set; }

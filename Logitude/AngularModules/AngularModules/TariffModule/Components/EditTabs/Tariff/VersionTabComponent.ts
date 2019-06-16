@@ -414,6 +414,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             filter.TariffType = context.EntityPM.TypeCode;
 
             context.SendExcelToServer(filter);
+            //context.EntityPM.FileUploadedName = file.Name;
         };
 
         reader.onerror = function (e) {
@@ -453,7 +454,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
-
+            
             if (this.PriceSteps.indexOf(',') > -1) {
                 var steps: string[] = this.PriceSteps.split(",");
                 var count = steps.length;
@@ -470,7 +471,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.CurrentVersion.AddTariffLine(tariffLine);
         });
         
-        this.EntityPM.TariffLinesAdded = true;
+        this.EntityPM.TariffLinesAddedFromExcel = true;
         this.isUploadExcelFinished = true;
         this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
     }
