@@ -179,5 +179,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CAAT { get; set; }
         public bool IsTestTenant { get; set; }
         public double? DefaultWarningPercentage { get; set; }
+
+        [ForeignKey("CheckDigitControlAlgorithmCode")]
+        public virtual CheckDigitControlAlgorithm CheckDigitControlAlgorithm { get; set; }
+        public string CheckDigitControlAlgorithmCode { get; set; }
     }
 }

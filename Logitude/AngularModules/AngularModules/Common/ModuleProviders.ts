@@ -231,6 +231,7 @@ import {DocumentFilingBackupBatchListService} from './Services/StandardLists/Doc
 
 import {DocumentFilingBackupSettingPMService} from './Services/StandardPMs/DocumentFilingBackupSettingPMService';
 import {DocumentFilingBackupBatchPMService} from './Services/StandardPMs/DocumentFilingBackupBatchPMService';
+import { CheckDigitControlAlgorithmListService } from './Services/StandardLists/CheckDigitControlAlgorithmListService';
 
 
 export class ModuleProviders {
@@ -475,6 +476,8 @@ export class ModuleProviders {
             case "ReportsTemplatesVersionPMService": { myResult = new ReportsTemplatesVersionPMService(); break; }//                
             case "TemperatureUnitListService": { myResult = new TemperatureUnitListService(); break; }//
             case "NumberFormatListService": { myResult = new NumberFormatListService(); break; }
+            case "CheckDigitControlAlgorithmListService": { myResult = new CheckDigitControlAlgorithmListService(); break; }
+
 
                 
         }

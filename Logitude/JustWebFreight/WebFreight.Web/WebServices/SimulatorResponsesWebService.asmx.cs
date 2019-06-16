@@ -349,7 +349,7 @@ namespace WebFreight.Web.WebServices
                         //IQueueService queueservice = QueueServiceManager.GetQueueService(emailqueueName, tenant);
                         //queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
 
-						DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
+						DbQueueService queueservice = new DbQueueService(commlog.QueueName, tenant);
 						queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", communicationLogId }, { "Tenant", tenant.ToString() } });
 					}
 

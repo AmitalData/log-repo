@@ -655,6 +655,11 @@ export class TenantPM {
     public set DefaultWarningPercentage(newValue: number) { if (this.defaultWarningPercentage != newValue) { this.defaultWarningPercentage = newValue; this.MarkAsDirty("DefaultWarningPercentage"); } }
        
 	 
+    private checkDigitControlAlgorithmCode: string;
+    public get CheckDigitControlAlgorithmCode() { return this.checkDigitControlAlgorithmCode; }
+    public set CheckDigitControlAlgorithmCode(newValue: string) { if (this.checkDigitControlAlgorithmCode != newValue) { this.checkDigitControlAlgorithmCode = newValue; this.MarkAsDirty("CheckDigitControlAlgorithmCode"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		

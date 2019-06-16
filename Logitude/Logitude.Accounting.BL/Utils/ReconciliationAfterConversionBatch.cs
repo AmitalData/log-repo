@@ -19,6 +19,10 @@ namespace Logitude.Accounting.BL.Utils
     {
         private string _ResponseText;
         private HttpStatusCode _StatusCode;
+        private List<string> _NoLines;
+        private List<string> _WrongAction;
+        private List<string> _WrongSum;
+        private List<string> _WrongSumToMatch;
 
         public ReconciliationAfterConversionBatch()
         {
@@ -48,6 +52,10 @@ namespace Logitude.Accounting.BL.Utils
                 List<string> badList = new List<string>();
                 List<string> goodList = new List<string>();
                 List<Int64> madeList = new List<Int64>();
+                _NoLines = new List<string>();
+                _WrongAction = new List<string>();
+                _WrongSum = new List<string>();
+                _WrongSumToMatch = new List<string>();
 
                 foreach (IGrouping<String, JournalLineLedgerTransactionDTO> group in journalLineGroups)
                 {
@@ -57,7 +65,7 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         journalLineList.Add(new JournalLineReco(journalLineLedgerTransactionDTO.JournalLine, journalLineLedgerTransactionDTO.LedgerTransaction));
                     }
-                    if (IsGroupReconciable(journalLineList))
+                    if (IsGroupReconciable(journalLineList, groupKey))
                     {
                         ReconciableGroup recoGroup = new ReconciableGroup(groupKey, journalLineList);
                         reconciableGroupList.Add(recoGroup);
@@ -78,7 +86,7 @@ namespace Logitude.Accounting.BL.Utils
                         madeList.Add(recoGroup._Ref);
                     }
                 });
-                _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}";
+                _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum: {String.Join(", ", _WrongSum.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
             }
             catch (Exception e)
             {
@@ -126,20 +134,24 @@ namespace Logitude.Accounting.BL.Utils
             return rv;
         }
 
-        private bool IsGroupReconciable(List<JournalLineReco> journalLineRecoList)
+        private bool IsGroupReconciable(List<JournalLineReco> journalLineRecoList, string groupKey)
         {
             bool rv = true;
             if (journalLineRecoList.Count == 0)
             {
+                _NoLines.Add(groupKey);
                 rv = false;
             }
             else if (journalLineRecoList.Exists(line => line._journalLine.ActionCode != "1" && line._journalLine.ActionCode != "2"))
             {
+                _WrongAction.Add(groupKey);
                 rv = false;
             }
             //           else if (!journalLineRecoList.Exists(line => line._journalLine.ActionCode == "1") ||  !journalLineRecoList.Exists(line => line._journalLine.ActionCode == "2"))
             else if ((journalLineRecoList.Sum(line => line._journalLine.LocalAmount) != 0m))
             {
+
+                _WrongSum.Add(groupKey);
                 rv = false;
             }
             else if (journalLineRecoList.Exists(line => line._oneLineLedger == null))
@@ -152,6 +164,7 @@ namespace Logitude.Accounting.BL.Utils
                 sum = journalLineRecoList.Sum(line => line._valueToMatch);
                 if (sum != 0m)
                 {
+                    _WrongSumToMatch.Add(groupKey);
                     rv = false;
                 }
             }

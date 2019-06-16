@@ -15,6 +15,7 @@ import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { error } from 'util';
 
 @Component({
     selector: 'CustomerActivationSettingsComponent',
@@ -300,6 +301,10 @@ export class CustomerActivationSettingsComponent extends BaseComponent {
     }
 
     private SetUIProperties_VatFormat() {
+
+
+        this.UIProperties.SetEnabled("CheckDigitControlAlgorithmCode", this.ObjectTableName, this.VatFormatTypeCode == "NOF" ? false : true);
+
         if (this.VatFormatTypeCode == "FSC") {
             this.UIProperties.SetEnabled("VatFormatCountryId", this.ObjectTableName, true);
             this.UIProperties.SetEnabled("VatSize", this.ObjectTableName, true);
@@ -423,6 +428,13 @@ export class CustomerActivationSettingsComponent extends BaseComponent {
         this.UIProperties.SetEnabled("VatMandatoryForPotentialCustomers", this.ObjectTableName, this.VatMandatoryTypeCode != "MNT");
     }
 
+    get CheckDigitControlAlgorithmCode() { return this.tenantPM.CheckDigitControlAlgorithmCode; }
+    set CheckDigitControlAlgorithmCode(value: string) {
+        if (this.tenantPM.CheckDigitControlAlgorithmCode != value) {
+            this.tenantPM.CheckDigitControlAlgorithmCode = value;            
+        }
+    }
+
     // Commands 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
@@ -449,11 +461,19 @@ export class CustomerActivationSettingsComponent extends BaseComponent {
             }
         }
 
+        if (this.CheckDigitControlAlgorithmCode == "LUHN") {
+            if (!this.IsNumeric) {
+                if (this.VatFormatTypeCode != "NOF") {
+                    errors.push("Luhn Algorithm cannot be activated on Alpha-Numeric VAT numbers");
+                }
+            }
+        }
+
         this.ValidationErrorsList = errors;
+
         if (this.ValidationErrorsList.length == 0) {
             ServiceLocator.SendTotangoUserActivity("CompanyDefaults", "Edit");
             this.SubmitTenantChanges();
-
         }
 
     }
