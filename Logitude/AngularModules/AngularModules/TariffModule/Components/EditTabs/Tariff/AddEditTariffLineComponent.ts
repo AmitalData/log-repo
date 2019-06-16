@@ -70,7 +70,7 @@ export class AddEditTariffLineComponent  {
         }
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
-
+            this.EntityPM.AddedManually = true;
             if (this.DataContext.IsNewEntity) {
 
                 this.DataContext.IsNewEntity = false;

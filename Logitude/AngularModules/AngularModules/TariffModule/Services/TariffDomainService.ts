@@ -247,7 +247,8 @@ export class TariffFilterParameter {
     PriceSteps: string;
     TariffId: string;
     Version: number;
-    TariffType: string
+    TariffType: string;
+    FileName: string;
 }
 
 

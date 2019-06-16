@@ -527,6 +527,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
             filter.TariffType = context.EntityPM.TypeCode;
+            filter.FileName = context.FileName;
 
             context.SendExcelToServer(filter);
         };

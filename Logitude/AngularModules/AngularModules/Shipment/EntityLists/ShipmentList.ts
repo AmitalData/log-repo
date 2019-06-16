@@ -27,6 +27,7 @@ export class ShipmentList {
 		LocalCustomsTransmissionsStatusDate: Date;
 		LocalCustomsSentByUserId: string;
 		LocalCustomsSentByUserName: string;
+		OperationalClosedByUserId: string;
 		ComputedStatusId: string;
 		ComputedStatusDate: Date;
 		ComputedStatusName: string;
@@ -83,6 +84,7 @@ export class ShipmentList {
 		IsAccountingClosed: boolean;
 		IsOperationalClosed: boolean;
 		LastUpdate: Date;
+		ComputedShipmentNumber: string;
 		Field1Id: string;
 		Field1: string;
 		Field2: string;

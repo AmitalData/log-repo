@@ -157,6 +157,8 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
                 LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
                 LogitudeSettings.EmailSendingQuota = setting.EmailSendingQuota;
+                LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
+
                 //LogitudeSettings.ABMProductId = setting.ABMProductId;
 
             }
@@ -464,6 +466,11 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.GLSHKURL = setting.GLSHKURL;
                 LogitudeSettings.ABMProductId = setting.ABMProductId;
                 LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+                LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
+                
+
+
+
                 //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
                 if (LogitudeSettings.IsCostomsDeploy)
                 {

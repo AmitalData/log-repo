@@ -395,7 +395,8 @@ namespace WebFreight.Web
             LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
             LogitudeSettings.DropboxAppKey = setting.DropboxAppKey;
             LogitudeSettings.DropboxAppSecret = setting.DropboxAppSecret;
-            LogitudeSettings.OceanInsightsToken = setting.OceanInsightsToken; 
+            LogitudeSettings.OceanInsightsToken = setting.OceanInsightsToken;
+            LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
         }
 
         private void StartSignalRTopicThread()
