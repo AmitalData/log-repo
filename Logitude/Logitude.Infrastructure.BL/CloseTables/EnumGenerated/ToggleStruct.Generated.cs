@@ -15,6 +15,7 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string LogBoxExport = "LEX";  
        public const string UnicargoReportToggle = "URT";  
        public const string BuildDocumentReportService = "BDR";  
+       public const string QuotationRoutingRatesQuotes = "QRR";  
     }
 }
 
