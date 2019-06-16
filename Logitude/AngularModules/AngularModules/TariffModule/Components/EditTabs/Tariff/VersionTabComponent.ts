@@ -38,7 +38,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
-    public IsVersionsComboBoxEnabled: boolean = true;
+    public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
@@ -121,7 +121,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.LoadTariffLines("currentVersion");
         }
 
-        this.WarningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
+        this.warningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
     }
 
     private loadedTariffLines: TariffLinePM[];
@@ -146,7 +146,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 if (!response.HasError) {
                     this.compareTariffLines = response.Result;
 
-                    this.FillTariffLines(this.compareTariffLines);
+                    this.DoCompare();
                 }
 
                 this.CurrentSession.StopBusyIndicator();
@@ -224,7 +224,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
       
         this.ItemsCollection = [];  
-        this.DeletedTariffsLines = [];
+        
 
         tariffLines.sort(p => p.Index).forEach(item => {
             this.ItemsCollection.push(new TariffLineData(item, this));
@@ -232,6 +232,11 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
 
+        this.DoCompare();        
+    }
+
+    private DoCompare() {
+        this.DeletedTariffsLines = [];
         if (this.IsComparToChecked && this.ComparedToVersionPM != null) {
             this.ComaredLines();
             this.BuildDeletedLines();
@@ -618,19 +623,18 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             newVersion.Id = item.TariffId; 
             this.VersionsList.push(newVersion);
         });
+
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
 
         if (this.SelectedVersion == null) {
             this.isComparToChecked = false;
-            this.IsVersionsComboBoxEnabled = true;
-            this.UIProperties.SetEnabled("IsComparToChecked", null, false);
-            this.UIProperties.SetEnabled("WarningPercentage", null, false);
+            this.IsCompareEnabled = false;
         }
         else {
-            this.IsVersionsComboBoxEnabled = false;
-            this.UIProperties.SetEnabled("IsComparToChecked", null, true);
-            this.UIProperties.SetEnabled("WarningPercentage", null, true);
+            this.IsCompareEnabled = true;
         }
+
+        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsCompareEnabled);
     }
     
     private selectedVersion: VersionClass;

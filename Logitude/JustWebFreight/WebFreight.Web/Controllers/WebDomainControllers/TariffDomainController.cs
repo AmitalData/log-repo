@@ -719,12 +719,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
                 }
-
-                int count = 0;
-                // -1 : is for notes fields
-                if (rowData.Length - 1 > 2)
+                
+                if (rowData.Length > 2)
                 {
-                    count = 1;
                     if (this.IsNumber(rowData[2]))
                     {
                         tariffLine.MinPrice = Convert.ToDecimal(rowData[2]);
@@ -735,9 +732,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 3)
+                int count = 0;
+                if (rowData.Length > 3)
                 {
-                    count = 2;
+                    count = 1;
                     if (this.IsNumber(rowData[3]))
                     {
                         tariffLine.Step1Price = Convert.ToDecimal(rowData[3]);
@@ -748,9 +746,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 4)
+                if (rowData.Length > 4)
                 {
-                    count = 3;
+                    count = 2;
                     if (this.IsNumber(rowData[4]))
                     {
                         tariffLine.Step2Price = Convert.ToDecimal(rowData[4]);
@@ -761,9 +759,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 5)
+                if (rowData.Length > 5)
                 {
-                    count = 4;
+                    count = 3;
                     if (this.IsNumber(rowData[5]))
                     {
                         tariffLine.Step3Price = Convert.ToDecimal(rowData[5]);
@@ -774,9 +772,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 6)
+                if (rowData.Length > 6)
                 {
-                    count = 5;
+                    count = 4;
                     if (this.IsNumber(rowData[6]))
                     {
                         tariffLine.Step4Price = Convert.ToDecimal(rowData[6]);
@@ -787,9 +785,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 7)
+                if (rowData.Length > 7)
                 {
-                    count = 6;
+                    count = 5;
                     if (this.IsNumber(rowData[7]))
                     {
                         tariffLine.Step5Price = Convert.ToDecimal(rowData[7]);
@@ -800,9 +798,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 8)
+                if (rowData.Length > 8)
                 {
-                    count = 7;
+                    count = 6;
                     if (this.IsNumber(rowData[8]))
                     {
                         tariffLine.Step6Price = Convert.ToDecimal(rowData[8]);
@@ -813,9 +811,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 9)
+                if (rowData.Length > 9)
                 {
-                    count = 8;
+                    count = 7;
                     if (this.IsNumber(rowData[9]))
                     {
                         tariffLine.Step7Price = Convert.ToDecimal(rowData[9]);
@@ -826,9 +824,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 >= 10)
+                if (rowData.Length > 10)
                 {
-                    count = 9;
+                    count = 8;
                     if (this.IsNumber(rowData[10]))
                     {
                         tariffLine.Step8Price = Convert.ToDecimal(rowData[10]);
@@ -839,8 +837,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                tariffLine.Notes = rowData[count + 2];                
-
+                if (rowData.Length > count + 3)
+                {
+                    tariffLine.Notes = rowData[count + 3];
+                }
+                 
                 myResult.Add(tariffLine);
                 rowIndex++;
             }
@@ -893,8 +894,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 int count = 0;
-                // -1 : is for notes fields
-                if (rowData.Length - 1 > 2)
+                if (rowData.Length > 2)
                 {
                     count = 1;
                     if (this.IsNumber(rowData[2]))
@@ -907,7 +907,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 3)
+                if (rowData.Length > 3)
                 {
                     count = 2;
                     if (this.IsNumber(rowData[3]))
@@ -920,7 +920,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 4)
+                if (rowData.Length > 4)
                 {
                     count = 3;
 
@@ -934,7 +934,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 5)
+                if (rowData.Length > 5)
                 {
                     count = 4;
                     if (this.IsNumber(rowData[5]))
@@ -947,7 +947,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 6)
+                if (rowData.Length > 6)
                 {
                     count = 5;
                     if (this.IsNumber(rowData[6]))
@@ -960,7 +960,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 7)
+                if (rowData.Length > 7)
                 {
                     count = 6;
                     if (this.IsNumber(rowData[7]))
@@ -986,7 +986,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 9)
+                if (rowData.Length > 9)
                 {
                     count = 8;
                     if (this.IsNumber(rowData[9]))
@@ -999,7 +999,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 >= 10)
+                if (rowData.Length > 10)
                 {
                     count = 9;
                     if (this.IsNumber(rowData[10]))
@@ -1012,7 +1012,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 >= 11)
+                if (rowData.Length > 11)
                 {
                     count = 10;
                     if (this.IsNumber(rowData[11]))
@@ -1025,7 +1025,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                tariffLine.Notes = rowData[count + 2];
+                if (rowData.Length > count + 2)
+                {
+                    tariffLine.Notes = rowData[count + 2];
+                }                
 
                 myResult.Add(tariffLine);
                 rowIndex++;
