@@ -226,7 +226,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.ItemsCollection = [];  
         this.DeletedTariffsLines = [];
 
-        tariffLines.sort(p => p.Index).forEach(item => {
+        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
             this.ItemsCollection.push(new TariffLineData(item, this));
         });
 
@@ -431,7 +431,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     private isUploadExcelFinished: boolean = false;
     private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
-        tariffLines.forEach(item => {
+        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
             var tariffLine = new TariffLinePM(null);
             tariffLine.StartDate = this.StartDate;
             tariffLine.ExpirationDate = this.ExpirationDate;
