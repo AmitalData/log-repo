@@ -113,7 +113,10 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge7UOM, 
 	         Surcharge8UOM, 
 	         Surcharge9UOM, 
-	         Surcharge10UOM,
+	         Surcharge10UOM, 
+	         TariffLinesAddedNumbers, 
+	         TariffLinesAddedFromExcel, 
+	         FileUploadedName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -595,6 +595,30 @@ namespace Logitude.Server.Tools.Helpers
         {
             return value / 1.000000000000000000000000000000000m;
         }
+
+        public static int CalculateLuhnAlgorithm(string number)
+        {
+            int sum = 0, d;
+            for (int i = 0; i < number.Length; i++)
+            {
+                d = Convert.ToInt32(number.Substring(i, 1));
+                if (i % 2 != 0)
+                    d = d * 2;
+                if (d > 9)
+                    d -= 9;
+                sum += d;
+            }
+
+            if (sum % 10 == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return 10 - (sum % 10);
+            }
+        }
+
     }
 
     public class DatesHelper

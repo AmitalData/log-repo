@@ -35,6 +35,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPOCOToPM(ReconcileExternalPageLinePM entityPM, ReconcileExternalPageLine entityPOCO)
         {
+            CustomMappedPMProperties.Add(PMPropertyNames.ReconciliationNumber);
+            CustomMappedPMProperties.Add(PMPropertyNames.Amount);
+
             if (entityPOCO.IsReconciled)
             {
                 ExternalReconciliationLineQueryService recoLineQS = new ExternalReconciliationLineQueryService(entityPOCO.Tenant);
@@ -43,8 +46,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 ExternalReconciliationPM reco = recoQS.GetSingle(reconciliationLine.ReconciliationId, false,false);
                 entityPM.ReconciliationNumber = reco.ReconciliationNumber.ToString();
             }
+
+            entityPM.Amount = entityPOCO.CreditAmount > 0 ? entityPOCO.CreditAmount : entityPOCO.DebitAmount;
+
         }
-   }
+    }
 
 
 }

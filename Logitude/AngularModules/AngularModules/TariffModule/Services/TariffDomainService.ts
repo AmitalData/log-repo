@@ -317,4 +317,5 @@ export class ExcelTariffLines {
     Surcharge10PriceText: string;
     Index: number;
     Notes: string;
+    IsUploaded: boolean;
 }

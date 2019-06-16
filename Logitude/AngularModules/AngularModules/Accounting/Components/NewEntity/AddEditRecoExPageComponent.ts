@@ -41,7 +41,13 @@ export class AddEditRecoExPageComponent extends BaseComponent{
     public IsMultiCurrency: boolean = false;
     currency: any;
     AMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount");
+    CreditAMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.CreditAmount");
+    DebitAMOUNT_TEXT = TextCodeTranslator.Translate("ReconcileExternalPageLine.F.DebitAmount");
+
     AmountColHeader: string;
+    CreditAmountColHeader: string;
+    DebitAmountColHeader: string;
+
     PageLinesList: ObservableCollection;
     public isRTL: boolean = false;
     public TotalSum: number = 0.0;
@@ -294,7 +300,7 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                         error += TextCodeTranslator.Translate("Accounting.O.ReferenceDateIsRequired");
                         errors.push(error);
                     }
-                    if (AppTool.IsNullOrEmpty(line.Amount)) {
+                    if (AppTool.IsNullOrEmpty(line.CreditAmount) && AppTool.IsNullOrEmpty(line.DebitAmount)) {
                         var error = "";
                         error = TextCodeTranslator.Translate("Accounting.General.O.Line");
                         error += (line.LineNumber + ": ");
@@ -378,6 +384,8 @@ export class AddEditRecoExPageComponent extends BaseComponent{
         {
             this.IsMultiCurrency = true;
             this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
+            this.CreditAmountColHeader = this.CreditAMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
+            this.DebitAmountColHeader = this.DebitAMOUNT_TEXT + " (" + this.TenantCurrency.Code + ")";
         }
         else if (this.BankAccountPM.GLAccountCurrencyId)
         {
@@ -388,10 +396,14 @@ export class AddEditRecoExPageComponent extends BaseComponent{
                 {
                     this.currency = currency;
                     this.AmountColHeader = this.AMOUNT_TEXT + " (" + this.currency.Code +")"
+                    this.CreditAmountColHeader = this.CreditAMOUNT_TEXT + " (" + this.currency.Code + ")";
+                    this.DebitAmountColHeader = this.DebitAMOUNT_TEXT + " (" + this.currency.Code + ")";
                 }
                 else {
                     console.log("[!] Cannot find the currency !!");
                     this.AmountColHeader = this.AMOUNT_TEXT;
+                    this.CreditAmountColHeader = this.CreditAMOUNT_TEXT;
+                    this.DebitAmountColHeader = this.DebitAMOUNT_TEXT;
                 }
             });
         }
@@ -568,7 +580,11 @@ export class AddEditRecoExPageComponent extends BaseComponent{
 
         if (this.PageLinesList.Length > 0) {
             for (var line of this.PageLinesList.Collection) {
-                sum += (line.Amount == null || line.Amount == undefined) ? 0 : line.Amount;
+
+                //debit
+                sum += !line.DebitAmount?0:line.DebitAmount;
+                sum -= !line.CreditAmount?0:line.CreditAmount;
+
             }
         }
 
@@ -614,6 +630,27 @@ export class PageLineModel extends BaseComponent {
             this.parent.CalculateTotals();
         }
     }
+
+    get CreditAmount() { return this.pageLinePM.CreditAmount; }
+    set CreditAmount(value: number) {
+        if (this.pageLinePM.CreditAmount != value) {
+            this.pageLinePM.CreditAmount = value;
+            this.parent.CalculateTotals();
+            // if(value != 0)
+            //     this.DebitAmount = 0;
+        }
+    }
+
+    get DebitAmount() { return this.pageLinePM.DebitAmount; }
+    set DebitAmount(value: number) {
+        if (this.pageLinePM.DebitAmount != value) {
+            this.pageLinePM.DebitAmount = value;
+            this.parent.CalculateTotals();
+            // if(value != 0)
+            //     this.CreditAmount = 0;
+        }
+    }
+
 
     get Reference() { return this.pageLinePM.Reference; }
     set Reference(value: string) {

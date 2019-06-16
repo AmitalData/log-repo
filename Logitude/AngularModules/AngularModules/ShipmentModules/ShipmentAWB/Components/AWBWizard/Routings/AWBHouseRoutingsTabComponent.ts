@@ -1,4 +1,4 @@
-﻿import {Component, AfterViewInit} from '@angular/core';
+import {Component, AfterViewInit} from '@angular/core';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {UIProperty, UIProperties}  from '../../../../../Infrastructure/Components/LogitudeComponents/UIProperties'
 import {AppTool} from '../../../../../Infrastructure/Tools';
@@ -114,7 +114,9 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
         this.Wizard.ValidateScreen_PAC();
     }
     private Validate() {
-        this.ShowWarning_House = AppTool.IsNullOrEmpty(this.House) ? true : false;
+        if (!this.Wizard.IsImportWizard) {
+            this.ShowWarning_House = AppTool.IsNullOrEmpty(this.House) ? true : false;
+        }
     }
 
     private AllPorts: PortList[];

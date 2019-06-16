@@ -144,7 +144,7 @@ export class TaskSchedulerComponent implements OnInit  {
         
         newItem.Type = this.SchedulerType;
         var logWindow = new LogitudeWindow();
-        logWindow.Height = this.SchedulerType == "FTP" ? 730 : 620;
+        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 730 : 620;
         logWindow.Width = 800;
         logWindow.Title = this.SchedulerType + " Scheduler Details";
         logWindow.DataContext = new TaskSchedulerItemClass(newItem, this, true);
@@ -160,7 +160,7 @@ export class TaskSchedulerComponent implements OnInit  {
         var logWindow = new LogitudeWindow();
         logWindow.Title = this.SchedulerType  + " Scheduler Details";
         logWindow.DataContext = item;
-        logWindow.Height = this.SchedulerType == "FTP" ? 730 : 620;
+        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 730 : 620;
         logWindow.Width = 800;
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
         logWindow.WindowClosed.subscribe(s => {
@@ -645,13 +645,27 @@ export class TaskSchedulerItemClass extends BaseComponent {
         }
     }
 
+    get IsSFTP() {
+        return this.FTPDetails.IsSFTP;
+    }
+    set IsSFTP(newValue: boolean) {
+        if (this.FTPDetails && this.FTPDetails.IsSFTP != newValue) {
+
+
+            this.FTPDetails.IsSFTP = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }
+
 
     SetSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
         this.SchedulerDetailsData = schedulerDetailsData;
         if (schedulerDetailsData) {
-            if (this.EntityPM.Type == "FTP") {
+            if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") {
                 if (!schedulerDetailsData.FTPDetails) {
                     schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
+                    schedulerDetailsData.FTPDetails.IsSFTP = (this.EntityPM.Type == "SFTP" ? true : false);
+                    
                 }
                 this.FTPDetails = schedulerDetailsData.FTPDetails;
 

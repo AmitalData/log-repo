@@ -720,11 +720,11 @@ export class ShipmentDomainService {
         return entityList;
     }
 
-    DownloadShipmentPackages(shipmentId: string) {
+    DownloadShipmentPackages(shipmentNumber: string, shipmentId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetDownloadShipmentPackages?shipmentId=' + shipmentId;
+        var url = this._apiUrl + '/GetDownloadShipmentPackages?shipmentNumber=' + shipmentNumber + '&shipmentId=' + shipmentId;
 
         return Observable.defer(() => {
             return this._http.get(url, { headers: authHeader }).map(response => {
@@ -770,6 +770,24 @@ export class ShipmentDomainService {
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });
+    }
+
+    PostUploadExcelFile(filter: ExcelPackageFilter) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + "/PostUploadExcelFile", JSON.stringify(filter), {
+                headers: authHeader,
+            }).map(response => {
+                var result = response.json();
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
     }
 }
 
@@ -829,7 +847,6 @@ export class ShipmentCarrierStatusList {
     public TimeOfDepartureInfo: string;
     public TimeOfArrivalInfo: string;
 }
-
 export class ValidateShipmentMasterArgs {
     public ShipmentId: string;
     public BookingId: string;
@@ -862,4 +879,26 @@ export class ShipmentConnectedEntity {
     public OpenDate: Date;
     public AcceptedDate: Date;
     public Salesman: string;    
+}
+
+export class ExcelPackageFilter {
+    Tenant: number;
+    FileData: string;
+    ShipmentId: string;
+}
+export class ExcelPackage {
+    ContainerTypeId: string;
+    ContainerTypeCode: string;
+    ContainerTypeName: string;
+    ContainerNumber: string;
+    Volume: number;
+    GrossWeight: number;
+    Step2Price: number;
+    Tare: number;
+    ShipperSeal: string;
+    CarrierSeal: string;
+    MarksAndNumbers: string;
+    Description: string;
+    IsRefrigerated: boolean;
+    HasErrors: boolean;
 }

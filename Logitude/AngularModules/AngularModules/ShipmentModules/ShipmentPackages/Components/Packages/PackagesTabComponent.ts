@@ -15,7 +15,7 @@ import {PackageTypeListService} from '../../../../Common/Services/StandardLists/
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {ShipmentDomainService} from '../../../../Shipment/Services/ShipmentDomainService';
+import { ShipmentDomainService, ExcelPackageFilter, ExcelPackage} from '../../../../Shipment/Services/ShipmentDomainService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
@@ -24,6 +24,9 @@ import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/Sh
 import {WarehouseReleasePackageListExtendedService} from '../../../../Warehouse/Services/ExtendedLists/WarehouseReleasePackageListExtendedService';
 import {PickUpDeliveryPackageHarmonizePM} from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 import { CountryListService } from '../../../../Common/Services/StandardLists/CountryListService';
+import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+declare var ResultAsArray: any;
 
 @Component({
     moduleId: module.id,
@@ -88,7 +91,13 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.BuildItemsSource();
 
                     if (this.dowonload) {
+                        this.dowonload = false;
                         this.DownloadPackages();
+                    }
+
+                    if (this.saveAfterDeletePackages) {
+                        this.saveAfterDeletePackages = false;
+                        this.CreatePackagesFromExcel();
                     }
                 }
             });
@@ -1487,87 +1496,90 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         confirmWindow.Show("Are you sure you want to delete all packages?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                for (var i = this.EntityPM.ShipmentPackages.length - 1; i >= 0; i--) {                    
-                    var shipmentPackage = this.EntityPM.ShipmentPackages[i];
-
-                    //Package items
-                    if (shipmentPackage.ShipmentPackageItems != null && shipmentPackage.ShipmentPackageItems.length > 0) {
-                        for (var j = shipmentPackage.ShipmentPackageItems.length - 1; j >= 0; j--) {
-                            shipmentPackage.RemoveShipmentPackageItemPM(shipmentPackage.ShipmentPackageItems[j]);
-                        }
-                    }
-                    
-                    // Inside packages
-                    if (shipmentPackage.InsideShipmentPackages != null && shipmentPackage.InsideShipmentPackages.length > 0) {
-                        for (var k = shipmentPackage.InsideShipmentPackages.length - 1; k >= 0; k--) {
-                            shipmentPackage.RemoveInsideShipmentPackagePM(shipmentPackage.InsideShipmentPackages[k]);
-                        }
-                    }
-
-                    // package harmonize
-                    if (shipmentPackage.ShipmentPackageHarmonizes != null && shipmentPackage.ShipmentPackageHarmonizes.length > 0) {
-                        for (var m = shipmentPackage.ShipmentPackageHarmonizes.length - 1; m >= 0; m--) {
-                            shipmentPackage.RemoveShipmentPackageHarmonizePM(shipmentPackage.ShipmentPackageHarmonizes[m]);
-                        }
-                    }
-
-                    if (!AppTool.IsNullOrEmpty(shipmentPackage.DeliveryId)) {
-                        var delivery = this.EntityPM.ShipmentDeliveries.filter(f => f.Id == shipmentPackage.DeliveryId)[0];
-                        if (delivery) {
-                            if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.length > 0) {
-                                for (var n = delivery.ShipmentPickUpDeliveryPackages.length - 1; n >= 0; n--) {
-                                    var deliveryPackage = delivery.ShipmentPickUpDeliveryPackages[n]
-
-                                    if (deliveryPackage) {
-                                        if (deliveryPackage.PickUpDeliveryPackageHarmonizes != null && deliveryPackage.PickUpDeliveryPackageHarmonizes.length > 0) {
-                                            for (var f = deliveryPackage.PickUpDeliveryPackageHarmonizes.length - 1; f >= 0; f--) {
-                                                deliveryPackage.RemovePickUpDeliveryPackageHarmonizePM(deliveryPackage.PickUpDeliveryPackageHarmonizes[f]);
-                                            }
-                                        }
-
-                                        delivery.RemovePackage(deliveryPackage);
-                                    }
-                                }
-                            }
-
-                            this.EntityPM.RemoveDelivery(delivery);
-                        }
-                    }
-
-                    if (!AppTool.IsNullOrEmpty(shipmentPackage.EmptyContainerReturnId)) {
-                        var emptyContainer = this.EntityPM.ShipmentDeliveries.filter(f => f.Id == shipmentPackage.EmptyContainerReturnId)[0];
-                        if (emptyContainer) {
-                            if (emptyContainer.ShipmentPickUpDeliveryPackages != null && emptyContainer.ShipmentPickUpDeliveryPackages.length > 0) {
-                                for (var n = emptyContainer.ShipmentPickUpDeliveryPackages.length - 1; n >= 0; n--) {
-                                    var deliveryPackage = emptyContainer.ShipmentPickUpDeliveryPackages[n]
-
-                                    if (deliveryPackage) {
-                                        if (deliveryPackage.PickUpDeliveryPackageHarmonizes != null && deliveryPackage.PickUpDeliveryPackageHarmonizes.length > 0) {
-                                            for (var f = deliveryPackage.PickUpDeliveryPackageHarmonizes.length - 1; f >= 0; f--) {
-                                                deliveryPackage.RemovePickUpDeliveryPackageHarmonizePM(deliveryPackage.PickUpDeliveryPackageHarmonizes[f]);
-                                            }
-                                        }
-
-                                        emptyContainer.RemovePackage(deliveryPackage);
-                                    }
-                                }
-                            }
-
-                            this.EntityPM.RemoveDelivery(emptyContainer);
-                        }
-                    }
-                    
-                    this.EntityPM.RemovePackage(shipmentPackage);
-                }
-                
-                this.ItemsSource = new ObservableCollection([]);
-                this.ComputeTotals();
-                this.SetUIProperties();
-                this.SetGenerateData();
+                this.StartDelete();
             }
         });
     }
-    
+    private StartDelete() {
+        for (var i = this.EntityPM.ShipmentPackages.length - 1; i >= 0; i--) {
+            var shipmentPackage = this.EntityPM.ShipmentPackages[i];
+
+            //Package items
+            if (shipmentPackage.ShipmentPackageItems != null && shipmentPackage.ShipmentPackageItems.length > 0) {
+                for (var j = shipmentPackage.ShipmentPackageItems.length - 1; j >= 0; j--) {
+                    shipmentPackage.RemoveShipmentPackageItemPM(shipmentPackage.ShipmentPackageItems[j]);
+                }
+            }
+
+            // Inside packages
+            if (shipmentPackage.InsideShipmentPackages != null && shipmentPackage.InsideShipmentPackages.length > 0) {
+                for (var k = shipmentPackage.InsideShipmentPackages.length - 1; k >= 0; k--) {
+                    shipmentPackage.RemoveInsideShipmentPackagePM(shipmentPackage.InsideShipmentPackages[k]);
+                }
+            }
+
+            // package harmonize
+            if (shipmentPackage.ShipmentPackageHarmonizes != null && shipmentPackage.ShipmentPackageHarmonizes.length > 0) {
+                for (var m = shipmentPackage.ShipmentPackageHarmonizes.length - 1; m >= 0; m--) {
+                    shipmentPackage.RemoveShipmentPackageHarmonizePM(shipmentPackage.ShipmentPackageHarmonizes[m]);
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(shipmentPackage.DeliveryId)) {
+                var delivery = this.EntityPM.ShipmentDeliveries.filter(f => f.Id == shipmentPackage.DeliveryId)[0];
+                if (delivery) {
+                    if (delivery.ShipmentPickUpDeliveryPackages != null && delivery.ShipmentPickUpDeliveryPackages.length > 0) {
+                        for (var n = delivery.ShipmentPickUpDeliveryPackages.length - 1; n >= 0; n--) {
+                            var deliveryPackage = delivery.ShipmentPickUpDeliveryPackages[n]
+
+                            if (deliveryPackage) {
+                                if (deliveryPackage.PickUpDeliveryPackageHarmonizes != null && deliveryPackage.PickUpDeliveryPackageHarmonizes.length > 0) {
+                                    for (var f = deliveryPackage.PickUpDeliveryPackageHarmonizes.length - 1; f >= 0; f--) {
+                                        deliveryPackage.RemovePickUpDeliveryPackageHarmonizePM(deliveryPackage.PickUpDeliveryPackageHarmonizes[f]);
+                                    }
+                                }
+
+                                delivery.RemovePackage(deliveryPackage);
+                            }
+                        }
+                    }
+
+                    this.EntityPM.RemoveDelivery(delivery);
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(shipmentPackage.EmptyContainerReturnId)) {
+                var emptyContainer = this.EntityPM.ShipmentDeliveries.filter(f => f.Id == shipmentPackage.EmptyContainerReturnId)[0];
+                if (emptyContainer) {
+                    if (emptyContainer.ShipmentPickUpDeliveryPackages != null && emptyContainer.ShipmentPickUpDeliveryPackages.length > 0) {
+                        for (var n = emptyContainer.ShipmentPickUpDeliveryPackages.length - 1; n >= 0; n--) {
+                            var deliveryPackage = emptyContainer.ShipmentPickUpDeliveryPackages[n]
+
+                            if (deliveryPackage) {
+                                if (deliveryPackage.PickUpDeliveryPackageHarmonizes != null && deliveryPackage.PickUpDeliveryPackageHarmonizes.length > 0) {
+                                    for (var f = deliveryPackage.PickUpDeliveryPackageHarmonizes.length - 1; f >= 0; f--) {
+                                        deliveryPackage.RemovePickUpDeliveryPackageHarmonizePM(deliveryPackage.PickUpDeliveryPackageHarmonizes[f]);
+                                    }
+                                }
+
+                                emptyContainer.RemovePackage(deliveryPackage);
+                            }
+                        }
+                    }
+
+                    this.EntityPM.RemoveDelivery(emptyContainer);
+                }
+            }
+
+            this.EntityPM.RemovePackage(shipmentPackage);
+        }
+
+        this.ItemsSource = new ObservableCollection([]);
+        this.ComputeTotals();
+        this.SetUIProperties();
+        this.SetGenerateData();
+    }
+
     private dowonload: boolean = false;
     DownloadClicked() {
         this.dowonload = true;
@@ -1580,8 +1592,128 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         logWindow.Height = 200;
         logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/DownloadPackagesFileComponent');
         logWindow.ComponentLoaded.subscribe(comp => {
-            comp.Download(this.EntityPM.Id);
+            comp.Download(this.EntityPM.Id, this.EntityPM.ShipmentNumber);
         });
+    }
+
+    OnFileChanged(fileEvent) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Show("Uploading packages will result in deleting existing packages and all its data");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                var file = fileEvent.target.files[0];
+
+                if (file && file.size > 0) {
+                    var documentExtendedService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+                    documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
+                        if (!response.HasError) {
+                            var myResult = response.Result;
+                            if (myResult) {
+                                this.StartUploadingExcelFile(file);
+                            }
+                        }
+                    });
+                }                
+            }
+        }); 
+    }    
+    StartUploadingExcelFile(file: any) {
+        if (file && file.size > 0) {
+            var filebuffer = file.slice(0, file.size);
+            this.ConvertArrayBufferToBase64(filebuffer, this);
+        }
+    }
+    ConvertArrayBufferToBase64(file: any, context: any) {
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(ResultAsArray(e));
+            var len = bytes.byteLength;
+
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+
+            var filter = new ExcelPackageFilter();
+            filter.FileData = window.btoa(binary);
+            filter.ShipmentId = context.EntityPM.Id;
+
+            context.SendExcelToServer(filter);
+        };
+
+        reader.onerror = function (e) {
+            console.log(e);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+    
+    private saveAfterDeletePackages: boolean = false;
+    private packages: ExcelPackage[];
+    SendExcelToServer(filter: any) {
+        var myDomainService: ShipmentDomainService = new ShipmentDomainService();
+
+        myDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.packages= response.Result;
+
+                if (this.packages.filter(d => d.HasErrors).length > 0) {
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("File contains errors, please validate the data and try again");
+                }
+
+                else {
+                    this.saveAfterDeletePackages = true;
+                    this.StartDelete();
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();                    
+                }
+            }
+        });
+    }
+    
+    private CreatePackagesFromExcel() {
+        this.packages.forEach(item => {
+            var shipmentPackage = new ShipmentPackagePM(null);
+            shipmentPackage.Quantity = 1;
+            shipmentPackage.IsContainer = true;
+            shipmentPackage.Tenant = SessionLocator.Tenant;
+            shipmentPackage.TemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
+            shipmentPackage.FlashPointTemperatureUnitCode = SessionLocator.TenantPM.TemperatureUnitCode;
+
+            shipmentPackage.PackageTypeId = item.ContainerTypeId;
+            shipmentPackage.PackageTypeCode = item.ContainerTypeCode;
+            shipmentPackage.PackageTypeName = item.ContainerTypeName;
+            shipmentPackage.ContainerNumber = item.ContainerNumber;
+            shipmentPackage.Volume = item.Volume;
+            shipmentPackage.Weight = item.GrossWeight;
+            shipmentPackage.Tare = item.Tare;
+            shipmentPackage.ShipperSeal = item.ShipperSeal;
+            shipmentPackage.CarrierSeal = item.CarrierSeal;
+            shipmentPackage.MarksAndNumbers = item.MarksAndNumbers;
+            shipmentPackage.Description = item.Description;
+            shipmentPackage.IsContainerRefrigerated = item.IsRefrigerated;
+
+            var ratio: number;
+            if (this.EntityPM.Ratio == null) {
+                ratio = AppTool.GetRatio(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
+            }
+
+            if (AppTool.IsNullOrZero(shipmentPackage.Volume)) {
+                shipmentPackage.Volume = AppTool.ComputePackageVolume(shipmentPackage.Quantity, shipmentPackage.Width, shipmentPackage.Height, shipmentPackage.Length, shipmentPackage.Weight, ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode);
+            }
+
+            shipmentPackage.VolumetricWeight = AppTool.ComputePackageVolumetricWeight(shipmentPackage.Quantity, shipmentPackage.Width, shipmentPackage.Height, shipmentPackage.Length, shipmentPackage.Volume, shipmentPackage.Weight, ratio, this.EntityPM.DimensionsUnitCode, this.EntityPM.VolumeUnitCode, this.EntityPM.GrossWeightUnitCode, this.EntityPM.ChargeableWeightUnitCode);
+
+            if (item.IsRefrigerated == false) {
+                shipmentPackage.NonActiveContainer = false;
+            }
+            
+            this.EntityPM.AddPackage(shipmentPackage);
+        });
+
+        this.BuildItemsSource();
+        this.ResetTotalEditedValues();
+        this.ComputeTotals();
     }
 }
 

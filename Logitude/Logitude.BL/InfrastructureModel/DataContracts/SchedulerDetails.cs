@@ -40,6 +40,8 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
 		[DataMember]
         public string Extension { get; set; }
 
+        [DataMember]
+        public bool IsSFTP { get; set; }
 
     }
 
