@@ -580,7 +580,11 @@ export class AddEditRecoExPageComponent extends BaseComponent{
 
         if (this.PageLinesList.Length > 0) {
             for (var line of this.PageLinesList.Collection) {
-                sum += (line.Amount == null || line.Amount == undefined) ? 0 : line.Amount;
+
+                //debit
+                sum += !line.DebitAmount?0:line.DebitAmount;
+                sum -= !line.CreditAmount?0:line.CreditAmount;
+
             }
         }
 
@@ -632,8 +636,8 @@ export class PageLineModel extends BaseComponent {
         if (this.pageLinePM.CreditAmount != value) {
             this.pageLinePM.CreditAmount = value;
             this.parent.CalculateTotals();
-            if(value != 0)
-                this.DebitAmount = 0;
+            // if(value != 0)
+            //     this.DebitAmount = 0;
         }
     }
 
@@ -642,8 +646,8 @@ export class PageLineModel extends BaseComponent {
         if (this.pageLinePM.DebitAmount != value) {
             this.pageLinePM.DebitAmount = value;
             this.parent.CalculateTotals();
-            if(value != 0)
-                this.CreditAmount = 0;
+            // if(value != 0)
+            //     this.CreditAmount = 0;
         }
     }
 

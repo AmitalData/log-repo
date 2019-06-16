@@ -184,12 +184,11 @@ export class QuoteMenuButtonsHandler {
                     if (button.EventCode == "Quotation") {
                         button.Width = 70;
 
-                        if (this.EntityPM.QuoteTypeCode != "A") {
-                            button.IsDisabled = true;
-                        }
-
-                        else {
+                        if ((this.EntityPM.QuoteTypeCode == "P" && SessionLocator.Tenant == 1062) || this.EntityPM.QuoteTypeCode == "A") {
                             button.IsDisabled = false;
+                        }
+                        else {
+                            button.IsDisabled = true;
                         }
 
                         if (this.EntityPM.IsQuoteDataExternal && this.EntityPM.IsQuoteDocumentExternal) {

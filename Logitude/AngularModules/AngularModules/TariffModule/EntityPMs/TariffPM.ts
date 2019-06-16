@@ -299,6 +299,21 @@ export class TariffPM {
             this.activeVersions = newValue;
         }
     }
+    private tariffLinesAddedNumbers: number;
+    public get TariffLinesAddedNumbers() { return this.tariffLinesAddedNumbers; }
+    public set TariffLinesAddedNumbers(newValue: number) { if (this.tariffLinesAddedNumbers != newValue) { this.tariffLinesAddedNumbers = newValue; this.MarkAsDirty("TariffLinesAddedNumbers"); } }
+       
+	 
+    private tariffLinesAddedFromExcel: boolean;
+    public get TariffLinesAddedFromExcel() { return this.tariffLinesAddedFromExcel; }
+    public set TariffLinesAddedFromExcel(newValue: boolean) { if (this.tariffLinesAddedFromExcel != newValue) { this.tariffLinesAddedFromExcel = newValue; this.MarkAsDirty("TariffLinesAddedFromExcel"); } }
+       
+	 
+    private fileUploadedName: string;
+    public get FileUploadedName() { return this.fileUploadedName; }
+    public set FileUploadedName(newValue: string) { if (this.fileUploadedName != newValue) { this.fileUploadedName = newValue; this.MarkAsDirty("FileUploadedName"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		
