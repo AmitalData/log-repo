@@ -3056,7 +3056,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             IQueueService queueservice = new DbQueueService();
             queueservice.InitializeQueue("ImporterApprovalReceivedQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() } }, null, null);
+            queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() } , { "CorrelationId", Guid.NewGuid().ToString() } }, null, null);
         }
          
         private void AddPaymentReceivedToQueue()
