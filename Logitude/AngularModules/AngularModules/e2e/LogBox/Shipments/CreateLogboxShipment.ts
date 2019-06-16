@@ -38,10 +38,13 @@ export class LogboxShipment {
         this.helper.WaitByIdAndClick('AddLogboxDocument');
         this.helper.WaitByIdAndClick('DocumentTypeCode');
         this.helper.WaitByIdAndFill('Description', 'Test Document');
-        this.helper.WaitByIdAndFill('Notes', 'Logbox test scenario');
+       // this.helper.WaitByIdAndFill('Notes', 'Logbox test scenario');
         this.helper.WaitByIdAndClick('OK');
         this.helper.WaitBusyIndicator();
-
+        this.helper.WaitByIdAndClick('EmptyTicket');
+        this.helper.WaitByIdAndFill('Notes', 'Empty Tiketed added');
+        this.helper.WaitByIdAndClick('OK');
+        this.helper.WaitBusyIndicator();
     }
 
     //  ClickNewShipment() {

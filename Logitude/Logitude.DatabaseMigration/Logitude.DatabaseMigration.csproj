@@ -1097,6 +1097,10 @@
     <Compile Include="Migrations\201906120624059_AddDefaultWarningPercentageToTenant_Maheera.Designer.cs">
       <DependentUpon>201906120624059_AddDefaultWarningPercentageToTenant_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906130630427_NewField_ReconcileExternalPageLine_DebitAmount.cs" />
+    <Compile Include="Migrations\201906130630427_NewField_ReconcileExternalPageLine_DebitAmount.Designer.cs">
+      <DependentUpon>201906130630427_NewField_ReconcileExternalPageLine_DebitAmount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201906130941538_AddCheckDigitControlAlgorithm.cs" />
     <Compile Include="Migrations\201906130941538_AddCheckDigitControlAlgorithm.Designer.cs">
       <DependentUpon>201906130941538_AddCheckDigitControlAlgorithm.cs</DependentUpon>
@@ -1869,6 +1873,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906120624059_AddDefaultWarningPercentageToTenant_Maheera.resx">
       <DependentUpon>201906120624059_AddDefaultWarningPercentageToTenant_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906130630427_NewField_ReconcileExternalPageLine_DebitAmount.resx">
+      <DependentUpon>201906130630427_NewField_ReconcileExternalPageLine_DebitAmount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906130941538_AddCheckDigitControlAlgorithm.resx">
       <DependentUpon>201906130941538_AddCheckDigitControlAlgorithm.cs</DependentUpon>
