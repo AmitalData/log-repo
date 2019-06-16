@@ -403,3 +403,4 @@ __pycache__/
 /Logitude/Logitude.IntegrationTests/FTPFiles
 /Logitude/automation (logbox).sql
 /Logitude/update report to all tenants.sql
+/Logitude/Logitude.IntegrationTests/DownloadedFiles

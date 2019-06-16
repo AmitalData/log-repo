@@ -152,45 +152,19 @@ export class AWBPackagesTabComponent extends BaseComponent {
         this.Wizard.ValidateScreen_GEN();
     }
     private Validate() {
-        var isShowWarning_GrossWeight = false;
-        var isShowWarning_ChargeableWeight = false;
-        var isShowWarning_AWBCommodityItemNumber = false;
-        var isShowWarning_DescriptionOfGoods = false;
+        if (!this.Wizard.IsImportWizard) {
+            var isShowWarning_GrossWeight = false;
+            var isShowWarning_ChargeableWeight = false;
+            var isShowWarning_AWBCommodityItemNumber = false;
+            var isShowWarning_DescriptionOfGoods = false;
 
-        if (AppTool.IsNullOrZero(this.GrossWeight)) {
-            isShowWarning_GrossWeight = true;
-        }
-
-        if (this.Wizard.IsFWB) {
-            if (AppTool.IsNullOrZero(this.ChargeableWeight)) {
-                isShowWarning_ChargeableWeight = true;
+            if (AppTool.IsNullOrZero(this.GrossWeight)) {
+                isShowWarning_GrossWeight = true;
             }
-        }
 
-        else {
-            if (AppTool.IsNullOrEmpty(this.DescriptionOfGoods)) {
-                isShowWarning_DescriptionOfGoods = true;
-            }
-        }
-
-        if (!this.IsMultipleCommodities) {
             if (this.Wizard.IsFWB) {
-
-                if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.MainCarriageCarrierCode == "AR") {
-                    if (AppTool.IsNullOrEmpty(this.DescriptionOfGoods)) {
-                        isShowWarning_DescriptionOfGoods = true;
-                    }
-                }
-
-                if (!FormatTool.Validate_CommodityNo(this.AWBCommodityItemNumber)) {
-                    isShowWarning_AWBCommodityItemNumber = true;
-                }
-
-                if (!isShowWarning_AWBCommodityItemNumber) {
-                    var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBCommodityItemNumber")[0];
-                    if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBCommodityItemNumber)) {
-                        isShowWarning_AWBCommodityItemNumber = true;
-                    }
+                if (AppTool.IsNullOrZero(this.ChargeableWeight)) {
+                    isShowWarning_ChargeableWeight = true;
                 }
             }
 
@@ -200,10 +174,38 @@ export class AWBPackagesTabComponent extends BaseComponent {
                 }
             }
 
-            if (!isShowWarning_DescriptionOfGoods) {
-                var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "DescriptionOfGoods")[0];
-                if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.DescriptionOfGoods)) {
-                    isShowWarning_DescriptionOfGoods = true;
+            if (!this.IsMultipleCommodities) {
+                if (this.Wizard.IsFWB) {
+
+                    if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.MainCarriageCarrierCode == "AR") {
+                        if (AppTool.IsNullOrEmpty(this.DescriptionOfGoods)) {
+                            isShowWarning_DescriptionOfGoods = true;
+                        }
+                    }
+
+                    if (!FormatTool.Validate_CommodityNo(this.AWBCommodityItemNumber)) {
+                        isShowWarning_AWBCommodityItemNumber = true;
+                    }
+
+                    if (!isShowWarning_AWBCommodityItemNumber) {
+                        var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "AWBCommodityItemNumber")[0];
+                        if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.AWBCommodityItemNumber)) {
+                            isShowWarning_AWBCommodityItemNumber = true;
+                        }
+                    }
+                }
+
+                else {
+                    if (AppTool.IsNullOrEmpty(this.DescriptionOfGoods)) {
+                        isShowWarning_DescriptionOfGoods = true;
+                    }
+                }
+
+                if (!isShowWarning_DescriptionOfGoods) {
+                    var myFieldRule = this.Wizard.AirlineRulesList.filter(d => d.RuleFieldName == "DescriptionOfGoods")[0];
+                    if (!AppTool.IsAirlineRuleFieldValid(myFieldRule, this.DescriptionOfGoods)) {
+                        isShowWarning_DescriptionOfGoods = true;
+                    }
                 }
             }
         }
@@ -441,7 +443,7 @@ export class AWBPackagesTabComponent extends BaseComponent {
             }
         }
 
-        list.sort((a, b) => { return (a === b) ? 0 : a ? -1 : 1 }).forEach((item) => {
+        list./*sort((a, b) => { return (a === b) ? 0 : a ? 1 : 1 }).*/forEach((item) => {
             var itemViewModel: AWBWizardPackageItem = new AWBWizardPackageItem(item, false, this);
             this.ItemsSource.push(itemViewModel);
             itemViewModel.SetUIProperties();

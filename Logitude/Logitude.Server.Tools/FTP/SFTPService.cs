@@ -129,7 +129,7 @@ namespace Logitude.Server.Tools.FTP
             }
 
         }
-        public void Download(string p_localpath, string p_pattern, ref string p_more, out string p_download_filename, out string p_status, out string p_message)
+        public void DownloadAllDirectoryFiles(string p_pattern, out string p_download_filename, out string p_status, out string p_message)
         {
             MyStart();
             bool v_contiue;
@@ -197,11 +197,11 @@ namespace Logitude.Server.Tools.FTP
                             p_download_filename = "";
                             Console.WriteLine(match.ToString());
                             sb.AppendLine(match.ToString());
-                            DownloadFile(p_localpath, fp.Filename, out v_contiue, out p_status, out p_message);
+                            byte[] fileData = DownloadFileInternally(fp.Filename, out v_contiue, out p_status, out p_message);
                             if (!v_contiue)
                             {
                                 v_downloaded = true;
-                                p_download_filename = Path.GetDirectoryName(p_localpath + @"\") + @"\" + Path.GetFileName(fp.Filename);
+                                //p_download_filename = Path.GetDirectoryName(p_localpath + @"\") + @"\" + Path.GetFileName(fp.Filename);
                                 //p_download_filename += Environment.NewLine + "#" + _currIdxFile.ToString();
                                 break;
                             }
@@ -232,7 +232,7 @@ namespace Logitude.Server.Tools.FTP
             }
         }
 
-        public void DeleteFile(string p_filename, ref string p_more, out string p_status, out string p_message)
+        public void DeleteFile(string p_filename, out string p_status, out string p_message)
         {
             MyStart();
             p_status = "";
@@ -505,14 +505,15 @@ namespace Logitude.Server.Tools.FTP
             }
         }
 
-        public void DirList(string p_pattern, string p_onlyfiles, string p_onlydirs, ref string p_more, out string p_filelist, out string p_status, out string p_message)
+        public List<string> DirList(string p_pattern, bool p_onlyfiles, bool p_onlydirs, out string p_status, out string p_message)
         {
+            List<string> filesList = new List<string>();
             MyStart();
             p_status = "";
             p_message = "";
-            p_filelist = "";
-            bool v_onlyfiles = CnBool(p_onlyfiles);
-            bool v_onlydirs = CnBool(p_onlydirs);
+             
+            bool v_onlyfiles = p_onlyfiles;
+            bool v_onlydirs = p_onlydirs;
             bool v_found = false;
             int v_count = 0;
             if (string.IsNullOrEmpty(p_pattern)) p_pattern = "*";
@@ -538,15 +539,23 @@ namespace Logitude.Server.Tools.FTP
                     {
                         // Finally, we get the Group value and display it.
                         v_found = true;
-                        if (dirEntry.FileName != "..") v_count++;
+                        if (v_onlyfiles)
+                        {
+                            if (dirEntry.FileName != ".." && !dirEntry.IsDir) v_count++;
+                        }
+                        else if (p_onlydirs)
+                        {
+                            if (dirEntry.FileName != ".." && dirEntry.IsDir) v_count++;
+                        }
+                        else if (dirEntry.FileName != "..") v_count++;
                         if (dirEntry.IsDir && !v_onlyfiles)
-                            sb.AppendLine(dirEntry.FileName + " <dir>");
+                            filesList.Add(dirEntry.FileName + " <dir>");//sb.AppendLine(dirEntry.FileName + " <dir>");
                         if (!dirEntry.IsDir && !v_onlydirs)
-                            sb.AppendLine(dirEntry.FileName);
+                            filesList.Add(dirEntry.FileName);//sb.AppendLine(dirEntry.FileName);
                         Console.WriteLine(match.ToString());
                     }
                 }
-                p_filelist = sb.ToString();
+                //p_filelist = sb.ToString();
                 if (!v_found)
                     p_message = "No files found with path/pattern '" + sftp.RemotePath + v_pattern + "'";
                 else
@@ -567,28 +576,78 @@ namespace Logitude.Server.Tools.FTP
             {
                 MyFinally();
             }
+
+            return filesList;
+        }
+
+
+        public byte[] DownloadFile(string p_filename, out string p_status, out string p_message)
+        {
+            MemoryStream downloadStream = new MemoryStream();
+            //p_continue = false;
+            p_status = "";
+            p_message = "";
+            try
+            {
+                sftp.RemoteFile = p_filename;
+                sftp.SetDownloadStream(downloadStream);
+                //sftp.LocalFile = p_localpath + @"\" + p_filename;
+                sftp.Overwrite = true;
+                //if (!sftp.FileExists)
+                if (!IsRemoteFileExist(p_filename))
+                {
+                    // p_continue = true;
+                    p_status = "-2";
+                    p_message = "Failed to download file '" + sftp.RemotePath + p_filename + ", file doesn't exist";
+                    return null;
+                }
+                else
+                {
+                    //sftp.do
+                    sftp.Download();
+                    p_message = "File '" + p_filename + "' was successfully downloaded";// to '" + sftp.LocalFile + "'";
+                    if (sftp.RemotePath != "") p_message += " in directory '" + sftp.RemotePath + "'";
+                    p_status = "1";
+                    // p_continue = false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                p_message = "Failed to download file '" + sftp.RemotePath + p_filename;//"' to local path '" + sftp.LocalFile + "'";
+                p_message += Environment.NewLine + ex.Message;
+                if (ex.InnerException != null)
+                    p_message += Environment.NewLine + ex.InnerException.Message;
+                p_status = "-1";
+                //p_continue = false;
+            }
+
+            return downloadStream.ToArray();
         }
         #region Infrastructure
-        private void DownloadFile(string p_localpath, string p_filename, out bool p_continue, out string p_status, out string p_message)
+        private byte[] DownloadFileInternally(string p_filename, out bool p_continue, out string p_status, out string p_message)
         {
+            MemoryStream downloadStream = new MemoryStream();
             p_continue = false;
             p_status = "";
             p_message = "";
             try
             {
                 sftp.RemoteFile = p_filename;
-                sftp.LocalFile = p_localpath + @"\" + p_filename;
+                sftp.SetDownloadStream(downloadStream);
+                //sftp.LocalFile = p_localpath + @"\" + p_filename;
                 sftp.Overwrite = true;
                 //if (!sftp.FileExists)
                 if (!IsRemoteFileExist(p_filename))
                 {
                     p_continue = true;
-                    return;
+                    return null;
                 }
                 else
                 {
+                    //sftp.do
                     sftp.Download();
-                    p_message = "File '" + p_filename + "' was successfully downloaded to '" + sftp.LocalFile + "'";
+                    p_message = "File '" + p_filename + "' was successfully downloaded";// to '" + sftp.LocalFile + "'";
                     if (sftp.RemotePath != "") p_message += " in directory '" + sftp.RemotePath + "'";
                     p_continue = false;
                 }
@@ -596,7 +655,7 @@ namespace Logitude.Server.Tools.FTP
             }
             catch (Exception ex)
             {
-                p_message = "Failed to download file '" + sftp.RemotePath + p_filename + "' to local path '" + sftp.LocalFile + "'";
+                p_message = "Failed to download file '" + sftp.RemotePath + p_filename;// + "' to local path '" + sftp.LocalFile + "'";
                 p_message += Environment.NewLine + ex.Message;
                 if (ex.InnerException != null)
                     p_message += Environment.NewLine + ex.InnerException.Message;
@@ -604,6 +663,7 @@ namespace Logitude.Server.Tools.FTP
                 p_continue = false;
             }
 
+            return downloadStream.ToArray();
         }
 
         private void sftp_OnSSHServerAuthentication(object sender, nsoftware.IPWorksSSH.SftpSSHServerAuthenticationEventArgs e)

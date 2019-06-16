@@ -119,8 +119,8 @@ export class AccountingFunctionalTestComponent extends BaseComponent {
             this.FileExtension = temp[temp.length - 1];
             this.FileName = file.name.replace("." + this.FileExtension, "");
 
-            if (this.FileExtension.toLowerCase() != "xls") {
-                this.ShowMessage("חובה קובץ xls");
+            if (this.FileExtension.toLowerCase() != "xlsx") {
+                this.ShowMessage("חובה קובץ xlsx");
                 return;
             }
 

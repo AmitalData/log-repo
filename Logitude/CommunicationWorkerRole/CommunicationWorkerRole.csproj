@@ -360,8 +360,10 @@
     <Compile Include="LogBoxMailgunAnalyzerWorkerRole.cs" />
     <Compile Include="Services\FTPSchedulerTaskService.cs" />
     <Compile Include="ImporterApprovalReceivedWorkerRole.cs" />
+    <Compile Include="Services\SFTPSchedulerTaskService.cs" />
     <Compile Include="Tasks\DeleteTaskSchedulerHistoriesTask.cs" />
     <Compile Include="Tasks\FTPSchedulerTask.cs" />
+    <Compile Include="Tasks\SFTPSchedulerTask.cs" />
     <Compile Include="Tasks\TestLoggingWarningTask.cs" />
     <Compile Include="Tasks\TestLoggingInfoWithExceptionIfCurrentMinuteisEvenTask.cs" />
     <Compile Include="TMQueueMessageBuilderWorkerRole.cs" />

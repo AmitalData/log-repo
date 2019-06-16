@@ -177,6 +177,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\AutomationResultEmailRecipient.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CardExternalAccountsByProduct.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\ChargesExternalAccountsByProduct.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CreditLimitSetting.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerAdditional.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\CustomerDeposition.cs" />
@@ -338,6 +339,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\TemperatureUnit.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TenantLoginPolicy.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TenantAdditionalData.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\TenantManagmentLicense.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TwoFactorAuthenticationDevice.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\LoginPolicy.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserLicense.cs" />
@@ -363,6 +365,7 @@
     <Compile Include="CommonDataModel\Mapping\BlobFileMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CardExternalAccountsByProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ChargesExternalAccountsByProductMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\CheckDigitControlAlgorithmMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ColorIndexMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerCodeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerMap.cs" />
@@ -433,6 +436,7 @@
     <Compile Include="CommonDataModel\Mapping\TemperatureUnitMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TenantAdditionalDataMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TenantLoginPolicyMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\TenantManagmentLicenseMap.cs" />
     <Compile Include="CommonDataModel\Mapping\TwoFactorAuthenticationDeviceMap.cs" />
     <Compile Include="CommonDataModel\Mapping\LoginPolicyMap.cs" />
     <Compile Include="CommonDataModel\Mapping\UserLicenseMap.cs" />
@@ -456,6 +460,7 @@
     <Compile Include="CommonDataModel\Repositories\BlobFileRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CardExternalAccountsByProductRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ChargesExternalAccountsByProductRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\CheckDigitControlAlgorithmRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ColorIndexRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerCodeRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\ComputingPartnerRepository.cs" />
