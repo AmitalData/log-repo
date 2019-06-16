@@ -43,7 +43,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public CurrentVersion: TariffVersionPM;
     private CurrentSession = SessionLocator.SelectedSession;
     private ChargesTypeListService: ChargesTypeListService;
-
+    private FilName: string = "";
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -532,6 +532,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             console.log(e);
         };
         reader.readAsArrayBuffer(file);
+       // context.EntityPM.FileUploadedName = file.Name;
+
     }
     SendExcelToServer(filter: any) {
         this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
@@ -619,7 +621,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.CurrentVersion.AddTariffLine(tariffLine);
         });
 
-        this.EntityPM.TariffLinesAdded = true;
+        this.EntityPM.TariffLinesAddedFromExcel = true;
         this.isUploadExcelFinished = true;
         this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
     }
