@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות הנהלת חשבונות",
 			      				    DefaultText =  "Full Accounting Settings",
-			      				    Code =  "6039",
+			      				    Code =  "eb30",
 			      				    Name =  "FullAccountingSetting Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Accounting",
@@ -2457,7 +2457,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DefaultExternalDiffGLAccountId",
 					  						DefaultText =  "Default External Diff GLAccount ",
-					  						FullLocalDefaultText =  "מערתכ המחאות מופעלת",
+					  						FullLocalDefaultText =  "כרטיס ברירת מחדל להפרשי התאמות חיצוניות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2537,6 +2537,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IsPaymentChequesActivated",
+					  						OldFieldName =  "IsPaymentChequesActivated",
 					  						ObjectTableName =  "FullAccountingSetting",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2556,6 +2557,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsPaymentChequesActivated",
 					  						ListPropertyPath =  "IsPaymentChequesActivated",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
