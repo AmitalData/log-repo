@@ -58,7 +58,7 @@ export class AddEditTaskSchedulerComponent  {
 
     private RunComponent() {
         if (this.viewContainerRef) {
-            var componentName: string = this.DataContext.Type == "FTP" ? "FTBSchedulerTemplateComponent" :"TaskSchedulerTemplateComponent";
+            var componentName: string = (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") ? "FTBSchedulerTemplateComponent" :"TaskSchedulerTemplateComponent";
             SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/SchedulerTemplates/" + componentName, this.viewContainerRef)
                     .then(cmpRef => {
                         this.GeneralTemplateComponent = cmpRef.instance;
@@ -93,17 +93,18 @@ export class AddEditTaskSchedulerComponent  {
 
 
     BuildSchedulerDetailsData() {
-        if (this.DataContext.Type == "FTP") {
+        if (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") {
             this.GeneralAreaHeight = "310px";
             if (this.EntityPM.SchedulerDetailsData) {
                 this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
             }
-           else if (this.EntityPM.Id) {
+            else if (this.EntityPM.Id) {
                 this.LoadSchedulerDetailsData();
-            } else  {
-               var schedulerDetailsData = new SchedulerDetails();
-               schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
-               this.SetSchedulerDetailsData(schedulerDetailsData);
+            } else {
+                var schedulerDetailsData = new SchedulerDetails();
+                schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
+                schedulerDetailsData.FTPDetails.IsSFTP = (this.EntityPM.Type == "SFTP" ? true : false);
+                this.SetSchedulerDetailsData(schedulerDetailsData);
             }
         }
     }
@@ -249,8 +250,8 @@ export class AddEditTaskSchedulerComponent  {
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
 
-        if (this.DataContext.Type == "FTP") {
-            this.DataContext.ServiceClassName = "FTPSchedulerTask";
+        if (this.DataContext.Type == "FTP" || this.DataContext.Type == "SFTP") {
+            this.DataContext.ServiceClassName = (this.DataContext.Type == "FTP" ? "FTPSchedulerTask" : "SFTPSchedulerTask");
 
 
             if (AppTool.IsNullOrEmpty(this.DataContext.UserName)) errors.push(msg.replace("%FieldName", "UserName"));
@@ -317,7 +318,7 @@ export class AddEditTaskSchedulerComponent  {
         if (this.EntityPM.Status == "In progress") {
             errors.push("The task is in progress. You are not allowed to edit it");// the start time field
         }
-        if (this.EntityPM.Type == "FTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
+        if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
     
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
