@@ -56,7 +56,53 @@ namespace WebFreight.Web.Helpers
     public class ExportDocumentHelper
     {
 
-        public string ExportDocument2Pdf(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId = null)
+        public  string ExportDocument2PdfViewWebService(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId, ExportDocumentHelper exportDocumentHelper, string token)
+        {
+            string result;
+            try
+            {
+                BuildDocumentParameter exportDocument2PdfParamete = new BuildDocumentParameter() { DocumentOutId = documentOutId, DocumentTypeId = documentTypeId, EntityId = entityId, EntityObjectTableId = entityObjectTableId, ChildEntityId = childEntityId, ChildObjectTableId = childObjectTableId, DocumentTypeCopyId = documentTypeCopyId, UserId = userId, Tenant = tenant };
+                string exportDocument2PdfParameterxml = LogitudeXmlSerializer.SerializeObjectToXmlString(exportDocument2PdfParamete);
+                exportDocument2PdfParameterxml = exportDocument2PdfParameterxml.Replace("<", "@TagOpen");
+                string soap = GetSoapReportViaWebService("ExportDocument2Pdf", "exportDocument2PdfParameterxml", exportDocument2PdfParameterxml);
+
+
+                string url = LogitudeSettings.CPUIntensiveWebServicesURL.TrimEnd('/') + "/WebServices/BuildDocumentReportWebService.asmx";
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+                req.Headers.Add("Token", token);
+                req.ContentType = "application/soap+xml;";
+                req.Method = "POST";
+                using (Stream stm = req.GetRequestStream())
+                {
+                    using (StreamWriter stmw = new StreamWriter(stm))
+                    {
+                        stmw.Write(soap);
+                    }
+                }
+                using (WebResponse Serviceres = req.GetResponse())
+                {
+                    using (StreamReader rd = new StreamReader(Serviceres.GetResponseStream()))
+                    {
+                        var serviceResult = rd.ReadToEnd();
+                        result = exportDocumentHelper.getBetween(serviceResult, "<ExportDocument2PdfResult>", "</ExportDocument2PdfResult>");
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result = exportDocumentHelper.ExportDocument2Pdf(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
+
+            }
+
+            return result;
+        }
+
+
+
+
+        public string ExportDocument2Pdf(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId = null , bool isRunViaService = true)
         {
             try
             {
@@ -89,7 +135,7 @@ namespace WebFreight.Web.Helpers
                 {
                     if (templatedata.Length != 0)
                     {
-                        StiReport report = GetReportDocument(documentType, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, templatedata, defaulttemplate, tenant, theT1, theT2, theA1, theA2, userId);
+                        StiReport report = GetReportDocument(documentType, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, templatedata, defaulttemplate, tenant, theT1, theT2, theA1, theA2, userId, isRunViaService);
 
                         LoadEditableFields(documentOut, report);
 
@@ -278,14 +324,14 @@ namespace WebFreight.Web.Helpers
         private long t1;
         long t2;
 
-        public StiReport GetReportDocument(DocumentType documentType, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, DocumentTypeCopy documentTypeCopy, Byte[] templatedata, DocumentTypeTemplate defaulttemplate, int tenant, long theT1, long theT2, long theA1, long theA2, string userId = null, bool isJsonBody = false)
+        public StiReport GetReportDocument(DocumentType documentType, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, DocumentTypeCopy documentTypeCopy, Byte[] templatedata, DocumentTypeTemplate defaulttemplate, int tenant, long theT1, long theT2, long theA1, long theA2, string userId = null, bool isRunViaService = true)
         {
 
             string documentTypeCopyId = documentTypeCopy != null ? documentTypeCopy.Id : "";
             string documentTypeCode = !string.IsNullOrEmpty(documentType.Code) ? documentType.Code.ToUpper() : "";
             DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
             StiReport report = new StiReport();
-            if (IsCallBuildDocumentReportWebService(tenant))
+            if (IsCallBuildDocumentReportWebService(tenant) && isRunViaService)
             {
                 report = BuildReportViaWebService(new BuildDocumentParameter { DocumentTypeCode = documentType.Code, DocumentTypeId = documentType.Id, EntityId = entityId, EntityObjectTableId = entityObjectTableId, ChildEntityId = childEntityId, ChildObjectTableId = childObjectTableId, DefaulttemplateId = defaulttemplate.Id, Tenant = tenant, DocumentTypeCopyId = documentTypeCopyId });
             }
@@ -306,10 +352,10 @@ namespace WebFreight.Web.Helpers
                 string buildDocumentParameterxml = LogitudeXmlSerializer.SerializeObjectToXmlString(buildDocumentParameter);
                 buildDocumentParameterxml = buildDocumentParameterxml.Replace("<", "@TagOpen");
 
-                string soap = GetSoapReportViaWebService(buildDocumentParameterxml);
+                string soap = GetSoapReportViaWebService("BuildDocumentReport" , "buildDocumentParameterxml" , buildDocumentParameterxml);
                 StiReport stiReport = new StiReport();
-        //    
-                string url =   LogitudeSettings.CPUIntensiveWebServicesURL.TrimEnd('/') + "/WebServices/BuildDocumentReportWebService.asmx";
+
+                string url = LogitudeSettings.CPUIntensiveWebServicesURL.TrimEnd('/') + "/WebServices/BuildDocumentReportWebService.asmx";
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 string token = HttpContext.Current.Request.Headers["Token"];
                 req.Headers.Add("Token", token);
@@ -348,16 +394,21 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        private static string GetSoapReportViaWebService(string buildDocumentParameterxml)
+        public string GetSoapReportViaWebService( string methodName , string parameterName , string parameterxml)
         {
-            return @"<?xml version=""1.0"" encoding=""utf-8""?>
+            string result = @"<?xml version=""1.0"" encoding=""utf-8""?>
 <soap:Envelope xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
  
 xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" 
 xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
   <soap:Body>
-    <BuildDocumentReport xmlns=""http://tempuri.org/"">
-     <buildDocumentParameterxml>" + buildDocumentParameterxml + "</buildDocumentParameterxml></BuildDocumentReport></soap:Body></soap:Envelope>";
+    <methodName xmlns=""http://tempuri.org/"">
+     <parameterName>" + parameterxml + "</parameterName></methodName></soap:Body></soap:Envelope>";
+
+            result = result.Replace("methodName", methodName);
+            result = result.Replace("parameterName", parameterName);
+            return result;
+
         }
 
         public StiReport BuildReport(string documentTypeCode, string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string defaulttemplateId, int tenant, string userId, string documentTypeCopyId)
@@ -1134,7 +1185,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             return report;
         }
 
-        private string getBetween(string strSource, string strStart, string strEnd)
+        public string getBetween(string strSource, string strStart, string strEnd)
         {
             int Start, End;
             if (strSource.Contains(strStart) && strSource.Contains(strEnd))
@@ -1546,7 +1597,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             return report;
         }
 
-     
+
         public void RegBusinessObject(StiReport report, StiBusinessObject currentBusinessObject)
         {
             report.RegBusinessObject(currentBusinessObject.Category, currentBusinessObject.Name, currentBusinessObject.BusinessObjectValue);
@@ -1961,7 +2012,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
 
 
         public static DateTime? ExceptionDateBuildDocumentReportWebService { get; set; }
-        private bool IsCallBuildDocumentReportWebService(int tenant)
+        public bool IsCallBuildDocumentReportWebService(int tenant)
         {
             bool result = false;
             if (!string.IsNullOrEmpty(LogitudeSettings.CPUIntensiveWebServicesURL) && FeatureToggleHelper.HasFeatureToggle("BDR", tenant))
