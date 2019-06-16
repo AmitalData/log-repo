@@ -195,7 +195,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                             storageservice.Write(data, fileInfo);
-                           // this.EventTrace(tariff, type, loggedContact);
+                            this.EventTrace(tariff, type, loggedContact);
                         }
 
 
@@ -213,30 +213,32 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         private void EventTrace(TariffPM tariffPM,string type,ContactPM loggedContact)
         {
-            //if (type== "Template")
-            //{
-            //    EventTracer.CreateTraceEvent(new EventTracerArgs()
-            //    {
-            //        Tenant = tariffPM.Tenant,
-            //        EventTypeCode = "TDLD",
-            //        UserId = loggedContact.Id,
-            //        EntityId = tariffPM.Id,
-            //        ObjectTableName = "Tariff",
-            //        Notes = "Tariff Header exported"
-            //    });
-            //}
-            //else
-            //{
-            //    EventTracer.CreateTraceEvent(new EventTracerArgs()
-            //    {
-            //        Tenant = tariffPM.Tenant,
-            //        EventTypeCode = "TDLD",
-            //        UserId = loggedContact.Id,
-            //        EntityId = tariffPM.Id,
-            //        ObjectTableName = "Tariff",
-            //        Notes = "Tariff Lines exported"
-            //    });
-            //}
+            if (type == "Template")
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tariffPM.Tenant,
+                    EventTypeCode = "TDLD",
+                    UserId = loggedContact.Id,
+                    EntityId = tariffPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = "Tariff Header exported"
+                });
+            }
+            else
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tariffPM.Tenant,
+                    EventTypeCode = "TDLD",
+                    UserId = loggedContact.Id,
+                    EntityId = tariffPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = "Tariff Lines exported"
+                });
+            }
+
+
         }
         private byte[] ExportAirFreightCostLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant, string type)
         {
@@ -684,9 +686,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                filter.Tenant = authToken.Tenant;
+
+                string loggedUserEmail = authToken.Email;
+
+                ContactQuery contactQuery = new ContactQuery(authToken.Tenant);
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, authToken.Tenant);
+
                 this.portRepository = new PortRepository(authToken.Tenant);
 
-                filter.Tenant = authToken.Tenant;
                 byte[] fileData = Convert.FromBase64String(filter.FileData);
 
                 System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
@@ -705,7 +713,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     tariffLinesResult = this.BuildAirSurchargesCostExcelLines(sheet, authToken.Tenant);
                 }
-                
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = filter.Tenant,
+                    EventTypeCode = "TUPL",
+                    UserId = loggedContact.Id,
+                    EntityId = filter.TariffId,
+                    ObjectTableName = "Tariff",
+                    Notes = filter.FileName+" uploaded ("+ tariffLinesResult.Count+" lines)"
+                });
+
                 return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
             }
 
@@ -1705,6 +1723,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string TariffId { get; set; }
         public int Version { get; set; }
         public string TariffType { get; set; }
+        public string FileName { get; set; }
     }
     public class ExcelTariffLines
     {
