@@ -343,9 +343,9 @@
                                                 <td style="width:150px; left: -10px;">
                                                     <LogLabel [ObjectFieldName]="'Account'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-
+                                               
                                                 <td *ngIf="FullAccounting && AccountingPaymentMethodCode == 'CH'" style="width:150px; left: -10px;">
-                                                    <LogLabel [Text]="'Cheque Status'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [Text]="'ARInvoice.CH.InvoiceNumberListLable' | TextCodeTranslationPipe"  [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
                                                 <td>
