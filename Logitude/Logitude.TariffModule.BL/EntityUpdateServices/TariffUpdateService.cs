@@ -94,32 +94,29 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             ContactRepository contactRep = new ContactRepository(commonContext);
             Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
 
-            //if (entityPM.TariffLinesAddedFromExcel)
-            //{
-            //    EventTracer.CreateTraceEvent(new EventTracerArgs()
-            //    {
-            //        Tenant = entityPM.Tenant,
-            //        EventTypeCode = "TUPL",
-            //        UserId = contact.Id,
-            //        EntityId = entityPM.Id,
-            //        ObjectTableName = "Tariff",
-            //        Notes = entityPM.FileUploadedName + " uploaded (" + entityPM.TariffLinesAddedNumbers + " lines)"
-            //    });
-            //}
 
 
-            //if (entityPM.TariffLinesAdded)
-            //{
-            //    EventTracer.CreateTraceEvent(new EventTracerArgs()
-            //    {
-            //        Tenant = entityPM.Tenant,
-            //        EventTypeCode = "TLAD",
-            //        UserId = contact.Id,
-            //        EntityId = entityPM.Id,
-            //        ObjectTableName = "Tariff",
-            //        Notes = "Tariff Lines manually added "+
-            //    });
-            //}
+            if (entityPM.TariffLinesAdded)
+            {
+                TariffVersionPM tariffVersion = entityPM.TariffVersions.Where(p => p.IsDraft).FirstOrDefault();
+                if (tariffVersion != null)
+                {
+                    int count = tariffVersion.TariffLines.Where(a => a.AddedManually == true).Count();
+                    if (count > 0)
+                    {
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            Tenant = entityPM.Tenant,
+                            EventTypeCode = "TLAD",
+                            UserId = contact.Id,
+                            EntityId = entityPM.Id,
+                            ObjectTableName = "Tariff",
+                            Notes = "Tariff Lines manually added (" + count + " lines)"
+                        });
+                    }
+                }
+               
+            }
 
 
 
