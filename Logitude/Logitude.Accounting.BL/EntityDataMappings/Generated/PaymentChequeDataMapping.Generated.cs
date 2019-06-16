@@ -51,7 +51,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         EntityId, 
 	         ObjectTableId, 
 	         Notes, 
-	         UniqueField,
+	         UniqueField, 
+	         APPaymentId,
 	      }
 
 
@@ -103,7 +104,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         JournalId, 
 	         StatusEnglishName, 
 	         BankLocalName, 
-	         BankEnglishName,
+	         BankEnglishName, 
+	         APPaymentId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -255,6 +257,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UniqueField))
             {
 				entityPOCO.UniqueField = entityPM.UniqueField;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.APPaymentId))
+            {
+				entityPOCO.APPaymentId = entityPM.APPaymentId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -413,6 +420,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.UniqueField = entityPOCO.UniqueField;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.APPaymentId))
+            {
+					entityPM.APPaymentId = entityPOCO.APPaymentId;
+            }
+
 		}
 
 		public void PMToOldPM(PaymentChequePM entityPM, PaymentChequePM oldEntityPM)
@@ -562,6 +574,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UniqueField))
             {
                 oldEntityPM.UniqueField = entityPM.UniqueField;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.APPaymentId))
+            {
+                oldEntityPM.APPaymentId = entityPM.APPaymentId;
             }
 			
 		}

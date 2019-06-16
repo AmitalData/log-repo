@@ -148,7 +148,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 NumberFormatCode = a.NumberFormatCode,
                                                 CAAT = a.CAAT,
                                                 CBSA = a.CBSA,
+                                                DefaultWarningPercentage = a.DefaultWarningPercentage,
                                                 IsTestTenant = a.IsTestTenant,
+                                                CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -306,8 +308,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         EcommerceSupportEmail = tt.EcommerceSupportEmail,
                         CAAT = tt.CAAT,
                         CBSA = tt.CBSA,
+                        DefaultWarningPercentage = tt.DefaultWarningPercentage,
                         IsTestTenant = tt.IsTestTenant,
-
+                        CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -471,8 +474,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EcommerceSupportEmail = tt.EcommerceSupportEmail,
                     CAAT = tt.CAAT,
                     CBSA = tt.CBSA,
+                    DefaultWarningPercentage = tt.DefaultWarningPercentage,
                     IsTestTenant = tt.IsTestTenant,
-
+                    CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -618,8 +622,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
                                            CAAT = a.CAAT,
                                            CBSA = a.CBSA,
+                                           DefaultWarningPercentage = a.DefaultWarningPercentage,
                                            IsTestTenant = a.IsTestTenant,
-
+                                           CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                        }).FirstOrDefault();
 
@@ -765,8 +770,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
                                        CAAT = a.CAAT,
                                        CBSA = a.CBSA,
+                                       DefaultWarningPercentage = a.DefaultWarningPercentage,
                                        IsTestTenant = a.IsTestTenant,
-
+                                       CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                    }).FirstOrDefault();
 
@@ -916,8 +922,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                EcommerceSupportEmail = a.EcommerceSupportEmail,
                                                CAAT = a.CAAT,
                                                CBSA = a.CBSA,
+                                               DefaultWarningPercentage = a.DefaultWarningPercentage,
                                                IsTestTenant = a.IsTestTenant,
-
+                                               CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                            }).FirstOrDefault();
 
@@ -1066,8 +1073,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
                                            CAAT = a.CAAT,
                                            CBSA = a.CBSA,
+                                           DefaultWarningPercentage = a.DefaultWarningPercentage,
                                            IsTestTenant = a.IsTestTenant,
-
+                                           CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                        }).FirstOrDefault();
 
@@ -1208,8 +1216,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
                                        CAAT = a.CAAT,
                                        CBSA = a.CBSA,
+                                       DefaultWarningPercentage = a.DefaultWarningPercentage,
                                        IsTestTenant = a.IsTestTenant,
-
+                                       CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                    }).FirstOrDefault();
                 if (tenant != null)
@@ -1385,8 +1394,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     EcommerceSupportEmail = myPOCO.EcommerceSupportEmail,
                     CAAT = myPOCO.CAAT,
                     CBSA = myPOCO.CBSA,
+                    DefaultWarningPercentage = myPOCO.DefaultWarningPercentage,
                     IsTestTenant = myPOCO.IsTestTenant,
-
+                    CheckDigitControlAlgorithmCode = myPOCO.CheckDigitControlAlgorithmCode,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1517,8 +1527,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 NumberFormatCode = a.NumberFormatCode,
                                                 CAAT = a.CAAT,
                                                 CBSA = a.CBSA,
+                                                DefaultWarningPercentage = a.DefaultWarningPercentage,
                                                 IsTestTenant = a.IsTestTenant,
-
+                                                CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                             };
             return result;

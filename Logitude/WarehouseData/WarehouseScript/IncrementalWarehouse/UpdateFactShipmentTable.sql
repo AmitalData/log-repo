@@ -287,7 +287,7 @@
 
 	 --------------Resolve Custom Field Data Type Code-------------------
             
-			    --@[ResolveCustomFieldDataTypeCode]
+			      --@[ResolveCustomFieldDataTypeCodeVariable]
 
 	 ------------------------------------------------------
 

@@ -12,6 +12,7 @@ import { VersionHistoryTabComponent } from './Components/EditTabs/Tariff/Version
 import { AddEditTariffLineComponent } from './Components/EditTabs/Tariff/AddEditTariffLineComponent';
 import { TariffTabsContentComponent } from './Components/EditTabs/Tariff/TariffTabsContentComponent';
 import { SurchargeVersionTabComponent } from './Components/EditTabs/Tariff/SurchargeVersionTabComponent';
+import { TariffDatesValidationComponent } from './Components/EditTabs/Tariff/TariffDatesValidationComponent';
 
 export const Components =
     [
@@ -27,6 +28,7 @@ export const Components =
         TariffTabsContentComponent,
         SurchargeVersionTabComponent,
         TariffSearchAirFreightPricesComponent,
+        TariffDatesValidationComponent,
     ];
 
 export const ControlsComponents =
@@ -50,7 +52,8 @@ export class ModuleDeclarations {
             case "AddEditTariffLineComponent": { myResult = AddEditTariffLineComponent; break; }
             case "TariffTabsContentComponent": { myResult = TariffTabsContentComponent; break; }
             case "SurchargeVersionTabComponent": { myResult = SurchargeVersionTabComponent; break; }
-            case "TariffSearchAirFreightPricesComponent": { myResult = TariffSearchAirFreightPricesComponent; break; }                
+            case "TariffSearchAirFreightPricesComponent": { myResult = TariffSearchAirFreightPricesComponent; break; }
+            case "TariffDatesValidationComponent": { myResult = TariffDatesValidationComponent; break; }
         }
 
         return myResult;

@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+//import {TariffVersionPM} from './TariffVersionPM';
 import {TariffVersionPM} from './TariffVersionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -284,6 +285,20 @@ export class TariffPM {
     public set Surcharge10UOM(newValue: string) { if (this.surcharge10UOM != newValue) { this.surcharge10UOM = newValue; this.MarkAsDirty("Surcharge10UOM"); } }
        
 	 
+     
+	private activeVersions: TariffVersionPM[];
+    get  ActiveVersions() {
+        if (this.activeVersions == null) {
+            this.activeVersions = [];
+        }
+
+        return this.activeVersions;
+    }
+    set  ActiveVersions(newValue: TariffVersionPM[]) {
+        if (this.activeVersions != newValue) {
+            this.activeVersions = newValue;
+        }
+    }
 
     public OldEntityPM: TariffPM;
 		

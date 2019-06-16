@@ -5,18 +5,18 @@
             <div class="MediaFill">
                 <div class="MediaFillRelative">
 
-                    <div class="MediaFillAbsolute" [hidden]="HasTemplate != true && this.IsSpotLightTemplate != true" style="overflow: hidden;">
-                        <div #Template></div>
+                    <div  class="MediaFillAbsolute" [hidden]="HasTemplate != true && this.IsSpotLightTemplate != true" style="overflow: hidden;">
+                        <div  #Template></div>
                     </div>
 
                     <div class="MediaFillAbsolute" *ngIf="HasTemplate != true && ObjectField">
 
                         <div class="MediaFillRelative" *ngIf="!IsAutoFormat">
 
-                            <div class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="ObjectField.DataTemplateName" title="{{FieldValue}}">{{FieldValue}}</div>
+                            <div   class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="ObjectField.DataTemplateName" title="{{FieldValue}}">{{FieldValue}}</div>
 
                             <div class="MediaFill" *ngIf="!ObjectField.DataTemplateName">
-                                <div class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="!IsHeaderScreenTemplate">{{FieldValue}}</div>
+                                <div  class="TextTrimming" [style.textAlign]="TextAlign" *ngIf="!IsHeaderScreenTemplate">{{FieldValue}}</div>
 
                                 <div class="MediaFill" *ngIf="IsHeaderScreenTemplate">
 

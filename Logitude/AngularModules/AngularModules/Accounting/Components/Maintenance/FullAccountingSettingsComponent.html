@@ -195,6 +195,17 @@
                                                         </td>
                                                     </tr>
 
+                                                    <!-- IsPaymentChequesActivated -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'IsPaymentChequesActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <CheckBox [IsChecked]="IsPaymentChequesActivated" (Checked)="IsPaymentChequesActivated = $event"></CheckBox>
+                                                        </td>
+                                                    </tr>
+
                                                     <!-- AccountingActivationDate -->
                                                     <tr class="FormFieldRow">
                                                         <td style="width: 180px;">
