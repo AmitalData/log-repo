@@ -21,6 +21,7 @@ export class FTPSchedulerDetails {
     public Prefix: string;
     public Extension: string;
     public Suffix: string;
+    public IsSFTP: boolean;
 
 }
 
