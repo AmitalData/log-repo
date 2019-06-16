@@ -184,7 +184,15 @@ export class QuoteMenuButtonsHandler {
                     if (button.EventCode == "Quotation") {
                         button.Width = 70;
 
-                        if ((this.EntityPM.QuoteTypeCode == "P" && SessionLocator.Tenant == 1062) || this.EntityPM.QuoteTypeCode == "A") {
+
+                        var isShowQuotationButton: boolean = false;
+                        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QRR" && d.TenantNumber == SessionLocator.Tenant)[0];
+                        if (featureToggle) {
+                            isShowQuotationButton = true;
+                        }
+
+
+                        if ((this.EntityPM.QuoteTypeCode == "P" && isShowQuotationButton) || this.EntityPM.QuoteTypeCode == "A") {
                             button.IsDisabled = false;
                         }
                         else {
