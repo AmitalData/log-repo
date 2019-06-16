@@ -1144,6 +1144,7 @@ namespace WebFreight.Web.InfrastructureModel
                 PackageCode = signUpInfoClass.PackageCode,
                 CreateTenantFromSignUp = true,
                 TimeZoneOffset = null,
+                CheckDigitControlAlgorithmCode = "NONE",
             };
 
             //DateTime currentdate;

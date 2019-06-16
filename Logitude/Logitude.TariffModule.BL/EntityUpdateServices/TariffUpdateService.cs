@@ -93,19 +93,36 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
             Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
-            
-            if (entityPM.TariffLinesAdded)
-            {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "TLAD",
-                    UserId = contact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = "Tariff",
-                    Notes = changesXml
-                });
-            }
+
+            //if (entityPM.TariffLinesAddedFromExcel)
+            //{
+            //    EventTracer.CreateTraceEvent(new EventTracerArgs()
+            //    {
+            //        Tenant = entityPM.Tenant,
+            //        EventTypeCode = "TUPL",
+            //        UserId = contact.Id,
+            //        EntityId = entityPM.Id,
+            //        ObjectTableName = "Tariff",
+            //        Notes = entityPM.FileUploadedName + " uploaded (" + entityPM.TariffLinesAddedNumbers + " lines)"
+            //    });
+            //}
+
+
+            //if (entityPM.TariffLinesAdded)
+            //{
+            //    EventTracer.CreateTraceEvent(new EventTracerArgs()
+            //    {
+            //        Tenant = entityPM.Tenant,
+            //        EventTypeCode = "TLAD",
+            //        UserId = contact.Id,
+            //        EntityId = entityPM.Id,
+            //        ObjectTableName = "Tariff",
+            //        Notes = "Tariff Lines manually added "+
+            //    });
+            //}
+
+
+
 
             if (entityPM.SetAsInActive)
             {

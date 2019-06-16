@@ -22,8 +22,10 @@ export class DownloadPackagesFileComponent {
     }
 
     private EntityId: string;
-    Download(entityId: string) {
+    private EntityNumber: string;
+    Download(entityId: string, entityNumber: string) {
         this.EntityId = entityId;
+        this.EntityNumber = entityNumber;
         this.IsResourcesReady = true;
         this.Start();
     }
@@ -35,7 +37,7 @@ export class DownloadPackagesFileComponent {
         this.IsDownloadingError = false;
 
         var myDomainService = new ShipmentDomainService();
-        myDomainService.DownloadShipmentPackages(this.EntityId).subscribe((myResponse: ServiceResponse) => {
+        myDomainService.DownloadShipmentPackages(this.EntityNumber, this.EntityId).subscribe((myResponse: ServiceResponse) => {
             this.IsDownloadInProgress = false;
 
             if (myResponse.HasError) {

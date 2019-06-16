@@ -893,6 +893,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
+        public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
 
 
 
@@ -4863,7 +4864,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
             modelBuilder.Configurations.Add(new SchedulerLogsMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
-
+            modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
 
             base.OnModelCreating(modelBuilder);
         }

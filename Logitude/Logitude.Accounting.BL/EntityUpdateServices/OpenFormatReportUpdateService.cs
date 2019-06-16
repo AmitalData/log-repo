@@ -1,5 +1,7 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Resolvers;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
@@ -26,20 +28,43 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             entityPM.Id = IdCounter.GetNumber("OpenFormatReport", entityPM.Tenant);
             entityPM.CreateDate = DateTime.Now;
+            showLocals = SetShowLocalLabels(entityPM);
+            if (entityPM.ToDate > DateTime.Today)
+            {
+                throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.FutureDateNotAllowed", entityPM.Tenant, showLocals));
+            }
             entityPM.CreatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
            entityPM.ToDate = new DateTime(entityPM.ToDate.Year, entityPM.ToDate.Month,  entityPM.ToDate.Day, 23, 59, 59);
-            entityPM.ReportNumber= CodeCounter.GetNumber("OpenFormatReport", entityPM.Tenant).ToString(); ;
+            entityPM.ReportNumber= CodeCounter.GetNumber("OpenFormatReport", entityPM.Tenant).ToString(); 
 
             entityPM.StatusTypeCode = "1";
             entityPM.UpdateDate = DateTime.Now; ;
-         
+          
           
             Validate(entityPM);
 
          
         }
+        bool showLocals;
+        public bool SetShowLocalLabels(OpenFormatReportPM entityPM)
+        {
+            ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
+            showLocals = !contact.DontShowLocal;
+            return showLocals;
+        }
+        public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
+        public static ContactPM GetLoggedContact(int tenant)
+        {
+            if (OverrideGetLoggedContactFunc != null)
+            {
+                return OverrideGetLoggedContactFunc(tenant);
+            }
 
+           
 
+            ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedcontact;
+        }
 
         protected override void AfterUpdating(OpenFormatReportPM entityPM, EntityPM entityParentPM)
         {
