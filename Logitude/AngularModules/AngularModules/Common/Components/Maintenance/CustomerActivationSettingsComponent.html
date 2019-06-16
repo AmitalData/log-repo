@@ -1,4 +1,4 @@
-﻿<style type="text/css">
+<style type="text/css">
     .SystemDefaultsBox {
         width: 100%;
         height: 100%;
@@ -239,6 +239,7 @@
                                                                                 <td><div></div></td>
                                                                             </tr>
 
+                                                                            <!-- IsNumeric -->
                                                                             <tr class="FormFieldRow">
                                                                                 <td>
                                                                                     <LogLabel [ObjectFieldName]="'IsNumeric'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -247,7 +248,7 @@
                                                                                     <table>
                                                                                         <tr>
                                                                                             <td>
-                                                                                                <RadioButton [Name]="'CustomerActivationRadio'" [IsChecked]="IsNumeric" (Checked) = "SetCustomerActivationRadio('N')" [Text]="'Numeric'" [IsEnabled]="IsNumericEnabled"></RadioButton>
+                                                                                                <RadioButton [Name]="'CustomerActivationRadio'" [IsChecked]="IsNumeric" (Checked)="SetCustomerActivationRadio('N')" [Text]="'Numeric'" [IsEnabled]="IsNumericEnabled"></RadioButton>
                                                                                             </td>
 
                                                                                             <td style="width: 5px; min-width: 5px;">
@@ -255,7 +256,7 @@
                                                                                             </td>
 
                                                                                             <td>
-                                                                                                <RadioButton [Name]="'CustomerActivationRadio'" [IsChecked]="IsAlphaNumeric" (Checked) = "SetCustomerActivationRadio('A')" [Text]="'Alpha-Numeric'" [IsEnabled]="IsNumericEnabled"></RadioButton>
+                                                                                                <RadioButton [Name]="'CustomerActivationRadio'" [IsChecked]="IsAlphaNumeric" (Checked)="SetCustomerActivationRadio('A')" [Text]="'Alpha-Numeric'" [IsEnabled]="IsNumericEnabled"></RadioButton>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>
@@ -264,6 +265,7 @@
                                                                                 <td><div></div></td>
                                                                             </tr>
 
+                                                                            <!-- VatSize -->
                                                                             <tr class="FormFieldRow">
                                                                                 <td>
                                                                                     <LogLabel [ObjectFieldName]="'VatSize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -278,6 +280,25 @@
                                                                                 <td><div></div></td>
                                                                             </tr>
 
+                                                                            <!-- CheckDigitControlAlgorithmCode -->
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'CheckDigitControlAlgorithmCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <LogLov [ObjectFieldName]="'CheckDigitControlAlgorithmCode'"
+                                                                                            [ObjectTableName]="'Tenant'"
+                                                                                            [DataContext]="DataContext"
+                                                                                            [LookUpTableName]="'CheckDigitControlAlgorithm'"
+                                                                                            [SelectedValue]="CheckDigitControlAlgorithmCode">
+                                                                                    </LogLov>
+
+                                                                                </td>
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <!-- Mandatory -->
                                                                             <tr class="FormFieldRow">
                                                                                 <td>
                                                                                     <LogLabel [ObjectFieldName]="'VatMandatoryTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>

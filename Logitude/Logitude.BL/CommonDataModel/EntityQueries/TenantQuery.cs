@@ -150,6 +150,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CBSA = a.CBSA,
                                                 DefaultWarningPercentage = a.DefaultWarningPercentage,
                                                 IsTestTenant = a.IsTestTenant,
+                                                CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -309,7 +310,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         CBSA = tt.CBSA,
                         DefaultWarningPercentage = tt.DefaultWarningPercentage,
                         IsTestTenant = tt.IsTestTenant,
-
+                        CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -475,7 +476,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CBSA = tt.CBSA,
                     DefaultWarningPercentage = tt.DefaultWarningPercentage,
                     IsTestTenant = tt.IsTestTenant,
-
+                    CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -623,7 +624,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            CBSA = a.CBSA,
                                            DefaultWarningPercentage = a.DefaultWarningPercentage,
                                            IsTestTenant = a.IsTestTenant,
-
+                                           CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                        }).FirstOrDefault();
 
@@ -771,7 +772,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        CBSA = a.CBSA,
                                        DefaultWarningPercentage = a.DefaultWarningPercentage,
                                        IsTestTenant = a.IsTestTenant,
-
+                                       CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                    }).FirstOrDefault();
 
@@ -923,7 +924,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                CBSA = a.CBSA,
                                                DefaultWarningPercentage = a.DefaultWarningPercentage,
                                                IsTestTenant = a.IsTestTenant,
-
+                                               CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                            }).FirstOrDefault();
 
@@ -1074,7 +1075,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            CBSA = a.CBSA,
                                            DefaultWarningPercentage = a.DefaultWarningPercentage,
                                            IsTestTenant = a.IsTestTenant,
-
+                                           CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                        }).FirstOrDefault();
 
@@ -1217,7 +1218,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        CBSA = a.CBSA,
                                        DefaultWarningPercentage = a.DefaultWarningPercentage,
                                        IsTestTenant = a.IsTestTenant,
-
+                                       CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                    }).FirstOrDefault();
                 if (tenant != null)
@@ -1395,7 +1396,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CBSA = myPOCO.CBSA,
                     DefaultWarningPercentage = myPOCO.DefaultWarningPercentage,
                     IsTestTenant = myPOCO.IsTestTenant,
-
+                    CheckDigitControlAlgorithmCode = myPOCO.CheckDigitControlAlgorithmCode,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1528,7 +1529,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CBSA = a.CBSA,
                                                 DefaultWarningPercentage = a.DefaultWarningPercentage,
                                                 IsTestTenant = a.IsTestTenant,
-
+                                                CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
 
                                             };
             return result;

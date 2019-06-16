@@ -210,6 +210,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         IDbSet<CustomsShipper> CustomsShippers { get; }
         IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set;}
+        IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
 
         void SetAsModified(object entity);
         void DetectChanges();

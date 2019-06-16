@@ -988,6 +988,7 @@
       <DependentUpon>ChampMessaging.aspx</DependentUpon>
     </Compile>
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.AgentSharedManifest.cs" />
+    <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustomerFieldsUpdateSetting.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustomsInterface.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.RegistryDateType.cs" />
@@ -2416,6 +2417,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesExternalAccountsByProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargeTypeAccountingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CheckDigitControlAlgorithmUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CommodityUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CommunicationLogTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CommunicationLogUpdateClass.cs" />

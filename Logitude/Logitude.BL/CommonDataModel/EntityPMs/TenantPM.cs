@@ -377,5 +377,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? DefaultWarningPercentage { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string CheckDigitControlAlgorithmCode { get; set; }
     }
 }
