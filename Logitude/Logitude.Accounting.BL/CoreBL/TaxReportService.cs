@@ -195,10 +195,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
 
-                    if (a.JournalId == "1-808875")
-                    {
-
-                    }
+                   
                     if (a.AccountingEntity == "4")
                     {
 
@@ -244,6 +241,19 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (gLAccountPM.IsEquipmentVendor)
                         {
                             isEquipment = true;
+                        }
+
+                    }
+
+                    if (a.Reference != null) {
+
+
+                        Regex rg = new Regex(@"^[a-zA-Z\s,]*$");
+                        string[] match = rg.Split(a.Reference);
+                        if (match.Count() >0)
+                        {
+
+
                         }
 
                     }
