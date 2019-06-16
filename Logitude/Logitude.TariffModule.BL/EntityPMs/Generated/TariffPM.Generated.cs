@@ -1123,7 +1123,76 @@ namespace Logitude.TariffModule.BL.EntityPMs
               }
              set {  deletedActiveVersions = value; }
 	    }
-	     }
+	  	  private int tariffLinesAddedNumbers ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int TariffLinesAddedNumbers  
+	   {
+	    
+	     get
+		{
+		   return tariffLinesAddedNumbers;
+		 }
+		 set
+		 {
+		   if(tariffLinesAddedNumbers != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffLinesAddedNumbers",OldValue=tariffLinesAddedNumbers,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tariffLinesAddedNumbers=value;
+		   }
+			
+		 }
+	   }
+	  private bool tariffLinesAddedFromExcel ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool TariffLinesAddedFromExcel  
+	   {
+	    
+	     get
+		{
+		   return tariffLinesAddedFromExcel;
+		 }
+		 set
+		 {
+		   if(tariffLinesAddedFromExcel != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffLinesAddedFromExcel",OldValue=tariffLinesAddedFromExcel,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   tariffLinesAddedFromExcel=value;
+		   }
+			
+		 }
+	   }
+	  private string fileUploadedName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FileUploadedName  
+	   {
+	    
+	     get
+		{
+		   return fileUploadedName;
+		 }
+		 set
+		 {
+		   if(fileUploadedName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileUploadedName",OldValue=fileUploadedName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fileUploadedName=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

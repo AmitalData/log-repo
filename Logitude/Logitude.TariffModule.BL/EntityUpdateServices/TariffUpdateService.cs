@@ -93,19 +93,33 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
             Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
-            
+
+
+
             if (entityPM.TariffLinesAdded)
             {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                TariffVersionPM tariffVersion = entityPM.TariffVersions.Where(p => p.IsDraft).FirstOrDefault();
+                if (tariffVersion != null)
                 {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "TLAD",
-                    UserId = contact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = "Tariff",
-                    Notes = changesXml
-                });
+                    int count = tariffVersion.TariffLines.Where(a => a.AddedManually == true).Count();
+                    if (count > 0)
+                    {
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            Tenant = entityPM.Tenant,
+                            EventTypeCode = "TLAD",
+                            UserId = contact.Id,
+                            EntityId = entityPM.Id,
+                            ObjectTableName = "Tariff",
+                            Notes = "Tariff Lines manually added (" + count + " lines)"
+                        });
+                    }
+                }
+               
             }
+
+
+
 
             if (entityPM.SetAsInActive)
             {

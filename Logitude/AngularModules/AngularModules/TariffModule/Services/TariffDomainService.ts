@@ -247,7 +247,8 @@ export class TariffFilterParameter {
     PriceSteps: string;
     TariffId: string;
     Version: number;
-    TariffType: string
+    TariffType: string;
+    FileName: string;
 }
 
 
@@ -317,4 +318,5 @@ export class ExcelTariffLines {
     Surcharge10PriceText: string;
     Index: number;
     Notes: string;
+    IsUploaded: boolean;
 }
