@@ -14,6 +14,7 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string EnableAzureRootFolder = "EZR";  
        public const string LogBoxExport = "LEX";  
        public const string UnicargoReportToggle = "URT";  
+       public const string BuildDocumentReportService = "BDR";  
     }
 }
 

@@ -47,11 +47,12 @@ namespace WebFreight.Web.App_Code
         // GET api/<controller>/5
 
 
-        public HttpResponseMessage GetDocumentPdfFile(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId , string userId)
+        public HttpResponseMessage GetDocumentPdfFile(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId)
         {
             ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
             try
             {
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -61,9 +62,18 @@ namespace WebFreight.Web.App_Code
                     throw new Exception("Sorry you’re not authenticated");
                 }
 
+                string result = "";
 
-                var reslut = exportDocumentHelper.ExportDocument2Pdf(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
-                return Request.CreateResponse(HttpStatusCode.OK, reslut);
+                if (!exportDocumentHelper.IsCallBuildDocumentReportWebService(authToken.Tenant))
+                {
+                    result = exportDocumentHelper.ExportDocument2Pdf(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId,false);
+                }
+                else
+                {
+                    result = exportDocumentHelper.ExportDocument2PdfViewWebService(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId, exportDocumentHelper, token);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -72,6 +82,7 @@ namespace WebFreight.Web.App_Code
             }
         }
 
+ 
         public HttpResponseMessage GetDownloadFileFromServer(string documentId, int tenant)
         {
             List<object> htmlResult = new List<object>();
@@ -85,11 +96,11 @@ namespace WebFreight.Web.App_Code
                 {
                     throw new Exception("Sorry you’re not authenticated");
                 }
-                
-                    ExportDocumentHelper ExportDocumentHelper = new ExportDocumentHelper();
-                    HtmlEditorHelper htmlEditorHelper = new Helpers.HtmlEditorHelper();
-                    htmlResult = ExportDocumentHelper.GetDownloadFileFromServer(documentId, tenant);
-                
+
+                ExportDocumentHelper ExportDocumentHelper = new ExportDocumentHelper();
+                HtmlEditorHelper htmlEditorHelper = new Helpers.HtmlEditorHelper();
+                htmlResult = ExportDocumentHelper.GetDownloadFileFromServer(documentId, tenant);
+
                 return Request.CreateResponse(HttpStatusCode.OK, htmlResult);
             }
 
@@ -112,7 +123,7 @@ namespace WebFreight.Web.App_Code
                 string reslutXml = "<?xml version='1.0' encoding='utf-8' standalone='yes'?> <StiSerializer version='1.02' type='Silverlight' application='Editable Fields of Rendered Report'>   <Items isList='true' count='0' /> </StiSerializer>  ";
 
                 System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-                Byte[]  bytedata = enc.GetBytes(reslutXml);
+                Byte[] bytedata = enc.GetBytes(reslutXml);
                 documentOut.EditableFields = bytedata;
                 documentOutRepository.Update(documentOut);
                 documentOutRepository.SubmitChanges();
@@ -149,9 +160,9 @@ namespace WebFreight.Web.App_Code
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                if(filter.Tenant != authToken.Tenant)
+                if (filter.Tenant != authToken.Tenant)
                 {
-                   throw new Exception("Sorry you’re not authenticated");
+                    throw new Exception("Sorry you’re not authenticated");
                 }
 
                 long theT1 = new long();
@@ -180,7 +191,7 @@ namespace WebFreight.Web.App_Code
                 ReportKey = filter.ReportKey;
                 IsDisplayOnly = filter.IsDisplayOnly;
                 PageNumber = filter.PageNumber;
-               
+
                 DocumentOutRepository documentOutRepository = new DocumentOutRepository(filter.Tenant);
                 DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(filter.CurrentDocumentOutId, filter.Tenant);
 
@@ -189,12 +200,12 @@ namespace WebFreight.Web.App_Code
 
                     Byte[] templatedata = null;
                     DocumentTypeRepository repository = new DocumentTypeRepository(filter.Tenant);
-                  
+
                     DocumentRepository docRepository = new DocumentRepository(filter.Tenant);
                     DocumentTypeCopyRepository documentTypeCopyRep = new DocumentTypeCopyRepository(filter.Tenant);
                     DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(filter.Tenant);
                     DocumentOutCopyRepository documentOutCopyRep = new DocumentOutCopyRepository(filter.Tenant);
-                   
+
                     DocumentTypeTemplate template = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(filter.DocumentTypeTemplateId);
 
                     DocumentTypeCopy documentTypeCopy = documentTypeCopyRep.GetSingleDocumentTypeCopy(filter.DocumentTypeCopyId);
@@ -209,9 +220,8 @@ namespace WebFreight.Web.App_Code
                     {
                         if (templatedata.Length != 0)
                         {
-                            StiReport report = new StiReport();
 
-                            report = exportDocumentHelper.GetReportDocument(documentType, filter.EntityId, filter.ObjectTableId, filter.ChildEntityId, filter.ChildObjectTableId, documentTypeCopy, report, templatedata, template, filter.Tenant, theT1, theT2, theA1, theA2, filter.LoggedContactId);
+                            StiReport report = exportDocumentHelper.GetReportDocument(documentType, filter.EntityId, filter.ObjectTableId, filter.ChildEntityId, filter.ChildObjectTableId, documentTypeCopy, templatedata, template, filter.Tenant, theT1, theT2, theA1, theA2, filter.LoggedContactId);
 
                             string mdc = report.SaveDocumentToString();
 
@@ -262,7 +272,7 @@ namespace WebFreight.Web.App_Code
 
         }
 
-        private List<EditableFieldPosition> BulidEditableFieldPositionList(bool isDisplayOnly, List<string> result ,string reportKey , int pagenumber)
+        private List<EditableFieldPosition> BulidEditableFieldPositionList(bool isDisplayOnly, List<string> result, string reportKey, int pagenumber)
         {
 
             List<EditableFieldPosition> editableFieldPositionList = new List<EditableFieldPosition>();
@@ -289,7 +299,7 @@ namespace WebFreight.Web.App_Code
 
                     XmlNodeList childFieldNodes = null;
 
-     
+
 
                     if (!string.IsNullOrEmpty(editablefield))
                     {
@@ -299,8 +309,8 @@ namespace WebFreight.Web.App_Code
                             XmlDataDocument messageFieldDoc = new XmlDataDocument();
                             messageFieldDoc.Load(readerfield);
                             XmlNodeList ItemsFieldList = messageFieldDoc.GetElementsByTagName("Items");
-                            if (ItemsFieldList != null  && ItemsFieldList.Count>0 ) childFieldNodes = ItemsFieldList[0].ChildNodes;
-                       
+                            if (ItemsFieldList != null && ItemsFieldList.Count > 0) childFieldNodes = ItemsFieldList[0].ChildNodes;
+
                         }
                         catch (Exception ex)
                         {
@@ -309,7 +319,7 @@ namespace WebFreight.Web.App_Code
 
                     }
 
-                    int  numberOfEditedField = 0;
+                    int numberOfEditedField = 0;
 
                     editableFieldPositionList = GetEditableFieldPosition(xmal, reportunit, childFieldNodes, pagenumber, ref numberOfEditedField);
 
@@ -320,16 +330,16 @@ namespace WebFreight.Web.App_Code
                         editableFieldPositionList.Add(new EditableFieldPosition() { FieldName = "Image", FieldValue = result[0], PageCount = PageCount, ReportKey = reportKey });
                     }
                 }
-                
+
             }
             return editableFieldPositionList;
         }
 
         private List<string> GetReportAsImageFromStorage(string reportKey, int tenant, int pagenumber, DocumentOut documentOut)
         {
-         
+
             List<string> results = new List<string>();
-           
+
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
 
             BlobFileInfo fileInfo = GetNewBlobFileInfo(reportKey, tenant);
@@ -362,10 +372,10 @@ namespace WebFreight.Web.App_Code
         private string ResolveSpecialCharacters(string editableFields)
         {
             editableFields = editableFields.Replace("<", "&lt;");
-            editableFields = editableFields.Replace(">" , "&gt;");
-            editableFields = editableFields.Replace("\"" , "&quot;");
-            editableFields = editableFields.Replace("\'" , "&apos;");
-            editableFields = editableFields.Replace("&" , "&amp;");
+            editableFields = editableFields.Replace(">", "&gt;");
+            editableFields = editableFields.Replace("\"", "&quot;");
+            editableFields = editableFields.Replace("\'", "&apos;");
+            editableFields = editableFields.Replace("&", "&amp;");
             return editableFields;
         }
 
@@ -380,7 +390,7 @@ namespace WebFreight.Web.App_Code
             {
 
                 editableFields = System.Text.Encoding.UTF8.GetString(documentOut.EditableFields);
-               // if (!string.IsNullOrEmpty(editableFields)) editableFields = ResolveSpecialCharacters(editableFields);
+                // if (!string.IsNullOrEmpty(editableFields)) editableFields = ResolveSpecialCharacters(editableFields);
 
                 Stream editableFieldsStream;
                 using (editableFieldsStream = new MemoryStream())
@@ -401,7 +411,7 @@ namespace WebFreight.Web.App_Code
 
 
             PageCount = stiReport.RenderedPages.Count;
-        
+
             string base64String = System.Convert.ToBase64String(memoryStream.ToArray(), 0, memoryStream.ToArray().Length);
 
             string uri = "data:image/jpg;base64," + base64String;
@@ -415,17 +425,17 @@ namespace WebFreight.Web.App_Code
 
 
 
-        private List<EditableFieldPosition> GetEditableFieldPosition(string xmal, string reportUnit, XmlNodeList childFieldNodes, int pagenumber ,ref int numberOfEditedField)
+        private List<EditableFieldPosition> GetEditableFieldPosition(string xmal, string reportUnit, XmlNodeList childFieldNodes, int pagenumber, ref int numberOfEditedField)
         {
-            double pageWidth  = 0;
+            double pageWidth = 0;
             double pageHeight = 0;
             double margeleft = 0;
             double margeRight = 0;
             XmlNode componentXmlNode = null;
-    
+
             EditableFieldPosition editableFieldPosition;
 
-        
+
             List<EditableFieldPosition> editableFieldPositionLists = new List<EditableFieldPosition>();
             if (!string.IsNullOrEmpty(xmal))
             {
@@ -433,11 +443,11 @@ namespace WebFreight.Web.App_Code
                 XmlDataDocument messageDoc = new XmlDataDocument();
                 messageDoc.Load(reader);
 
-                GetPropertiesValueFromXmlDataDocumen(pagenumber, messageDoc,  ref pageWidth , ref pageHeight , ref margeleft ,ref margeRight, ref componentXmlNode);  
-      
+                GetPropertiesValueFromXmlDataDocumen(pagenumber, messageDoc, ref pageWidth, ref pageHeight, ref margeleft, ref margeRight, ref componentXmlNode);
+
                 if (componentXmlNode != null)
                 {
-                    List<XmlNode> childNodes = (new System.Collections.Generic.List<XmlNode>(Shim<XmlNode>(componentXmlNode.ChildNodes))).Where(d => d.Attributes["ed"]!=null || (d.Attributes["type"] != null && d.Attributes["type"].Value!=null && d.Attributes["type"].Value.ToLower() == "checkbox")).ToList();
+                    List<XmlNode> childNodes = (new System.Collections.Generic.List<XmlNode>(Shim<XmlNode>(componentXmlNode.ChildNodes))).Where(d => d.Attributes["ed"] != null || (d.Attributes["type"] != null && d.Attributes["type"].Value != null && d.Attributes["type"].Value.ToLower() == "checkbox")).ToList();
                     foreach (XmlNode item in childNodes)
                     {
                         bool isEditable = false;
@@ -467,7 +477,7 @@ namespace WebFreight.Web.App_Code
 
                         if (ed != null || (controltype == "checkbox" && isEditable))
                         {
-                    
+
 
 
                             string fontFamily = "Arial";
@@ -488,7 +498,7 @@ namespace WebFreight.Web.App_Code
                             string oldValue = "";
                             int fieldPosition = 1;
                             bool isEditedField = false;
-                           
+
                             string[] recInfo = new string[] { "0", "0", "0", "0" };
                             string[] fontInfo = new string[] { "Arial", "17", "" };
 
@@ -501,8 +511,8 @@ namespace WebFreight.Web.App_Code
                             else if (controltype == "checkbox")
                             {
                                 fieldValue = "false";
-                  
-                                List<XmlNode> itemchildNodes = (new System.Collections.Generic.List<XmlNode>(Shim<XmlNode>(item.ChildNodes))).Where(d =>d.Name == "ClientRectangle" || d.Name == "Name").ToList();
+
+                                List<XmlNode> itemchildNodes = (new System.Collections.Generic.List<XmlNode>(Shim<XmlNode>(item.ChildNodes))).Where(d => d.Name == "ClientRectangle" || d.Name == "Name").ToList();
                                 foreach (XmlNode node in itemchildNodes)
                                 {
                                     if (node.Name == "ClientRectangle") recInfo = node.InnerText != null ? node.InnerText.Split(',') : recInfo;
@@ -517,7 +527,7 @@ namespace WebFreight.Web.App_Code
                             }
 
 
-                          EditableFieldPosition editableField = editableFieldPositionLists.Where(d => d.FieldName == fieldName && d.PageFieldIndex == (PageNumber - 1)).FirstOrDefault();
+                            EditableFieldPosition editableField = editableFieldPositionLists.Where(d => d.FieldName == fieldName && d.PageFieldIndex == (PageNumber - 1)).FirstOrDefault();
                             if (editableField != null)
                             {
                                 fieldPosition = editableFieldPositionLists.Where(d => d.FieldName == fieldName && d.PageFieldIndex == (PageNumber - 1)).Count() + 1;
@@ -542,36 +552,36 @@ namespace WebFreight.Web.App_Code
                                 }
                             }
 
-                                // Rec Info Postion
+                            // Rec Info Postion
 
 
-                                if (controltype == "text")
+                            if (controltype == "text")
+                            {
+
+                                if (item.Attributes["rc"] != null)
                                 {
+                                    recInfo = !string.IsNullOrEmpty(item.Attributes["rc"].Value) ? item.Attributes["rc"].Value.Split(',') : recInfo;
+                                }
 
-                                    if (item.Attributes["rc"] != null)
-                                    {
-                                        recInfo = !string.IsNullOrEmpty(item.Attributes["rc"].Value) ? item.Attributes["rc"].Value.Split(',') : recInfo;
-                                    }
+                                // Font Info
 
-                                    // Font Info
+                                if (item.Attributes["fn"] != null)
+                                {
+                                    fontInfo = !string.IsNullOrEmpty(item.Attributes["fn"].Value) ? item.Attributes["fn"].Value.Split(',') : fontInfo;
+                                }
 
-                                    if (item.Attributes["fn"] != null)
-                                    {
-                                        fontInfo = !string.IsNullOrEmpty(item.Attributes["fn"].Value) ? item.Attributes["fn"].Value.Split(',') : fontInfo;
-                                    }
-
-                                    if (fontInfo.Length > 0) fontFamily = !string.IsNullOrEmpty(fontInfo[0]) ? fontInfo[0] : "Arial";
-                                    if (fontInfo.Length > 1) fontSize = !string.IsNullOrEmpty(fontInfo[1]) ? ConvertFromPointToPixel(Double.Parse(fontInfo[1])) : 17;
-                                    if (fontInfo.Length > 2) fontweight = !string.IsNullOrEmpty(fontInfo[2]) ? fontInfo[2] : "";
+                                if (fontInfo.Length > 0) fontFamily = !string.IsNullOrEmpty(fontInfo[0]) ? fontInfo[0] : "Arial";
+                                if (fontInfo.Length > 1) fontSize = !string.IsNullOrEmpty(fontInfo[1]) ? ConvertFromPointToPixel(Double.Parse(fontInfo[1])) : 17;
+                                if (fontInfo.Length > 2) fontweight = !string.IsNullOrEmpty(fontInfo[2]) ? fontInfo[2] : "";
 
 
-                                    //RightToLeft
-                                    if (item.Attributes["RightToLeft"] != null)
-                                    {
-                                        string RTL = item.Attributes["RightToLeft"].Value;
-                                        floatText = !string.IsNullOrEmpty(RTL) ? RTL.ToLower() == "true" ? "right" : "left" : "left";
+                                //RightToLeft
+                                if (item.Attributes["RightToLeft"] != null)
+                                {
+                                    string RTL = item.Attributes["RightToLeft"].Value;
+                                    floatText = !string.IsNullOrEmpty(RTL) ? RTL.ToLower() == "true" ? "right" : "left" : "left";
 
-                                    }
+                                }
 
 
                                 //Text Color
@@ -589,21 +599,21 @@ namespace WebFreight.Web.App_Code
                                 }
 
 
-                                    //Text Align
-                                    if (item.Attributes["ha"] != null)
-                                    {
-                                        textAligh = !string.IsNullOrEmpty(item.Attributes["ha"].Value) ? item.Attributes["ha"].Value : "left";
-                                    }
-
-
-                                    //Vertical Align
-                                    if (item.Attributes["va"] != null)
-                                    {
-                                        verticalAlign = !string.IsNullOrEmpty(item.Attributes["va"].Value) ? item.Attributes["va"].Value : "top";
-                                    }
-
+                                //Text Align
+                                if (item.Attributes["ha"] != null)
+                                {
+                                    textAligh = !string.IsNullOrEmpty(item.Attributes["ha"].Value) ? item.Attributes["ha"].Value : "left";
                                 }
-                              
+
+
+                                //Vertical Align
+                                if (item.Attributes["va"] != null)
+                                {
+                                    verticalAlign = !string.IsNullOrEmpty(item.Attributes["va"].Value) ? item.Attributes["va"].Value : "top";
+                                }
+
+                            }
+
 
 
 
@@ -672,12 +682,12 @@ namespace WebFreight.Web.App_Code
 
                             editableFieldPositionLists.Add(editableFieldPosition);
                         }
-                   
-                       
+
+
 
                     }
                 }
-           
+
             }
             return editableFieldPositionLists;
 
@@ -692,10 +702,10 @@ namespace WebFreight.Web.App_Code
                 yield return (T)current;
             }
         }
-        private  void GetPropertiesValueFromXmlDataDocumen(int pageNumber, XmlDataDocument messageDoc, ref double pageWidth, ref double pageHeight, ref double margeleft, ref double margeRight, ref XmlNode componentXmlNode )
+        private void GetPropertiesValueFromXmlDataDocumen(int pageNumber, XmlDataDocument messageDoc, ref double pageWidth, ref double pageHeight, ref double margeleft, ref double margeRight, ref XmlNode componentXmlNode)
         {
             int pageIndex = pageNumber - 1;
-               
+
             List<string> types = new List<string>() { "Margins", "PageWidth", "PageHeight", "Components" };
             foreach (string type in types)
             {
@@ -737,8 +747,8 @@ namespace WebFreight.Web.App_Code
 
 
 
-           
-     
+
+
 
 
 
@@ -764,11 +774,11 @@ namespace WebFreight.Web.App_Code
                 return "#" + hex;
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return "";
             }
-         
+
         }
 
 
@@ -787,7 +797,7 @@ namespace WebFreight.Web.App_Code
                     string result = GetUsedSpaceAndUnit((int?)usedSpace);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
-             else throw new Exception("Sorry you’re not authenticated to view system info.");
+                else throw new Exception("Sorry you’re not authenticated to view system info.");
             }
             catch (Exception ex)
             {
@@ -829,7 +839,7 @@ namespace WebFreight.Web.App_Code
             return FileSize;
         }
 
-        private double   ConvertFromPointToPixel(double points)
+        private double ConvertFromPointToPixel(double points)
         {
             points = points * 2;
             double pixels = points / 0.75;
