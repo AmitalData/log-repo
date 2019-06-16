@@ -55,6 +55,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Build Document Report Service", 
                 SearchFields = "BDR,Build Document Report Service", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "QuotationRoutingRatesQuotes", 
+                Code = "QRR", 
+                SearchFields = "QRR,QuotationRoutingRatesQuotes", 
+			});
 			
             return all;
        }
