@@ -23,6 +23,9 @@ import {TariffVersionPM} from '../../EntityPMs/TariffVersionPM';
 
 import {TariffLinePM} from '../../EntityPMs/TariffLinePM';
 import {TariffPMInitService} from '../../EntityPMInitServices/TariffPMInitService';
+import { TariffValidator } from '../../Validators/TariffValidator';
+
+
 
 @Injectable()
 
@@ -83,7 +86,11 @@ export class TariffPMService {
                 validator = new ClassLevelValidator();
                  
                 var errorsArray = validator.Validate("Tariff", entityPM);
-                 
+            var customValidator: TariffValidator = new TariffValidator();
+            var validationErrorsArr = customValidator.Validate(entityPM);
+            if (validationErrorsArr) {
+                errorsArray = errorsArray.concat(validationErrorsArr);
+            }
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -138,7 +145,11 @@ export class TariffPMService {
                 validator = new ClassLevelValidator();
                
                 var errorsArray = validator.Validate("Tariff", entityPM);
-                 
+                var customValidator: TariffValidator = new TariffValidator();
+                var validationErrorsArr = customValidator.Validate(entityPM);
+                if (validationErrorsArr) {
+                    errorsArray = errorsArray.concat(validationErrorsArr);
+                }
 
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
