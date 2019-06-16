@@ -40,7 +40,7 @@ namespace WebFreight.Web.WebServices
                 buildDocumentParameterxml = buildDocumentParameterxml.Replace("@TagOpen", "<");
                 BuildDocumentParameter buildDocumentParameter = LogitudeXmlSerializer.DeserializeObject<BuildDocumentParameter>(buildDocumentParameterxml);
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                stiReport = exportDocumentHelper.BuildReport(buildDocumentParameter.DocumentTypeCode, buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DefaulttemplateId, tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
+                stiReport = exportDocumentHelper.BuildReport(buildDocumentParameter.DocumentTypeCode, buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DefaulttemplateId, authToken.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
 
             }
 

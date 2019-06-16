@@ -49,7 +49,7 @@ namespace WebFreight.Web.App_Code
 
         public HttpResponseMessage GetDocumentPdfFile(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId)
         {
-            ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+         
             try
             {
 
@@ -63,14 +63,14 @@ namespace WebFreight.Web.App_Code
                 }
 
                 string result = "";
-
+                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                 if (!exportDocumentHelper.IsCallBuildDocumentReportWebService(authToken.Tenant))
                 {
                     result = exportDocumentHelper.ExportDocument2Pdf(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId,false);
                 }
                 else
                 {
-                    result = exportDocumentHelper.ExportDocument2PdfViewWebService(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId, exportDocumentHelper, token);
+                    result = exportDocumentHelper.ExportDocument2PdfViewWebService(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId, token);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
