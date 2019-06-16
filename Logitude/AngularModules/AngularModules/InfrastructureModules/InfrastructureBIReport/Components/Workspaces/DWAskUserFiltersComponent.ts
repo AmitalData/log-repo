@@ -130,7 +130,6 @@ export class DWAskUserFiltersComponent implements OnInit {
             if (!myResult.HasError) {
                 this.rowData = this.rowData.concat(myResult.Result.SQLDataResult);
                 this.PageIndex = this.PageIndex + 1000;
-                this.LoadingMsg = "Loading " + this.count;
                 var dataSize = myResult.Result.SQLDataResult.length;
                 if (dataSize == 0) {
                     this.CurrentSession.StopBusyIndicator();
@@ -139,6 +138,7 @@ export class DWAskUserFiltersComponent implements OnInit {
                 else {
                     this.count = this.count + dataSize;
                     this.LoadingMsg = "Loading " + this.count;
+                    this.CurrentSession.StartBusyIndicator("Loading " + this.count + " from 10000");
                     if (this.count == this.totalDataLoaded) {
                         this.PageIndex = this.PageIndex + 1;
                         this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
@@ -155,6 +155,10 @@ export class DWAskUserFiltersComponent implements OnInit {
                         this.GetRowDataRecursive();
                     }
                 }
+
+
+                
+
             }
             else {
                 this.CurrentSession.StopBusyIndicator();
