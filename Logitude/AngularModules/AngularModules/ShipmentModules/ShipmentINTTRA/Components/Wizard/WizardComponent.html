@@ -271,7 +271,12 @@
                     <td style="width: 57px;" *ngIf="SimulatorIsVisible">
                         <button class="Button" (click)="SimulateClicked()">Simulate</button>
                     </td>
-
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                    <td  style="width: 57px;" *ngIf="SimulatorBookingIsVisible">
+                        <button class="Button" (click)="SendBookingClicked()"> Send e-booking </button>
+                    </td>
                     <td>
                         <div></div>
                     </td>
