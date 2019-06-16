@@ -183,11 +183,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public static ContactPM GetLoggedContact(int tenant)
         {
             if (OverrideGetLoggedContactFunc != null)
-            {
                 return OverrideGetLoggedContactFunc(tenant);
-            }
-            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
-            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
 
             ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
@@ -196,13 +192,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Validate(ReconcileExternalPagePM entityPM)
         {
-            //var validContext = AccountingValidationContextServiceProvider.NewReconcileExternalPageValidatorContext((MainContext as IAccountingContext), entityPM);
-            //ValidationResult result = ReconcileExternalPageValidator.IsReconcileExternalPageValid(entityPM, validContext);
-            //if (result != null)
-            //{
-            //    throw new ApplicationException(result.ErrorMessage);
-            //}
-
             if (entityPM.StatusCode != "1") // 1- Draft
             {
 
@@ -257,7 +246,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         foreach (ReconcileExternalPageLinePM line in entityPM.ReconcileExternalPageLines)
                         {
-                            sum += line.Amount;
+                            sum += line.DebitAmount;
+                            sum -= line.CreditAmount;
                         }
                     }
                     if (sum != entityPM.CloseBalance)
@@ -282,8 +272,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
 
-            base.Validate(entityPM);
+            // credit and debit
+            CheckCreditAndDebitFieldForLines(entityPM);
+
         }
-        
+
+        private static void CheckCreditAndDebitFieldForLines(ReconcileExternalPagePM entityPM)
+        {
+            foreach (ReconcileExternalPageLinePM line in entityPM.ReconcileExternalPageLines)
+            {
+                if (line.CreditAmount != 0 && line.DebitAmount != 0)
+                {
+                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                    string msg = TextCodesTranslator.TranslateText("ReconcileExternalPage.O.NoCreditAndDebit", entityPM.Tenant, showLocal);
+                    msg = msg.Replace("#lineNo", line.ToString());
+                    throw new ApplicationException(msg);
+                }
+
+            }
+        }
     }
 }
