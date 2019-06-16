@@ -1238,12 +1238,19 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public TooltipId: string = null;
     public TooltipContentId: string = null;
     private CurrentSession = SessionLocator.SelectedSession;
+    public FilterTypes: ObjectFieldOperator[];
     constructor(DWObjectField: any = null, ParentClass: DWQueryBuilderComponent = null) {
         super();
         var idIndex = this.CurrentSession.GetNewId("Tooltip");
         this.TooltipId = "Tooltip_" + idIndex;
         this.TooltipContentId = "TooltipContent_" + idIndex;
         this.BaseDWObjectField = DWObjectField;
+
+        this.FilterTypes = [];
+        this.FilterTypes.push(new ObjectFieldOperator("Fixed Filter", "Fixed Filter"));
+        this.FilterTypes.push(new ObjectFieldOperator("Ask User", "Dynamic Filter"));
+        this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
+
         if (ParentClass != null) {
             this.MyParentClass = ParentClass;
             this.IndexOrder = ParentClass.SelectedFieldsDataSource.length;
@@ -1481,7 +1488,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
     }
 
-    private textValue: any = (this.dataTypeCode == "Boolean") ? false : null;
+    private textValue: any = false;
     public get TextValue() {
         return this.textValue;
     }
@@ -1612,7 +1619,22 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public get FilterType() { return this.filterType; }
     public set FilterType(newValue: string) { this.filterType = newValue; }
 
-    private isSetDefaults: boolean = false;
+
+
+    private filterTypeSelected: ObjectFieldOperator;
+    public get FilterTypeSelected() { return this.filterTypeSelected; }
+    public set FilterTypeSelected(newValue: ObjectFieldOperator) {
+
+        this.filterTypeSelected = newValue;
+        if (this.filterTypeSelected) {
+            this.FilterType = this.filterTypeSelected.Code;
+        }
+    }
+
+
+
+
+    private isSetDefaults: boolean = true;
     public get IsSetDefaults() { return this.isSetDefaults; }
     public set IsSetDefaults(newValue: boolean) {
         if (this.isSetDefaults != newValue) {
@@ -1629,7 +1651,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
 
     FilterTypeChanged(Value) {
-        this.FilterType = Value;
+       
+        this.FilterTypeSelected = Value;
+        if (this.FilterTypeSelected) {
+            this.FilterType = this.FilterTypeSelected.Code;
+        }
     }
 
     OpenFilterSettings() {
@@ -1643,7 +1669,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 500;
         logWindow.Height = 260;
-        logWindow.Title = "Ask User Settings";
+        logWindow.Title = "Dynamic Filter Settings";
         logWindow.Show('./CommonModules/CommonOthers/Components/DWQueryBuilder/DWFilterSettings');
         logWindow.WindowClosed.subscribe(($event: string) => {
             if ($event) {
