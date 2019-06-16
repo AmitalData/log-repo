@@ -28,7 +28,7 @@ namespace WebFreight.Web.WebServices
         public string BuildDocumentReport(string buildDocumentParameterxml)
         {
 
-           
+
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -44,25 +44,25 @@ namespace WebFreight.Web.WebServices
 
             }
 
-         string result = stiReport.SaveDocumentToString();
+            string result = stiReport.SaveDocumentToString();
             return result;
 
         }
 
         [WebMethod]
-        public string ExportDocument2Pdf(string buildDocumentParameterxml)
+        public string ExportDocument2Pdf(string exportDocument2PdfParameterxml)
         {
             string result = "";
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-            if (!string.IsNullOrEmpty(buildDocumentParameterxml))
+            if (!string.IsNullOrEmpty(exportDocument2PdfParameterxml))
             {
-                buildDocumentParameterxml = buildDocumentParameterxml.Replace("@TagOpen", "<");
-                BuildDocumentParameter buildDocumentParameter = LogitudeXmlSerializer.DeserializeObject<BuildDocumentParameter>(buildDocumentParameterxml);
+                exportDocument2PdfParameterxml = exportDocument2PdfParameterxml.Replace("@TagOpen", "<");
+                BuildDocumentParameter buildDocumentParameter = LogitudeXmlSerializer.DeserializeObject<BuildDocumentParameter>(exportDocument2PdfParameterxml);
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                result = exportDocumentHelper.ExportDocument2Pdf( buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DocumentOutId, authToken.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
+                result = exportDocumentHelper.ExportDocument2Pdf(buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DocumentOutId, authToken.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId,false);
 
             }
 
@@ -70,6 +70,6 @@ namespace WebFreight.Web.WebServices
 
         }
 
-        
+
     }
 }
