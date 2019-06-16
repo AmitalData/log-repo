@@ -8,11 +8,15 @@ export class TariffValidator {
     private chargesTypePMService: ChargesTypeListService;
 
     public Validate(entityPM: any) {
-        this.chargesTypePMService = new ChargesTypeListService();
-        this.FillChargesIDsAndUOMS();
         var error: any = [];
-        error = this.ValidateSurcharge(entityPM);        
+
+        if (entityPM.TypeCode == "ASC") {
+            this.chargesTypePMService = new ChargesTypeListService();
+            this.FillChargesIDsAndUOMS();
+            error = this.ValidateSurcharge(entityPM);
+        }
         return error;
+
     }
 
 
