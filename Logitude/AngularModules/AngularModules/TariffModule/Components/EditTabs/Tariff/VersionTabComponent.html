@@ -102,6 +102,7 @@
                                     <div *ngIf="IsDraftVersion">
                                         <input class="upload" style="display: none;width:65px"
                                                type="file" (change)="OnFileChanged($event)"
+                                               (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
                                                #fileInput>
                                         <a href="#" style="text-decoration:none">
                                             <button (click)="fileInput.click()">Upload Excel</button>

@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy}  from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef}  from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {APPaymentPM} from '../../../../Invoice/EntityPMs/APPaymentPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -30,6 +30,8 @@ import {AccountingPaymentMethodListService} from '../../../../Invoice/Services/S
 import {GLAccountWithholdingTaxExtendedPMService, GLAccountingWithholdingItem} from  '../../../../Accounting/Services/Others/GLAccountWithholdingTaxExtendedService';
 import {BankAccountPMService} from '../../../../Accounting/Services/StandardPMs/BankAccountPMService';
 import {BankAccountPM} from  '../../../../Accounting/EntityPMs/BankAccountPM';
+import {FullAccountingSettingPM} from '../../../../Accounting/EntityPMs/FullAccountingSettingPM';
+import { FullAccountingSettingPMService } from '../../../../Accounting/Services/StandardPMs/FullAccountingSettingPMService';
 
 @Component({
     moduleId: module.id,
@@ -48,11 +50,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public isRTL: boolean = false;
     public IsFullAccounting: boolean = false;
     public IsNoVendorTax: boolean = false;
-
+    public PaymentChequeActivated: boolean = true;
     public IsMultiCurrency: boolean = false;
     public LocalCurrencyCode = "";
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService) {
+    public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
+
+    constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
         if (ObjectsLocator.GlobalSetting) {
@@ -62,7 +66,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
-
+        this.GetFullAccountingSettings();
+      
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EnableMultiCurrency")) {
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyAPPayments) {
                 this.IsMultiCurrency = true;
@@ -78,6 +83,45 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+    }
+    public ShowFlip: boolean = false;
+    IsSplitComponentOpened: boolean = true;
+
+    token: any;
+    SplitButtonClicked() {
+
+        this.IsSplitComponentOpened = !this.IsSplitComponentOpened;
+        if (!this.IsSplitComponentOpened) {
+
+            this.PaymentChequeActivated = false;
+        }
+        else {
+            this.PaymentChequeActivated = true;
+        }
+
+        this.ShowFlip = true;
+       // this.cd.detectChanges();
+
+     
+    }
+
+    private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
+    public  GetFullAccountingSettings() {
+      
+
+        this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult => {
+                var myResponse: ServiceResponse = myResult;
+                if (myResponse != null) {
+
+                    var res = myResponse.Result;
+                    this.FullAccountingSetting = res;
+                    
+                    
+                  this.PaymentChequeActivated = this.FullAccountingSetting.IsPaymentChequesActivated && this.IsFullAccounting;
+                }
+           
+        });
+
     }
 
     private SaveCompletedEvent: any = null;
