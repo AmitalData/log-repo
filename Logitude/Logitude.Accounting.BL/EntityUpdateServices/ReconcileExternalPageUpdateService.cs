@@ -285,7 +285,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
                     string msg = TextCodesTranslator.TranslateText("ReconcileExternalPage.O.NoCreditAndDebit", entityPM.Tenant, showLocal);
-                    msg = msg.Replace("#lineNo", line.ToString());
+                    msg = msg.Replace("#lineNo", line.LineNumber.ToString());
                     throw new ApplicationException(msg);
                 }
 
