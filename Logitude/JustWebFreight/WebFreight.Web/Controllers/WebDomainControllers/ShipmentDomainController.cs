@@ -1893,7 +1893,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
 
         [ActionName("PostUploadExcelFile")]
-        public HttpResponseMessage PostUploadExcelFile(TariffFilterParameter filter)
+        public HttpResponseMessage PostUploadExcelFile(ExcelPackageFilter filter)
         {
             try
             {
@@ -1936,17 +1936,77 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     rowData[i] = row.Cells[i].Value2.ToString();
                 }
 
-                if (!string.IsNullOrEmpty(rowData[0]))
+                if (rowData.Length > 0)
                 {
-                    string packageTypeCode = rowData[0].Trim();
-
-                    PackageType packageType = packageTypeRepository.GetSinglePackageTypeByCode(packageTypeCode, tenant, true);
-                    if (packageType != null)
+                    if (!string.IsNullOrEmpty(rowData[0]))
                     {
-                        excelPackage.ContainerTypeId = packageType.Id;
-                        excelPackage.ContainerTypeCode = packageType.Code;
-                        excelPackage.ContainerTypeName = packageType.EnglishName;
-                        excelPackage.IsRefrigerated = packageType.IsRefrigerated;
+                        string packageTypeCode = rowData[0].Trim();
+
+                        PackageType packageType = packageTypeRepository.GetSinglePackageTypeByCode(packageTypeCode, tenant, true);
+                        if (packageType != null)
+                        {
+                            excelPackage.ContainerTypeId = packageType.Id;
+                            excelPackage.ContainerTypeCode = packageType.Code;
+                            excelPackage.ContainerTypeName = packageType.EnglishName;
+                            excelPackage.IsRefrigerated = packageType.IsRefrigerated;
+                        }
+
+                        else
+                        {
+                            excelPackage.HasErrors = true;
+                        }
+                    }
+                }
+
+                if (rowData.Length > 1)
+                {
+                    if (!string.IsNullOrEmpty(rowData[1]))
+                    {
+                        string containerNumber = rowData[1].Trim();
+
+                        if (containerNumber.Length > 20)
+                        {
+                            excelPackage.ContainerNumber = containerNumber.Substring(0, 20).ToUpper();
+                        }
+
+                        else
+                        {
+                            excelPackage.ContainerNumber = containerNumber.ToUpper();
+                        }
+                    }
+                }
+
+                if (rowData.Length > 2)
+                {
+                    if (!string.IsNullOrEmpty(rowData[2]))
+                    {
+                        string volume = rowData[2].Trim();
+                        if (this.IsNumber(volume))
+                        {
+                            excelPackage.Volume = Convert.ToDouble(volume);
+                        }
+
+                        else
+                        {
+                            excelPackage.HasErrors = true;
+                        }
+                    }
+                }
+
+                if (rowData.Length > 3)
+                {
+                    if (!string.IsNullOrEmpty(rowData[3]))
+                    {
+                        string grossWeight = rowData[3].Trim();
+                        if (this.IsNumber(grossWeight))
+                        {
+                            excelPackage.GrossWeight = Convert.ToDouble(grossWeight);
+                        }
+
+                        else
+                        {
+                            excelPackage.HasErrors = true;
+                        }
                     }
 
                     else
@@ -1954,121 +2014,88 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         excelPackage.HasErrors = true;
                     }
                 }
-                
-                if (!string.IsNullOrEmpty(rowData[1]))
+
+                if (rowData.Length > 4)
                 {
-                    string containerNumber = rowData[1].Trim();
-
-                    if (containerNumber.Length > 20)
+                    if (!string.IsNullOrEmpty(rowData[4]))
                     {
-                        excelPackage.ContainerNumber = containerNumber.Substring(0, 20).ToUpper();
-                    }
-
-                    else
-                    {
-                        excelPackage.ContainerNumber = containerNumber.ToUpper();
+                        string tare = rowData[4].Trim();
+                        if (this.IsNumber(tare))
+                        {
+                            excelPackage.Tare = Convert.ToDouble(tare);
+                        }
                     }
                 }
 
-                if (!string.IsNullOrEmpty(rowData[2]))
+                if (rowData.Length > 5)
                 {
-                    string volume = rowData[2].Trim();
-                    if (this.IsNumber(volume))
+                    if (!string.IsNullOrEmpty(rowData[5]))
                     {
-                        excelPackage.Volume = Convert.ToDouble(volume);
-                    }
+                        string shipperSeal = rowData[5].Trim();
 
-                    else
-                    {
-                        excelPackage.HasErrors = true;
+                        if (shipperSeal.Length > 15)
+                        {
+                            excelPackage.ShipperSeal = shipperSeal.Substring(0, 15);
+                        }
+
+                        else
+                        {
+                            excelPackage.ShipperSeal = shipperSeal;
+                        }
                     }
                 }
 
-                if (!string.IsNullOrEmpty(rowData[3]))
+                if (rowData.Length > 6)
                 {
-                    string grossWeight = rowData[3].Trim();
-                    if (this.IsNumber(grossWeight))
+                    if (!string.IsNullOrEmpty(rowData[6]))
                     {
-                        excelPackage.GrossWeight = Convert.ToDouble(grossWeight);
-                    }
+                        string carrierSeal = rowData[6].Trim();
 
-                    else
-                    {
-                        excelPackage.HasErrors = true;
+                        if (carrierSeal.Length > 15)
+                        {
+                            excelPackage.CarrierSeal = carrierSeal.Substring(0, 15);
+                        }
+
+                        else
+                        {
+                            excelPackage.CarrierSeal = carrierSeal;
+                        }
                     }
                 }
 
-                else
+                if (rowData.Length > 7)
                 {
-                    excelPackage.HasErrors = true;
-                }
-
-                if (!string.IsNullOrEmpty(rowData[4]))
-                {
-                    string tare = rowData[4].Trim();
-                    if (this.IsNumber(tare))
+                    if (!string.IsNullOrEmpty(rowData[7]))
                     {
-                        excelPackage.Tare = Convert.ToDouble(tare);
-                    }
-                }
-                
-                if (!string.IsNullOrEmpty(rowData[5]))
-                {
-                    string shipperSeal = rowData[5].Trim();
+                        string marks = rowData[7].Trim();
 
-                    if (shipperSeal.Length > 15)
-                    {
-                        excelPackage.ShipperSeal = shipperSeal.Substring(0, 15);
-                    }
+                        if (marks.Length > 350)
+                        {
+                            excelPackage.MarksAndNumbers = marks.Substring(0, 350);
+                        }
 
-                    else
-                    {
-                        excelPackage.ShipperSeal = shipperSeal;
+                        else
+                        {
+                            excelPackage.MarksAndNumbers = marks;
+                        }
                     }
                 }
 
-                if (!string.IsNullOrEmpty(rowData[6]))
+                if (rowData.Length > 8)
                 {
-                    string carrierSeal = rowData[6].Trim();
-
-                    if (carrierSeal.Length > 15)
+                    if (!string.IsNullOrEmpty(rowData[8]))
                     {
-                        excelPackage.CarrierSeal = carrierSeal.Substring(0, 15);
-                    }
+                        string description = rowData[8].Trim();
 
-                    else
-                    {
-                        excelPackage.CarrierSeal = carrierSeal;
-                    }
-                }
+                        if (description.Length > 2000)
+                        {
+                            excelPackage.Description = description.Substring(0, 2000);
+                        }
 
-                if (!string.IsNullOrEmpty(rowData[7]))
-                {
-                    string marks = rowData[7].Trim();
-
-                    if (marks.Length > 350)
-                    {
-                        excelPackage.MarksAndNumbers = marks.Substring(0, 350);
-                    }
-
-                    else
-                    {
-                        excelPackage.MarksAndNumbers = marks;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(rowData[8]))
-                {
-                    string description = rowData[8].Trim();
-
-                    if (description.Length > 2000)
-                    {
-                        excelPackage.Description = description.Substring(0, 2000);
-                    }
-
-                    else
-                    {
-                        excelPackage.Description = description;
+                        else
+                        {
+                            excelPackage.Description = description;
+                        }
                     }
                 }
 

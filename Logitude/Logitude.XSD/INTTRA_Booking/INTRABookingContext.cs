@@ -556,25 +556,20 @@ namespace Logitude.XSD.INTTRA_Booking
                     }
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
-
-                    var contactList = contactQuery.GetContactListsbyCardId(this.MasterData.MainCarriageCarrierId, Tenant).ToList();
-                    contactList.ForEach(contact =>
+                    var contactPM = contactQuery.GetSinglePM(myCard.PrimaryContactId, Tenant);
+                    contacts.Add(new ContactInformationType()
                     {
-                        contacts.Add(new ContactInformationType()
+                        Type = ContactTypeValues.InformationContact,
+                        Name = contactPM.EnglishName,
+                        CommunicationDetails = new CoordinatesType()
                         {
-                            Type = ContactTypeValues.InformationContact,
-                            Name = contact.EnglishName,
-                            CommunicationDetails = new CoordinatesType()
-                            {
-                                Email = new string[] { contact.Email },
-                                Fax = new string[] { contact.Fax },
-                                Phone = new string[] { contact.BusinessPhone },
-                            }
-                        });
+                            Email = new string[] { contactPM.Email },
+                            Fax = new string[] { contactPM.Fax },
+                            Phone = new string[] { contactPM.BusinessPhone },
+                        }
                     });
 
                     item.Contacts = contacts.ToArray();
-
                     this.MessagePropertiesParties.Add(item);
                 }
             }
@@ -598,24 +593,20 @@ namespace Logitude.XSD.INTTRA_Booking
                     }
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
-                    var contactList = contactQuery.GetContactListsbyCardId(this.Shipment.ShipperId, Tenant).ToList();
-                    contactList.ForEach(contact =>
+                    var contactPM = contactQuery.GetSinglePM(shipper.PrimaryContactId, Tenant);
+                    contacts.Add(new ContactInformationType()
                     {
-                        contacts.Add(new ContactInformationType()
+                        Type = ContactTypeValues.InformationContact,
+                        Name = contactPM.EnglishName,
+                        CommunicationDetails = new CoordinatesType()
                         {
-                            Type = ContactTypeValues.InformationContact,
-                            Name = contact.EnglishName,
-                            CommunicationDetails = new CoordinatesType()
-                            {
-                                Email = new string[] { contact.Email },
-                                Fax = new string[] { contact.Fax },
-                                Phone = new string[] { contact.BusinessPhone },
-                            }
-                        });
+                            Email = new string[] { contactPM.Email },
+                            Fax = new string[] { contactPM.Fax },
+                            Phone = new string[] { contactPM.BusinessPhone },
+                        }
                     });
-
+                   
                     item.Contacts = contacts.ToArray();
-
                     this.MessagePropertiesParties.Add(item);
                 }    
             }
@@ -639,20 +630,17 @@ namespace Logitude.XSD.INTTRA_Booking
                     }
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
-                    var contactList = contactQuery.GetContactListsbyCardId(this.Shipment.ConsigneeId, Tenant).ToList();
-                    contactList.ForEach(contact =>
+                    var contactPM = contactQuery.GetSinglePM(myCard.PrimaryContactId, Tenant);
+                    contacts.Add(new ContactInformationType()
                     {
-                        contacts.Add(new ContactInformationType()
+                        Type = ContactTypeValues.InformationContact,
+                        Name = contactPM.EnglishName,
+                        CommunicationDetails = new CoordinatesType()
                         {
-                            Type = ContactTypeValues.InformationContact,
-                            Name = contact.EnglishName,
-                            CommunicationDetails = new CoordinatesType()
-                            {
-                                Email = new string[] { contact.Email }, 
-                                Fax = new string[] { contact.Fax }, 
-                                Phone = new string[] { contact.BusinessPhone },
-                            }
-                        });
+                            Email = new string[] { contactPM.Email },
+                            Fax = new string[] { contactPM.Fax },
+                            Phone = new string[] { contactPM.BusinessPhone },
+                        }
                     });
 
                     item.Contacts = contacts.ToArray();
