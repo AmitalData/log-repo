@@ -56,7 +56,8 @@ namespace Logitude.XSD.INTTRA_Booking {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://xml.inttra.com/booking/services/01")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
     public partial class HeaderType {
         
         private string senderIdField;
@@ -3796,7 +3797,8 @@ namespace Logitude.XSD.INTTRA_Booking {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://xml.inttra.com/booking/services/01")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
     public partial class MessageDetailsType {
         
         private GoodsDetailsType[] goodsDetailsField;
@@ -4272,7 +4274,9 @@ namespace Logitude.XSD.INTTRA_Booking {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://xml.inttra.com/booking/services/01")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
     public partial class MessagePropertiesType {
         
         private ShipmentIDType shipmentIDField;
