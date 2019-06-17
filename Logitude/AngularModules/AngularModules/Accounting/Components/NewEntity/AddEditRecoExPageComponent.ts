@@ -605,6 +605,9 @@ export class PageLineModel extends BaseComponent {
     public DataContext = this;
     constructor(public pageLinePM: ReconcileExternalPageLinePM, public parent: AddEditRecoExPageComponent) {
         super();
+
+        this.CreditAmount = 0;
+        this.DebitAmount = 0;
     }
 
     //#region Properties
@@ -636,6 +639,9 @@ export class PageLineModel extends BaseComponent {
         if (this.pageLinePM.CreditAmount != value) {
             this.pageLinePM.CreditAmount = value;
             this.parent.CalculateTotals();
+
+            if(AppTool.IsNullOrEmpty(value))
+                this.CreditAmount = 0;
             // if(value != 0)
             //     this.DebitAmount = 0;
         }
@@ -646,6 +652,9 @@ export class PageLineModel extends BaseComponent {
         if (this.pageLinePM.DebitAmount != value) {
             this.pageLinePM.DebitAmount = value;
             this.parent.CalculateTotals();
+
+            if(AppTool.IsNullOrEmpty(value))
+                this.DebitAmount = 0;
             // if(value != 0)
             //     this.CreditAmount = 0;
         }

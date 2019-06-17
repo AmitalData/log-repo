@@ -36,6 +36,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
 
+
     FillChargesIDsAndUOMS() {
         for (var index = 1; index <= 10; index++) {
             this.IdProps.push("Surcharge" + index + "Id");
@@ -470,6 +471,7 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.Validate(true);
                 }
             });
         }
