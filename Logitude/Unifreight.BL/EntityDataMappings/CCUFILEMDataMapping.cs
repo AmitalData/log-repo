@@ -94,6 +94,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.LOANAMOUNT = entityPM.LOANAMOUNT;
             entityPOCO.CURRENCYRATENEW = entityPM.CURRENCYRATENEW;
             entityPOCO.DRAWNON = entityPM.DRAWNON;
+            entityPOCO.PRATMEHESLIST = entityPM.PRATMEHESLIST;
+            entityPOCO.ALLPRATMEHESLIST = entityPM.ALLPRATMEHESLIST;
+            entityPOCO.NOOFINVOICES = entityPM.NOOFINVOICES;
+            entityPOCO.TOTALINVOICELINESNO = entityPM.TOTALINVOICELINESNO;
         }
 
         public void POCOToPM(CCUFILEMPM entityPM, CCUFILEM entityPOCO)
@@ -178,6 +182,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.LOANAMOUNT = entityPOCO.LOANAMOUNT;
             entityPM.CURRENCYRATENEW = entityPOCO.CURRENCYRATENEW;
             entityPM.DRAWNON = entityPOCO.DRAWNON;
+            entityPM.PRATMEHESLIST = entityPOCO.PRATMEHESLIST;
+            entityPM.ALLPRATMEHESLIST = entityPOCO.ALLPRATMEHESLIST;
+            entityPM.NOOFINVOICES = entityPOCO.NOOFINVOICES;
+            entityPM.TOTALINVOICELINESNO = entityPOCO.TOTALINVOICELINESNO;
         }
 
         public void CustomPMToPOCO(CCUFILEMPM entityPM, CCUFILEM entityPOCO)
