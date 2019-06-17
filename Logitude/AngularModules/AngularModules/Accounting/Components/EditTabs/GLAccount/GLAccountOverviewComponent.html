@@ -554,7 +554,7 @@
                                                 {{ 'GLAccounts.O.CreditLimit' | TextCodeTranslationPipe }}
                                             </div>
                                             <div *ngIf="!IsCreditNotDefined()" style="font-weight: bold;" class="amount" float-start style="padding-top: 5px;font-weight: bold;font-size: 18px;text-align: right;">
-                                                {{accountTotal | NumbersPipe:'N2'}}
+                                                {{(accountCardlist?accountCardlist.CreditLimitAmount:0) | NumbersPipe:'N2'}}
                                             </div>
                                             <div *ngIf="!IsCreditNotDefined()" class="progress green" [class.red]="IsOverCredit()" float-end>
                                                 <progress [attr.value]="creditPercentage" max="100"></progress>
@@ -573,7 +573,7 @@
                                                 {{ 'GLAccounts.O.AccountingBalance' | TextCodeTranslationPipe }}
                                             </div>
                                             <div class="amount" float-start style="text-align: right;" >
-                                                {{GLAccountMoreData.BalanceInLocalCurrency | NumbersPipe:'N2'}}
+                                                {{(GLAccountMoreData.BalanceInLocalCurrency?GLAccountMoreData.BalanceInLocalCurrency:0) | NumbersPipe:'N2'}}
                                             </div>
                                             <a style="font-size: 11px;line-height: 22px;padding: 0 4px;"  (click)="CardIndexClicked()" float-start text-end >
                                                 {{ 'GLAccounts.O.CardIndex' | TextCodeTranslationPipe }}
@@ -586,7 +586,7 @@
                                                 {{ 'GLAccounts.O.FutureChequesToday' | TextCodeTranslationPipe }}
                                             </div>
                                             <div class="amount" float-start style="text-align: right;" >
-                                                {{GLAccountMoreData.TotalOpenChequesInLocalCur | NumbersPipe:'N2'}}
+                                                {{(GLAccountMoreData.TotalOpenChequesInLocalCur?GLAccountMoreData.TotalOpenChequesInLocalCur:0) | NumbersPipe:'N2'}}
                                             </div>
                                             <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" (click)="DisplayChequelistClicked()" float-start text-start >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
@@ -599,7 +599,7 @@
                                                 {{ 'GLAccounts.O.FutureCheques' | TextCodeTranslationPipe }}
                                             </div>
                                             <div class="amount" float-start style="text-align: right;" >
-                                                {{GLAccountMoreData.TotFutureOpenChequesInLocalCur | NumbersPipe:'N2'}}
+                                                {{(GLAccountMoreData.TotFutureOpenChequesInLocalCur?GLAccountMoreData.TotFutureOpenChequesInLocalCur:0) | NumbersPipe:'N2'}}
                                             </div>
                                             <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start text-start >
                                                 <!-- {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }} -->
@@ -612,7 +612,7 @@
                                                 {{ 'GLAccounts.O.TotalOpenShipments' | TextCodeTranslationPipe }}
                                             </div>
                                             <div class="amount" float-start style="text-align: right;" >
-                                                <!-- 132,538 -->
+                                                0.00
                                             </div>
                                             <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start text-start >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
@@ -622,11 +622,13 @@
 
                                         <!-- 6 -->
                                         <div class="credit-limit-row" style="">
-                                            <div class="label TextTrimming" [class.fnt-sz-14]="!showLocal" float-start text-start >
+                                            <div class="label TextTrimming" style="padding-top: 7px;" [class.fnt-sz-14]="!showLocal" float-start text-start >
                                                 {{ 'GLAccount.O.CreditStatus ' | TextCodeTranslationPipe }}
                                             </div>
-                                            <div style="font-weight: bold;font-size: 18px;text-align: right;" class="amount" float-start [class.red]="IsOverCredit()" >
-                                                {{accountCardlist.CreditLimitAmount | NumbersPipe:'N2'}}
+                                            <div style="font-weight: bold;font-size: 18px;text-align: right;
+                                                        border-top: 1px solid darkgray; padding-top: 8px;"
+                                                class="amount" float-start [class.red]="IsOverCredit()" >
+                                                {{creditStatusAmount | NumbersPipe:'N2'}}
                                             </div>
                                             <!-- <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" float-start text-start >
                                                 {{ 'GLAccounts.O.DisplayChequelist' | TextCodeTranslationPipe }}
