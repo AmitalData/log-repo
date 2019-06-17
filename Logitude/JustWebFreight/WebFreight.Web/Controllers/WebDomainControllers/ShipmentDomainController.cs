@@ -1747,74 +1747,82 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public byte[] ExportShipmentPackagesToExcel(List<ShipmentPackage> shipmentPackages, List<PackageType> packageTypes, int tenant)
         {
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
 
+            IWorksheet sheet1 = workbook.Worksheets[0];
+            sheet1.Name = "Packages";
+            sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
+            sheet1.Range["A1:I1"].CellStyle.Font.Size = 10;
+            sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
+            sheet1.Range["A1:I1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range["A1:I1"].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range["A1:I1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+            sheet1.Range["A1:G1"].ColumnWidth = 15;
+            sheet1.Range["H1:I1"].ColumnWidth = 17;
+
+            DataTable dataTable1 = new DataTable();
+            dataTable1.Columns.Add("Container Type");
+            dataTable1.Columns.Add("Container #");
+            dataTable1.Columns.Add("Volume");
+            dataTable1.Columns.Add("Gross Weight");
+            dataTable1.Columns.Add("Tare");
+            dataTable1.Columns.Add("Shipper Seal");
+            dataTable1.Columns.Add("Carrier Seal");
+            dataTable1.Columns.Add("Marks & Numbers");
+            dataTable1.Columns.Add("Description");
+
+            IWorksheet sheet2 = workbook.Worksheets[1];
+            sheet2.Name = "Package Types";
+            sheet2.Range["A1"].CellStyle.Font.Bold = true;
+            sheet2.Range["A1"].CellStyle.Font.Size = 11;
+            sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
+            sheet2.Range["A1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet2.Range["A1"].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet2.Range["A1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+            List<ExcelPackageType> types = new List<ExcelPackageType>();
+            if (packageTypes != null && packageTypes.Count > 0)
+            {
+                types = (from a in packageTypes
+                         where a.IsContainer == true
+                         select new ExcelPackageType()
+                         {
+                             Code = a.Code,
+                         }).ToList();
+            }
+          
             if (shipmentPackages != null && shipmentPackages.Count > 0)
             {
-                List<ExcelPackage> packages = (from a in shipmentPackages
-                                               select new ExcelPackage()
-                                               {
-                                                   ContainerTypeCode = a.PackageType == null ? null : a.PackageType.Code,
-                                                   ContainerNumber = a.ContainerNumber,
-                                                   Volume = a.Volume,
-                                                   GrossWeight = a.Weight,
-                                                   Tare = a.Tare,
-                                                   ShipperSeal = a.ShipperSeal,
-                                                   CarrierSeal = a.CarrierSeal,
-                                                   MarksAndNumbers = a.MarksAndNumbers,
-                                                   Description = a.Description,
-                                               }).ToList();
-
-                List<ExcelPackageType> types = (from a in packageTypes
-                                                where a.IsContainer == true
-                                                select new ExcelPackageType()
-                                                {
-                                                    Code = a.Code,
-                                                }).ToList();
-
-                ExcelEngine excelEngine = new ExcelEngine();
-                IApplication application = excelEngine.Excel;
-                IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
+                foreach(ShipmentPackage package in shipmentPackages)
+                {
+                    DataRow row = dataTable1.NewRow();
+                    row[0] = package.PackageType == null ? null : package.PackageType.Code;
+                    row[1] = package.ContainerNumber;
+                    row[2] = package.Volume;
+                    row[3] = package.Weight;
+                    row[4] = package.Tare;
+                    row[5] = package.ShipperSeal;
+                    row[6] = package.CarrierSeal;
+                    row[7] = package.MarksAndNumbers;
+                    row[8] = package.Description;
+                    dataTable1.Rows.Add(row);
+                }
                 
-                //Packages
-                IWorksheet sheet1 = workbook.Worksheets[0];
-                sheet1.Name = "Packages";
-                sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
-                sheet1.Range["A1:I1"].CellStyle.Font.Size = 10;
-                sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
-                sheet1.Range["A1:I1"].CellStyle.Font.Color = ExcelKnownColors.White;
-                sheet1.Range["A1:I1"].CellStyle.Color = System.Drawing.Color.Gray;
-                sheet1.Range["A1:I1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-
-                sheet1.Range["A1:G1"].ColumnWidth = 15;
-                sheet1.Range["H1:I1"].ColumnWidth = 17;
-
-                string packagesRange = "A2:A" + (packages.Count() + 1);
+                string packagesRange = "A2:A" + (shipmentPackages.Count() + 1);
                 sheet1.Range[packagesRange].DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
-                sheet1.Range[packagesRange].DataValidation.IsSuppressDropDownArrow = false;
-
-                sheet1.Range["A1"].Text = "Container Type";
-                sheet1.Range["B1"].Text = "Container #";
-                sheet1.Range["D1"].Text = "Gross Weight";
-                sheet1.Range["F1"].Text = "Shipper Seal";
-                sheet1.Range["G1"].Text = "Carrier Seal";
-                sheet1.Range["H1"].Text = "Marks & Numbers";
-
-                DataTable dataTable1 = this.ConvertToDataTable(packages);
-                sheet1.ImportDataTable(dataTable1, true, 1, 1);
-
-                //Package Types
-                IWorksheet sheet2 = workbook.Worksheets[1];
-                sheet2.Name = "Package Types";
-                sheet2.Range["A1"].CellStyle.Font.Bold = true;
-                sheet2.Range["A1"].CellStyle.Font.Size = 11;
-                sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
-                DataTable dataTable2 = this.ConvertToDataTable(types);
-                sheet2.ImportDataTable(dataTable2, true, 1, 1);
-                string typesRange = "A2:A" + (types.Count() + 1);
-
-                workbook.Version = ExcelVersion.Excel2007;
-                workbook.SaveAs(memory);
+                sheet1.Range[packagesRange].DataValidation.IsSuppressDropDownArrow = false;  
             }
+
+            DataTable dataTable2 = this.ConvertToDataTable(types);
+
+            sheet1.ImportDataTable(dataTable1, true, 1, 1);
+            sheet2.ImportDataTable(dataTable2, true, 1, 1);
+
+            workbook.Version = ExcelVersion.Excel2007;
+            workbook.SaveAs(memory);
 
             return memory.ToArray();
         }
@@ -1822,12 +1830,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
             DataTable table = new DataTable();
+            
             foreach (PropertyDescriptor prop in properties)
             {
-                if (prop.Name != "ContainerTypeId" && prop.Name != "ContainerTypeName" && prop.Name != "IsRefrigerated" && prop.Name != "HasErrors")
-                {
-                    table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-                }
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
             }
 
             foreach (T item in data)
