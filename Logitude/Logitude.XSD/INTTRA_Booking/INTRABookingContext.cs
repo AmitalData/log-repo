@@ -488,6 +488,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 INTTRA_Booking.PartiesType item = new INTTRA_Booking.PartiesType()
                 {
                     Role = INTTRA_Booking.PartyTypeValues.Booker,
+                    RoleSpecified  =true,
                     Name = this.TenantObject.Company,
                     Identifier = new INTTRA_Booking.PartyIdentifierType()
                     {
@@ -509,6 +510,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 INTTRA_Booking.PartiesType item = new INTTRA_Booking.PartiesType()
                 {
                     Role = INTTRA_Booking.PartyTypeValues.Forwarder,
+                    RoleSpecified = true,
                     Name = this.TenantObject.Company,
                     Identifier = new INTTRA_Booking.PartyIdentifierType()
                     {
@@ -533,6 +535,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     INTTRA_Booking.PartiesType item = new INTTRA_Booking.PartiesType()
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Carrier,
+                        RoleSpecified = true,
                         Name = myCard.EnglishName,
                         Identifier = new INTTRA_Booking.PartyIdentifierType()
                         {
@@ -585,6 +588,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     INTTRA_Booking.PartiesType item = new INTTRA_Booking.PartiesType()
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Shipper,
+                        RoleSpecified = true,
                         Name = shipper.EnglishName,
                     };
 
@@ -625,6 +629,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     INTTRA_Booking.PartiesType item = new INTTRA_Booking.PartiesType()
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Consignee,
+                        RoleSpecified = true,
                         Name = myCard.EnglishName,
                     };
 
@@ -734,13 +739,11 @@ namespace Logitude.XSD.INTTRA_Booking
         public string VolumeUnitCode { get; set; }
         public string GrossWeightUnitCode { get; set; }
         public long XMLCreateDate { get; set; }
-        public long XMLCreateDate_Long { get; set; }
         private void GetProperties()
         {
             this.TodayDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant).Date;
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
             this.XMLCreateDate = this.GetDateShortFormat(this.TodayDateTime);
-            this.XMLCreateDate_Long = this.GetDateLongFormat(this.TodayDateTime);
 
             this.ShipmentNumber = this.Shipment.ShipmentNumber;
             this.VolumeUnitCode = this.Shipment.VolumeUnitCode.ToUpper();

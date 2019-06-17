@@ -15,7 +15,7 @@ export class ARPaymentValidator {
 
         Validator.TryValidateObject(entityPm, null, validationResults);
 
-      
+
 
         var isNegativeAmountEnabled: boolean = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetARPayments && entityPm.AccountingPaymentMethodCode == "FS" ? true : false;
 
@@ -52,9 +52,11 @@ export class ARPaymentValidator {
 
         if (entityPm.AccountingPaymentMethodCode == "CH") {
             if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
-                validationResults.push(msg.replace("%FieldName", "Cheque Ref"));
+                validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.S.Details.ChequeRef")));
             }
         }
+
+
 
         if (entityPm.HasInvoicesErrors) {
             validationResults.push(TextCodeTranslator.Translate("ARPayment.M.PaymentInvoicesHaveErrors"));
@@ -120,10 +122,10 @@ export class ARPaymentValidator {
               if (AppTool.IsNullOrEmpty(entityPm.SelloPago))
                   validationResults.push(msg.replace("%FieldName", "Sello Pago"));
           }
-          
+
         }
 
-        return validationResults;    
+        return validationResults;
     }
 
     public static ValidateCurrenctEntity(entityPm: ARPaymentPM) {
@@ -168,7 +170,7 @@ export class ARPaymentValidator {
 
         if (entityPm.AccountingPaymentMethodCode == "CH") {
             if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
-                errors.push(msg.replace("%FieldName", "Cheque Ref"));
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.S.Details.ChequeRef")));
             }
         }
 

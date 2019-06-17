@@ -2301,6 +2301,6 @@
     <Feature Code="&quot;IMPORTAWBWIZARD&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.IMPORTAWBWIZARD&quot;" FeatureDefaultText="&quot;Show Import AWB Wizard&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;DELETEPACKAGES&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.DELETEPACKAGES&quot;" FeatureDefaultText="&quot;Delete Packages&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
     <Feature Code="&quot;DOWNUPLPACAKGES&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.DOWNUPLPACAKGES&quot;" FeatureDefaultText="&quot;Download/Upload Packages&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
-    <Feature Code="&quot;INTTRABookingSimulator&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.INTTRABookingSimulator&quot;" FeatureDefaultText="&quot;INTTRA Booking Simulator&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;INTTRABookingSimulator&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Shipment.Features.INTTRABookingSimulator&quot;" FeatureDefaultText="&quot;Send INTTRA Booking&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
