@@ -493,9 +493,13 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         });
     }
 
-
-    @BeforeOnDestroy
-    ngOnDestroy() {
+    //async MyFunc() {
+    //    await this.ngxBeforeOnDestroy();
+    //}
+    //@BeforeOnDestroy
+    async ngOnDestroy() {
+        await this.ngxBeforeOnDestroy();
+        //this.MyFunc();
         console.log("LogTextBox:ngOnDestroy");
         this.cd = null;
         if (this._debounceTimeSub) {

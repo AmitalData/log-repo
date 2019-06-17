@@ -453,6 +453,7 @@ export class DeclarationClassificationComponent extends BaseComponent implements
         SessionLocator.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
+        windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ImporterDetails");
 
         var logWindow = new LogitudeWindow();
