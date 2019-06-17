@@ -1249,7 +1249,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.FilterTypes = [];
         this.FilterTypes.push(new ObjectFieldOperator("Fixed Filter", "Fixed Filter"));
         this.FilterTypes.push(new ObjectFieldOperator("Ask User", "Dynamic Filter"));
-        this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
+        this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[1];
 
         if (ParentClass != null) {
             this.MyParentClass = ParentClass;
@@ -1615,7 +1615,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         //this.MyParentClass.ClearData();
     }
 
-    private filterType: string = "Fixed Filter";
+    private filterType: string = "Ask User";
     public get FilterType() { return this.filterType; }
     public set FilterType(newValue: string) { this.filterType = newValue; }
 
