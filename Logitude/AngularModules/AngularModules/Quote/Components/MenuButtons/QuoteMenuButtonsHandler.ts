@@ -185,14 +185,14 @@ export class QuoteMenuButtonsHandler {
                         button.Width = 70;
 
 
-                        var isShowQuotationButton: boolean = false;
+                        var isShowRoutingRatesQuotation: boolean = false;
                         var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QRR" && d.TenantNumber == SessionLocator.Tenant)[0];
                         if (featureToggle) {
-                            isShowQuotationButton = true;
+                            isShowRoutingRatesQuotation = true;
                         }
 
 
-                        if ((this.EntityPM.QuoteTypeCode == "P" && isShowQuotationButton) || this.EntityPM.QuoteTypeCode == "A") {
+                        if ((this.EntityPM.QuoteTypeCode == "P" && isShowRoutingRatesQuotation) || this.EntityPM.QuoteTypeCode == "A") {
                             button.IsDisabled = false;
                         }
                         else {

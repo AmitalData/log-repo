@@ -285,7 +285,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public GLAccountPM GetGLAccountById(PaymentChequePM entityPM)
         {
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
-            return gLAccountQueryService.GetSingle(EntityPOCO.PayToGLAccountId, false, false);
+            return gLAccountQueryService.GetSingle(entityPM.PayToGLAccountId, false, false);
         }
         public static ContactPM GetLoggedContact(int tenant)
         {

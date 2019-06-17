@@ -22,7 +22,7 @@ namespace Logitude.XSD.INTTRA_Booking
             {
                 SenderId = "LOGITUDE",
                 ReceiverId = "INTTRA",
-                RequestDateTimeStamp = new DateTime(this.Context.XMLCreateDate_Long),
+                RequestDateTimeStamp = new DateTime(this.Context.TodayDateTime.Year, this.Context.TodayDateTime.Month, this.Context.TodayDateTime.Day, this.Context.TodayDateTime.Hour, this.Context.TodayDateTime.Minute, this.Context.TodayDateTime.Second),
                 RequestMessageVersion = HeaderTypeRequestMessageVersion.Item10,
                 TransactionType = TransactionTypeValues.Booking,
                 TransactionVersion = HeaderTypeTransactionVersion.Item20,
@@ -44,7 +44,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 ContactInformation = new ContactInformationType()
                 {
                     Type = ContactTypeValues.InformationContact,
-                    Name = this.Context.LoggedContact.Name,
+                    Name = this.Context.LoggedContact.EnglishName,
                     CommunicationDetails = new CoordinatesType()
                     {
                         Email = new string[] { this.Context.LoggedContact.Email },
@@ -55,7 +55,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 DateTime = new INTTRA_Booking.DateTimeCodeType()
                 {
                     Type = INTTRA_Booking.DateTimeCodeTypeType.DateTime,
-                    Value = new DateTime(this.Context.XMLCreateDate_Long),
+                    Value = new DateTime(this.Context.TodayDateTime.Year, this.Context.TodayDateTime.Month, this.Context.TodayDateTime.Day, this.Context.TodayDateTime.Hour, this.Context.TodayDateTime.Minute, this.Context.TodayDateTime.Second),
                 },
                 MovementType = this.Context.MovementType,
 

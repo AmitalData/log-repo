@@ -77,12 +77,13 @@
                                             <label>{{'Shipment.B.Packages.DownloadUpload' | TextCodeTranslationPipe}}</label>
                                             <img src="./Images/ToggleIcon.png" />
 
-                                            <div class="ToggleButtonMenu">
+                                            <div class="ToggleButtonMenu" style="width:118px;">
                                                 <button (click)="DownloadClicked()">{{'Shipment.B.Packages.DownloadPackages' | TextCodeTranslationPipe}}</button>
 
                                                 <div>
                                                     <input class="upload" style="display: none;width:65px"
                                                            type="file" (change)="OnFileChanged($event)"
+                                                           (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
                                                            #fileInput>
                                                     <a href="#" style="text-decoration:none">
                                                         <button (click)="fileInput.click()">{{'Shipment.B.Packages.UploadPackages' | TextCodeTranslationPipe}}</button>
