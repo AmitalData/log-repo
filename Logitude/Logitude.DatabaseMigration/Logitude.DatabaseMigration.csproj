@@ -1109,6 +1109,10 @@
     <Compile Include="Migrations\201906131011395_AddCheckDigitControlAlgorithmModifications.Designer.cs">
       <DependentUpon>201906131011395_AddCheckDigitControlAlgorithmModifications.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.cs" />
+    <Compile Include="Migrations\201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.Designer.cs">
+      <DependentUpon>201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1882,6 +1886,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906131011395_AddCheckDigitControlAlgorithmModifications.resx">
       <DependentUpon>201906131011395_AddCheckDigitControlAlgorithmModifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.resx">
+      <DependentUpon>201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

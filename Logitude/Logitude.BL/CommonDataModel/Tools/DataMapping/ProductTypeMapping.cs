@@ -16,7 +16,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
         {
             modifiation.InActive = entityPM.InActive;
             modifiation.QuotationDefaultTemplateId = entityPM.QuotationDefaultTemplateId;
-            
+            modifiation.RoutingRQuoteDefaultTemplateId = entityPM.RoutingRQuoteDefaultTemplateId;
         }
     }
 }
