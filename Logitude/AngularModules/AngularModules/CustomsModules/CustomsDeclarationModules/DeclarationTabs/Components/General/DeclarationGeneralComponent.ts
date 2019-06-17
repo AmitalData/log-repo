@@ -776,7 +776,6 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
     EditImporter() {
         SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
-
         SessionLocator.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
