@@ -29,6 +29,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Globalization;
 using Simplog.Data.InvoiceModel;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -37,8 +38,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         public static void Validate(ARPaymentPM entityPM, CashBookPM cashBook = null)
         {
             int tenant = entityPM.Tenant;
-
-            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
 
             string paymentMethodCode = "";
             Simplog.Data.InvoiceModel.Repositories.AccountingPaymentMethodRepository paymentMethodRepository = new Simplog.Data.InvoiceModel.Repositories.AccountingPaymentMethodRepository(tenant);

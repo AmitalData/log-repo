@@ -10537,7 +10537,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 Aging4AccountTypeCode = AgingReportParam.Aging4AccountTypeCodeEnum.Customer2,
                 GroupByDate = AgingReportParam.DateEnum.DueDate,
-                AgingMethod = AgingReportParam.MethodEnum.TotalByMonthFIFOMethod.ToString(),
+                AgingMethod = AgingReportParam.MethodEnum.ReconcileOpenBalanceMethod.ToString(),
 
                 AgingMethod_Options = Enum.GetNames(typeof(AgingReportParam.MethodEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),
                 GroupByDate_Options = Enum.GetNames(typeof(AgingReportParam.DateEnum)).ToList().Aggregate((b4, aftr) => string.Concat(b4, ";", aftr)),

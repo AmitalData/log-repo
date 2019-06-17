@@ -331,7 +331,7 @@
                                         <log-column [header]="DebitAmountColHeader" [width]="'130'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'DebitAmount'">
                                             <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span style="color:#00a24d;" [class.red]='item.DebitAmount<0'>{{ item.DebitAmount | NumbersPipe:'n2' }}</span>
+                                                    <span style="color:#00a24d;" [class.red]='item.DebitAmount!=0'>{{ item.DebitAmount | NumbersPipe:'n2' }}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogTextBox [ObjectFieldName]="'DebitAmount'" [InputType]="'sigdouble'" [DataContext]="item"
@@ -345,7 +345,7 @@
                                         <log-column [header]="CreditAmountColHeader" [width]="'130'" [Alignment]="isRTL ? 'right' : 'left'" [binding]="'CreditAmount'">
                                             <log-cell-template template="let item" #logcelltemplate>
                                                 <div style="text-align: right;" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                                    <span style="color:#00a24d;" [class.red]='item.CreditAmount<0'>{{ item.CreditAmount | NumbersPipe:'n2' }}</span>
+                                                    <span style="color:#00a24d;" [class.red]='item.CreditAmount!=0'>{{ item.CreditAmount | NumbersPipe:'n2' }}</span>
                                                 </div>
                                                 <div *ngIf="logcelltemplate.IsEditMode">
                                                     <LogTextBox [ObjectFieldName]="'CreditAmount'" [InputType]="'sigdouble'" [DataContext]="item"

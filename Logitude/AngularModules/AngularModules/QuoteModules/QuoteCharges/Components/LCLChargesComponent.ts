@@ -2071,8 +2071,11 @@ export class QuoteChargeItem extends BaseComponent {
 
             var myTotalAmount = value;
             var myPrice = this.SaleUnitPrice;
-            if (myTotalAmount > 0 && this.SaleQuantity > 0) {
-                myPrice = myTotalAmount / this.SaleQuantity;
+
+            if (myTotalAmount) {
+                if (this.SaleQuantity > 0) {
+                    myPrice = myTotalAmount / this.SaleQuantity;
+                }
             }
 
             this.EntityPM.SaleTotalAmountLocal = AppTool.Round(value * this.SaleExchangeRate, 2);
@@ -2130,8 +2133,11 @@ export class QuoteChargeItem extends BaseComponent {
 
 
             var myPrice = this.SaleUnitPrice;
-            if (myTotalAmount > 0 && this.SaleQuantity > 0) {
-                myPrice = myTotalAmount / this.SaleQuantity;
+
+            if (myTotalAmount) {
+                if (this.SaleQuantity > 0) {
+                    myPrice = myTotalAmount / this.SaleQuantity;
+                }
             }
 
             this.EntityPM.SaleTotalAmount = AppTool.Round(myTotalAmount, 2);

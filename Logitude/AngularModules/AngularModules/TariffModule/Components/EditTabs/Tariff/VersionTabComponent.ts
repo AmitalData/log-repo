@@ -40,6 +40,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public IsDraftVersion: boolean = true;
     public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
+    private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -226,7 +227,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.ItemsCollection = [];  
         
 
-        tariffLines.sort(p => p.Index).forEach(item => {
+        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
             this.ItemsCollection.push(new TariffLineData(item, this));
         });
 
@@ -378,6 +379,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.UploadExcel(file);
     }
     UploadExcel(file: any) {
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.FileName = name[0];
+            }
+        }
         if (file && file.size > 0) {
             this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
@@ -412,9 +419,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
             filter.TariffType = context.EntityPM.TypeCode;
-
+            filter.TariffType = context.EntityPM.TypeCode;
+            filter.FileName = context.FileName;
             context.SendExcelToServer(filter);
-            //context.EntityPM.FileUploadedName = file.Name;
         };
 
         reader.onerror = function (e) {
@@ -436,7 +443,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     private isUploadExcelFinished: boolean = false;
     private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
-        tariffLines.forEach(item => {
+        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
             var tariffLine = new TariffLinePM(null);
             tariffLine.StartDate = this.StartDate;
             tariffLine.ExpirationDate = this.ExpirationDate;

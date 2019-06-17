@@ -6420,6 +6420,7 @@
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffTypeListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardLists\TariffVersionListService.ts" />
     <TypeScriptCompile Include="TariffModule\Services\StandardPMs\TariffPMService.ts" />
+    <TypeScriptCompile Include="TariffModule\Validators\TariffValidator.ts" />
     <TypeScriptCompile Include="test.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Connections\ConnectToParentComponent.ts" />
     <TypeScriptCompile Include="TimeManagement\Components\Helpers\TMProjectHelperComponent.ts" />

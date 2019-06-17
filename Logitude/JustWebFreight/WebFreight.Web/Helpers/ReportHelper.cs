@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
@@ -1435,6 +1436,12 @@ namespace WebFreight.Web.Helpers
             return url;
         }
 
+        private byte[] LoadShipmentsEventsListDataProvider(byte[] filters, int tenant)
+        {
+            DatabaseInitializer.RunOnSeconderyDB = true;
+            LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
+            return logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, tenant);
+        }
 
         public byte[] BuildReportDataProvider(ReportFliter reportFliter, byte[] filters)
         {
@@ -1453,9 +1460,10 @@ namespace WebFreight.Web.Helpers
                     }
 
                 case "SHEL":
-                    {
-                        DatabaseInitializer.RunOnSeconderyDB = true;
-                        dataProvider = logitudeReportsWebService.LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant);
+                    { 
+                        Thread thread = new Thread(() => { dataProvider = LoadShipmentsEventsListDataProvider(filters, reportFliter.tenant); });
+                        thread.Start();
+                        thread.Join(); 
                         break;
                     }
 
@@ -1813,6 +1821,7 @@ namespace WebFreight.Web.Helpers
             return dataProvider;
         }
 
+       
 
         private bool IsHaveReport(string reportCode)
         {
