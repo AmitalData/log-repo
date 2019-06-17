@@ -1597,26 +1597,48 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     OnFileChanged(fileEvent) {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Uploading packages will result in deleting existing packages and all its data");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                var file = fileEvent.target.files[0];
+        var file = fileEvent.target.files[0];
 
-                if (file && file.size > 0) {
-                    var documentExtendedService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
-                    documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
-                        if (!response.HasError) {
-                            var myResult = response.Result;
-                            if (myResult) {
-                                this.StartUploadingExcelFile(file);
-                            }
+        if (file) {
+            var extension: string = file.name.split('.')[1];
+
+            if (extension.includes("xls")) {
+                if (this.EntityPM.ShipmentPackages.length > 0) {
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Show("Uploading packages will result in deleting existing packages and all its data");
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
+                            this.SelectExcelFile(fileEvent);
                         }
                     });
-                }                
+                }
+
+                else {
+                    this.SelectExcelFile(fileEvent);
+                }
             }
-        }); 
-    }    
+
+            else {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
+            }
+        }   
+    }
+    SelectExcelFile(fileEvent) {
+        var file = fileEvent.target.files[0];
+
+        if (file && file.size > 0) {
+            var documentExtendedService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+            documentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var myResult = response.Result;
+                    if (myResult) {
+                        this.StartUploadingExcelFile(file);
+                    }
+                }
+            });
+        }
+    }
     StartUploadingExcelFile(file: any) {
         if (file && file.size > 0) {
             var filebuffer = file.slice(0, file.size);
@@ -1693,8 +1715,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             shipmentPackage.Description = item.Description;
             shipmentPackage.IsContainerRefrigerated = item.IsRefrigerated;
 
-            var ratio: number;
-            if (this.EntityPM.Ratio == null) {
+            var ratio: number = this.EntityPM.Ratio;
+            if (AppTool.IsNullOrZero(ratio)) {
                 ratio = AppTool.GetRatio(this.EntityPM.DirectionId, this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId, SessionLocator.TenantPM.CountryCode);
             }
 
