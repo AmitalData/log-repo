@@ -220,15 +220,25 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
                         MyGenericResponseObj.Stage = "Done " + this._INVOICE.INVOICENUMBER;
                     }
+                    Boolean markChangeSetOperationDeleteOnly = false;
                     if (mode == "INSERT_UPDATE_DELETE")
                     {
                         foreach (var supplierInvoice in this._MyDeclarationPM.SupplierInvoices)
                         {
                             if(supplierInvoice.ChangeSetOp != ChangeSetOperation.Insert && supplierInvoice.ChangeSetOp != ChangeSetOperation.Update && String.IsNullOrWhiteSpace(supplierInvoice.ChangeInSupplierInvoice))
                             {
-                                supplierInvoice.ChangeSetOp = ChangeSetOperation.Delete;
+                                if(lineToSequence == null || lineToSequence.Where(d => d.sequenceNumeric == supplierInvoice.SequenceNumeric).FirstOrDefault() == null)
+                                {
+                                    supplierInvoice.ChangeSetOp = ChangeSetOperation.Delete;
+                                    markChangeSetOperationDeleteOnly = true;
+                                }
                             }
                         }
+                    }
+                    if(markChangeSetOperationDeleteOnly)
+                    {
+                        DeclarationUpdateService.markChangeSetOperationDeleteOnly = true;
+                        DeclarationUpdateService.MarkToDeleteSupplierInvoice(_MyDeclarationPM);
                     }
                     AppendLogLine("InvoiceInsert:All:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                     if (this._MyDeclarationPM.SupplierInvoices != null && this._MyDeclarationPM.SupplierInvoices.Count() > 0) // moran 8.10.15 - Task 16452
@@ -521,7 +531,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
             else
             {
-                if (_MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault() == null)
+                this._MySupplierInvoicePM = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault();
+                if (this._MySupplierInvoicePM == null)
                 {
                     this._MySupplierInvoicePM = new Logitude.Customs.Def.EntityPMs.SupplierInvoicePM();
                     this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -535,12 +546,16 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         lineToSequenceNumeric.line = int1;
                         lineToSequenceNumeric.sequenceNumeric = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault().SequenceNumeric.Value;
                         lineToSequence.Add(lineToSequenceNumeric);
+                        if (this._MySupplierInvoicePM.SequenceNumeric != int1)
+                        {
+                            this._MySupplierInvoicePM.SequenceNumeric = int1;
+                            this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                        }
                     }
                     return;
                 }
                 else
                 {
-                    this._MySupplierInvoicePM = _MyDeclarationPM.SupplierInvoices.Where(si => si.UnfInvoiceCounterKey == this._INVOICE.SI_COUNTER).FirstOrDefault();
                     this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
                 }
             }
@@ -590,6 +605,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     lineToSequenceNumeric.line = int1;
                     lineToSequenceNumeric.sequenceNumeric = this._MySupplierInvoicePM.SequenceNumeric.Value;
                     lineToSequence.Add(lineToSequenceNumeric);
+                    if (this._MySupplierInvoicePM.SequenceNumeric != int1) this._MySupplierInvoicePM.SequenceNumeric = int1;
                 }
             }
             if (!(!String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.AccountTypeCode) && String.IsNullOrWhiteSpace(this._INVOICE.ACCOUNTTYPE)))
