@@ -11855,6 +11855,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     DeclarationDate = f.DeclarationDate,
                     DeclarationNumber = f.DeclarationNumber,
                     ARInvoices = f.ARInvoices,
+                    Notes = f.Notes,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();
