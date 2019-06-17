@@ -64,6 +64,7 @@ using Logitude.Accounting.BL.Utils;
 using System.Data.Common;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.InfrastructureModel;
+using System.Text.RegularExpressions;
 
 namespace Logitude.Update
 {
@@ -3692,6 +3693,24 @@ User/Pass",
         {
             ChangeTenantLayoutDirection("ltr");
             
+        }
+
+        private void button42_Click(object sender, EventArgs e)
+        {
+
+            string text = "APP4030";
+
+            var chars = Regex.Matches(text, @"^[a-zA-Z]+$");
+            //Regex rg = new Regex(@"^[a-zA-Z]+$");
+            //   bool match = rg.IsMatch(text);
+               //   match = rg.Split(text);
+            //if (match.Count() > 0)
+            //{
+
+
+            //}
+
+
         }
     }
 
