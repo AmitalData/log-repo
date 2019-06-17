@@ -28,9 +28,9 @@ namespace Logitude.IntegrationTests.FTP
                     From = "My FTP Server",
                     Host = "192.168.1.26",
                     Password = "password",
-                    Prefix = "",
+                    Prefix = "a",
                     Subject = "test",
-                    Suffix = "",
+                    Suffix = "y",
                     UserName = "tester",
                     Extension = "pdf",
                 }

@@ -1,7 +1,8 @@
-﻿import {WizardComponent} from './Components/Wizard/WizardComponent';
+import {WizardComponent} from './Components/Wizard/WizardComponent';
 import {SimulatorComponent} from './Components/Wizard/SimulatorComponent';
 import {INTTRASettingsComponent} from './Components/Maintenance/INTTRASettingsComponent';
 import {INTTRACommunicationSettingsComponent} from './Components/Maintenance/INTTRACommunicationSettingsComponent';
+import { SimulatorBookingComponent } from './Components/Wizard/SimulatorBookingComponent';
 
 export const Components =
     [
@@ -9,8 +10,8 @@ export const Components =
         SimulatorComponent,
         INTTRASettingsComponent,
         INTTRACommunicationSettingsComponent,
+        SimulatorBookingComponent
     ];
-
 
 export class ModuleDeclarations {
     public static Get(name: string) {
@@ -22,7 +23,7 @@ export class ModuleDeclarations {
             case "SimulatorComponent": { myResult = SimulatorComponent; break; }
             case "INTTRASettingsComponent": { myResult = INTTRASettingsComponent; break; }
             case "INTTRACommunicationSettingsComponent": { myResult = INTTRACommunicationSettingsComponent; break; }
-
+            case "SimulatorBookingComponent": { myResult = SimulatorBookingComponent; break; }
         }
 
         return myResult;

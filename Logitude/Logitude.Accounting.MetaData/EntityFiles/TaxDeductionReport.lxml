@@ -40,7 +40,7 @@
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;TaxDeductionReportEdit&quot;" MenuButtonGroupName="&quot;TaxDeductionReportEditButtonsGroup&quot;">
-    <MenuButton EventCode="&quot;TDMR&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;יותר&quot;">
+    <MenuButton EventCode="&quot;TDMR&quot;" DefaultText="&quot;More&quot;" MenuButtonType="&quot;dropdownbutton&quot;" IndexOrder="0" LocalDefaultText="&quot;נוספים&quot;">
       <MenuItem EventCode="&quot;TXFL&quot;" DefaultText="&quot;Download Text file&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="0" LocalDefaultText="&quot;הורד קובץ טקסט&quot;" />
       <MenuItem EventCode="&quot;DNPD&quot;" DefaultText="&quot;Download PDF file&quot;" MenuButtonType="&quot;menuitem&quot;" IndexOrder="1" LocalDefaultText="&quot;הורד קובץ PDF  &quot;" />
     </MenuButton>

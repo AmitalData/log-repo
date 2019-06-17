@@ -614,6 +614,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     //#region Credit limit
     creditPercentage:number = 0;
     accountTotal: number = 0;
+    creditStatusAmount: number = 0;
     LoadCreditDetailsData(){
 
 
@@ -635,6 +636,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 percentage = percentage / (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0);
             else
                 percentage = 0;
+
+            this.creditStatusAmount = (this.accountCardlist.CreditLimitAmount ? this.accountCardlist.CreditLimitAmount : 0) - this.accountTotal;
+
         }
 
         if (!percentage) percentage = 0;

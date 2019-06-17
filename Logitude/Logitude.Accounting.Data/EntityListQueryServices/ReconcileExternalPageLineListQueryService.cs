@@ -39,7 +39,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                                    CreditAmount = a.CreditAmount,
                                                                    DebitAmount = a.DebitAmount,
-                                                                   Amount = a.CreditAmount > 0 ? a.CreditAmount : a.DebitAmount,
+                                                                   Amount = a.CreditAmount != 0 ? a.CreditAmount : a.DebitAmount,
 
                                                                    Notes = a.Notes,
 

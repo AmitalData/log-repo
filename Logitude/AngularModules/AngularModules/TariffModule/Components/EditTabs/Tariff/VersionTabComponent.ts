@@ -40,6 +40,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public IsDraftVersion: boolean = true;
     public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
+    private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -373,11 +374,30 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     // Upload Excel File 
-    OnFileChanged(event) {
-        var file = event.target.files[0];
-        this.UploadExcel(file);
+    OnFileChanged(fileEvent) {
+        var file = fileEvent.target.files[0];
+
+        if (file) {
+            var extension: string = file.name.split('.')[1];
+
+            if (extension.includes("xls")) {
+                var file = fileEvent.target.files[0];
+                this.UploadExcel(file);
+            }
+
+            else {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
+            }
+        } 
     }
     UploadExcel(file: any) {
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.FileName = name[0];
+            }
+        }
         if (file && file.size > 0) {
             this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
@@ -412,9 +432,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
             filter.TariffType = context.EntityPM.TypeCode;
-
+            filter.TariffType = context.EntityPM.TypeCode;
+            filter.FileName = context.FileName;
             context.SendExcelToServer(filter);
-            //context.EntityPM.FileUploadedName = file.Name;
         };
 
         reader.onerror = function (e) {

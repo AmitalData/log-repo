@@ -63,18 +63,22 @@ namespace CommunicationWorkerRole.Services
                 string extention = Path.GetExtension(fileName);
                 if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
                 {
-                    byte[] fileData = DownloadFTPFile(schedulerDetails, sftpService, fileName);
-                    AddToAnalyzeQueue(fileName, fileData, schedulerDetails);
-                    DeleteFTPFile(schedulerDetails, sftpService, fileName);
+                    string p_read_status = "";
+                    byte[] fileData = DownloadFTPFile(schedulerDetails, sftpService, fileName, out p_read_status);
+                    if (p_read_status != "-1")
+                    {
+                        AddToAnalyzeQueue(fileName, fileData, schedulerDetails);
+                        DeleteFTPFile(schedulerDetails, sftpService, fileName);
+                    }
                 }
             }
 
         }
 
-        public byte[] DownloadFTPFile(SchedulerDetails schedulerDetails, SFTPService sftpService, string fileName)
+        public byte[] DownloadFTPFile(SchedulerDetails schedulerDetails, SFTPService sftpService, string fileName, out string p_status)
         {
             string p_message;
-            string p_status = "";
+          
              
             string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
             byte[] fileData = sftpService.DownloadFile(fileName, out p_status, out p_message);
@@ -126,8 +130,34 @@ namespace CommunicationWorkerRole.Services
             //SFTPService sftpService = new SFTPService();
             string p_message;
             string p_status = "";
+            string pattern = "*";
+            //if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Extension))
+            //{
+            //    pattern += "." + schedulerDetails.FTPDetails.Extension.TrimStart('.');
+            //}
 
-            directoryFiles = sftpService.DirList("*", true, false, out p_status, out p_message);
+            //if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Prefix))
+            //{
+            //    pattern = schedulerDetails.FTPDetails.Prefix + pattern;
+            //    //directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
+            //    //f.StartsWith(schedulerDetails.FTPDetails.Prefix, StringComparison.CurrentCultureIgnoreCase)))
+            //    //.ToList();
+            //}
+
+            //if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Suffix))
+            //{
+
+            //    pattern = pattern + schedulerDetails.FTPDetails.Suffix;
+            //    //directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
+            //    //f.Replace(Path.GetExtension(f), "")
+            //    //.EndsWith(schedulerDetails.FTPDetails.Suffix, StringComparison.CurrentCultureIgnoreCase)))
+            //    //.ToList();
+            //}
+
+            pattern = (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Prefix) ? schedulerDetails.FTPDetails.Prefix : "") + "*" + (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Suffix) ? schedulerDetails.FTPDetails.Suffix : "") +
+                (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Extension) ? "." + schedulerDetails.FTPDetails.Extension.TrimStart('.') : "");
+
+                           directoryFiles = sftpService.DirList(pattern, true, false, out p_status, out p_message);
             if (p_status == "-1")
             {
                 AddWarning(p_message);
@@ -139,28 +169,28 @@ namespace CommunicationWorkerRole.Services
 
             //.Where(f => !string.IsNullOrWhiteSpace(f) && !string.IsNullOrWhiteSpace(Path.GetExtension(f))).ToList();
 
-            if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Extension))
-            {
-                directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
-                Path.GetExtension(f).TrimStart('.')
-                .Equals(schedulerDetails.FTPDetails.Extension, StringComparison.CurrentCultureIgnoreCase)))
-                .ToList();
-            }
+            //if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Extension))
+            //{
+            //    directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
+            //    Path.GetExtension(f).TrimStart('.')
+            //    .Equals(schedulerDetails.FTPDetails.Extension, StringComparison.CurrentCultureIgnoreCase)))
+            //    .ToList();
+            //}
 
-            if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Prefix))
-            {
-                directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
-                f.StartsWith(schedulerDetails.FTPDetails.Prefix, StringComparison.CurrentCultureIgnoreCase)))
-                .ToList();
-            }
+            //if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Prefix))
+            //{
+            //    directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
+            //    f.StartsWith(schedulerDetails.FTPDetails.Prefix, StringComparison.CurrentCultureIgnoreCase)))
+            //    .ToList();
+            //}
 
-            if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Suffix))
-            {
-                directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
-                f.Replace(Path.GetExtension(f), "")
-                .EndsWith(schedulerDetails.FTPDetails.Suffix, StringComparison.CurrentCultureIgnoreCase)))
-                .ToList();
-            }
+            //if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Suffix))
+            //{
+            //    directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
+            //    f.Replace(Path.GetExtension(f), "")
+            //    .EndsWith(schedulerDetails.FTPDetails.Suffix, StringComparison.CurrentCultureIgnoreCase)))
+            //    .ToList();
+            //}
 
             return directoryFiles;
         }
@@ -190,7 +220,7 @@ namespace CommunicationWorkerRole.Services
                     ConnectedToEntity = false,
                     ConnectedToTenant = true,
                     Tenant = schedulerDetails.Tenant,
-                    FileSize = fileData.Length,
+                    FileSize = fileData != null ? fileData.Length : 0,
                     FileName = fileName,
                 };
 

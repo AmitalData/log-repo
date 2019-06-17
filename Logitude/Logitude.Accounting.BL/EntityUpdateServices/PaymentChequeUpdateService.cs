@@ -272,17 +272,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public void ValidateGLAccountAccountType(PaymentChequePM entityPM)
         {
             GLAccountPM account=  GetGLAccountById(entityPM);
-           
-            if (account.AccountTypeCode == "3")
+
+            if (account != null)
             {
-                throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.VendorsGLAccount", entityPM.Tenant, showLocals));
+                if (account.AccountTypeCode == "3")
+                {
+                    throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.VendorsGLAccount", entityPM.Tenant, showLocals));
+                }
             }
 
         }
         public GLAccountPM GetGLAccountById(PaymentChequePM entityPM)
         {
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
-            return gLAccountQueryService.GetSingle(EntityPOCO.PayToGLAccountId, false, false);
+            return gLAccountQueryService.GetSingle(entityPM.PayToGLAccountId, false, false);
         }
         public static ContactPM GetLoggedContact(int tenant)
         {
