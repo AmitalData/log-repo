@@ -32,7 +32,7 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
     public isRTL: boolean = false;
 
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         // Set Entity
@@ -112,23 +112,23 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     Listen() {
 
 
-        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
-            this.CurrentEditComponentId = SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
+        if (this.CurrentSession.CurrentEditComponent != null) {
+            this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
 
             //
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
 
             //
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
                     }
                 });
@@ -182,6 +182,16 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
 
         }
   }
+
+    get IsVATExempt() { return this.EntityPM.IsVATExempt }
+    set IsVATExempt(value: boolean) {
+        if (this.EntityPM.IsVATExempt != value) {
+            this.EntityPM.IsVATExempt = value;
+
+        }
+    }
+
+
 
   get IsEquipmentVendor() { return this.EntityPM.IsEquipmentVendor }
   set IsEquipmentVendor(value: boolean) {
@@ -340,6 +350,14 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
     set RevenueExpenseType(value: string) {
         if (this.EntityPM.RevenueExpenseType != value) {
             this.EntityPM.RevenueExpenseType = value;
+            if (value == "3") {
+
+                this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, false);
+            }
+            else {
+                this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, true);
+            }
+
         }
     }
     //#endregion
@@ -358,6 +376,15 @@ export class GLAccountGeneralTabComponent extends BaseComponent {
         if (this.EntityPM.ChartOfAccountsId) {
             this.ChartOfAccountsId = this.EntityPM.ChartOfAccountsId;
             this.UIProperties.SetValidity("ChartOfAccountsId", this.ObjectTableName, true, "");
+        }
+
+        if (this.EntityPM.RevenueExpenseType == "3") {
+
+
+            this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, false);
+        }
+        else {
+            this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, true);
         }
 
     }

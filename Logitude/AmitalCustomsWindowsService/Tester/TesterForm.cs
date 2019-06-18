@@ -20,9 +20,6 @@ using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.Messaging.Maman;
-using System.Threading;
-using Logitude.Customs.BL.Messaging;
-using System.Net;
 //using System.Windows.Interactivity;
 
 namespace AmitalCustomsWindowsService.Tester
@@ -47,19 +44,10 @@ namespace AmitalCustomsWindowsService.Tester
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
-
-            var t = new Thread(GetENV);
-            t.Start();
-            //GetENV();
-            ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
-        }
-
-        private static void GetENV()
-        {
-            
-            var pmCustomsSetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(1);
-            var jsonSetting = ProxyUtil.JsonConvertSerialize(pmCustomsSetting);
+            var pmCustomsSetting= Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(1);
+            var jsonSetting=ProxyUtil.JsonConvertSerialize(pmCustomsSetting);
             Debug.WriteLine(jsonSetting);
+            ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
         }
 
         private void BlobToolStripMenuItem_Click(object sender, EventArgs e)
@@ -261,19 +249,13 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            string customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-43468729.xml");
-            WebFreight.Web.CustomWebServices.Testers.Tester.DeSerializeObject3052(customsResponseXml);
-            customsResponseXml = File.ReadAllText(@"C:\Users\itzik\Desktop\zevel\1-20980020.xml");
-            WebFreight.Web.CustomWebServices.Testers.Tester.DeSerializeObject3052(customsResponseXml);
-
             //http://lodmpn05/DSVWebFreightDebug/api/DeclarationWebService/GetDeclarationMandatoryTicketList/?parentEntityId=1-92241&parentEntityCode=Declaration
             //DbContextBaseUtil.ToLog = true;
-            //WebFreight.Web.CustomWebServices.Testers.Tester.TestNOWait();
+            WebFreight.Web.CustomWebServices.Testers.Tester.TestNOWait();
 
             //clsTester.GetDeclarationMandatoryTicketList(parentEntityId: "1-92241", parentEntityCode: "Declaration");
             //clsTester.TestLockTab();
-            //return;
+            return;
             clsTester.TestNull();
         }
 
@@ -496,30 +478,10 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void debugStepToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            switch (_CBWorkerRole.Text)
-            {
-                case "CustomsAnalyzeQueueWR":
-                    {
-                        var customsAnalyzeQueueWR = new CustomsAnalyzeQueueWR();
-                        customsAnalyzeQueueWR.CheckParamsAndExec(_TBID.Text, _CBInterfaceID.Text, GetTenant());
 
-                    }
-                    break;
-                case "SendWEBAPIMessage2MamanWR":
-                    {
-                        var SendWEBAPIMessage2MamanWR = new SendWEBAPIMessage2MamanWR();
-                        SendWEBAPIMessage2MamanWR.DebugStep(_TBID.Text, _CBInterfaceID.Text, GetTenant());
-
-                    }
-                    break;
-                default:
-                    CustomsWorkerRole.Test.clsTester.DebugRQStep(
+            CustomsWorkerRole.Test.clsTester.DebugRQStep(
                 _CBInterfaceID.Text, GetTenant(), _TBID.Text,
                 _CBWorkerRole.Text);
-                    break;
-            }
-            
-            
 
 
         }
@@ -742,40 +704,22 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void hAWBALDARMamanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WebAPINetworkCredentialMessage.OVSUpdateHawbStatusTester();
-            //WebAPI2BearerMamanMessage.OVSUpdateHawbStatusTesterNotWork();
-
-            //MamanBaldarTest();
-
-        }
-
-        private static void MamanBaldarTest()
-        {
             var wr = new SendWEBAPIMessage2MamanWR();
             string data =
                 @"{""BaldarCode"":""2026"",""BaldarAwb"":""baldarAWb35"",""AirlineAwbPref"":""001"",""Master"":22222211,""Awb8"":88888888,""HawbExtnd"":""abcd1234 update"",""AirlineCode"":""1X"",""FltNo"":null,""FltDate"":null,""LandTime"":null,""DecNoOfPackags"":1,""DecWeight"":100.1,""DolarValue"":200.12345,""StoreTypeReq"":""67"",""Description"":""Description1 - 2026 update"",""CustomerName"":""Miriam"",""CustomerAddress"":""Ein Gedi"",""CustomerPhone"":""026765544"",""DestLineDesc"":""DestLineDesc"",""BaldarMessageTime"":""2018 - 10 - 16T17: 38:33.1365366 + 03:00"",""BaldarHp"":""2323231"",""OpenBaldarAwbDate"":""2018 - 10 - 15T17: 38:33.1365366 + 03:00"",""ResponseStatusCode"":null,""ResponseStatusMsg"":null}";
-            var service = new WebAPI2BearerMamanMessage(new CourierWEBAPICommSettings()
+            var service = new WebAPI2BearerMamanMessage(new Logitude.Customs.BL.Messaging.Maman.Courier2MamanCommSettings()
             {
                 DeclarationId = "",
                 username = "F_unitedf",
                 password = "Unit2019",
-                //URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
-                //URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae",
-
-                //URIToken = @"http://localhost:52013/api/Token",
-                //URIBaldarCreateECTHRMessgae = @"http://localhost:52013/api/MamanCreateECTHRMessgae",
-
-                URIToken = @"http://192.116.221.103/WebApp3PartySimulator/api/Token",
-                URIMethod = @"http://192.116.221.103/WebApp3PartySimulator/api/MamanCreateECTHRMessgae",
-
-
+                URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
+                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae",
                 Tenant = 1
 
-
             });
-
-
             var res = service.PostIt(data);
+
+            
         }
 
         private void mamanCreateECSpclMessgaeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -797,13 +741,13 @@ namespace AmitalCustomsWindowsService.Tester
   ""SpLabel5"": ""sample string 9"",
   ""SpSpclCode"": ""sample string 10""
 }";
-            var service = new WebAPI2BearerMamanMessage(new CourierWEBAPICommSettings()
+            var service = new WebAPI2BearerMamanMessage(new Logitude.Customs.BL.Messaging.Maman.Courier2MamanCommSettings()
             {
                 DeclarationId = "",
                 username = "F_unitedf",
                 password = "Unit2019",
                 URIToken = @"https://maman.wsfreeze.co.il/WebAPIExt/Token", //HTTP/1.1;
-                URIMethod = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECSpclMessgae",
+                URIBaldarCreateECTHRMessgae = @"https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECSpclMessgae",
                 Tenant = 1
 
             });
@@ -820,77 +764,6 @@ namespace AmitalCustomsWindowsService.Tester
         private void TesterForm_Load(object sender, EventArgs e)
         {
 
-        }
-
-        private void buildMamanBaldarSTBToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var AirlineIdMAWB=_tstbMamanBaldarSTB.Text;
-            AirlineIdMAWB = AirlineIdMAWB.Trim();
-            if (string.IsNullOrEmpty(AirlineIdMAWB))
-            {
-                MessageBox.Show("AirlineId-MAWB is must");
-            }
-            var my = new Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue.MamanStatusAvailabilityTesterService();
-            var list = my.Tester(AirlineIdMAWB);
-            string dir = @"C:\inetpub\wwwroot\FTP_MAMAN";
-            if (!Directory.Exists(dir))
-            {
-                dir = Path.Combine(Path.GetTempPath(), "FTP_MAMAN");
-                if (!Directory.Exists(dir)) {
-                    Directory.CreateDirectory(dir);
-                }
-
-            }
-            System.Diagnostics.Process.Start(dir);
-            foreach (var item in list)
-            {
-                var f = Path.Combine(dir, item.Key);
-                File.WriteAllText(f, item.Value);
-            }
-        }
-
-        private void textBoxLogger_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void downloadFTPToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string interfaceID = _CBInterfaceID.Text;
-            if (string.IsNullOrWhiteSpace(interfaceID))
-            {
-                MessageBox.Show("_CBInterfaceID.Text is null");
-                return;
-            }
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            try
-            {
-                openFileDialog1.InitialDirectory = "c:\\";
-                openFileDialog1.Filter = "All files (*.*)|*.*";
-                openFileDialog1.FilterIndex = 2;
-                openFileDialog1.RestoreDirectory = true;
-
-                if (openFileDialog1.ShowDialog() != DialogResult.OK)
-                {
-                    return;
-                }
-                var fileName = openFileDialog1.FileName;
-                var bytsDcaFile = File.ReadAllBytes(fileName);
-                fileName = Path.GetFileName(fileName);
-
-                int Tenant = GetTenant();
-
-                FTPToAnalyzeQueueWR.SaveAnalyzeQueueFromCode(Tenant, interfaceID, fileName, bytsDcaFile);
-            }
-            finally
-            {
-                openFileDialog1.Dispose();
-            }
-            
-
-
-            
-            
         }
     }
 }

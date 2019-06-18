@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
@@ -33,7 +33,7 @@ export class YearTransferComponent extends BaseComponent {
     _JournalOpService: JournalOpService;
     public ValidationErrorsList: string[];
     
-
+    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService, public entityArgs: EntityArgs) {
         super();
         this._JournalOpService = new JournalOpService();
@@ -41,7 +41,7 @@ export class YearTransferComponent extends BaseComponent {
         this.UIProperties.SetRequired("Year", this.ObjectTableName, true);
         this._entityResourceService.getEntityResourceByTableName("Journal").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("JournalLine").subscribe((response: any) => { });
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 
     // Properties
@@ -79,7 +79,7 @@ export class YearTransferComponent extends BaseComponent {
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
-        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
+        this.CurrentSession.StartBusyIndicatorCreating();
         this._JournalOpService
             .GetYearTransferJournal(this.year)
             .subscribe(
@@ -95,13 +95,13 @@ export class YearTransferComponent extends BaseComponent {
                 alert(err);
             },
             () => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
             }
         );
     }
     OpenJournal() {
         if (!AppTool.IsNullOrEmpty(this._JournalPM.Id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this._JournalPM.Id, ObjectTableName: 'Journal' });
@@ -111,7 +111,7 @@ export class YearTransferComponent extends BaseComponent {
         }
     }
     CancelButtonClicked() {
-        SessionLocator.CurrentSession.CloseCurrentWindow();
+        this.CurrentSession.CloseCurrentWindow();
     }
     OnKeyUp(key) {
         if (!AppTool.IsNullOrEmpty(key)) {

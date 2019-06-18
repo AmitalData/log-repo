@@ -84,9 +84,6 @@
             this.toolStripMenuItemcheckUniqueUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.hAWBALDARMamanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mamanCreateECSpclMessgaeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mamanBaldarSTBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._tstbMamanBaldarSTB = new System.Windows.Forms.ToolStripTextBox();
-            this.buildMamanBaldarSTBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxLogger = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -99,7 +96,6 @@
             this.Interface = new System.Windows.Forms.Label();
             this._TBTenant = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.downloadFTPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -206,8 +202,7 @@
             // 
             this.downLoadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.downloadDcaMessageSheetWRToolStripMenuItem,
-            this.downloadFileToolStripMenuItem,
-            this.downloadFTPToolStripMenuItem});
+            this.downloadFileToolStripMenuItem});
             this.downLoadToolStripMenuItem.Name = "downLoadToolStripMenuItem";
             this.downLoadToolStripMenuItem.Size = new System.Drawing.Size(300, 22);
             this.downLoadToolStripMenuItem.Text = "DownLoad";
@@ -368,8 +363,7 @@
             this.asDataSetToolStripMenuItem,
             this.uploadMultiToolStripMenuItem,
             this.hAWBALDARMamanToolStripMenuItem,
-            this.mamanCreateECSpclMessgaeToolStripMenuItem,
-            this.mamanBaldarSTBToolStripMenuItem});
+            this.mamanCreateECSpclMessgaeToolStripMenuItem});
             this.adHockToolStripMenuItem.Name = "adHockToolStripMenuItem";
             this.adHockToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
             this.adHockToolStripMenuItem.Text = "AdHock";
@@ -554,28 +548,6 @@
             this.mamanCreateECSpclMessgaeToolStripMenuItem.Text = "MamanCreateECSpclMessgae";
             this.mamanCreateECSpclMessgaeToolStripMenuItem.Click += new System.EventHandler(this.mamanCreateECSpclMessgaeToolStripMenuItem_Click);
             // 
-            // mamanBaldarSTBToolStripMenuItem
-            // 
-            this.mamanBaldarSTBToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._tstbMamanBaldarSTB,
-            this.buildMamanBaldarSTBToolStripMenuItem});
-            this.mamanBaldarSTBToolStripMenuItem.Name = "mamanBaldarSTBToolStripMenuItem";
-            this.mamanBaldarSTBToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.mamanBaldarSTBToolStripMenuItem.Text = "MamanStatusAvailability";
-            // 
-            // _tstbMamanBaldarSTB
-            // 
-            this._tstbMamanBaldarSTB.Name = "_tstbMamanBaldarSTB";
-            this._tstbMamanBaldarSTB.Size = new System.Drawing.Size(100, 23);
-            this._tstbMamanBaldarSTB.Text = "AirlinePreFix-MAWB";
-            // 
-            // buildMamanBaldarSTBToolStripMenuItem
-            // 
-            this.buildMamanBaldarSTBToolStripMenuItem.Name = "buildMamanBaldarSTBToolStripMenuItem";
-            this.buildMamanBaldarSTBToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.buildMamanBaldarSTBToolStripMenuItem.Text = "BuildMessage  MamanBaldarSTB";
-            this.buildMamanBaldarSTBToolStripMenuItem.Click += new System.EventHandler(this.buildMamanBaldarSTBToolStripMenuItem_Click);
-            // 
             // textBoxLogger
             // 
             this.textBoxLogger.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -584,7 +556,6 @@
             this.textBoxLogger.Name = "textBoxLogger";
             this.textBoxLogger.Size = new System.Drawing.Size(638, 308);
             this.textBoxLogger.TabIndex = 1;
-            this.textBoxLogger.TextChanged += new System.EventHandler(this.textBoxLogger_TextChanged);
             // 
             // splitContainer1
             // 
@@ -708,13 +679,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Tenant";
             // 
-            // downloadFTPToolStripMenuItem
-            // 
-            this.downloadFTPToolStripMenuItem.Name = "downloadFTPToolStripMenuItem";
-            this.downloadFTPToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.downloadFTPToolStripMenuItem.Text = "DownloadFTP";
-            this.downloadFTPToolStripMenuItem.Click += new System.EventHandler(this.downloadFTPToolStripMenuItem_Click);
-            // 
             // TesterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -810,9 +774,5 @@
         private System.Windows.Forms.ToolStripMenuItem asDataSetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hAWBALDARMamanToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mamanCreateECSpclMessgaeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mamanBaldarSTBToolStripMenuItem;
-        private System.Windows.Forms.ToolStripTextBox _tstbMamanBaldarSTB;
-        private System.Windows.Forms.ToolStripMenuItem buildMamanBaldarSTBToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem downloadFTPToolStripMenuItem;
     }
 }

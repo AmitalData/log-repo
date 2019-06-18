@@ -11,8 +11,24 @@
                 <tr>
                     <td>
                         <div class="MediaFill">
-                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [RowsCount]="9"
+
+                            <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [ObjectTableName]="ObjectTableName" [RowsCount]="13"
                                 [DataContext]="DataContext" [IsMultiline]="true" [HideColumns]="true"></LogTextBox>
+
+
+                            <div *ngIf="entityPM" class="footer" style="margin-top: 10px;">
+                                <div float-start style="padding: 0px 10px; width:100%;">
+                                    <div float-start  style="color: dimgray;font-size:11px; width: fit-content;">{{'AccountingNote.F.UpdatedByUserName' | TextCodeTranslationPipe}} </div>
+                                    <div float-start style="font-size:12px;width: 230px;padding: 0 10px;" class="TextTrimming">
+                                        <span float-start>{{ entityPM.UpdatedByUserName }}</span> <span float-start style="font-size:10px; line-height: 17px;padding: 0 5px;">({{ entityPM.UpdateDate | DateTimePipe:'DT' }})</span>
+                                    </div>
+                                </div>
+                                <!-- <div float-start style="padding: 0px 10px; width:100%;" >
+                                    <div float-start  style="color: dimgray;font-size:11px; width: 80px;">Updated Date: </div>
+                                    <div float-start style="font-size:12px;">{{ entityPM.UpdateDate | DateTimePipe:'DT' }}</div>
+                                </div> -->
+                            </div>
+
                         </div>
                     </td>
                 </tr>

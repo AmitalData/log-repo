@@ -11,7 +11,8 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManager';
 import { DocumentTypePMExtendedService } from '../../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
-
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
+import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 
 export class OpenFormatReportMenuButtonsHandler {
     public EntityPM: OpenFormatReportPM;
@@ -23,6 +24,8 @@ export class OpenFormatReportMenuButtonsHandler {
     DocumentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
     documentType: any;
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+    private CurrentSession = SessionLocator.SelectedSession;
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
@@ -61,6 +64,18 @@ export class OpenFormatReportMenuButtonsHandler {
                                 break;
                             }
                         case "INIDL":
+                            {
+                                if (this.EntityPM.StatusTypeCode != "3") {
+                                    button.IsDisabled = true;
+                                }
+                                else {
+                                    button.IsDisabled = false;
+                                }
+
+                                break;
+                            }
+
+                        case "PDFD":
                             {
                                 if (this.EntityPM.StatusTypeCode != "3") {
                                     button.IsDisabled = true;
@@ -117,6 +132,18 @@ export class OpenFormatReportMenuButtonsHandler {
                     
                     break;
                 }
+            case "PDFD":
+
+                {
+                    var myPrintHelper = new GeneralPrintHelper("OpenFormatReport", "OFDP", this.EntityPM.Id, null, this.EntityPM.ReportNumber, null);
+                    if (myPrintHelper.IsLoadPrintControl) {
+                        ServiceLocator.SendTotangoUserActivity("OpenFormatReport", "Print");
+                        myPrintHelper.ShowPrintControl();
+                    }
+                    break;
+
+
+            }
         }
 
 
@@ -144,11 +171,11 @@ export class OpenFormatReportMenuButtonsHandler {
     
 
     private StartBusyIndicator(message: string) {
-        SessionLocator.CurrentSession.StartBusyIndicator(message);
+        this.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        SessionLocator.CurrentSession.StopBusyIndicator();
+        this.CurrentSession.StopBusyIndicator();
     }
 }
 

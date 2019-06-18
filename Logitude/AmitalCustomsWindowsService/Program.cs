@@ -1,6 +1,5 @@
 ﻿using AmitalCustomsWindowsService.Utils;
 using Logitude.Customs.BL.EntityQueryServiceExt;
-using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
@@ -129,20 +128,6 @@ namespace AmitalCustomsWindowsService
 
                 InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null);
                 ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
-                InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =
-                    (string courierMasterId, int tenant) =>
-                    {
-                        var courierMasterRequiredErrors = CustomsRequiredFieldsValidator.GetCourierMasterRequiredFieldErrorsForCourierDeclaration(courierMasterId, tenant);
-                        if (courierMasterRequiredErrors != null)
-                        {
-                            return courierMasterRequiredErrors.RequiredFields.Count == 0;
-
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                    };
                 Simplog.Server.Infrastructure.LogitudeSettings.HandleLogMe("StartStatic", false, "", DateTime.MaxValue);
 
                 CustomsRegistrations.Register();

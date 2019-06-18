@@ -251,7 +251,7 @@
 
     .SaveAlert{
         position: absolute;
-        top: 20px;
+        top: 30px;
         left: 0px;
         right: 0px;
         z-index: 10;
@@ -764,16 +764,16 @@
                     {{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}
                 </div>
                 <div class="footer-summery">
-                    <div class="footer-cell" [class.border-left]="isRTL" [style.float]="isRTL ? 'right' : 'left'" style="text-align: right;">
+                    <div class="footer-cell" [class.border-left]="isRTL" float-start style="text-align: right;">
                         <div style="font-size: 15px; color:#0a7d4c;">{{TotalCredit | NumbersPipe:'N2'}}</div>
                         <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Credit' | TextCodeTranslationPipe}} </div>
                     </div>
-                    <div class="footer-cell" [class.border-left]="!isRTL" [style.float]="isRTL ? 'right' : 'left'" [style.text-align]="isRTL ? 'right' : 'left'"  style="padding-left: 20px;">
+                    <div class="footer-cell" [class.border-left]="!isRTL" float-start text-start style="padding-left: 20px;">
                         <div style="font-size: 15px; color:#740218;">{{TotalDebit | NumbersPipe:'N2'}}</div>
                         <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Debit' | TextCodeTranslationPipe}} </div>
                     </div>
 
-                    <div class="footer-cell " [style.float]="isRTL ? 'right' : 'left'" style="padding-left: 30px;">
+                    <div class="footer-cell " float-start style="padding-left: 30px;">
                         <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalsDeference!=0">{{TotalsDeference | NumbersPipe:'N2'}}</div>
                         <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Difference' | TextCodeTranslationPipe}} </div>
                     </div>
