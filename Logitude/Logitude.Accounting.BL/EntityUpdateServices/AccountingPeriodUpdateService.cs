@@ -57,14 +57,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.OpenMonth < entityPOCO.OpenMonth) // Open Month decremented
             {
                 LedgerTransactionQueryService ledgerTransactionQuery = new LedgerTransactionQueryService(entityPM.Tenant);
-                IQueryable<LedgerTransaction> monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonth(entityPOCO.Year, entityPOCO.OpenMonth, entityPOCO.Tenant);
-                bool monthHasTransactions = monthTransactions.Any();
-                if (monthHasTransactions)
+                for (int _month = entityPOCO.OpenMonth; _month >= entityPM.OpenMonth; _month--)
                 {
-                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
-                    string msg = TextCodesTranslator.TranslateText("AccountingPeriod.O.CantCancelOpenMonth", 0, showLocal);
-                    throw new ApplicationException(msg);
+                    IQueryable<LedgerTransaction> monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonth(entityPOCO.Year, _month, entityPOCO.Tenant);
+                    bool monthHasTransactions = monthTransactions.Any();
+                    if (monthHasTransactions)
+                    {
+                        bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                        string msg = TextCodesTranslator.TranslateText("AccountingPeriod.O.CantCancelOpenMonth", 0, showLocal);
+                        throw new ApplicationException(msg);
+                    }
                 }
+                
             }
         }
 
