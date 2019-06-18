@@ -1,4 +1,5 @@
 
+
 import {UpdateCurrencyRateComponent} from './Components/UpdateCurrencyRate/UpdateCurrencyRateComponent';
 import {UpdateVATPercentageComponent} from './Components/UpdateVATPercentage/UpdateVATPercentageComponent';
 import {CitySelectionComponent} from './Components/CitySelection/CitySelectionComponent';
@@ -8,6 +9,10 @@ import { DWQueryBuilderFiltersComponent } from './Components/DWQueryBuilder/DWQu
 import { CustomsShipperGeneralTabComponent } from './Components/Depositions/EditTab/CustomsShipperGeneralTabComponent';
 import { DWFilterSettings } from './Components/DWQueryBuilder/DWFilterSettings';
 //import { DWAskUserFiltersComponent } from './Components/DWQueryBuilder/DWAskUserFiltersComponent'; 
+
+import { ProductTypeGeneralTabComponent } from './Components/ProductType/EditTabs/ProductTypeGeneralTabComponent';
+
+
 
 
 export const Components =
@@ -21,6 +26,7 @@ export const Components =
         CustomsShipperGeneralTabComponent,
         DWFilterSettings,
         //DWAskUserFiltersComponent
+        ProductTypeGeneralTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -38,7 +44,8 @@ export class ModuleDeclarations {
             case "CustomsShipperGeneralTabComponent": { myResult = CustomsShipperGeneralTabComponent; break; }
             case "DWFilterSettings": { myResult = DWFilterSettings; break; }
             //case "DWAskUserFiltersComponent": { myResult = DWAskUserFiltersComponent; break; }
-                 
+            case "ProductTypeGeneralTabComponent": { myResult = ProductTypeGeneralTabComponent; break; }
+                
                 
         }
 

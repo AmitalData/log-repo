@@ -125,50 +125,17 @@ namespace WebFreight.Web.Helpers
 
         public void StartImporterDeposition(ImporterDepositionAM importerDepositionAM)
         {
-
+            bool isNew = false;
             int tenant = importerDepositionAM.CustomerTenant;
-
             CustomsShipperQuery customsShipperQuery = new CustomsShipperQuery(tenant);
-            CustomsShipperPM customsShipperPM = customsShipperQuery.GetSinglePMByShipperCode(importerDepositionAM.ShipperCode, tenant);
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
             CustomsShipperService customsShipperService = new CustomsShipperService(objectContext, tenant);
-            bool isNew = false;
+            CustomsShipperPM customsShipperPM = customsShipperQuery.GetSinglePMByShipperCode(importerDepositionAM.ShipperCode, tenant);
+
             if (customsShipperPM == null)
             {
-                isNew = true; 
-                customsShipperPM = new CustomsShipperPM();
-                customsShipperPM.Tenant = tenant;
-                customsShipperPM.CustomsShipperCode = importerDepositionAM.ShipperCode;
-                customsShipperPM.EnglishName = importerDepositionAM.ShipperName;
-                customsShipperPM.LocalName = importerDepositionAM.ShipperName;
-                customsShipperPM.ShipperVAT = importerDepositionAM.ShipperVAT;
-                customsShipperPM.CountryCode = importerDepositionAM.ShipperCountry;
-                customsShipperPM.ValidDepositionNumber = importerDepositionAM.DepositionNumber;
-                customsShipperPM.ValidityStartDate = importerDepositionAM.ValidityStartDate;
-                customsShipperPM.ValidityEndDate = importerDepositionAM.ValidityEndDate;
-
-                customsShipperPM.Addresses = new List<AddressPM>();
-                var address = new AddressPM()
-                {
-                    Description = "Main Address",
-                    Name = importerDepositionAM.ShipperName,
-                    CountryCode = importerDepositionAM.ShipperCountry,
-                    AddressTypeId = "M",
-                };
-
-                if (!string.IsNullOrEmpty(importerDepositionAM.ShipperCountry))
-                {
-                    CountryQuery countryQuery = new CountryQuery(tenant);
-                    CountryPM countryPM = countryQuery.GetSinglePMByCode(importerDepositionAM.ShipperCountry, tenant);
-                    if (countryPM != null)
-                    {
-                        address.CountryId = countryPM.Id;
-                        address.CountryName = countryPM.EnglishName;
-                    }
-                }
-
-                customsShipperPM.Addresses.Add(address);
-                customsShipperService.Create(customsShipperPM);
+                isNew = true;
+                customsShipperPM = CreateCustomsShipper(importerDepositionAM, tenant, customsShipperService);
             }
 
             CustomerDepositionRepository customerDepositionRepository = new CustomerDepositionRepository(tenant);
@@ -176,18 +143,7 @@ namespace WebFreight.Web.Helpers
 
             if (customerDeposition == null)
             {
-                customerDeposition = new CustomerDeposition()
-                {
-                    Id = IdCounter.GetNumber("CustomerDeposition", tenant).ToString(),
-                    Tenant = tenant,
-                    CustomsShipperId = customsShipperPM.Id,
-                    DepositionNumber = importerDepositionAM.DepositionNumber,
-                    ValidityStartDate = importerDepositionAM.ValidityStartDate,
-                    ValidityEndDate = importerDepositionAM.ValidityEndDate,
-                    CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                };
-                customerDepositionRepository.Add(customerDeposition);
-                customerDepositionRepository.SubmitChanges();
+                customerDeposition = CreateCustomerDeposition(importerDepositionAM, customsShipperPM, customerDepositionRepository);
             }
             else
             {
@@ -200,23 +156,74 @@ namespace WebFreight.Web.Helpers
                 }
             }
 
+
             if (!isNew)
             {
-
-                CustomerDeposition validCustomerDeposition =  customerDepositionRepository.GetValidityCustomerDepositionByCustomsShipperId(customsShipperPM.Id, customsShipperPM.Tenant);
-                if (validCustomerDeposition != null)
+                if (customerDeposition.ValidityEndDate > customsShipperPM.ValidityEndDate)
                 {
-                    if (customsShipperPM.ValidityStartDate != validCustomerDeposition.ValidityStartDate || customsShipperPM.ValidityEndDate != validCustomerDeposition.ValidityEndDate)
-                    {
-                        customsShipperPM.ValidityStartDate = validCustomerDeposition.ValidityStartDate;
-                        customsShipperPM.ValidityEndDate = validCustomerDeposition.ValidityEndDate;
-                        customsShipperPM.ValidDepositionNumber = validCustomerDeposition.DepositionNumber;
-                        customsShipperService.Update(customsShipperPM);
-                    }
+                    customsShipperPM.ValidityStartDate = customerDeposition.ValidityStartDate;
+                    customsShipperPM.ValidityEndDate = customerDeposition.ValidityEndDate;
+                    customsShipperPM.ValidDepositionNumber = customerDeposition.DepositionNumber;
+                    customsShipperService.Update(customsShipperPM);
                 }
             }
 
 
+        }
+
+        private static CustomerDeposition CreateCustomerDeposition(ImporterDepositionAM importerDepositionAM, CustomsShipperPM customsShipperPM, CustomerDepositionRepository customerDepositionRepository)
+        {
+            CustomerDeposition customerDeposition = new CustomerDeposition()
+            {
+                Id = IdCounter.GetNumber("CustomerDeposition", customsShipperPM.Tenant).ToString(),
+                Tenant = customsShipperPM.Tenant,
+                CustomsShipperId = customsShipperPM.Id,
+                DepositionNumber = importerDepositionAM.DepositionNumber,
+                ValidityStartDate = importerDepositionAM.ValidityStartDate,
+                ValidityEndDate = importerDepositionAM.ValidityEndDate,
+                CreateDate = TenantServerConfigration.GetCurrentDateTime(customsShipperPM.Tenant),
+            };
+            customerDepositionRepository.Add(customerDeposition);
+            customerDepositionRepository.SubmitChanges();
+            return customerDeposition;
+        }
+
+        private static CustomsShipperPM CreateCustomsShipper(ImporterDepositionAM importerDepositionAM, int tenant, CustomsShipperService customsShipperService)
+        {
+            CustomsShipperPM customsShipperPM = new CustomsShipperPM();
+            customsShipperPM.Tenant = tenant;
+            customsShipperPM.CustomsShipperCode = importerDepositionAM.ShipperCode;
+            customsShipperPM.EnglishName = importerDepositionAM.ShipperName;
+            customsShipperPM.LocalName = importerDepositionAM.ShipperName;
+            customsShipperPM.ShipperVAT = importerDepositionAM.ShipperVAT;
+            customsShipperPM.CountryCode = importerDepositionAM.ShipperCountry;
+            customsShipperPM.ValidDepositionNumber = importerDepositionAM.DepositionNumber;
+            customsShipperPM.ValidityStartDate = importerDepositionAM.ValidityStartDate;
+            customsShipperPM.ValidityEndDate = importerDepositionAM.ValidityEndDate;
+
+            customsShipperPM.Addresses = new List<AddressPM>();
+            var address = new AddressPM()
+            {
+                Description = "Main Address",
+                Name = importerDepositionAM.ShipperName,
+                CountryCode = importerDepositionAM.ShipperCountry,
+                AddressTypeId = "M",
+            };
+
+            if (!string.IsNullOrEmpty(importerDepositionAM.ShipperCountry))
+            {
+                CountryQuery countryQuery = new CountryQuery(tenant);
+                CountryPM countryPM = countryQuery.GetSinglePMByCode(importerDepositionAM.ShipperCountry, tenant);
+                if (countryPM != null)
+                {
+                    address.CountryId = countryPM.Id;
+                    address.CountryName = countryPM.EnglishName;
+                }
+            }
+
+            customsShipperPM.Addresses.Add(address);
+            customsShipperService.Create(customsShipperPM);
+            return customsShipperPM;
         }
 
         #region API Logs

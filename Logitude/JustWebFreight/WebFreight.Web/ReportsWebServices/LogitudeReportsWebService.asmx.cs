@@ -10691,7 +10691,7 @@ namespace WebFreight.Web.ReportsWebServices
             // constants
             const int PAGE_SIZE = 100;
             const int PAGE_RECORD_START_INDEX = 0;
-            const string ACCOUNT_TYPE_CODE = "2";
+          // const string ACCOUNT_TYPE_CODE = "2";
 
             // declarations
             LedgerTransactionsDataProvider transactionsDataProvider = new LedgerTransactionsDataProvider();
@@ -10711,6 +10711,8 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_FromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_GLAccountId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "GLAccountId").FirstOrDefault();
+            QueryFilterItem filterItem_AccountTypeCode = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AccountTypeCode").FirstOrDefault();
+            QueryFilterItem filterItem_ChartOfAccountsId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsId").FirstOrDefault();
             QueryFilterItem filterItem_CurrencyId = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CurrencyId").FirstOrDefault();
             QueryFilterItem filterItem_IsReconciled = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsReconciled").FirstOrDefault();
             QueryFilterItem filterItem_IncludeChildAccounts = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault();
@@ -10724,6 +10726,8 @@ namespace WebFreight.Web.ReportsWebServices
             DateTime fromDate_filter = GetQueryFilterItemValue<DateTime>(filterItem_FromDate);
             DateTime toDate_filter = GetQueryFilterItemValue<DateTime>(filterItem_ToDate);
             string glAccountId = GetQueryFilterItemValue<string>(filterItem_GLAccountId);
+            string accountTypeCode = GetQueryFilterItemValue<string>(filterItem_AccountTypeCode);
+            string chartOfAccountsId = GetQueryFilterItemValue<string>(filterItem_ChartOfAccountsId);
             string currencyId = GetQueryFilterItemValue<string>(filterItem_CurrencyId);
             bool isReconciled = GetQueryFilterItemValue<bool>(filterItem_IsReconciled);
             bool includeChildAccounts = GetQueryFilterItemValue<bool>(filterItem_IncludeChildAccounts);
@@ -10775,7 +10779,8 @@ namespace WebFreight.Web.ReportsWebServices
                 Category3Id = category3Id,
                 Category4Id = category4Id,
                 Category5Id = category5Id,
-                AccountTypeCode = ACCOUNT_TYPE_CODE,
+                AccountTypeCode = accountTypeCode, //ACCOUNT_TYPE_CODE,
+                ChartOfAccountsId = chartOfAccountsId, 
                 SearchFields = searchFields,
                 DateTypeCode = _dateTypeCode,
                 //CallBack = xxxx,
