@@ -737,12 +737,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
             int rowIndex = 0;
+            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
-                String[] rowData = new String[sheet.Columns.Count()];
+                String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
-                for (int i = 0; i < sheet.Columns.Count(); i++)
+
+                String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
+
+                for (int i = 0; i < sheet.Columns.Count() - 1; i++)
                 {
                     rowData[i] = row.Cells[i].Value2.ToString();
                 }
@@ -782,11 +787,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         tariffLine.MinPriceText = this.TrimTo_20(rowData[2]);
                     }
                 }
-
-                int count = 0;
+                
                 if (rowData.Length > 3)
                 {
-                    count = 1;
                     if (this.IsNumber(rowData[3]))
                     {
                         tariffLine.Step1Price = Convert.ToDecimal(rowData[3]);
@@ -799,7 +802,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 4)
                 {
-                    count = 2;
                     if (this.IsNumber(rowData[4]))
                     {
                         tariffLine.Step2Price = Convert.ToDecimal(rowData[4]);
@@ -812,7 +814,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 5)
                 {
-                    count = 3;
                     if (this.IsNumber(rowData[5]))
                     {
                         tariffLine.Step3Price = Convert.ToDecimal(rowData[5]);
@@ -825,7 +826,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 6)
                 {
-                    count = 4;
                     if (this.IsNumber(rowData[6]))
                     {
                         tariffLine.Step4Price = Convert.ToDecimal(rowData[6]);
@@ -838,7 +838,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 7)
                 {
-                    count = 5;
                     if (this.IsNumber(rowData[7]))
                     {
                         tariffLine.Step5Price = Convert.ToDecimal(rowData[7]);
@@ -851,7 +850,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 8)
                 {
-                    count = 6;
                     if (this.IsNumber(rowData[8]))
                     {
                         tariffLine.Step6Price = Convert.ToDecimal(rowData[8]);
@@ -864,7 +862,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 9)
                 {
-                    count = 7;
                     if (this.IsNumber(rowData[9]))
                     {
                         tariffLine.Step7Price = Convert.ToDecimal(rowData[9]);
@@ -877,7 +874,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 10)
                 {
-                    count = 8;
                     if (this.IsNumber(rowData[10]))
                     {
                         tariffLine.Step8Price = Convert.ToDecimal(rowData[10]);
@@ -888,9 +884,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length > count + 3)
+                if (!string.IsNullOrEmpty(notescolumn))
                 {
-                    tariffLine.Notes = rowData[count + 3];
+                    tariffLine.Notes = notesRowData;
                 }
 
                 tariffLine.IsUploaded = true;
@@ -910,13 +906,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
             int rowIndex = 0;
 
+            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+            
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
-                String[] rowData = new String[sheet.Columns.Count()];
+                String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
+                
+                String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
 
-                for (int i = 0; i < sheet.Columns.Count(); i++)
+                for (int i = 0; i < sheet.Columns.Count() - 1; i++)
                 {
                     rowData[i] = row.Cells[i].Value2.ToString();
                 }
@@ -944,11 +944,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
                 }
-
-                int count = 0;
+                
                 if (rowData.Length > 2)
                 {
-                    count = 1;
                     if (this.IsNumber(rowData[2]))
                     {
                         tariffLine.Surcharge1Price = Convert.ToDecimal(rowData[2]);
@@ -961,7 +959,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 3)
                 {
-                    count = 2;
                     if (this.IsNumber(rowData[3]))
                     {
                         tariffLine.Surcharge2Price = Convert.ToDecimal(rowData[3]);
@@ -974,8 +971,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 4)
                 {
-                    count = 3;
-
                     if (this.IsNumber(rowData[4]))
                     {
                         tariffLine.Surcharge3Price = Convert.ToDecimal(rowData[4]);
@@ -988,7 +983,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 5)
                 {
-                    count = 4;
                     if (this.IsNumber(rowData[5]))
                     {
                         tariffLine.Surcharge4Price = Convert.ToDecimal(rowData[5]);
@@ -1001,7 +995,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 6)
                 {
-                    count = 5;
                     if (this.IsNumber(rowData[6]))
                     {
                         tariffLine.Surcharge5Price = Convert.ToDecimal(rowData[6]);
@@ -1014,7 +1007,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 7)
                 {
-                    count = 6;
                     if (this.IsNumber(rowData[7]))
                     {
                         tariffLine.Surcharge6Price = Convert.ToDecimal(rowData[7]);
@@ -1025,9 +1017,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 8)
+                if (rowData.Length > 8)
                 {
-                    count = 7;
                     if (this.IsNumber(rowData[8]))
                     {
                         tariffLine.Surcharge7Price = Convert.ToDecimal(rowData[8]);
@@ -1040,7 +1031,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 9)
                 {
-                    count = 8;
                     if (this.IsNumber(rowData[9]))
                     {
                         tariffLine.Surcharge8Price = Convert.ToDecimal(rowData[9]);
@@ -1053,7 +1043,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 10)
                 {
-                    count = 9;
                     if (this.IsNumber(rowData[10]))
                     {
                         tariffLine.Surcharge9Price = Convert.ToDecimal(rowData[10]);
@@ -1066,7 +1055,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (rowData.Length > 11)
                 {
-                    count = 10;
                     if (this.IsNumber(rowData[11]))
                     {
                         tariffLine.Surcharge10Price = Convert.ToDecimal(rowData[11]);
@@ -1077,9 +1065,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length > count + 2)
+                if (!string.IsNullOrEmpty(notescolumn))
                 {
-                    tariffLine.Notes = rowData[count + 2];
+                    tariffLine.Notes = notesRowData;
                 }
 
                 tariffLine.IsUploaded = true;

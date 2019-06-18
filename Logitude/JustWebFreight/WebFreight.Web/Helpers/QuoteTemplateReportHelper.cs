@@ -189,7 +189,7 @@ namespace Logitude.BL.Helpers
             ObjectTable objectTable = null;
 
 
-            headerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, headerHtmlString, quotePM, template, ref objectTabelRepository, ref objectTable);
+            headerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, headerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
 
             HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, headerHtmlString, null, 2040, 0);
             pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
@@ -201,7 +201,7 @@ namespace Logitude.BL.Helpers
                 pdfConverter.PdfHeaderOptions.HeaderHeight += 7;
             }
 
-            footerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, footerHtmlString, quotePM, template, ref objectTabelRepository, ref objectTable);
+            footerHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, footerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
 
 
             HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, footerHtmlString, null, 2040, 0);
@@ -247,7 +247,7 @@ namespace Logitude.BL.Helpers
 
             bodyHtmlString = htmlDocument.DocumentNode.InnerHtml;
 
-            bodyHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, bodyHtmlString, quotePM, template, ref objectTabelRepository, ref objectTable);
+            bodyHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, bodyHtmlString, quotePM, template, userId , ref objectTabelRepository, ref objectTable);
             pdfConverter.TriggeringMode = TriggeringMode.Auto;
             //data = pdfConverter.GetPdfBytesFromHtmlString(bodyHtmlString);
             data = pdfConverter.ConvertHtml(bodyHtmlString, null);
@@ -255,7 +255,7 @@ namespace Logitude.BL.Helpers
             return data;
         }
 
-        private string ResolveHtmlData(int tenant, HtmlEditorHelper htmlEditorHelper, string htmlString, QuotePM quotePM, QuoteTemplatePM template, ref ObjectTableRepository objectTabelRepository, ref ObjectTable objectTable)
+        private string ResolveHtmlData(int tenant, HtmlEditorHelper htmlEditorHelper, string htmlString, QuotePM quotePM, QuoteTemplatePM template, string userId, ref ObjectTableRepository objectTabelRepository, ref ObjectTable objectTable)
         {
 
             if (!string.IsNullOrEmpty(htmlString) && (htmlString.Contains("[") || htmlString.Contains("]")))
@@ -266,7 +266,7 @@ namespace Logitude.BL.Helpers
                     objectTable = objectTabelRepository.GetObjectTableByName("Quote", tenant, true);
                 }
 
-                htmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, template.CreatedByUserId, tenant, htmlString, ref subject, ref from, ref cc, ref replyTo, quotePM);
+                htmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, userId, tenant, htmlString, ref subject, ref from, ref cc, ref replyTo, quotePM);
             }
             return htmlString;
         }
