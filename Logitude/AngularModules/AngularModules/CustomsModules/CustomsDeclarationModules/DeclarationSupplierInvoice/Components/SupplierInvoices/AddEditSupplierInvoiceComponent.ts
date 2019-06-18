@@ -1535,7 +1535,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         }
 
-        if (this.tariffErrorItems > 0) { errors.push("ישנן שורות עם קוד הסכם שגוי")}
+        //if (this.tariffErrorItems > 0) { errors.push("ישנן שורות עם קוד הסכם שגוי")}
 
         if (errors.length == 0) {
 
