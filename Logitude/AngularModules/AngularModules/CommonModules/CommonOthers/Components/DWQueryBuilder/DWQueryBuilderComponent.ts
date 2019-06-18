@@ -1249,7 +1249,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.FilterTypes = [];
         this.FilterTypes.push(new ObjectFieldOperator("Fixed Filter", "Fixed Filter"));
         this.FilterTypes.push(new ObjectFieldOperator("Ask User", "Dynamic Filter"));
-        this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[1];
+        this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
 
         if (ParentClass != null) {
             this.MyParentClass = ParentClass;
