@@ -61,17 +61,8 @@ namespace WebFreight.Web.App_Code
                 {
                     throw new Exception("Sorry you’re not authenticated");
                 }
-
-                string result = "";
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                if (!exportDocumentHelper.IsCallBuildDocumentReportWebService(authToken.Tenant))
-                {
-                    result = exportDocumentHelper.ExportDocument2Pdf(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId,false);
-                }
-                else
-                {
-                    result = exportDocumentHelper.ExportDocument2PdfViewWebService(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId, token);
-                }
+                string result = exportDocumentHelper.ExportDocument2Pdf(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
