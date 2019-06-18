@@ -704,6 +704,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 documentsFilingPM.EntityId = _PaymentOrderPM.Id;
                 documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+                
+                
+                //HD#330080 - moti will connect id to ref 
+                documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
+                documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+
+
             }
 
             documentsFilingPM.ChildEntityReference = _PaymentOrderPM.PaymentNumber;
@@ -890,6 +897,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 documentsFilingPM.EntityId = _PaymentOrderPM.Id;
                 documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+
+                //HD#330080 - moti will connect id to ref 
+                documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
+                documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+
             }
 
             documentsFilingPM.ChildEntityReference = _PaymentOrderPM.PaymentNumber;
