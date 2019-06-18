@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef}  from '@angular/core';
+﻿import {Component, ChangeDetectorRef}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -24,7 +24,7 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
     public isRTL: boolean = false;
 
 
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -40,20 +40,20 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
                     }
                 });

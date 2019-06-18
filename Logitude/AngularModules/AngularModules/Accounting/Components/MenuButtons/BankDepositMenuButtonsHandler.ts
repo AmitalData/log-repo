@@ -1,4 +1,4 @@
-import { BankDepositExtendedPMService } from './../../Services/ExtendedPMs/BankDepositExtendedPMService';
+﻿import { BankDepositExtendedPMService } from './../../Services/ExtendedPMs/BankDepositExtendedPMService';
 declare var window: any;
 import {BankDepositPM} from '../../EntityPMs/BankDepositPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
@@ -33,7 +33,7 @@ export class BankDepositMenuButtonsHandler {
     private _documentTypePMService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
     private _exportDocumentService: ExportDocumentService = new ExportDocumentService();
     private _BankDepositExtendedPMService: BankDepositExtendedPMService = new BankDepositExtendedPMService();
-    private CurrentSession = SessionLocator.SelectedSession;
+
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -48,13 +48,13 @@ export class BankDepositMenuButtonsHandler {
     Listen() {
 
 
-        if (this.CurrentSession.CurrentEditComponent != null) {
-            this.CurrentSession.CurrentEditComponent.ComponentId;
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
+            SessionLocator.CurrentSession.CurrentEditComponent.ComponentId;
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
                     }
                 });
@@ -185,17 +185,17 @@ export class BankDepositMenuButtonsHandler {
             case "CancelDeposit":
                 {
                     ///// save in server
-                    this.CurrentSession.StartBusyIndicatorLoading();
+                    SessionLocator.CurrentSession.StartBusyIndicatorLoading();
                     this._BankDepositExtendedPMService.cancelDeposit(this.EntityPM.Id).subscribe(myResult => {
-                        this.CurrentSession.StopBusyIndicator();
+                        SessionLocator.CurrentSession.StopBusyIndicator();
 
                         var mm: ServiceResponse = myResult;
                         if (!mm.HasError) {
-                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
                         }
                         else {
-                            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = mm.ErrorsArray;
+                            SessionLocator.CurrentSession.CurrentEditComponent.ValidationErrorsList = mm.ErrorsArray;
                         }
                     });
 
@@ -230,11 +230,11 @@ export class BankDepositMenuButtonsHandler {
     }
 
     private StartBusyIndicator(message: string) {
-        this.CurrentSession.StartBusyIndicator(message);
+        SessionLocator.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        this.CurrentSession.StopBusyIndicator();
+        SessionLocator.CurrentSession.StopBusyIndicator();
     }
 
     private PrintDeposit() {

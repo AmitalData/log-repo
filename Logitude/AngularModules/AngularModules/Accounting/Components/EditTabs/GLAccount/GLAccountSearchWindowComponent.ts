@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, OnInit}  from '@angular/core';
+﻿import {Component, Output, EventEmitter, OnInit}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 declare var window: any;
@@ -33,7 +33,6 @@ export class GLAccountSearchWindowComponent extends BaseComponent implements OnI
     gLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     SelectedRow: any;
     ValidationErrorsList: string[];
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
        
@@ -101,7 +100,7 @@ export class GLAccountSearchWindowComponent extends BaseComponent implements OnI
 
                     if (myResponse) {
                         if (!myResponse.HasError) {
-                            this.CurrentSession.CloseCurrentWindowEmit(entityList);
+                            SessionLocator.CurrentSession.CloseCurrentWindowEmit(entityList);
                         }
                         else
                         {
@@ -173,6 +172,6 @@ export class GLAccountSearchWindowComponent extends BaseComponent implements OnI
 
     }
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 }

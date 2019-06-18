@@ -45,7 +45,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
     _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
     _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
     taxDeductionReportExtendedPMService: TaxDeductionReportExtendedPMService = new TaxDeductionReportExtendedPMService();
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         super();
 
@@ -241,7 +241,7 @@ export class AccountingFlatFileDownloadComponent extends BaseComponent implement
 
     //#region Buttons
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
 

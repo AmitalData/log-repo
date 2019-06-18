@@ -140,13 +140,13 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.10\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.18\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.10\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.18\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.10\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.18\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -262,6 +262,10 @@
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
       <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
       <Name>Simplog.Global.Data</Name>
@@ -340,7 +344,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
-</PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

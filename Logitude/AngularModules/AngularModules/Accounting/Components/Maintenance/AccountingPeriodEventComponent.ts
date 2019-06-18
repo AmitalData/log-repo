@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, ViewChildren, QueryList} from '@angular/core';
+﻿import {Component, OnInit, AfterViewInit, ViewChildren, QueryList} from '@angular/core';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
@@ -34,7 +34,7 @@ export class AccountingPeriodEventComponent extends BaseComponent implements Aft
 
     public DataContext: AccountingPeriodEventComponent = this;
     public ObjectTableName: string = "AccountingPeriod"
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private _entityResourceService: EntityResourceService, public entityArgs: EntityArgs) {
         super();
         
@@ -53,7 +53,7 @@ export class AccountingPeriodEventComponent extends BaseComponent implements Aft
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 
     ngAfterViewInit() {

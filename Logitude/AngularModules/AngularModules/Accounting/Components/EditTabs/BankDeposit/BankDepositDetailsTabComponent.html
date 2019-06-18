@@ -727,11 +727,11 @@
         </div>
         <div class="footer-summery">
 
-            <div *ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit" float-start class="footer-cell" style="text-align: right;">
+            <div *ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit" [style.float]="isRTL ? 'right' : 'left'" class="footer-cell" style="text-align: right;">
                 <div style="font-size: 15px; font-weight: bold; color:#25446C;">{{CashBookTotal | NumbersPipe:'N2'}}</div>
                 <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Totals' | TextCodeTranslationPipe}}</div>
             </div>
-            <div *ngIf="!this.EntityPM.IsCashDeposit" class="footer-cell" float-start [class.border-left]="IsLinesSelection && isRTL" style="text-align: left;">
+            <div *ngIf="!this.EntityPM.IsCashDeposit" class="footer-cell" [style.float]="isRTL ? 'right' : 'left'" [class.border-left]="IsLinesSelection && isRTL" style="text-align: left;">
                 <div style="font-size: 15px; font-weight: bold; color:#25446C;">{{SelectedTotal | NumbersPipe:'N2'}}</div>
                 <!--<div style="font-size: 13px; color: #6f6f6f;">{{IsLinesSelection ? "Selected" : "Total"}}</div>-->
                 <div *ngIf="IsLinesSelection" style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Selected' | TextCodeTranslationPipe}}</div>

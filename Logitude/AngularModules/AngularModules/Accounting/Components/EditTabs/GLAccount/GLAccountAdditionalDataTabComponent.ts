@@ -1,4 +1,4 @@
-import {Component}  from '@angular/core';
+﻿import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {GLAccountExtendedListService} from '../../../Services/ExtendedLists/GLAccountExtendedListService';
@@ -34,7 +34,7 @@ export class GLAccountAdditionalDataTabComponent extends BaseComponent  {
     public ChildrenFilterItems: ApiQueryFilters;
 
     public entityPM: GLAccountPM = null;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private entityArgs: EntityArgs) {
         super();
         this.ConnectedGLAccounts = new ObservableCollection([]);
@@ -183,7 +183,6 @@ export class SplittedByCurrencyAccount extends BaseComponent {
     parent: GLAccountAdditionalDataTabComponent;
     GLAccountPMService: GLAccountPMService = new GLAccountPMService();
     DataContext: any = this;
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor(entity: GLAccountPM, Parent: GLAccountAdditionalDataTabComponent) {
         super();
         this.entityPM = entity;
@@ -229,7 +228,7 @@ export class SplittedByCurrencyAccount extends BaseComponent {
             this.entityPM.Inactive = false;
             this.entityPM.Type = "ACTIVE";
         }
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
+        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
             
             this.GLAccountPMService.update(this.entityPM).subscribe((myResponse: ServiceResponse) => {
 
@@ -239,7 +238,7 @@ export class SplittedByCurrencyAccount extends BaseComponent {
                     }
                 }
 
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
 
             });
 
@@ -275,7 +274,7 @@ export class SplittedByCurrencyAccount extends BaseComponent {
 }
 
 export class GLAccountChild extends BaseComponent {
-    private CurrentSession = SessionLocator.SelectedSession;
+
     entityPM: GLAccountPM;
     parent: GLAccountAdditionalDataTabComponent;
     GLAccountPMService: GLAccountPMService = new GLAccountPMService();
@@ -334,7 +333,7 @@ export class GLAccountChild extends BaseComponent {
                 }
             }
 
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.CurrentSession.StopBusyIndicator();
 
         });
     }

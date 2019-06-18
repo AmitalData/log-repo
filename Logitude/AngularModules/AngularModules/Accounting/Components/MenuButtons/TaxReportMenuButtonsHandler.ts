@@ -25,7 +25,6 @@ export class TaxReportMenuButtonsHandler {
     public ObjectTableName: string = "TaxReport"
 
   _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
-    private CurrentSession = SessionLocator.SelectedSession;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -106,14 +105,14 @@ export class TaxReportMenuButtonsHandler {
                   logWindow.Show('./Accounting/Components/Others/AccountingFlatFileDownloadComponent');
 
 
-                  //this.CurrentSession.StartBusyIndicatorLoading();
+                  //SessionLocator.CurrentSession.StartBusyIndicatorLoading();
                   //this._TaxReportExtendedPMService.DownloadPNC874File(this.EntityPM).subscribe(myResult => {
                   //  var mm: ServiceResponse = myResult;
                   //  var entity = mm.Result;
 
                   //    var docFilingPM = entity;
                   //    DownloadManager.DownloadPage(docFilingPM.DocumentId);
-                  //  this.CurrentSession.StopBusyIndicator();
+                  //  SessionLocator.CurrentSession.StopBusyIndicator();
 
                   //});
 
@@ -128,10 +127,10 @@ export class TaxReportMenuButtonsHandler {
     }
 
     private StartBusyIndicator(message: string) {
-        this.CurrentSession.StartBusyIndicator(message);
+        SessionLocator.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        this.CurrentSession.StopBusyIndicator();
+        SessionLocator.CurrentSession.StopBusyIndicator();
     }
 }

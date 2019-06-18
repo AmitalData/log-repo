@@ -57,7 +57,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     public isRTL: boolean = false;
     public ValidationErrorsList: string[];
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         super();
 
@@ -129,7 +128,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     txt_Amount: string = TextCodeTranslator.Translate("JournalLine.F.LocalAmount");
 
     ngOnInit() {
-        this.CurrentSession.LostFocusEvent.subscribe((res) => {
+        SessionLocator.CurrentSession.LostFocusEvent.subscribe((res) => {
             if (this.CD) {
                 var isDestroyed: boolean = this.CD['destroyed'];
                 if (!isDestroyed) {
@@ -298,7 +297,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         if (this.ValidationErrorsList.length > 0) {
             return;
         }
-        this.CurrentSession.StartBusyIndicatorCreating();
+        SessionLocator.CurrentSession.StartBusyIndicatorCreating();
 
 
         var myReconciliationLines: ReconciliationLinePM[] = [];
@@ -330,7 +329,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             .subscribe(
             (res) => {
 
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
                 if (res.HasError) {
                     this.ValidationErrorsList = res.ErrorsArray;
 
@@ -347,7 +346,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     _NewJournalPM: JournalPM;
     OpenJournal() {
         if (!AppTool.IsNullOrEmpty(this._NewJournalPM.Id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this._NewJournalPM.Id, ObjectTableName: 'Journal' });
@@ -358,7 +357,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 }
 

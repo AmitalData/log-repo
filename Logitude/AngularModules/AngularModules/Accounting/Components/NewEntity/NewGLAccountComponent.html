@@ -1,4 +1,4 @@
-
+﻿
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
@@ -93,7 +93,7 @@
                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
                                     <!-- <LogTextBox [IsMultiline]="true" [ObjectFieldName]="'EnglishName'" [InputType]="'text'" [DataContext]="DataContext"
-            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox> -->
+                                    [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox> -->
 
                                 </td>
                                 <td><div></div></td>
@@ -107,7 +107,7 @@
                                 </td>
 
                                 <td>
-                                    <CheckBox [IsChecked]="IsMultiCurrency" (Checked)="IsMultiCurrency = $event" [IsEnabled]="IsMultiCurrencyCheckboxEnabled"></CheckBox>
+                                    <CheckBox [IsChecked]="IsMultiCurrency" (Checked)="IsMultiCurrency = $event"></CheckBox>
                                 </td>
                                 <td><div></div></td>
                             </tr>
@@ -187,20 +187,6 @@
                                             [SelectedValue]="RevenueExpenseType"
                                             [HideColumns]="true">
                                     </LogLov>
-                                </td>
-                                <td><div></div></td>
-                            </tr>
-
-                            <!-- IsVATExempt -->
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'IsVATExempt'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogCheckBox [ObjectFieldName]="'IsVATExempt'" [Checked]="IsVATExempt" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-
                                 </td>
                                 <td><div></div></td>
                             </tr>

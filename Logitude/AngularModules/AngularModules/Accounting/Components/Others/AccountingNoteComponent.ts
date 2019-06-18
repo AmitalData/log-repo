@@ -37,7 +37,7 @@ export class AccountingNoteComponent extends BaseComponent {
 
 
 
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor () {
         super();
         if(ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -57,17 +57,13 @@ export class AccountingNoteComponent extends BaseComponent {
             {
                 // new
                 this.entityPM = new AccountingNotePM();
-                var loggedContact = SessionLocator.LoggedUserPM;
                 if(this.accountPM.CardId) {
                     this.entityPM.Tenant = SessionLocator.Tenant;
                     this.entityPM.CardId = this.accountPM.CardId;
                     this.entityPM.CreateDate = new Date();
                     this.entityPM.UpdateDate= new Date();
-                    this.entityPM.CreatedByUserId = loggedContact.Id;
-                    this.entityPM.UpdatedByUserId = loggedContact.Id;
-                    this.entityPM.UpdatedByUserName = loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName);
-                    this.entityPM.CreatedByUserName = loggedContact.DontShowLocal ? loggedContact.EnglishName : (loggedContact.LocalName||loggedContact.EnglishName);
-
+                    this.entityPM.CreatedByUserId = "will";
+                    this.entityPM.UpdatedByUserId = "replaced";
                 }else{
                     this.ValidationErrorsList = [];
                     this.ValidationErrorsList.push("No card id in selected gl account!!!!!!!!!!");
@@ -99,41 +95,41 @@ export class AccountingNoteComponent extends BaseComponent {
     {
         if(this.isEditForm)
         {
-            this.CurrentSession.StartBusyIndicatorSaving();
+            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
             this._AccountingNotePMService.update(this.entityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindow();
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.CurrentSession.CloseCurrentWindow();
 
                 }
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.CurrentSession.StopBusyIndicator();
                 }
             });
         }
         else
         {
-            this.CurrentSession.StartBusyIndicatorSaving();
+            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
             this._AccountingNotePMService.insert(this.entityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindow();
+                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    SessionLocator.CurrentSession.CloseCurrentWindow();
 
                 }
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.CurrentSession.StopBusyIndicator();
                 }
             });
         }
     }
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
     //#endregion
 

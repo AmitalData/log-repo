@@ -28,7 +28,7 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
     entityPM: TaxDeductionReportPM = new TaxDeductionReportPM();
     TaxDeductionReportPMService: TaxDeductionReportPMService = new TaxDeductionReportPMService();
     public TenantPM: TenantPM;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         super();
 
@@ -87,17 +87,17 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            this.CurrentSession.StartBusyIndicator("");
+            SessionLocator.CurrentSession.StartBusyIndicator("");
             this.TaxDeductionReportPMService.insert(this.entityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var entity = mm.Result;
 
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
 
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                        this.CurrentSession.SessionLocation.viewContainerRef)
+                        SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
@@ -105,12 +105,12 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
                                 this.CancelButtonClicked();
                             });
                         });
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.CurrentSession.StopBusyIndicator();
                 }
             });
 
@@ -123,7 +123,7 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
 
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
 
     }
 

@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -25,7 +25,6 @@ export class GLAccountMenuButtonsHandler {
     public TenantPM: TenantPM;
     public ObjectTableName: string = "GLAccount"
     TotalSum: number = 0;
-    private CurrentSession = SessionLocator.SelectedSession;
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     private glAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     public SetEntityPM(entityArgs: EntityArgs) {
@@ -41,20 +40,20 @@ export class GLAccountMenuButtonsHandler {
     private LoadCompletedEvent: any = null;
     private TabSelectedEvent: any = null;
     Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
                     }
                 });
@@ -177,11 +176,11 @@ export class GLAccountMenuButtonsHandler {
     }
 
     private StartBusyIndicator(message: string) {
-        this.CurrentSession.StartBusyIndicator(message);
+        SessionLocator.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        this.CurrentSession.StopBusyIndicator();
+        SessionLocator.CurrentSession.StopBusyIndicator();
     }
 
     ReconcileButtonClicked() {

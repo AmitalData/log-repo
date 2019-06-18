@@ -32,7 +32,7 @@ export class FieldTemplateComponent {
     public isRTL: boolean = false;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     public tenantCurrency: string = "";
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -98,16 +98,6 @@ export class FieldTemplateComponent {
             else {
                 this.FieldValue = this.Entity.StatusLocalName;
             }
-
-            if (this.Entity.StatusTypeCode == "2") {
-                this.textColor = "orange";
-            }
-            else if (this.Entity.StatusTypeCode == "3") {
-                this.textColor = "green";
-            }
-            else if (this.Entity.StatusTypeCode == "4") {
-                this.textColor = "red";
-            }
         }
 
         if (this.ObjectTableName == "OpenFormatReport" && this.FieldName == "Status") {
@@ -129,16 +119,6 @@ export class FieldTemplateComponent {
                 this.FieldValue = this.Entity.UserLocalName;
             }
         }
-
-        if (this.ObjectTableName == "TaxReport" && this.FieldName == "StatusEnglishName") {
-
-            if (SessionLocator.LoggedUserPM.DontShowLocal) {
-                this.FieldValue = this.Entity.StatusEnglishName;
-            }
-            else {
-                this.FieldValue = this.Entity.StatusLocalName;
-            }
-        }
     }
 
     Abs(num: number) {
@@ -149,7 +129,7 @@ export class FieldTemplateComponent {
 
     OpenCashBook(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'CashBook' });
@@ -161,7 +141,7 @@ export class FieldTemplateComponent {
 
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
@@ -242,7 +222,7 @@ export class FieldTemplateComponent {
             }
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -256,12 +236,12 @@ export class FieldTemplateComponent {
 
     OpenGLAccount(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'GLAccount' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     });
                 });
         }
@@ -269,7 +249,7 @@ export class FieldTemplateComponent {
 
     OpenBankAccount(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'BankAccount', BackButtonLabel: 'Deposit' });

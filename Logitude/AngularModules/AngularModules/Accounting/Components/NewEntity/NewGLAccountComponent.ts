@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
+﻿import {Component, ChangeDetectorRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
@@ -36,7 +36,7 @@ export class NewGLAccountComponent extends BaseComponent {
 
 
     public isRTL: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -127,18 +127,6 @@ export class NewGLAccountComponent extends BaseComponent {
             this.CD.detectChanges();
         }
     }
-
-
-    get IsVATExempt() { return this.EntityPM.IsVATExempt }
-    set IsVATExempt(value: boolean) {
-        if (this.EntityPM.IsVATExempt != value) {
-            this.EntityPM.IsVATExempt = value;
-
-        }
-    }
-
-
-
     get RevaluationEnabled() { return this.EntityPM.RevaluationEnabled }
     set RevaluationEnabled(value: boolean) {
         if (this.EntityPM.RevaluationEnabled != value) {
@@ -147,7 +135,6 @@ export class NewGLAccountComponent extends BaseComponent {
         }}
 
 
-        IsMultiCurrencyCheckboxEnabled: boolean = true;
     get ChartOfAccountsTypeCode() { return this.EntityPM.ChartOfAccountsTypeCode; }
     set ChartOfAccountsTypeCode(value: string) {
         if (this.EntityPM.ChartOfAccountsTypeCode != value) {
@@ -157,42 +144,15 @@ export class NewGLAccountComponent extends BaseComponent {
         this.OnLovItemChanged(value);
 
         if (!AppTool.IsNullOrEmpty(value)) {
-
-            // if (value == "1") { // 1-Revenues
-            //     this.RevenueExpenseType = "1";
-            //     this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
-            // } else if (value == "2") { // 2-Expenses
-            //     this.RevenueExpenseType = "2";
-            //     this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
-            // } else {
-            //     this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
-            // }
-
-            //
-
-            if (value == "1" || value == "2"){ // 1-Revenues, 2-Expenses
-
-                // disable fields
-                this.IsMultiCurrency = true;
-                this.CurrencyId = null;
-                this.IsMultiCurrencyCheckboxEnabled = false;
-                this.UIProperties.SetEnabled("IsMultiCurrency", this.ObjectTableName, false);
-                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
-
-                // disable fields
+            if (value == "1") { // 1-Revenues
+                this.RevenueExpenseType = "1";
                 this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
-
-                // set type
-                this.RevenueExpenseType = value;
+            } else if (value == "2") { // 2-Expenses
+                this.RevenueExpenseType = "2";
+                this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, false);
             } else {
-                // enable fields
-                this.IsMultiCurrency = false;
-                this.IsMultiCurrencyCheckboxEnabled = true;
-                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
             }
-
-
         } else {
             this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
         }
@@ -309,14 +269,6 @@ export class NewGLAccountComponent extends BaseComponent {
     set RevenueExpenseType(value: string) {
         if (this.EntityPM.RevenueExpenseType != value) {
             this.EntityPM.RevenueExpenseType = value;
-            if (value == "3") {
-
-                this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, false);
-            }
-            else {
-                this.UIProperties.SetEnabled("IsVATExempt", this.ObjectTableName, true);
-            }
-
         }
     }
 
@@ -342,7 +294,7 @@ export class NewGLAccountComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindowEmit("cancel");
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit("cancel");
     }
 
     SubmitChanges() {
@@ -357,12 +309,12 @@ export class NewGLAccountComponent extends BaseComponent {
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                this.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);
+                SessionLocator.CurrentSession.CloseCurrentWindowEmit(mm.Result.Id);
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -371,9 +323,6 @@ export class NewGLAccountComponent extends BaseComponent {
         this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
         this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
-
-
-
     }
 
     OnLovItemChanged(item: any){

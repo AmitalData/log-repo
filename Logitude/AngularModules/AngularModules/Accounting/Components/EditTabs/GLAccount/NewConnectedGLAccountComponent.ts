@@ -40,7 +40,6 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
     entityResourceService: EntityResourceService = new EntityResourceService();
     GLAccountPMService: GLAccountPMService = new GLAccountPMService();
     gLAccountCurrencyExtendedPMService: GLAccountCurrencyExtendedPMService = new GLAccountCurrencyExtendedPMService();
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -157,7 +156,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                                                   if (response) {
                                                       if (!response.HasError) 
                                                       {
-                                                          this.CurrentSession.CloseCurrentWindowEmit("ok");
+                                                          SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
                                                       }
                                                       else {
                                                           this.ValidationErrorsList = response.ErrorsArray;
@@ -165,7 +164,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
                                                   }
                                               });
 
-                                           //  this.CurrentSession.CloseCurrentWindow();
+                                           //  SessionLocator.CurrentSession.CloseCurrentWindow();
                                           }
                                           else {
                                               this.ValidationErrorsList = response.ErrorsArray;
@@ -174,7 +173,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
 
 
 
-                                      //  this.CurrentSession.StopBusyIndicator();
+                                      //  SessionLocator.CurrentSession.StopBusyIndicator();
 
                                   });
                                  
@@ -197,7 +196,7 @@ export class NewConnectedGLAccountComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.accountPM = null;
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 
 

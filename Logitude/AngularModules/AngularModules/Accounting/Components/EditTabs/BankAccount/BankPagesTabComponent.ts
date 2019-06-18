@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef}  from '@angular/core';
+﻿import {Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -43,7 +43,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
 
     public isRTL: boolean = false;
 
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -69,19 +69,19 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
+        if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
             if (this.SaveCompletedEvent == null) {
-                this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                     }
                 });
             }
 
             if (this.LoadCompletedEvent == null) {
-                this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
                         console.log("Entity Reloaded");
                     }
                 });
@@ -207,8 +207,8 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     public columns: any[] = null;
 
     ReloadData() {
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
 
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
     }
@@ -358,7 +358,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     }
 
     OpenWindow(entity: any = null) {
-        this.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
 
         if (entity)
         {
@@ -375,7 +375,7 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
                 var draftPage = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(draftPage))
                 {
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
 
                     var msg = new MessageWindow();
                     //msg.Title = "Error";
@@ -394,10 +394,10 @@ export class BankPagesTabComponent extends BaseComponent implements OnInit, OnDe
     ShowWindow(entity: any = null) {
 
         // get bank account, then open window
-        this.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         this._BankAccountPMService.get(this.EntityPM.Id).subscribe((myResult) =>
         {
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.CurrentSession.StopBusyIndicator();
             var bankAccount = myResult.Result;
 
             if (!AppTool.IsNullOrEmpty(bankAccount))

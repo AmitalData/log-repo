@@ -22,7 +22,6 @@ export class CashBookMenuButtonsHandler {
     public ObjectTableName: string = "CashBook"
     TotalSum: number = 0;
     public isRTL: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -154,18 +153,18 @@ export class CashBookMenuButtonsHandler {
         logWindow.Title = windowTitle;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => {
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
         logWindow.Show('./Accounting/Components/NewEntity/NewBankDepositComponent');
     }
 
 
     private StartBusyIndicator(message: string) {
-        this.CurrentSession.StartBusyIndicator(message);
+        SessionLocator.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        this.CurrentSession.StopBusyIndicator();
+        SessionLocator.CurrentSession.StopBusyIndicator();
     }
 }
 

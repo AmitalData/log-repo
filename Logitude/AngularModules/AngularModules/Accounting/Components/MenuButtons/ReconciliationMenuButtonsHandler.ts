@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {ReconciliationPM} from '../../EntityPMs/ReconciliationPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -21,7 +21,6 @@ export class ReconciliationMenuButtonsHandler {
     public entityArgs: EntityArgs
     public TenantPM: TenantPM;
     public ObjectTableName: string = "Reconciliation"
-    private CurrentSession = SessionLocator.SelectedSession;
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -90,10 +89,10 @@ export class ReconciliationMenuButtonsHandler {
     }
 
     private StartBusyIndicator(message: string) {
-        this.CurrentSession.StartBusyIndicator(message);
+        SessionLocator.CurrentSession.StartBusyIndicator(message);
     }
 
     private StopBusyIndicator() {
-        this.CurrentSession.StopBusyIndicator();
+        SessionLocator.CurrentSession.StopBusyIndicator();
     }
 }

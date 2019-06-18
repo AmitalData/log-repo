@@ -40,7 +40,6 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
     LayoutDirection: string;
     EntityResourceService: EntityResourceService = new EntityResourceService();
     BankAccountPMService: BankAccountPMService = new BankAccountPMService();
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.entityPM = entityArgs.EntityPM;
@@ -71,7 +70,7 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
             this.DisableFieldsMethod();
         }
         if (this.DisableFieldsEvent == null) {
-            this.DisableFieldsEvent = this.CurrentSession.DisableFieldsEvent.subscribe((res) => {
+            this.DisableFieldsEvent = SessionLocator.CurrentSession.DisableFieldsEvent.subscribe((res) => {
                 this.DisableFieldsMethod();
                         });
         }

@@ -36,7 +36,6 @@ export class PaymentChequeMenuButtonsHandler
         
     }
     bankAccountPMService: BankAccountPMService = new BankAccountPMService();
-    private CurrentSession = SessionLocator.SelectedSession;
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
@@ -179,8 +178,8 @@ export class PaymentChequeMenuButtonsHandler
                                         this.entityArgs.EditComponent.SaveChanges();
                                         this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
                                             if ($event == true) {
-                                                this.CurrentSession.DisableFieldsEvent.emit({});
-                                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                                                SessionLocator.CurrentSession.DisableFieldsEvent.emit({});
+                                                SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
 
                                             }
@@ -222,9 +221,9 @@ export class PaymentChequeMenuButtonsHandler
 
     ReloadEntityPM(key: string) {
         if (key == "ok") {
-            this.CurrentSession.DisableFieldsEvent.emit({});
+            SessionLocator.CurrentSession.DisableFieldsEvent.emit({});
 
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         }
     }
     SaveChanges() {

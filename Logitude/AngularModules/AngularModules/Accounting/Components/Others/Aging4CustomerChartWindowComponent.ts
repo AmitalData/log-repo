@@ -1,4 +1,4 @@
-declare var makeAmBarChart;
+﻿declare var makeAmBarChart;
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
@@ -35,7 +35,7 @@ export class Aging4CustomerChartWindowComponent extends BaseComponent implements
     AccountId: string;
     CardId: string;
     noCard: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         super();
 
@@ -60,7 +60,7 @@ export class Aging4CustomerChartWindowComponent extends BaseComponent implements
     }
 
     OkButtonClicked() {
-        this.CurrentSession.CurrentWindow.Close("ok");
+        SessionLocator.CurrentSession.CurrentWindow.Close("ok");
     }
 
     //#region Chart Code

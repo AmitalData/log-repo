@@ -12,9 +12,6 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { UIProperties } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import { TaxReportExtendedPMService } from '../../Services/ExtendedPMs/TaxReportExtendedPMService';
-import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
-import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
 
 
 @Component({
@@ -31,13 +28,6 @@ export class NewTaxReportComponent extends BaseComponent {
     entityPM: TaxReportPM = new TaxReportPM();
     TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     public TenantPM: TenantPM;
-    _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
-    btePM: any;
-    private CurrentSession = SessionLocator.SelectedSession;
-    _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-    timer: any;
-    timerInterval: number = 1000;
-    bteList: BatchTaskExecutionList;
 
     constructor() {
         super();
@@ -139,42 +129,30 @@ export class NewTaxReportComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            this.CurrentSession.StartBusyIndicator("");
+            SessionLocator.CurrentSession.StartBusyIndicator("");
             this.TaxReportPMService.insert(this.entityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var entity = mm.Result;
-                    this.CurrentSession.StartBusyIndicator("");
-                //    this.CurrentSession.CloseCurrentWindowEmit("ok");
 
-                    this._TaxReportExtendedPMService.PostCreateTaxReportInBatch(entity).subscribe(myResult => {
-                        var mm: ServiceResponse = myResult;
-                        var entity = mm.Result;
-                        this.btePM = entity;
+                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
 
-                        //this.ChangeStatus("inprogress");
-
-                        this.timer = setInterval(() => {
-                            this.GetBTE();
-                        }, this.timerInterval);
-
-                    });
-                    //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                    //    this.CurrentSession.SessionLocation.viewContainerRef)
-                    //    .then(cmpRef => {
-                    //        cmpRef.instance.ComponentRef = cmpRef;
-                    //        cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
-                    //        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                    //            this.CancelButtonClicked();
-                    //        });
-                    //    });
-                    //this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
+                        SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
+                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                this.CancelButtonClicked();
+                            });
+                        });
+                    SessionLocator.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.CurrentSession.StopBusyIndicator();
                 }
             });
 
@@ -186,58 +164,8 @@ export class NewTaxReportComponent extends BaseComponent {
     }
 
 
-    GetBTE() {
-        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe(myResult => {
-            console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-                this.bteList = mm.Result;
-                if (this.bteList.StatusCode == "D") // D- Done
-                {
-
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-
-                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                        this.CurrentSession.SessionLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ EntityId: this.entityPM.Id, ObjectTableName: this.ObjectTableName });
-                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                                this.CancelButtonClicked();
-                            });
-                        });
-                    this.CurrentSession.StopBusyIndicator();
-                    //stop timer
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-
-
-                }
-                else if (this.bteList.StatusCode == "F") // F- Failed
-                {
-                    //stop timer
-
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-
-                    //update status
-                 //   this.ChangeStatus("failed");
-
-                }
-            }
-            else {
-            }
-        });
-
-    }
-
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
 
     }
 

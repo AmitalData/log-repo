@@ -1,4 +1,4 @@
-declare var window: any;
+﻿declare var window: any;
 import {BankAccountPM} from '../../EntityPMs/BankAccountPM';
 import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
@@ -22,7 +22,7 @@ export class BankAccountMenuButtonsHandler {
     public TenantPM: TenantPM;
     public ObjectTableName: string = "BankAccount"
     TotalSum: number = 0;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     _LedgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
 
@@ -70,7 +70,7 @@ export class BankAccountMenuButtonsHandler {
 
                 case "BankAccountReconcile":
                     {
-                        this.CurrentSession.StartBusyIndicatorLoading();
+                        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
                         if (!this.EntityPM.GLAccountCurrencyId || this.EntityPM.GLAccountCurrencyId == "multi")
                         {
                             this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.GLAccountId).subscribe((serviceResponse: ServiceResponse) => {
@@ -81,7 +81,7 @@ export class BankAccountMenuButtonsHandler {
                                     this.showReconcileWindow(openAmountCurrency);
 
                                 }
-                                this.CurrentSession.StopBusyIndicator();
+                                SessionLocator.CurrentSession.StopBusyIndicator();
                             });
                         }
                         else
@@ -90,7 +90,7 @@ export class BankAccountMenuButtonsHandler {
                                 var currency = myResult.Result;
                                 var openAmountCurrency = currency ? currency.Sign : "";
                                 this.showReconcileWindow(openAmountCurrency);
-                                this.CurrentSession.StopBusyIndicator();
+                                SessionLocator.CurrentSession.StopBusyIndicator();
                             });
                         } 
 
@@ -151,7 +151,7 @@ export class BankAccountMenuButtonsHandler {
         logitudeWindow.Show('./Accounting/Components/Others/ExternalReconcileComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             // show alert
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
     }
 

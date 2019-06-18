@@ -374,30 +374,30 @@
 
                         <!-- First List -->
                         <ul class="horizontal-list" [style.padding]="isRTL ? '0 15px 0 0' : '0 0 0 15px'" [style.float]="isRTL ? 'right' : 'left'">
-                            <li float-start [style.padding-left]="isRTL ? '40px' : 'initial'" [style.padding-right]="isRTL ? 'initial' : '40px'" style="padding-top: 4px;" (click)="LabelClicked()">{{'Accounting.O.ReconcileAccordingTo' | TextCodeTranslationPipe}}:</li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" [style.padding-left]="isRTL ? '40px' : 'initial'" [style.padding-right]="isRTL ? 'initial' : '40px'" style="padding-top: 4px;" (click)="LabelClicked()">{{'Accounting.O.ReconcileAccordingTo' | TextCodeTranslationPipe}}:</li>
 
                             <!-- Amount Checkbox -->
-                            <li float-start style="padding: 0 8px;padding-top: 5px;"><CheckBox [IsEnabled]="false" [IsChecked]="AmountCheckBoxChecked" (Checked)="AmountCheckBoxChecked = $event"></CheckBox></li>
-                            <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'" [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">{{'Accounting.General.O.Amount' | TextCodeTranslationPipe}}</li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 8px;padding-top: 5px;"><CheckBox [IsEnabled]="false" [IsChecked]="AmountCheckBoxChecked" (Checked)="AmountCheckBoxChecked = $event"></CheckBox></li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" [style.padding-left]="isRTL ? '30px' : 'initial'" [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">{{'Accounting.General.O.Amount' | TextCodeTranslationPipe}}</li>
 
                             <!-- Reference Date Checkbox -->
-                            <li float-start style="padding: 0 8px;padding-top: 5px;"><CheckBox [IsChecked]="ReferenceDateCheckBoxChecked" (Checked)="ReferenceDateCheckBoxChecked = $event"></CheckBox></li>
-                            <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'" [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">{{'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe}}</li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 8px;padding-top: 5px;"><CheckBox [IsChecked]="ReferenceDateCheckBoxChecked" (Checked)="ReferenceDateCheckBoxChecked = $event"></CheckBox></li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" [style.padding-left]="isRTL ? '30px' : 'initial'" [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">{{'ReconcileExternalPageLine.F.ReferenceDate' | TextCodeTranslationPipe}}</li>
 
                             <!-- Reference Checkbox -->
-                            <li float-start style="padding: 0 8px;padding-top: 5px;"><CheckBox [IsChecked]="ReferenceCheckBoxChecked" (Checked)="ReferenceCheckBoxChecked = $event"></CheckBox></li>
-                            <li float-start [style.padding-left]="isRTL ? '30px' : 'initial'" [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">{{'Accounting.General.O.Reference' | TextCodeTranslationPipe}}</li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 8px;padding-top: 5px;"><CheckBox [IsChecked]="ReferenceCheckBoxChecked" (Checked)="ReferenceCheckBoxChecked = $event"></CheckBox></li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" [style.padding-left]="isRTL ? '30px' : 'initial'" [style.padding-right]="isRTL ? 'initial' : '30px'" style="padding-top: 4px;">{{'Accounting.General.O.Reference' | TextCodeTranslationPipe}}</li>
 
                             <!-- Auto Reco Button -->
-                            <li float-start style="padding: 0 15px;padding-top: 2px;"><button class="Button" (click)="AutoReco()">{{'Accounting.General.O.AutomaticReconcile' | TextCodeTranslationPipe}}</button></li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 15px;padding-top: 2px;"><button class="Button" (click)="AutoReco()">{{'Accounting.General.O.AutomaticReconcile' | TextCodeTranslationPipe}}</button></li>
 
                             <!-- Refresh Button -->
-                            <!--<li float-start style="padding: 0 15px;padding-top: 2px;"><button class="Button" (click)="RefreshButtonClicked()">R</button></li>-->
+                            <!--<li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 15px;padding-top: 2px;"><button class="Button" (click)="RefreshButtonClicked()">R</button></li>-->
                             <!-- Seperator -->
-                            <li float-start class="seperator"></li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" class="seperator"></li>
 
                             <!-- Filters Button -->
-                            <li float-start style="width: 41px;padding-top: 3px;position: relative;" class="filter-button" (click)="FilterButtonClicked()">
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="width: 41px;padding-top: 3px;position: relative;" class="filter-button" (click)="FilterButtonClicked()">
                                 <div class="">
                                     <img [attr.src]="isFiltersSelected ? './Images/FilterGrayTransUsed.png' : './Images/FilterGrayTrans.png'" [attr.title]="isFiltersSelected ? txt_FiltersSelected : ''">
                                     <img [class.FlipImgVert]="isFiltersVisible" src="./Images/FiltersOpen.png">
@@ -439,48 +439,48 @@
                         <ul class="horizontal-list" style="overflow: auto;">
 
                             <!-- Date -->
-                            <li float-start style="padding-left: 20px;padding-top: 4px;">{{'Accounting.General.O.Date' | TextCodeTranslationPipe}}:</li>
-                            <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding-left: 20px;padding-top: 4px;">{{'Accounting.General.O.Date' | TextCodeTranslationPipe}}:</li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 5px;padding-top: 2px;width: 150px;">
                                 <ComboBox [ItemsSource]="DateFilterList" [Binding]="'LocalName'" [SelectedItem]="SelectedDateOperator" (SelectedItemChanged)="SelectedDateOperator = $event"></ComboBox>
                             </li>
-                            <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 5px;padding-top: 2px;width: 150px;">
                                 <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
                                                [NoObjectField]="true" [SelectedDateValue]="FromDate" [ForceSubscribe]="true"
                                                [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                             </li>
-                            <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 5px;padding-top: 2px;width: 150px;">
                                 <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
                                                [NoObjectField]="true" [SelectedDateValue]="ToDate" [ForceSubscribe]="true"
                                                [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                             </li>
 
-                            <li float-start style="width: 40px;height: 100%;"></li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="width: 40px;height: 100%;"></li>
 
                             <!-- ForeignAmount -->
-                            <li float-start style="padding-left: 20px;padding-top: 4px;">{{'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe}}:</li>
-                            <li float-start style="padding: 0 5px;padding-top: 2px;width: 150px;">
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding-left: 20px;padding-top: 4px;">{{'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe}}:</li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 5px;padding-top: 2px;width: 150px;">
                                 <ComboBox [ItemsSource]="OperatorsList" [Binding]="'LocalName'" [SelectedItem]="SelectedOperator" (SelectedItemChanged)="SelectedOperator = $event"></ComboBox>
                             </li>
-                            <li float-start style="padding: 0 5px;padding-top: 2px;width: 100px;">
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 5px;padding-top: 2px;width: 100px;">
                                 <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'OpenAmount'" [Text]="OpenAmount" [HideColumns]="true"
                                             (ValueChanged)="OpenAmountTextChanged($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                             </li>
 
-                            <li float-start style="width: 40px;height: 100%;"></li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="width: 40px;height: 100%;"></li>
 
                             <!-- Search -->
-                            <li float-start style="padding-left: 20px;padding-top: 4px;">{{'Accounting.General.B.Search' | TextCodeTranslationPipe}}:</li>
-                            <li float-start style="padding: 0 5px;padding-top: 2px;width: 170px;position: relative;">
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding-left: 20px;padding-top: 4px;">{{'Accounting.General.B.Search' | TextCodeTranslationPipe}}:</li>
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 5px;padding-top: 2px;width: 170px;position: relative;">
                                 <SearchTextBox [ObjectTableName]="'LedgerTransaction'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                             </li>
 
                             <!-- Reset Filters Button -->
-                            <li *ngIf="isFiltersSelected" float-start style="padding: 0 15px;padding-top: 2px;">
+                            <li *ngIf="isFiltersSelected" [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 15px;padding-top: 2px;">
                                 <IconButton [Name]="'delete'" (click)="ResetFilters()"></IconButton>
                             </li>
 
                             <!-- Refresh Button -->
-                            <li float-start style="padding: 0 15px;padding-top: 2px;">
+                            <li [style.float]="isRTL ? 'right' : 'left'" style="padding: 0 15px;padding-top: 2px;">
                                 <IconButton [Name]="'refresh'" (click)="RefreshButtonClicked()"></IconButton>
                             </li>
 

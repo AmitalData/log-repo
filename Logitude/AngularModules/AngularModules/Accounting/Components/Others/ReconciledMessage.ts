@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
+﻿import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {ReconciliationPM} from '../../EntityPMs/ReconciliationPM';
@@ -53,7 +53,7 @@ import {AppTool} from '../../../Infrastructure/Tools';
 
 export class ReconciledMessage {
     public RecoPM: ReconciliationPM;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
     }
 
@@ -65,19 +65,19 @@ export class ReconciledMessage {
 
     OpenReco() {
         if (!AppTool.IsNullOrEmpty(this.RecoPM.Id)) {
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.RecoPM.Id, ObjectTableName: 'Reconciliation', BackButtonLabel: 'Back' });
                 cmpRef.instance.BackCompleted.subscribe(bk => {
-                    this.CurrentSession.CloseCurrentWindow();
+                    SessionLocator.CurrentSession.CloseCurrentWindow();
                 });
-                this.CurrentSession.CloseCurrentWindow();
+                SessionLocator.CurrentSession.CloseCurrentWindow();
             });
 
         }
     }
     OkButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 }

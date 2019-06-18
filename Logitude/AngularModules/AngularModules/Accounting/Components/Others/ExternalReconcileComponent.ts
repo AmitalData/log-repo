@@ -79,7 +79,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     txt_FiltersSelected: string = "";
     LoadGrids: boolean = false;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private CD: ChangeDetectorRef) {
         super();
         this.isRTL = SessionLocator.TenantPM.LayoutDirection === 'rtl';
@@ -245,10 +245,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    });
 
         //    // 2- call the service
-        //    this.CurrentSession.StartBusyIndicatorSaving();
+        //    SessionLocator.CurrentSession.StartBusyIndicatorSaving();
         //    this._ReconciliationExtendedPMService.delsertDraftLedgerTransaction(transactionsList).subscribe((serviceResponse: ServiceResponse) => {
         //        console.log("_ReconciliationExtendedPMService.delsertDraftLedgerTransaction", serviceResponse);
-        //        this.CurrentSession.StopBusyIndicator();
+        //        SessionLocator.CurrentSession.StopBusyIndicator();
 
         //        var result = serviceResponse.Result;
 
@@ -269,7 +269,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindowEmit("ExternalReco");
+        SessionLocator.CurrentSession.CloseCurrentWindowEmit("ExternalReco");
     }
 
     RefreshButtonClicked() {
@@ -807,7 +807,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
             //#endregion
 
-            this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
+            SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
 
 
             this._ExternalReconciliationExtendedListService.getExternalAutomaticReconcilationsByFilter(this.AmountCheckBoxChecked, this.ReferenceCheckBoxChecked, this.ReferenceDateCheckBoxChecked,
@@ -859,9 +859,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                     }
                     else {
                         this.ValidationErrorsList = mm.ErrorsArray;
-                        this.CurrentSession.StopBusyIndicator();
+                        SessionLocator.CurrentSession.StopBusyIndicator();
                     }
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.CurrentSession.StopBusyIndicator();
                 });
 
         }, 200);
@@ -1115,9 +1115,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
     SubmitChanges(entity) {
 
-        this.CurrentSession.StartBusyIndicatorSaving();
+        SessionLocator.CurrentSession.StartBusyIndicatorSaving();
         this.externalReconciliationPMService.insert(entity).subscribe(myResult => {
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;
             var entity = mm.Result;
@@ -1132,7 +1132,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -1210,7 +1210,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -1223,7 +1223,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
@@ -1235,12 +1235,12 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     OpenReco() {
         if (!AppTool.IsNullOrEmpty(this.ExternalRecoPM.Id)) {
             this.showAlert = false;
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.ExternalRecoPM.Id, ObjectTableName: 'ExternalReconciliation' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
-                        this.CurrentSession.CloseCurrentWindow();
+                        SessionLocator.CurrentSession.CloseCurrentWindow();
                     });
                 });
 
@@ -1381,7 +1381,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     IsGenerateButtonVisible: boolean = false;
     IsGeneratePasswordVisible: boolean = false;
     GenerateTestLines(txt: string) {
-        this.CurrentSession.StartBusyIndicator("Generate test lines... " + "(" + this.reapeatCount + "/" + 100 + ")");
+        SessionLocator.CurrentSession.StartBusyIndicator("Generate test lines... " + "(" + this.reapeatCount + "/" + 100 + ")");
         this._ExternalReconciliationExtendedListService.getGenerateTestRecordsForExternalReco(this.BankAccountPM.Id, this.BankAccountPM.GLAccountId, txt).subscribe(myResult => {
 
             var mm: ServiceResponse = myResult;
@@ -1392,7 +1392,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
                     if (this.reapeatCount == 100) {
                         var msg = new MessageWindow();
-                        this.CurrentSession.StopBusyIndicator();
+                        SessionLocator.CurrentSession.StopBusyIndicator();
 
                         msg.Show("Test lines generated successfully :) ");
                         this.ReloadScreen();
@@ -1409,7 +1409,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
         });
     }

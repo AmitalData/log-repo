@@ -31,7 +31,6 @@ export class AddEditTaxWithholdingLineComponent extends BaseComponent {
   newEntity: GLAccountWithholdingTaxPM;
   gLAccountPMService: GLAccountPMService = new GLAccountPMService();
     public IsNew: boolean;
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         
@@ -197,9 +196,9 @@ export class AddEditTaxWithholdingLineComponent extends BaseComponent {
                 this.entity.Inactive = this.newEntity.Inactive;
               this.LastLineToDate = this.ToDate;
             
-              this.CurrentSession.CloseCurrentWindowEmit("ok");
+              SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
             //  this.gLAccountPMService.update(this.parent).subscribe((myResponse: ServiceResponse) => { });
-           //   this.CurrentSession.CurrentEditComponent.SaveChanges();
+           //   SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
             }
             else {
                 this.ValidationErrorsList = errors;
@@ -265,7 +264,7 @@ export class AddEditTaxWithholdingLineComponent extends BaseComponent {
         //this.entity.Percentage = this.oldEntity.Percentage;
         //this.entity.FromDate = this.oldEntity.FromDate;
         //this.entity.ToDate = this.oldEntity.ToDate;
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
 
     }
 }

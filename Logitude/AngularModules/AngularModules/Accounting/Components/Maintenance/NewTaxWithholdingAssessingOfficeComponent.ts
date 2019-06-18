@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+﻿import {Component} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
@@ -24,7 +24,7 @@ export class NewTaxWithholdingAssessingOfficeComponent extends BaseComponent{
     public TenantPM: TenantPM;
     public ValidationErrorsList: string[] = [];
     myService: TaxWithholdingAssessOfficePMService;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -74,7 +74,7 @@ export class NewTaxWithholdingAssessingOfficeComponent extends BaseComponent{
         }
     }
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
     SubmitChanges() {
 
@@ -82,12 +82,12 @@ export class NewTaxWithholdingAssessingOfficeComponent extends BaseComponent{
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                this.CurrentSession.CloseCurrentWindowEmit("ok");
+                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
         });
     }

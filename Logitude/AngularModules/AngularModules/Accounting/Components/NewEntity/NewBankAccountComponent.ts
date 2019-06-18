@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
+﻿import {Component, ChangeDetectorRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -33,7 +33,7 @@ export class NewBankAccountComponent extends BaseComponent{
 
 public isRTL: boolean = false;
 
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -166,7 +166,7 @@ public isRTL: boolean = false;
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 
     SubmitChanges() {
@@ -174,12 +174,12 @@ public isRTL: boolean = false;
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                this.CurrentSession.CloseCurrentWindowEmit("ok");
+                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
         });
     }

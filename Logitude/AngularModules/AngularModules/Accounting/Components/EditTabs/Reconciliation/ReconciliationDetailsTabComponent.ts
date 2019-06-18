@@ -1,4 +1,4 @@
-import {Component}  from '@angular/core';
+﻿import {Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ReconciliationPM} from '../../../EntityPMs/ReconciliationPM';
 import {ReconciliationLinePM} from '../../../EntityPMs/ReconciliationLinePM';
@@ -48,7 +48,6 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
     ItemSource: ReconciliationLineModel[];
     public CurrencyCode;
     public AmountText: string;
-    private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -59,7 +58,7 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
     //#region Properties
 
     //get Number() { return this.EntityPM.Number; }
-
+    
     //#endregion
 
     private timerToken: any;
@@ -76,14 +75,10 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
 
     LoadData() {
         this.ItemSource = [];
-        this.originalItemSource = [];
-
         this.EntityPM.ReconciliationLines.forEach((line) => {
             var item = new ReconciliationLineModel(line, this.ColorMe(line));
             this.ItemSource.push(item);
         });
-        this.originalItemSource = this.ItemSource;
-
 
         this.CalculateTotals();
     }
@@ -91,7 +86,7 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
     OpenJournal(id) {
         // open Journal screen
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
@@ -107,21 +102,21 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
         }
     }
 
-    originalItemSource;
     FilterLines() {
-        var lines = this.originalItemSource;
+        //var lines = this.ItemSource;
 
-        // Filtering
-        if (!AppTool.IsNullOrEmpty(this.searchText)) {
-           lines = lines.filter((el) => {
-               var line = el.Line;
-               if (line.SearchFields != null)
-                   if (line.SearchFields.toLowerCase().includes(this.searchText.toLowerCase())) return true;
-               return false;
-           });
-        }
-        this.ItemSource = lines;
-        this.NoRows = lines.length == 0;
+        //// Filtering
+        //if (!AppTool.IsNullOrEmpty(this.searchText)) {
+        //    lines = lines.filter((el) => {
+        //        if (el. != null)
+        //            if (el.ChequeNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
+        //        if (el.AccountNumber != null)
+        //            if (el.AccountNumber.toLowerCase().includes(this.searchText.toLowerCase())) return true;
+        //        return false;
+        //    });
+        //}
+        //this.ItemSource = lines;
+        //this.NoRows = lines.length == 0;
     }
 
     //#region Row Coloring
@@ -143,11 +138,11 @@ export class ReconciliationDetailsTabComponent extends BaseComponent {
         }
         return false;
     }
-    //#endregion
+    //#endregion 
 
     RefreshButtonClicked() {
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+        SessionLocator.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
         this.LoadData();
     }
 

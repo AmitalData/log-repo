@@ -27,43 +27,39 @@
 
                                     <td style="width: 60px;padding: 0 10px; color:rgb(110, 113, 114)" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.Datefrom'  | TextCodeTranslationPipe}}</td>
 
-                                    <td style="width: 100px; ">
+                                    <td style="width: 130px; ">
                                         <LogDatePicker [ObjectFieldName]="'FromMonthInclusive'" [ObjectTableName]="ObjectTableName"
-                                                       [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                            [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
+                                            ></LogDatePicker>
                                     </td>
 
                                     <td style="width:15px;">
                                         <div></div>
                                     </td>
 
-                                    <td style="width: 30px; color:rgb(110, 113, 114)" [style.text-align]="isRTL ? 'right' : 'left'">
-                                        {{'Accounting.General.O.To' | TextCodeTranslationPipe }}
-                                    </td>
+                                    <td style="width: 30px; color:rgb(110, 113, 114)" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.To'
+                                        | TextCodeTranslationPipe}}</td>
 
-                                    <td style="width: 100px;">
+                                    <td style="width: 130px;">
                                         <LogDatePicker [ObjectFieldName]="'ToMonthInclusive'" [ObjectTableName]="ObjectTableName"
-                                                       [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                            [NoObjectField]="true" [DataContext]="DataContext" [HideColumns]="true"
+                                            ></LogDatePicker>
                                     </td>
-                                    <td style="width:15px;">
+
+                                    <td>
                                         <div></div>
                                     </td>
-                                    <td  style="width: 40px">
-                                        <div *ngIf="HasException">
-                                            <button style="display: inline-block;width:100px;" class="Button" [disabled]="Fixing" (click)="RunService()"> {{'Accounting.General.O.Fix'  | TextCodeTranslationPipe}}</button>
-                                        </div>
-                                    </td>
-                                    <td style="width: 10px"></td>
 
                                 </tr>
 
-                                <tr >
+                                <tr>
                                     <!-- ResultXML -->
                                     <td style="vertical-align:top;width: 130px;" [style.text-align]="isRTL ? 'right' : 'left'">
                                         <LogLabel [ObjectFieldName]="'ResultXML'" [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"></LogLabel>
                                     </td>
 
-                                    <td colspan="7" style="vertical-align: top" [style.text-align]="isRTL ? 'right' : 'left'">
+                                    <td colspan="5" style="vertical-align: top" [style.text-align]="isRTL ? 'right' : 'left'">
                                         <div style="width: 650px;">
                                             <LogTextBox [ObjectFieldName]="'ResultXML'" [InputType]="'nText'" [DataContext]="DataContext"
                                             [RowsCount]="30" [ObjectTableName]="ObjectTableName" [IsMultiline]="true"

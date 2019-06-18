@@ -29,7 +29,7 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
     EntityResourceService: EntityResourceService = new EntityResourceService();
     visible: boolean;
     FilterSelectedValue: string = 'Active';
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityResourceService.getEntityResourceByTableName("GLAccountWithholdingTax").subscribe((response: any) => {
@@ -46,13 +46,13 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
     }
 
   private Listen() {
-    if (this.CurrentSession.CurrentEditComponent != null) {
+    if (SessionLocator.CurrentSession.CurrentEditComponent != null) {
 
 
-      this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-        this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isLoadSuccess: boolean) => {
-          if (isLoadSuccess && this.CurrentSession.CurrentEditComponent) {
-            this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+      SessionLocator.CurrentSession.CurrentEditComponent.SubscriptionAdd(
+        SessionLocator.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isLoadSuccess: boolean) => {
+          if (isLoadSuccess && SessionLocator.CurrentSession.CurrentEditComponent) {
+            this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
 
             this.BuildGLAccountTaxWithholdingLinesList();
 
@@ -242,7 +242,7 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
             else if (this.FilterSelectedValue == "Inactive") this.InactiveFilter = true;
             else this.InactiveFilter = null;
             this.BuildGLAccountTaxWithholdingLinesList();
-            this.CurrentSession.CurrentEditComponent.SaveChanges();
+            SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
         }
 
 
@@ -378,7 +378,7 @@ export class GLAccountTaxLine extends BaseComponent {
           this.entity.ChangeSetOp = "Update";
    
           this.parent.BuildGLAccountTaxWithholdingLinesList();
-       //   this.CurrentSession.CurrentEditComponent.SaveChanges();
+       //   SessionLocator.CurrentSession.CurrentEditComponent.SaveChanges();
         
         }
 

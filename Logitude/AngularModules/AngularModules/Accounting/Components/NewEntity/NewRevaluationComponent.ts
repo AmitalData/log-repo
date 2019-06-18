@@ -29,7 +29,7 @@ export class NewRevaluationComponent extends BaseComponent {
     entityResourceService: EntityResourceService = new EntityResourceService();
     public ValidationErrorsList: string[] = [];
     FIELD_IS_REQUIERD: string;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         super();
       
@@ -211,21 +211,21 @@ export class NewRevaluationComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 
 
 
     SubmitChanges() {
-        this.CurrentSession.StartBusyIndicator("");
+        SessionLocator.CurrentSession.StartBusyIndicator("");
         this.RevaluationService.insert(this.EntityPM).subscribe(Result => {
           
             var mm: ServiceResponse = Result;
             if (!mm.HasError) {
                 var entity = mm.Result;
-                this.CurrentSession.CloseCurrentWindowEmit("ok");
+                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                    this.CurrentSession.SessionLocation.viewContainerRef)
+                    SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                     .then(cmpRef => {
                         cmpRef.instance.ComponentRef = cmpRef;
                         cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
@@ -233,12 +233,12 @@ export class NewRevaluationComponent extends BaseComponent {
                             this.CancelButtonClicked();
                         });
                     });
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
 
             else {
               //  this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
         });
     }

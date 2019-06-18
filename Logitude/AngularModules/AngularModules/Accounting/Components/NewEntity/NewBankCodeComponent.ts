@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef} from '@angular/core';
+﻿import {Component, ChangeDetectorRef} from '@angular/core';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {Validator} from '../../../Infrastructure/Validators/Validator';
@@ -22,7 +22,7 @@ export class NewBankCodeComponent extends BaseComponent{
     public TenantPM: TenantPM;
     public ValidationErrorsList: string[] = [];
     myService: BankCodePMService;
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         this.TenantPM = SessionLocator.TenantPM;
@@ -75,7 +75,7 @@ export class NewBankCodeComponent extends BaseComponent{
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 
     SubmitChanges() {
@@ -83,12 +83,12 @@ export class NewBankCodeComponent extends BaseComponent{
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
-                this.CurrentSession.CloseCurrentWindowEmit("ok");
+                SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
             }
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
         });
     }

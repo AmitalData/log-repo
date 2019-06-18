@@ -30,7 +30,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
 
 
-export class LineModel extends BaseComponent {
+class LineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;
     public ObjectTableName = "LedgerTransaction";
     public RowIndex: number;
@@ -237,7 +237,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
 
 
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if(ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -470,7 +470,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             }
             //
 
-            this.CurrentSession.StartBusyIndicatorSaving();
+            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
             var entity = this.CreateReconciliation();
             this.SubmitChanges(entity);
 
@@ -525,7 +525,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         filters.GetCount = true;
         //#endregion
 
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
+        SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
 
 
         var m1 = null;
@@ -566,9 +566,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.CurrentSession.StopBusyIndicator();
         });
     }
 
@@ -586,10 +586,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             });
 
             // 2- call the service
-            this.CurrentSession.StartBusyIndicatorSaving();
+            SessionLocator.CurrentSession.StartBusyIndicatorSaving();
             this._ReconciliationExtendedPMService.delsertDraftLedgerTransaction(transactionsList).subscribe((serviceResponse: ServiceResponse) => {
                 console.log("_ReconciliationExtendedPMService.delsertDraftLedgerTransaction", serviceResponse);
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
 
                 var result = serviceResponse.Result;
 
@@ -617,8 +617,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
             //this.ToSend()
             var next = true;
             if (next) {
-                this.CurrentSession.entityResourceService.getEntityResourceByTableName("Journal").subscribe(response => {
-                    this.CurrentSession.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe(response => {
+                SessionLocator.CurrentSession.entityResourceService.getEntityResourceByTableName("Journal").subscribe(response => {
+                    SessionLocator.CurrentSession.entityResourceService.getEntityResourceByTableName("JournalLine").subscribe(response => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
                         logitudeWindow.Height = 400;
@@ -627,7 +627,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                         logitudeWindow.Show('./Accounting/Components/Others/JournalReconcileComponent');
                         logitudeWindow.WindowClosed.subscribe(($event: any) => {
                             // Close Reconcile window
-                            //this.CurrentSession.CloseCurrentWindow();
+                            //SessionLocator.CurrentSession.CloseCurrentWindow();
                             //this.CancelButtonClicked();
 
                             // Refresh Data
@@ -647,7 +647,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
     }
     //#endregion
 
@@ -960,9 +960,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
         newEntity.CreateDate = new Date();
         newEntity.CreatedByUserId = null;
         newEntity.CreatedByUserId = null;
-        newEntity.AccountCurrencyId = this.GLAccountPM.CurrencyId;
-        newEntity.CurrencyCode = this.GLAccountPM.CurrencyCode;
-        newEntity.AccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
 
         newEntity.ReconciliationLines = [];
 
@@ -1001,7 +998,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                 //logitudeWindow.Show('./Accounting/Components/Others/ReconciledMessage');
                 //logitudeWindow.WindowClosed.subscribe(($event: any) => {
                 //    // Close Reconcile window
-                //    //this.CurrentSession.CloseCurrentWindow();
+                //    //SessionLocator.CurrentSession.CloseCurrentWindow();
                 //    //this.CancelButtonClicked();
 
                 //    // Refresh Data
@@ -1023,7 +1020,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
                 this.ShowSuccessAlert();
 
 
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
 
 
 
@@ -1031,7 +1028,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             }
         });
     }
@@ -1109,7 +1106,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
 
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -1122,7 +1119,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal', BackButtonLabel: 'Back' });
@@ -1134,12 +1131,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     OpenReco() {
         if (!AppTool.IsNullOrEmpty(this.RecoPM.Id)) {
             this.showAlert = false;
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: this.RecoPM.Id, ObjectTableName: 'Reconciliation', BackButtonLabel: 'Back' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
-                        this.CurrentSession.CloseCurrentWindow();
+                        SessionLocator.CurrentSession.CloseCurrentWindow();
                     });
                 });
 
@@ -1226,10 +1223,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit {
     }
     IsDraft: boolean = false;
     DeleteDraftReconciliation() {
-        this.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         this._ReconciliationExtendedPMService.deleteResetDraftOpenReconciliation(this.GLAccountPM.Id).subscribe((response: ServiceResponse) => {
             console.log("_ReconciliationExtendedPMService.deleteResetDraftOpenReconciliation", response);
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.CurrentSession.StopBusyIndicator();
             this.SelectedLines.Clear();
             this.ReloadScreen();
         });

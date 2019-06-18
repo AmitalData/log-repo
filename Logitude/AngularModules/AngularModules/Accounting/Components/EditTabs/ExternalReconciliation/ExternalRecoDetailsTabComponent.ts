@@ -1,4 +1,4 @@
-import { AccountingEntityHelper } from './../../../Utilities/AccountingEntityHelper';
+﻿import { AccountingEntityHelper } from './../../../Utilities/AccountingEntityHelper';
 import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
 import {LedgerTransactionListService} from '../../../Services/StandardLists/LedgerTransactionListService';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -70,7 +70,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
     externalReconciliationExtendedPMService: ExternalReconciliationExtendedPMService = new ExternalReconciliationExtendedPMService();
     externalReconciliationPMService: ExternalReconciliationPMService = new ExternalReconciliationPMService();
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
-    private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(private entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -134,7 +134,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
         //#endregion
 
         // 2- get lines
-        this.CurrentSession.StartBusyIndicatorLoading();
+        SessionLocator.CurrentSession.StartBusyIndicatorLoading();
         if (bankPageLinesIds.length > 0) {
             this.GetBankLines(bankPageLinesIds, transactionsLinesIds); // then get ledger lines
         } else {
@@ -195,11 +195,11 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
                 this.FillGroupHash();
 
-                this.CurrentSession.StopBusyIndicator();
+                SessionLocator.CurrentSession.StopBusyIndicator();
             });
         } else {
             console.log("No ledger lines!");
-            this.CurrentSession.StopBusyIndicator();
+            SessionLocator.CurrentSession.StopBusyIndicator();
         }
 
 
@@ -292,7 +292,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
 
         }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
@@ -305,7 +305,7 @@ export class ExternalRecoDetailsTabComponent extends BaseComponent implements On
     }
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });

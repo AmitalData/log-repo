@@ -12,8 +12,6 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { AppTool } from '../../../Infrastructure/Tools';
 import { UIProperties } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { error } from 'util';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
-declare var window: any;
 
 
 
@@ -33,14 +31,11 @@ export class NewOpenFormatReportComponent extends BaseComponent {
     entityPM: OpenFormatReportPM = new OpenFormatReportPM();
     OpenFormatReportPMService: OpenFormatReportPMService = new OpenFormatReportPMService();
     public TenantPM: TenantPM;
-    private CurrentSession = SessionLocator.SelectedSession;
-    testingMode:any;
+
     constructor() {
         super();
         this.entityPM.Tenant = SessionLocator.Tenant;
-        var table = window.ObjectTables.filter(d => d.Name === 'OpenFormatReport')[0];
-        this.testingMode = FeatureLocator.Features.filter(f => (f.Code == "TestingMode") && f.ObjectTableId == table.Id)[0];
-        
+
       
     }
 
@@ -74,13 +69,7 @@ export class NewOpenFormatReportComponent extends BaseComponent {
             }
         }
     }
-    get TestingMode() { return this.entityPM.TestingMode; }
-    set TestingMode(value: boolean) {
-        if (this.entityPM.TestingMode != value) {
-            this.entityPM.TestingMode = value;
-          
-        }
-    }
+
 
     ValidationErrorsList: string[] = [];
     OkButtonClicked() {
@@ -99,17 +88,17 @@ export class NewOpenFormatReportComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            this.CurrentSession.StartBusyIndicator("");
+            SessionLocator.CurrentSession.StartBusyIndicator("");
             this.OpenFormatReportPMService.insert(this.entityPM).subscribe(myResult => {
 
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var entity = mm.Result;
 
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    SessionLocator.CurrentSession.CloseCurrentWindowEmit("ok");
 
                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                        this.CurrentSession.SessionLocation.viewContainerRef)
+                        SessionLocator.CurrentSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
@@ -117,12 +106,12 @@ export class NewOpenFormatReportComponent extends BaseComponent {
                                 this.CancelButtonClicked();
                             });
                         });
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
                     this.ValidationErrorsList = mm.ErrorsArray;
-                    this.CurrentSession.StopBusyIndicator();
+                    SessionLocator.CurrentSession.StopBusyIndicator();
                 }
             });
 
@@ -135,7 +124,7 @@ export class NewOpenFormatReportComponent extends BaseComponent {
 
 
     CancelButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        SessionLocator.CurrentSession.CloseCurrentWindow();
 
     }
 }
