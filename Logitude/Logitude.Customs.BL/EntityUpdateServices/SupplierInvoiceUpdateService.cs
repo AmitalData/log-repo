@@ -461,8 +461,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //                        select a).Any();
             ICustomContext context = MainContext as CustomContext;
             SupplierInvoiceRepository invoiceRepository = new SupplierInvoiceRepository(context);
-            List<SupplierInvoice> supplierInvoices = invoiceRepository.GetMulti(new DeclarationKeys() { Id = entityPM.DeclarationId });
-            supplierInvoices = supplierInvoices.OrderBy(d => d.InvoiceCounterKey).ToList();
+            List<SupplierInvoice> supplierInvoices = null; // invoiceRepository.GetMulti(new DeclarationKeys() { Id = entityPM.DeclarationId });
+            //supplierInvoices = supplierInvoices.OrderBy(d => d.InvoiceCounterKey).ToList();
 
             bool dirty = false;
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
@@ -516,9 +516,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (entityPM.ChangeSetOp == ChangeSetOperation.Delete || entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 SubmitChanges();
-                if(supplierInvoices == null || supplierInvoices.Count() < 1)
+                //if(supplierInvoices == null || supplierInvoices.Count() < 1)
                 {
                     supplierInvoices = invoiceRepository.GetMulti(new DeclarationKeys() { Id = entityPM.DeclarationId });
+                    supplierInvoices = supplierInvoices.OrderBy(d => d.InvoiceCounterKey).ToList();
                 }
 
                 isSubmitChanges = true;
