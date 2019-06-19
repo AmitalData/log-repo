@@ -1113,6 +1113,10 @@
     <Compile Include="Migrations\201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.Designer.cs">
       <DependentUpon>201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906182042483_AddIsNorthAmericaField.cs" />
+    <Compile Include="Migrations\201906182042483_AddIsNorthAmericaField.Designer.cs">
+      <DependentUpon>201906182042483_AddIsNorthAmericaField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201906190804240_AbedAdddNewFieldsShowHeaderLabelsPackagesToQuoteTemplateSettings.cs" />
     <Compile Include="Migrations\201906190804240_AbedAdddNewFieldsShowHeaderLabelsPackagesToQuoteTemplateSettings.Designer.cs">
       <DependentUpon>201906190804240_AbedAdddNewFieldsShowHeaderLabelsPackagesToQuoteTemplateSettings.cs</DependentUpon>
@@ -1893,6 +1897,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.resx">
       <DependentUpon>201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906182042483_AddIsNorthAmericaField.resx">
+      <DependentUpon>201906182042483_AddIsNorthAmericaField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906190804240_AbedAdddNewFieldsShowHeaderLabelsPackagesToQuoteTemplateSettings.resx">
       <DependentUpon>201906190804240_AbedAdddNewFieldsShowHeaderLabelsPackagesToQuoteTemplateSettings.cs</DependentUpon>
