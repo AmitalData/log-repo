@@ -121,7 +121,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //journal.UpdatedByUserId = theEntityPm.UpdatedByUserId;
                 ApproveDate = @now,
                 //journal.ApprovedByUserId = theEntityPm.ApprovedByUserId;
-                AccountingEntityCode = "1",
+                AccountingEntityCode = "11", // "Year Transfer"
             //    AccountingEntityId = null,
                 CreatedByUserId= usrid,
                 ApprovedByUserId = usrid,
