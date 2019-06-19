@@ -15,6 +15,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string DefaultTemplate { get; set; }
 
         public string RoutingRQuoteDefaultTemplateId { get; set; }
+        public string RoutingRQuoteDefaultTemplate { get; set; }
+
+
 
     }
 }

@@ -686,7 +686,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     BankPushLine(row, RowIndex) {
         var index = this.BankSelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
-            row.AmountToReconcile = row.Amount;
+            // row.AmountToReconcile = row.Amount;
+            row.AmountToReconcile = row.CreditAmount!=0?row.CreditAmount*-1:row.DebitAmount;
+            row.Amount = row.AmountToReconcile;
             var r = new BankLineModel(row, this, RowIndex);
             this.BankSelectedLines.Insert(r);
             this.CalculateBankTotals();
