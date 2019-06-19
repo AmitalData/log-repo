@@ -167,7 +167,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //}
                 journal.JournalLines.Add(journalLine1);
                 journal.JournalLines.Add(journalLine2);
-              //  journalUpdateService.Update(journal, true);
+               journalUpdateService.Update(journal, true);
                 entityPM.JournalNumber = journal.JournalNumber;
             }
             ValidateEntity(entityPM);
