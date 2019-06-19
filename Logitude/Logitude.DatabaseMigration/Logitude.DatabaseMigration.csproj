@@ -1113,6 +1113,14 @@
     <Compile Include="Migrations\201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.Designer.cs">
       <DependentUpon>201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906191055164_APPaymentChequeNumberMigration.cs" />
+    <Compile Include="Migrations\201906191055164_APPaymentChequeNumberMigration.Designer.cs">
+      <DependentUpon>201906191055164_APPaymentChequeNumberMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906191234278_APPAymentPaymentChequeIdMigration.cs" />
+    <Compile Include="Migrations\201906191234278_APPAymentPaymentChequeIdMigration.Designer.cs">
+      <DependentUpon>201906191234278_APPAymentPaymentChequeIdMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1889,6 +1897,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.resx">
       <DependentUpon>201906170542271_AbedAddRatesQuotationDefaultTemplateIdToProductTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906191055164_APPaymentChequeNumberMigration.resx">
+      <DependentUpon>201906191055164_APPaymentChequeNumberMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906191234278_APPAymentPaymentChequeIdMigration.resx">
+      <DependentUpon>201906191234278_APPAymentPaymentChequeIdMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

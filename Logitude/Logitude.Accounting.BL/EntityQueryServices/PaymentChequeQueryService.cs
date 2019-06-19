@@ -34,7 +34,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<PaymentChequePM> GetPaymentChequesByPaymentId(string paymentId, int tenant)
         {
             List<PaymentCheque> list = (from a in context.PaymentCheques
-                                        where a.EntityId == paymentId && a.Tenant == tenant
+                                        where a.APPaymentId == paymentId && a.Tenant == tenant
                                         select a).ToList();
 
             return list.Select(rec => this.GetEntityPM(rec)).ToList();
