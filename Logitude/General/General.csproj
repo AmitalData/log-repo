@@ -586,6 +586,7 @@
     <Content Include="Main Branch\2019\04 - 2019\Day 07 [Rabaia] DeleteTaskSchedulerHistories SP.sql" />
     <Content Include="Main Branch\2019\05 - 2019\Day 12 [Maheera] Add New Measurements.sql" />
     <Content Include="Main Branch\2019\05 - 2019\Day 28 [Ayman] Update CommunicationLog AWBNumber.sql" />
+    <Content Include="Main Branch\2019\06 - 2019\Day 19 [Abed] SetDefultValueToShowHeaderLabelsInQuoteTemplateSetting.sql" />
     <Content Include="OracleScripts\18R01\1- from_pre  compare to_pe2.txt" />
     <Content Include="OracleScripts\18R01\2-compare aminet_main to aminetpre_main .txt" />
     <Content Include="OracleScripts\18R01\Documents filings search fields.txt" />

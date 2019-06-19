@@ -215,21 +215,18 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
           itemPoco.DetailsTableColumWidthType = itemPM.DetailsTableColumWidthType;
           itemPoco.HeaderTableColumWidthType = itemPM.HeaderTableColumWidthType;
 
-
           itemPoco.DetailsTableColumn1LabelWidth = itemPM.DetailsTableColumn1LabelWidth;
           itemPoco.DetailsTableColumn1ValueWidth = itemPM.DetailsTableColumn1ValueWidth;
           itemPoco.DetailsTableColumn2LabelWidth = itemPM.DetailsTableColumn2LabelWidth;
           itemPoco.DetailsTableColumn2ValueWidth = itemPM.DetailsTableColumn2ValueWidth;
 
 
-
           itemPoco.HeaderTableColumn1LabelWidth = itemPM.HeaderTableColumn1LabelWidth;
           itemPoco.HeaderTableColumn1ValueWidth = itemPM.HeaderTableColumn1ValueWidth;
           itemPoco.HeaderTableColumn2LabelWidth = itemPM.HeaderTableColumn2LabelWidth;
           itemPoco.HeaderTableColumn2ValueWidth = itemPM.HeaderTableColumn2ValueWidth; 
-            
-
-                itemPoco.QuoteTemplatePDFMarginRight = itemPM.QuoteTemplatePDFMarginRight;
+           
+          itemPoco.QuoteTemplatePDFMarginRight = itemPM.QuoteTemplatePDFMarginRight;
           itemPoco.QuoteTemplatePDFMarginLeft = itemPM.QuoteTemplatePDFMarginLeft;
 
 
@@ -252,7 +249,8 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
           itemPoco.ShowChargeNoteContainers = itemPM.ShowChargeNoteContainers;
           itemPoco.ShowSaleMaxMinAmountContainers = itemPM.ShowSaleMaxMinAmountContainers;
           itemPoco.ShowSaleMaxMinAmountPackages = itemPM.ShowSaleMaxMinAmountPackages;
-
+          itemPoco.ShowHeaderLabelsContainers = itemPM.ShowHeaderLabelsContainers;
+          itemPoco.ShowHeaderLabelsPackages = itemPM.ShowHeaderLabelsPackages;
 
         }
     }

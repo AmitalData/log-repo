@@ -3414,22 +3414,6 @@ export class AWBHelper {
 
             this.ValidateRoutings(shipmentPM, errors);
 
-            if (shipmentPM.DirectionId.toUpperCase() == "D") {
-                if (!AppTool.IsNullOrEmpty(shipmentPM.MainCarriageFromPortId) && !AppTool.IsNullOrEmpty(shipmentPM.MainCarriageToPortId)) {
-                    if (shipmentPM.FromCountryId != shipmentPM.ToCountryId) {
-                        if (shipmentPM.FromCountryIsEC == false || shipmentPM.ToCountryIsEC == false) {
-                            if (shipmentPM.TransportModeId == "I") {
-                                errors.push("Main Carriage Addresses must be in the same country since the direction is Domestic");
-                            }
-
-                            else {
-                                errors.push("Main Carriage Ports must be in the same country since the direction is Domestic");
-                            }
-                        }
-                    }
-                }
-            }
-
             if (shipmentPM.ShipmentAWBPrintOnlies != null) {
                 shipmentPM.ShipmentAWBPrintOnlies.forEach(item => {
                     Validator.TryValidateObject(item, "ShipmentAWBPrintOnly", errors);
@@ -3599,7 +3583,6 @@ export class RoutingHelper {
             entityPM.MainCarriageFromPortName = myPortName;
             entityPM.MainCarriageFromPortCountryCode = myPortCountryCode;
             entityPM.MainCarriageFromPortCountryName = myPortCountryName;
-            entityPM.MainCarriageFromPortCountryEC = myPortCountryEC;
 
             ShipmentTool.ComputeSCI(entityPM);
             ShipmentTool.BuildAWBPlaceField(entityPM);
@@ -3622,7 +3605,6 @@ export class RoutingHelper {
             var myPortCountryId: string = null;
             var myPortCountryCode: string = null;
             var myPortCountryName: string = null;
-            var myPortCountryEC: boolean = false;
             if (list != null) {
                 myPortId = list.Id;
                 myPortCode = list.Code;
@@ -3630,7 +3612,6 @@ export class RoutingHelper {
                 myPortCountryId = list.CountryId;
                 myPortCountryCode = list.CountryCode;
                 myPortCountryName = list.CountryName;
-                myPortCountryEC = list.CountryEC;
             }
 
             // this
@@ -3647,7 +3628,6 @@ export class RoutingHelper {
                 entityPM.MainCarriageToPortName = entityPM.Transshipment1FromPortName;
                 entityPM.MainCarriageToPortCountryCode = entityPM.Transshipment1FromPortCountryCode;
                 entityPM.MainCarriageToPortCountryName = entityPM.Transshipment1FromPortCountryName;
-                entityPM.MainCarriageToPortCountryEC = myPortCountryEC;
             }
 
             else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment2FromPortId)) {
@@ -3656,7 +3636,6 @@ export class RoutingHelper {
                 entityPM.MainCarriageToPortName = entityPM.Transshipment2FromPortName;
                 entityPM.MainCarriageToPortCountryCode = entityPM.Transshipment2FromPortCountryCode;
                 entityPM.MainCarriageToPortCountryName = entityPM.Transshipment2FromPortCountryName;
-                //entityPM.MainCarriageToPortCountryEC = entityPM.Transshipment2FromPortCountryEC;                    
             }
 
             else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment3FromPortId)) {
@@ -3665,7 +3644,6 @@ export class RoutingHelper {
                 entityPM.MainCarriageToPortName = entityPM.Transshipment3FromPortName;
                 entityPM.MainCarriageToPortCountryCode = entityPM.Transshipment3FromPortCountryCode;
                 entityPM.MainCarriageToPortCountryName = entityPM.Transshipment3FromPortCountryName;
-                //entityPM.MainCarriageToPortCountryEC = entityPM.Transshipment3FromPortCountryEC;                    
             }
 
             else {
@@ -3674,7 +3652,6 @@ export class RoutingHelper {
                 entityPM.MainCarriageToPortName = entityPM.MainCarriageFinalDestinationPortName;
                 entityPM.MainCarriageToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                 entityPM.MainCarriageToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                entityPM.MainCarriageToPortCountryEC = entityPM.ToCountryIsEC;
             }
 
             // this.To == thisDeleted OR next.From
@@ -3774,7 +3751,6 @@ export class RoutingHelper {
                     entityPM.Transshipment1ToPortName = myPortName;
                     entityPM.Transshipment1ToPortCountryCode = myPortCountryCode;
                     entityPM.Transshipment1ToPortCountryName = myPortCountryName;
-                    entityPM.Transshipment1ToPortCountryEC = myPortCountryEC;
                 }
 
                 else {
@@ -3783,7 +3759,6 @@ export class RoutingHelper {
                     entityPM.MainCarriageToPortName = myPortName;
                     entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
                     entityPM.MainCarriageToPortCountryName = myPortCountryName;
-                    entityPM.MainCarriageToPortCountryEC = myPortCountryEC;
                 }
             }
 
@@ -3801,7 +3776,6 @@ export class RoutingHelper {
                     myPortName = entityPM.Transshipment3FromPortName;
                     myPortCountryCode = entityPM.Transshipment3FromPortCountryCode;
                     myPortCountryName = entityPM.Transshipment3FromPortCountryName;
-                    //myPortCountryEC = entityPM.Transshipment3FromPortCountryEC; 
                 }
 
                 if (!AppTool.IsNullOrEmpty(entityPM.Transshipment1FromPortId)) {
@@ -3810,7 +3784,6 @@ export class RoutingHelper {
                     entityPM.Transshipment1ToPortName = myPortName;
                     entityPM.Transshipment1ToPortCountryCode = myPortCountryCode;
                     entityPM.Transshipment1ToPortCountryName = myPortCountryName;
-                    entityPM.Transshipment1ToPortCountryEC = myPortCountryEC;
                 }
 
                 else {
@@ -3819,7 +3792,6 @@ export class RoutingHelper {
                     entityPM.MainCarriageToPortName = myPortName;
                     entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
                     entityPM.MainCarriageToPortCountryName = myPortCountryName;
-                    entityPM.MainCarriageToPortCountryEC = myPortCountryEC;
                 }
             }
         }
@@ -3859,7 +3831,6 @@ export class RoutingHelper {
                     entityPM.Transshipment2ToPortName = myPortName;
                     entityPM.Transshipment2ToPortCountryCode = myPortCountryCode;
                     entityPM.Transshipment2ToPortCountryName = myPortCountryName;
-                    entityPM.Transshipment2ToPortCountryEC = myPortCountryEC;
                 }
 
                 else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment1FromPortId)) {
@@ -3868,7 +3839,6 @@ export class RoutingHelper {
                     entityPM.Transshipment1ToPortName = myPortName;
                     entityPM.Transshipment1ToPortCountryCode = myPortCountryCode;
                     entityPM.Transshipment1ToPortCountryName = myPortCountryName;
-                    entityPM.Transshipment1ToPortCountryEC = myPortCountryEC;
                 }
 
                 else {
@@ -3877,7 +3847,6 @@ export class RoutingHelper {
                     entityPM.MainCarriageToPortName = myPortName;
                     entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
                     entityPM.MainCarriageToPortCountryName = myPortCountryName;
-                    entityPM.MainCarriageToPortCountryEC = myPortCountryEC;
                 }
 
                 // Next
@@ -3902,7 +3871,6 @@ export class RoutingHelper {
                     entityPM.Transshipment2ToPortName = entityPM.MainCarriageFinalDestinationPortName;
                     entityPM.Transshipment2ToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                     entityPM.Transshipment2ToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                    //entityPM.Transshipment2ToPortCountryEC = entityPM.maincarriagefi
                 }
 
                 else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment1FromPortId)) {
@@ -3911,7 +3879,6 @@ export class RoutingHelper {
                     entityPM.Transshipment1ToPortName = entityPM.MainCarriageFinalDestinationPortName;
                     entityPM.Transshipment1ToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                     entityPM.Transshipment1ToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                    //entityPM.Transshipment1ToPortCountryEC = myPortCountryEC;
                 }
 
                 else {
@@ -3920,48 +3887,8 @@ export class RoutingHelper {
                     entityPM.MainCarriageToPortName = entityPM.MainCarriageFinalDestinationPortName;
                     entityPM.MainCarriageToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
                     entityPM.MainCarriageToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-                    //entityPM.MainCarriageToPortCountryEC = myPortCountryEC;
                 }
             }
-
-
-
-
-            //// Previous.To == this.From
-            //if (!AppTool.IsNullOrEmpty(entityPM.Transshipment3FromPortId)) {
-            //    entityPM.Transshipment2ToPortId = entityPM.Transshipment3FromPortId;
-            //    entityPM.Transshipment2ToPortCode = entityPM.Transshipment3FromPortCode;
-            //    entityPM.Transshipment2ToPortName = entityPM.Transshipment3FromPortName;
-            //    entityPM.Transshipment2ToPortCountryCode = entityPM.Transshipment3FromPortCountryCode;
-            //    entityPM.Transshipment2ToPortCountryName = entityPM.Transshipment3FromPortCountryName;
-            //    //entityPM.MainCarriageToPortCountryEC = entityPM.Transshipment3FromPortCountryEC;                    
-            //}
-
-            //else {
-            //    entityPM.Transshipment2ToPortId = entityPM.MainCarriageFinalDestinationPortId;
-            //    entityPM.Transshipment2ToPortCode = entityPM.MainCarriageFinalDestinationPortCode;
-            //    entityPM.Transshipment2ToPortName = entityPM.MainCarriageFinalDestinationPortName;
-            //    entityPM.Transshipment2ToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
-            //    entityPM.Transshipment2ToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-            //    entityPM.Transshipment2ToPortCountryEC = entityPM.ToCountryIsEC;
-            //}
-
-            //// this.To == next.From
-            //if (AppTool.IsNullOrEmpty(entityPM.Transshipment3FromPortId)) {
-            //    entityPM.Transshipment3ToPortId = null;
-            //    entityPM.Transshipment3ToPortCode = null;
-            //    entityPM.Transshipment3ToPortName = null;
-            //    entityPM.Transshipment3ToPortCountryCode = null;
-            //    entityPM.Transshipment3ToPortCountryName = null;
-            //}
-
-            //else {
-            //    entityPM.Transshipment3ToPortId = entityPM.MainCarriageFinalDestinationPortId;
-            //    entityPM.Transshipment3ToPortCode = entityPM.MainCarriageFinalDestinationPortCode;
-            //    entityPM.Transshipment3ToPortName = entityPM.MainCarriageFinalDestinationPortName;
-            //    entityPM.Transshipment3ToPortCountryCode = entityPM.MainCarriageFinalDestinationPortCountryCode;
-            //    entityPM.Transshipment3ToPortCountryName = entityPM.MainCarriageFinalDestinationPortCountryName;
-            //}
         }
     }
     public static FinalDestinationPortChanged(entityPM: ShipmentPM, list: PortList) {
@@ -4002,7 +3929,6 @@ export class RoutingHelper {
                 entityPM.Transshipment3ToPortName = myPortName;
                 entityPM.Transshipment3ToPortCountryCode = myPortCountryCode;
                 entityPM.Transshipment3ToPortCountryName = myPortCountryName;
-                entityPM.Transshipment3ToPortCountryEC = myPortCountryEC;
             }
 
             else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment2FromPortId)) {
@@ -4011,7 +3937,6 @@ export class RoutingHelper {
                 entityPM.Transshipment2ToPortName = myPortName;
                 entityPM.Transshipment2ToPortCountryCode = myPortCountryCode;
                 entityPM.Transshipment2ToPortCountryName = myPortCountryName;
-                entityPM.Transshipment2ToPortCountryEC = myPortCountryEC;
             }
 
             else if (!AppTool.IsNullOrEmpty(entityPM.Transshipment1FromPortId)) {
@@ -4020,7 +3945,6 @@ export class RoutingHelper {
                 entityPM.Transshipment1ToPortName = myPortName;
                 entityPM.Transshipment1ToPortCountryCode = myPortCountryCode;
                 entityPM.Transshipment1ToPortCountryName = myPortCountryName;
-                entityPM.Transshipment1ToPortCountryEC = myPortCountryEC;
             }
 
             else {
@@ -4029,7 +3953,6 @@ export class RoutingHelper {
                 entityPM.MainCarriageToPortName = myPortName;
                 entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
                 entityPM.MainCarriageToPortCountryName = myPortCountryName;
-                entityPM.MainCarriageToPortCountryEC = myPortCountryEC;
             }
 
             // next.From = this.To
@@ -4076,7 +3999,6 @@ export class RoutingHelper {
             entityPM.MainCarriageFromPortName = myPortName;
             entityPM.MainCarriageFromPortCountryCode = myPortCountryCode;
             entityPM.MainCarriageFromPortCountryName = myPortCountryName;
-            entityPM.MainCarriageFromPortCountryEC = myPortCountryEC;
 
             ShipmentTool.ComputeSCI(entityPM);
             ShipmentTool.BuildAWBPlaceField(entityPM);
@@ -4090,7 +4012,6 @@ export class RoutingHelper {
             var myPortCountryId: string = null;
             var myPortCountryCode: string = null;
             var myPortCountryName: string = null;
-            var myPortCountryEC: boolean = false;
             if (list != null) {
                 myPortId = list.Id;
                 myPortCode = list.Code;
@@ -4098,7 +4019,6 @@ export class RoutingHelper {
                 myPortCountryId = list.CountryId;
                 myPortCountryCode = list.CountryCode;
                 myPortCountryName = list.CountryName;
-                myPortCountryEC = list.CountryEC;
             }
 
             // this
@@ -4139,11 +4059,9 @@ export class RoutingHelper {
                 entityPM.MainCarriageToPortName = myPortName;
                 entityPM.MainCarriageToPortCountryCode = myPortCountryCode;
                 entityPM.MainCarriageToPortCountryName = myPortCountryName;
-                entityPM.MainCarriageToPortCountryEC = myPortCountryEC;
             }
 
             entityPM.ToCountryId = myPortCountryId;
-            entityPM.ToCountryIsEC = myPortCountryEC;
             entityPM.FinalDistenationPortId = myPortId;
             entityPM.MainCarriageFinalDestinationPortId = myPortId;
             entityPM.MainCarriageFinalDestinationPortCode = myPortCode;

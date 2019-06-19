@@ -173,5 +173,9 @@ export class QuoteTemplateSettingList {
         ShowSaleMaxMinAmountPackages: boolean;
         ShowSaleMaxMinAmountContainers: boolean;
 
+        ShowHeaderLabelsPackages: boolean;
+        ShowHeaderLabelsContainers: boolean;
+
+
 
 }     
