@@ -239,6 +239,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                   ShowChargeNotePackages = a.ShowChargeNotePackages,
                                                   ShowSaleMaxMinAmountContainers = a.ShowSaleMaxMinAmountContainers,
                                                   ShowSaleMaxMinAmountPackages =a.ShowSaleMaxMinAmountPackages,
+                                                  ShowHeaderLabelsContainers = a.ShowHeaderLabelsContainers,
+                                                  ShowHeaderLabelsPackages = a.ShowHeaderLabelsPackages,
 
                                               }).FirstOrDefault();
 
@@ -449,6 +451,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                        ShowChargeNotePackages = a.ShowChargeNotePackages,
                                                        ShowSaleMaxMinAmountContainers = a.ShowSaleMaxMinAmountContainers,
                                                        ShowSaleMaxMinAmountPackages = a.ShowSaleMaxMinAmountPackages,
+                                                       ShowHeaderLabelsContainers = a.ShowHeaderLabelsContainers,
+                                                       ShowHeaderLabelsPackages = a.ShowHeaderLabelsPackages,
 
 
                                                                       };
@@ -653,6 +657,8 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                     ShowChargeNotePackages = quoteTemplateSetting.ShowChargeNotePackages,
                                                     ShowSaleMaxMinAmountContainers = quoteTemplateSetting.ShowSaleMaxMinAmountContainers,
                                                     ShowSaleMaxMinAmountPackages = quoteTemplateSetting.ShowSaleMaxMinAmountPackages,
+                                                    ShowHeaderLabelsContainers = quoteTemplateSetting.ShowHeaderLabelsContainers,
+                                                    ShowHeaderLabelsPackages = quoteTemplateSetting.ShowHeaderLabelsPackages,
 
                                                           };
             return result;

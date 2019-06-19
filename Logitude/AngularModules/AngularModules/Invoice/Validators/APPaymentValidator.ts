@@ -45,7 +45,7 @@ export class APPaymentValidator {
             }
         }
 
-        if (entityPm.PaymentMethodCode == "CH") {
+        if (entityPm.PaymentMethodCode == "CH" && !entityPm.AutomaticPaymentCheque) {
             if (AppTool.IsNullOrEmpty(entityPm.ChequeOrPaymentRef)) {
                 validationResults.push(msg.replace("%FieldName", "Cheque Ref"));
             }

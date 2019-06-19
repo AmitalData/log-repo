@@ -84,7 +84,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
     }
-    public ShowFlip: boolean = false;
+    public ShowSplitButton: boolean = false;
     IsSplitComponentOpened: boolean = true;
 
     token: any;
@@ -92,14 +92,19 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         this.IsSplitComponentOpened = !this.IsSplitComponentOpened;
         if (!this.IsSplitComponentOpened) {
-
+            this.AutomaticPaymentCheque=false;
             this.PaymentChequeActivated = false;
+            if (AppTool.IsNullOrEmpty(this.ChequeOrPaymentRef)) {
+                this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, true);
+            }
         }
         else {
             this.PaymentChequeActivated = true;
+           this.AutomaticPaymentCheque=true;
+            this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, false);
         }
 
-        this.ShowFlip = true;
+        this.ShowSplitButton = true;
        // this.cd.detectChanges();
 
      
@@ -302,7 +307,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.UIProperties.SetVisibility("Account", this.ObjectTableName, false);
 
         if (!AppTool.IsNullOrEmpty(this.PaymentMethodCode)) {
-            if (this.PaymentMethodCode == "CH") {
+            if (this.PaymentMethodCode == "CH" && !this.PaymentChequeActivated) {
                 if (AppTool.IsNullOrEmpty(this.ChequeOrPaymentRef)) {
                     this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, true);
                 }
@@ -791,7 +796,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
     }
-
+    
+  
+    get AutomaticPaymentCheque() { return this.EntityPM.AutomaticPaymentCheque; }
+    set AutomaticPaymentCheque(value: boolean) {
+        if (this.EntityPM.AutomaticPaymentCheque != value) {
+            this.EntityPM.AutomaticPaymentCheque = value;
+        }
+    }
     private myRelativeRateDate: string = null;
     get RelativeRateDate() { return this.myRelativeRateDate; }
     set RelativeRateDate(value: string) {
@@ -882,12 +894,23 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM != null) {
             if (this.EntityPM.PaymentMethodCode != value) {
                 this.EntityPM.PaymentMethodCode = value;
+                this.SetAutomaticPaymentCheque(value);
+               
 
                 this.SetUIProperties_FullAccounting(); // for BankAccountId
             }
         }
     }
 
+    SetAutomaticPaymentCheque(value: string){
+    if (this.PaymentMethodCode == "CH") {
+        this.EntityPM.AutomaticPaymentCheque = true;
+    }
+    else {
+        this.EntityPM.AutomaticPaymentCheque = false;
+     }
+
+    }
     get BranchId() {
         if (this.EntityPM == null) {
             return null;
@@ -954,9 +977,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 this.UIProperties.SetEnabled("BankBranch", this.ObjectTableName, false);
                 this.UIProperties.SetEnabled("Account", this.ObjectTableName, false);
                 this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, !this.BankAccountId);
-            }else{
+            }
+             else
+             {
                 this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, false);
             }
+           
         }
     }
     SetUIProperties_FullAccounting_Tax() {
