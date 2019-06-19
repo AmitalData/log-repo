@@ -326,17 +326,18 @@
                         <LogLabel [ObjectFieldName]="'TruckerId'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td style="width:150px">
+                    <td colspan="2" style="width:180px">
                         <LogLov [ObjectFieldName]="'TruckerId'"
-                                [SelectedValue]="TruckerId"
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
-                                [HideColumns]="true"
-                                [LookUpTableName]="'Carrier'"
-                                [DependencyFilter1Value]="CarrierDependencyProperty1">
+                                [SelectedValue]="TruckerId"
+                                [DisplayMemberPath]="'LocalName'"
+                                [HideAddLink]="true"
+                                [LookUpTableName]="'Card'"
+                                [DependencyFilter1Value]="'TR'"
+                                [DisplayFieldsFromList]="'Code,LocalName,EnglishName'">
                         </LogLov>
                     </td>
-                    <td style="width:30px"></td>
                 </tr>
             </table>
         </td>
