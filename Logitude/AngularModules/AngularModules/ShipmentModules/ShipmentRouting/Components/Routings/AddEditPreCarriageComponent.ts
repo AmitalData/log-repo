@@ -409,7 +409,6 @@ export class AddEditPreCarriageComponent extends BaseComponent {
         this.entityCloner.AddField('MainCarriageFromPortName');
         this.entityCloner.AddField('MainCarriageFromPortCountryCode');
         this.entityCloner.AddField('MainCarriageFromPortCountryName');
-        this.entityCloner.AddField('MainCarriageFromPortCountryEC');
         this.entityCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {
