@@ -46,9 +46,7 @@ namespace Logitude.CRM.Data
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
 			string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
             CRMContext context = new CRMContext(connection);
             return context;
         }
@@ -102,6 +100,12 @@ namespace Logitude.CRM.Data
             modelBuilder.Configurations.Add(new EscalationActionTimeIndicatorMap());
 	
             modelBuilder.Configurations.Add(new EscalationPreDefinitionMap());
+	
+            modelBuilder.Configurations.Add(new OccasionMap());
+	
+            modelBuilder.Configurations.Add(new OccasionStatusMap());
+	
+            modelBuilder.Configurations.Add(new OccasionTypeMap());
 	
             modelBuilder.Configurations.Add(new OpportunityMap());
 	
@@ -548,6 +552,24 @@ namespace Logitude.CRM.Data
 	 }
 	
 	 public IDbSet<EscalationPreDefinition> EscalationPreDefinitions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<Occasion> Occasions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OccasionStatus> OccasionStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OccasionType> OccasionTypes 
 	 {
 	      get; set;
 	 
