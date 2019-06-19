@@ -91,7 +91,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     public NewInvoices: SupplierInvoicePM[] = [];
    
     _SkipAutoInsurance: boolean = false;
-    _IsNoIncotermCheck: boolean = false;
+    _IsNoIncotermCheck: string = "N";
 
     constructor//(private cd: ChangeDetectorRef) {
         () {
@@ -634,7 +634,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
                         SessionLocator.CurrentSession.StopBusyIndicator();
-                        if (this._IsNoIncotermCheck) {
+                        if (this._IsNoIncotermCheck == "Y") {
                             this.ConfirmWindowYesButton();
                         }
                         else {
@@ -670,7 +670,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
 
                         SessionLocator.CurrentSession.StopBusyIndicator();
-                        if (this._IsNoIncotermCheck) {
+                        if (this._IsNoIncotermCheck == "Y") {
                             this.ConfirmWindowYesButton();
                         }
                         else {
@@ -866,7 +866,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
                     SessionLocator.CurrentSession.StopBusyIndicator();
-                    if (this._IsNoIncotermCheck) {
+                    if (this._IsNoIncotermCheck == "Y") {
                         this.ConfirmWindowYesButton();
                     }
                     else {
@@ -896,7 +896,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
                     SessionLocator.CurrentSession.StopBusyIndicator();
 
-                    if (this._IsNoIncotermCheck) {
+                    if (this._IsNoIncotermCheck == "Y") {
                         this.ConfirmWindowYesButton();
                     }
                     else {
