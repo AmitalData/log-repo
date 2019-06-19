@@ -259,7 +259,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                                 }
                             });
                             //this.TextValueChanges(this.TextValue);
-                            var isDestroyed: boolean = this.cd["destroyed"]; 
+                            var isDestroyed: boolean = this.cd["destroyed"];
                             if (this.cd && isDestroyed == false) {
                                 this.cd.detectChanges();
                             }
@@ -620,8 +620,17 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
 
         // this.TextValue = this.DataContext[this.ObjectFieldName];
         this.keydown = false;
+
+        this.HandleMinusOnlyValue();
+
         this.GetValueFormatted(this.TextValue);
         this.LostFocus.emit(this.TextValue);
+    }
+
+    HandleMinusOnlyValue() {
+        if (this.TextValue + "" == '-' && this.InputType.toLowerCase() == 'sigdouble') {
+            this.TextValue = "0";
+        }
     }
 
     OnKeyUp(event) {
@@ -1335,6 +1344,11 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                             else {
                                 value = Number(this.TextValue);
                             }
+
+
+                            if (this.TextValue + "" == '-' && this.InputType.toLowerCase() == 'sigdouble')
+                                this.DataContext[this.ObjectFieldName] = 0;
+
                             if (!isNaN(value)) {
                                 var isok: boolean = true;
                                 if (this.InputType == 'unsdecimal' || this.InputType == 'unsinteger' || this.InputType == 'double') {
@@ -1355,7 +1369,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                                         this.DataContext[this.ObjectFieldName] = customFieldClass;
                                     }
                                     else {
-                                        this.DataContext[this.ObjectFieldName] = value;
+
+                                            this.DataContext[this.ObjectFieldName] = value;
                                     }
                                 }
                             }
@@ -1568,7 +1583,9 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                         }
                     }
 
-                    if (isNaN(Number(val))) {
+                    if(this.InputType.toLowerCase() == 'sigdouble' && ((this.TextValue + "") == '-')){
+                        // skip for minus only
+                    } else if (isNaN(Number(val))) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         suppressValidation = true;
                     }
@@ -1580,6 +1597,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
 
             }
         }
+
 
         if (!this.NoValidation && this.uiProperty != null && !suppressValidation) {
             var errors = null;

@@ -354,7 +354,7 @@ namespace WebFreight.Web.Helpers
             string documentTypeCopyId = documentTypeCopy != null ? documentTypeCopy.Id : "";
             string documentTypeCode = !string.IsNullOrEmpty(documentType.Code) ? documentType.Code.ToUpper() : "";
             DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
-            StiReport report =  BuildReport(documentType.Code, documentType.Id, entityId, entityObjectTableId, childEntityId, childObjectTableId, defaulttemplate.Id, tenant, documentTypeCopyId, userId);
+            StiReport report =  BuildReport(documentType.Code, documentType.Id, entityId, entityObjectTableId, childEntityId, childObjectTableId, defaulttemplate.Id, tenant, userId, documentTypeCopyId);
             return report;
         }
 
