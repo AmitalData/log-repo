@@ -84,6 +84,8 @@ export class NewGLAccountComponent extends BaseComponent {
                 this.DisplayNumber = args.DisplayNo;
                 this.LocalName = args.LocalName;
                 this.EnglishName = args.EnglishName;
+                this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
                 this.AccountTypeCode = args.AccountType;
                 this.EntityPM.NewGLAccountCardId = args.CardId;
                 this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
@@ -95,6 +97,8 @@ export class NewGLAccountComponent extends BaseComponent {
                 this.LocalName = args.LocalName;
                 this.EnglishName = args.EnglishName;
                 this.AccountTypeCode = args.AccountType;
+                this.UIProperties.SetEnabled("LocalName", this.ObjectTableName, false);
+                this.UIProperties.SetEnabled("EnglishName", this.ObjectTableName, false);
                 this.EntityPM.NewGLAccountCardId = args.CardId;
                 this.EntityPM.RevenueExpenseType = args.RevenueExpenseType;
                 this.InitLOVFilters();
@@ -351,10 +355,12 @@ export class NewGLAccountComponent extends BaseComponent {
             this.EntityPM.ControlAccountId = this.FullAccountingSetting.VendorControlAccountId;
         }
 
+        this.CurrentSession.StartBusyIndicatorSaving();
         this.EntityPM.AccountTypeCode = AppTool.IsNullOrEmpty(this.AccountTypeCode) ? "1" : this.AccountTypeCode;
         this.EntityPM.Inactive = false;
         this.EntityPM.IsControlAccount = false;
         this.myService.insert(this.EntityPM).subscribe(myResult => {
+            this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
@@ -363,7 +369,6 @@ export class NewGLAccountComponent extends BaseComponent {
 
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
-                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

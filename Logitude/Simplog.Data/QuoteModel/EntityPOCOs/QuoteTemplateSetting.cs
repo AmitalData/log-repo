@@ -321,6 +321,9 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool ShowSaleMaxMinAmountContainers { get; set; }
 
 
+        public bool ShowHeaderLabelsPackages { get; set; }
+        public bool ShowHeaderLabelsContainers { get; set; }
+
 
         [ForeignKey("TotalPerContainersAdditionalTextDesignId")]
         public virtual QuoteTemplateTextDesign TotalPerContainersAdditionalTextDesign { get; set; }

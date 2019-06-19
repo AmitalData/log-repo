@@ -47,7 +47,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.ReconciliationNumber = reco.ReconciliationNumber.ToString();
             }
 
-            entityPM.Amount = entityPOCO.CreditAmount > 0 ? entityPOCO.CreditAmount : entityPOCO.DebitAmount;
+            entityPM.Amount = entityPOCO.CreditAmount != 0 ? entityPOCO.CreditAmount : entityPOCO.DebitAmount;
 
         }
     }

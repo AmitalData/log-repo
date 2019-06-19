@@ -51,6 +51,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             entityPM.InActive = modification != null ? modification.InActive : false;
             entityPM.QuotationDefaultTemplateId = modification != null ? modification.QuotationDefaultTemplateId : null;
+            entityPM.RoutingRQuoteDefaultTemplateId = modification != null ? modification.RoutingRQuoteDefaultTemplateId : null;
+
+
+
+
             return entityPM;
         }
 
@@ -104,10 +109,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             foreach (ProductTypeList item in result)
             {
-                if (!string.IsNullOrEmpty(item.QuotationDefaultTemplateId) && quoteTemplateLists!=null)
+                if (!string.IsNullOrEmpty(item.QuotationDefaultTemplateId) && quoteTemplateLists != null)
                 {
                     QuoteTemplateList quoteTemplateList = quoteTemplateLists.Where(d => d.Id == item.QuotationDefaultTemplateId).FirstOrDefault();
                     if (quoteTemplateList != null) item.DefaultTemplate = quoteTemplateList.Name;
+
+
+                    quoteTemplateList = quoteTemplateLists.Where(d => d.Id == item.RoutingRQuoteDefaultTemplateId).FirstOrDefault();
+                    if (quoteTemplateList != null) item.RoutingRQuoteDefaultTemplate = quoteTemplateList.Name;
                 }
 
             }

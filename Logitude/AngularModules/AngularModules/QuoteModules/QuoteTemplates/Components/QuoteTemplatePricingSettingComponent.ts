@@ -599,6 +599,28 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
 
+    ShowHeaderLabelsKey: string = Guid.newGuid();
+    get ShowHeaderLabels() {
+        var showHeaderLabels: boolean = false;
+        if (this.QuoteTemplateSettingPM) showHeaderLabels = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.ShowHeaderLabelsPackages : this.QuoteTemplateSettingPM.ShowHeaderLabelsContainers;
+        return showHeaderLabels;
+    }
+    set ShowHeaderLabels(value: boolean) {
+        if (this.QuoteTemplateSettingPM != null) {
+            if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.ShowHeaderLabelsPackages = value;
+            else this.QuoteTemplateSettingPM.ShowHeaderLabelsContainers = value;
+        }
+    }
+
+
+
+    
+
+
+
+
+
+
     DisablePricingSetting() {
         this.ShowChargeCode = false;
         this.ShowChargeName = false;
@@ -609,6 +631,8 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.ShowLocalCurrencyColumn = false;
         this.ShowChargeDescription = false;
         this.ShowSaleMaxMinAmountColumn = false;
+        this.ShowHeaderLabels = false;
+    
     }
 
 

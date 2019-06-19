@@ -88,8 +88,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(msg);
                 }
             }
-
-            if (paymentMethodCode == "CH")
+          
+            if (paymentMethodCode == "CH" && !entityPM.AutomaticPaymentCheque)
             {
                 if (string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef))
                 {
@@ -240,7 +240,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+        public static FullAccountingSettingPM GetFullAccountingSetting(APPaymentPM entityPM)
+        {
+            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+            return query.GetFullAccountingSettingByTenant(entityPM.Tenant );
 
+        }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         private static ContactPM GetLoggedContact(int tenant)
         {

@@ -86,6 +86,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string BankAccountId { get; set; }
 
         public DateTime? FirstApproveDate { get; set; }
-
+        public string PaymentChequeNumber { get; set; }
+        public string PaymentChequeId { get; set; }
     }
 }

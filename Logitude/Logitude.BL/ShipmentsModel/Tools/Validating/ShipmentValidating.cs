@@ -134,21 +134,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                     else
                     {
-                        if (!string.IsNullOrEmpty(entityPM.MainCarriageFromAddressId) && !string.IsNullOrEmpty(entityPM.MainCarriageToAddressId))
-                        {
-                            AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
-                            Address fromAddress = addressRepository.GetSingleAddress(entityPM.MainCarriageFromAddressId, entityPM.Tenant);
-                            Address toAddress = addressRepository.GetSingleAddress(entityPM.MainCarriageToAddressId, entityPM.Tenant);
+                        List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
+                        AddDomesticAddress(iDomesticCountries, entityPM.MainCarriageFromAddressId, entityPM.Tenant);
+                        AddDomesticAddress(iDomesticCountries, entityPM.MainCarriageToAddressId, entityPM.Tenant);
 
-                            if (fromAddress != null && toAddress != null)
+                        if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
+                        {
+                            bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
+                            bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+
+                            if (!isAllPortsEC && !isAllPortsNA)
                             {
-                                if (fromAddress.CountryId != toAddress.CountryId)
-                                {
-                                    if (fromAddress.Country.EC == false || toAddress.Country.EC == false)
-                                    {
-                                        throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
-                                    }
-                                }
+                                throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
                             }
                         }
                     }
@@ -156,25 +153,31 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
 
                 else
                 {
-                    if (!string.IsNullOrEmpty(entityPM.MainCarriageFromPortId) && !string.IsNullOrEmpty(entityPM.MainCarriageToPortId))
-                    {
-                        PortPM fromPort = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.MainCarriageFromPortId, true);
-                        PortPM toPort = PortQuery.GetSinglePort(entityPM.Tenant, entityPM.MainCarriageToPortId, true);
+                    List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
+                    AddDomesticPort(iDomesticCountries, entityPM.MainCarriageFromPortId, entityPM.Tenant);
+                    AddDomesticPort(iDomesticCountries, entityPM.MainCarriageToPortId, entityPM.Tenant);
+                    AddDomesticPort(iDomesticCountries, entityPM.Transshipment1FromPortId, entityPM.Tenant);
+                    AddDomesticPort(iDomesticCountries, entityPM.Transshipment1ToPortId, entityPM.Tenant);
+                    AddDomesticPort(iDomesticCountries, entityPM.Transshipment2FromPortId, entityPM.Tenant);
+                    AddDomesticPort(iDomesticCountries, entityPM.Transshipment2ToPortId, entityPM.Tenant);
+                    AddDomesticPort(iDomesticCountries, entityPM.Transshipment3FromPortId, entityPM.Tenant);
+                    AddDomesticPort(iDomesticCountries, entityPM.Transshipment3ToPortId, entityPM.Tenant);
+                    AddDomesticPort(iDomesticCountries, entityPM.FinalDistenationPortId, entityPM.Tenant);
 
-                        if (fromPort != null && toPort != null)
+                    if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
+                    {
+                        bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
+                        bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+
+                        if (!isAllPortsEC && !isAllPortsNA)
                         {
-                            if (fromPort.CountryId != toPort.CountryId)
-                            {
-                                if (fromPort.CountryEC == false || toPort.CountryEC == false)
-                                {
-                                    throw new ApplicationException("Both Ports must be in the same country since the direction is Domestic");
-                                }
-                            }
+                            throw new ApplicationException("All Ports must be in the same country since the direction is Domestic");
                         }
                     }
                 }
             }
         }
+
         private static void ValidateFromPort(ShipmentPM entityPM, Tenant loggedTenant)
         {
             bool isInlandDomestic = (entityPM.DirectionId == "D" && entityPM.TransportModeId == "I");
@@ -1243,5 +1246,55 @@ namespace Logitude.BL.ShipmentsModel.Tools.Validating
                 }
             }
         }
+        private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iPortId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iPortId).Any())
+                {
+                    PortPM iPort = PortQuery.GetSinglePort(iTenant, iPortId, true);
+
+                    if (iPort != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iPort.Id,
+                            CountryId = iPort.CountryId,
+                            CountryIsEC = iPort.CountryEC,
+                            CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
+                        });
+                    }
+                }                                  
+            }
+        }
+        private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iAddressId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iAddressId).Any())
+                {
+                    AddressRepository addressRepository = new AddressRepository(iTenant);
+                    Address iAddress = addressRepository.GetSingleAddress(iAddressId, iTenant);
+
+                    if (iAddress != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iAddress.Id,
+                            CountryId = iAddress.CountryId,
+                            CountryIsEC = iAddress.Country.EC,
+                            CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
+                        });
+                    }
+                }
+            }
+        }
+    }
+    public class DomesticCountry
+    {
+        public string Id { get; set; }
+        public string CountryId { get; set; }
+        public bool CountryIsEC { get; set; }
+        public bool CountryIsNorthAmerica { get; set; }
     }
 }

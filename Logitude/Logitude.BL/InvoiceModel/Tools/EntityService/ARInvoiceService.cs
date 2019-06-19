@@ -826,8 +826,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                     }
 
-                    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
-                    iConsolidationService.OnCreatingAutoCredit(this.allConnectedInvoices);
+                    //ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
+                    //iConsolidationService.OnCreatingAutoCredit(this.allConnectedInvoices);
 
                     #endregion
                 }
@@ -3478,11 +3478,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             if (this.isVoidingInvoice)
             {
-                if (this.entityPM.IsConsolidationInvoice)
-                {
-                    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
-                    iConsolidationService.OnVoid(this.allConnectedInvoices);
-                }
+                //if (this.entityPM.IsConsolidationInvoice)
+                //{
+                //    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
+                //    iConsolidationService.OnVoid(this.allConnectedInvoices);
+                //}
 
                 this.UpdateShipmentRegistryDate();
             }
@@ -3504,11 +3504,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     this.sATInterfaceHelper.SendSATRequestFile(entityPM, invoice);
                 }
 
-                if (this.entityPM.IsConsolidationInvoice)
-                {
-                    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
-                    iConsolidationService.OnApprove();
-                }
+                //if (this.entityPM.IsConsolidationInvoice)
+                //{
+                //    ConsolidationService iConsolidationService = new ConsolidationService(this.entityPM, this.objectContext);
+                //    iConsolidationService.OnApprove();
+                //}
 
                 this.UpdateShipmentRegistryDate();
             }

@@ -68,6 +68,9 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     PreviewPdfId: string;
     IsShowPreviewPDF: boolean = true;
     IsReady: boolean = false;
+
+    QuoteTypeCode: string;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -165,7 +168,9 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         _entityResourceService.getEntityResourceByTableName("QuoteTemplate").subscribe(response => {
             this.IsReady = true;
  
-        this.QuotePM = args.QuotePM;
+         this.QuotePM = args.QuotePM;
+
+        this.QuoteTypeCode = this.QuotePM.QuoteTypeCode;
         this.QuotationWindow = args.QuotationWindow;
         this.QuotationTitle = args.QuotationWindow ? args.QuotationWindow.Title : "";
         this.LoadQuoteCustomerEmail();
@@ -177,6 +182,8 @@ export class QuotationComponent extends BaseComponent implements OnInit {
         this.HeightPdf = (this.CurrentSession.CurrentWindow.Height - 100);
 
         this.LoadData();
+
+ 
 
         });
     }
@@ -364,6 +371,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     }
 
     QuotationDefaultTemplateId: string;
+
     LoadProductType() {
 
         if (!AppTool.IsNullOrEmpty(this.QuotePM.ProductCode)) {
@@ -371,7 +379,8 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             _productTypeListService.getSingleFromCache(this.QuotePM.ProductCode).subscribe(result => {
                 var productsList: ProductTypeList = result.Result;
                 if (productsList) {
-                    this.QuotationDefaultTemplateId = productsList.QuotationDefaultTemplateId;
+                    if (this.QuoteTypeCode == "A") this.QuotationDefaultTemplateId = productsList.QuotationDefaultTemplateId;
+                    else this.QuotationDefaultTemplateId = productsList.RoutingRQuoteDefaultTemplateId;
                 }
 
                 this.LoadTemplates();

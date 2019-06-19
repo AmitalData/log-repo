@@ -363,6 +363,21 @@ export class APPaymentPM {
     public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
        
 	 
+    private automaticPaymentCheque: boolean;
+    public get AutomaticPaymentCheque() { return this.automaticPaymentCheque; }
+    public set AutomaticPaymentCheque(newValue: boolean) { if (this.automaticPaymentCheque != newValue) { this.automaticPaymentCheque = newValue; this.MarkAsDirty("AutomaticPaymentCheque"); } }
+       
+	 
+    private paymentChequeNumber: string;
+    public get PaymentChequeNumber() { return this.paymentChequeNumber; }
+    public set PaymentChequeNumber(newValue: string) { if (this.paymentChequeNumber != newValue) { this.paymentChequeNumber = newValue; this.MarkAsDirty("PaymentChequeNumber"); } }
+       
+	 
+    private paymentChequeId: string;
+    public get PaymentChequeId() { return this.paymentChequeId; }
+    public set PaymentChequeId(newValue: string) { if (this.paymentChequeId != newValue) { this.paymentChequeId = newValue; this.MarkAsDirty("PaymentChequeId"); } }
+       
+	 
 
     public OldEntityPM: APPaymentPM;
 		
