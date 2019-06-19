@@ -3056,7 +3056,7 @@ namespace WebFreight.Web.InfrastructureModel
                     SearchFields = c.SearchFields,
                     HasStates = c.HasStates,
                     IsStateRequired = c.IsStateRequired,
-
+                    IsNorthAmerica = c.IsNorthAmerica,
                 };
                 countryRepository.Add(country);
             }

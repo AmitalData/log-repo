@@ -1003,8 +1003,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string MainCarriageToPortName { get; set; }
         public string MainCarriageToPortCountryCode { get; set; }
         public string MainCarriageToPortCountryName { get; set; }
-        public bool MainCarriageFromPortCountryEC { get; set; }
-        public bool MainCarriageToPortCountryEC { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MainCarriageVesselId { get; set; }
@@ -1089,10 +1087,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Transshipment3ToPortName { get; set; }
         public string Transshipment3ToPortCountryCode { get; set; }
         public string Transshipment3ToPortCountryName { get; set; }
-
-        public bool Transshipment1ToPortCountryEC { get; set; }
-        public bool Transshipment2ToPortCountryEC { get; set; }
-        public bool Transshipment3ToPortCountryEC { get; set; }
 
         public string FinalDistenationPortId { get; set; }
 
@@ -1889,8 +1883,6 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool IsSendFSRCreatingShipment { get; set; }
         public string ToCountryId { get; set; }
         public string FromCountryId { get; set; }
-        public bool ToCountryIsEC { get; set; }
-        public bool FromCountryIsEC { get; set; }
         public string CopyFromShipmentId { get; set; }
         public bool IsCopyFromShipment { get; set; }
         public bool IsBuildFromQuote { get; set; }
@@ -2354,5 +2346,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public bool ConvertShipmentToFCL { get; set; }
 
         public bool ShipmentDirectionConverted { get; set; }
+        public bool FromCountryIsEC { get; set; }
+        public bool ToCountryIsEC { get; set; }
     }
 }
