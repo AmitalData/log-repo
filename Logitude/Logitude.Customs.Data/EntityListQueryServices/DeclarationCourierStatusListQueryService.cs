@@ -43,23 +43,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             //}        
             //TestSql(iQueryable);
 
-            var q =
+            var qDeclarationPaymentPendingHold =
             (from p in context.DeclarationPendings
              where p.Status == "A"
-             select p
+             group p by p.DeclarationID  into g
+             select new MyJoin  { DeclarationId =g.Key, ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1") }
+
             );
-
-
-            var qDeclarationPaymentPendingHold = (
-                from p in q
-                    //where p.CourierPendingReason.ErrorPlace == "1"
-                select new
-                {
-                    p.DeclarationID,
-                    ErrorPlace = q.Any(r => r.DeclarationID == p.DeclarationID &&
-                    p.CourierPendingReason.ErrorPlace == "1")
-                }
-                     );
 
 
             IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
@@ -71,7 +61,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
                                                               join errorPlace in qDeclarationPaymentPendingHold
-                                                              on a.DeclarationId equals errorPlace.DeclarationID
+                                                              on a.DeclarationId equals errorPlace.DeclarationId
                                                               into errorPlaceOuterJoin
                                                               from errorPlaceOuterJoinNullable in errorPlaceOuterJoin.DefaultIfEmpty()
 
@@ -86,7 +76,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   IsSVGTab = a.IsCourierMissingClassification == true,
                                                                   IsMNFRTab = (a.CourierManifestStatusCode == "R"),
                                                                   IsDECRTab = (a.CourierDeclarationStatusCode == "R"),
-                                                                  IsHOLDTab = (a.CourierPendingReasonCode != null),
+                                                                  //IsHOLDTab = (a.CourierPendingReasonCode != null),
                                                                   IsMNFTab = (a.CourierManifestStatusCode == "M" || a.CourierManifestStatusCode == "X"),
                                                                   IsPAYTab = a.CourierPaymentStatusCode == "R",
                                                                   IsDECTab = (a.CourierDeclarationStatusCode == "M" || a.CourierDeclarationStatusCode == "X"),
@@ -110,8 +100,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   CourierSearchFields = d.CourierSearchFields,
                                                                   TotalInvoiceAmountInUSD = a.TotalInvoiceAmountInUSD,
                                                                   DeclarationNumber = d.DeclarationNumber,
-                                                                  CourierPendingReasonCode = a.CourierPendingReasonCode,
-                                                                  CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
+                                                                  //CourierPendingReasonCode = a.CourierPendingReasonCode,
+                                                                  //CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
 
 
                                                                   CourierPendingReasonErrorPlace = errorPlaceOuterJoinNullable != null ?
@@ -188,6 +178,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         }
 	}
 
-
+    public class MyJoin
+    {
+        public bool ErrorPlace { get; set; }
+        internal string DeclarationId { get; set; }
+    }
 }
 	
