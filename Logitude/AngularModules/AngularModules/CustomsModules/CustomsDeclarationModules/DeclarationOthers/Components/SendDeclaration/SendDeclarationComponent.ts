@@ -649,7 +649,8 @@ export class SendDeclarationService implements OnDestroy {
     CheckFreightByIncoterm() {
         //this.StartMyBusyIndicator("");///SessionLocator.CurrentSession.CurrentEditComponent.StartBusyIndicator("");//Avoid ReSend
 
-        this.DeclarationService.CheckFreightAmountsByIncoterm(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+        //this.DeclarationService.CheckFreightAmountsByIncoterm(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
+        this.DeclarationService.CheckFreightAmountsByIncotermWithDefault(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             var isFreightAmount: boolean = myResponse.Result;
             if (!isFreightAmount) {
                 this.SendDeclaration();
