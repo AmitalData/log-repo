@@ -878,124 +878,159 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
 
         #region Journal & Journal Lines
-        private void AddAPPaymentJournalAndJournalLines(APPaymentPM theEntityPm, bool setApproved)
+        private void AddAPPaymentJournalAndJournalLines(APPaymentPM paymentPM, bool setApproved)
         {
-            int tenant = theEntityPm.Tenant;
+            int tenant = paymentPM.Tenant;
             if (setApproved)
             {
-
-                ///throw new Exception("[ARInvoicePayments]");
 
                 TenantRepository tenantRepository = new TenantRepository(tenant);
                 Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
                 if (tenantPOCO.AccountingActivated)
                 {
-                    this.UpdateCashBook(theEntityPm);
-                    // Insert Journal 
-                    JournalPM journal = new JournalPM();
-                    journal.Tenant = tenant;
-                    journal.JournalNumber = "1";
-                    journal.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    journal.AccountingDate = theEntityPm.RegisterDate.Value;
-                    journal.TypeCode = "0";
-                    journal.StatusCode = "2";
-                    journal.CreatedByUserId = theEntityPm.CreatedByUserId;
-                    journal.AccountingEntityCode = "5";
-                    journal.AccountingEntityId = theEntityPm.Id;
-                    journal.AccountingEntityReference = theEntityPm.PaymentNo;
-                    journal.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    journal.UpdatedByUserId = theEntityPm.UpdatedByUserId;
-                    journal.ApproveDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                    journal.ApprovedByUserId = theEntityPm.ApprovedByUserId;
-                    journal.ChangeSetOp = ChangeSetOperation.Insert;
-
-                    // Insert Journal Lines 
-                    // [Credit]
-                    JournalLinePM journalLine = new JournalLinePM();
-                    journalLine.Tenant = tenant;
-                    journalLine.JournalId = journal.Id;
-                    journalLine.Line = 1;
-                    journalLine.ActionCode = "1";
-                    journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
-                    journalLine.DocumentDate = theEntityPm.ValueDate.Value;
-                    journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
-                    journalLine.DueDate = theEntityPm.ValueDate.Value;
-                    journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency - (decimal)theEntityPm.TaxDeductionLocalAmount;
-                    journalLine.CurrencyId = theEntityPm.PaymentCurrencyId;
-                    journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency - ((decimal)theEntityPm.TaxDeductionLocalAmount/(decimal)theEntityPm.PaymentCurrencyExchangeRate);
-                    journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
-                    journalLine.Reference1 = theEntityPm.PaymentNo;
-                    journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
-                    journalLine.Notes = theEntityPm.InternalNotes;
-                    journalLine.CreditAccountId = GetCreditAccoutId(theEntityPm);
-                    journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                    journal.JournalLines.Add(journalLine);
-                    // [Debit ]
-                    GLAccountPM glAccount = getDebitGLAccount(theEntityPm.VendorId, theEntityPm.Tenant);
-                    journalLine = new JournalLinePM();
-                    journalLine.Tenant = tenant;
-                    journalLine.JournalId = journal.Id;
-                    journalLine.Line = 1;
-                    journalLine.ActionCode = "2";
-                    journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
-                    journalLine.DocumentDate = theEntityPm.RegisterDate.Value;
-                    journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
-                    journalLine.DueDate = theEntityPm.ValueDate.Value;
-                    journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
-                    journalLine.CurrencyId = theEntityPm.PaymentCurrencyId;
-                    journalLine.ForeignAmount = (decimal)theEntityPm.AmountInPaymentCurrency;
-                    journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
-                    journalLine.Reference1 = theEntityPm.PaymentNo;
-                    journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
-                    journalLine.Notes = theEntityPm.InternalNotes;
-                    journalLine.DebitAccountId = glAccount != null ? glAccount.Id : null;
-                    journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                    journal.JournalLines.Add(journalLine);
-                    // [Credit]
-                    if (theEntityPm.TaxDeductionLocalAmount == 0 && theEntityPm.VendorAddressId != tenantPOCO.AddressId)
-                    {
-                        // nothing
-                    }
-                    else
-                    {
-                        journalLine = new JournalLinePM();
-                        journalLine.Tenant = tenant;
-                        journalLine.JournalId = journal.Id;
-                        journalLine.Line = 1;
-                        journalLine.ActionCode = "1";
-                        journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
-                        journalLine.DocumentDate = theEntityPm.RegisterDate.Value;
-                        journalLine.AccountingDate = theEntityPm.RegisterDate.Value;
-                        journalLine.DueDate = theEntityPm.ValueDate.Value;
-                        journalLine.LocalAmount = (decimal)theEntityPm.TaxDeductionLocalAmount;
-                        journalLine.CurrencyId = theEntityPm.PaymentCurrencyId;
-                        var foreignAmount = theEntityPm.TaxDeductionLocalAmount;
-                        if (theEntityPm.PaymentCurrencyId != tenantPOCO.CurrencyId)
-                        {
-                            foreignAmount = (decimal)theEntityPm.TaxDeductionLocalAmount / (decimal)theEntityPm.PaymentCurrencyExchangeRate;
-                        }
-                        journalLine.ForeignAmount = (decimal)foreignAmount;
-                        journalLine.ExchangeRate = (decimal)theEntityPm.PaymentCurrencyExchangeRate;
-                        journalLine.Reference1 = theEntityPm.PaymentNo;
-                        journalLine.Reference2 = theEntityPm.ChequeOrPaymentRef;
-                        journalLine.Notes = theEntityPm.InternalNotes;
-                        IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
-                        FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
-                        journalLine.CreditAccountId = accountingSettings != null ? accountingSettings.TaxWithholdingGLAccountId : null;
-                        journalLine.DebitAccountId = glAccount != null ? glAccount.Id : null;
-                        journalLine.ChangeSetOp = ChangeSetOperation.Insert;
-                        journal.JournalLines.Add(journalLine);
-                    }
-
-                    var serializer = new XmlSerializer(typeof(JournalPM));
-                    var stringwriter = new System.IO.StringWriter();
-                    serializer.Serialize(stringwriter, journal);
-                    string xmlParameters = stringwriter.ToString();
-
-                    IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
-                    journalUpdate.Update(journal);
+                    UpdateCashBook(paymentPM);
+                    CreateAPPaymentJournal(paymentPM, tenantPOCO);
                 }
             }
+        }
+
+        private void CreateAPPaymentJournal(APPaymentPM paymentPM, Tenant tenantPOCO)
+        {
+            // Refactored by Abdullah
+
+            JournalPM journal = CreateAPPaymentJournal(paymentPM);
+
+            AddCreditJournalLineForBankGLAccount(paymentPM, journal);
+
+            AddDebitJournalLineForVendorGLAccount(paymentPM, journal);
+
+            if (paymentPM.TaxDeductionLocalAmount != 0 || paymentPM.VendorAddressId == tenantPOCO.AddressId)
+                AddCreditJournalLineForTaxGLAccount(paymentPM, paymentPM.Tenant, tenantPOCO, journal);
+
+            SubmitJournal(journal);
+        }
+
+        private static void SubmitJournal(JournalPM journal)
+        {
+            IJournalUpdateServiceExt journalUpdate = ContainerAccessor.Container.Resolve(typeof(IJournalUpdateServiceExt), "JournalUpdateServiceExt", new ParameterOverride("", 1)) as IJournalUpdateServiceExt;
+            journalUpdate.Update(journal);
+        }
+
+        private void AddCreditJournalLineForTaxGLAccount(APPaymentPM paymentPM, int tenant, Tenant tenantPOCO, JournalPM journal)
+        {
+            GLAccountPM glAccount = getDebitGLAccount(paymentPM.VendorId, paymentPM.Tenant);
+            FullAccountingSettingPM accountingSettings = GetFullAccountingSettings(tenant);
+
+            JournalLinePM creditForTaxGLAccount = new JournalLinePM
+            {
+                Tenant = tenant,
+                JournalId = journal.Id,
+                Line = 1,
+                ActionCode = "1",
+                ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                DocumentDate = paymentPM.ValueDate.Value,
+                AccountingDate = paymentPM.RegisterDate.Value,
+                DueDate = paymentPM.ValueDate.Value,
+                LocalAmount = (decimal)paymentPM.TaxDeductionLocalAmount,
+                CurrencyId = paymentPM.PaymentCurrencyId,
+                ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
+                Reference1 = paymentPM.PaymentNo,
+                Reference2 = paymentPM.ChequeOrPaymentRef,
+                Notes = paymentPM.InternalNotes,
+                CreditAccountId = accountingSettings?.TaxWithholdingGLAccountId,
+                DebitAccountId = glAccount?.Id,
+                ChangeSetOp = ChangeSetOperation.Insert,
+            };
+
+            //ForeignAmount
+            if (paymentPM.PaymentCurrencyId != tenantPOCO.CurrencyId)
+                creditForTaxGLAccount.ForeignAmount = (decimal)paymentPM.TaxDeductionLocalAmount / (decimal)paymentPM.PaymentCurrencyExchangeRate;
+            else
+                creditForTaxGLAccount.ForeignAmount = paymentPM.TaxDeductionLocalAmount.Value;
+
+
+            journal.JournalLines.Add(creditForTaxGLAccount);
+        }
+
+        private static FullAccountingSettingPM GetFullAccountingSettings(int tenant)
+        {
+            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+            FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
+            return accountingSettings;
+        }
+
+        private void AddDebitJournalLineForVendorGLAccount(APPaymentPM paymentPM, JournalPM journal)
+        {
+            GLAccountPM glAccount = getDebitGLAccount(paymentPM.VendorId, paymentPM.Tenant);
+            JournalLinePM debitForVendorGLAccount = new JournalLinePM
+            {
+                Tenant = tenant,
+                JournalId = journal.Id,
+                Line = 1,
+                ActionCode = "2",
+                ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                DocumentDate = paymentPM.ValueDate.Value,
+                AccountingDate = paymentPM.RegisterDate.Value,
+                DueDate = paymentPM.ValueDate.Value,
+                LocalAmount = (decimal)paymentPM.AmountInLocalCurrency,
+                CurrencyId = paymentPM.PaymentCurrencyId,
+                ForeignAmount = (decimal)paymentPM.AmountInPaymentCurrency,
+                ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
+                Reference1 = paymentPM.PaymentNo,
+                Reference2 = paymentPM.ChequeOrPaymentRef,
+                Notes = paymentPM.InternalNotes,
+                DebitAccountId = glAccount != null ? glAccount.Id : null,
+                ChangeSetOp = ChangeSetOperation.Insert
+            };
+            journal.JournalLines.Add(debitForVendorGLAccount);
+        }
+
+        private void AddCreditJournalLineForBankGLAccount(APPaymentPM paymentPM, JournalPM journal)
+        {
+            JournalLinePM creditForTaxGLAccount = new JournalLinePM
+            {
+                Tenant = tenant,
+                JournalId = journal.Id,
+                Line = 1,
+                ActionCode = "1",
+                ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                DocumentDate = paymentPM.ValueDate.Value,
+                AccountingDate = paymentPM.RegisterDate.Value,
+                DueDate = paymentPM.ValueDate.Value,
+                LocalAmount = (decimal)paymentPM.AmountInLocalCurrency - (decimal)paymentPM.TaxDeductionLocalAmount,
+                CurrencyId = paymentPM.PaymentCurrencyId,
+                ForeignAmount = (decimal)paymentPM.AmountInPaymentCurrency - ((decimal)paymentPM.TaxDeductionLocalAmount / (decimal)paymentPM.PaymentCurrencyExchangeRate),
+                ExchangeRate = (decimal)paymentPM.PaymentCurrencyExchangeRate,
+                Reference1 = paymentPM.PaymentNo,
+                Reference2 = paymentPM.ChequeOrPaymentRef,
+                Notes = paymentPM.InternalNotes,
+                CreditAccountId = GetCreditAccoutId(paymentPM),
+                ChangeSetOp = ChangeSetOperation.Insert
+            };
+
+            journal.JournalLines.Add(creditForTaxGLAccount);
+
+        }
+
+        private static JournalPM CreateAPPaymentJournal(APPaymentPM paymentPM)
+        {
+            JournalPM journal = new JournalPM();
+            journal.Tenant = paymentPM.Tenant;
+            journal.JournalNumber = "1";
+            journal.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
+            journal.AccountingDate = paymentPM.RegisterDate.Value;
+            journal.TypeCode = "0";
+            journal.StatusCode = "2";
+            journal.CreatedByUserId = paymentPM.CreatedByUserId;
+            journal.AccountingEntityCode = "5";
+            journal.AccountingEntityId = paymentPM.Id;
+            journal.AccountingEntityReference = paymentPM.PaymentNo;
+            journal.UpdateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
+            journal.UpdatedByUserId = paymentPM.UpdatedByUserId;
+            journal.ApproveDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
+            journal.ApprovedByUserId = paymentPM.ApprovedByUserId;
+            journal.ChangeSetOp = ChangeSetOperation.Insert;
+            return journal;
         }
 
         private void UpdateCashBook(APPaymentPM theEntityPm)

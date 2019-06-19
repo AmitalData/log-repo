@@ -606,8 +606,10 @@ export class PageLineModel extends BaseComponent {
     constructor(public pageLinePM: ReconcileExternalPageLinePM, public parent: AddEditRecoExPageComponent) {
         super();
 
-        this.CreditAmount = 0;
-        this.DebitAmount = 0;
+        if(AppTool.IsNullOrEmpty(this.CreditAmount))
+            this.CreditAmount = 0;
+        if(AppTool.IsNullOrEmpty(this.DebitAmount))
+            this.DebitAmount = 0;
     }
 
     //#region Properties

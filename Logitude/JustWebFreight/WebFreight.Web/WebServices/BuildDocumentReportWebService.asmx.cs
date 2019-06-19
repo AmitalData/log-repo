@@ -24,30 +24,30 @@ namespace WebFreight.Web.WebServices
     // [System.Web.Script.Services.ScriptService]
     public class BuildDocumentReportWebService : System.Web.Services.WebService
     {
-        [WebMethod]
-        public string BuildDocumentReport(string buildDocumentParameterxml)
-        {
+        //[WebMethod]
+        //public string BuildDocumentReport(string buildDocumentParameterxml)
+        //{
 
 
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+        //    string token = HttpContext.Current.Request.Headers["Token"];
+        //    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-            StiReport stiReport = new StiReport();
+        //    StiReport stiReport = new StiReport();
 
-            if (!string.IsNullOrEmpty(buildDocumentParameterxml))
-            {
-                buildDocumentParameterxml = buildDocumentParameterxml.Replace("@TagOpen", "<");
-                BuildDocumentParameter buildDocumentParameter = LogitudeXmlSerializer.DeserializeObject<BuildDocumentParameter>(buildDocumentParameterxml);
-                ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                stiReport = exportDocumentHelper.BuildReport(buildDocumentParameter.DocumentTypeCode, buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DefaulttemplateId, authToken.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
+        //    if (!string.IsNullOrEmpty(buildDocumentParameterxml))
+        //    {
+        //        buildDocumentParameterxml = buildDocumentParameterxml.Replace("@TagOpen", "<");
+        //        BuildDocumentParameter buildDocumentParameter = LogitudeXmlSerializer.DeserializeObject<BuildDocumentParameter>(buildDocumentParameterxml);
+        //        ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+        //        stiReport = exportDocumentHelper.BuildReport(buildDocumentParameter.DocumentTypeCode, buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DefaulttemplateId, authToken.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
 
-            }
+        //    }
 
-            string result = stiReport.SaveDocumentToString();
-            return result;
+        //    string result = stiReport.SaveDocumentToString();
+        //    return result;
 
-        }
+        //}
 
         [WebMethod]
         public string ExportDocument2Pdf(string exportDocument2PdfParameterxml)
@@ -62,7 +62,7 @@ namespace WebFreight.Web.WebServices
                 exportDocument2PdfParameterxml = exportDocument2PdfParameterxml.Replace("@TagOpen", "<");
                 BuildDocumentParameter buildDocumentParameter = LogitudeXmlSerializer.DeserializeObject<BuildDocumentParameter>(exportDocument2PdfParameterxml);
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-                result = exportDocumentHelper.ExportDocument2Pdf(buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DocumentOutId, authToken.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId,false);
+                result = exportDocumentHelper.ExportDocument2PdfNormalWay(buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DocumentOutId, authToken.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
 
             }
 

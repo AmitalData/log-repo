@@ -275,7 +275,7 @@ export class ReceivablePageComponent {
                 }
             });
         });
-        logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
         logWindow.Show("./InvoiceModules/ARInvoice/Components/NewEntity/NewGeneralARInvoiceComponent");
     }
     //#endregion

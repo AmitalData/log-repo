@@ -472,12 +472,6 @@ namespace WebFreight.Web.Helpers
                 FinalQuery = FinalQuery + " ORDER BY " + DWQueryParam.ColumnsSort;
             }
 
-            if (!FinalQuery.Contains("Fact_Shipments.[Source Tenant] as"))
-            {
-                FinalQuery = FinalQuery.Replace("from", ",Fact_Shipments.[Source Tenant] as [Source Tenant] from");
-            }
-           
-
             return FinalQuery;
         }
 
