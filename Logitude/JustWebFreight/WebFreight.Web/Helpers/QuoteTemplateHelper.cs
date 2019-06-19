@@ -340,6 +340,8 @@ namespace WebFreight.Web.Helpers
                 TotalPerContainersTableDesignId = totalPerContainersTableDesign.Id,
                 ShowSaleMaxMinAmountContainers = true,
                 ShowSaleMaxMinAmountPackages = true,
+                ShowHeaderLabelsContainers = true,
+                ShowHeaderLabelsPackages = true,
 
             };
 
@@ -774,7 +776,8 @@ namespace WebFreight.Web.Helpers
                     ShowChargeNotePackages = setting.ShowChargeNotePackages,
                     ShowTotalPerChargeGroupContainers = setting.ShowTotalPerChargeGroupContainers,
                     ShowTotalPerChargeGroupPackages = setting.ShowTotalPerChargeGroupPackages,
-                
+                    ShowHeaderLabelsContainers = setting.ShowHeaderLabelsContainers,
+                    ShowHeaderLabelsPackages = setting.ShowHeaderLabelsPackages,
                 };
 
                 if (string.IsNullOrEmpty(copySetting.TotalPerContainersTableDesignId))

@@ -176,6 +176,7 @@
     <TextCode Code="&quot;QuoteTemplate.M.ValueEditedByUserMessage&quot;" DefaultText="&quot;Value edited by user&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Quote.Quotation.M.FileUploadedManuallyMessage&quot;" DefaultText="&quot;File uploaded manually&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;Quote.Quotation.M.HaveAllTheQuoteTemplatesMessage&quot;" DefaultText="&quot;You have all the Quote Templates&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;QuoteTemplate.S.ShowHeaderLabels&quot;" DefaultText="&quot;Show Header Labels&quot;" TextCodeTypeCode="&quot;S&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;COPYATSIGNUP&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;QuoteTemplate.Features.CopyAtSignup&quot;" FeatureDefaultText="&quot;Copy At Signup&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
