@@ -1625,6 +1625,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }   
     }
     SelectExcelFile(fileEvent) {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
         var file = fileEvent.target.files[0];
 
         if (file && file.size > 0) {
@@ -1736,6 +1738,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         this.BuildItemsSource();
         this.ResetTotalEditedValues();
         this.ComputeTotals();
+        this.CurrentSession.StopBusyIndicator();
     }
 }
 

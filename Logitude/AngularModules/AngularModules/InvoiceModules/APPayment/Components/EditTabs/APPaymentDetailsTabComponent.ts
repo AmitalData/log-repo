@@ -32,6 +32,7 @@ import {BankAccountPMService} from '../../../../Accounting/Services/StandardPMs/
 import {BankAccountPM} from  '../../../../Accounting/EntityPMs/BankAccountPM';
 import {FullAccountingSettingPM} from '../../../../Accounting/EntityPMs/FullAccountingSettingPM';
 import { FullAccountingSettingPMService } from '../../../../Accounting/Services/StandardPMs/FullAccountingSettingPMService';
+import { PaymentChequePMService } from '../../../../Accounting/Services/StandardPMs/PaymentChequePMService';
 
 @Component({
     moduleId: module.id,
@@ -55,7 +56,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public LocalCurrencyCode = "";
     private CurrentSession = SessionLocator.SelectedSession;
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
-
+    PaymentChequePMService: PaymentChequePMService = new PaymentChequePMService();
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -67,7 +68,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
         this.GetFullAccountingSettings();
-      
+        if (AppTool.IsNullOrEmpty(this.EntityPM.PaymentChequeNumber)) {
+            this.IsSplitButtonVisibile = false;
+        }
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EnableMultiCurrency")) {
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyAPPayments) {
                 this.IsMultiCurrency = true;
@@ -109,7 +112,22 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
      
     }
+    entityId: string;
+    ViewPaymentChequeId() {
 
+       
+
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: this.EntityPM.PaymentChequeId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
+                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                    this.BuildScreenData();
+                });
+            });
+    }
+    
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public  GetFullAccountingSettings() {
       
@@ -347,6 +365,17 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private RefreshScreen() {
         this.SetUIProperties();
         this.LoadData();
+        this.CollapseSplitButton();
+    }
+    ChequeNumber: string;
+    IsSplitButtonVisibile: boolean = false;
+    CollapseSplitButton() {
+        if (this.PaymentMethodCode == "CH" && this.AutomaticPaymentCheque) {
+            this.IsSplitButtonVisibile = false;
+            this.ChequeNumber = this.EntityPM.PaymentChequeNumber;
+        }
+      
+
     }
     get IsScreenEnabled() {
         var result = true;
@@ -905,9 +934,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     SetAutomaticPaymentCheque(value: string){
     if (this.PaymentMethodCode == "CH") {
         this.EntityPM.AutomaticPaymentCheque = true;
+        this.IsSplitButtonVisibile = true;
     }
     else {
         this.EntityPM.AutomaticPaymentCheque = false;
+        this.IsSplitButtonVisibile = false;
      }
 
     }

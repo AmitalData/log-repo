@@ -14,6 +14,7 @@ export class LogitudeWindow {
     public IsSameWindowSize: boolean = false;
     public IsShowCloseButton: boolean = false;
     public IsFillScreen: boolean = false;
+    public IsFillScreenHeight: boolean = false;
     public WindowArgs: any;
     public NewWizardArgs: any;
     public DataContext: any;
@@ -368,6 +369,12 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
                 windowWidth = appWidth - 115;
                 windowHeight = appHeight - 115;
             }
+
+            else if (this.logWindow.IsFillScreenHeight) {
+                windowHeight = appHeight - 50;
+                windowWidth = this.logWindow.Width;
+            }
+
 
             else {
                 SetOverProperty = true;

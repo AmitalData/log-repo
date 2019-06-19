@@ -32,6 +32,9 @@ namespace Logitude.CRM.Data
 		 IDbSet<EmployeeGroupLine> EmployeeGroupLines { get; }
 		 IDbSet<EscalationActionTimeIndicator> EscalationActionTimeIndicators { get; }
 		 IDbSet<EscalationPreDefinition> EscalationPreDefinitions { get; }
+		 IDbSet<Occasion> Occasions { get; }
+		 IDbSet<OccasionStatus> OccasionStatuses { get; }
+		 IDbSet<OccasionType> OccasionTypes { get; }
 		 IDbSet<Opportunity> Opportunities { get; }
 		 IDbSet<OpportunityAdditionalService> OpportunityAdditionalServices { get; }
 		 IDbSet<OpportunityClosingReason> OpportunityClosingReasons { get; }

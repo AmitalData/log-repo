@@ -1773,7 +1773,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             dataTable1.Columns.Add("Carrier Seal");
             dataTable1.Columns.Add("Marks & Numbers");
             dataTable1.Columns.Add("Description");
-
+            
             IWorksheet sheet2 = workbook.Worksheets[1];
             sheet2.Name = "Package Types";
             sheet2.Range["A1"].CellStyle.Font.Bold = true;
@@ -1809,12 +1809,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     row[7] = package.MarksAndNumbers;
                     row[8] = package.Description;
                     dataTable1.Rows.Add(row);
-                }
-                
-                string packagesRange = "A2:A" + (shipmentPackages.Count() + 1);
-                sheet1.Range[packagesRange].DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
-                sheet1.Range[packagesRange].DataValidation.IsSuppressDropDownArrow = false;  
+                }  
             }
+            
+            sheet1.Range["A2"].EntireColumn.DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
+            sheet1.Range["A2"].EntireColumn.DataValidation.IsSuppressDropDownArrow = false;
+            sheet1.Range["A1"].DataValidation.ListOfValues = new string[0];
+            sheet1.Range["A1"].DataValidation.IsSuppressDropDownArrow = true;
 
             DataTable dataTable2 = this.ConvertToDataTable(types);
 
