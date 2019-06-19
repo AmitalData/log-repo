@@ -404,7 +404,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.Id = IdCounter.GetNumber("APPayment", entityPM.Tenant).ToString();
             }
-
+           
             if (string.IsNullOrEmpty(entityPM.PaymentNo))
             {
                 entityPM.PaymentNo = TableCounter.GetNumber(entityPM.Tenant, "APPT", "DR", null).ToString();
