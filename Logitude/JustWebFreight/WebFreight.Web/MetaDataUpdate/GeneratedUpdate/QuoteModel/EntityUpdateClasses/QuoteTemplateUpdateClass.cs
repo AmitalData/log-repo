@@ -1658,6 +1658,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.QuoteModel.EntityUpdateC
 
  		   TextCode QuoteTemplateTextCode_QuoteQuotationMHaveAllTheQuoteTemplatesMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Quote.Quotation.M.HaveAllTheQuoteTemplatesMessage", DefaultText = "You have all the Quote Templates",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode QuoteTemplateTextCode_QuoteTemplateSShowHeaderLabels = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "QuoteTemplate.S.ShowHeaderLabels", DefaultText = "Show Header Labels",LocalDefaultText = null, ObjectTableId = QuoteTemplateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

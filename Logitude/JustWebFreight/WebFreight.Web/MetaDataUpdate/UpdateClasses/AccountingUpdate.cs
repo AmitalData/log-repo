@@ -3954,7 +3954,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "WBLK",
-                EnglishName = "The Vendor does not have a certificate according to the 1000 System",
+                EnglishName = "The Vendor does not have a certificate",
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "לספק לא קיים אישור על פי מערכת 1000",
@@ -3967,10 +3967,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "WLDA",
-                EnglishName = "A new line was entered with the same date by the 1000 System",
+                EnglishName = "A line was entered with the same date",
                 Tenant = 0,
                 AddedManually = false,
-                LocalName = "נקלטה שורה חדשה עם תאריך זהה על ידי מערכת 1000",
+                LocalName = "נקלטה שורה חדשה עם תאריך זהה",
                 ObjectTableId = gLAccountWithholdingTax.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",
