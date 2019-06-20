@@ -301,6 +301,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return journals;
         }
+        public IQueryable<JournalPM> GetJournalsByAccountingEntityCodeAndDate(string entityCode, DateTime acccountingDate, int tenant)
+        {
+            IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingEntityCodeAndDate(entityCode, acccountingDate, tenant);
+
+            IQueryable<JournalPM> journals = from a in journalQuery
+                                             select new JournalPM()
+                                             {
+                                                 JournalNumber = a.JournalNumber,
+                                                 AccountingDate = a.AccountingDate,
+                                                 StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
+                                                 Id = a.Id
+                                             };
+
+            return journals;
+        }
 
 
         public JournalPM GetSinglePM(string id, int tenant)

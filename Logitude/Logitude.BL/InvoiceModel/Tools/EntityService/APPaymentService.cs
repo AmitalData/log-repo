@@ -87,10 +87,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.CreatePaymentCheque(theEntityPm);
             if(paymentCheque != null)
             {
-                payment.PaymentChequeNumber = paymentCheque.ChequeNumber;
-                theEntityPm.PaymentChequeNumber = payment.PaymentChequeNumber;
-                payment.PaymentChequeId = paymentCheque.Id;
-                theEntityPm.PaymentChequeId = payment.PaymentChequeId;
+                payment.ChequeOrPaymentRef = paymentCheque.ChequeNumber;
+                theEntityPm.ChequeOrPaymentRef = payment.ChequeOrPaymentRef;
+               
             }
             this.UpdatePaymentOpenAmount();
             APPaymentHelper service = new APPaymentHelper();
@@ -117,10 +116,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         PaymentChequePM paymentCheque;
         private void CreatePaymentCheque(APPaymentPM entityPM )
         {
-            FullAccountingSettingPM setting = GetFullAccountingSetting(entityPM);
+           
             if (setApproved && entityPM.AutomaticPaymentCheque  )
             {
-              
+                SecurityUtility.CheckContactFeature("PaymentCheque", "NEW", entityPM.Tenant);
                 GLAccountPM gLAccount = GetGLAccountByCard(entityPM);
                  paymentCheque = new PaymentChequePM() {
 
@@ -404,7 +403,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.Id = IdCounter.GetNumber("APPayment", entityPM.Tenant).ToString();
             }
-
+           
             if (string.IsNullOrEmpty(entityPM.PaymentNo))
             {
                 entityPM.PaymentNo = TableCounter.GetNumber(entityPM.Tenant, "APPT", "DR", null).ToString();
