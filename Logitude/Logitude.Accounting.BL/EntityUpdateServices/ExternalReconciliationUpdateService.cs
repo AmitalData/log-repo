@@ -212,37 +212,57 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         void CheckDifferenc(ExternalReconciliationPM entityPM)
         {
-            IAccountingContext context = MainContext as AccountingContext;
-            //Validate lines total
-            decimal LedgerLinesSum = 0;
-            decimal BankLinesSum = 0;
+            decimal ledgerLinesTotal = GetLedgerTransactionsTotal(entityPM);
+            decimal bankLinesTotal = GetBankPageLinesTotal(entityPM);
 
-            ExternalReconciliationQueryService query = new ExternalReconciliationQueryService(context);
-
-            List<string> listOfLedgerLinesIds = entityPM.ExternalReconciliationLines.FindAll(d => d.LedgerTransactionId != null).Select(d => d.LedgerTransactionId).ToList();
-            List<LedgerTransaction> ledgerLines = query.GetLedgerTransactionByIds(listOfLedgerLinesIds, entityPM.Tenant);
-            //LedgerLinesSum = ledgerLines.Sum(a => a.OpenAmount);
-            //LedgerLinesSum = ledgerLines.Sum(a => (a.ForeignAmountDebit == 0 ? a.ForeignAmountDebit : a.ForeignAmountCredit));
-            LedgerLinesSum = ledgerLines.Sum(a => a.ForeignAmountDebit);
-            LedgerLinesSum += ledgerLines.Sum(a => a.ForeignAmountCredit);
-
-            List<string> listOfBankLinesIds = entityPM.ExternalReconciliationLines.FindAll(d => d.ExternalPageLineId != null).Select(d => d.ExternalPageLineId).ToList();
-            List<ReconcileExternalPageLine> pageLines = query.GetBankPagesByIds(listOfBankLinesIds, entityPM.Tenant);
-            BankLinesSum = pageLines.Sum(a => a.CreditAmount > 0 ? a.CreditAmount : a.DebitAmount);
-
-
-            var def = (BankLinesSum - LedgerLinesSum);
-            var totalDifference = def < 0 ? def * -1 : def;
+            decimal totalDifference = Math.Abs(bankLinesTotal - ledgerLinesTotal);
 
             if (totalDifference != 0)
             {
                 ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
                 bool showLocal = !loggedContact.DontShowLocal;
 
-                var msg = TranslateTextsClass.Translate("Accounting.General.O.DifferenceMustEqual0",0, showLocal);
+                var msg = TranslateTextsClass.Translate("Accounting.General.O.DifferenceMustEqual0", 0, showLocal);
                 throw new ApplicationException(msg);
             }
 
+        }
+
+        private decimal GetBankPageLinesTotal(ExternalReconciliationPM entityPM)
+        {
+            List<ReconcileExternalPageLine> pageLines = GetBankPagesLinesForReconciliations(entityPM);
+
+            decimal BankLinesSum = 0;
+            BankLinesSum = pageLines.Sum(a => a.CreditAmount * -1);
+            BankLinesSum = BankLinesSum + pageLines.Sum(a => a.DebitAmount);
+            return BankLinesSum;
+        }
+
+        private List<ReconcileExternalPageLine> GetBankPagesLinesForReconciliations(ExternalReconciliationPM entityPM)
+        {
+            IAccountingContext context = MainContext as AccountingContext;
+            ExternalReconciliationQueryService query = new ExternalReconciliationQueryService(context);
+            List<string> listOfBankLinesIds = entityPM.ExternalReconciliationLines.FindAll(d => d.ExternalPageLineId != null).Select(d => d.ExternalPageLineId).ToList();
+            List<ReconcileExternalPageLine> pageLines = query.GetBankPagesByIds(listOfBankLinesIds, entityPM.Tenant);
+            return pageLines;
+        }
+
+        private decimal GetLedgerTransactionsTotal(ExternalReconciliationPM entityPM)
+        {
+            decimal LedgerLinesSum = 0;
+            List<LedgerTransaction> ledgerLines = GetLedgerTransactionsForReconciliationLines(entityPM);
+            LedgerLinesSum = ledgerLines.Sum(a => a.ForeignAmountDebit);
+            LedgerLinesSum -= ledgerLines.Sum(a => a.ForeignAmountCredit);
+            return LedgerLinesSum;
+        }
+
+        private List<LedgerTransaction> GetLedgerTransactionsForReconciliationLines(ExternalReconciliationPM entityPM)
+        {
+            IAccountingContext context = MainContext as AccountingContext;
+            ExternalReconciliationQueryService query = new ExternalReconciliationQueryService(context);
+            List<string> listOfLedgerLinesIds = entityPM.ExternalReconciliationLines.FindAll(d => d.LedgerTransactionId != null).Select(d => d.LedgerTransactionId).ToList();
+            List<LedgerTransaction> ledgerLines = query.GetLedgerTransactionByIds(listOfLedgerLinesIds, entityPM.Tenant);
+            return ledgerLines;
         }
 
         private void UpdateLedgerTransactions(ExternalReconciliationPM entityPM)
