@@ -78,7 +78,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
             var logWindow = new LogitudeWindow();
             logWindow.IsFillScreenHeight = true;
             logWindow.Width = 700;
-            logWindow.Title = "Search Air Freight Prices";
+            logWindow.Title = "Price Check";
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });      
     }
