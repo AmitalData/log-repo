@@ -1587,7 +1587,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
     private DownloadPackages() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Downloading Packahes";
+        logWindow.Title = "Downloading Packages";
         logWindow.Width = 500;
         logWindow.Height = 200;
         logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/DownloadPackagesFileComponent');
