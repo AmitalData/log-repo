@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.Validators
 {
-  public  class ContactInfo
+  public  class ContactInformation
     {
 
         public int Tenant { get; set; }
