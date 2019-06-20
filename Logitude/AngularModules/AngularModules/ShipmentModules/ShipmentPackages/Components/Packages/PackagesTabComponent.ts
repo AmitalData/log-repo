@@ -1492,13 +1492,15 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     DeletePackagesButtonClicked() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Are you sure you want to delete all packages?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.StartDelete();
-            }
-        });
+        if (this.EntityPM.ShipmentPackages.length > 0) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Are you sure you want to delete all packages?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.StartDelete();
+                }
+            });
+        }
     }
     private StartDelete() {
         for (var i = this.EntityPM.ShipmentPackages.length - 1; i >= 0; i--) {
@@ -1570,10 +1572,11 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.EntityPM.RemoveDelivery(emptyContainer);
                 }
             }
-
+            
             this.EntityPM.RemovePackage(shipmentPackage);
         }
 
+        this.EntityPM.PackagesDeleted = true;
         this.ItemsSource = new ObservableCollection([]);
         this.ComputeTotals();
         this.SetUIProperties();

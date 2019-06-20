@@ -81,6 +81,6 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNumber { get; set; }
 
         public string UserName { get; set; }
-
+        public string ConsigneePhoneNumber { get; set; }
     }
 }
