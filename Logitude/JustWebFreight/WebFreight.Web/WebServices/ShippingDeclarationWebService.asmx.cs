@@ -1926,6 +1926,10 @@ namespace WebFreight.Web.WebServices
                     {
                         myDataProvider.ToPartnerName = toPartner.LocalName;
                     }
+
+                    myDataProvider.DeliveryTruckNumber = shipment.TruckNumber;
+                    myDataProvider.DeliveryTrailerNumber = shipment.TrailerNumber;
+                    myDataProvider.InlandDriver = shipment.Driver;
                     #endregion
                 }
 

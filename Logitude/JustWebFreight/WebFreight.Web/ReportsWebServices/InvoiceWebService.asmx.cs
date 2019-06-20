@@ -171,7 +171,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.Signature = tenantSettings.Signature != null ? tenantSettings.Signature : "";
                     invoicedataprovider.VatNumber = tenantSettings.VatNumber != null ? tenantSettings.VatNumber : "";
 
-                    DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies where copy.Id == documentTypeCopyId select copy).FirstOrDefault();
+                    DocumentTypeCopy documenttypecopy = (from copy in commonContext.DocumentTypeCopies where copy.Id == documentTypeCopyId && copy.Tenant == tenant select copy).FirstOrDefault();
 
                     switch (currentObjectTable.Name)
                     {
