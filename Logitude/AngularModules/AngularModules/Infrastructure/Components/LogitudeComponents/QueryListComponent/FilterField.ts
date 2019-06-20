@@ -171,7 +171,12 @@ export class FilterField extends BaseComponent {
     public set IsPreDefined(newValue: boolean) { this.isPreDefined = newValue; }
 
     private exists: boolean;
-    public get Exists() { return this.exists; }
+    public get Exists() {
+        if (this.IsPreDefined == true)
+            return true;
+        else
+        return this.exists;
+    }
     public set Exists(newValue: boolean) {
         //if (this.ParentClass.SelectedObjectFields && (this.ParentClass.SelectedObjectFields.length) > 10 && newValue == true) {
         //    this.ParentClass.ValidationErrorsList = [];
