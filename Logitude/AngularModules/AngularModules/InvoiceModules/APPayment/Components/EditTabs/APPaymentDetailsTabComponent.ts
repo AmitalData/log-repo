@@ -940,7 +940,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     SetAutomaticPaymentCheque(value: string){
-    if (this.PaymentMethodCode == "CH") {
+        if (this.PaymentMethodCode == "CH" && this.PaymentChequeActivated) {
         this.EntityPM.AutomaticPaymentCheque = true;
         this.IsSplitButtonVisibile = true;
     }
