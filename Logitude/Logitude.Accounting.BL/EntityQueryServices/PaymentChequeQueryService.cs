@@ -31,6 +31,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return this.GetEntityPM(poco);
         }
 
+        public PaymentChequePM GetPaymentChequeByChequeNo( string chequeNumber, int tenant)
+        {
+            PaymentCheque poco = (from a in context.PaymentCheques
+                                  where
+                                       a.ChequeNumber == chequeNumber && a.Tenant == tenant
+                                  select a).FirstOrDefault();
+
+            return this.GetEntityPM(poco);
+        }
+
+
         public List<PaymentChequePM> GetPaymentChequesByPaymentId(string paymentId, int tenant)
         {
             List<PaymentCheque> list = (from a in context.PaymentCheques
