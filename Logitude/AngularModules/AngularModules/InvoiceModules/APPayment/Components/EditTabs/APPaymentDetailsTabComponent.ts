@@ -32,7 +32,7 @@ import {BankAccountPMService} from '../../../../Accounting/Services/StandardPMs/
 import {BankAccountPM} from  '../../../../Accounting/EntityPMs/BankAccountPM';
 import {FullAccountingSettingPM} from '../../../../Accounting/EntityPMs/FullAccountingSettingPM';
 import { FullAccountingSettingPMService } from '../../../../Accounting/Services/StandardPMs/FullAccountingSettingPMService';
-import { PaymentChequePMService } from '../../../../Accounting/Services/StandardPMs/PaymentChequePMService';
+import { PaymentChequeExtendedPMService } from '../../../../Accounting/Services/ExtendedPMs/PaymentChequeExtendedPMService';
 
 @Component({
     moduleId: module.id,
@@ -56,7 +56,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public LocalCurrencyCode = "";
     private CurrentSession = SessionLocator.SelectedSession;
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
-    PaymentChequePMService: PaymentChequePMService = new PaymentChequePMService();
+    PaymentChequePMService: PaymentChequeExtendedPMService = new PaymentChequeExtendedPMService();
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -113,19 +113,27 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
      
     }
     entityId: string;
-    ViewPaymentChequeId() {
+    ViewPaymentCheque() {
 
-       
+        this.PaymentChequePMService.getPaymentChequeByChequeNumber(this.EntityPM.ChequeOrPaymentRef).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (myResponse != null) {
 
+                var res = myResponse.Result;
+                var entityId = res.Id;
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            this.BuildScreenData();
+                        });
+                    });
+            }
 
-        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-            .then(cmpRef => {
-                cmpRef.instance.ComponentRef = cmpRef;
-                cmpRef.instance.Run({ EntityId: this.EntityPM.PaymentChequeId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
-                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                    this.BuildScreenData();
-                });
-            });
+        });
+
+      
     }
     
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
