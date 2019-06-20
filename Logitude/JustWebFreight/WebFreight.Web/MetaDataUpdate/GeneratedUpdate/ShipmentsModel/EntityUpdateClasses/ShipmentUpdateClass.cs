@@ -128,6 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  true,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "Shipment,Shipments,Simplog.ShipmentLib.NewShipmentCommand,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -41279,6 +41280,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
                 Code =  "SDCV",
                 EnglishName =  "Shipment Direction Converted",
                 LocalName =  "Shipment Direction Converted",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ShipmentObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "PADL",
+                EnglishName =  "Packages Deleted",
+                LocalName =  "Packages Deleted",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,
