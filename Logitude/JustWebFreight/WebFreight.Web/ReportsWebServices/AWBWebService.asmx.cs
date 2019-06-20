@@ -121,6 +121,7 @@ namespace WebFreight.Web.ReportsWebServices
                 awbDp.VolumeInCBM = shipmentPM.VolumeInCBM + " CBM";
                 awbDp.VolumeUnitCode = shipmentPM.VolumeUnitCode;
                 awbDp.ChargeableWeightEdited = shipmentPM.ChargeableWeightEdited;
+                awbDp.MainCarriageLeg2_MAWB = shipmentPM.Transshipment1AdditionalMAWBOBLBL;
 
                 if (shipmentPM.BranchId != null)
                 {
