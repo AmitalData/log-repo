@@ -85,6 +85,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
             this.CreatePaymentCheque(theEntityPm);
+            if(paymentCheque != null)
+            {
+                payment.PaymentChequeNumber = paymentCheque.ChequeNumber;
+                theEntityPm.PaymentChequeNumber = payment.PaymentChequeNumber;
+                payment.PaymentChequeId = paymentCheque.Id;
+                theEntityPm.PaymentChequeId = payment.PaymentChequeId;
+            }
             this.UpdatePaymentOpenAmount();
             APPaymentHelper service = new APPaymentHelper();
             service.APPaymentQuickbooksValidating(theEntityPm, setApproved, false, payment, this.objectContext, this.myCommonContext, setCancelApproved);
@@ -107,6 +114,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
            return query.GetFullAccountingSettingByTenant(tenant);
 
         }
+        PaymentChequePM paymentCheque;
         private void CreatePaymentCheque(APPaymentPM entityPM )
         {
             FullAccountingSettingPM setting = GetFullAccountingSetting(entityPM);
@@ -114,7 +122,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
               
                 GLAccountPM gLAccount = GetGLAccountByCard(entityPM);
-                PaymentChequePM paymentCheque = new PaymentChequePM() {
+                 paymentCheque = new PaymentChequePM() {
 
                     CreateDate = DateTime.Today,
                    
@@ -148,6 +156,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 paymentCheque.PaymentChequeLines.Add(paymentChequeLine);
                 IPaymentChequeUpdateServiceExt paymentChequeUpdateService = ContainerAccessor.Container.Resolve(typeof(IPaymentChequeUpdateServiceExt), "PaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IPaymentChequeUpdateServiceExt;
                 paymentChequeUpdateService.Update(paymentCheque);
+              
             }
 
 
@@ -395,7 +404,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.Id = IdCounter.GetNumber("APPayment", entityPM.Tenant).ToString();
             }
-
+           
             if (string.IsNullOrEmpty(entityPM.PaymentNo))
             {
                 entityPM.PaymentNo = TableCounter.GetNumber(entityPM.Tenant, "APPT", "DR", null).ToString();

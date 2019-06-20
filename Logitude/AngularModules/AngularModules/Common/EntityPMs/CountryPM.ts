@@ -110,6 +110,11 @@ export class CountryPM {
     public set HasCitiesList(newValue: boolean) { if (this.hasCitiesList != newValue) { this.hasCitiesList = newValue; this.MarkAsDirty("HasCitiesList"); } }
        
 	 
+    private isNorthAmerica: boolean;
+    public get IsNorthAmerica() { return this.isNorthAmerica; }
+    public set IsNorthAmerica(newValue: boolean) { if (this.isNorthAmerica != newValue) { this.isNorthAmerica = newValue; this.MarkAsDirty("IsNorthAmerica"); } }
+       
+	 
 
     public OldEntityPM: CountryPM;
 		

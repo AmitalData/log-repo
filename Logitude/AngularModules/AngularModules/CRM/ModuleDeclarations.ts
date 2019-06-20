@@ -1,4 +1,4 @@
-﻿import {CRMWorkspaceComponent} from './Components/Workspaces/CRMWorkspaceComponent';
+import {CRMWorkspaceComponent} from './Components/Workspaces/CRMWorkspaceComponent';
 import {FieldTemplateComponent} from './Components/Templates/FieldTemplateComponent';
 import {TicketsComponent} from './Components/Workspaces/TicketsComponent';
 import {OverviewWorkspaceComponent} from './Components/Workspaces/OverviewWorkspaceComponent';
@@ -19,6 +19,7 @@ import {ByOpenedTicketComponent} from './Components/Workspaces/TicketDashboardTa
 import {TicketClassificationMaintenanceComponent} from './Components/Workspaces/TicketClassificationMaintenanceComponent';
 import {AddEditClassificationComponent} from './Components/Workspaces/AddEditClassificationComponent'; 
 import {ByFirstResolveTicketComponent} from './Components/Workspaces/TicketDashboardTabComponents/ByFirstResolveTicketComponent';
+import { OccasionWorkspaceComponent } from './Components/Workspaces/OccasionWorkspaceComponent';
 
 // Helpers
 import {TicketHelperComponent} from './Components/Helpers/TicketHelperComponent';
@@ -60,6 +61,7 @@ export const Components =
         TicketClassificationMaintenanceComponent,
         AddEditClassificationComponent,
         ByFirstResolveTicketComponent,
+        OccasionWorkspaceComponent,
     ];
 export const ControlsComponents =
     [
@@ -102,7 +104,9 @@ export class ModuleDeclarations {
             // Short Titles 
             case "TicketShortTitleComponent": { myResult = TicketShortTitleComponent; break; }      
             case "ActivityShortTitleComponent": { myResult = ActivityShortTitleComponent; break; }   
-            case "OpportunityShortTitleComponent": { myResult = OpportunityShortTitleComponent; break; }      
+            case "OpportunityShortTitleComponent": { myResult = OpportunityShortTitleComponent; break; }
+            case "OccasionWorkspaceComponent": { myResult = OccasionWorkspaceComponent; break; }
+                
         }
 
         return myResult;

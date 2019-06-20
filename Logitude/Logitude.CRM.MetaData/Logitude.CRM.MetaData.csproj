@@ -134,6 +134,9 @@
     <None Include="EntityFiles\EmployeeGroupLine.lxml" />
     <None Include="EntityFiles\EscalationActionTimeIndicator.lxml" />
     <None Include="EntityFiles\EscalationPreDefinition.lxml" />
+    <None Include="EntityFiles\Occasion.lxml" />
+    <None Include="EntityFiles\OccasionStatus.lxml" />
+    <None Include="EntityFiles\OccasionType.lxml" />
     <None Include="EntityFiles\Opportunity.lxml" />
     <None Include="EntityFiles\OpportunityAdditionalService.lxml" />
     <None Include="EntityFiles\OpportunityClosingReason.lxml" />

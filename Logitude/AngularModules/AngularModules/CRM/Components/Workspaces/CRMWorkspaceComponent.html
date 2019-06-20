@@ -23,6 +23,9 @@
                             <li id="{{'CRMQUT' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'QUT'" (click)="SelectedItem = 'QUT'">{{'General.MH.Quotes' | TextCodeTranslationPipe}}</li>
                             <li id="{{'CRMACT' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'ACT'" (click)="SelectedItem = 'ACT'">Activities</li>
                             <li id="{{'CRMOPP' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'OPP'" (click)="SelectedItem = 'OPP'">Opportunities</li>
+
+                            <li id="{{'CRMOCC' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'OCC'" (click)="SelectedItem = 'OCC'" *ngIf="IsOccasionVisible">Occasion</li>
+
                             <li style="width:100px;" [class.SelectedPageMenu]="SelectedItem == 'CON'" (click)="SelectedItem = 'CON'" *ngIf="IsContactsVisible">
                                 <table>
                                     <tr>
@@ -36,7 +39,8 @@
                                     </tr>
                                 </table>
                             </li>
-                            <li [class.SelectedPageMenu]="SelectedItem == 'DAS'" (click)="SelectedItem = 'DAS'">Dashboard</li>
+
+                            <li id="{{'CRMDAS' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'DAS'" (click)="SelectedItem = 'DAS'">Dashboard</li>
                         </ul>
                     </td>
 
@@ -90,6 +94,10 @@
 
             <div class="MediaFill" [hidden]="SelectedItem != 'OPP'">
                 <div LocationDirective Code="OPP"></div>
+            </div>
+
+            <div class="MediaFill" [hidden]="SelectedItem != 'OCC'" *ngIf="IsOccasionVisible">
+                <div LocationDirective Code="OCC"></div>
             </div>
 
             <div class="MediaFill" [hidden]="SelectedItem != 'CON'" *ngIf="IsContactsVisible">
