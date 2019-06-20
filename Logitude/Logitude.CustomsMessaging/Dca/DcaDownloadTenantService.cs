@@ -84,7 +84,9 @@ namespace Logitude.CustomsMessaging.Dca
             _AllInterface = interfaceTypeQueryService.GetWithInterfaceManagementDefinition(_CustomsSettingPM.Tenant);
 
             _InterfaceListDCA = //(new IIGMessageQueryService()).GetAll().Where(mess => mess.Interactive.HasFlag(InterfaceType.InteractiveMode.DCA)); ;
-                   _AllInterface.Where(rec =>
+                   _AllInterface
+                   .Where(r=>r.Active==true)
+                   .Where(rec =>
                        //rec.InterfaceManagement.INOUT ==  Logitude.Customs.BL.ClosedTable.InOutType.In  &&
                        //!string.IsNullOrWhiteSpace(rec.InterfaceManagement.DcaPrefixName) && 
                        //!rec.OverrideInActive &&
