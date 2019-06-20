@@ -120,7 +120,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     {
                         ReportHelper reportHelper = new ReportHelper();
                         byte[] filters = reportHelper.GetReportFilters(reportFliter.QueryFilterItemLists);
-                        Thread.Sleep(new TimeSpan(0,0,55));
+                   
                         LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
 
                         byte[] dataProvider = reportHelper.BuildReportDataProvider(reportFliter, filters);
