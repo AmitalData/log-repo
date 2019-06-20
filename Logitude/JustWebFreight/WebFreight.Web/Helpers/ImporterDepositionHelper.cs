@@ -159,13 +159,19 @@ namespace WebFreight.Web.Helpers
 
             if (!isNew)
             {
-                if (customerDeposition.ValidityEndDate > customsShipperPM.ValidityEndDate)
+                CustomerDeposition validCustomerDeposition = customerDepositionRepository.GetValidityCustomerDepositionByCustomsShipperId(customsShipperPM.Id, customsShipperPM.Tenant);
+                if (validCustomerDeposition != null)
                 {
-                    customsShipperPM.ValidityStartDate = customerDeposition.ValidityStartDate;
-                    customsShipperPM.ValidityEndDate = customerDeposition.ValidityEndDate;
-                    customsShipperPM.ValidDepositionNumber = customerDeposition.DepositionNumber;
-                    customsShipperService.Update(customsShipperPM);
+                    if(customerDeposition.ValidityEndDate > validCustomerDeposition.ValidityEndDate) validCustomerDeposition = customerDeposition;
+                    if (customsShipperPM.ValidityStartDate != validCustomerDeposition.ValidityStartDate || customsShipperPM.ValidityEndDate != validCustomerDeposition.ValidityEndDate)
+                    {
+                        customsShipperPM.ValidityStartDate = validCustomerDeposition.ValidityStartDate;
+                        customsShipperPM.ValidityEndDate = validCustomerDeposition.ValidityEndDate;
+                        customsShipperPM.ValidDepositionNumber = validCustomerDeposition.DepositionNumber;
+                        customsShipperService.Update(customsShipperPM);
+                    }
                 }
+
             }
 
 
