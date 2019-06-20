@@ -43,7 +43,7 @@ export class FilterField extends BaseComponent {
         this.IsCustomFilter = this.ObjectField.IsCustomFilter;
 
         if (queryId != null && queryId != undefined && queryId != "") {
-            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == objectField.Id)[0];
+            var preDefinedFilter = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldId == objectField.Id && d.QueryId == queryId)[0];
             if (preDefinedFilter != null) {
                 this.AdvancedQueryFilterPM = preDefinedFilter;
                 if (preDefinedFilter.PredefinedValue != null) {
@@ -172,9 +172,9 @@ export class FilterField extends BaseComponent {
 
     private exists: boolean;
     public get Exists() {
-        if (this.IsPreDefined == true)
-            return true;
-        else
+        //if (this.IsPreDefined == true)
+        //    return true;
+        //else
         return this.exists;
     }
     public set Exists(newValue: boolean) {
