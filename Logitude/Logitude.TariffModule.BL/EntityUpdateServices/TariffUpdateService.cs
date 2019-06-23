@@ -81,6 +81,19 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                 this.CreateTariffVersion(entityPM);
             }
+
+            if (entityPM.TypeCode == "ASC")
+            {
+                if (entityPM.TariffVersions.Where(d => d.StartDate != null || d.ExpirationDate != null).Any())
+                {
+                    throw new ApplicationException("Dates are not allowed in Surcharges versions");
+                }
+
+                if (entityPM.ActiveVersions.Where(d=>d.StartDate != null || d.ExpirationDate != null).Any())
+                {
+                    throw new ApplicationException("Dates are not allowed in Surcharges versions");
+                }
+            }
         }
 
         protected override void UpdateComposition(TariffPM entityPM)
@@ -208,15 +221,23 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 CreateDate = entityPM.CreateDate,
                 CreatedByUserId = entityPM.CreatedByUserId,
                 StartDate = entityPM.StartDate,
-                ExpirationDate = entityPM.ExpirationDate,                
+                ExpirationDate = entityPM.ExpirationDate,
                 Version = entityPM.LastVersion,
                 SearchFields = entityPM.LastVersion.ToString(),
                 ChangeSetOp = ChangeSetOperation.Insert,
                 IsDraft = true,
             };
 
-            TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            tariffVersionUpdateService.Update(tariffVersionPM, true);
+            if (entityPM.TypeCode == "ASC")
+            {
+                tariffVersionPM.StartDate = null;
+                tariffVersionPM.ExpirationDate = null;
+            }
+
+            entityPM.TariffVersions.Add(tariffVersionPM);
+
+            //TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            //tariffVersionUpdateService.Update(tariffVersionPM, true);
         }
     }
 }
