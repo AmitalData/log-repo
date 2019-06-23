@@ -77,7 +77,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
         this._entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             var logWindow = new LogitudeWindow();
             logWindow.IsFillScreenHeight = true;
-            logWindow.Width = 700;
+            logWindow.Width = 900;
             logWindow.Title = "Price Check";
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });      
