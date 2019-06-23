@@ -51,6 +51,7 @@ import {TicketStagePMService} from './Services/StandardPMs/TicketStagePMService'
 import { TicketTypePMService } from './Services/StandardPMs/TicketTypePMService';
 import { OccasionTypeListService } from './Services/StandardLists/OccasionTypeListService';
 import { OccasionStatusListService } from './Services/StandardLists/OccasionStatusListService';
+import { OccasionTypePMService } from './Services/StandardPMs/OccasionTypePMService';
 
 
 // Menu Buttons 
@@ -122,6 +123,7 @@ export class ModuleProviders {
  
             case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
             case "OccasionStatusListService": { myResult = new OccasionStatusListService(); break; }
+            case "OccasionTypePMService": { myResult = new OccasionTypePMService(); break; }
 
             //Menu Buttons
             case "TicketMenuButtonsHandler": { myResult = new TicketMenuButtonsHandler(); break; }

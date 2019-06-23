@@ -115,10 +115,10 @@
                         <LogLabel [ObjectFieldName]="'StartDateTime'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td colspan="2">
+                    <td>
                         <table>
                             <tr>
-                                <td style="width:250px;">
+                                <td style="width:280px;">
                                     <table>
                                         <tr>
                                             <td>
@@ -130,7 +130,7 @@
                                             </td>
 
                                             <td>
-                                                <LogDatePicker [ObjectFieldName]="'StartDateTime'" [SelectedDateValue]="StartDateTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" [InputType]="'time'"></LogDatePicker>
+                                                <LogDatePicker [ObjectFieldName]="'StartDateTime'" [SelectedDateValue]="StartDateTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'"></LogDatePicker>
                                             </td>
                                         </tr>
                                     </table>
@@ -153,7 +153,7 @@
                     <td>
                         <table>
                             <tr>
-                                <td style="width:250px;">
+                                <td>
                                     <table>
                                         <tr>
                                             <td>
@@ -165,13 +165,16 @@
                                             </td>
 
                                             <td>
-                                                <LogDatePicker [ObjectFieldName]="'EndDateTime'" [SelectedDateValue]="EndDateTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true" [InputType]="'time'"></LogDatePicker>
+                                                <LogDatePicker [ObjectFieldName]="'EndDateTime'" [SelectedDateValue]="EndDateTime" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'"></LogDatePicker>
                                             </td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
                         </table>
+                    </td>
+                    <td>
+                        <div></div>
                     </td>
                 </tr>
 
