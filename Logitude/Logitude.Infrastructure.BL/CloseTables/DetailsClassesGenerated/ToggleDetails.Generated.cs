@@ -66,8 +66,8 @@ namespace Logitude.Infrastructure.BL
             all.Add(new ToggleDetails()
             {    
                 Code = "RRW", 
-                Name = "Report Run View Worker Role", 
-                SearchFields = "RRW,Report Run View Worker Role", 
+                Name = "Run Report Via WorkerRole", 
+                SearchFields = "RRW,Run Report Via WorkerRole", 
 			});
 			
             return all;
