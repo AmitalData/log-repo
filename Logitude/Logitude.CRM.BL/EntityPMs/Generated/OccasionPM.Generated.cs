@@ -204,12 +204,12 @@ namespace Logitude.CRM.BL.EntityPMs
 			
 		 }
 	   }
-	  private DateTime startDateTime ;
+	  private DateTime? startDateTime ;
 	  	  
        
 	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime StartDateTime  
+       public DateTime? StartDateTime  
 	   {
 	    
 	     get
@@ -220,19 +220,19 @@ namespace Logitude.CRM.BL.EntityPMs
 		 {
 		   if(startDateTime != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StartDateTime",OldValue=startDateTime,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StartDateTime",OldValue=startDateTime,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   startDateTime=value;
 		   }
 			
 		 }
 	   }
-	  private DateTime endDateTime ;
+	  private DateTime? endDateTime ;
 	  	  
        
 	   [CustomValidation(typeof(CRMValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime EndDateTime  
+       public DateTime? EndDateTime  
 	   {
 	    
 	     get
@@ -243,7 +243,7 @@ namespace Logitude.CRM.BL.EntityPMs
 		 {
 		   if(endDateTime != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EndDateTime",OldValue=endDateTime,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EndDateTime",OldValue=endDateTime,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   endDateTime=value;
 		   }
