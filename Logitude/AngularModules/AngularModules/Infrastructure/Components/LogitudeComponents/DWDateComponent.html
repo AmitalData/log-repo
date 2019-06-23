@@ -1,7 +1,7 @@
 ﻿<div *ngIf="IsLoad">
     <table>
         <tr>
-          
+            <!--Interval and Range-->
             <td *ngIf="ShowInterval" style="width:48%;">
                 <div>
                     <LogTextBox (ValueChanged)="SelectedIntervalChanged($event)" [HideColumns]="true" [Text]="IntervalValue" [InputType]="'integer'" [IsFreeText]="true" [DataContext]="DataContext" [NoObjectField]="true"  [NoValidation]="true"></LogTextBox>
@@ -17,10 +17,37 @@
                     <ComboBox (SelectedItemChanged)="SelectedRangeChanged($event)" [ItemsSource]="RangeLists" [SelectedItem]="SelectedRange"></ComboBox>
                 </div>
             </td>
+
+
+
+            <!--Date DatePicker-->
             <td style="width:100%" *ngIf="ShowLogDatePicker">
                 <LogDatePicker (ValueChanged)="DatePickerValueChange($event)"   [HideColumns]="true"   [IsFreeValue]="true"  [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'"   [DataContext]="DataContext"></LogDatePicker>
      
             </td>
+
+
+
+            <!--Date Between-->
+            <td style="width:100%"  *ngIf="Operation == 'Between'">
+                <table>
+                    <tr>
+                        <td  style="width:48%;">
+                            <LogDatePicker style="width:48%" (ValueChanged)="DatePickerBetweenValue1Change($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="BetweenDateValue1" [ObjectFieldName]="'BetweenDateValue1'" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
+                        <td style="width:2%"></td>
+                        <td  style="width:48%;">
+                            <LogDatePicker  style="width:48%" (ValueChanged)="DatePickerBetweenValue2Change($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="BetweenDateValue2" [ObjectFieldName]="'BetweenDateValue2'" [DataContext]="DataContext"></LogDatePicker>
+                        </td>
+                    </tr>
+                </table>
+               
+
+               
+
+            </td>
+
+
         </tr>
     </table>
 </div>
