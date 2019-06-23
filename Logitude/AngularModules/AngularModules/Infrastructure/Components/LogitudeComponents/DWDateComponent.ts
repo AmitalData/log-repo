@@ -34,7 +34,6 @@ export class DWDateComponent extends BaseComponent {
     DataContext: any;
     ObjectFieldName: string;
     Item: any;
-    IsFirstTime: boolean = true;
     IsLoad: boolean = false;
 
     @Output() ValueChanged = new EventEmitter();
@@ -70,17 +69,13 @@ export class DWDateComponent extends BaseComponent {
     }
     public set Operation(newValue: string) {
         if (this.operation != newValue) {
-
-            if (!this.IsFirstTime) this.SetDefultValue(this.operation, newValue);
+            this.DataContext.TextValue = "";
+            this.SetDefultValue(this.operation, newValue);
             this.operation = newValue;
-          
-            if (!this.IsFirstTime) {
-                this.ShowControl();
-                this.DataContext.TextValue = "";
-              this.SetValue();
-            }
-            this.IsFirstTime = false;
-
+            this.ShowControl();
+        
+            this.SetValue();
+  
         }
     }
 
@@ -127,18 +122,20 @@ export class DWDateComponent extends BaseComponent {
 
 
     DatePickerBetweenValue1Change(value: Date) {
-        if (this.IsDateValueChange(value, this.BetweenDateValue1)) {
-            this.BetweenDateValue1 = value;
-            this.SetValue();
-        }
+            if (this.IsDateValueChange(value, this.BetweenDateValue1)) {
+                this.BetweenDateValue1 = value;
+                this.SetValue();
+            }
     }
 
 
     DatePickerBetweenValue2Change(value: Date) {
-        if (this.IsDateValueChange(value, this.BetweenDateValue2)) {
-            this.BetweenDateValue2 = value;
-            this.SetValue();
-        }
+
+            if (this.IsDateValueChange(value, this.BetweenDateValue2)) {
+                this.BetweenDateValue2 = value;
+                this.SetValue();
+            }
+        
     }
 
 
@@ -163,16 +160,13 @@ export class DWDateComponent extends BaseComponent {
         }
     }
 
+
     SetDefultValue(operation, newoperation) {
 
-      if ((operation == "Previous" && newoperation != "Next") || (operation == "Next" && newoperation != "Previous")) {
+        if ((operation == "Previous" && newoperation != "Next") || (operation == "Next" && newoperation != "Previous") || (operation == "Current" && newoperation != "Current")) {
             this.IntervalValue = 1;
             this.SelectedRange = "Day";
-        } else if ((operation == "Current" && newoperation != "Current")) {
-            this.IntervalValue = 1;
-            this.SelectedRange = "Day";
-        }
-
+        } 
     }
 
     SetValue() {
