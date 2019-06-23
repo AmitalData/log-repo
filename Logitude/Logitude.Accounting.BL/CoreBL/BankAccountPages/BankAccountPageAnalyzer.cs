@@ -43,7 +43,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
                 FileContent = ConvertFromDosHeberwToWinHeberw(FileContent);
                 int? tenantFromPage4Tester = null;
                 _BankPagesDTO = CreateBankPagesDTOFromFile(FileContent, out tenantFromPage4Tester);
-                
+
                 if (tenantFromPage4Tester.HasValue)
                 {
                     ptenant = tenantFromPage4Tester.Value;
@@ -61,20 +61,20 @@ namespace Logitude.Accounting.BL.CoreBL.BankAccountPages
             }
             int tenant = ptenant.Value;
             TenantBankPagesFilter(tenant, _BankPagesDTO);
-            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+
+            foreach (var validBankAccountDTO in _TenantBankPagesDTO)
             {
-                foreach (var validBankAccountDTO in _TenantBankPagesDTO)
+                foreach (var newPageOfBankAccountDTO in validBankAccountDTO.PagesOfAccount.OrderBy(r => r.MyBankAccountM.PageNo))
                 {
-                    foreach (var newPageOfBankAccountDTO in validBankAccountDTO.PagesOfAccount.OrderBy(r => r.MyBankAccountM.PageNo))
+                    _BankAccountQueryService = new BankAccountQueryService(tenant);
+                    var accurateBankAccount = _BankAccountQueryService.GetSingle(validBankAccountDTO.DBBankaccountPM.Id, false, false);
+                    using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
                     {
-                        _BankAccountQueryService = new BankAccountQueryService(tenant);
-                        var accurateBankAccount = _BankAccountQueryService.GetSingle(validBankAccountDTO.DBBankaccountPM.Id, false, false);
-
                         AnalyzeNewPage(tenant, accurateBankAccount, newPageOfBankAccountDTO);
-
+                        scope.Complete();
                     }
+
                 }
-                scope.Complete();
             }
         }
 
@@ -155,15 +155,25 @@ s             b                   a
                 decimal tot = BankPagesDTO.MyBankAccountM.RealOpenBalance;
                 foreach (var itemBankPageLine in BankPagesDTO.MyBankPageLines)
                 {
-                    tot = tot + itemBankPageLine.RealAmount;
+                    tot = tot +
+                    //itemBankPageLine.RealAmount;
+                    (itemBankPageLine.DEBIT0_CREDIT1 == "0" ? -1 : +1) *
+                    itemBankPageLine.Amount;
                     if (tot != itemBankPageLine.BalanceAfter)
                     {
                         throw new Exception("tot!= itemBankPageLine.BalanceAfter "+ itemBankPageLine.RawLine);
                     }
-                }  
+                }
 
 
-                var sumAmount= BankPagesDTO.MyBankPageLines.Sum(bankPageLine => bankPageLine.RealAmount);
+                var sumAmount = BankPagesDTO.MyBankPageLines
+                //.Sum(bankPageLine => bankPageLine.RealAmount);
+                .Sum(bankPageLine =>
+                //bankPageLine.RealAmount
+                                    (bankPageLine.DEBIT0_CREDIT1 == "0" ? -1 : +1) *
+                    bankPageLine.Amount
+
+            );
                 if (BankPagesDTO.MyBankAccountM.RealCloseBalance !=
                 BankPagesDTO.MyBankAccountM.RealOpenBalance + sumAmount)
                 {
@@ -385,7 +395,10 @@ s             b                   a
                     ChangeSetOp = ChangeSetOperation.Insert,
                     LineNumber = lineCounterNumber++,
 
-                    Amount = line.RealAmount,
+                    //Amount = line.RealAmount,
+                    DebitAmount = line.DEBIT0_CREDIT1 == "1" ? line.Amount : 0,
+                    CreditAmount = line.DEBIT0_CREDIT1 == "0" ? line.Amount : 0,
+
                     ReferenceDate = line.ReferenceDate,
                     Reference = line.Reference
 
