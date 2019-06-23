@@ -1249,7 +1249,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.FilterTypes = [];
         this.FilterTypes.push(new ObjectFieldOperator("Fixed Filter", "Fixed Filter"));
         this.FilterTypes.push(new ObjectFieldOperator("Ask User", "Dynamic Filter"));
-        this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
+        
 
         if (ParentClass != null) {
             this.MyParentClass = ParentClass;
@@ -1287,12 +1287,13 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
             this.IsCustom = DWObjectField.IsCustom;
-            
-
-
+         
             if (DWObjectField.FilterType) {
                 this.FilterType = DWObjectField.FilterType;
-            }
+            } 
+            this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
+          
+
             if (DWObjectField.IsSetDefaults) {
                 this.IsSetDefaults = DWObjectField.IsSetDefaults;
             }
@@ -1651,11 +1652,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
 
     FilterTypeChanged(Value) {
-       
         this.FilterTypeSelected = Value;
-        if (this.FilterTypeSelected) {
-            this.FilterType = this.FilterTypeSelected.Code;
-        }
     }
 
     OpenFilterSettings() {

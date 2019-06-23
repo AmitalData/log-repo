@@ -55,7 +55,7 @@ namespace Logitude.BL.Security
             if (!string.IsNullOrEmpty(overrideEmail))
             {
                 string email = overrideEmail;//HttpContext.Current.User.Identity.Name;
-                ContactInfo contactinfo = GetContactInfo(email, tenant);
+                ContactInformation contactinfo = GetContactInfo(email, tenant);
 
                 if (contactinfo != null)
                 {
@@ -130,27 +130,34 @@ namespace Logitude.BL.Security
             return features;
         }
 
-        public static ContactInfo GetContactInfo(string email, int tenant, bool forceAPIFeaturesCheck = false)
+        public static ContactInformation GetContactInfo(string email, int tenant, bool forceAPIFeaturesCheck = false)
         {
             int loggedTenant = tenant;
 
-            ContactInfo myContactInfo = null;
+            ContactInformation myContactInfo = null;
            
             string key = email + "_" + tenant + "_info";
+          
 
-           
+            //if (CacheManager.CacheWrapper.Get(key) != null && !forceAPIFeaturesCheck)
+            //{
+            //    myContactInfo = (ContactInformation)CacheManager.CacheWrapper.Get(key);
+            //}
+            //else
+            //{
+
                 if (tenant == 0)
                 {
                     List<string> allPackages = GetAllPackagesCodes(email, loggedTenant, false);
 
-                    myContactInfo = new ContactInfo()
+                    myContactInfo = new ContactInformation()
                     {
                         ContactEmail = email,
                         IsLogitudeAdmin = true,
                         PackagesCodes = allPackages,
                     };
 
-                    CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                 }
 
                 else
@@ -230,7 +237,7 @@ namespace Logitude.BL.Security
 
                             List<string> allPackages = GetAllPackagesCodes(email, loggedTenant, isCustomerCare);
 
-                            myContactInfo = new ContactInfo()
+                            myContactInfo = new ContactInformation()
                             {
                                 Tenant = contact.Tenant,
                                 ContactEmail = contact.Email,
@@ -241,7 +248,7 @@ namespace Logitude.BL.Security
                             //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
 
 
-                            CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
                     }
 
@@ -249,7 +256,7 @@ namespace Logitude.BL.Security
                     {
                         if (authToken != null)
                         {
-                            myContactInfo = new ContactInfo()
+                            myContactInfo = new ContactInformation()
                             {
                                 Tenant = authToken.Tenant,
                                 ContactEmail = authToken.Email,
@@ -260,12 +267,13 @@ namespace Logitude.BL.Security
                             //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
 
 
-                            CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
                     }
-                
-            }
 
+                }
+
+            //}
             return myContactInfo;
         }
 

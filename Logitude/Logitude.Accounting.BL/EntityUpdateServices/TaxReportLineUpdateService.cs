@@ -72,6 +72,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
             //ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(entityPM.Tenant);
             entityPM.StatusCode = "6";
+            entityPM.VatNumber = entityPM.VatNumber.Trim();
             if (entityPM.OutputOrInput == "O")
             {
 

@@ -1133,6 +1133,14 @@
     <Compile Include="Migrations\201906191108387_AddOccasionsTables_Maheera.Designer.cs">
       <DependentUpon>201906191108387_AddOccasionsTables_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.cs" />
+    <Compile Include="Migrations\201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.Designer.cs">
+      <DependentUpon>201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.cs" />
+    <Compile Include="Migrations\201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.Designer.cs">
+      <DependentUpon>201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201906201245296_AddTariffConcurrencyGUID.cs" />
     <Compile Include="Migrations\201906201245296_AddTariffConcurrencyGUID.Designer.cs">
       <DependentUpon>201906201245296_AddTariffConcurrencyGUID.cs</DependentUpon>
@@ -1932,6 +1940,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906191108387_AddOccasionsTables_Maheera.resx">
       <DependentUpon>201906191108387_AddOccasionsTables_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.resx">
+      <DependentUpon>201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.resx">
+      <DependentUpon>201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906201245296_AddTariffConcurrencyGUID.resx">
       <DependentUpon>201906201245296_AddTariffConcurrencyGUID.cs</DependentUpon>

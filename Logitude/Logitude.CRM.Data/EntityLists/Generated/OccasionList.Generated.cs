@@ -31,9 +31,9 @@ namespace Logitude.CRM.Data.EntityLists
        [DataMember]
        public string Name  { get; set; }
        [DataMember]
-       public DateTime StartDateTime  { get; set; }
+       public DateTime? StartDateTime  { get; set; }
        [DataMember]
-       public DateTime EndDateTime  { get; set; }
+       public DateTime? EndDateTime  { get; set; }
        [DataMember]
        public string Goal  { get; set; }
        [DataMember]
