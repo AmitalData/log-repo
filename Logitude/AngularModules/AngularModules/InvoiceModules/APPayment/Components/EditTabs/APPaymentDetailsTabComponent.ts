@@ -62,6 +62,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+            this.IsSplitComponentOpened  = this.isRTL;
+
         }
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.EntityPM = entityArgs.EntityPM;
@@ -70,6 +72,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.GetFullAccountingSettings();
         if (AppTool.IsNullOrEmpty(this.EntityPM.PaymentChequeNumber)) {
             this.IsSplitButtonVisibile = false;
+       
         }
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EnableMultiCurrency")) {
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyAPPayments) {
@@ -88,23 +91,23 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
     }
     public ShowSplitButton: boolean = false;
-    IsSplitComponentOpened: boolean = true;
+    IsSplitComponentOpened: boolean;
 
     token: any;
     SplitButtonClicked() {
 
         this.IsSplitComponentOpened = !this.IsSplitComponentOpened;
         if (!this.IsSplitComponentOpened) {
-            this.AutomaticPaymentCheque=false;
-            this.PaymentChequeActivated = false;
+            this.AutomaticPaymentCheque=!this.isRTL;
+            this.PaymentChequeActivated = !this.isRTL;
             if (AppTool.IsNullOrEmpty(this.ChequeOrPaymentRef)) {
-                this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, true);
+                this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, this.isRTL);
             }
         }
         else {
-            this.PaymentChequeActivated = true;
-           this.AutomaticPaymentCheque=true;
-            this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, false);
+            this.PaymentChequeActivated = this.isRTL;
+            this.AutomaticPaymentCheque = this.isRTL;
+            this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, !this.isRTL);
         }
 
         this.ShowSplitButton = true;
