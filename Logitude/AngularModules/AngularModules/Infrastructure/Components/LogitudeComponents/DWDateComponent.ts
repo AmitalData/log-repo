@@ -122,6 +122,36 @@ export class DWDateComponent extends BaseComponent {
 
 
     DatePickerBetweenValue1Change(value: Date) {
+        if (this.IsDateValueChange(value, this.BetweenDateValue1)) {
+            this.BetweenDateValue1 = value;
+            this.SetValue();
+        }
+    }
+
+
+    DatePickerBetweenValue2Change(value: Date) {
+        if (this.IsDateValueChange(value, this.BetweenDateValue2)) {
+            this.BetweenDateValue2 = value;
+            this.SetValue();
+        }
+    }
+
+
+
+    IsDateValueChange(value1, value2) {
+        var isChange: boolean = false;
+        var valueA: string = value1 != null ? value1.toString() : "";
+        var valueB: string = value2 != null ? value2.toString() : "";
+
+        if (valueA != valueB) {
+            isChange = true;
+        }
+        return isChange;
+    }
+
+
+
+    DatePickerBetweenValue1Change(value: Date) {
             if (this.IsDateValueChange(value, this.BetweenDateValue1)) {
                 this.BetweenDateValue1 = value;
                 this.SetValue();
