@@ -62,6 +62,11 @@ exports.config = {
       browser.params.Login.Email = "ahmadb@test.com";
       browser.params.Login.Password = "ahmed!A123";
     }
+    else if (browser.params.Env == "logboxStaging") {
+        browser.params.Link = "https://staging.logbox.co.il";
+        browser.params.Login.Email = "ahmadb@test.com";
+        browser.params.Login.Password = "ahmed!A123";
+    }
     else if (browser.params.Env == "localhost") {
       browser.params.Link = "http://localhost:4200/";
       browser.params.Login.Email = "angular@fnarsoft.com";
