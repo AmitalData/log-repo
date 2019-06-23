@@ -94,7 +94,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
             List<ShipmentPickUpDelivery> shipmentPickUpDeliveriesLists = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d).ToList();
             List<ShipmentPackage> shipmentPackages = (from d in shipmentsContext.ShipmentPackages where shipmentdelevriesIds.Contains(d.ShipmentId) select d).ToList();
             List<string> FromPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromPartnerCardId).ToList();
+            List<string> ConsgineeCardIds = (from d in shipmentsContext.Shipments where shipmentdelevriesIds.Contains(d.Id) select d.ConsigneeId).ToList();
             List<Address> FromPartnerAddressLists = (from a in commonDataContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && FromPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
+            List<Address> ConsgineeAddressLists = (from a in commonDataContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && ConsgineeCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
 
             List<string> FromAddressCountryIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromAddressCountryId).ToList();
             List<string> ToPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.ToPartnerCardId).ToList();
@@ -124,6 +126,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 if (!string.IsNullOrEmpty(item.ShipmentTypeId))
                 {
                     Shipment.Type = ShipmentTypes.ContainsKey(item.ShipmentTypeId) ? ShipmentTypes[item.ShipmentTypeId] != null ? ShipmentTypes[item.ShipmentTypeId] : null:null;
+                }
+                else
+                {
+                    Shipment.Type = "Air";
                 }
 
                 if (!string.IsNullOrEmpty(item.StatusId))
@@ -206,6 +212,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                 #region Partners Section
                 Shipment.Shipper = item.ShipperName;
                 Shipment.Consignee = item.ConsigneeName;
+                if (!string.IsNullOrEmpty(item.ConsigneeId))
+                {
+                    Address ConsigneeAddress = ConsgineeAddressLists.Where(d => d.CardId == item.ConsigneeId).FirstOrDefault();
+                    if (ConsigneeAddress != null)
+                    {
+                        Shipment.ConsigneeAddress = DataProviders.General.GetAddress(ConsigneeAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
+                        Shipment.ConsigneePhone = ConsigneeAddress.PhoneNumber;
+
+                    }
+               
+
+
+                }
+
                 if (!string.IsNullOrEmpty(item.Notify1Id))
                 {
                     Card card = cardRepository.GetSingleCardByIdAndTenant(item.Notify1Id, tenant, true);
