@@ -62,6 +62,13 @@ namespace Logitude.Infrastructure.BL
                 Code = "QRR", 
                 SearchFields = "QRR,QuotationRoutingRatesQuotes", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "RRW", 
+                Name = "Report Run View Worker Role", 
+                SearchFields = "RRW,Report Run View Worker Role", 
+			});
 			
             return all;
        }
