@@ -70,10 +70,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
         this.GetFullAccountingSettings();
-        if (AppTool.IsNullOrEmpty(this.EntityPM.PaymentChequeNumber)) {
-            this.IsSplitButtonVisibile = false;
+        //if (AppTool.IsNullOrEmpty(this.EntityPM.PaymentChequeNumber)) {
+        //    this.IsSplitButtonVisibile = false;
        
-        }
+        //}
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EnableMultiCurrency")) {
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyAPPayments) {
                 this.IsMultiCurrency = true;
@@ -108,6 +108,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.PaymentChequeActivated = this.isRTL;
             this.AutomaticPaymentCheque = this.isRTL;
             this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, !this.isRTL);
+            this.ChequeOrPaymentRef = null;
         }
 
         this.ShowSplitButton = true;
@@ -383,7 +384,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     CollapseSplitButton() {
         if (this.PaymentMethodCode == "CH" && this.AutomaticPaymentCheque) {
             this.IsSplitButtonVisibile = false;
-            this.ChequeNumber = this.EntityPM.PaymentChequeNumber;
+           
         }
       
 
