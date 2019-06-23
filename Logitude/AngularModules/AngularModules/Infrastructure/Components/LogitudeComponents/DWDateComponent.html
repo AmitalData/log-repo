@@ -33,11 +33,11 @@
                 <table>
                     <tr>
                         <td  style="width:48%;">
-                            <LogDatePicker style="width:48%" (ValueChanged)="DatePickerBetweenValue1Change($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="BetweenDateValue1" [ObjectFieldName]="'BetweenDateValue1'" [DataContext]="DataContext"></LogDatePicker>
+                            <LogDatePicker style="width:48%" [InputType]="'date'" (ValueChanged)="DatePickerBetweenValue1Change($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="BetweenDateValue1" [ObjectFieldName]="'BetweenDateValue1'" [DataContext]="DataContext"></LogDatePicker>
                         </td>
                         <td style="width:2%"></td>
                         <td  style="width:48%;">
-                            <LogDatePicker  style="width:48%" (ValueChanged)="DatePickerBetweenValue2Change($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="BetweenDateValue2" [ObjectFieldName]="'BetweenDateValue2'" [DataContext]="DataContext"></LogDatePicker>
+                            <LogDatePicker  style="width:48%" [InputType]="'date'"  (ValueChanged)="DatePickerBetweenValue2Change($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="BetweenDateValue2" [ObjectFieldName]="'BetweenDateValue2'" [DataContext]="DataContext"></LogDatePicker>
                         </td>
                     </tr>
                 </table>
