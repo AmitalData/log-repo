@@ -331,6 +331,7 @@
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
+    <Compile Include="QuoteModel\CustomFilters\QuoteTemplateCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
     <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />
     <Compile Include="CommonDataModel\DataContracts\UsersByTenantData.cs" />
@@ -2525,6 +2526,7 @@
     <Compile Include="Validators\ClassLevelValidator.cs" />
     <Compile Include="Validators\ClassLevelValidator.Shared.cs" />
     <Compile Include="Validators\CodeExistanceValidator.Shared.cs" />
+    <Compile Include="Validators\ContactInfo.cs" />
     <Compile Include="Validators\DocumentTypeClassLevelValidator.Shared.cs" />
     <Compile Include="Validators\DocumentTypeTransModeValidator.Shared.cs" />
     <Compile Include="Validators\FieldValidator.cs" />

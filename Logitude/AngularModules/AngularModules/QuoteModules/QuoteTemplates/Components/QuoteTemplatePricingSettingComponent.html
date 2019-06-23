@@ -110,6 +110,19 @@
                                                                                             <td>
                                                                                                 <table>
 
+                                                                                                    <tr style="height:22px">
+                                                                                                        <td style="width:8px"></td>
+                                                                                                        <td>
+                                                                                                            <div class="CheckBox">
+                                                                                                                <input [disabled]="!ShowPricesTable" [(ngModel)]="ShowHeaderLabels" class="LeftCenter" style="text-align:center" [attr.id]="ShowHeaderLabelsKey" type="checkbox" />
+                                                                                                                <label style="color:black" class="LeftCenter" [attr.for]="ShowHeaderLabelsKey">{{'QuoteTemplate.S.ShowHeaderLabels' | TextCodeTranslationPipe}}</label>
+                                                                                                            </div>
+                                                                                                        </td>
+
+                                                                                                    </tr>
+
+
+
                                                                                                     <!--Charge Code-->
                                                                                                     <tr style="height:22px">
                                                                                                         <td style="width:8px"></td>

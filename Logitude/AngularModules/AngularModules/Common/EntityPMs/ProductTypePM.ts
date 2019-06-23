@@ -60,6 +60,11 @@ export class ProductTypePM {
     public set DefaultTemplate(newValue: string) { if (this.defaultTemplate != newValue) { this.defaultTemplate = newValue; this.MarkAsDirty("DefaultTemplate"); } }
        
 	 
+    private routingRQuoteDefaultTemplateId: string;
+    public get RoutingRQuoteDefaultTemplateId() { return this.routingRQuoteDefaultTemplateId; }
+    public set RoutingRQuoteDefaultTemplateId(newValue: string) { if (this.routingRQuoteDefaultTemplateId != newValue) { this.routingRQuoteDefaultTemplateId = newValue; this.MarkAsDirty("RoutingRQuoteDefaultTemplateId"); } }
+       
+	 
 
     public OldEntityPM: ProductTypePM;
 		

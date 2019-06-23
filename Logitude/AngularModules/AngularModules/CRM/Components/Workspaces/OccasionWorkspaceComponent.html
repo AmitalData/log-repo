@@ -1,0 +1,31 @@
+<table>
+    <tr>
+        <td style="width: 250px;">
+            <div class="MediaFill">
+                <SectionBox [Scrolling]="true">
+                    <SectionHead>Occasion Queries</SectionHead>
+
+                    <SectionBody>
+                        <div class="QueriesSection">
+
+                            <div *ngIf="IsNewOccasionVisible" style="height:22px; width: 57px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
+                                <button class="Button" (click)="NewOccasionClicked()">New</button>
+                            </div>
+                            <div>
+                                <p class="QueryLink">All Occasion (0)</p>
+                            </div>
+                        </div>
+                    </SectionBody>
+                </SectionBox>
+            </div>
+        </td>
+
+        <td style="width:10px;">
+            <div></div>
+        </td>
+
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table>

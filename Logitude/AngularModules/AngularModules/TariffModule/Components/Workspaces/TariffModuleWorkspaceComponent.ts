@@ -76,8 +76,9 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     CheckAirfreightCost() {
         this._entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             var logWindow = new LogitudeWindow();
-            logWindow.IsFillScreen=true;
-            logWindow.Title = "Search Air Freight Prices";
+            logWindow.IsFillScreenHeight = true;
+            logWindow.Width = 900;
+            logWindow.Title = "Price Check";
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });      
     }

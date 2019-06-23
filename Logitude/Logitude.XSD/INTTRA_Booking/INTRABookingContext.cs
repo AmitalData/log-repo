@@ -488,6 +488,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 INTTRA_Booking.PartiesType item = new INTTRA_Booking.PartiesType()
                 {
                     Role = INTTRA_Booking.PartyTypeValues.Booker,
+                    RoleSpecified  =true,
                     Name = this.TenantObject.Company,
                     Identifier = new INTTRA_Booking.PartyIdentifierType()
                     {
@@ -509,6 +510,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 INTTRA_Booking.PartiesType item = new INTTRA_Booking.PartiesType()
                 {
                     Role = INTTRA_Booking.PartyTypeValues.Forwarder,
+                    RoleSpecified = true,
                     Name = this.TenantObject.Company,
                     Identifier = new INTTRA_Booking.PartyIdentifierType()
                     {
@@ -533,6 +535,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     INTTRA_Booking.PartiesType item = new INTTRA_Booking.PartiesType()
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Carrier,
+                        RoleSpecified = true,
                         Name = myCard.EnglishName,
                         Identifier = new INTTRA_Booking.PartyIdentifierType()
                         {
@@ -553,25 +556,20 @@ namespace Logitude.XSD.INTTRA_Booking
                     }
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
-
-                    var contactList = contactQuery.GetContactListsbyCardId(this.MasterData.MainCarriageCarrierId, Tenant).ToList();
-                    contactList.ForEach(contact =>
+                    var contactPM = contactQuery.GetSinglePM(myCard.PrimaryContactId, Tenant);
+                    contacts.Add(new ContactInformationType()
                     {
-                        contacts.Add(new ContactInformationType()
+                        Type = ContactTypeValues.InformationContact,
+                        Name = contactPM.EnglishName,
+                        CommunicationDetails = new CoordinatesType()
                         {
-                            Type = ContactTypeValues.InformationContact,
-                            Name = contact.EnglishName,
-                            CommunicationDetails = new CoordinatesType()
-                            {
-                                Email = new string[] { contact.Email },
-                                Fax = new string[] { contact.Fax },
-                                Phone = new string[] { contact.BusinessPhone },
-                            }
-                        });
+                            Email = new string[] { contactPM.Email },
+                            Fax = new string[] { contactPM.Fax },
+                            Phone = new string[] { contactPM.BusinessPhone },
+                        }
                     });
 
                     item.Contacts = contacts.ToArray();
-
                     this.MessagePropertiesParties.Add(item);
                 }
             }
@@ -585,6 +583,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     INTTRA_Booking.PartiesType item = new INTTRA_Booking.PartiesType()
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Shipper,
+                        RoleSpecified = true,
                         Name = shipper.EnglishName,
                     };
 
@@ -594,24 +593,20 @@ namespace Logitude.XSD.INTTRA_Booking
                     }
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
-                    var contactList = contactQuery.GetContactListsbyCardId(this.Shipment.ShipperId, Tenant).ToList();
-                    contactList.ForEach(contact =>
+                    var contactPM = contactQuery.GetSinglePM(shipper.PrimaryContactId, Tenant);
+                    contacts.Add(new ContactInformationType()
                     {
-                        contacts.Add(new ContactInformationType()
+                        Type = ContactTypeValues.InformationContact,
+                        Name = contactPM.EnglishName,
+                        CommunicationDetails = new CoordinatesType()
                         {
-                            Type = ContactTypeValues.InformationContact,
-                            Name = contact.EnglishName,
-                            CommunicationDetails = new CoordinatesType()
-                            {
-                                Email = new string[] { contact.Email },
-                                Fax = new string[] { contact.Fax },
-                                Phone = new string[] { contact.BusinessPhone },
-                            }
-                        });
+                            Email = new string[] { contactPM.Email },
+                            Fax = new string[] { contactPM.Fax },
+                            Phone = new string[] { contactPM.BusinessPhone },
+                        }
                     });
-
+                   
                     item.Contacts = contacts.ToArray();
-
                     this.MessagePropertiesParties.Add(item);
                 }    
             }
@@ -625,6 +620,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     INTTRA_Booking.PartiesType item = new INTTRA_Booking.PartiesType()
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Consignee,
+                        RoleSpecified = true,
                         Name = myCard.EnglishName,
                     };
 
@@ -634,20 +630,17 @@ namespace Logitude.XSD.INTTRA_Booking
                     }
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
-                    var contactList = contactQuery.GetContactListsbyCardId(this.Shipment.ConsigneeId, Tenant).ToList();
-                    contactList.ForEach(contact =>
+                    var contactPM = contactQuery.GetSinglePM(myCard.PrimaryContactId, Tenant);
+                    contacts.Add(new ContactInformationType()
                     {
-                        contacts.Add(new ContactInformationType()
+                        Type = ContactTypeValues.InformationContact,
+                        Name = contactPM.EnglishName,
+                        CommunicationDetails = new CoordinatesType()
                         {
-                            Type = ContactTypeValues.InformationContact,
-                            Name = contact.EnglishName,
-                            CommunicationDetails = new CoordinatesType()
-                            {
-                                Email = new string[] { contact.Email }, 
-                                Fax = new string[] { contact.Fax }, 
-                                Phone = new string[] { contact.BusinessPhone },
-                            }
-                        });
+                            Email = new string[] { contactPM.Email },
+                            Fax = new string[] { contactPM.Fax },
+                            Phone = new string[] { contactPM.BusinessPhone },
+                        }
                     });
 
                     item.Contacts = contacts.ToArray();
@@ -734,13 +727,11 @@ namespace Logitude.XSD.INTTRA_Booking
         public string VolumeUnitCode { get; set; }
         public string GrossWeightUnitCode { get; set; }
         public long XMLCreateDate { get; set; }
-        public long XMLCreateDate_Long { get; set; }
         private void GetProperties()
         {
             this.TodayDate = TenantServerConfigration.GetCurrentDateTime(this.Tenant).Date;
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(this.Tenant);
             this.XMLCreateDate = this.GetDateShortFormat(this.TodayDateTime);
-            this.XMLCreateDate_Long = this.GetDateLongFormat(this.TodayDateTime);
 
             this.ShipmentNumber = this.Shipment.ShipmentNumber;
             this.VolumeUnitCode = this.Shipment.VolumeUnitCode.ToUpper();

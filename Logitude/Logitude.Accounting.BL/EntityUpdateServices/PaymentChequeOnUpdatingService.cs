@@ -4,6 +4,8 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -97,6 +99,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public virtual JournalPM  CreateJournalPM(PaymentChequePM entityPM)
         {
+            APPaymentPM paymentPM = GetAPPayment(entityPM);
             BankAccountPM bankAccount = GetSingleBankAccountPM(entityPM);
             JournalUpdateService journalUpdateService = new JournalUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
             JournalPM journal = new JournalPM
@@ -107,7 +110,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CreatedByUserId = entityPM.CreatedByUserId,
                 AccountingEntityCode = "9",
                 AccountingEntityId = entityPM.Id,
-                AccountingEntityReference = entityPM.ChequeNumber,
+                AccountingEntityReference = paymentPM != null?  paymentPM.PaymentNo : entityPM.ChequeNumber,
                 UpdateDate = entityPM.UpdateDate,
                 UpdatedByUserId = entityPM.UpdatedByUserId,
                 ApproveDate = entityPM.CreateDate,
@@ -115,6 +118,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ChangeSetOp = ChangeSetOperation.Insert,
                 Tenant = entityPM.Tenant,
                 AccountingDate = (DateTime)entityPM.CreateDate,
+               
 
             };
             if (entityPM.ForeignAmount == null) entityPM.ForeignAmount = 0;
@@ -140,8 +144,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CurrencyId = entityPM.CurrencyId,
                 ForeignAmount = (decimal)entityPM.ForeignAmount,
                 ExchangeRate = entityPM.ExchangeRate,
-                ChangeSetOp = ChangeSetOperation.Insert
-
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Reference1 = paymentPM != null? paymentPM.PaymentNo : null,
+                Reference2 = entityPM.ChequeNumber,
+                
 
             };
             JournalLinePM journalLine2 = new JournalLinePM()
@@ -155,7 +161,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CurrencyId = entityPM.CurrencyId,
                 ForeignAmount = (decimal)entityPM.ForeignAmount,
                 ExchangeRate = entityPM.ExchangeRate,
-                ChangeSetOp = ChangeSetOperation.Insert
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
+                Reference2 = entityPM.ChequeNumber,
 
 
             };
@@ -182,6 +190,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, false, false);
             return bankAccount;
         }
+
+        public virtual APPaymentPM GetAPPayment(PaymentChequePM paymentCheque)
+        {
+            if (paymentCheque.APPaymentId != null)
+            {
+                APPaymentQuery paymentQuery = new APPaymentQuery(paymentCheque.Tenant);
+                return paymentQuery.GetSingleAPPaymentPM(paymentCheque.APPaymentId, paymentCheque.Tenant);
+
+            }
+            else return null;
+        }
     }
 
     public interface IPaymentChequeOnUpdatingService
@@ -193,5 +212,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         DateTime GetCurrentDateTime(int tenant);
         JournalPM  CreateJournalPM(PaymentChequePM entityPM);
         BankAccountPM GetSingleBankAccountPM(PaymentChequePM entityPM);
+       APPaymentPM GetAPPayment(PaymentChequePM paymentCheque);
     }
 }

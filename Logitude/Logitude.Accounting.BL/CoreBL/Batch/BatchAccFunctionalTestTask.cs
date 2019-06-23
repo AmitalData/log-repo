@@ -158,6 +158,11 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 MyTrailReportLevel = ReportLevel.GLAccount,
                 FromDate = new DateTime(2015, 1, 1),
                 ToDate = DateTime.Now.Date,
+                DetailedControlClients=true,
+                DetailedControlVendors = true,
+                DetailedControlJob= true,
+                DetailedControlFile = true,
+                
             }))
             {
 
@@ -197,17 +202,17 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     }
                         ).ToList();
 
-                var sb = new StringBuilder().AppendLine("CheckTrailReport");
+                var sb = new StringBuilder().AppendLine().AppendLine("-------------CheckTrailReport-------------");
                 myList.ForEach(r => {
                     sb.Append("DisplayNumber:").Append(r.DisplayNumber);
                     if (r.LocalCloseBalance== r.ExpectedLocalCloseBalance)
                     {
-                        sb.Append("equal:").AppendLine(r.ExpectedLocalCloseBalance.GetValueOrDefault().ToString());
+                        sb.Append(">>OK Equal:").AppendLine(r.ExpectedLocalCloseBalance.GetValueOrDefault().ToString());
                     }
                     else
                     {
                         sb.AppendLine(
-$"Expected:{r.ExpectedLocalCloseBalance.GetValueOrDefault()}!=Real{r.LocalCloseBalance}");
+$">>BAD Expected:{r.ExpectedLocalCloseBalance.GetValueOrDefault()}!=Real:{r.LocalCloseBalance}");
                     }
                 });
                 return sb.ToString();

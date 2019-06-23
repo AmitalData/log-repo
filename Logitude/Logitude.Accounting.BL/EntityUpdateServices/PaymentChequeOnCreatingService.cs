@@ -29,6 +29,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public  void OnCreating(PaymentChequePM entityPM)
         {
+            
             if (entityPM.Id == null || entityPM.Id == "") entityPM.Id = IdCounterWrapperGetNumber(entityPM.Tenant); //IdCounter.GetNumber("CashBook", entityPM.Tenant);
 
           //  entityPM.SearchFields = entityPM.EnglishName + "," + entityPM.LocalName + "," + entityPM.AccountNumber + "," + entityPM.AccountName + "," + entityPM.CashBookTypeName;
@@ -49,6 +50,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             
             entityPM.InternalNumber = CodeCounterWrapperGetNumber(entityPM.Tenant).ToString();
+            if(entityPM.PaymentChequeStatusCode == null)
             entityPM.PaymentChequeStatusCode = "1";
             entityPM.UniqueField = entityPM.Id;
             //ValidateEntity(entityPM);

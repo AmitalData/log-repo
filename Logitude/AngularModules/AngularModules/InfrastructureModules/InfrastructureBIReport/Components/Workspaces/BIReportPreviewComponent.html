@@ -162,8 +162,11 @@
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 30px;">
-                                                <button [disabled]="IsNewEntity || HasValidationError" class="Button" style="width:25px;float:left;" (click)="ExportToExcelClicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                                            <td style="width: 120px;">
+                                                <button [disabled]="IsNewEntity || HasValidationError" class="Button" style="width:120px;float:left;" (click)="ExportToExcelClicked()">
+                                                    <img style="margin-left:2px;" class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png"/>
+                                                    <span style="line-height: 19px;margin-left:15px;text-align:center;">Download Excel</span>
+                                                </button>
                                             </td>
 
                                             <td style="width: 5px;">

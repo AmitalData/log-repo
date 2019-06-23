@@ -1082,7 +1082,9 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.TotalPerContainersAdditionalTextDesignId).HasColumnName("TotalPerContainersAdditionalTextDesignId");
             this.Property(t => t.TotalPerContainersTableDesignId).HasColumnName("TotalPerContainersTableDesignId");
             this.Property(t => t.ShowTitleTotalPerContainersTable).HasColumnName("ShowTitleTotalPerContainersTable");
-                
+
+            this.Property(t => t.ShowHeaderLabelsPackages).HasColumnName("ShowHeaderLabelsPackages");
+           this.Property(t => t.ShowHeaderLabelsContainers).HasColumnName("ShowHeaderLabelsContainers");
             }
 
 

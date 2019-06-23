@@ -553,7 +553,6 @@ export class AddEditOnCarriageComponent extends BaseComponent {
         this.entityCloner.AddField('MainCarriageToPortName');
         this.entityCloner.AddField('MainCarriageToPortCountryCode');
         this.entityCloner.AddField('MainCarriageToPortCountryName');
-        this.entityCloner.AddField('MainCarriageToPortCountryEC');
 
         this.entityCloner.AddField('ToCountryId');
         this.entityCloner.AddField('ToCountryIsEC');

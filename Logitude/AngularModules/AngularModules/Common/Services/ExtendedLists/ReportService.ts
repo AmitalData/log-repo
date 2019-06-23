@@ -38,11 +38,11 @@ export class ReportService {
         }).catch(ServiceHelper.HandleServiceError);
     }
 
-    GetCheckIfStimualReportIsBuilt(reportKey: string,  tenant: number) {
+    GetCheckIfStimulSoftReportIsBliud(reportKey: string,  tenant: number) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + "/GetCheckIfStimualReportIsBuilt" + '?reportKey=' + reportKey + '&tenant=' + tenant , { headers: authHeader }).map(response => {
+        return this._http.get(this._apiUrl + "/GetCheckIfStimulSoftReportIsBliud" + '?reportKey=' + reportKey + '&tenant=' + tenant , { headers: authHeader }).map(response => {
 
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();

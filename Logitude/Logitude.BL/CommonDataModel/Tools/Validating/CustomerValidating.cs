@@ -247,7 +247,11 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
                     if (myTenant.CheckDigitControlAlgorithmCode == "LUHN")
                     {
-                        string checkDigit = MethodHelper.CalculateLuhnAlgorithm(entityPM.VatNumber).ToString();
+                        entityPM.VatNumber = entityPM.VatNumber.Trim();
+
+                        string numberWithoutCheckDigit = entityPM.VatNumber.Substring(0, entityPM.VatNumber.Length - 1);
+
+                        string checkDigit = MethodHelper.CalculateLuhnAlgorithm(numberWithoutCheckDigit).ToString();
                         string lastNumber = entityPM.VatNumber.LastOrDefault().ToString();
 
                         if (checkDigit != lastNumber)

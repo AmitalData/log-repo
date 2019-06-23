@@ -13,5 +13,11 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SearchFields { get; set; }
         public string QuotationDefaultTemplateId { get; set; }
         public string DefaultTemplate { get; set; }
+
+        public string RoutingRQuoteDefaultTemplateId { get; set; }
+        public string RoutingRQuoteDefaultTemplate { get; set; }
+
+
+
     }
 }

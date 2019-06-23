@@ -489,9 +489,22 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     }
 
     // Upload Excel File 
-    OnFileChanged(event) {
-        var file = event.target.files[0];
-        this.UploadExcel(file);
+    OnFileChanged(fileEvent) {
+        var file = fileEvent.target.files[0];
+
+        if (file) {
+            var extension: string = file.name.split('.')[1];
+
+            if (extension.includes("xls")) {
+                var file = fileEvent.target.files[0];
+                this.UploadExcel(file);
+            }
+
+            else {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
+            }
+        }
     }
     UploadExcel(file: any) {
         if (file && file.size > 0) {

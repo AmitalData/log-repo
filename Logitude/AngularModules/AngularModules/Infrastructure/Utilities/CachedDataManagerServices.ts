@@ -86,6 +86,10 @@ import { TariffListService } from '../../TariffModule/Services/StandardLists/Tar
 import { TariffTypeListService } from '../../TariffModule/Services/StandardLists/TariffTypeListService';
 
 
+//Occasions
+import { OccasionStatusListService } from '../../CRM/Services/StandardLists/OccasionStatusListService';
+
+
 export class CachedDataManagerServices {
     public getAllFromCache(objectTableName: string, filters: ApiQueryFilters) {
 
