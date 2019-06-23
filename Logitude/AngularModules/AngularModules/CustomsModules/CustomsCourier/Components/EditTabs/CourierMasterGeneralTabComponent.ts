@@ -30,6 +30,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
 
     public IsDisplayOnly: boolean = false;
     public DisplayOnlyMessage: string = "";
+    timerToken: NodeJS.Timer;
 
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -42,6 +43,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         this.DisplayOnlyCheck();
         this.CarrierDependencyProperty1 = "TR";
         this.Listen();
+
     }
 
     private Listen() {
@@ -245,6 +247,12 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
                     this.IsDisplayOnly = true;
                     this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
                     this.SetScreenFieldsEditability();
+
+                    this.timerToken = setTimeout(() => {
+                        this.SetScreenFieldsEditability();
+                        clearTimeout(this.timerToken);
+                        //this.CD.detectChanges();
+                    }, 900);
                 }
             }
         });
