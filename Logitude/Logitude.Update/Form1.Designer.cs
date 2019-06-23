@@ -893,6 +893,7 @@
             this.button42.Text = "Test";
             this.toolTip1.SetToolTip(this.button42, "When finished, Click on Update Tenants, Then Build Zip files");
             this.button42.UseVisualStyleBackColor = true;
+            this.button42.Visible = false;
             this.button42.Click += new System.EventHandler(this.button42_Click);
             // 
             // BuildZipFileslbl
