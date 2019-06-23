@@ -19,7 +19,7 @@ namespace WebFreight.Web.Helpers
             string result = string.Empty;
 
             if (operationCode == "Between") result = ResolveBetweenDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
-            if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
+           else if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
             else
             {
                 if (ValidateFieldValue(operationCode, fieldValue))
@@ -65,7 +65,7 @@ namespace WebFreight.Web.Helpers
 
                 if (isSample)
                 {
-                    result = betweenDateValue1 + "   -    " + betweenDateValue2;
+                    result = betweenDateValue1 + "    -     " + betweenDateValue2;
 
                 }
 

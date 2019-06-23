@@ -1149,6 +1149,10 @@
     <Compile Include="Migrations\201906230909109_MakeTarrifConcurrencyGUIDRequired.Designer.cs">
       <DependentUpon>201906230909109_MakeTarrifConcurrencyGUIDRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906231635221_MakeTariffVersionDatesNullable.cs" />
+    <Compile Include="Migrations\201906231635221_MakeTariffVersionDatesNullable.Designer.cs">
+      <DependentUpon>201906231635221_MakeTariffVersionDatesNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1952,6 +1956,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906230909109_MakeTarrifConcurrencyGUIDRequired.resx">
       <DependentUpon>201906230909109_MakeTarrifConcurrencyGUIDRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906231635221_MakeTariffVersionDatesNullable.resx">
+      <DependentUpon>201906231635221_MakeTariffVersionDatesNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
