@@ -11,6 +11,7 @@ using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -172,6 +173,26 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = changesXml
                 });
             }
+        }
+
+        protected override void CheckConcurrency(TariffPM entityPM, Tariff entityPOCO)
+        {
+            if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))
+            {
+                string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+                throw new OptimisticConcurrencyException(msg);
+            }
+
+            //if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
+            //{
+            //    if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))
+            //    {
+            //        string msg = CRMTranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+            //        throw new OptimisticConcurrencyException(msg);
+            //    }
+            //}
+
+            //base.CheckConcurrency(entityPM, entityPOCO);
         }
 
         private void CreateTariffVersion(TariffPM entityPM)

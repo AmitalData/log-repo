@@ -1133,6 +1133,14 @@
     <Compile Include="Migrations\201906191108387_AddOccasionsTables_Maheera.Designer.cs">
       <DependentUpon>201906191108387_AddOccasionsTables_Maheera.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906201245296_AddTariffConcurrencyGUID.cs" />
+    <Compile Include="Migrations\201906201245296_AddTariffConcurrencyGUID.Designer.cs">
+      <DependentUpon>201906201245296_AddTariffConcurrencyGUID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906230909109_MakeTarrifConcurrencyGUIDRequired.cs" />
+    <Compile Include="Migrations\201906230909109_MakeTarrifConcurrencyGUIDRequired.Designer.cs">
+      <DependentUpon>201906230909109_MakeTarrifConcurrencyGUIDRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1924,6 +1932,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906191108387_AddOccasionsTables_Maheera.resx">
       <DependentUpon>201906191108387_AddOccasionsTables_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906201245296_AddTariffConcurrencyGUID.resx">
+      <DependentUpon>201906201245296_AddTariffConcurrencyGUID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906230909109_MakeTarrifConcurrencyGUIDRequired.resx">
+      <DependentUpon>201906230909109_MakeTarrifConcurrencyGUIDRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
