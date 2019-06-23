@@ -469,7 +469,7 @@
                                                     <table>
                                                         <tr>
                                                             <td style="width:150px; ">
-                                                               
+
                                                                 <LogLabel [ObjectFieldName]="'ChequeOrPaymentRef'" [ObjectTableName]="ObjectTableName"
                                                                           [DataContext]="DataContext"></LogLabel>
 
@@ -481,6 +481,7 @@
                                                     </table>
 
                                                 </td>
+                                                <td *ngIf="!IsChequeLinkVisibile && !IsSplitButtonVisibile && AutomaticPaymentCheque"></td>
                                                 <td>
                                                     <div></div>
                                                 </td>
@@ -575,6 +576,7 @@
                                                     </table>
 
                                                 </td>
+                                                <td *ngIf="!IsChequeLinkVisibile && !IsSplitButtonVisibile && AutomaticPaymentCheque" style="width:400px"></td>
                                                 <td><div></div></td>
 
 
@@ -585,7 +587,7 @@
                                             </tr>
 
                                             <tr>
-                                                <td colspan="8">
+                                                <td>
                                                     <div></div>
                                                 </td>
                                             </tr>
