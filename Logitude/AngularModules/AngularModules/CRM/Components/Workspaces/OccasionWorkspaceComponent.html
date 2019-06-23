@@ -7,8 +7,8 @@
 
                     <SectionBody>
                         <div class="QueriesSection">
-                            <!--<div>Open Opportunities</div>-->
-                            <div style="height:22px; width: 57px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
+
+                            <div *ngIf="IsNewOccasionVisible" style="height:22px; width: 57px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px; right:2px;">
                                 <button class="Button" (click)="NewOccasionClicked()">New</button>
                             </div>
                             <div>
