@@ -63,7 +63,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-
+        //ReportRunViewWorkerRole
         var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RRW" && d.TenantNumber == SessionLocator.Tenant)[0];
         if (featureToggle) {
             this.IsHaveRunReportViewWorkerRolwToggleFeature = true;
