@@ -452,6 +452,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         itemPM.ExpirationDate = this.ExpirationDate;
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
+        itemPM.Index = 0;
 
         var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
         if (Version) {
@@ -667,9 +668,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             errors.push("Invalid Tariff Lines");
         }
 
-        if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
-            errors.push("Approving past version is not allowed, please update the dates");
-        }
+        //if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+        //    errors.push("Approving past version is not allowed, please update the dates");
+        //}
 
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
@@ -1267,6 +1268,20 @@ export class TariffLineData extends BaseComponent {
 
         else {
             return FontTool.Red;
+        }
+    }
+
+    get StartDate() { return this.EntityPM.StartDate; }
+    set StartDate(value: Date) {
+        if (this.EntityPM.StartDate != value) {
+            this.EntityPM.StartDate = value;
+        }
+    }
+
+    get ExpirationDate() { return this.EntityPM.ExpirationDate; }
+    set ExpirationDate(value: Date) {
+        if (this.EntityPM.ExpirationDate != value) {
+            this.EntityPM.ExpirationDate = value;
         }
     }
 
