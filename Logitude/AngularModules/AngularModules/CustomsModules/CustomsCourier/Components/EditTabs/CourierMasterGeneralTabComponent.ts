@@ -30,7 +30,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
 
     public IsDisplayOnly: boolean = false;
     public DisplayOnlyMessage: string = "";
-    timerToken: NodeJS.Timer;
+    timerToken: any;
 
     constructor(public entityArgs: EntityArgs) {
         super();
