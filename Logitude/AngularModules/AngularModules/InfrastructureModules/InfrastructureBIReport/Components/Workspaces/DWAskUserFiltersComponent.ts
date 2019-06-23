@@ -138,7 +138,7 @@ export class DWAskUserFiltersComponent implements OnInit {
                 else {
                     this.count = this.count + dataSize;
                     this.LoadingMsg = "Loading " + this.count;
-                    this.CurrentSession.StartBusyIndicator("Loading " + this.count + " from 10000");
+                    this.CurrentSession.StartBusyIndicator("Loading " + this.count);
                     if (this.count == this.totalDataLoaded) {
                         this.PageIndex = this.PageIndex + 1;
                         this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
