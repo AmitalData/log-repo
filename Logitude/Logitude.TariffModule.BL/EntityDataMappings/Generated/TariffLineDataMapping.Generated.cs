@@ -141,7 +141,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LineUniqueKey, 
 	         LineUniqueKeyText, 
 	         Index, 
-	         Notes,
+	         Notes, 
+	         AddedManually,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

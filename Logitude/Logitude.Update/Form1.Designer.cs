@@ -65,6 +65,10 @@
             this.importToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.impPackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.impRolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tenantRTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tenantTxtBox = new System.Windows.Forms.ToolStripTextBox();
+            this.rTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -103,6 +107,7 @@
             this.button38 = new System.Windows.Forms.Button();
             this.button39 = new System.Windows.Forms.Button();
             this.button37 = new System.Windows.Forms.Button();
+            this.button42 = new System.Windows.Forms.Button();
             this.BuildZipFileslbl = new System.Windows.Forms.Label();
             this.button27 = new System.Windows.Forms.Button();
             this.ConvertXmalTemplateToHtmlButton = new System.Windows.Forms.Button();
@@ -168,10 +173,6 @@
             this.HarmonizeCodesButton = new System.Windows.Forms.Button();
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
-            this.tenantRTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tenantTxtBox = new System.Windows.Forms.ToolStripTextBox();
-            this.rTLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -452,7 +453,7 @@
             this.expPackagesToolStripMenuItem,
             this.expRolesToolStripMenuItem});
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.exportToolStripMenuItem.Text = "Export";
             // 
             // expPackagesToolStripMenuItem
@@ -475,7 +476,7 @@
             this.impPackagesToolStripMenuItem,
             this.impRolesToolStripMenuItem});
             this.importToolStripMenuItem1.Name = "importToolStripMenuItem1";
-            this.importToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.importToolStripMenuItem1.Size = new System.Drawing.Size(110, 22);
             this.importToolStripMenuItem1.Text = "Import";
             // 
             // impPackagesToolStripMenuItem
@@ -491,6 +492,36 @@
             this.impRolesToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.impRolesToolStripMenuItem.Text = "Imp.Roles";
             this.impRolesToolStripMenuItem.Click += new System.EventHandler(this.impRolesToolStripMenuItem_Click);
+            // 
+            // tenantRTLToolStripMenuItem
+            // 
+            this.tenantRTLToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tenantTxtBox,
+            this.rTLToolStripMenuItem,
+            this.lTRToolStripMenuItem});
+            this.tenantRTLToolStripMenuItem.Name = "tenantRTLToolStripMenuItem";
+            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
+            this.tenantRTLToolStripMenuItem.Text = "Tenant RTL";
+            // 
+            // tenantTxtBox
+            // 
+            this.tenantTxtBox.Name = "tenantTxtBox";
+            this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
+            this.tenantTxtBox.Text = "1";
+            // 
+            // rTLToolStripMenuItem
+            // 
+            this.rTLToolStripMenuItem.Name = "rTLToolStripMenuItem";
+            this.rTLToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.rTLToolStripMenuItem.Text = "RTL";
+            this.rTLToolStripMenuItem.Click += new System.EventHandler(this.rtlBtn_Click);
+            // 
+            // lTRToolStripMenuItem
+            // 
+            this.lTRToolStripMenuItem.Name = "lTRToolStripMenuItem";
+            this.lTRToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.lTRToolStripMenuItem.Text = "LTR";
+            this.lTRToolStripMenuItem.Click += new System.EventHandler(this.ltrBtn_Click);
             // 
             // statusStrip1
             // 
@@ -852,6 +883,18 @@
             this.button37.UseVisualStyleBackColor = true;
             this.button37.Visible = false;
             this.button37.Click += new System.EventHandler(this.button37_Click);
+            // 
+            // button42
+            // 
+            this.button42.Location = new System.Drawing.Point(437, 321);
+            this.button42.Name = "button42";
+            this.button42.Size = new System.Drawing.Size(184, 25);
+            this.button42.TabIndex = 95;
+            this.button42.Text = "Test";
+            this.toolTip1.SetToolTip(this.button42, "When finished, Click on Update Tenants, Then Build Zip files");
+            this.button42.UseVisualStyleBackColor = true;
+            this.button42.Visible = false;
+            this.button42.Click += new System.EventHandler(this.button42_Click);
             // 
             // BuildZipFileslbl
             // 
@@ -1342,6 +1385,7 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.button42);
             this.tabPage1.Controls.Add(this.lblUTariffModule);
             this.tabPage1.Controls.Add(this.button41);
             this.tabPage1.Controls.Add(this.btnUpdateTenantZeroNew);
@@ -1608,36 +1652,6 @@
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
             // 
-            // tenantRTLToolStripMenuItem
-            // 
-            this.tenantRTLToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tenantTxtBox,
-            this.rTLToolStripMenuItem,
-            this.lTRToolStripMenuItem});
-            this.tenantRTLToolStripMenuItem.Name = "tenantRTLToolStripMenuItem";
-            this.tenantRTLToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
-            this.tenantRTLToolStripMenuItem.Text = "Tenant RTL";
-            // 
-            // tenantTxtBox
-            // 
-            this.tenantTxtBox.Name = "tenantTxtBox";
-            this.tenantTxtBox.Size = new System.Drawing.Size(100, 23);
-            this.tenantTxtBox.Text = "1";
-            // 
-            // rTLToolStripMenuItem
-            // 
-            this.rTLToolStripMenuItem.Name = "rTLToolStripMenuItem";
-            this.rTLToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.rTLToolStripMenuItem.Text = "RTL";
-            this.rTLToolStripMenuItem.Click += new System.EventHandler(this.rtlBtn_Click);
-            // 
-            // lTRToolStripMenuItem
-            // 
-            this.lTRToolStripMenuItem.Name = "lTRToolStripMenuItem";
-            this.lTRToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.lTRToolStripMenuItem.Text = "LTR";
-            this.lTRToolStripMenuItem.Click += new System.EventHandler(this.ltrBtn_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1826,6 +1840,7 @@
         private System.Windows.Forms.ToolStripTextBox tenantTxtBox;
         private System.Windows.Forms.ToolStripMenuItem rTLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lTRToolStripMenuItem;
+        private System.Windows.Forms.Button button42;
     }
 }
 

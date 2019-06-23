@@ -38,8 +38,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
-    public IsVersionsComboBoxEnabled: boolean = true;
+    public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
+    private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -121,7 +122,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.LoadTariffLines("currentVersion");
         }
 
-        this.WarningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
+        this.warningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
     }
 
     private loadedTariffLines: TariffLinePM[];
@@ -146,7 +147,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 if (!response.HasError) {
                     this.compareTariffLines = response.Result;
 
-                    this.FillTariffLines(this.compareTariffLines);
+                    this.DoCompare();
                 }
 
                 this.CurrentSession.StopBusyIndicator();
@@ -224,14 +225,19 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         }
       
         this.ItemsCollection = [];  
-        this.DeletedTariffsLines = [];
+        
 
-        tariffLines.sort(p => p.Index).forEach(item => {
+        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
             this.ItemsCollection.push(new TariffLineData(item, this));
         });
 
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
 
+        this.DoCompare();        
+    }
+
+    private DoCompare() {
+        this.DeletedTariffsLines = [];
         if (this.IsComparToChecked && this.ComparedToVersionPM != null) {
             this.ComaredLines();
             this.BuildDeletedLines();
@@ -368,11 +374,30 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     // Upload Excel File 
-    OnFileChanged(event) {
-        var file = event.target.files[0];
-        this.UploadExcel(file);
+    OnFileChanged(fileEvent) {
+        var file = fileEvent.target.files[0];
+
+        if (file) {
+            var extension: string = file.name.split('.')[1];
+
+            if (extension.includes("xls")) {
+                var file = fileEvent.target.files[0];
+                this.UploadExcel(file);
+            }
+
+            else {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
+            }
+        } 
     }
     UploadExcel(file: any) {
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.FileName = name[0];
+            }
+        }
         if (file && file.size > 0) {
             this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
@@ -407,7 +432,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
             filter.TariffType = context.EntityPM.TypeCode;
-
+            filter.TariffType = context.EntityPM.TypeCode;
+            filter.FileName = context.FileName;
             context.SendExcelToServer(filter);
         };
 
@@ -430,7 +456,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     private isUploadExcelFinished: boolean = false;
     private InsertNewRowsFromExcel(tariffLines: ExcelTariffLines[]) {
-        tariffLines.forEach(item => {
+        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
             var tariffLine = new TariffLinePM(null);
             tariffLine.StartDate = this.StartDate;
             tariffLine.ExpirationDate = this.ExpirationDate;
@@ -448,7 +474,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
-
+            
             if (this.PriceSteps.indexOf(',') > -1) {
                 var steps: string[] = this.PriceSteps.split(",");
                 var count = steps.length;
@@ -465,7 +491,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.CurrentVersion.AddTariffLine(tariffLine);
         });
         
-        this.EntityPM.TariffLinesAdded = true;
+        this.EntityPM.TariffLinesAddedFromExcel = true;
         this.isUploadExcelFinished = true;
         this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
     }
@@ -618,19 +644,18 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             newVersion.Id = item.TariffId; 
             this.VersionsList.push(newVersion);
         });
+
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
 
         if (this.SelectedVersion == null) {
             this.isComparToChecked = false;
-            this.IsVersionsComboBoxEnabled = true;
-            this.UIProperties.SetEnabled("IsComparToChecked", null, false);
-            this.UIProperties.SetEnabled("WarningPercentage", null, false);
+            this.IsCompareEnabled = false;
         }
         else {
-            this.IsVersionsComboBoxEnabled = false;
-            this.UIProperties.SetEnabled("IsComparToChecked", null, true);
-            this.UIProperties.SetEnabled("WarningPercentage", null, true);
+            this.IsCompareEnabled = true;
         }
+
+        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsCompareEnabled);
     }
     
     private selectedVersion: VersionClass;

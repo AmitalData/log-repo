@@ -24,7 +24,7 @@ export class GeneralTabComponent {
       var moveType = this.Helper.WaitByIdAndFill('Shipment_MoveTypeId', 'TestMoveType');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-      var incoterm = this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'TestIncoterm');
+      var incoterm = this.Helper.WaitByIdAndFill('Shipment_IncotermId', 'LDE Incoterm');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
       var AMSBL = this.Helper.WaitByIdAndFill('Shipment_AMSBL', 'Shipment AMSBL');

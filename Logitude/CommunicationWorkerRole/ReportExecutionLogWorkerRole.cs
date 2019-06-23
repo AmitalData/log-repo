@@ -135,7 +135,7 @@ namespace CommunicationWorkerRole
 
                                 if (reportFliter != null)
                                 {
-                                    Thread thread = new Thread(() => BuildReport(reportFliter, reportExecutionLog, reportExecutionLogRepository));
+                                    Thread thread = new Thread(() => BuildReport(reportFliter, reportExecutionLog, reportExecutionLogRepository, queueservice));
                                     thread.IsBackground = true;
                                     thread.Start();
                           
@@ -198,7 +198,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void BuildReport(ReportFliter reportFliter, ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository)
+        private void BuildReport(ReportFliter reportFliter, ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository, IQueueService queueservice )
         {
 
             try
@@ -206,12 +206,16 @@ namespace CommunicationWorkerRole
                 ReportHelper reportHelper = new ReportHelper();
                 reportHelper.BuildReport(reportFliter);
                 this.UpdateReportExecutionLog(null, reportExecutionLog, reportExecutionLogRepository, "D");
+                queueservice.Complete();
             }
             catch (Exception ex)
             {
                 if (reportExecutionLog != null && reportExecutionLogRepository != null)
                 {
-                    this.UpdateReportExecutionLog(ex, reportExecutionLog, reportExecutionLogRepository,"F");
+                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
+                    this.UpdateReportExecutionLog(ex, reportExecutionLog, reportExecutionLogRepository, "F");
+                    queueservice.CompleteAsFailed();
+
                 }
             }
         }

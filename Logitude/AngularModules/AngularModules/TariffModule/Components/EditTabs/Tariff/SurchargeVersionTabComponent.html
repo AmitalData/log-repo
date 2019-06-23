@@ -43,10 +43,10 @@
                             <table>
                                 <tr>
                                     <td style="width:90px;">
-                                        <LogCheckBox [NoObjectField]="true" [ObjectFieldName]="'IsComparToChecked'" [Checked]="IsComparToChecked" [Text]="'Compare to'" [DataContext]="DataContext"></LogCheckBox>
+                                        <CheckBox [IsChecked]="IsComparToChecked" (Checked)="IsComparToChecked = $event" [Text]="'Compare to'" [IsEnabled]="IsCompareEnabled"></CheckBox>
                                     </td>
                                     <td style="width:190px;">
-                                        <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="IsVersionsComboBoxEnabled" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
+                                        <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="!IsCompareEnabled" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
                                     </td>
                                     <td style="width:5px;">
                                         <div></div>
@@ -97,6 +97,7 @@
                                     <div *ngIf="IsDraftVersion">
                                         <input class="upload" style="display: none;width:65px"
                                                type="file" (change)="OnFileChanged($event)"
+                                               (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
                                                #fileInput>
                                         <a href="#" style="text-decoration:none">
                                             <button (click)="fileInput.click()">Upload Excel</button>

@@ -45,19 +45,61 @@ namespace Logitude.Accounting.BL.CoreBL
                 List<AccountingPeriodPM> accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodsByTenantAndType("1", tenant);
                 if (accountingPeriodsByTypeRegular != null)
                 {
-                    string transText = "";
-                    bool useLocal = true;
-                    transText = TranslateTextsClassTranslate("Accounting.O.AccountingPeriodClosed", 0, useLocal);
-                    if (String.IsNullOrWhiteSpace(transText))
-                    {
-                        transText = "Closed Month";
-                    }
-
                     if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), accountingDate))
                     {
+                        string transText = "";
+                        bool useLocal = true;
+                        transText = TranslateTextsClassTranslate("Accounting.O.AccountingPeriodClosed", 0, useLocal);
+                        if (String.IsNullOrWhiteSpace(transText))
+                        {
+                            transText = "Closed Month";
+                        }
                         throw new Exception(transText);
                     }
                 }
+
+                JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
+                List<JournalPM> journalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j =>!j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
+                if (journalPMs != null)
+                {
+                    bool problem = false;
+                    string journalNo = "";
+                    JournalPM jPM = journalPMs.Where(j => String.IsNullOrEmpty(j.OriginalJournalId)).FirstOrDefault();  
+                    if (jPM != null) // at least one journal without OriginalJournalId
+                    {
+                        problem = true;
+                        journalNo = jPM.JournalNumber;
+                    }
+                    else
+                    { 
+                        List<String> originalJournalIds = journalPMs.Select(j => j.OriginalJournalId).ToList();
+                        List<JournalPM> notVoidedOriginalJournals = journalQueryService.GetJournalsByIds(originalJournalIds, tenant).Where(originalJournal => !originalJournal.IsVoided.HasValue || !originalJournal.IsVoided.Value).ToList();
+                        List<String> notVoidedOriginalIds = notVoidedOriginalJournals.Select(k => k.Id).ToList();
+                        List<JournalPM> realJournals = journalPMs.Where(j => notVoidedOriginalIds.Contains(j.OriginalJournalId)).ToList();
+                        if (realJournals != null)
+                        {
+                            jPM = realJournals.FirstOrDefault();
+                            if (jPM != null) // at least one journal where OriginalJournalId is not voided
+                            {
+                                problem = true;
+                                journalNo = jPM.JournalNumber;
+                            }
+                        }
+                    }
+                    if (problem)
+                    {
+                        string transText = "";
+                        bool useLocal = true;
+                        transText = TranslateTextsClassTranslate("Accounting.O.AccountingPeriodAlready", 0, useLocal) + journalNo;
+                        if (String.IsNullOrWhiteSpace(transText))
+                        {
+                            transText = "The chosen year is transferred already, In order to transfer it again, you must void Journal " + journalNo;
+                        }
+
+                        throw new Exception(transText);
+                    }
+                }
+
             }
 
 
@@ -121,7 +163,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 //journal.UpdatedByUserId = theEntityPm.UpdatedByUserId;
                 ApproveDate = @now,
                 //journal.ApprovedByUserId = theEntityPm.ApprovedByUserId;
-                AccountingEntityCode = "1",
+                AccountingEntityCode = "11", // "Year Transfer"
             //    AccountingEntityId = null,
                 CreatedByUserId= usrid,
                 ApprovedByUserId = usrid,

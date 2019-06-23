@@ -21,6 +21,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool HasStates { get; set; }
         public bool IsStateRequired { get; set; }
         public bool HasCitiesList { get; set; }
+        public bool IsNorthAmerica { get; set; }
 
         public string GlobalZoneId { get; set; }
         [ForeignKey("GlobalZoneId")]

@@ -48,6 +48,20 @@ namespace Logitude.Infrastructure.BL
                 Name = "Unicargo Report Toggle", 
                 SearchFields = "URT,Unicargo Report Toggle", 
 			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BDR", 
+                Name = "Build Document Report Service", 
+                SearchFields = "BDR,Build Document Report Service", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "QuotationRoutingRatesQuotes", 
+                Code = "QRR", 
+                SearchFields = "QRR,QuotationRoutingRatesQuotes", 
+			});
 			
             return all;
        }

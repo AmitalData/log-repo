@@ -39,11 +39,11 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
-    public IsVersionsComboBoxEnabled: boolean = true;
+    public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
     private CurrentSession = SessionLocator.SelectedSession;
     private ChargesTypeListService: ChargesTypeListService;
-
+    private FilName: string = "";
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -86,6 +86,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                         this.isUploadExcelFinished = false;
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
+                    this.SetSurchargesLabelsAndVisibility();
                 }
             });
         }
@@ -124,7 +125,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.LoadTariffLines("currentVersion");
         }
 
-        this.WarningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
+        this.warningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
     }
 
     private loadedTariffLines: TariffLinePM[];
@@ -149,7 +150,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 if (!response.HasError) {
                     this.compareTariffLines = response.Result;
 
-                    this.FillTariffLines(this.compareTariffLines);
+                    this.DoCompare();  
                 }
 
                 this.CurrentSession.StopBusyIndicator();
@@ -306,8 +307,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.TariffsLinesSource.Clear();
         }
 
-        this.ItemsCollection = [];
-        this.DeletedTariffsLines = [];
+        this.ItemsCollection = [];        
 
         tariffLines.sort(p => p.Index).forEach(item => {
             this.ItemsCollection.push(new TariffLineData(item, this));
@@ -315,6 +315,11 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         this.TariffsLinesSource.InsertCollection(this.ItemsCollection);
 
+        this.DoCompare();    
+    }
+
+    private DoCompare() {
+        this.DeletedTariffsLines = [];
         if (this.IsComparToChecked && this.ComparedToVersionPM != null) {
             this.ComaredLines();
             this.BuildDeletedLines();
@@ -410,20 +415,19 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             newVersion.Id = item.TariffId;
             this.VersionsList.push(newVersion);
         });
+
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
 
         if (this.SelectedVersion == null) {
             this.isComparToChecked = false;
-            this.IsVersionsComboBoxEnabled = true;
-            this.UIProperties.SetEnabled("IsComparToChecked", null, false);
-            this.UIProperties.SetEnabled("WarningPercentage", null, false);
+            this.IsCompareEnabled = false;
         }
         else {
-            this.IsVersionsComboBoxEnabled = false;
-            this.UIProperties.SetEnabled("IsComparToChecked", null, true);
-            this.UIProperties.SetEnabled("WarningPercentage", null, true);
+            this.IsCompareEnabled = true;
         }
-    }
+
+        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsCompareEnabled);
+    }    
 
     ComparingCalculations(load: boolean) {
         if (load) {
@@ -485,9 +489,22 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     }
 
     // Upload Excel File 
-    OnFileChanged(event) {
-        var file = event.target.files[0];
-        this.UploadExcel(file);
+    OnFileChanged(fileEvent) {
+        var file = fileEvent.target.files[0];
+
+        if (file) {
+            var extension: string = file.name.split('.')[1];
+
+            if (extension.includes("xls")) {
+                var file = fileEvent.target.files[0];
+                this.UploadExcel(file);
+            }
+
+            else {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
+            }
+        }
     }
     UploadExcel(file: any) {
         if (file && file.size > 0) {
@@ -524,6 +541,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             filter.TariffId = context.EntityPM.Id;
             filter.Version = context.CurrentVersion.Version;
             filter.TariffType = context.EntityPM.TypeCode;
+            filter.FileName = context.FileName;
 
             context.SendExcelToServer(filter);
         };
@@ -532,6 +550,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             console.log(e);
         };
         reader.readAsArrayBuffer(file);
+       // context.EntityPM.FileUploadedName = file.Name;
+
     }
     SendExcelToServer(filter: any) {
         this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
@@ -619,7 +639,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.CurrentVersion.AddTariffLine(tariffLine);
         });
 
-        this.EntityPM.TariffLinesAdded = true;
+        this.EntityPM.TariffLinesAddedFromExcel = true;
         this.isUploadExcelFinished = true;
         this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
     }
@@ -981,131 +1001,131 @@ export class TariffLineData extends BaseComponent {
 
     private CompareSurcharge1Price() {
         if (this.ComparedEntity != null) {
+            this.Surcharge1ComparingPrice = null;
+            this.Surcharge1ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge1Price != null) {
             var surcharge1ComparingValue = this.Surcharge1Price - this.ComparedEntity.Surcharge1Price;
             if (!AppTool.IsNullOrZero(surcharge1ComparingValue)) {
                 this.Surcharge1ComparingPrice = (surcharge1ComparingValue / this.ComparedEntity.Surcharge1Price) * 100;
                 this.Surcharge1ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge1ComparingPrice);
-            }
-            else {
-                this.Surcharge1ComparingPrice = null;
-                this.Surcharge1ComparingTextColor = this.DefaultColor;
-            }
+                }
+            }         
         }
     }
     private CompareSurcharge2Price() {
         if (this.ComparedEntity != null) {
-            var surcharge2ComparingValue = this.Surcharge2Price - this.ComparedEntity.Surcharge2Price;
-            if (!AppTool.IsNullOrZero(surcharge2ComparingValue)) {
-                this.Surcharge2ComparingPrice = (surcharge2ComparingValue / this.ComparedEntity.Surcharge2Price) * 100;
-                this.Surcharge2ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge2ComparingPrice);
-            }
-            else {
-                this.Surcharge2ComparingPrice = null;
-                this.Surcharge2ComparingTextColor = this.DefaultColor;
+            this.Surcharge2ComparingPrice = null;
+            this.Surcharge2ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge2Price != null) {
+                var surcharge2ComparingValue = this.Surcharge2Price - this.ComparedEntity.Surcharge2Price;
+                if (!AppTool.IsNullOrZero(surcharge2ComparingValue)) {
+                    this.Surcharge2ComparingPrice = (surcharge2ComparingValue / this.ComparedEntity.Surcharge2Price) * 100;
+                    this.Surcharge2ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge2ComparingPrice);
+                }            
             }
         }
     }
     private CompareSurcharge3Price() {
         if (this.ComparedEntity != null) {
-            var surcharge3ComparingValue = this.Surcharge3Price - this.ComparedEntity.Surcharge3Price;
-            if (!AppTool.IsNullOrZero(surcharge3ComparingValue)) {
-                this.Surcharge3ComparingPrice = (surcharge3ComparingValue / this.ComparedEntity.Surcharge3Price) * 100;
-                this.Surcharge3ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge3ComparingPrice);
-            }
-            else {
-                this.Surcharge3ComparingPrice = null;
-                this.Surcharge3ComparingTextColor = this.DefaultColor;
+            this.Surcharge3ComparingPrice = null;
+            this.Surcharge3ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge3Price != null) {
+                var surcharge3ComparingValue = this.Surcharge3Price - this.ComparedEntity.Surcharge3Price;
+                if (!AppTool.IsNullOrZero(surcharge3ComparingValue)) {
+                    this.Surcharge3ComparingPrice = (surcharge3ComparingValue / this.ComparedEntity.Surcharge3Price) * 100;
+                    this.Surcharge3ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge3ComparingPrice);
+                }               
             }
         }
     }
     private CompareSurcharge4Price() {
         if (this.ComparedEntity != null) {
-            var surcharge4ComparingValue = this.Surcharge4Price - this.ComparedEntity.Surcharge4Price;
-            if (!AppTool.IsNullOrZero(surcharge4ComparingValue)) {
-                this.Surcharge4ComparingPrice = (surcharge4ComparingValue / this.ComparedEntity.Surcharge4Price) * 100;
-                this.Surcharge4ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge4ComparingPrice);
-            }
-            else {
-                this.Surcharge4ComparingPrice = null;
-                this.Surcharge4ComparingTextColor = this.DefaultColor;
+            this.Surcharge4ComparingPrice = null;
+            this.Surcharge4ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge4Price != null) {
+                var surcharge4ComparingValue = this.Surcharge4Price - this.ComparedEntity.Surcharge4Price;
+                if (!AppTool.IsNullOrZero(surcharge4ComparingValue)) {
+                    this.Surcharge4ComparingPrice = (surcharge4ComparingValue / this.ComparedEntity.Surcharge4Price) * 100;
+                    this.Surcharge4ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge4ComparingPrice);
+                }              
             }
         }
     }
     private CompareSurcharge5Price() {
         if (this.ComparedEntity != null) {
-            var surcharge5ComparingValue = this.Surcharge5Price - this.ComparedEntity.Surcharge5Price;
-            if (!AppTool.IsNullOrZero(surcharge5ComparingValue)) {
-                this.Surcharge5ComparingPrice = (surcharge5ComparingValue / this.ComparedEntity.Surcharge5Price) * 100;
-                this.Surcharge5ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge5ComparingPrice);
-            }
-            else {
-                this.Surcharge5ComparingPrice = null;
-                this.Surcharge5ComparingTextColor = this.DefaultColor;
+            this.Surcharge5ComparingPrice = null;
+            this.Surcharge5ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge5Price != null) {
+                var surcharge5ComparingValue = this.Surcharge5Price - this.ComparedEntity.Surcharge5Price;
+                if (!AppTool.IsNullOrZero(surcharge5ComparingValue)) {
+                    this.Surcharge5ComparingPrice = (surcharge5ComparingValue / this.ComparedEntity.Surcharge5Price) * 100;
+                    this.Surcharge5ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge5ComparingPrice);
+                }            
             }
         }
     }
     private CompareSurcharge6Price() {
         if (this.ComparedEntity != null) {
-            var surcharge6ComparingValue = this.Surcharge6Price - this.ComparedEntity.Surcharge6Price;
-            if (!AppTool.IsNullOrZero(surcharge6ComparingValue)) {
-                this.Surcharge6ComparingPrice = (surcharge6ComparingValue / this.ComparedEntity.Surcharge6Price) * 100;
-                this.Surcharge6ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge6ComparingPrice);
-            }
-            else {
-                this.Surcharge6ComparingPrice = null;
-                this.Surcharge6ComparingTextColor = this.DefaultColor;
+            this.Surcharge6ComparingPrice = null;
+            this.Surcharge6ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge6Price != null) {
+                var surcharge6ComparingValue = this.Surcharge6Price - this.ComparedEntity.Surcharge6Price;
+                if (!AppTool.IsNullOrZero(surcharge6ComparingValue)) {
+                    this.Surcharge6ComparingPrice = (surcharge6ComparingValue / this.ComparedEntity.Surcharge6Price) * 100;
+                    this.Surcharge6ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge6ComparingPrice);
+                }             
             }
         }
     }
     private CompareSurcharge7Price() {
         if (this.ComparedEntity != null) {
-            var surcharge7ComparingValue = this.Surcharge7Price - this.ComparedEntity.Surcharge7Price;
-            if (!AppTool.IsNullOrZero(surcharge7ComparingValue)) {
-                this.Surcharge7ComparingPrice = (surcharge7ComparingValue / this.ComparedEntity.Surcharge7Price) * 100;
-                this.Surcharge7ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge7ComparingPrice);
-            }
-            else {
-                this.Surcharge7ComparingPrice = null;
-                this.Surcharge7ComparingTextColor = this.DefaultColor;
+            this.Surcharge7ComparingPrice = null;
+            this.Surcharge7ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge7Price != null) {
+                var surcharge7ComparingValue = this.Surcharge7Price - this.ComparedEntity.Surcharge7Price;
+                if (!AppTool.IsNullOrZero(surcharge7ComparingValue)) {
+                    this.Surcharge7ComparingPrice = (surcharge7ComparingValue / this.ComparedEntity.Surcharge7Price) * 100;
+                    this.Surcharge7ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge7ComparingPrice);
+                }             
             }
         }
     }
     private CompareSurcharge8Price() {
         if (this.ComparedEntity != null) {
-            var surcharge8ComparingValue = this.Surcharge8Price - this.ComparedEntity.Surcharge8Price;
-            if (!AppTool.IsNullOrZero(surcharge8ComparingValue)) {
-                this.Surcharge8ComparingPrice = (surcharge8ComparingValue / this.ComparedEntity.Surcharge8Price) * 100;
-                this.Surcharge8ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge8ComparingPrice);
-            }
-            else {
-                this.Surcharge8ComparingPrice = null;
-                this.Surcharge8ComparingTextColor = this.DefaultColor;
+            this.Surcharge8ComparingPrice = null;
+            this.Surcharge8ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge8Price != null) {
+                var surcharge8ComparingValue = this.Surcharge8Price - this.ComparedEntity.Surcharge8Price;
+                if (!AppTool.IsNullOrZero(surcharge8ComparingValue)) {
+                    this.Surcharge8ComparingPrice = (surcharge8ComparingValue / this.ComparedEntity.Surcharge8Price) * 100;
+                    this.Surcharge8ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge8ComparingPrice);
+                }              
             }
         }
     }
     private CompareSurcharge9Price() {
         if (this.ComparedEntity != null) {
-            var surcharge9ComparingValue = this.Surcharge9Price - this.ComparedEntity.Surcharge9Price;
-            if (!AppTool.IsNullOrZero(surcharge9ComparingValue)) {
-                this.Surcharge9ComparingPrice = (surcharge9ComparingValue / this.ComparedEntity.Surcharge9Price) * 100;
-                this.Surcharge9ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge9ComparingPrice);
-            }
-            else {
-                this.Surcharge9ComparingPrice = null;
-                this.Surcharge9ComparingTextColor = this.DefaultColor;
+            this.Surcharge9ComparingPrice = null;
+            this.Surcharge9ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge9Price != null) {
+                var surcharge9ComparingValue = this.Surcharge9Price - this.ComparedEntity.Surcharge9Price;
+                if (!AppTool.IsNullOrZero(surcharge9ComparingValue)) {
+                    this.Surcharge9ComparingPrice = (surcharge9ComparingValue / this.ComparedEntity.Surcharge9Price) * 100;
+                    this.Surcharge9ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge9ComparingPrice);
+                }              
             }
         }
     }
     private CompareSurcharge10Price() {
         if (this.ComparedEntity != null) {
-            var surcharge10ComparingValue = this.Surcharge10Price - this.ComparedEntity.Surcharge10Price;
-            if (!AppTool.IsNullOrZero(surcharge10ComparingValue)) {
-                this.Surcharge10ComparingPrice = (surcharge10ComparingValue / this.ComparedEntity.Surcharge10Price) * 100;
-                this.Surcharge10ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge10ComparingPrice);
-            }
-            else {
-                this.Surcharge10ComparingPrice = null;
-                this.Surcharge10ComparingTextColor = this.DefaultColor;
+            this.Surcharge10ComparingPrice = null;
+            this.Surcharge10ComparingTextColor = this.DefaultColor;
+            if (this.ComparedEntity.Surcharge10Price != null) {
+                var surcharge10ComparingValue = this.Surcharge10Price - this.ComparedEntity.Surcharge10Price;
+                if (!AppTool.IsNullOrZero(surcharge10ComparingValue)) {
+                    this.Surcharge10ComparingPrice = (surcharge10ComparingValue / this.ComparedEntity.Surcharge10Price) * 100;
+                    this.Surcharge10ComparingTextColor = this.ComputeWarningPercentageColor(this.Surcharge10ComparingPrice);
+                }               
             }
         }
     }

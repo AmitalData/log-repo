@@ -268,6 +268,7 @@
     <Compile Include="CommonDataModel\APIDataContract\Vendor.Generated.cs" />
     <Compile Include="CommonDataModel\APIDataContract\Vessel.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\AccountingSystemDetails.Generated.cs" />
+    <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CheckDigitControlAlgorithmDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CommunicationLogTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\CommunicationStatusTypeDetails.Generated.cs" />
     <Compile Include="CommonDataModel\CloseTables\DetailsClassesGenerated\ContactDoneMethodDetails.Generated.cs" />
@@ -330,11 +331,13 @@
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
+    <Compile Include="QuoteModel\CustomFilters\QuoteTemplateCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
     <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />
     <Compile Include="CommonDataModel\DataContracts\UsersByTenantData.cs" />
     <Compile Include="CommonDataModel\EntityAMs\DepositionRequestAM.cs" />
     <Compile Include="CommonDataModel\EntityAMs\ImporterDepositionAM.cs" />
+    <Compile Include="CommonDataModel\EntityLists\CheckDigitControlAlgorithmList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomerDepositionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomsShipperList.cs" />
     <Compile Include="CommonDataModel\EntityLists\DocumentFilingBackupBatchList.cs" />
@@ -344,6 +347,7 @@
     <Compile Include="CommonDataModel\EntityLists\FilingInboxList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HybridPartnersPermissionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\NumberFormatList.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\CheckDigitControlAlgorithmPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CustomerDepositionPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\CustomsShipperPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\DepositionRequestPM.cs" />
@@ -358,6 +362,7 @@
     <Compile Include="CommonDataModel\EntityPMs\INTTRABranchRegisteredCarrierPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\INTTRASettingPM.cs" />
     <Compile Include="CommonDataModel\EntityPMs\NumberFormatPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\CheckDigitControlAlgorithmQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CustomerDepositionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CustomsShipperQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\DocumentFilingBackupBatchQuery.cs" />
@@ -2521,6 +2526,7 @@
     <Compile Include="Validators\ClassLevelValidator.cs" />
     <Compile Include="Validators\ClassLevelValidator.Shared.cs" />
     <Compile Include="Validators\CodeExistanceValidator.Shared.cs" />
+    <Compile Include="Validators\ContactInfo.cs" />
     <Compile Include="Validators\DocumentTypeClassLevelValidator.Shared.cs" />
     <Compile Include="Validators\DocumentTypeTransModeValidator.Shared.cs" />
     <Compile Include="Validators\FieldValidator.cs" />

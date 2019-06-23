@@ -401,7 +401,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageFromPortName = mainCarriageFromPort.EnglishName;
                         shipmentPM.MainCarriageFromPortCountryCode = mainCarriageFromPort.CountryCode;
                         shipmentPM.MainCarriageFromPortCountryName = mainCarriageFromPort.CountryName;
-                        shipmentPM.MainCarriageFromPortCountryEC = mainCarriageFromPort.CountryEC;
                         shipmentPM.FromCountryCode = mainCarriageFromPort.CountryCode;
                         shipmentPM.FromLocation = mainCarriageFromPort.Code + " " + mainCarriageFromPort.EnglishName;
                     }
@@ -416,7 +415,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.ToPortCountry = mainCarriageToPort.CountryName;
                         shipmentPM.ToCountryCode = mainCarriageToPort.CountryCode;
                         shipmentPM.MainCarriageToPortCountryName = mainCarriageToPort.CountryName;
-                        shipmentPM.MainCarriageToPortCountryEC = mainCarriageToPort.CountryEC;
                         shipmentPM.MainCarriageToPortCode = mainCarriageToPort.Code;
                         shipmentPM.MainCarriageToPortName = mainCarriageToPort.EnglishName;
                         shipmentPM.MainCarriageToPortCountryCode = mainCarriageToPort.CountryCode;
@@ -512,7 +510,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.Transshipment1ToPortStateCode = transshipment1ToPort.StateCode;
 
                             shipmentPM.FinalDistenationPortId = masterData.Transshipment1ToPortId;
-                            shipmentPM.Transshipment1ToPortCountryEC = transshipment1ToPort.CountryEC;
                         }
                     }
 
@@ -564,7 +561,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.Transshipment2ToPortStateCode = transshipment2ToPort.StateCode;
 
                             shipmentPM.FinalDistenationPortId = masterData.Transshipment2ToPortId;
-                            shipmentPM.Transshipment2ToPortCountryEC = transshipment2ToPort.CountryEC;
                         }
                     }
 
@@ -617,7 +613,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             shipmentPM.Transshipment3ToPortStateCode = transshipment3ToPort.StateCode;
 
                             shipmentPM.FinalDistenationPortId = masterData.Transshipment3ToPortId;
-                            shipmentPM.Transshipment3ToPortCountryEC = transshipment3ToPort.CountryEC;
                         }
                     }
 
@@ -673,8 +668,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         shipmentPM.MainCarriageToPortName = toPort.EnglishName;
                         shipmentPM.MainCarriageToPortCountryCode = toPort.CountryCode;
                         shipmentPM.MainCarriageToPortCountryName = toPort.CountryName;
-                        shipmentPM.MainCarriageToPortCountryEC = fromPort.CountryEC;
-                        shipmentPM.MainCarriageFromPortCountryEC = toPort.CountryEC;
                         shipmentPM.ToPort = toPort.Code;
                         shipmentPM.ToPortCountry = toPort.CountryName;
                         shipmentPM.ToPortName = toPort.EnglishName;
@@ -11855,6 +11848,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     DeclarationDate = f.DeclarationDate,
                     DeclarationNumber = f.DeclarationNumber,
                     ARInvoices = f.ARInvoices,
+                    Notes = f.Notes,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

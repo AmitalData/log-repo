@@ -823,6 +823,16 @@ export class QuoteTemplateSettingPM {
 
 
 
+    private showHeaderLabelsPackages: boolean;
+    public get ShowHeaderLabelsPackages() { return this.showHeaderLabelsPackages; }
+    public set ShowHeaderLabelsPackages(newValue: boolean) { if (this.showHeaderLabelsPackages != newValue) { this.showHeaderLabelsPackages = newValue; this.MarkAsDirty("ShowHeaderLabelsPackages"); } }
+
+
+    private showHeaderLabelsContainers: boolean;
+    public get ShowHeaderLabelsContainers() { return this.showHeaderLabelsContainers; }
+    public set ShowHeaderLabelsContainers(newValue: boolean) { if (this.showHeaderLabelsContainers != newValue) { this.showHeaderLabelsContainers = newValue; this.MarkAsDirty("ShowHeaderLabelsContainers"); } }
+
+
 
     public OldEntityPM: QuoteTemplateSettingPM;
 		

@@ -427,12 +427,12 @@ export class ARInvoiceMenuButtonsHandler {
 
                         this.isRunningBatchTaskExecution = false;
 
-                        if (this.EntityPM.BatchTaskExecutionId) {
+                        //if (this.EntityPM.BatchTaskExecutionId) {
 
-                            this.CurrentSession.StartBusyIndicator("Updating Shipments. It may take a few minutes...");
+                        //    this.CurrentSession.StartBusyIndicator("Updating Shipments. It may take a few minutes...");
 
-                            this.CheckBatchTaskExecution(this.EntityPM.BatchTaskExecutionId);
-                        }
+                        //    this.CheckBatchTaskExecution(this.EntityPM.BatchTaskExecutionId);
+                        //}
                     }
                 }
 

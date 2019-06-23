@@ -211,6 +211,9 @@ namespace CustomsWorkerRole
                 LogitudeSettings.QueueServiceMode = setting.QueueServiceMode;
                 LogitudeSettings.ABMProductId = setting.ABMProductId;
                 LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+                LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
+
+                
             }
             if (LogitudeSettings.IsCostomsDeploy)
             {

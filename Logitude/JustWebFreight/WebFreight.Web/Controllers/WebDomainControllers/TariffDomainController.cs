@@ -153,11 +153,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                string loggedUserEmail = authToken.Email;
 
                 ITariffModuleContext context = TariffModuleContext.GetContext(tenant);
                 TariffQueryService tariffQuery = new TariffQueryService(context);
                 TariffPM tariff = tariffQuery.GetSingle(tariffId, false, false);
-
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
                 string fileName = "";
                 if (tariff != null)
                 {
@@ -193,7 +195,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                             storageservice.Write(data, fileInfo);
+                            this.EventTrace(tariff, type, loggedContact);
                         }
+
+
                     }
                 }
 
@@ -204,6 +209,36 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private void EventTrace(TariffPM tariffPM,string type,ContactPM loggedContact)
+        {
+            if (type == "Template")
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tariffPM.Tenant,
+                    EventTypeCode = "TDLD",
+                    UserId = loggedContact.Id,
+                    EntityId = tariffPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = "Tariff Header exported"
+                });
+            }
+            else
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tariffPM.Tenant,
+                    EventTypeCode = "TDLD",
+                    UserId = loggedContact.Id,
+                    EntityId = tariffPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = "Tariff Lines exported"
+                });
+            }
+
+
         }
         private byte[] ExportAirFreightCostLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant, string type)
         {
@@ -651,9 +686,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                filter.Tenant = authToken.Tenant;
+
+                string loggedUserEmail = authToken.Email;
+
+                ContactQuery contactQuery = new ContactQuery(authToken.Tenant);
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, authToken.Tenant);
+
                 this.portRepository = new PortRepository(authToken.Tenant);
 
-                filter.Tenant = authToken.Tenant;
                 byte[] fileData = Convert.FromBase64String(filter.FileData);
 
                 System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
@@ -672,7 +713,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     tariffLinesResult = this.BuildAirSurchargesCostExcelLines(sheet, authToken.Tenant);
                 }
-                
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = filter.Tenant,
+                    EventTypeCode = "TUPL",
+                    UserId = loggedContact.Id,
+                    EntityId = filter.TariffId,
+                    ObjectTableName = "Tariff",
+                    Notes = filter.FileName+" uploaded ("+ tariffLinesResult.Count+" lines)"
+                });
+
                 return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
             }
 
@@ -686,12 +737,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
             int rowIndex = 0;
+            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
-                String[] rowData = new String[sheet.Columns.Count()];
+                String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
-                for (int i = 0; i < sheet.Columns.Count(); i++)
+
+                String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
+
+                for (int i = 0; i < sheet.Columns.Count() - 1; i++)
                 {
                     rowData[i] = row.Cells[i].Value2.ToString();
                 }
@@ -719,12 +775,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
                 }
-
-                int count = 0;
-                // -1 : is for notes fields
-                if (rowData.Length - 1 > 2)
+                
+                if (rowData.Length > 2)
                 {
-                    count = 1;
                     if (this.IsNumber(rowData[2]))
                     {
                         tariffLine.MinPrice = Convert.ToDecimal(rowData[2]);
@@ -734,10 +787,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         tariffLine.MinPriceText = this.TrimTo_20(rowData[2]);
                     }
                 }
-
-                if (rowData.Length - 1 > 3)
+                
+                if (rowData.Length > 3)
                 {
-                    count = 2;
                     if (this.IsNumber(rowData[3]))
                     {
                         tariffLine.Step1Price = Convert.ToDecimal(rowData[3]);
@@ -748,9 +800,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 4)
+                if (rowData.Length > 4)
                 {
-                    count = 3;
                     if (this.IsNumber(rowData[4]))
                     {
                         tariffLine.Step2Price = Convert.ToDecimal(rowData[4]);
@@ -761,9 +812,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 5)
+                if (rowData.Length > 5)
                 {
-                    count = 4;
                     if (this.IsNumber(rowData[5]))
                     {
                         tariffLine.Step3Price = Convert.ToDecimal(rowData[5]);
@@ -774,9 +824,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 6)
+                if (rowData.Length > 6)
                 {
-                    count = 5;
                     if (this.IsNumber(rowData[6]))
                     {
                         tariffLine.Step4Price = Convert.ToDecimal(rowData[6]);
@@ -787,9 +836,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 7)
+                if (rowData.Length > 7)
                 {
-                    count = 6;
                     if (this.IsNumber(rowData[7]))
                     {
                         tariffLine.Step5Price = Convert.ToDecimal(rowData[7]);
@@ -800,9 +848,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 8)
+                if (rowData.Length > 8)
                 {
-                    count = 7;
                     if (this.IsNumber(rowData[8]))
                     {
                         tariffLine.Step6Price = Convert.ToDecimal(rowData[8]);
@@ -813,9 +860,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 9)
+                if (rowData.Length > 9)
                 {
-                    count = 8;
                     if (this.IsNumber(rowData[9]))
                     {
                         tariffLine.Step7Price = Convert.ToDecimal(rowData[9]);
@@ -826,9 +872,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 >= 10)
+                if (rowData.Length > 10)
                 {
-                    count = 9;
                     if (this.IsNumber(rowData[10]))
                     {
                         tariffLine.Step8Price = Convert.ToDecimal(rowData[10]);
@@ -839,8 +884,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                tariffLine.Notes = rowData[count + 2];                
+                if (!string.IsNullOrEmpty(notescolumn))
+                {
+                    tariffLine.Notes = notesRowData;
+                }
 
+                tariffLine.IsUploaded = true;
                 myResult.Add(tariffLine);
                 rowIndex++;
             }
@@ -857,13 +906,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
             int rowIndex = 0;
 
+            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+            
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
-                String[] rowData = new String[sheet.Columns.Count()];
+                String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
+                
+                String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
 
-                for (int i = 0; i < sheet.Columns.Count(); i++)
+                for (int i = 0; i < sheet.Columns.Count() - 1; i++)
                 {
                     rowData[i] = row.Cells[i].Value2.ToString();
                 }
@@ -891,12 +944,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
                 }
-
-                int count = 0;
-                // -1 : is for notes fields
-                if (rowData.Length - 1 > 2)
+                
+                if (rowData.Length > 2)
                 {
-                    count = 1;
                     if (this.IsNumber(rowData[2]))
                     {
                         tariffLine.Surcharge1Price = Convert.ToDecimal(rowData[2]);
@@ -907,9 +957,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 3)
+                if (rowData.Length > 3)
                 {
-                    count = 2;
                     if (this.IsNumber(rowData[3]))
                     {
                         tariffLine.Surcharge2Price = Convert.ToDecimal(rowData[3]);
@@ -920,10 +969,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 4)
+                if (rowData.Length > 4)
                 {
-                    count = 3;
-
                     if (this.IsNumber(rowData[4]))
                     {
                         tariffLine.Surcharge3Price = Convert.ToDecimal(rowData[4]);
@@ -934,9 +981,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 5)
+                if (rowData.Length > 5)
                 {
-                    count = 4;
                     if (this.IsNumber(rowData[5]))
                     {
                         tariffLine.Surcharge4Price = Convert.ToDecimal(rowData[5]);
@@ -947,9 +993,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 6)
+                if (rowData.Length > 6)
                 {
-                    count = 5;
                     if (this.IsNumber(rowData[6]))
                     {
                         tariffLine.Surcharge5Price = Convert.ToDecimal(rowData[6]);
@@ -960,9 +1005,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 7)
+                if (rowData.Length > 7)
                 {
-                    count = 6;
                     if (this.IsNumber(rowData[7]))
                     {
                         tariffLine.Surcharge6Price = Convert.ToDecimal(rowData[7]);
@@ -973,9 +1017,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 8)
+                if (rowData.Length > 8)
                 {
-                    count = 7;
                     if (this.IsNumber(rowData[8]))
                     {
                         tariffLine.Surcharge7Price = Convert.ToDecimal(rowData[8]);
@@ -986,9 +1029,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 > 9)
+                if (rowData.Length > 9)
                 {
-                    count = 8;
                     if (this.IsNumber(rowData[9]))
                     {
                         tariffLine.Surcharge8Price = Convert.ToDecimal(rowData[9]);
@@ -999,9 +1041,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 >= 10)
+                if (rowData.Length > 10)
                 {
-                    count = 9;
                     if (this.IsNumber(rowData[10]))
                     {
                         tariffLine.Surcharge9Price = Convert.ToDecimal(rowData[10]);
@@ -1012,9 +1053,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length - 1 >= 11)
+                if (rowData.Length > 11)
                 {
-                    count = 10;
                     if (this.IsNumber(rowData[11]))
                     {
                         tariffLine.Surcharge10Price = Convert.ToDecimal(rowData[11]);
@@ -1025,8 +1065,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                tariffLine.Notes = rowData[count + 2];
+                if (!string.IsNullOrEmpty(notescolumn))
+                {
+                    tariffLine.Notes = notesRowData;
+                }
 
+                tariffLine.IsUploaded = true;
                 myResult.Add(tariffLine);
                 rowIndex++;
             }
@@ -1667,6 +1711,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string TariffId { get; set; }
         public int Version { get; set; }
         public string TariffType { get; set; }
+        public string FileName { get; set; }
     }
     public class ExcelTariffLines
     {
@@ -1722,7 +1767,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string Surcharge8PriceText { get; set; }
         public string Surcharge9PriceText { get; set; }
         public string Surcharge10PriceText { get; set; }
-
+        public bool IsUploaded { get; set; }
         public int Index { get; set; }
 
         public string Notes { get; set; }

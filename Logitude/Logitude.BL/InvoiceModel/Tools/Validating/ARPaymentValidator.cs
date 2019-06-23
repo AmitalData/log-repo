@@ -29,6 +29,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using System.Globalization;
 using Simplog.Data.InvoiceModel;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.Validating
 {
@@ -37,8 +38,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         public static void Validate(ARPaymentPM entityPM, CashBookPM cashBook = null)
         {
             int tenant = entityPM.Tenant;
-
-            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
+            bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+            string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
 
             string paymentMethodCode = "";
             Simplog.Data.InvoiceModel.Repositories.AccountingPaymentMethodRepository paymentMethodRepository = new Simplog.Data.InvoiceModel.Repositories.AccountingPaymentMethodRepository(tenant);
@@ -350,22 +351,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         string msg = TranslateTextsClass.Translate("ARPayment.M.ValueDateCantBeFutureDate", tenant, useLocal);
                         errors += msg + ";";
                     }
+                    bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
 
                     if (code == "CH" && string.IsNullOrEmpty(branch))
                     {
-                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
                         errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.BankBranch", tenant, useLocal)) + ";";
                     }
 
                     if (code == "CH" && string.IsNullOrEmpty(account))
                     {
-                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
                         errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Account", tenant, useLocal)) + ";";
                     }
 
                     if (code == "CH" && string.IsNullOrEmpty(bank))
                     {
-                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant);
+                        string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
                         errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Bank", tenant, useLocal)) + ";";
                     }
                 }

@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "ee30",
+			      				    Code =  "1f6d",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -127,6 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "General,Generals,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -1900,7 +1901,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOCancelReconciltiation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.CancelReconciltiation", DefaultText = "Cancel Reconciltiation",LocalDefaultText = @"ביטול התאמה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOIsCancelled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.IsCancelled", DefaultText = "Cancelled",LocalDefaultText = @"מבוטלת", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOIsCancelled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.IsCancelled", DefaultText = "Cancelled",LocalDefaultText = @"מבוטל", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOWantToCancelCurrentReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WantToCancelCurrentReconciliation", DefaultText = "Are you sure you want to cancel the current reconciliation?",LocalDefaultText = @"האם אתה בטוח שאתה רוצה לבטל את ההתאמה הנוכחית?", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

@@ -1943,16 +1943,7 @@ export class ShipmentPM {
     public set MainCarriageToPortCountryName(newValue: string) { if (this.mainCarriageToPortCountryName != newValue) { this.mainCarriageToPortCountryName = newValue; this.MarkAsDirty("MainCarriageToPortCountryName"); } }
        
 	 
-    private mainCarriageFromPortCountryEC: boolean;
-    public get MainCarriageFromPortCountryEC() { return this.mainCarriageFromPortCountryEC; }
-    public set MainCarriageFromPortCountryEC(newValue: boolean) { if (this.mainCarriageFromPortCountryEC != newValue) { this.mainCarriageFromPortCountryEC = newValue; this.MarkAsDirty("MainCarriageFromPortCountryEC"); } }
-       
-	 
-    private mainCarriageToPortCountryEC: boolean;
-    public get MainCarriageToPortCountryEC() { return this.mainCarriageToPortCountryEC; }
-    public set MainCarriageToPortCountryEC(newValue: boolean) { if (this.mainCarriageToPortCountryEC != newValue) { this.mainCarriageToPortCountryEC = newValue; this.MarkAsDirty("MainCarriageToPortCountryEC"); } }
-       
-	 
+
     private mainCarriageVesselId: string;
     public get MainCarriageVesselId() { return this.mainCarriageVesselId; }
     public set MainCarriageVesselId(newValue: string) { if (this.mainCarriageVesselId != newValue) { this.mainCarriageVesselId = newValue; this.MarkAsDirty("MainCarriageVesselId"); } }
@@ -2323,21 +2314,18 @@ export class ShipmentPM {
     public set Transshipment3ToPortCountryName(newValue: string) { if (this.transshipment3ToPortCountryName != newValue) { this.transshipment3ToPortCountryName = newValue; this.MarkAsDirty("Transshipment3ToPortCountryName"); } }
        
 	 
-    private transshipment1ToPortCountryEC: boolean;
-    public get Transshipment1ToPortCountryEC() { return this.transshipment1ToPortCountryEC; }
-    public set Transshipment1ToPortCountryEC(newValue: boolean) { if (this.transshipment1ToPortCountryEC != newValue) { this.transshipment1ToPortCountryEC = newValue; this.MarkAsDirty("Transshipment1ToPortCountryEC"); } }
-       
+ 
 	 
-    private transshipment2ToPortCountryEC: boolean;
-    public get Transshipment2ToPortCountryEC() { return this.transshipment2ToPortCountryEC; }
-    public set Transshipment2ToPortCountryEC(newValue: boolean) { if (this.transshipment2ToPortCountryEC != newValue) { this.transshipment2ToPortCountryEC = newValue; this.MarkAsDirty("Transshipment2ToPortCountryEC"); } }
-       
+   
 	 
-    private transshipment3ToPortCountryEC: boolean;
-    public get Transshipment3ToPortCountryEC() { return this.transshipment3ToPortCountryEC; }
-    public set Transshipment3ToPortCountryEC(newValue: boolean) { if (this.transshipment3ToPortCountryEC != newValue) { this.transshipment3ToPortCountryEC = newValue; this.MarkAsDirty("Transshipment3ToPortCountryEC"); } }
+    private fromCountryIsEC: boolean;
+    public get FromCountryIsEC() { return this.fromCountryIsEC; }
+    public set FromCountryIsEC(newValue: boolean) { if (this.fromCountryIsEC != newValue) { this.fromCountryIsEC = newValue; this.MarkAsDirty("FromCountryIsEC"); } }
        
-	 
+    private toCountryIsEC: boolean;
+    public get ToCountryIsEC() { return this.toCountryIsEC; }
+    public set ToCountryIsEC(newValue: boolean) { if (this.toCountryIsEC != newValue) { this.toCountryIsEC = newValue; this.MarkAsDirty("ToCountryIsEC"); } }
+
     private finalDistenationPortId: string;
     public get FinalDistenationPortId() { return this.finalDistenationPortId; }
     public set FinalDistenationPortId(newValue: string) { if (this.finalDistenationPortId != newValue) { this.finalDistenationPortId = newValue; this.MarkAsDirty("FinalDistenationPortId"); } }
@@ -3294,16 +3282,6 @@ export class ShipmentPM {
     public set FromCountryId(newValue: string) { if (this.fromCountryId != newValue) { this.fromCountryId = newValue; this.MarkAsDirty("FromCountryId"); } }
        
 	 
-    private toCountryIsEC: boolean;
-    public get ToCountryIsEC() { return this.toCountryIsEC; }
-    public set ToCountryIsEC(newValue: boolean) { if (this.toCountryIsEC != newValue) { this.toCountryIsEC = newValue; this.MarkAsDirty("ToCountryIsEC"); } }
-       
-	 
-    private fromCountryIsEC: boolean;
-    public get FromCountryIsEC() { return this.fromCountryIsEC; }
-    public set FromCountryIsEC(newValue: boolean) { if (this.fromCountryIsEC != newValue) { this.fromCountryIsEC = newValue; this.MarkAsDirty("FromCountryIsEC"); } }
-       
-	 
     private copyFromShipmentId: string;
     public get CopyFromShipmentId() { return this.copyFromShipmentId; }
     public set CopyFromShipmentId(newValue: string) { if (this.copyFromShipmentId != newValue) { this.copyFromShipmentId = newValue; this.MarkAsDirty("CopyFromShipmentId"); } }
@@ -4250,6 +4228,10 @@ export class ShipmentPM {
     private shipmentDirectionConverted: boolean;
     public get ShipmentDirectionConverted() { return this.shipmentDirectionConverted; }
     public set ShipmentDirectionConverted(newValue: boolean) { if (this.shipmentDirectionConverted != newValue) { this.shipmentDirectionConverted = newValue; this.MarkAsDirty("ShipmentDirectionConverted"); } }
+
+    private packagesDeleted: boolean;
+    public get PackagesDeleted() { return this.packagesDeleted; }
+    public set PackagesDeleted(newValue: boolean) { if (this.packagesDeleted != newValue) { this.packagesDeleted = newValue; this.MarkAsDirty("PackagesDeleted"); } }
 
     public OldEntityPM: ShipmentPM;
 

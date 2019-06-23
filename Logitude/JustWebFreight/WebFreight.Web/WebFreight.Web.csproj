@@ -988,8 +988,10 @@
       <DependentUpon>ChampMessaging.aspx</DependentUpon>
     </Compile>
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.AgentSharedManifest.cs" />
+    <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CheckDigitControlAlgorithm.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustomerFieldsUpdateSetting.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustomsInterface.cs" />
+    <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustomsShipper.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.RegistryDateType.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.TemperatureUnit.cs" />
     <Compile Include="Controllers\AccountingModel\AccountingEntegrityCheckController.cs" />
@@ -1222,7 +1224,12 @@
     <Compile Include="Controllers\CommonDataModel\Services\ExcelExportFeaturesController.cs" />
     <Compile Include="Controllers\CommonDataModel\Services\ExcelExportController.cs" />
     <Compile Include="Controllers\CRMModel\Extended\TicketExtendedController.cs" />
+    <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CRMModel\Generated\ListControllers\OccasionViewsController.Generated.cs" />
     <Compile Include="Controllers\CRMModel\Generated\ListControllers\SLALineViewsController.Generated.cs" />
+    <Compile Include="Controllers\CRMModel\Generated\PMControllers\OccasionController.Generated.cs" />
+    <Compile Include="Controllers\CRMModel\Generated\PMControllers\OccasionTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierMasterController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CourierPendingReasonController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\CustomsAirlineController.cs" />
@@ -2416,6 +2423,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesExternalAccountsByProductUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargesTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\ChargeTypeAccountingUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CheckDigitControlAlgorithmUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CommodityUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CommunicationLogTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\CommunicationLogUpdateClass.cs" />
@@ -2615,6 +2623,9 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ManifestCargoStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MAWBTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionStatusUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PendingErrorPlaceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportUpdateClass.cs" />
@@ -4358,6 +4369,7 @@
     <Content Include="WebServices\CommunicationLogsAzureService.asmx" />
     <Content Include="WebServices\ConvertDataProgramWebService.asmx" />
     <Content Include="WebServices\DashBoardWebService.asmx" />
+    <Content Include="WebServices\BuildDocumentReportWebService.asmx" />
     <Content Include="WebServices\DownloadTransferFileWebService.asmx" />
     <Content Include="WebServices\ExcelExportService.asmx" />
     <Content Include="WebServices\ExportDocument.asmx" />
@@ -6052,6 +6064,10 @@
     </Compile>
     <Compile Include="WebServices\DashBoardWebService.asmx.cs">
       <DependentUpon>DashBoardWebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\BuildDocumentReportWebService.asmx.cs">
+      <DependentUpon>BuildDocumentReportWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\DownloadTransferFileWebService.asmx.cs">

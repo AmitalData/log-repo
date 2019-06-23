@@ -6,6 +6,8 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.Interfaces;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -89,6 +91,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
                 TenantPM currentTenant = tenantQuery.GetSinglePM(entityPM.Tenant);
                 entityPM.ForeignAmount = entityPM.LocalAmount;
+                APPaymentPM paymentPM = GetAPPayment(entityPM);
                 JournalUpdateService journalUpdateService = new JournalUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
                 JournalPM journal = new JournalPM
                 {
@@ -97,9 +100,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     StatusCode="2",
                     CreatedByUserId = entityPM.CreatedByUserId,
                     AccountingEntityCode = "9",
-                    AccountingEntityId = entityPM.Id,
-                    AccountingEntityReference = entityPM.ChequeNumber,
-                    UpdateDate= entityPM.UpdateDate,
+                    AccountingEntityId = entityPM.APPaymentId != null? entityPM.APPaymentId : entityPM.Id,
+                    AccountingEntityReference = paymentPM != null ? paymentPM.PaymentNo : entityPM.ChequeNumber,
+                    UpdateDate = entityPM.UpdateDate,
                     UpdatedByUserId= entityPM.UpdatedByUserId,
                     ApproveDate = entityPM.CreateDate,
                     ApprovedByUserId = entityPM.CreatedByUserId,
@@ -131,7 +134,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                    CurrencyId = entityPM.CurrencyId,
                    ForeignAmount = (decimal)entityPM.ForeignAmount,
                    ExchangeRate = entityPM.ExchangeRate,
-                    ChangeSetOp = ChangeSetOperation.Insert
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
+                    Reference2 = entityPM.ChequeNumber,
 
 
                 };
@@ -146,8 +151,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     CurrencyId = entityPM.CurrencyId,
                     ForeignAmount = (decimal)entityPM.ForeignAmount,
                     ExchangeRate = entityPM.ExchangeRate,
-                    ChangeSetOp = ChangeSetOperation.Insert
-                   
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
+                    Reference2 = entityPM.ChequeNumber,
+
 
                 };
                 //if(currentTenant.CurrencyId == entityPM.BankGLAccountCurrencyId)
@@ -160,12 +167,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //}
                 journal.JournalLines.Add(journalLine1);
                 journal.JournalLines.Add(journalLine2);
-                journalUpdateService.Update(journal, true);
+               journalUpdateService.Update(journal, true);
                 entityPM.JournalNumber = journal.JournalNumber;
             }
             ValidateEntity(entityPM);
             entityPM.UpdateDate = DateTime.Now;
             entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+        }
+
+        public  APPaymentPM GetAPPayment(PaymentChequePM paymentCheque)
+        {
+            if (paymentCheque.APPaymentId != null)
+            {
+                APPaymentQuery paymentQuery = new APPaymentQuery(paymentCheque.Tenant);
+                return paymentQuery.GetSingleAPPaymentPM(paymentCheque.APPaymentId, paymentCheque.Tenant);
+
+            }
+            else return null;
         }
 
         protected override void Trace(PaymentChequePM entityPM, PaymentCheque entityPOCO, string changesXml)
@@ -254,7 +272,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
             }
-            ValidateGLAccountAccountType(entityPM);
+            if (entityPM.APPaymentId == null)
+            {
+                ValidateGLAccountAccountType(entityPM);
+            }
           
           
         }
@@ -272,17 +293,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public void ValidateGLAccountAccountType(PaymentChequePM entityPM)
         {
             GLAccountPM account=  GetGLAccountById(entityPM);
-           
-            if (account.AccountTypeCode == "3")
+
+            if (account != null)
             {
-                throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.VendorsGLAccount", entityPM.Tenant, showLocals));
+                if (account.AccountTypeCode == "3")
+                {
+                    throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.VendorsGLAccount", entityPM.Tenant, showLocals));
+                }
             }
 
         }
         public GLAccountPM GetGLAccountById(PaymentChequePM entityPM)
         {
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
-            return gLAccountQueryService.GetSingle(EntityPOCO.PayToGLAccountId, false, false);
+            return gLAccountQueryService.GetSingle(entityPM.PayToGLAccountId, false, false);
         }
         public static ContactPM GetLoggedContact(int tenant)
         {

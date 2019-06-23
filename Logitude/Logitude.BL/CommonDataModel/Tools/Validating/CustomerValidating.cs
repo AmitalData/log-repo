@@ -8,6 +8,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Text.RegularExpressions;
 using Simplog.Data.CommonDataModel;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.Validating
 {
@@ -243,6 +244,21 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                             }
                         }
                     }
+
+                    if (myTenant.CheckDigitControlAlgorithmCode == "LUHN")
+                    {
+                        entityPM.VatNumber = entityPM.VatNumber.Trim();
+
+                        string numberWithoutCheckDigit = entityPM.VatNumber.Substring(0, entityPM.VatNumber.Length - 1);
+
+                        string checkDigit = MethodHelper.CalculateLuhnAlgorithm(numberWithoutCheckDigit).ToString();
+                        string lastNumber = entityPM.VatNumber.LastOrDefault().ToString();
+
+                        if (checkDigit != lastNumber)
+                        {
+                            throw new ApplicationException("Luhn Algorithm: Invalid VAT Number");
+                        }
+                    }
                 }
             }
         }
@@ -296,5 +312,6 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                 }
             }
         }
+
     }
 }
