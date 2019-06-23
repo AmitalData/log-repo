@@ -218,13 +218,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
                     if (ConsigneeAddress != null)
                     {
                         Shipment.ConsigneeAddress = DataProviders.General.GetAddress(ConsigneeAddress);// myPartnerAddress.Country == null ? "" : myPartnerAddress.Country.EnglishName;
-                    }
+                        Shipment.ConsigneePhone = ConsigneeAddress.PhoneNumber;
 
-                    Card card = cardRepository.GetSingleCardByIdAndTenant(item.ConsigneeId, tenant, true);
-                    if (card != null)
-                    {
-                        Shipment.ConsigneePhone = card.Phone;
                     }
+               
 
 
                 }
