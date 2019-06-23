@@ -7,9 +7,9 @@ namespace Logitude.DatabaseMigration.Migrations
     {
         public override void Up()
         {
-          
-            
-        
+
+
+
             DropColumn("dbo.APPayments", "PaymentChequeNumber");
             DropColumn("dbo.APPayments", "PaymentChequeId");
         }

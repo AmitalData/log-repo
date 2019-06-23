@@ -57,6 +57,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private CurrentSession = SessionLocator.SelectedSession;
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     PaymentChequePMService: PaymentChequeExtendedPMService = new PaymentChequeExtendedPMService();
+    IsChequeLinkVisibile:boolean = false;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -70,10 +71,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
         this.GetFullAccountingSettings();
-        //if (AppTool.IsNullOrEmpty(this.EntityPM.PaymentChequeNumber)) {
-        //    this.IsSplitButtonVisibile = false;
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ChequeOrPaymentRef) &&  this.EntityPM.AutomaticPaymentCheque) {
+            this.IsChequeLinkVisibile = true;
        
-        //}
+        }
+       
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EnableMultiCurrency")) {
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyAPPayments) {
                 this.IsMultiCurrency = true;
@@ -387,7 +389,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
            
         }
       
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ChequeOrPaymentRef) && this.EntityPM.AutomaticPaymentCheque) {
+            this.IsChequeLinkVisibile = true;
 
+        }
     }
     get IsScreenEnabled() {
         var result = true;

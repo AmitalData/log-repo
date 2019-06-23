@@ -368,8 +368,6 @@ export class APPaymentPM {
     public set AutomaticPaymentCheque(newValue: boolean) { if (this.automaticPaymentCheque != newValue) { this.automaticPaymentCheque = newValue; this.MarkAsDirty("AutomaticPaymentCheque"); } }
        
 	 
-   
-	 
 
     public OldEntityPM: APPaymentPM;
 		

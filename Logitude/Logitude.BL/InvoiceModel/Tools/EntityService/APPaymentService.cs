@@ -289,13 +289,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             APPaymentValidator.Validate(theEntityPm);
             APPaymentTracing.Trace(theEntityPm, payment, isNewEntity);
-            CreatePaymentCheque(theEntityPm);
-            if (paymentCheque != null)
-            {
-                payment.ChequeOrPaymentRef = paymentCheque.ChequeNumber;
-                theEntityPm.ChequeOrPaymentRef = payment.ChequeOrPaymentRef;
-
-            }
+          
             foreach (APPaymentInvoicePM item in changedList)
             {
                 switch (item.ChangeSetOp)
@@ -322,11 +316,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
             this.InitializeTransferComponents();
-            var setApproved = theEntityPm.SetApproved;
+             setApproved = theEntityPm.SetApproved;
             var setVoided = theEntityPm.SetVoided;
             var setCancelApproved = theEntityPm.SetCancelApproval;
             var SetReSendQBO = theEntityPm.SetReSendQBO;
+            CreatePaymentCheque(theEntityPm);
+            if (paymentCheque != null)
+            {
+               
+                theEntityPm.ChequeOrPaymentRef = paymentCheque.ChequeNumber;
 
+            }
             APPaymentMapping.MapEntity(theEntityPm, payment, isNewEntity);   
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();           

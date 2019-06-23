@@ -1137,6 +1137,10 @@
     <Compile Include="Migrations\201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.Designer.cs">
       <DependentUpon>201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.cs" />
+    <Compile Include="Migrations\201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.Designer.cs">
+      <DependentUpon>201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1931,6 +1935,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.resx">
       <DependentUpon>201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.resx">
+      <DependentUpon>201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
