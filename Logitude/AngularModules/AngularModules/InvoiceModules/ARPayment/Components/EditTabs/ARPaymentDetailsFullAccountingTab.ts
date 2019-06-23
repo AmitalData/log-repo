@@ -594,6 +594,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 if (AppTool.IsNullOrEmpty(this.ChequeOrPaymentRef)) {
                     this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, true);
                 }
+                if (AppTool.IsNullOrEmpty(this.Bank)) {
+                    this.UIProperties.SetRequired("Bank", this.ObjectTableName, true);
+                }
                 this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
                 this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
                 this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
