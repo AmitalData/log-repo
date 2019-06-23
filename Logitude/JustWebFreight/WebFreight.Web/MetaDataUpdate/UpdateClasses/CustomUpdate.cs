@@ -12058,6 +12058,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             #region Vehicles
             Feature vehicleGENERALFeature = tenantFeatures.Where(d => d.Code == "GENERAL" && d.ObjectTableId == vehicleTable.Id).FirstOrDefault();
             Feature vehicleEVENTSFeature = tenantFeatures.Where(d => d.Code == "EVENTS" && d.ObjectTableId == vehicleTable.Id).FirstOrDefault();
+            Feature vehicleCustomDocumentFeature = tenantFeatures.Where(d => d.Code == "CUSTOMDOCUMENTS" && d.ObjectTableId == vehicleTable.Id).FirstOrDefault();
             Feature vehicleMOREDETAILSFeature = tenantFeatures.Where(d => d.Code == "MOREDETAILS" && d.ObjectTableId == vehicleTable.Id).FirstOrDefault();
             Feature vehiclOWNERSANDSAFETYFeature = tenantFeatures.Where(d => d.Code == "OWNERSAFETY" && d.ObjectTableId == vehicleTable.Id).FirstOrDefault();
             Feature vehiclCOMMUNICATIONSFeature = tenantFeatures.Where(d => d.Code == "COMMUNICATIONS" && d.ObjectTableId == vehicleTable.Id).FirstOrDefault();
@@ -12070,7 +12071,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 HtmlComponentName = "VehicleGeneralComponent",
                 HtmlComponentUrl = "./CustomsModules/CustomsVehicle/Components/EditTabs/VehicleGeneralComponent",
                 ControlPath = " ", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.General" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHGN", Tenant = 0, IndexOrder = 0 }, ObjectTableTabsRepository, TenantObjectTableTabs);
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vehicleEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHEV", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vehicleEVENTSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.Events" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHEV", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() {
                 HtmlComponentName = "VehicleMoreDetailsTabComponent",
                 HtmlComponentUrl = "./CustomsModules/CustomsVehicle/Components/EditTabs/VehicleMoreDetailsTabComponent",
@@ -12080,13 +12081,17 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
                 HtmlComponentUrl = "./CustomsModules/CustomsVehicle/Components/EditTabs/VehiclesOwnersAndSafetyTabComponent",
                 FeatureId = vehiclOWNERSANDSAFETYFeature.Id, ControlPath = " ", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.OwnersAndSafety" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHOS", Tenant = 0, IndexOrder = 2 }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
-
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vehiclCOMMUNICATIONSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.Communications" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHCM", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { FeatureId = vehiclCOMMUNICATIONSFeature.Id, ControlPath = "Simplog.Infrastructure.Views.Communications.CommunicationsControl", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.Communications" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHCM", Tenant = 0, IndexOrder = 5 }, ObjectTableTabsRepository, TenantObjectTableTabs);
             
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() {
                 HtmlComponentUrl = "./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent",
                 HtmlComponentName = "RequestSheetTabComponent",
-                FeatureId = vehiclREQUESTSHEETFeature.Id, ControlPath = " ", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.RequestSheet" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHRS", Tenant = 0, IndexOrder = 4 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+                FeatureId = vehiclREQUESTSHEETFeature.Id, ControlPath = " ", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Vehicle.TH.RequestSheet" && d.Tenant == 0).FirstOrDefault().Id, Code = "VHRS", Tenant = 0, IndexOrder = 6 }, ObjectTableTabsRepository, TenantObjectTableTabs);
+
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() {
+                HtmlComponentName = "CustomsDocumentsComponent",
+                HtmlComponentUrl = "./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent",
+                FeatureId = vehicleCustomDocumentFeature.Id, ControlPath = "", ObjectTableId = vehicleTable.Id, TabNameTextCodeId = ObjectContext.TextCodes.Where(d => d.Code == "Customs.Declaration.TH.CustomDocuments" && d.Tenant == 0).FirstOrDefault().Id, Code = "VCCD", Tenant = 0, IndexOrder = 3 }, ObjectTableTabsRepository, TenantObjectTableTabs);
 
             #endregion
 
@@ -15243,8 +15248,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             Feature VehicleFeature10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEET", Packagable = true, ObjectTableId = VehicleObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Vehicle.Features.RequetSheet", NameTextCodeDefaultText = "Request Sheet", FeatureTypeCode = "AREA" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature VehicleFeature11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SENDVEHICLE", Packagable = true, ObjectTableId = VehicleObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Vehicle.Features.SendVehicle", NameTextCodeDefaultText = "SendVehicle", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
             Feature VehicleFeature12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DELETEVEHICLE", Packagable = true, ObjectTableId = VehicleObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Vehicle.Features.DeleteVehicle", NameTextCodeDefaultText = "DeleteVehicle", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
+            Feature VehicleFeature13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMDOCUMENTS", Packagable = true, ObjectTableId = VehicleObjectTable.Id, Tenant = tenant, NameTextCodeCode = "Customs.Vehicle.Features.DocumentsVehicle", NameTextCodeDefaultText = "Custom Document", FeatureTypeCode = "ACT" }, FeaturesRepository, textCodeRep, TenantFeatures, TextCodes);
 
-            
 
             #endregion
             textCodeRep.SubmitChanges();
