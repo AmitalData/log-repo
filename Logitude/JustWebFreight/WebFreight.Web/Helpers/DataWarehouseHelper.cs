@@ -18,7 +18,7 @@ namespace WebFreight.Web.Helpers
         {
             string result = string.Empty;
 
-
+            if (operationCode == "Between") result = ResolveBetweenDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
             if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
             else
             {
@@ -39,6 +39,39 @@ namespace WebFreight.Web.Helpers
 
             return result;
 
+        }
+
+        private string ResolveBetweenDateValue(string fieldName, string operationCode, string fieldValue, int tenant, bool isSample)
+        {
+            string result = string.Empty;
+            if (!string.IsNullOrEmpty(fieldValue) && fieldValue.Contains(""))
+            {
+                string betweenDateValue1 = string.Empty;
+                string betweenDateValue2 = string.Empty;
+                var valuesBetweenDateArray = fieldValue.Split('^');
+
+                betweenDateValue1 = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(valuesBetweenDateArray[0]));
+                betweenDateValue2 = valuesBetweenDateArray.Length > 1 ? string.Format("{0:yyyy-MM-dd}", DateTime.Parse(valuesBetweenDateArray[1])) : null;
+            
+                if(!string.IsNullOrEmpty(betweenDateValue1) && !string.IsNullOrEmpty(betweenDateValue2))
+                {
+                    result = fieldName + ">= '" + betweenDateValue1 + "' and " + fieldName + "<= '" + betweenDateValue2 + "'" ;
+                }
+                else
+                {
+                    string betweenDateValue = !string.IsNullOrEmpty(betweenDateValue1) ? betweenDateValue1 : betweenDateValue2;
+                    result = fieldName + ">= '" + string.Format("{0:yyyy-MM-dd}", DateTime.Parse(betweenDateValue)) + "' and " + fieldName + "<'" + string.Format("{0:yyyy-MM-dd}", DateTime.Parse(betweenDateValue).AddDays(1)) + "'";
+                }
+
+                if (isSample)
+                {
+                    result = betweenDateValue1 + "   -    " + betweenDateValue2;
+
+                }
+
+            }
+
+            return result;
         }
 
         public bool ValidateFieldValue(string operationCode, string fieldValue)
