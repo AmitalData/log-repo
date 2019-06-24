@@ -28,9 +28,9 @@ namespace Logitude.IntegrationTests.FTP
                     From = "My FTP Server",
                     Host = "192.168.1.26",
                     Password = "password",
-                    Prefix = "a",
+                   //s Prefix = "a",
                     Subject = "test",
-                    Suffix = "y",
+                    //Suffix = "y",
                     UserName = "tester",
                     Extension = "pdf",
                 }
@@ -57,20 +57,19 @@ namespace Logitude.IntegrationTests.FTP
 
             foreach (string fileName in directoryFiles)
             {
+                byte[] fileData = fTPSchedulerTaskService.DownloadFTPFile(schedulerDetails, sftpService, fileName, out p_status);
+                // byte[] fileData = sftpService.DownloadFile(fileName, out p_status, out p_message);
+                //string extention = Path.GetExtension(fileName);
+                //if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
+                //{
+                //    //byte[] fileData = DownloadFTPFile(schedulerDetails, sftpService, fileName);
+                //    //byte[] fileData = sftpService.DownloadFile(fileName, out p_status, out p_message);
+                //    //AddToAnalyzeQueue(fileName, fileData, schedulerDetails);
+                //    //DeleteFTPFile(schedulerDetails, sftpService, fileName);
+                //}
 
-                byte[] fileData = sftpService.DownloadFile(fileName, out p_status, out p_message);
-                string extention = Path.GetExtension(fileName);
-                if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(extention))
-                {
-                    //byte[] fileData = DownloadFTPFile(schedulerDetails, sftpService, fileName);
-                    //AddToAnalyzeQueue(fileName, fileData, schedulerDetails);
-                    //DeleteFTPFile(schedulerDetails, sftpService, fileName);
-                }
-                string folderPath = Environment.CurrentDirectory.Replace(@"bin\Debug", "DownloadedFiles");
-                folderPath += "//" + fileName;
-                FileStream fileStream = new FileStream(folderPath, FileMode.Create);
-                fileStream.Write(fileData, 0, fileData.Length);
 
+                //WriteFileToLocalDirectory(fileName, fileData);
 
                 fTPSchedulerTaskService.DeleteFTPFile(schedulerDetails, sftpService, fileName);
 
@@ -89,6 +88,14 @@ namespace Logitude.IntegrationTests.FTP
             //    AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
             //    analyzeQueueReposiory.GetAnalyzeQueues(schedulerDetails.Tenant).wh
             //}
+        }
+
+        private static void WriteFileToLocalDirectory(string fileName, byte[] fileData)
+        {
+            string folderPath = Environment.CurrentDirectory.Replace(@"bin\Debug", "DownloadedFiles");
+            folderPath += "//" + fileName;
+            FileStream fileStream = new FileStream(folderPath, FileMode.Create);
+            fileStream.Write(fileData, 0, fileData.Length);
         }
 
         [TestMethod]
