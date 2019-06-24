@@ -82,10 +82,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //"קיים Pending עם עצירה בתשלום הצהרה"
 
 
-                if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonCode))
+                //if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonCode))
+                if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonErrorPlace))
                 {
 
-                    if (allCourierPendingReason.First(r=> r.Code == itemPM.CourierPendingReasonCode).ErrorPlace == "1")
+                    //if (allCourierPendingReason.First(r=> r.Code == itemPM.CourierPendingReasonCode).ErrorPlace == "1")
+                    
                     {
                         mess.AppendLine($" קיים Pending " +
                             $"עם עצירה בתשלום הצהרה ({itemPM.DeclarationId})");

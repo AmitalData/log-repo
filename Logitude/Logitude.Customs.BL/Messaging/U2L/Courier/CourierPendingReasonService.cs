@@ -102,14 +102,21 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
                     throw new BusinessErrorException("Declaration ID and Custom File No. is missing");
                 }
 
-                if (_MyDeclarationCourierStatusPM != null && _MyDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
+                //if (_MyDeclarationCourierStatusPM != null && _MyDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
+                if (_MyDeclarationCourierStatusPM != null)
                 {
-                    DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationCourierStatusPM.Tenant);
-                    _MyDeclarationCourierStatusPM.CourierPendingReasonCode = null;
-                    _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                    declarationCourierStatusUpdateService.Update(_MyDeclarationCourierStatusPM, true);
-                    LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To null");
-                    AppendLogLine("Set Courier Pending Reason Code To null" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    DeclarationPendingQueryService myCourierPendingReasonQueryService = new DeclarationPendingQueryService(_context);
+                    DeclarationPendingPM declarationPendingPM = myCourierPendingReasonQueryService.GetSingle(_MyDeclarationCourierStatusPM.DeclarationId,"900", false, false);
+                    if (declarationPendingPM != null && declarationPendingPM.Status == "A")
+                    {
+                        declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+                        declarationPendingPM.Status = "S";
+                        DeclarationPendingUpdateService declarationPendingUpdateService = new DeclarationPendingUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationCourierStatusPM.Tenant);
+                        declarationPendingUpdateService.Update(declarationPendingPM, true);
+                    }
+                    
+                    LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code 900 as Solved");
+                    AppendLogLine("Set Courier Pending Reason Code 900 as Solved" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 }
 
                 AppendLogLine("send request:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
