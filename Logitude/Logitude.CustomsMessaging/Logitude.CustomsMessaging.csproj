@@ -450,6 +450,7 @@
     <Compile Include="UnifreightGateway\UServerSetResponseService.cs" />
     <Compile Include="Dca\DcaDownloadTenantService.cs" />
     <Compile Include="Dca\DcaReceivedService.cs" />
+    <Compile Include="Utils\CRSUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

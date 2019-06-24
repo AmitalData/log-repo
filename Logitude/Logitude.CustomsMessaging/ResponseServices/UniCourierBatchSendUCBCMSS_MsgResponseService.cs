@@ -25,6 +25,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Microsoft.Practices.Unity;
+using Logitude.CustomsMessaging.Utils;
+
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class UniCourierBatchSendUCBCMSS_MsgResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, DCAInUCBCMSSWithResponseContentHeader, GenericRequestParams>
@@ -48,7 +50,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             List<DeclarationPM> lockedDeclarations = new List<DeclarationPM>();
             List <DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
             //listPM = qs.GetByMasterIDDeclarationCourierStatus(requestParams.Tenant, requestParams.AppicationId);
-            if (customResponse.DeclarationIdList == null || (customResponse.DeclarationIdList != null && customResponse.DeclarationIdList.Count==0))
+            if (customResponse.ServerSplitDeclarationsList == null || (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count==0))
             {
                 LogMessagingUtil.Instance.AppendLine("Splitter to 100 - Create new CRS");
                 mess.AppendLine($"Splitter to 100 - Create new CRS master {requestParams.AppicationId} ");
@@ -57,7 +59,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 var DeclarationIdList =qs.GetByMasterID_DeclarationIdList(requestParams.Tenant, requestParams.AppicationId);
                 DeclarationIdList.ChunkBy(100).ForEach(list100 =>
                 {
-                    CreateCRS(customResponse, requestParams,list100);
+                    //CreateCRS(customResponse, requestParams,list100);
+                    customResponse.ServerSplitDeclarationsList = list100;
+                    var myCRSUtil = new CRSUtil();
+                    myCRSUtil
+                    .CreateCRS_DCAIn<DCAInUCBCMSSWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
 
                 });
                 this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
@@ -70,7 +76,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             LogMessagingUtil.Instance.AppendLine("Handle 100 DeclarationIdList");
 
-            listPM = qs.GetByDeclarationIdList(requestParams.Tenant, customResponse.DeclarationIdList);
+            listPM = qs.GetByDeclarationIdList(requestParams.Tenant, customResponse.ServerSplitDeclarationsList);
             
             if (listPM.Count == 0)
             {
@@ -128,84 +134,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
         }
 
-        private string CreateCRS(DCAInUCBCMSSWithResponseContentHeader customResponse, GenericRequestParams requestParams, List<string> list100)
-        {
-            LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBCMSS  !!!");
-
-            string uniComm = null;
-            string fileName = null;
-            var transmitionDateTime = DateTime.Now;
-            string xmlESBResponseXmlClass = null;
-
-            var myDCAInUCBCMSSWithResponseContentHeader = new DCAInUCBCMSSWithResponseContentHeader()
-            {
-                CourierMasterId = customResponse.CourierMasterId,
-                LoggingUserId = customResponse.LoggingUserId,
-                HAWB = customResponse.HAWB,
-                StorageSiteCode = customResponse.StorageSiteCode,
-                tenant = requestParams.Tenant,
-                MyMoreParams = "",
-                DeclarationIdList = list100,
-                ResponseContentHeader = new DefaultResponseContentHeader()
-                {
-                    TransmitionDateTime = transmitionDateTime
-                },
-            };
-
-            var body = XmlGenericUtil<DCAInUCBCMSSWithResponseContentHeader>.SerializeObject(myDCAInUCBCMSSWithResponseContentHeader);
-            body = body.Substring(body.IndexOf(Environment.NewLine));
-            var myESBResponseXmlClass = new ESBResponseXmlClass();
-            var extrenalId = "62833ff7-1cd3-4faa-85a6-a4312ae4797a";
-            extrenalId = uniComm ?? Guid.NewGuid().ToString();
-            xmlESBResponseXmlClass = myESBResponseXmlClass.Get(Guid.NewGuid().ToString(), extrenalId, body);
-            var transTime = "2016-04-19_13-35-13-481";
-
-            transTime = transmitionDateTime.ToString("s").Replace("T", "_").Replace(":", "-");
-            transTime += "-";
-            transTime += transmitionDateTime.Millisecond.ToString();
-
-            fileName = "DcaPrefixName.IL941079089." + transTime + "." + extrenalId + ".PLT.xml";
-            //var messService = new Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService();
-            //var responseData = messService.SendSheet(genericRequestParams);
-
-            var ourRef = "";
-            //using (var trans = TransactionFactory.GetNewTransaction())
-            {
-                try
-                {
-                    var InterfaceManagementQS = new InterfaceManagementQueryService(requestParams.Tenant);
-                    var InterfaceManagementPM = InterfaceManagementQS.GetSingleInterfaceManagementwithDefinition(
-                        requestParams.MainInterfaceCode, requestParams.Tenant);
-                    fileName = fileName.Replace("DcaPrefixName.", InterfaceManagementPM.DcaPrefixName);
-                    
-                    var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(requestParams. MainInterfaceCode);
-
-                    //var customsRequestsSheetId = anaO.DcaReceivedCustomResponseCorrelation(messageDCA, tenant, selectedDcaFile, customMessageXml, true);
-                    
-
-
-                    ourRef = anaO.DcaReceivedCustomResponseCorrelation(InterfaceManagementPM, requestParams.Tenant, new Customs.BL.Utils.DCAFileModel()
-                    {
-                        SelectedFileDownload = fileName,
-                        TimStamp = transmitionDateTime
-
-                    }, xmlESBResponseXmlClass);
-
-                    //trans.Complete();
-                    return "המסר נבנה בהצלחה וישלח בתהליך רקע";
-                }
-                catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
-                {
-                    if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
-                    {
-                        Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCBCMSS SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
-                    }
-                    throw myCustomsRequestsSheetServiceException;
-                    return "קיים מסר זהה בתהליך";
-                }
-            }
-        }
-
+      
         private void RaiseEvent(DeclarationPM declarationPM, List<string> declarationsList, string eventCode, string remarks)
         {
             try

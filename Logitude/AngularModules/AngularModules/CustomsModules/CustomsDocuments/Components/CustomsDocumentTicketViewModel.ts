@@ -645,7 +645,7 @@ export class CustomsDocumentTicketViewModel {
         SessionLocator.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.General.O.Saving"));
         if (relatedDocumentViewModel != null) {
             var fileSizeInMB = relatedDocumentViewModel.FileSize / (1024 * 1024);
-            if (fileSizeInMB > 30) {
+            if (fileSizeInMB > 200) { //if (fileSizeInMB > 30) {
                 SessionLocator.CurrentSession.StopBusyIndicator();
                 var confirmWindow = new ConfirmWindow();
                 confirmWindow.Width = 400;

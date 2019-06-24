@@ -319,9 +319,11 @@
                                                                 <table *ngIf="_SelectedTabFilter.Code=='ALL' ">
                                                                     <tr>
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
-                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:200px">
+                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
+                                                                            style="width:220px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('R')"
                                                                                           [ButtonText]=_ReadyMNFToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
                                                                                 <div class="class-MENUSplitButton-content">
@@ -336,9 +338,11 @@
 
                                                                             </split-button>
                                                                         </td>
-                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:200px">
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
+                                                                            style="width:220px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectManifest('M')"
                                                                                           [ButtonText]=SelectedMNFToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
                                                                                 <div class="class-MENUSplitButton-content">
@@ -357,9 +361,11 @@
                                                                         <td style="width:1px"></td>
 
                                                                         <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems == null || (_CourierWorksheetSharedDataService._SelectedItems != null
-                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)" style="width:200px">
+                                                                            && _CourierWorksheetSharedDataService._SelectedItems.Collection.length == 0)"
+                                                                            style="width:220px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('R')"
                                                                                           [ButtonText]=_ReadyDECToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="115">
 
                                                                                 <div class="class-MENUSplitButton-content">
@@ -374,9 +380,11 @@
 
                                                                             </split-button>
                                                                         </td>
-                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0" style="width:200px">
+                                                                        <td *ngIf="_CourierWorksheetSharedDataService._SelectedItems != null && _CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0"
+                                                                            style="width:220px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLCorrectDec('M')"
                                                                                           [ButtonText]=SelectedDECToBatchSendButtonText
+                                                                                          [IsDisabled]="IsDisplayOnly"
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
 
                                                                                 <div class="class-MENUSplitButton-content">
@@ -395,7 +403,7 @@
                                                                         <td style="width:200px">
                                                                             <!--<button class="Button" [disabled]="!(IsILOVLEnabled || IsMamanEnabled)" (click)="SendALLTerminal()">שדר מסר ש.מ.ב למסוף</button>-->
                                                                             <split-button (DefaultSplitButtonClicked)="SendALLTerminal('M')"
-                                                                                          [IsDisabled]="!(IsILOVLEnabled || IsMamanEnabled)"
+                                                                                          [IsDisabled]="(!(IsILOVLEnabled || IsMamanEnabled)) || IsDisplayOnly"
                                                                                           [ButtonText]="'שדר מסר ש.מ.ב למסוף'"
                                                                                           [AsRegularButton]="'true'"
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">
@@ -473,7 +481,7 @@
                                                                         <td style="width:1px"></td>
                                                                         <td style="width:200px">
                                                                             <split-button (DefaultSplitButtonClicked)="SendUncorrectDocuments()"
-                                                                                          [IsDisabled]="!(_SelectedDOCValue == 'U')"
+                                                                                          [IsDisabled]="!(_SelectedDOCValue == 'U') || IsDisplayOnly"
                                                                                           [ButtonText]="'שדר מסמכים שגויים'"
                                                                                           [AsRegularButton]="'true'"
                                                                                           [MENUDivExtraTop]="24" [MENUDivExtraLeft]="110">

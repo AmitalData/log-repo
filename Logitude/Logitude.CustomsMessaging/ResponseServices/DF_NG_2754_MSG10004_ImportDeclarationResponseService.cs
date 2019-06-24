@@ -39,6 +39,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         //private List<SupplierInvoiceItemsTaxesModPM> _SupplierInvoiceItemsTaxesModificationPMList;
         //public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption;
         public bool _IsSubmitDeclarationResponse { get; set; }
+        public bool _IsRetrieveDeclarationResponse { get; set; }
         decimal? totGeneralTaxCalc = 0;
         decimal? totPurchaseCalc = 0;
         decimal? totVatCalc = 0;
@@ -679,7 +680,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (!(!string.IsNullOrWhiteSpace(paymentOrderNumber) && paymentStatusCode != "5") && !(_IsSubmitDeclarationResponse == true && string.IsNullOrWhiteSpace(paymentOrderNumber) && _MyDeclarationPM.DeclarationStatusTypeCode == "5" && _MyDeclarationPM.TotalTax <= 5))
             {
                 _MyDeclarationPM.CurrentContextTag = Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.UpdateUnifreightBillingConst;
-                if (_MyDeclarationPM.IsCourierDeclaration && declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue && _IsSubmitDeclarationResponse == true)
+                if (_MyDeclarationPM.IsCourierDeclaration && declarationPaymentsPM != null && declarationPaymentsPM.PaymentDate.HasValue && _IsSubmitDeclarationResponse == true && _MyDeclarationPM.DeclarationStatusTypeCode == "5")
                 {
                     _MyDeclarationPM.PaymentDate = declarationPaymentsPM.PaymentDate;
                 }
@@ -753,62 +754,76 @@ namespace Logitude.CustomsMessaging.ResponseServices
             myDeclarationUpdateService.IsFromCustomsFeedback = true;
             myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
-            if (!_IsSubmitDeclarationResponse && _MyDeclarationPM.IsCourierDeclaration) //Task 48913
+            if (_MyDeclarationPM.IsCourierDeclaration)
             {
                 DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
                 DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_MyDeclarationPM.Id, false, false);
-                if (currentDeclarationCourierStatusPM != null && 
-                    (string.IsNullOrEmpty(currentDeclarationCourierStatusPM.CourierPendingReasonCode) || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900" || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "901"))
+                if (currentDeclarationCourierStatusPM != null)
                 {
-                    // Pending 901
-                    Boolean isSetPendingTo901 = false;
-                    if (customResponse.Response.Error != null)
+                    if (!_IsSubmitDeclarationResponse) //Task 48913
                     {
-                        foreach (var errorItem in customResponse.Response.Error)
+                        if (string.IsNullOrEmpty(currentDeclarationCourierStatusPM.CourierPendingReasonCode) || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900" || currentDeclarationCourierStatusPM.CourierPendingReasonCode == "901")
                         {
-                            if (errorItem.ValidationCode != null && errorItem.ValidationCode.Value == "2382")
+                            // Pending 901
+                            Boolean isSetPendingTo901 = false;
+                            if (customResponse.Response.Error != null)
                             {
-                                LogMessagingUtil.Instance.AppendLine("Pending - הצהרה פלסטינאית = 901");
-                                isSetPendingTo901 = true;
-                                currentDeclarationCourierStatusPM.CourierPendingReasonCode = "901";
-                                currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 901");
-                            }
-                        }
-                    }
-                    if (!isSetPendingTo901)
-                    {
-                        if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "901")
-                        {
-                            currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
-                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                            LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 901");
-                        }
-
-                        // Pending 900
-                        CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
-                        CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
-                        if (courierMaster != null)
-                        {
-                            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
-                            bool isCollectActive = def.DEFDATA == "Y";
-                            if (isCollectActive)
-                            {
-                                LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
-                                if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
+                                foreach (var errorItem in customResponse.Response.Error)
                                 {
-                                    currentDeclarationCourierStatusPM.CourierPendingReasonCode = "900";
-                                    currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 900");
+                                    if (errorItem.ValidationCode != null && errorItem.ValidationCode.Value == "2382")
+                                    {
+                                        LogMessagingUtil.Instance.AppendLine("Pending - הצהרה פלסטינאית = 901");
+                                        isSetPendingTo901 = true;
+                                        currentDeclarationCourierStatusPM.CourierPendingReasonCode = "901";
+                                        currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                        LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 901");
+                                    }
                                 }
-                                else if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
+                            }
+                            if (!isSetPendingTo901)
+                            {
+                                if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "901")
                                 {
                                     currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
                                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 900");
+                                    LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 901");
+                                }
+
+                                // Pending 900
+                                CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
+                                CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
+                                if (courierMaster != null)
+                                {
+                                    var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
+                                    var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, false, true);
+                                    bool isCollectActive = def.DEFDATA == "Y";
+                                    if (isCollectActive)
+                                    {
+                                        LogMessagingUtil.Instance.AppendLine("תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900");
+                                        if (_MyDeclarationPM.SupplierInvoices != null && _MyDeclarationPM.SupplierInvoices.FirstOrDefault().IncotermCode != "DDP" && _MyDeclarationPM.TotalTax > 0)
+                                        {
+                                            currentDeclarationCourierStatusPM.CourierPendingReasonCode = "900";
+                                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                            LogMessagingUtil.Instance.AppendLine("Set Courier Pending Reason Code To 900");
+                                        }
+                                        else if (currentDeclarationCourierStatusPM.CourierPendingReasonCode == "900")
+                                        {
+                                            currentDeclarationCourierStatusPM.CourierPendingReasonCode = null;
+                                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                                            LogMessagingUtil.Instance.AppendLine("Del Courier Pending Reason Code 900");
+                                        }
+                                    }
                                 }
                             }
+
+                        }
+                    }
+                    if (_IsSubmitDeclarationResponse || _IsRetrieveDeclarationResponse) // Task 53175
+                    {
+                        if (string.IsNullOrEmpty(_MyDeclarationPM.PaymentOrderNumber) && _MyDeclarationPM.AcceptanceStatusCode == "1" && (_MyDeclarationPM.TotalTax == null || _MyDeclarationPM.TotalTax == 0))
+                        {
+                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
+                            currentDeclarationCourierStatusPM.CourierPaymentStatusCode = "P";
                         }
                     }
 
@@ -874,7 +889,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             MyResponseData.Succeeded = true;
             if (_MyDeclarationPM.CurrentContextTag == Logitude.Customs.BL.EntityUpdateServices.DeclarationUpdateService.CreateUnifreightPaymentConst) // moran 28.1.15 - Task 10005
             {
-                SendDeclarationPrint(_MyDeclarationPM, SendRequestVIA.WebServiceBatch, requestParams);
+                if (!_MyDeclarationPM.IsCourierDeclaration)
+                {
+                    SendDeclarationPrint(_MyDeclarationPM, SendRequestVIA.WebServiceBatch, requestParams);
+                }
             }
             if (requestParams.InterfaceTypeCode == "8373")
             {
