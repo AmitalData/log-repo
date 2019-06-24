@@ -113,10 +113,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                 //if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonCode))
-                if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonErrorPlace))
+                //if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonErrorPlace))
+                if (!String.IsNullOrWhiteSpace(itemPoco.CourierPendingReasonCode))
                 {
-
-                    //if (allCourierPendingReason.First(r=> r.Code == itemPM.CourierPendingReasonCode).ErrorPlace == "1")
+                    //if (allCourierPendingReason.First(r => r.Code == itemPM.CourierPendingReasonCode).ErrorPlace == "1")
+                    if (allCourierPendingReason.First(r=> r.Code == itemPoco.CourierPendingReasonCode).ErrorPlace == "1")
                     
                     {
                         mess.AppendLine($" קיים Pending " +
