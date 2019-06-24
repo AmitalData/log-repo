@@ -1489,7 +1489,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
     }
 
-    private textValue: any = false;
+    private textValue: any = (this.dataTypeCode == "Boolean") ? false : null;
     public get TextValue() {
         return this.textValue;
     }
