@@ -1157,6 +1157,10 @@
     <Compile Include="Migrations\201906240732387_AirlineAreasAndAirlineAreasPortTables_Khalid.Designer.cs">
       <DependentUpon>201906240732387_AirlineAreasAndAirlineAreasPortTables_Khalid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906240850455_AbedAddIsIsParentTenantToDWHSetting.cs" />
+    <Compile Include="Migrations\201906240850455_AbedAddIsIsParentTenantToDWHSetting.Designer.cs">
+      <DependentUpon>201906240850455_AbedAddIsIsParentTenantToDWHSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
