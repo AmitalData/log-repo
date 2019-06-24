@@ -740,7 +740,8 @@
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\ChartOFAccountModule.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\EditEntity\EditChartOfAccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\ChartOfAccount\NewEntity\NewChartOfAccount.ts" />
-    <TypeScriptCompile Include="e2e\FullAccounting\FullAcc-spec.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\FullAccScenarios-spec.ts" />
+    <TypeScriptCompile Include="e2e\FullAccounting\FullAccScenarios.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\Edit\EditGLaccount.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\GLAccount-spec.ts" />
     <TypeScriptCompile Include="e2e\FullAccounting\GLAccounts\NewCustomerGLaccount.ts" />

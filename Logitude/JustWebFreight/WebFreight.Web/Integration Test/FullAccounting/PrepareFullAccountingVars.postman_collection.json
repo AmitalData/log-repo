@@ -1,0 +1,2430 @@
+{
+	"info": {
+		"_postman_id": "a1e97e4e-7cc9-4a5d-be42-c3aeff7ec131",
+		"name": "PrepareFullAccountingVars",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e12b796-68a9-4d2c-a05b-bb8bee5fccc6",
+						"exec": [
+							"pm.test(\"logged successfuly \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Token);",
+							"    var idvalue2 = (pm.response.json().CurrentTenant);",
+							"    var idvalue3 = (pm.response.json().UserId);",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"    var id3exist = idvalue3 !== null;",
+							"",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    pm.expect(id3exist);",
+							"    pm.environment.set(\"Token\",idvalue1);",
+							"    pm.environment.set(\"CurrentTenant\",idvalue2);",
+							"    pm.environment.set(\"LoggedUserId\",idvalue3);",
+							"   ",
+							"    ",
+							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
+							"if(!id1exist){",
+							"    postman.setNextRequest(null);",
+							"}",
+							"else{",
+							"     postman.setNextRequest(\"GetFullAccountingSettings\");",
+							"}",
+							"",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"lana@logitudeworld.com\",\"Password\":\"lanoosh188<3\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":55} "
+				},
+				"url": {
+					"raw": "https://cloud.amital.co.il/api/authentication?tenant=55",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"amital",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "55"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetFullAccountingSettings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "317f8e11-a019-4332-8574-134fc42a82b0",
+						"exec": [
+							"pm.test(\"GetFullAccountingSettings\", function () {",
+							"  pm.response.to.have.status(200);",
+							"  var idvalue1 = (pm.response.json().AccountingActivated);",
+							"  var id1exist = idvalue1 !== null;",
+							"  var id1exist2= idvalue1 === true ;",
+							"  pm.environment.set(\"AccountingActivated\",idvalue1);",
+							"  ",
+							" ",
+							"  if (!id1exist2){",
+							"       //throw new Error('NOt FUll Accounting Tenant');",
+							"         tests[\"Is Full Accounting Tenant :\" + false] = ( true );",
+							"         postman.setNextRequest(null);",
+							" ",
+							"         ",
+							"          ",
+							"",
+							"  }",
+							"  else{",
+							" // tests[\"Full Accounting Tenant : \" + true ] = ( true );",
+							"  tests[\"Is Full Accounting Tenant :\" +  true] = ( true );",
+							"  postman.setNextRequest(\"GEtAccounntingPeriods\");",
+							" ",
+							"}",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "tenant",
+						"value": "{{CurrentTenant}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://cloud.amital.co.il/api/fullaccountingsettings/getsingle?id={{CurrentTenant}}&token={{Token}}",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"amital",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"fullaccountingsettings",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{CurrentTenant}}"
+						},
+						{
+							"key": "token",
+							"value": "{{Token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GEtAccounntingPeriods",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4bc45b58-019c-4017-b25a-a552290ef110",
+						"exec": [
+							"pm.test(\"Get Accounting Periods\", function () {",
+							"    ",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"    var date = new Date();",
+							"    var month = date.getMonth()+1;",
+							"    pm.environment.set(\"CurrentMonth\",month);",
+							"    var idvalue7 = (pm.response.json().Result[pm.response.json().Result.length-2].OpenMonth);",
+							"    pm.environment.set(\"AcocuntingPeriodsOpenMonth\",idvalue7);",
+							"    ",
+							"      if (idvalue7 < month)",
+							"      {",
+							"           tests[\"Current Month Opened  : \" + false ] = ( true );",
+							"      }",
+							"      ",
+							"        else {",
+							"    var idvalue1 = (pm.response.json().Result[pm.response.json().Result.length-2].Id);",
+							"    var idvalue2 = (pm.response.json().Result[pm.response.json().Result.length-2].Tenant);",
+							"    var idvalue3 = (pm.response.json().Result[pm.response.json().Result.length-2].Year);",
+							"    var idvalue4 = (pm.response.json().Result[pm.response.json().Result.length-2].PeriodTypeCode);",
+							"    var idvalue5 = (pm.response.json().Result[pm.response.json().Result.length-2].PeriodTypeName);",
+							"    var idvalue6 = (pm.response.json().Result[pm.response.json().Result.length-2].ClosedMonth);",
+							"    ",
+							"    pm.environment.set(\"AcocuntingPeriodsId\",idvalue1);",
+							"    pm.environment.set(\"AcocuntingPeriodsTenant\",idvalue2);",
+							"    pm.environment.set(\"AcocuntingPeriodsYear\",idvalue3);",
+							"    pm.environment.set(\"AcocuntingPeriodsPeriodTypeCode\",idvalue4);",
+							"    pm.environment.set(\"AcocuntingPeriodsPeriodTypeName\",idvalue5);",
+							"    pm.environment.set(\"AcocuntingPeriodsClosedMonth\",idvalue6);",
+							"",
+							"  ",
+							"   tests[\"Current Month Opened  : \" + true ] = ( true )",
+							"   ;}",
+							"   postman.setNextRequest(\"GetAccountingCurriency\");",
+							" ",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://cloud.amital.co.il/api/accountingperiodviews/getbyfilters?ForceCacheRefresh=false&GetAll=true",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"amital",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"accountingperiodviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "true"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAccountingCurriency",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a0e2c436-b3dd-43cf-a794-48337972bf52",
+						"exec": [
+							"",
+							"",
+							"",
+							"",
+							"pm.test(\"GetAccountingCurriency\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().CurrencyId);",
+							"    ",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"AccountingCurrencyId\",idvalue1);",
+							" ",
+							"    ",
+							"    tests[\"BodyCointainsAccountingCurrincy : \" + id1exist] = responseBody.has(id1exist);",
+							"",
+							" postman.setNextRequest(\"GetTenantCurriences\");",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://cloud.amital.co.il/api/tenants/getsingle?id={{CurrentTenant}}",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"amital",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"tenants",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{CurrentTenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTenantCurriences",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0fead3e4-e27f-4a28-9b98-9b7539824f0f",
+						"exec": [
+							"pm.test(\"GetTenantCurriencies\", function () {",
+							"  pm.response.to.have.status(200);",
+							" postman.setNextRequest(\"GetCountryAX\");",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://cloud.amital.co.il/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"amital",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"currencyviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCountryAX",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3a39dd00-2f84-417e-89b1-8972728aa588",
+						"exec": [
+							"pm.test(\"GetCountryAX\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       var idvaluet = \"test\";",
+							"        var idexist2 = idvaluet !== null;",
+							"     tests[\"CountryExsits : \" + false] = (true);",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"CountryId\",idvalue);",
+							"",
+							"     tests[\"CountryExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GetVatTypeExempt\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});",
+							"     ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "https://cloud.amital.co.il/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22\n\n",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"amital",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"countryviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "equals"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "AX"
+						},
+						{
+							"key": "PageSize",
+							"value": "22\n\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetVatTypeExempt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "30d1e618-96cf-4f8e-a6a9-e3e32654acf3",
+						"exec": [
+							"pm.test(\"GetVatTypeExempt\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       var idvaluet = \"test\";",
+							"        var idexist2 = idvaluet !== null;",
+							"     tests[\"VatExsits : \" + false] = (true);",
+							"         postman.setNextRequest(\"CreatVatExempt\");  ",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"VatId\",idvalue);",
+							"",
+							"     tests[\"VatExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GetPaymentTermCash\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://cloud.amital.co.il/api/vattypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=EXMPT&PageIndex=0&PageSize=23",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"amital",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"vattypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "EXMPT"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatVatExempt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1682d7af-25ea-487d-8543-53b06de86ddb",
+						"exec": [
+							"pm.test(\"Create Vat Type Exempt\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"VatId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisVatId : \" + idexist] =(idexist);\r",
+							"      postman.setNextRequest(\"GetPaymentTermCash\");\r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \r\n   \"Tenant\":\"{{CurrentTenant}}\",\r\n   \"IsSecured\":false,\r\n   \"Code\":\"EPT\",\r\n   \"EnglishName\":\"Exempt\",\r\n   \"LocalName\":\"f\",\r\n   \"SearchFields\":\"EXMPT\",\r\n   \"NewEntityPercentage\":0.0,\r\n   \"NewEntityPercentageDate\":\"2019-06-18T00:00:00Z\",\r\n  \r\n   \"VatTypePercentages\":[\r\n      {\r\n        \r\n         \"Tenant\":0,\r\n         \"VatTypeId\":\"1-3465\",\r\n         \"FromDate\":\"2019-06-18T00:00:00Z\",\r\n         \"Percentage\":0.0,\r\n         \"ChangeSetOp\":0\r\n      }\r\n   ]\r\n  \r\n}"
+				},
+				"url": {
+					"raw": "https://cloud.amital.co.il/api/vattypes",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"amital",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"vattypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPaymentTermCash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad0de5f5-52c5-4672-9fa8-d0f0db6e867f",
+						"exec": [
+							"pm.test(\"GetPaymentTermCash\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       ",
+							"     tests[\"PaymentTermExsits : \" + false] = (true);",
+							"     postman.setNextRequest(\"CreatePaymentTermCash\");  ",
+							"",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"PaymentTermId\",idvalue);",
+							"",
+							"     tests[\"PaymentTermExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GETPaymnetMethodCash\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://cloud.amital.co.il/api/paymenttermviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=cash&PageIndex=0&PageSize=23",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"amital",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"paymenttermviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "cash"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePaymentTermCash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "16412c84-d88b-45a5-8e6b-354a18696dac",
+						"exec": [
+							"pm.test(\"Create Payment Term Cash\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"PaymentTermId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisPaymentTermId : \" + idexist] =(idexist);\r",
+							"         postman.setNextRequest(\"GETPaymnetMethodCash\");  \r",
+							"\r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \r\n   \"EnglishName\":\"cash\",\r\n   \"LocalName\":\"cash local\",\r\n   \"Days\":0,\r\n   \"InActive\":false,\r\n   \"DisplayInLOV\":true,\r\n   \"SearchFields\":null,\r\n   \"IsManuallySet\":false,\r\n   \"CurrentMonth\":false,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
+				},
+				"url": {
+					"raw": "https://cloud.amital.co.il/api/paymentterms",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"amital",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"paymentterms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETPaymnetMethodCash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "669d741e-9c26-4643-a96f-85649c98462d",
+						"exec": [
+							"pm.test(\"GetPaymentMethodCash\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       ",
+							"     tests[\"PaymentMethodExsits : \" + false] = (true);",
+							"     postman.setNextRequest(\"CreatePaymentMethodCash\");  ",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"PaymentMethodId\",idvalue);",
+							"",
+							"     tests[\"PaymentTermExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GetBranchMainOffice\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://cloud.amital.co.il/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23\n",
+					"protocol": "https",
+					"host": [
+						"cloud",
+						"amital",
+						"co",
+						"il"
+					],
+					"path": [
+						"api",
+						"accountingpaymentmethodviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "Cash"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23\n"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePaymentMethodCash",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f535cde3-eebf-40c4-9915-e39cd2313d41",
+						"exec": [
+							"pm.test(\"CreatePayment Method Cash \", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"PaymentMethodId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisMethodId : \" + idexist] =(idexist);\r",
+							"      postman.setNextRequest(\"GetCustomerGlAccountCustGL\");\r",
+							"          postman.setNextRequest(\"GetBranchMainOffice\");  \r",
+							"\r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"EnglishName\":\"Cash\",\r\n   \"LocalName\":null,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/paymentterms",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"paymentterms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBranchMainOffice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "50a546d2-2d18-4735-bee8-709082bda3cd",
+						"exec": [
+							"pm.test(\"GetBranchMainOffice\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       ",
+							"     tests[\"BranchExsits : \" + false] = (true);",
+							"  postman.setNextRequest(\"CreateBranchMainOffice\"); ",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"BranchId\",idvalue);",
+							"",
+							"     tests[\"BranchExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GetChargeTypesAirFreight\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/branchviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main%20office&PageIndex=0&PageSize=23",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"branchviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "main%20office"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBranchMainOffice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5267272b-0cd9-4f05-ac44-053c6531f189",
+						"exec": [
+							"pm.test(\"Create Branch Main Office\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"BranchId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisBrnachId : \" + idexist] =(idexist);\r",
+							"     postman.setNextRequest(\"GetChargeTypesAirFreight\"); \r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\r\n   \"Tenant\":\"{{CurrentTenant}}\",\r\n   \r\n   \"EnglishName\":\"Main Office\",\r\n   \"LocalName\":\"Main Office\",\r\n  \r\n   \"InActive\":false,\r\n   \r\n   \"SearchFields\":\"test\",\r\n \r\n   \"IsHybrid\":false,\r\n   \"ExternalId\":null,\r\n   \"AddressId\":null,\r\n   \"Signature\":null,\r\n   \r\n   \"INTTRAContactId\":null,\r\n   \"CounterCode\":null\r\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/branches",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"branches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetChargeTypesAirFreight",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f4583b08-3ef7-4750-8296-fdcfaf044a40",
+						"exec": [
+							"pm.test(\"Get Charge Type AirFreight\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       var idvaluet = \"test\";",
+							"        var idexist2 = idvaluet !== null;",
+							"     tests[\"Charge Exsits : \" + false] = (true);",
+							"         postman.setNextRequest(\"CreateChargeType\");  ",
+							"",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"ChargeId\",idvalue);",
+							"",
+							"     tests[\"ChargeExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"GetChartOfAccountVend1\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"chargestypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "air%20freight"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateChargeType",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "95d498d4-cbbf-4a38-b7fb-f0747f588e36",
+						"exec": [
+							"pm.test(\"Create Branch Main Office\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"ChargeId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisChargeId : \" + idexist] =(idexist);\r",
+							"      postman.setNextRequest(\"GetChartOfAccountVend1\");\r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Tenant\":1064,\r\n  \r\n   \"Code\":\"AFT\",\r\n   \"EnglishName\":\"141\",\r\n   \"LocalName\":null,\r\n   \"ChargesGroupCode\":\"COMM\",\r\n   \"ChargesGroupId\":\"1-6036\",\r\n   \"MeasurementId\":\"1-29726\",\r\n   \"ContainerMeasurementId\":null,\r\n   \"Description\":null,\r\n   \"IsReceivable\":true,\r\n   \"IsPayable\":true,\r\n   \"IsAir\":true,\r\n   \"IsOcean\":true,\r\n   \"IsInland\":true,\r\n   \"IsAutoDisplayInShipment\":false,\r\n   \"IsAutoDisplayInConsolidation\":false,\r\n   \"IsAutoDisplayInQuote\":false,\r\n   \"DueTypeCode\":null,\r\n   \"IATACodeId\":null,\r\n   \"AWBPrintDescription\":true,\r\n   \"VatTypeId\":null,\r\n   \"ViewOrder\":100,\r\n  \r\n \r\n   \"IsCustoms\":false,\r\n   \"ComputedLocalName\":null,\r\n   \"AddedManually\":true,\r\n   \"InActive\":false,\r\n   \"MeasurementCode\":null,\r\n   \"MeasurementShortName\":null,\r\n   \"ContainerMeasurementCode\":null,\r\n   \"SearchFields\":\"11,11\",\r\n\r\n   \"PayableDebitGLAcountId\":null,\r\n   \"ReceivableCreditGLAccountId\":null,\r\n   \"IsExpense\":false\r\n ,\r\n  \r\n   \"IsExport\":true\r\n  \r\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/chargestypes",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"chargestypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetChartOfAccountVend1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6c0443e4-c8bb-4e1e-9f7d-ff352da2fb2d",
+						"exec": [
+							"pm.test(\"GetChartOfAccountVend1\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"   if(pm.response.json().Result.length < 1 ){\r",
+							"       \r",
+							"     tests[\"ChartOfAccountExists : \" + false] = (true);\r",
+							"        postman.setNextRequest(\"CreateChartOfAccountVend\");   \r",
+							"   }\r",
+							"   else {\r",
+							"    var idvalue =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].Id);\r",
+							"    var idvalue2 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].Code);\r",
+							"    var idvalue3 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].LocalName);\r",
+							"    var idvalue4 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].EnglishName);\r",
+							"    var idvalue5 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].ParentId);\r",
+							"    var idvalue6 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].TypeCode);\r",
+							"    var idvalue7 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].Inactive);\r",
+							"    var idvalue8 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].TypeName);\r",
+							"    var idvalue9 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].ParentName);\r",
+							"    var idvalue10 =(pm.response.json().Result.filter(a => a.Code == 'PMCHV')[0].SearchFields);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    \r",
+							" if (idexist)  {\r",
+							"     pm.environment.set(\"VendorChartOfAccountId\",idvalue);\r",
+							"     pm.environment.set(\"ChartOfAccountCode\",idvalue2);\r",
+							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
+							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
+							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
+							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
+							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
+							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
+							"\r",
+							"\r",
+							"     \r",
+							"     tests[\"ChartOfAccountExists : \" + true ] = (true);\r",
+							"     postman.setNextRequest(\"GetCustomerTestGlCust\");\r",
+							"    }\r",
+							"   }\r",
+							"    \r",
+							"});\r",
+							"     \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCHV&PageSize=23 ",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"chartofaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "PMCHV"
+						},
+						{
+							"key": "PageSize",
+							"value": "23 "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateChartOfAccountVend",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acc1d4e1-7c34-4550-93c8-876b886c9ec1",
+						"exec": [
+							"pm.test(\"CreateChartOfAccountVend\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"     var idvalue2 =(pm.response.json().Code);\r",
+							"    var idvalue3 =(pm.response.json().LocalName);\r",
+							"    var idvalue4 =(pm.response.json().EnglishName);\r",
+							"    var idvalue5 =(pm.response.json().ParentId);\r",
+							"    var idvalue6 =(pm.response.json().TypeCode);\r",
+							"    var idvalue7 =(pm.response.json().Inactive);\r",
+							"    var idvalue8 =(pm.response.json().TypeName);\r",
+							"    var idvalue9 =(pm.response.json().ParentName);\r",
+							"    var idvalue10 =(pm.response.json().SearchFields);\r",
+							"    \r",
+							"    \r",
+							"    \r",
+							"    \r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"VendorChartOfAccountId\",idvalue);\r",
+							"     pm.environment.set(\"ChartOfAccountCode\",idvalue2);\r",
+							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
+							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
+							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
+							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
+							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
+							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
+							"     \r",
+							"     \r",
+							"     tests[\"BodyContanisChartOfAccountId : \" + true] =(true);\r",
+							"        postman.setNextRequest(\"GetCustomerTestGlCust\");   \r",
+							"    }\r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});\r",
+							"     \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Code\": \"PMCHV\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChart\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/chartofaccounts",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"chartofaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCustomerTestGlCust",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c664975a-4f3a-44c4-8814-db7192e38b0b",
+						"exec": [
+							"pm.test(\"GetCustomerTestGlCust\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"       var idvaluet = \"test\";",
+							"        var idexist2 = idvaluet !== null;",
+							"     tests[\"CustomerExsits : \" + false] = (true);",
+							"        postman.setNextRequest(\"CreateCustomerTestGlCust\");   ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"CustomerId\",idvalue);",
+							"",
+							"     tests[\"CustomerExsits : \" + true ] = (true);",
+							"     postman.setNextRequest(\"GetVendorTestGlVend\");",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCust&GetCount=true&PageIndex=0&PageSize=22\n",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"customerviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "GetAll",
+							"value": "true"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "PMCust"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22\n"
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCustomerTestGlCust",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "147dab07-22e8-4497-97aa-4b67b53f0aa7",
+						"exec": [
+							"pm.test(\"CreateCustomerTest\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Customer.Id);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"CustomerId\",idvalue);\r",
+							"     \r",
+							"     tests[\"BodyContanisCustomerId : \" + idexist] =(idexist);\r",
+							"      postman.setNextRequest(\"GetVendorTestGlVend\");\r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tenant",
+						"value": "{{CurrentTenant}}",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"Tenant\":\"{{CurrentTenant}}\",\r\n \r\n  \"PartnerTypeId\": \"CS\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"PMCust\",\r\n    \"CountryId\": \"{{CountryId}}\"\r\n    \r\n    \r\n\r\n \r\n  \r\n  },\r\n \r\n  \"Customer\": {\r\n    \"$id\": \"3\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"PMCust\",\r\n    \"LocalName\": \"PMCust\",\r\n    \r\n    \r\n\r\n   \r\n   \r\n   \r\n    \"PartnerTypeId\": \"CS\",\r\n   \r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\",\r\n    \r\n\r\n    \r\n    \"IsCustomer\": true,\r\n    \"CustomerStatusCode\": \"ACT\",\r\n\r\n  \r\n    \"SetAsPotential\": false,\r\n    \r\n   \r\n    \"CustomerTenant\": 0\r\n  }\r\n\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/PartnersDomain",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"PartnersDomain"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetVendorTestGlVend",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c97346e7-e9b1-40b3-932a-98b52dba6c26",
+						"exec": [
+							"pm.test(\"GetVendorTestGlVend\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"    ",
+							"     tests[\"VendorrExsits : \" + false] = (true);",
+							"        postman.setNextRequest(\"CreateVendorTestGlVend\");   ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"VendorId\",idvalue);",
+							"",
+							"     tests[\"VendorExsits : \" + true ] = (true);",
+							"     postman.setNextRequest(\"GetCustomerGlAccountCustGL\");",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMVend&GetCount=true&PageIndex=0&PageSize=22\n",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"vendorviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "PMVend"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "22\n"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateVendorTestGlVend",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "147dab07-22e8-4497-97aa-4b67b53f0aa7",
+						"exec": [
+							"pm.test(\"CreateVendorTest\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Vendor.Id);\r",
+							"    var idvalue2= (pm.response.json().AddressId);\r",
+							"    var idexist = idvalue !== null;  \r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"VendorId\",idvalue);\r",
+							"      \r",
+							"     pm.environment.set(\"VendorAddressId\",idvalue2);\r",
+							"     \r",
+							"     tests[\"BodyContanisVendorId : \" + idexist] =(idexist);\r",
+							"      postman.setNextRequest(\"GetCustomerGlAccountCustGL\");\r",
+							"    }\r",
+							"    \r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});  \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tenant",
+						"type": "text",
+						"value": "{{CurrentTenant}}"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"Tenant\":\"{{CurrentTenant}}\",\r\n \r\n  \"PartnerTypeId\": \"VD\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"PMVend\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \r\n    \r\n    \r\n    \"SearchFields\": \"PMVend,PMVend,PMVend\"\r\n \r\n  \r\n  },\r\n \r\n  \"Vendor\": {\r\n   \r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"PMVend\",\r\n    \"LocalName\": \"PMVend\",\r\n    \r\n    \r\n\r\n   \r\n   \r\n   \r\n    \"PartnerTypeId\": \"VD\",\r\n   \r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\"\r\n  }\r\n\r\n \r\n    \r\n   \r\n  \r\n\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/PartnersDomain",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"PartnersDomain"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCustomerGlAccountCustGL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ae06fbdb-80b9-455b-b584-2c8b6e0d5d8b",
+						"exec": [
+							"pm.test(\"GetCustomerGlAccountIdCustGL\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"     tests[\"CustomerGLAccountExists : \" + false] = (true);",
+							"        postman.setNextRequest(\"GetChartOfAccountCust1\");   ",
+							"   }",
+							"   else {",
+							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber=='PMGLCust')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    ",
+							" if (idexist)  {",
+							"     pm.environment.set(\"CustomerGLAccountId\",idvalue);",
+							"     tests[\"GlAccountExists : \" + true] = (true);",
+							"      postman.setNextRequest(\"GetVendorGlAccountVendGL\"); ",
+							"    }",
+							"   }",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMGLCust&PageSize=23",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"glaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "PMGLCust"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetChartOfAccountCust1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6c0443e4-c8bb-4e1e-9f7d-ff352da2fb2d",
+						"exec": [
+							"pm.test(\"GetChartOfAccountCust1\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"   if(pm.response.json().Result.length < 1 ){\r",
+							"       var idvaluet = \"test\";\r",
+							"        var idexist2 = idvaluet !== null;\r",
+							"     tests[\"ChartOfAccountExists : \" + false] = (true);\r",
+							"        postman.setNextRequest(\"CreateChartOfAccountCust1\");   \r",
+							"   }\r",
+							"   else {\r",
+							"    var idvalue =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].Id);\r",
+							"    var idvalue2 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].Code);\r",
+							"    var idvalue3 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].LocalName);\r",
+							"    var idvalue4 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].EnglishName);\r",
+							"    var idvalue5 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].ParentId);\r",
+							"    var idvalue6 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].TypeCode);\r",
+							"    var idvalue7 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].Inactive);\r",
+							"    var idvalue8 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].TypeName);\r",
+							"    var idvalue9 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].ParentName);\r",
+							"    var idvalue10 =(pm.response.json().Result.filter(a => a.Code == 'Cust1')[0].SearchFields);\r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    \r",
+							" if (idexist)  {\r",
+							"     pm.environment.set(\"ChartOfAccountId\",idvalue);\r",
+							"     pm.environment.set(\"ChartOfAccountCode\",idvalue2);\r",
+							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
+							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
+							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
+							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
+							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
+							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
+							"\r",
+							"\r",
+							"     \r",
+							"     tests[\"ChartOfAccountExists : \" + true ] = (true);\r",
+							"     postman.setNextRequest(\"CreateCustomerGlAccountCustGl\");\r",
+							"    }\r",
+							"   }\r",
+							"    \r",
+							"});\r",
+							"     \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cust1&PageSize=23 ",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"chartofaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "Cust1"
+						},
+						{
+							"key": "PageSize",
+							"value": "23 "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateChartOfAccountCust1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acc1d4e1-7c34-4550-93c8-876b886c9ec1",
+						"exec": [
+							"pm.test(\"CreateChartOfAccountCust1\", function () {\r",
+							" pm.response.to.have.status(200);\r",
+							"    var idvalue =(pm.response.json().Id);\r",
+							"     var idvalue2 =(pm.response.json().Code);\r",
+							"    var idvalue3 =(pm.response.json().LocalName);\r",
+							"    var idvalue4 =(pm.response.json().EnglishName);\r",
+							"    var idvalue5 =(pm.response.json().ParentId);\r",
+							"    var idvalue6 =(pm.response.json().TypeCode);\r",
+							"    var idvalue7 =(pm.response.json().Inactive);\r",
+							"    var idvalue8 =(pm.response.json().TypeName);\r",
+							"    var idvalue9 =(pm.response.json().ParentName);\r",
+							"    var idvalue10 =(pm.response.json().SearchFields);\r",
+							"    \r",
+							"    \r",
+							"    \r",
+							"    \r",
+							"    var idexist = idvalue !== null;\r",
+							"    pm.expect(idexist);\r",
+							"    if(idexist){\r",
+							"     pm.environment.set(\"ChartOfAccountId\",idvalue);\r",
+							"     pm.environment.set(\"ChartOfAccountCode\",idvalue2);\r",
+							"     pm.environment.set(\"ChartOfAccountLocalName\",idvalue3);\r",
+							"     pm.environment.set(\"ChartOfAccountEnglishName\",idvalue4);\r",
+							"     pm.environment.set(\"ChartOfAccountParentId\",idvalue5);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeCode\",idvalue6);\r",
+							"     pm.environment.set(\"ChartOfAccountInactive\",idvalue7);\r",
+							"     pm.environment.set(\"ChartOfAccountTypeName\",idvalue8);\r",
+							"     pm.environment.set(\"ChartOfAccountParentName\",idvalue9);\r",
+							"     pm.environment.set(\"ChartOfAccountSearchFields\",idvalue10);\r",
+							"     \r",
+							"     \r",
+							"     tests[\"BodyContanisChartOfAccountId : \" + true] =(true);\r",
+							"        postman.setNextRequest(\"CreateCustomerGlAccountCustGl\");   \r",
+							"    }\r",
+							"    \r",
+							"   \r",
+							"    \r",
+							"});\r",
+							"     \r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Code\": \"Cust1\",\r\n    \"LocalName\": \"לקוחות\",\r\n    \"Englishname\": \"PMCustomerChart\",\r\n    \"TypeCode\": \"3\",\r\n    \"Inactive\": true,\r\n    \"SearchFields\": \"Cust1,לקוחות,CustomerChart\",\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/test/api/chartofaccounts",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"chartofaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCustomerGlAccountCustGl",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "90cec87d-391d-44af-a787-c761323f084f",
+						"exec": [
+							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							" ",
+							"    var id1exist = idvalue1 !== null;",
+							"   ",
+							"",
+							"    pm.expect(id1exist);",
+							"   ",
+							"   // pm.environment.set(\"GLAccountId1\",idvalue1);",
+							" //  tests[\"BodyContanisGLAccountId : \" + id1exist] = responseBody.has(id1exist);",
+							" ",
+							"    ",
+							"",
+							"if (id1exist)  {",
+							"   pm.environment.set(\"CustomerGLAccountId\",idvalue1); ",
+							"   ",
+							"   ",
+							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
+							"   postman.setNextRequest(\"GetVendorGlAccountVendGL\");",
+							" ",
+							"}});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"AccountTypeCode\":\"2\",\r\n   \"DisplayNumber\":\"PMGLCust\",\r\n   \"LocalName\":\"CustGlAccountLocal\",\r\n   \"EnglishName\":\"CustGlAccountEnglish\",\r\n   \"SearchFields\":\"PMGLCust,PMGLCust,PMGLCust\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{ChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"3\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{CustomerId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/glaccounts",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"glaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetVendorGlAccountVendGL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1c5e3b43-19fc-4816-9f8f-e7dec3f51fa9",
+						"exec": [
+							"pm.test(\"Get Vendor GlAccount VendorGL\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"     tests[\"VendorGLAccountExists : \" + false] = (true);",
+							"        postman.setNextRequest(\"CreateVendorGlAccountVendGL\");   ",
+							"   }",
+							"   else {",
+							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].Id);",
+							"    var idvalue2 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].InternalNumber);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    ",
+							" if (idexist)  {",
+							"     pm.environment.set(\"VendorGLAccountId\",idvalue);",
+							"      pm.environment.set(\"InternalNumber\",idvalue2);",
+							"     tests[\"GlAccountExists : \" + true] = (true);",
+							"      postman.setNextRequest(\"GetCustomerAddress\"); ",
+							"    }",
+							"   }",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMGLVend&PageSize=23",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"glaccountviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "PMGLVend"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateVendorGlAccountVendGL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "90cec87d-391d-44af-a787-c761323f084f",
+						"exec": [
+							"pm.test(\"CreateCustomerGlAccountCustGl \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							" ",
+							"    var id1exist = idvalue1 !== null;",
+							"   ",
+							"",
+							"    pm.expect(id1exist);",
+							"   ",
+							"   // pm.environment.set(\"GLAccountId1\",idvalue1);",
+							" //  tests[\"BodyContanisGLAccountId : \" + id1exist] = responseBody.has(id1exist);",
+							" ",
+							"    ",
+							"",
+							"if (id1exist)  {",
+							"   pm.environment.set(\"VendorGLAccountId\",idvalue1); ",
+							"   ",
+							"   tests[\"BodyContanisGlAccountId : \" + id1exist] =(id1exist);",
+							"      postman.setNextRequest(\"GetCustomerAddress\");",
+							"",
+							" ",
+							"}});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"PMGLVend\",\r\n   \"LocalName\":\"VendGlAccountLocal\",\r\n   \"EnglishName\":\"VendGlAccountEnglish\",\r\n   \"SearchFields\":\"VendGl,VendGlAccountEnglish,VendGlAccountLocal\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/glaccounts",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"glaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCustomerAddress",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b703704-e2de-4d97-b3c5-ff7986f1f8d9",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Get Customer Address \", function () {",
+							" pm.response.to.have.status(200);",
+							"    var idvalue =(pm.response.json().MainAddressId );",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    if(idexist){",
+							"     pm.environment.set(\"CustomerAddressId\",idvalue);",
+							"     ",
+							"     tests[\"BodyContanisAddressId : \" + idexist] =(idexist);",
+							"      postman.setNextRequest(\"GetVendorAddress\");",
+							"    }",
+							"    ",
+							"    ",
+							"   ",
+							"    ",
+							"});  ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/cardviews/getsingle/?id={{CustomerId}}\n",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"cardviews",
+						"getsingle",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{CustomerId}}\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetVendorAddress",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b703704-e2de-4d97-b3c5-ff7986f1f8d9",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Get Customer Address \", function () {",
+							" pm.response.to.have.status(200);",
+							"    var idvalue =(pm.response.json().MainAddressId );",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    if(idexist){",
+							"     pm.environment.set(\"VendorAddressId\",idvalue);",
+							"     ",
+							"     tests[\"BodyContanisAddressId : \" + idexist] =(idexist);",
+							"      postman.setNextRequest(null);",
+							"    }",
+							"    ",
+							"    ",
+							"   ",
+							"    ",
+							"});  ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{Token}}"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/cardviews/getsingle/?id={{VendorId}}\n",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"cardviews",
+						"getsingle",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{VendorId}}\n"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -143,11 +143,9 @@ namespace CommunicationWorkerRole
                                 else
                                 {
                                     this.UpdateReportExecutionLog(null, reportExecutionLog, reportExecutionLogRepository, "F" , "Report fliter not found");
+                                    queueservice.Complete();
 
                                 }
-
-
-                                queueservice.Complete();
 
                                 LogDoneItemInMemory();
                             }
@@ -184,6 +182,7 @@ namespace CommunicationWorkerRole
             }
         }
 
+
         private void ConnectClient()
         {
             try
@@ -214,9 +213,11 @@ namespace CommunicationWorkerRole
                 {
                     ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
                     this.UpdateReportExecutionLog(ex, reportExecutionLog, reportExecutionLogRepository, "F");
-                    queueservice.CompleteAsFailed();
+ 
 
                 }
+
+                queueservice.CompleteAsFailed();
             }
         }
 

@@ -1875,8 +1875,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Customers", DefaultText = "Customers", LocalDefaultText = "לקוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Vendors", DefaultText = "Vendors", LocalDefaultText = "ספקים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentChequeOptions", DefaultText = "Internal Cheque \\ Manual entry", LocalDefaultText = " מערכת המחאות/המחאה ידנית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.YouDontHavePermission", DefaultText = "Sorry! you have no permission to do this operation on ", LocalDefaultText = " אין לך הרשאה להכנת המחאה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
-
+            
 
             #region MainMenu
 
