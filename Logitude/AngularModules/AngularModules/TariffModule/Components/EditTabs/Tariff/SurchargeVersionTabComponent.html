@@ -77,6 +77,14 @@
                             <div></div>
                         </td>
 
+                        <td style="width: 1px" *ngIf="IsUpdateSurchargesButtonVisible">
+                            <button class="Button" (click)="UpdateSurchargesClicked()">Update Surcharges</button>
+                        </td>
+
+                        <td style="width:5px;" *ngIf="IsUpdateSurchargesButtonVisible">
+                            <div></div>
+                        </td>
+
                         <td style="width: 1px" *ngIf="IsApproveVersionButtonVisible">
                             <button class="Button" (click)="ApproveVersionClicked()">Approve Version</button>
                         </td>
