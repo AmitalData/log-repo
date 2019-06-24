@@ -24,7 +24,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public AirlineQuery()
         {
-            repository = new AirlineRepository(); 
+            repository = new AirlineRepository();
         }
 
         public AirlineQuery(int tenant)
@@ -36,6 +36,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             repository = airlineRepositoryRepository;
         }
+
+
+
 
         public AirlinePM GetSinglePMByCode(string code, int tenant)
         {
@@ -71,7 +74,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                IBANNumber = a.Card.IBANNumber,
                                BankName = a.Card.BankName,
                                BankAddress = a.Card.BankAddress,
-                               TTY = a.TTY,                                                                                                                                                                                          
+                               TTY = a.TTY,
                                IsChampRegistered = a.IsChampRegistered,
                                ChampNeedsRegistration = a.ChampNeedsRegistration,
                                AccountNumber = a.AccountNumber,
@@ -111,7 +114,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                ExternalAccountingBusinessArea = a.Card.ExternalAccountingBusinessArea,
                                PaymentMethodCode = a.Card.SATPaymentMethodCode,
                                ExternalId2 = a.Card.ExternalId2,
-                               SATForeignRFC= a.Card.ExternalId2,
+                               SATForeignRFC = a.Card.ExternalId2,
                                MetodoPagoCode = a.Card.MetodoPagoCode,
                                UsoCFDICode = a.Card.UsoCFDICode,
                                ImageDetailId = a.Card.ImageDetailId,
@@ -124,7 +127,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                },
                            }).FirstOrDefault();
 
-          
+
             if (airline != null)
             {
                 AirlinePM securedPm = new AirlinePM();
@@ -327,7 +330,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(repository.context);
             CardExternalCodeByCurrencyQuery cardExternalCodeByCurrencyQuery = new CardExternalCodeByCurrencyQuery(cardExternalCodeByCurrencyRepository);
             airline.CardExternalCodeByCurrencies = cardExternalCodeByCurrencyQuery.GetCardExternalCodeByCurrencyPMsForCustomer(airline.Id, airline.Tenant);
-            
+
             if (airline != null)
             {
                 airline.IsExternal = false;
@@ -341,14 +344,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         airline.IsExternal = true;
                     }
                 }
+
+                AirlineAreaRepository airlineAreaRepository = new AirlineAreaRepository(repository.context);
+                AirlineAreaQuery airlineAreaQuery = new AirlineAreaQuery(airlineAreaRepository);
+                airline.AirlineAreas = airlineAreaQuery.GetAirlineAreasPMsByAirlineId(airline.Id, airline.Tenant);
+
             }
+
+
 
             AirlinePM securedPm = new AirlinePM();
             SecuredMapping.GetMappedPM(airline, securedPm, "Airline", tenant);
 
             return securedPm;
         }
-        
+
         public bool CheckAirlinesAddedManually(string id, int tenant)
         {
             bool addedManually = (from a in repository.context.Airlines
@@ -358,7 +368,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return addedManually;
         }
-        
+
         public IQueryable<AirlinePM> GetAirlinePMsByTenant(int tenant)
         {
             IQueryable<AirlinePM> airlines = from a in repository.context.Airlines.Include("Card")
@@ -436,7 +446,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  MetodoPagoCode = a.Card.MetodoPagoCode,
                                                  UsoCFDICode = a.Card.UsoCFDICode,
                                                  ImageDetailId = a.Card.ImageDetailId,
-                                             };         
+                                             };
             return airlines;
         }
 
