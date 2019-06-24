@@ -1693,7 +1693,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
 
 
-        if (operation.Code == this.currentOp.Code || operation.Code == this.beforeOp.Code || operation.Code == this.afterOp.Code || operation.Code == this.previousOp.Code || operation.Code == this.nextOp.Code || operation.Code == this.currentOp.Code) {
+        if (operation.Code == this.currentOp.Code || operation.Code == this.beforeOp.Code || operation.Code == this.afterOp.Code || operation.Code == this.previousOp.Code || operation.Code == this.nextOp.Code || operation.Code == this.currentOp.Code || operation.Code == this.BetweenOp.Code) {
             this.DontSaveChanges = true;
             //this.TextValue = "";
             this.Operation = operation;
@@ -1946,6 +1946,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.list.push(this.previousOp);
             this.list.push(this.currentOp);
             this.list.push(this.nextOp);
+            this.list.push(this.BetweenOp);
+            
 
         }
 
@@ -1966,7 +1968,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     lessThanOp: ObjectFieldOperator = new ObjectFieldOperator("LessThan", "Less Than");
     greaterThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("GreaterThanOrEqual", "Greater Than Or Equal");
     lessThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("LessThanOrEqual", "Less Than Or Equal");
-    BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
+ 
     IsNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNull", "Is Empty");
     IsNotNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNotNull", "Has Value");
 
@@ -1976,6 +1978,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     previousOp: ObjectFieldOperator = new ObjectFieldOperator("Previous", "Previous");
     currentOp: ObjectFieldOperator = new ObjectFieldOperator("Current", "Current");
     nextOp: ObjectFieldOperator = new ObjectFieldOperator("Next", "Next");
+    BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
 }
 
 export class ObjectFieldOperator {
