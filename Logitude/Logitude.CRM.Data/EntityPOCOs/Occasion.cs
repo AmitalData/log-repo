@@ -42,9 +42,9 @@ namespace Logitude.CRM.Data.EntityPOCOs
         [Column("Name")]
 	    public string Name { get; set; }
         [Column("StartDateTime")]
-	    public DateTime StartDateTime { get; set; }
+	    public DateTime? StartDateTime { get; set; }
         [Column("EndDateTime")]
-	    public DateTime EndDateTime { get; set; }
+	    public DateTime? EndDateTime { get; set; }
         [Column("Goal")]
 	    public string Goal { get; set; }
         [Column("Location")]

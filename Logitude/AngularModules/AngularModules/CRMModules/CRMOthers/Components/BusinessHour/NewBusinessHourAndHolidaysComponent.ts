@@ -563,7 +563,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         logWindow.Width = 800;
         logWindow.Height = 450;
         logWindow.DataContext = viewModel;
-        logWindow.Show('./CRM/Components/NewEntity/NewBusinessHour/AddEditBusinessHourHolidayComponent');
+        logWindow.Show('./CRMModules/CRMOthers/Components/BusinessHour/AddEditBusinessHourHolidayComponent');
     }
     EditHoliday(holiday: BusinessHoursHolidayPM) {
         var viewModel = new BusinessHourHolidayArgs(this.entityPM, holiday, this, false, true);
@@ -572,7 +572,7 @@ export class NewBusinessHourAndHolidaysComponent extends BaseComponent {
         logWindow.Width = 800;
         logWindow.Height = 450;
         logWindow.DataContext = viewModel;
-        logWindow.Show('./CRM/Components/NewEntity/NewBusinessHour/AddEditBusinessHourHolidayComponent');
+        logWindow.Show('./CRMModules/CRMOthers/Components/BusinessHour/AddEditBusinessHourHolidayComponent');
     }
     SetIs247Radio(arg) {
         this.Is247 = arg;

@@ -93,7 +93,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     var exist = reportLinesList.Where(d => d.JournalId == a.Id).Any();
                     if (!exist)
                     {
-                        string reference = null;
+                        string outputreference = null;
                         ARInvoice invoice = invoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
                         if (invoice != null)
                         {
@@ -101,11 +101,11 @@ namespace Logitude.Accounting.BL.CoreBL
                             InvoiceAmount = invoice.TotalAmountForTaxReport != null ? invoice.TotalAmountForTaxReport : 0;
                             if (invoice.InvoiceNumber.Length == 9)
                             {
-                                reference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
+                                outputreference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
                             }
                             else
                             {
-                                reference = invoice.InvoiceNumber;
+                                outputreference = invoice.InvoiceNumber;
                             }
 
                             if (!string.IsNullOrEmpty(invoice.VatNumber))
@@ -115,7 +115,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             TaxReportLinePM line = new TaxReportLinePM()
                             {
                                 VatNumber = vatNumber,
-                                Reference = reference,
+                                Reference = outputreference,
                                 ReferecneGroup = "0000",
                                 ReferenceDate = invoice.InvoiceDate,
                                 JournalId = a.Id,
@@ -190,7 +190,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 APInvoiceTotalVATQuery myTotalVATQuery = new APInvoiceTotalVATQuery(tenant);
                 List<APInvoiceTotalVATPM> totalvats = new List<APInvoiceTotalVATPM>();
                 totalvats = myTotalVATQuery.GetTotalVATs(ids, tenant);
-
+               
                 foreach (TaxReportData a in ledgerTransactons)
                 {
                     Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.GLAccountId == a.OppositGLAccount).FirstOrDefault();
@@ -244,26 +244,15 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                     }
-
-                    if (a.Reference != null) {
-
-
-                        Regex rg = new Regex(@"^[a-zA-Z\s,]*$");
-                        string[] match = rg.Split(a.Reference);
-                        if (match.Count() >0)
-                        {
-
-
-                        }
-
-                    }
+                    SetReferenceFields(a.Reference);
+                   
                     TaxReportLinePM taxReportLine = new TaxReportLinePM()
                     {
 
                         VatNumber = VatNumber,
-                        Reference = a.Reference,
+                        Reference = reference,
                         ReferenceDate = a.ReferenceDate,
-                        ReferecneGroup = "0000",
+                        ReferecneGroup = referenceGroup,
                         JournalId = a.JournalId,
                         OutputOrInput = "I",
                         VatAmount = Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
@@ -366,6 +355,35 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
+
+        }
+       static string  reference = null;
+        static string referenceGroup = null;
+        public static void SetReferenceFields(string Reference)
+        {
+            if (Reference != null)
+            {
+                if (Reference.Contains("-"))
+                {
+
+                    Reference = Reference.Replace("-", "");
+                }
+
+                var array = Regex.Matches(Reference, @"\D+|\d+")
+                    .Cast<Match>()
+                    .Select(m => m.Value)
+                    .ToArray();
+                if (array.Length > 1)
+                {
+                    referenceGroup = array[0];
+                    reference = array[1];
+                }
+                else
+                {
+                    reference = Reference;
+                    referenceGroup = "0000";
+                }
+            }
 
         }
 
