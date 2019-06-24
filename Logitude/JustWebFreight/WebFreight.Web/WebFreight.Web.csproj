@@ -2871,6 +2871,8 @@
     <Content Include="Integration Test\Logbox\LogboxHeaders.postman_collection.json" />
     <Content Include="Integration Test\Security\DocumentDownloadTokenKey.postman_collection.json" />
     <Content Include="Integration Test\Security\ShipmentSecurityTest.postman_collection.json" />
+    <Content Include="Integration Test\DocsIn\DocumentsIn.postman_collection.json" />
+    <Content Include="Integration Test\DocsOut\DocumentsOut.postman_collection.json" />
     <None Include="Properties\PublishProfiles\main.pubxml" />
     <None Include="Properties\PublishProfiles\NewPublish.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
