@@ -311,7 +311,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  JournalNumber = a.JournalNumber,
                                                  AccountingDate = a.AccountingDate,
                                                  StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
-                                                 Id = a.Id
+                                                 Id = a.Id,
+                                                 IsVoided = a.IsVoided,
                                              };
 
             return journals;
@@ -382,6 +383,31 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             return journalPMs;
         }
+
+
+        public List<JournalPM> GetJournalPMsByIds(List<string> ids, int tenant)
+        {
+            List<JournalPM> journalPMs = new List<JournalPM>();
+            IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingIds(ids, tenant);
+
+            IQueryable<JournalPM> journals = from a in journalQuery
+                                             select new JournalPM()
+                                             {
+                                                 JournalNumber = a.JournalNumber,
+                                                 AccountingDate = a.AccountingDate,
+                                                 StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
+                                                 Id = a.Id,
+                                                 IsVoided = a.IsVoided,
+                                             };
+            journalPMs = journals.ToList();
+            foreach (JournalPM journal in journalPMs)
+            {
+
+                journal.JournalLines = GetJournalLines(journal, tenant);
+            }
+            return journalPMs;
+        }
+
 
         public List<JournalLinePM> GetJournalLines(JournalPM journal, int tenant)
         {

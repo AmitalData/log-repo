@@ -42,9 +42,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.UserName).HasColumnName("UserName");
             this.Property(t => t.Password).HasColumnName("Password");
             this.Property(t => t.Catalog).HasColumnName("Catalog");
+            this.Property(t => t.IsParentTenant).HasColumnName("IsParentTenant");
 
 
-
-    }
+        }
     }
 }

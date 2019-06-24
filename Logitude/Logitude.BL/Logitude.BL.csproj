@@ -331,6 +331,12 @@
     <Compile Include="CommonDataModel\CodePropertiesMapping\IncotermCodePropertiesMapping.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AgentSharedManifestCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
+    <Compile Include="CommonDataModel\EntityLists\AirlineAreasPortList.cs" />
+    <Compile Include="CommonDataModel\EntityLists\AirlineAreaList.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\AirlineAreasPortPM.cs" />
+    <Compile Include="CommonDataModel\EntityPMs\AirlineAreaPM.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\AirlineAreasPortQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\AirlineAreaQuery.cs" />
     <Compile Include="QuoteModel\CustomFilters\QuoteTemplateCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
     <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />
