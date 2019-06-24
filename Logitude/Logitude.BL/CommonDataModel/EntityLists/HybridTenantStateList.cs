@@ -20,5 +20,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
 
 
         public DateTime LastUpdateDateTime { get; set; }
+        public DateTime? LastQueueDateTime { get; set; }
     }
 }

@@ -87,6 +87,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                 else
                 {
+                    if(entityPM.PackagesDeleted)
+                    {
+                        this.CreateTraceEvent("PADL", entityPM.EventNote);
+                    }
+
                     if(entityPM.ShipmentDirectionConverted)
                     {
                         this.CreateTraceEvent("SDCV", entityPM.EventNote);

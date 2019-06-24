@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     TypeCode="0",
                     StatusCode="2",
                     CreatedByUserId = entityPM.CreatedByUserId,
-                    AccountingEntityCode = "9",
+                    AccountingEntityCode = paymentPM != null ? "5": "9",
                     AccountingEntityId = entityPM.APPaymentId != null? entityPM.APPaymentId : entityPM.Id,
                     AccountingEntityReference = paymentPM != null ? paymentPM.PaymentNo : entityPM.ChequeNumber,
                     UpdateDate = entityPM.UpdateDate,

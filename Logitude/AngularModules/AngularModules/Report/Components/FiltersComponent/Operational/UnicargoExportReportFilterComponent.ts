@@ -29,7 +29,7 @@ export class UnicargoExportReportFilterComponent extends BaseComponent {
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-        this.RunReport(false);
+        this.RunReport(true);
     }
 
 

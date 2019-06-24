@@ -90,6 +90,12 @@ exports.config = {
           browser.params.Login.Email = "sumaya@cloud.com";
           browser.params.Login.Password = "Sg0592463934!";
       }
+      else if (browser.params.Env == "logboxStaging") {
+          browser.params.Link = "https://staging.logbox.co.il";
+          browser.params.Login.Email = "ahmadb@test.com";
+          browser.params.Login.Password = "ahmed!A123";
+      }
+      
 
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   },

@@ -87,10 +87,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.CreatePaymentCheque(theEntityPm);
             if(paymentCheque != null)
             {
-                payment.PaymentChequeNumber = paymentCheque.ChequeNumber;
-                theEntityPm.PaymentChequeNumber = payment.PaymentChequeNumber;
-                payment.PaymentChequeId = paymentCheque.Id;
-                theEntityPm.PaymentChequeId = payment.PaymentChequeId;
+                payment.ChequeOrPaymentRef = paymentCheque.ChequeNumber;
+                theEntityPm.ChequeOrPaymentRef = payment.ChequeOrPaymentRef;
+               
             }
             this.UpdatePaymentOpenAmount();
             APPaymentHelper service = new APPaymentHelper();
@@ -117,51 +116,57 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         PaymentChequePM paymentCheque;
         private void CreatePaymentCheque(APPaymentPM entityPM )
         {
-            FullAccountingSettingPM setting = GetFullAccountingSetting(entityPM);
-            if (setApproved && entityPM.AutomaticPaymentCheque  )
-            {
-              
-                GLAccountPM gLAccount = GetGLAccountByCard(entityPM);
-                 paymentCheque = new PaymentChequePM() {
-
-                    CreateDate = DateTime.Today,
-                   
-                    PayToGLAccountId =gLAccount != null? gLAccount.Id : null,
-                   PayToName = gLAccount != null? (gLAccount.LocalName != null? gLAccount.LocalName : gLAccount.EnglishName) :null,
-                   BankAccountId = entityPM.BankAccountId,
-                    BankAccountGLAccountId = GetTransferAccountIdByBankAccountId(entityPM),
-                   LocalAmount =(decimal?) entityPM.AmountInLocalCurrency,
-                   CurrencyId = entityPM.PaymentCurrencyId,
-                   ExchangeRate = (decimal?)entityPM.PaymentCurrencyExchangeRate,
-                   ForeignAmount = (decimal?)entityPM.AmountInPaymentCurrency,
-                   ValueDate = entityPM.ValueDate,
-                   ApprovedByUserId = entityPM.ApprovedByUserId,
-                   ApproveDate = entityPM.ApprovedDateTime,
-                   APPaymentId = entityPM.Id,
-                   PaymentChequeStatusCode ="2",
-                   ChangeSetOp = ChangeSetOperation.Insert,
-                   Tenant = entityPM.Tenant,
-                   
-                };
-
-                PaymentChequeLinePM paymentChequeLine = new PaymentChequeLinePM()
+            FullAccountingSettingPM accountingSettings = GetFullAccountingSettings(tenant);
+            if (accountingSettings.AccountingActivated && accountingSettings.IsPaymentChequesActivated) {
+                IPaymentChequeQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IPaymentChequeQueryServiceExt), "PaymentChequeQueryServiceExt", new ParameterOverride("", 1)) as IPaymentChequeQueryServiceExt;
+                List<PaymentChequePM> PaymentCheques = query.GetPaymentChequesByPaymentId(entityPM.Id, tenant);
+                if (PaymentCheques.Count == 0)
                 {
-                    Notes = entityPM.PaymentNo,
-                    Amount =(decimal?) entityPM.AmountInLocalCurrency,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    Line =1,
-                    Tenant= entityPM.Tenant
+                    if (setApproved && (entityPM.AutomaticPaymentCheque || string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef)))
+                    {
+                        SecurityUtility.CheckContactFeature("PaymentCheque", "NEW", entityPM.Tenant);
+                        GLAccountPM gLAccount = GetGLAccountByCard(entityPM);
+                        paymentCheque = new PaymentChequePM()
+                        {
 
-                };
-                paymentCheque.PaymentChequeLines.Add(paymentChequeLine);
-                IPaymentChequeUpdateServiceExt paymentChequeUpdateService = ContainerAccessor.Container.Resolve(typeof(IPaymentChequeUpdateServiceExt), "PaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IPaymentChequeUpdateServiceExt;
-                paymentChequeUpdateService.Update(paymentCheque);
-              
+                            CreateDate = DateTime.Today,
+
+                            PayToGLAccountId = gLAccount != null ? gLAccount.Id : null,
+                            PayToName = gLAccount != null ? (gLAccount.LocalName != null ? gLAccount.LocalName : gLAccount.EnglishName) : null,
+                            BankAccountId = entityPM.BankAccountId,
+                            BankAccountGLAccountId = GetTransferAccountIdByBankAccountId(entityPM),
+                            LocalAmount = (decimal?)entityPM.AmountInLocalCurrency,
+                            CurrencyId = entityPM.PaymentCurrencyId,
+                            ExchangeRate = (decimal?)entityPM.PaymentCurrencyExchangeRate,
+                            ForeignAmount = (decimal?)entityPM.AmountInPaymentCurrency,
+                            ValueDate = entityPM.ValueDate,
+                            ApprovedByUserId = entityPM.ApprovedByUserId,
+                            ApproveDate = entityPM.ApprovedDateTime,
+                            APPaymentId = entityPM.Id,
+                            PaymentChequeStatusCode = "2",
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            Tenant = entityPM.Tenant,
+
+                        };
+
+                        PaymentChequeLinePM paymentChequeLine = new PaymentChequeLinePM()
+                        {
+                            Notes = entityPM.PaymentNo,
+                            Amount = (decimal?)entityPM.AmountInLocalCurrency,
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            Line = 1,
+                            Tenant = entityPM.Tenant
+
+                        };
+                        paymentCheque.PaymentChequeLines.Add(paymentChequeLine);
+                        IPaymentChequeUpdateServiceExt paymentChequeUpdateService = ContainerAccessor.Container.Resolve(typeof(IPaymentChequeUpdateServiceExt), "PaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IPaymentChequeUpdateServiceExt;
+                        paymentChequeUpdateService.Update(paymentCheque);
+
+                    }
+
+                }
+
             }
-
-
-
-
         }
 
         public string GetTransferAccountIdByBankAccountId(APPaymentPM paymentPM)
@@ -252,6 +257,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     IPaymentChequeUpdateServiceExt paymentChequeUpdate = ContainerAccessor.Container.Resolve(typeof(IPaymentChequeUpdateServiceExt), "PaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IPaymentChequeUpdateServiceExt;
                     item.PaymentChequeStatusCode = "4";
+                    item.IsCancelled = true;
                     item.ChangeSetOp = ChangeSetOperation.Update;
                     paymentChequeUpdate.Update(item);
                 }
@@ -284,7 +290,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             APPaymentValidator.Validate(theEntityPm);
             APPaymentTracing.Trace(theEntityPm, payment, isNewEntity);
-
+          
             foreach (APPaymentInvoicePM item in changedList)
             {
                 switch (item.ChangeSetOp)
@@ -311,11 +317,17 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
             this.InitializeTransferComponents();
-            var setApproved = theEntityPm.SetApproved;
+             setApproved = theEntityPm.SetApproved;
             var setVoided = theEntityPm.SetVoided;
             var setCancelApproved = theEntityPm.SetCancelApproval;
             var SetReSendQBO = theEntityPm.SetReSendQBO;
+            CreatePaymentCheque(theEntityPm);
+            if (paymentCheque != null)
+            {
+               
+                theEntityPm.ChequeOrPaymentRef = paymentCheque.ChequeNumber;
 
+            }
             APPaymentMapping.MapEntity(theEntityPm, payment, isNewEntity);   
             paymentRepository.Update(payment);
             paymentRepository.SubmitChanges();           
@@ -404,7 +416,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.Id = IdCounter.GetNumber("APPayment", entityPM.Tenant).ToString();
             }
-           
+          
+
             if (string.IsNullOrEmpty(entityPM.PaymentNo))
             {
                 entityPM.PaymentNo = TableCounter.GetNumber(entityPM.Tenant, "APPT", "DR", null).ToString();

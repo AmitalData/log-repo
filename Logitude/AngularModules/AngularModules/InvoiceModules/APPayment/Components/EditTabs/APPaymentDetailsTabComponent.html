@@ -438,7 +438,7 @@
                                                 <td style="width:150px; left: -10px;">
                                                     <LogLabel [ObjectFieldName]="'ValueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-                                                <td *ngIf="!PaymentChequeActivated">
+                                                <td *ngIf="!AutomaticPaymentCheque">
                                                     <table>
                                                         <tr>
                                                             <td style="width:150px; left: -10px;">
@@ -465,11 +465,14 @@
                                                     </table>
 
                                                 </td>
-                                                <td *ngIf="!IsSplitButtonVisibile">
+                                                <td *ngIf="IsChequeLinkVisibile">
                                                     <table>
                                                         <tr>
-                                                            <td>
-                                                                {{'PaymentCheque.F.ChequeNumber'| TextCodeTranslationPipe  }}
+                                                            <td style="width:150px; ">
+
+                                                                <LogLabel [ObjectFieldName]="'ChequeOrPaymentRef'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+
                                                             </td>
 
                                                             <td><div></div></td>
@@ -478,6 +481,7 @@
                                                     </table>
 
                                                 </td>
+                                                <td *ngIf="!IsChequeLinkVisibile && !IsSplitButtonVisibile && AutomaticPaymentCheque"></td>
                                                 <td>
                                                     <div></div>
                                                 </td>
@@ -506,7 +510,7 @@
                                                     <LogDatePicker [ObjectFieldName]="'ValueDate'" [SelectedDateValue]="ValueDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
 
-                                                <td *ngIf="!PaymentChequeActivated">
+                                                <td *ngIf="!AutomaticPaymentCheque">
                                                     <table>
                                                         <tr>
                                                             <td style="width:150px;">
@@ -545,8 +549,9 @@
                                                 <td *ngIf="IsSplitButtonVisibile">
                                                     <table>
                                                         <tr>
-                                                            <td *ngIf="PaymentChequeActivated" style="text-align:right;width:50px;color:#1B90CB;cursor:pointer;font-size:14px" (click)="SplitButtonClicked()">{{ 'Accounting.General.O.PaymentChequeOptions' | TextCodeTranslationPipe}} </td>
-                                                            <td *ngIf="PaymentChequeActivated || ShowSplitButton" style="width: 27px; min-width: 27px; left: -10px;" (click)="SplitButtonClicked()">
+                                                            <td *ngIf="PaymentChequeActivated" style="text-align:right;width:70px;color:#1B90CB;cursor:pointer;font-size:14px" (click)="SplitButtonClicked()">{{ 'Accounting.General.O.PaymentChequeOptions' | TextCodeTranslationPipe}} </td>
+                                                            <td style="width:10px"></td>
+                                                            <td *ngIf="PaymentChequeActivated || ShowSplitButton" style="width: 27px; min-width: 27px;" (click)="SplitButtonClicked()">
                                                                 <img class="SplitButton" src="./Images/Split/split-icon-right.png" [class.flipHoriz]="IsSplitComponentOpened" />
                                                             </td>
                                                             <td><div></div></td>
@@ -557,11 +562,12 @@
                                                 </td>
 
 
-                                                <td *ngIf="!IsSplitButtonVisibile">
+                                                <td *ngIf="IsChequeLinkVisibile">
                                                     <table>
                                                         <tr>
-                                                            <td>
-                                                                <a  style="font-size:12px; color:green" (click)="ViewPaymentChequeId(item)">{{EntityPM.PaymentChequeNumber}}</a>
+                                                         
+                                                            <td style="width:50px;text-align:center">
+                                                                <a style="font-size:12px; color:green" (click)="ViewPaymentCheque(item)">{{EntityPM.ChequeOrPaymentRef}}</a>
                                                             </td>
                                                             
                                                             <td><div></div></td>
@@ -570,6 +576,8 @@
                                                     </table>
 
                                                 </td>
+                                                <td *ngIf="!IsChequeLinkVisibile && !IsSplitButtonVisibile && AutomaticPaymentCheque" style="width:400px"></td>
+                                                <td><div></div></td>
 
 
 
@@ -579,7 +587,7 @@
                                             </tr>
 
                                             <tr>
-                                                <td colspan="8">
+                                                <td>
                                                     <div></div>
                                                 </td>
                                             </tr>

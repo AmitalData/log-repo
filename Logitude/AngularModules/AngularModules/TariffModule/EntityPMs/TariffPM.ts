@@ -7,7 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-//import {TariffVersionPM} from './TariffVersionPM';
 import {TariffVersionPM} from './TariffVersionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -312,6 +311,16 @@ export class TariffPM {
     private fileUploadedName: string;
     public get FileUploadedName() { return this.fileUploadedName; }
     public set FileUploadedName(newValue: string) { if (this.fileUploadedName != newValue) { this.fileUploadedName = newValue; this.MarkAsDirty("FileUploadedName"); } }
+       
+	 
+    private concurrencyGUID: string;
+    public get ConcurrencyGUID() { return this.concurrencyGUID; }
+    public set ConcurrencyGUID(newValue: string) { if (this.concurrencyGUID != newValue) { this.concurrencyGUID = newValue; this.MarkAsDirty("ConcurrencyGUID"); } }
+       
+	 
+    private newConcurrencyGUID: string;
+    public get NewConcurrencyGUID() { return this.newConcurrencyGUID; }
+    public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
        
 	 
 

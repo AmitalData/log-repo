@@ -108,6 +108,7 @@
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.html" />
+    <Content Include="CommonModules\CommonAirline\Components\EditTabs\AreasTabComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerCustomsAgentByProductSplitComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerForwarderByProductSplitComponent.html" />
     <Content Include="CommonModules\CommonCustomer\Components\EditTabs\MoreButtons\CustomerMediatorByProductSplitComponent.html" />
@@ -177,6 +178,7 @@
     <Content Include="CRMModules\CRMTickets\Components\EditTabs\Overview\TicketOverviewTabComponent.html" />
     <Content Include="CRMModules\CRMTickets\Components\NewEntity\ChooseShipmentComponent.html" />
     <Content Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.html" />
+    <Content Include="CRM\Components\Workspaces\OccasionWorkspaceComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclAP3LoisComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclATabComponent.html" />
@@ -396,6 +398,7 @@
     <TypeScriptCompile Include="Accounting\EntityPMs\OpenFormatReportPM.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedLists\TaxReportLineExtendedListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\AccountingEntegrityCheckExtendedPMService.ts" />
+    <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\PaymentChequeExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\TaxDeductionReportExtendedPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\AccountingIntegrityCheckListService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardLists\IntegrityCheckStatusListService.ts" />
@@ -408,6 +411,7 @@
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AreasTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\Depositions\EditTab\CustomsShipperGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWQueryBuilderFiltersComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonOthers\Components\DWQueryBuilder\DWFilterSettings.ts" />
@@ -424,12 +428,16 @@
     <TypeScriptCompile Include="Common\CustomFilters\WarehouseCustomFilter.ts" />
     <TypeScriptCompile Include="Common\DataContracts\DWQueryData.ts" />
     <TypeScriptCompile Include="Common\DataContracts\ShipmentPickUpDeliverySL.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\AirlineAreaList.ts" />
+    <TypeScriptCompile Include="Common\EntityLists\AirlineAreasPortList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CheckDigitControlAlgorithmList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomerDepositionList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\CustomsShipperList.ts" />
     <TypeScriptCompile Include="Common\EntityLists\NumberFormatList.ts" />
     <TypeScriptCompile Include="Common\EntityPMCustomCode\CustomerPMCustomCode.ts" />
     <TypeScriptCompile Include="Common\EntityPMInitServices\ReportPMInitService.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\AirlineAreaPM.ts" />
+    <TypeScriptCompile Include="Common\EntityPMs\AirlineAreasPortPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomerDepositionPM.ts" />
     <TypeScriptCompile Include="Common\EntityPMs\CustomsShipperPM.ts" />
     <TypeScriptCompile Include="Common\Services\ExtendedLists\CustomerDepositionListExtendedService.ts" />
@@ -480,6 +488,7 @@
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\ChooseShipmentComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
+    <TypeScriptCompile Include="CRM\Components\Workspaces\OccasionWorkspaceComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />

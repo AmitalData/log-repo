@@ -1492,15 +1492,19 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     DeletePackagesButtonClicked() {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Show("Are you sure you want to delete all packages?");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.StartDelete();
-            }
-        });
+        if (this.EntityPM.ShipmentPackages.length > 0) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Show("Are you sure you want to delete all packages?");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.StartDelete();
+                }
+            });
+        }
     }
     private StartDelete() {
+        var numberOfPackages: number = this.EntityPM.ShipmentPackages.length;
+
         for (var i = this.EntityPM.ShipmentPackages.length - 1; i >= 0; i--) {
             var shipmentPackage = this.EntityPM.ShipmentPackages[i];
 
@@ -1570,10 +1574,12 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     this.EntityPM.RemoveDelivery(emptyContainer);
                 }
             }
-
+            
             this.EntityPM.RemovePackage(shipmentPackage);
         }
 
+        this.EntityPM.PackagesDeleted = true;
+        this.EntityPM.EventNote = numberOfPackages + " packages deleted";
         this.ItemsSource = new ObservableCollection([]);
         this.ComputeTotals();
         this.SetUIProperties();
@@ -1587,7 +1593,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
     private DownloadPackages() {
         var logWindow = new LogitudeWindow();
-        logWindow.Title = "Downloading Packahes";
+        logWindow.Title = "Downloading Packages";
         logWindow.Width = 500;
         logWindow.Height = 200;
         logWindow.Show('./ShipmentModules/ShipmentPackages/Components/Packages/DownloadPackagesFileComponent');
@@ -1679,7 +1685,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         myDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                this.packages= response.Result;
+                this.packages = response.Result;
 
                 if (this.packages.filter(d => d.HasErrors).length > 0) {
                     var window: MessageWindow = new MessageWindow();
@@ -1688,9 +1694,17 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
                 else {
                     this.saveAfterDeletePackages = true;
-                    this.StartDelete();
-                    this.CurrentSession.CurrentEditComponent.SaveChanges();                    
+
+                    if (this.EntityPM.ShipmentPackages.length > 0) {
+                        this.StartDelete();
+                    }
+
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
                 }
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

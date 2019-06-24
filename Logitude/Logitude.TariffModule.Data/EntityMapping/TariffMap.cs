@@ -104,6 +104,8 @@ namespace Logitude.TariffModule.Data.EntityMapping
             this.Property(t => t.Surcharge9UOM).HasColumnName("Surcharge9UOM").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Surcharge10UOM).HasColumnName("Surcharge10UOM").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID").IsRequired().HasMaxLength(40).IsUnicode(false);
         }
     }
 }
