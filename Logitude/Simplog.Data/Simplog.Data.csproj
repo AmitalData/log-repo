@@ -170,6 +170,8 @@
     <Compile Include="CommonDataModel\DocumentsFilingsViewContext.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AgentSharedDocument.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AgentSharedManifest.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\AirlineAreasPort.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\AirlineArea.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AirlineMessagingRule.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\Automation.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AutomationHistory.cs" />
@@ -355,6 +357,8 @@
     <Compile Include="CommonDataModel\IDocumentsFilingsViewContext.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentSharedDocumentMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AgentSharedManifestMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\AirlineAreasPortMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\AirlineAreaMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AirlineMessagingRuleMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AirlineStatisticsMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AutomationHistoryMap.cs" />
@@ -450,7 +454,9 @@
     <Compile Include="CommonDataModel\Mapping\PaymentGatewayPartnersMap.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedDocumentRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AgentSharedManifestRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\AirlineAreasPortRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AirlineMessagingRuleRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\AirlineAreaRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AirlineStatisticsRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AutomationHistoryRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\AutomationLastUpdateRepository.cs" />

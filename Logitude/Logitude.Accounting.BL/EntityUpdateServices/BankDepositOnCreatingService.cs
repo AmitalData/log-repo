@@ -214,7 +214,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     newCreditJournalLine.LocalAmount = item.LocalAmount;
                     newCreditJournalLine.ForeignAmount = item.ForeignAmount;
                     newCreditJournalLine.CurrencyId = entityPM.DepositCurrencyId;
-                    newCreditJournalLine.DocumentDate = cheque.ValueDate;
+                    newCreditJournalLine.DocumentDate = entityPM.AccountingDate;
                     newCreditJournalLine.AccountingDate = entityPM.AccountingDate;
                     newCreditJournalLine.ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount;
 
@@ -298,7 +298,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     newDebitJournalLine.LocalAmount = item.LocalAmount;
                     newDebitJournalLine.ForeignAmount = item.ForeignAmount;
                     newDebitJournalLine.CurrencyId = entityPM.DepositCurrencyId;
-                    newDebitJournalLine.DocumentDate = cheque.ValueDate;
+                    newDebitJournalLine.DocumentDate = entityPM.AccountingDate;
                     newDebitJournalLine.AccountingDate = entityPM.AccountingDate;
                     newDebitJournalLine.Reference1 = cheque.ChequeNumber;
                     newDebitJournalLine.Reference2 = entityPM.DepositNumber.ToString();

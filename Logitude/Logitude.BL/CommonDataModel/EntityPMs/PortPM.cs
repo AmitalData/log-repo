@@ -138,5 +138,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string StateName { get; set; }
+
+        [DataMember]
+        public bool CountryIsNorthAmerica { get; set; }
     }
 }

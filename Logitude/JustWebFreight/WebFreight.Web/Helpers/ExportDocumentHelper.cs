@@ -56,7 +56,24 @@ namespace WebFreight.Web.Helpers
     public class ExportDocumentHelper
     {
 
-        public  string ExportDocument2PdfViewWebService(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId, string token)
+        #region ExportDocument2Pdf
+
+        public string ExportDocument2Pdf(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId=null)
+        {
+            string result = string.Empty;
+            if (IsCallBuildDocumentReportWebService(tenant))
+            {
+                result = ExportDocument2PdfViewWebService(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
+            }
+            else
+            {
+                result = ExportDocument2PdfNormalWay(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
+            }
+
+            return result;
+        }
+
+        private string ExportDocument2PdfViewWebService(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId)
         {
             string result;
             try
@@ -66,7 +83,7 @@ namespace WebFreight.Web.Helpers
                 exportDocument2PdfParameterxml = exportDocument2PdfParameterxml.Replace("<", "@TagOpen");
                 string soap = GetSoapReportViaWebService("ExportDocument2Pdf", "exportDocument2PdfParameterxml", exportDocument2PdfParameterxml);
 
-
+                string token = HttpContext.Current.Request.Headers["Token"];
                 string url = LogitudeSettings.CPUIntensiveWebServicesURL.TrimEnd('/') + "/WebServices/BuildDocumentReportWebService.asmx";
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 req.Headers.Add("Token", token);
@@ -85,24 +102,22 @@ namespace WebFreight.Web.Helpers
                     {
                         var serviceResult = rd.ReadToEnd();
                         result = getBetween(serviceResult, "<ExportDocument2PdfResult>", "</ExportDocument2PdfResult>");
-
+                        ExceptionDateExportPdfDocumentWebService = null;
                     }
                 }
 
             }
             catch (Exception ex)
             {
-                result = ExportDocument2Pdf(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId,false);
+                ExceptionDateExportPdfDocumentWebService = DateTime.Now;
+                result = ExportDocument2PdfNormalWay(documentTypeId, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentOutId, tenant, documentTypeCopyId, userId);
 
             }
 
             return result;
         }
 
-
-
-
-        public string ExportDocument2Pdf(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId = null , bool isRunViaService = true)
+        public string ExportDocument2PdfNormalWay(string documentTypeId, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, string documentOutId, int tenant, string documentTypeCopyId, string userId = null )
         {
             try
             {
@@ -141,7 +156,7 @@ namespace WebFreight.Web.Helpers
                 {
                     if (templatedata.Length != 0)
                     {
-                        StiReport report = GetReportDocument(documentType, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, templatedata, defaulttemplate, tenant, theT1, theT2, theA1, theA2, userId, isRunViaService);
+                        StiReport report = GetReportDocument(documentType, entityId, entityObjectTableId, childEntityId, childObjectTableId, documentTypeCopy, templatedata, defaulttemplate, tenant, theT1, theT2, theA1, theA2, userId);
 
                         LoadEditableFields(documentOut, report);
 
@@ -206,6 +221,9 @@ namespace WebFreight.Web.Helpers
             }
 
         }
+       
+        #endregion
+
 
         private static void LoadEditableFields(DocumentOut documentOut, StiReport report)
         {
@@ -330,75 +348,65 @@ namespace WebFreight.Web.Helpers
         private long t1;
         long t2;
 
-        public StiReport GetReportDocument(DocumentType documentType, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, DocumentTypeCopy documentTypeCopy, Byte[] templatedata, DocumentTypeTemplate defaulttemplate, int tenant, long theT1, long theT2, long theA1, long theA2, string userId = null, bool isRunViaService = true)
+        public StiReport GetReportDocument(DocumentType documentType, string entityId, string entityObjectTableId, string childEntityId, string childObjectTableId, DocumentTypeCopy documentTypeCopy, Byte[] templatedata, DocumentTypeTemplate defaulttemplate, int tenant, long theT1, long theT2, long theA1, long theA2, string userId = null)
         {
 
             string documentTypeCopyId = documentTypeCopy != null ? documentTypeCopy.Id : "";
             string documentTypeCode = !string.IsNullOrEmpty(documentType.Code) ? documentType.Code.ToUpper() : "";
             DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
-            StiReport report = new StiReport();
-            if (IsCallBuildDocumentReportWebService(tenant) && isRunViaService)
-            {
-                report = BuildReportViaWebService(new BuildDocumentParameter { DocumentTypeCode = documentType.Code, DocumentTypeId = documentType.Id, EntityId = entityId, EntityObjectTableId = entityObjectTableId, ChildEntityId = childEntityId, ChildObjectTableId = childObjectTableId, DefaulttemplateId = defaulttemplate.Id, Tenant = tenant, DocumentTypeCopyId = documentTypeCopyId });
-            }
-            else
-            {
-                return BuildReport(documentType.Code, documentType.Id, entityId, entityObjectTableId, childEntityId, childObjectTableId, defaulttemplate.Id, tenant, documentTypeCopyId, userId);
-
-            }
-
+            StiReport report =  BuildReport(documentType.Code, documentType.Id, entityId, entityObjectTableId, childEntityId, childObjectTableId, defaulttemplate.Id, tenant, userId, documentTypeCopyId);
             return report;
         }
 
 
-        private StiReport BuildReportViaWebService(BuildDocumentParameter buildDocumentParameter)
-        {
-            try
-            {
-                string buildDocumentParameterxml = LogitudeXmlSerializer.SerializeObjectToXmlString(buildDocumentParameter);
-                buildDocumentParameterxml = buildDocumentParameterxml.Replace("<", "@TagOpen");
+        //private StiReport BuildReportViaWebService(BuildDocumentParameter buildDocumentParameter)
+        //{
+        //    try
+        //    {
+        //        string buildDocumentParameterxml = LogitudeXmlSerializer.SerializeObjectToXmlString(buildDocumentParameter);
+        //        buildDocumentParameterxml = buildDocumentParameterxml.Replace("<", "@TagOpen");
 
-                string soap = GetSoapReportViaWebService("BuildDocumentReport" , "buildDocumentParameterxml" , buildDocumentParameterxml);
-                StiReport stiReport = new StiReport();
+        //        string soap = GetSoapReportViaWebService("BuildDocumentReport" , "buildDocumentParameterxml" , buildDocumentParameterxml);
+        //        StiReport stiReport = new StiReport();
 
-                string url = LogitudeSettings.CPUIntensiveWebServicesURL.TrimEnd('/') + "/WebServices/BuildDocumentReportWebService.asmx";
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-                string token = HttpContext.Current.Request.Headers["Token"];
-                req.Headers.Add("Token", token);
-                req.ContentType = "application/soap+xml;";
-                req.Method = "POST";
-                using (Stream stm = req.GetRequestStream())
-                {
-                    using (StreamWriter stmw = new StreamWriter(stm))
-                    {
-                        stmw.Write(soap);
-                    }
-                }
-                using (WebResponse Serviceres = req.GetResponse())
-                {
-                    using (StreamReader rd = new StreamReader(Serviceres.GetResponseStream()))
-                    {
-                        var serviceResult = rd.ReadToEnd();
-                        string result = getBetween(serviceResult, "<BuildDocumentReportResult>", "</BuildDocumentReportResult>");
+        //        string url = LogitudeSettings.CPUIntensiveWebServicesURL.TrimEnd('/') + "/WebServices/BuildDocumentReportWebService.asmx";
+        //        HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+        //        string token = HttpContext.Current.Request.Headers["Token"];
+        //        req.Headers.Add("Token", token);
+        //        req.ContentType = "application/soap+xml;";
+        //        req.Method = "POST";
+        //        using (Stream stm = req.GetRequestStream())
+        //        {
+        //            using (StreamWriter stmw = new StreamWriter(stm))
+        //            {
+        //                stmw.Write(soap);
+        //            }
+        //        }
+        //        using (WebResponse Serviceres = req.GetResponse())
+        //        {
+        //            using (StreamReader rd = new StreamReader(Serviceres.GetResponseStream()))
+        //            {
+        //                var serviceResult = rd.ReadToEnd();
+        //                string result = getBetween(serviceResult, "<BuildDocumentReportResult>", "</BuildDocumentReportResult>");
 
-                        if (!string.IsNullOrEmpty(result))
-                        {
-                            result = HttpUtility.HtmlDecode(result);
-                            stiReport.LoadDocumentFromString(result);
-                            ExceptionDateBuildDocumentReportWebService = null;
-                        }
+        //                if (!string.IsNullOrEmpty(result))
+        //                {
+        //                    result = HttpUtility.HtmlDecode(result);
+        //                    stiReport.LoadDocumentFromString(result);
+        //                    ExceptionDateExportPdfDocumentWebService = null;
+        //                }
 
-                    }
-                }
+        //            }
+        //        }
 
-                return stiReport;
-            }
-            catch (Exception ex)
-            {
-                ExceptionDateBuildDocumentReportWebService = DateTime.Now;
-                return BuildReport(buildDocumentParameter.DocumentTypeCode, buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DefaulttemplateId, buildDocumentParameter.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
-            }
-        }
+        //        return stiReport;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionDateExportPdfDocumentWebService = DateTime.Now;
+        //        return BuildReport(buildDocumentParameter.DocumentTypeCode, buildDocumentParameter.DocumentTypeId, buildDocumentParameter.EntityId, buildDocumentParameter.EntityObjectTableId, buildDocumentParameter.ChildEntityId, buildDocumentParameter.ChildObjectTableId, buildDocumentParameter.DefaulttemplateId, buildDocumentParameter.Tenant, buildDocumentParameter.DocumentTypeCopyId, buildDocumentParameter.UserId);
+        //    }
+        //}
 
         public string GetSoapReportViaWebService( string methodName , string parameterName , string parameterxml)
         {
@@ -2017,17 +2025,17 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
         }
 
 
-        public static DateTime? ExceptionDateBuildDocumentReportWebService { get; set; }
+        public static DateTime? ExceptionDateExportPdfDocumentWebService { get; set; }
         public bool IsCallBuildDocumentReportWebService(int tenant)
         {
             bool result = false;
             if (!string.IsNullOrEmpty(LogitudeSettings.CPUIntensiveWebServicesURL) && FeatureToggleHelper.HasFeatureToggle("BDR", tenant))
             {
-                if (ExceptionDateBuildDocumentReportWebService == null) result = true;
+                if (ExceptionDateExportPdfDocumentWebService == null) result = true;
                 else
                 {
                     DateTime nowDate = DateTime.Now;
-                    DateTime endDate = (DateTime)ExceptionDateBuildDocumentReportWebService;
+                    DateTime endDate = (DateTime)ExceptionDateExportPdfDocumentWebService;
                     if (endDate.AddMinutes(5) < nowDate)
                     {
                         result = true;

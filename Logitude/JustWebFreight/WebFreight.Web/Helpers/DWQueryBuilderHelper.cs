@@ -433,7 +433,7 @@ namespace WebFreight.Web.Helpers
             {
                 OrderByString = DWQueryParam.ColumnsSort;
             }
-            string PagingString = " ORDER BY " + OrderByString + " OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
+            string PagingString = " ORDER BY " + OrderByString+ " OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
             string FinalQuery = "";
             if (Filters != null)
             {
@@ -471,12 +471,6 @@ namespace WebFreight.Web.Helpers
             {
                 FinalQuery = FinalQuery + " ORDER BY " + DWQueryParam.ColumnsSort;
             }
-
-            if (!FinalQuery.Contains("Fact_Shipments.[Source Tenant] as"))
-            {
-                FinalQuery = FinalQuery.Replace("from", ",Fact_Shipments.[Source Tenant] as [Source Tenant] from");
-            }
-           
 
             return FinalQuery;
         }

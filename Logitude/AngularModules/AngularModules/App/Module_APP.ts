@@ -54,9 +54,7 @@ import { AppComponent } from './AppComponent';
             { loadChildren: 'CRMModules/CRMOthers/ModuleCRMOthers#ModuleCRMOthers' },
             { loadChildren: 'CRMModules/CRMStages/ModuleCRMStages#ModuleCRMStages' },
             { loadChildren: 'CRMModules/CRMTickets/ModuleCRMTickets#ModuleCRMTickets' },
-
-
-
+            { loadChildren: 'CRMModules/CRMOccasion/ModuleCRMOccasion#ModuleCRMOccasion' },
             { loadChildren: 'Dashboard/Module_DASH#DashboardModule' },
 
             // Invoice Modules

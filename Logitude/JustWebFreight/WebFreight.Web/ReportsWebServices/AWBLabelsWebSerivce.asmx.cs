@@ -115,6 +115,7 @@ namespace WebFreight.Web.ReportsWebServices
                         if (myAddress != null)
                         {
                             myDataProvider.ConsigneeAddress = myCard.EnglishName + Environment.NewLine + DataProviders.General.GetAddress(myAddress);
+                            myDataProvider.ConsigneePhoneNumber = myAddress.PhoneNumber;
                         }
                     }
                 }
@@ -231,6 +232,7 @@ namespace WebFreight.Web.ReportsWebServices
                     newlabel.ModifiedFullMAWB = myDataProvider.ModifiedFullMAWB;
                     newlabel.HouseNumber = myDataProvider.HouseNumber;
                     newlabel.UserName = myDataProvider.UserName;
+                    newlabel.ConsigneePhoneNumber = myDataProvider.ConsigneePhoneNumber;
 
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPM, newlabel);

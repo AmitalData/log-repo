@@ -4664,7 +4664,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionFileTypeId",
 					  						DefaultText =  "Deduction File Type",
-					  						FullLocalDefaultText =  "סוג תיק ניכויים",
+					  						FullLocalDefaultText =  "סוג עיסוק",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -4900,7 +4900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionTypeId",
 					  						DefaultText =  "Deduction Type",
-					  						FullLocalDefaultText =  "סוג עיסוק",
+					  						FullLocalDefaultText =  "סוג תיק ניכויים",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -7445,6 +7445,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountONoCreditDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoCreditDefined", DefaultText = "Credit balance not defined",LocalDefaultText = @"לא הוגדרה מסגרת אשראי ללקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOCreditStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CreditStatus ", DefaultText = "Credit Status",LocalDefaultText = @"מסגרת אשרא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOQueries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Queries", DefaultText = "GL Accounts Queries",LocalDefaultText = @"שאילתות כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -198,6 +198,8 @@ export class NewPaymentChequeComponent extends BaseComponent
                     this.UIProperties.SetValidity("PayToGLAccountId", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.VendorsGLAccount")); 
                 }
                 else {
+                    this.UIProperties.SetValidity("PayToGLAccountId", this.ObjectTableName, true,null); 
+
                     this.isAccountValid = true;
                     this.PayToName = value.LocalName;
                 }

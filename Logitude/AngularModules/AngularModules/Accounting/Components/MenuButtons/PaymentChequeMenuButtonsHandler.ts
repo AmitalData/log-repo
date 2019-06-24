@@ -79,7 +79,7 @@ export class PaymentChequeMenuButtonsHandler
                             }
                         case "CancelCheque":
                             {
-                                if (this.EntityPM.PaymentChequeStatusCode == "3" || this.EntityPM.IsCancelled ) {
+                                if (this.EntityPM.PaymentChequeStatusCode == "3" || this.EntityPM.IsCancelled || !AppTool.IsNullOrEmpty(this.EntityPM.APPaymentId)) {
                                     button.IsDisabled = true;
                                 }
                                 else

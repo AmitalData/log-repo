@@ -1727,6 +1727,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.WithholdingBlocked", DefaultText = "The Vendor does not have a certificate according to the 1000 System", LocalDefaultText = "לספק לא קיים אישור על פי מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.WithholdingLineDisabled", DefaultText = "A new line was entered with the same date by the 1000 System", LocalDefaultText = "נקלטה שורה חדשה עם תאריך זהה על ידי מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.AccountingPeriodClosed", DefaultText = "The accounting period for recording the Journal is closed", LocalDefaultText = "התקופה החשבונאית לרישום פקודת היומן סגורה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.AccountingPeriodAlready", DefaultText = "The chosen year is transferred already, In order to transfer it again, you must void Journal ", LocalDefaultText = "השנה שנבחרה הועברה כבר, ע”מ להעביר אותה בשנית, יש לבטל את פקודת יומן ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.ReferenceDateIsRequired", DefaultText = "Reference date is required", LocalDefaultText = "שדה תאריך הוא שדה חובה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
@@ -1873,6 +1874,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LoadBankPage", DefaultText = "Load Bank Page", LocalDefaultText = "טען דפי בנק מקובץ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Customers", DefaultText = "Customers", LocalDefaultText = "לקוחות", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Vendors", DefaultText = "Vendors", LocalDefaultText = "ספקים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentChequeOptions", DefaultText = "Internal Cheque \\ Manual entry", LocalDefaultText = " מערכת המחאות/המחאה ידנית", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
 
 
@@ -2180,6 +2182,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.System1000", DefaultText = "System 1000", LocalDefaultText = "מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.Q.System1000", DefaultText = "System 1000", LocalDefaultText = "מערכת 1000", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DeductionFileNumber", DefaultText = "Deduction File Number is undefined.", LocalDefaultText = "מספר תיק ניכויים אינו מוגדר.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowType", DefaultText = "Finishing Row Type", LocalDefaultText = "רשומת סיכום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartingRowType", DefaultText = "Starting Row Type", LocalDefaultText = "רשומת פתיחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorLineRowType", DefaultText = "Vendor Line Row Type", LocalDefaultText = "רשומת תנועה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotValidRowType", DefaultText = "Not a valid Row Type", LocalDefaultText = "רשומת לא מסוג תקין", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DoesntStartWithRowType", DefaultText = "does not start with a Line Row Type", LocalDefaultText = "לא מתחיל בסוג רשומה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotEncountered", DefaultText = "not encountered", LocalDefaultText = "לא זוהתה עד כה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DiffersFrom", DefaultText = "differs from ", LocalDefaultText = "לא זהה ל", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.IsMissing", DefaultText = "is missing", LocalDefaultText = "חסר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.IsEmpty", DefaultText = "is empty", LocalDefaultText = "ריק", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotFound", DefaultText = "not found", LocalDefaultText = "לא נמצא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.AppearsBefore", DefaultText = "Appears Before", LocalDefaultText = "מופיעה לפני", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartingRowDeductionFile", DefaultText = "Starting Row Deduction File", LocalDefaultText = "תיק ניכויים ברשומת הפתיחה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowDeductionFile", DefaultText = "Finishing Row Deduction File", LocalDefaultText = "תיק ניכויים ברשומת הסיכום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.OurDeductionFile", DefaultText = "Our Deduction File Number", LocalDefaultText = "מספר תיק הניכויים שלנו", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowTotals", DefaultText = "Finishing Row totals are not summing up together", LocalDefaultText = "כמויות לא מתחברות יחד ברשימת הסיכום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowTotalVendors", DefaultText = "Finishing Row Total Vendor Number", LocalDefaultText = "כמות ספקים ברשימת הסיכום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.CountVendorRows", DefaultText = "count of Vendor Rows", LocalDefaultText = "ספירת שורות ספקים", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorLineNo", DefaultText = "Vendor Line #", LocalDefaultText = "שורת ספק מס' ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorNo", DefaultText = "Vendor #", LocalDefaultText = "ספק מס' ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorCode", DefaultText = "Vendor Code", LocalDefaultText = "מספר ספק", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.LocatedDeductionFile", DefaultText = "Located Deduction File", LocalDefaultText = "תיק ניכויים שאותר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.LocatedVATNumber", DefaultText = "Located VAT Number", LocalDefaultText = "מספר עוסק מורשה שאותר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartDate", DefaultText = "Start Date", LocalDefaultText = "תאריך התחלה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.EndDate", DefaultText = "End Date", LocalDefaultText = "תאריך סיום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FailedWhilePerforming", DefaultText = "failed while performing", LocalDefaultText = "תקלה בביצוע", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
         }
         #endregion
 
@@ -3953,7 +3980,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "WBLK",
-                EnglishName = "The Vendor does not have a certificate according to the 1000 System",
+                EnglishName = "The Vendor does not have a certificate",
                 Tenant = 0,
                 AddedManually = false,
                 LocalName = "לספק לא קיים אישור על פי מערכת 1000",
@@ -3966,10 +3993,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code = "WLDA",
-                EnglishName = "A new line was entered with the same date by the 1000 System",
+                EnglishName = "A line was entered with the same date",
                 Tenant = 0,
                 AddedManually = false,
-                LocalName = "נקלטה שורה חדשה עם תאריך זהה על ידי מערכת 1000",
+                LocalName = "נקלטה שורה חדשה עם תאריך זהה",
                 ObjectTableId = gLAccountWithholdingTax.Id,
                 ShortView = false,
                 EventTypeCategoryCode = "LOG",

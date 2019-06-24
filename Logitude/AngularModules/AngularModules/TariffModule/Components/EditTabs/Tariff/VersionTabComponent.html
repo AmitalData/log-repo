@@ -11,7 +11,7 @@
             <td>
                 <table>
                     <tr>
-                        <td style="width:100px;">
+                        <td style="width:70px;">
                             <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
@@ -27,7 +27,7 @@
                             <div></div>
                         </td>
 
-                        <td style="width:120px;">
+                        <td style="width:100px;">
                             <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
@@ -39,38 +39,35 @@
                             {{ExpirationDate | DateTimePipe:'SD'}}
                         </td>
 
-                        <td style="float:left;min-width:495px;">
-                            <table>
-                                <tr>
-                                    <td style="width:90px;">
-                                        <CheckBox [IsChecked]="IsComparToChecked" (Checked)="IsComparToChecked = $event" [Text]="'Compare to'" [IsEnabled]="IsCompareEnabled"></CheckBox>
-                                    </td>
-                                    <td style="width:190px;">
-                                        <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="!IsCompareEnabled" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
-                                    </td>
-                                    <td style="width:5px;">
-                                        <div></div>
-                                    </td>
-                                    <td style="width:60px;">
-                                        <LogLabel [NoObjectField]="true" [Text]="'Warning'" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td style="float:left; width:50px;">
-                                        <LogTextBox [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'WarningPercentage'" [Text]="WarningPercentage" [DataContext]="DataContext"></LogTextBox>
-                                    </td>
-
-                                    <td style="width:5px;float:left;margin-left:3px;margin-top:3px;">
-                                        <div class="Label LeftCenter" style="width:5px;float:left;text-align:left;vertical-align:central;"> % </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-
                         <td>
                             <div></div>
                         </td>
-                       
+
+                        <td style="width:90px;">
+                            <CheckBox [IsChecked]="IsComparToChecked" (Checked)="IsComparToChecked = $event" [Text]="'Compare to'" [IsEnabled]="IsCompareEnabled"></CheckBox>
+                        </td>
+
+                        <td style="width:190px;">
+                            <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="!IsCompareEnabled" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
+                        </td>
 
                         <td style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:60px;">
+                            <LogLabel [NoObjectField]="true" [Text]="'Warning'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td style="width:50px;">
+                            <LogTextBox [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'WarningPercentage'" [Text]="WarningPercentage" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td style="width:1px;padding-left:3px;">
+                            %
+                        </td>
+
+                        <td style="width:50px;">
                             <div></div>
                         </td>
 
@@ -102,6 +99,7 @@
                                     <div *ngIf="IsDraftVersion">
                                         <input class="upload" style="display: none;width:65px"
                                                type="file" (change)="OnFileChanged($event)"
+                                               (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
                                                #fileInput>
                                         <a href="#" style="text-decoration:none">
                                             <button (click)="fileInput.click()">Upload Excel</button>

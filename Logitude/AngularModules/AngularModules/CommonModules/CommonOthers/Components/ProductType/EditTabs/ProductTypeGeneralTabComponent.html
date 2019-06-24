@@ -1,0 +1,116 @@
+﻿<div class="TabHolder">
+    <table>
+        <tr class="TabTitleRow">
+            <td>{{'ProductType.TH.General' | TextCodeTranslationPipe}}</td>
+        </tr>
+
+        <tr style="height: 1px;">
+            <td>
+                <div style="width: 100%; position: relative;">
+                    <div #BillingChild></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height: 1px;" >
+            <td>
+                <table>
+                
+                    <tr>
+                        <td style="width: 395px;">
+
+                            <table>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 170px;">
+                                        <LogLabel  [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 170px;">
+                                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 170px;">
+                                        <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <CheckBox [IsChecked]="InActive" (Checked)="InActive = $event"></CheckBox>
+                                    
+                                        
+                                    </td>
+                                </tr>
+
+
+
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 170px;">
+                                        <LogLabel [attr.title]="'Spot Rate Quotation Default Template'" [ObjectFieldName]="'QuotationDefaultTemplateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'QuotationDefaultTemplateId'"
+                                                [SelectedValue]="QuotationDefaultTemplateId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [DependencyFilter1Value]="'A'"
+                                                [LookUpTableName]="'QuoteTemplate'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 170px;">
+                                        <LogLabel [attr.title]="'Routing Rates Quotation Default Template'" [ObjectFieldName]="'RoutingRQuoteDefaultTemplateId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'RoutingRQuoteDefaultTemplateId'"
+                                                [SelectedValue]="RoutingRQuoteDefaultTemplateId"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [DependencyFilter1Value]="'P'"
+                                                [DependencyFilter1IsList]
+                                                [LookUpTableName]="'QuoteTemplate'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                </tr>
+
+                            </table>
+
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+      
+
+        <tr>
+            <td>
+                <div></div>
+            </td>
+        </tr>
+    </table>
+</div>

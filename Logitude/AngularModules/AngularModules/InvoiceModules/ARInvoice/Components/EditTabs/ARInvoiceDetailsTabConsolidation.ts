@@ -27,6 +27,7 @@ import {ARInvoiceListService} from '../../../../Invoice/Services/StandardLists/A
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { ARInvoiceStockLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
 
 @Component({
     moduleId: module.id,
@@ -1169,11 +1170,20 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if ((d != null && d != "cancel")) {
-                    this.IsgetFromStockAfterSaving = true;
-                    this.InvoiceNumber = s.StockLineSelectedItem.Number;
-                    this.ARInvoiceStockId = s.StockLineSelectedItem.Id;
-                    this.IsInvoiceNumberComboBoxEnabled = false;
-                    this.CurrentSession.CurrentEditComponent.SaveChanges();
+                    if (this.EntityPM.IsAutoCredit) {
+                        var myConfirmWindow = new ConfirmWindow();
+                        myConfirmWindow.Width = 400;
+                        myConfirmWindow.Show(TextCodeTranslator.Translate("ARInvoice.M.ConfirmAutoCredit"));
+                        myConfirmWindow.WindowClosed.subscribe(event => {
+                            if (myConfirmWindow.Yes) {
+                                this.SetStockProperties(s.StockLineSelectedItem, TextCodeTranslator.Translate("ARInvoice.M.CreatingAutoCredit"));
+                            }
+                        });
+                    }
+
+                    else {
+                        this.SetStockProperties(s.StockLineSelectedItem);
+                    }                    
                 }
             });
         });
@@ -1184,6 +1194,14 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.IsInvoiceNumberComboBoxEnabled = true;
         this.SelectedInvoiceNumberFilter = this.InvoiceNumberFilterList.filter(a => a.Code == "CNR")[0];
         this.CurrentSession.CurrentEditComponent.SaveChanges();
+    }
+
+    private SetStockProperties(stockLineSelectedItem: ARInvoiceStockLinePM, msg: string = null) {
+        this.IsgetFromStockAfterSaving = true;
+        this.InvoiceNumber = stockLineSelectedItem.Number;
+        this.ARInvoiceStockId = stockLineSelectedItem.Id;
+        this.IsInvoiceNumberComboBoxEnabled = false;
+        this.CurrentSession.CurrentEditComponent.SaveChanges(msg);
     }
 }
 export class SubInvoiceLine {

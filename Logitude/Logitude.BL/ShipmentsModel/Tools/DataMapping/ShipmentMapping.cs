@@ -425,6 +425,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
                 entityPoco.DirectionId = entityPM.DirectionId;
                 entityPM.ShipmentDirectionConverted = false;
             }
+            
+            entityPM.PackagesDeleted = false;            
 
             ValidateMAWBStackField(entityPoco, entityMasterData);
         }

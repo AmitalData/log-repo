@@ -338,6 +338,8 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         itemPM.ExpirationDate = this.ExpirationDate;
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
+        itemPM.Index = 0;
+
         var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
         if (Version) {
             if (Version.TariffLines.length > 0) {
@@ -374,9 +376,22 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     // Upload Excel File 
-    OnFileChanged(event) {
-        var file = event.target.files[0];
-        this.UploadExcel(file);
+    OnFileChanged(fileEvent) {
+        var file = fileEvent.target.files[0];
+
+        if (file) {
+            var extension: string = file.name.split('.')[1];
+
+            if (extension.includes("xls")) {
+                var file = fileEvent.target.files[0];
+                this.UploadExcel(file);
+            }
+
+            else {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
+            }
+        } 
     }
     UploadExcel(file: any) {
         if (!AppTool.IsNullOrEmpty(file.name)) {
