@@ -206,8 +206,9 @@ export class DynamicLoader {
             case "CRMModules/CRMOthers": { myResult = "CRMModules/CRMOthers/ModuleCRMOthers#ModuleCRMOthers"; break; }
             case "CRMModules/CRMStages": { myResult = "CRMModules/CRMStages/ModuleCRMStages#ModuleCRMStages"; break; }
             case "CRMModules/CRMTickets": { myResult = "CRMModules/CRMTickets/ModuleCRMTickets#ModuleCRMTickets"; break; }
+            case "CRMModules/CRMOccasion": { myResult = "CRMModules/CRMOccasion/ModuleCRMOccasion#ModuleCRMOccasion"; break; }
 
-
+                
             
                  
              //Customs

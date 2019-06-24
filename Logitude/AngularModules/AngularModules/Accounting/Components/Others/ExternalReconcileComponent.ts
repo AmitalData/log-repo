@@ -524,7 +524,13 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         var total = 0;
         for (let line of this.TransactionSelectedLines.Collection) {
             //total += +line.OpenAmount;
-            total += +line.ForeignAmount;
+            // total += +line.ForeignAmount;
+
+            if(line.IsCredit)
+                total -= +line.ForeignAmount;
+            else
+                total += +line.ForeignAmount;
+
         }
         this.accountTransactionsTotal = total;
         var def = (this.bankTransactionsTotal - this.accountTransactionsTotal)
@@ -686,9 +692,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     BankPushLine(row, RowIndex) {
         var index = this.BankSelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
-            // row.AmountToReconcile = row.Amount;
-            row.AmountToReconcile = row.CreditAmount!=0?row.CreditAmount*-1:row.DebitAmount;
-            row.Amount = row.AmountToReconcile;
+             row.AmountToReconcile = row.CreditAmount!=0?row.CreditAmount:row.DebitAmount;
+            // row.AmountToReconcile = row.CreditAmount!=0?row.CreditAmount*-1:row.DebitAmount;
+            // row.Amount = row.AmountToReconcile;
             var r = new BankLineModel(row, this, RowIndex);
             this.BankSelectedLines.Insert(r);
             this.CalculateBankTotals();
@@ -732,7 +738,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         this.bankTransactionsTotal = 0;
         var total = 0;
         for (let line of this.BankSelectedLines.Collection) {
-            total += +line.Amount;
+            if(line.IsCredit)
+                total -= +line.Amount;
+            else
+                total += +line.Amount;
+
         }
         this.bankTransactionsTotal = total;
         var def = (this.bankTransactionsTotal - this.accountTransactionsTotal)
@@ -1505,6 +1515,10 @@ class TransactionLineModel extends BaseComponent {
     get GroupHash() { return this.LedgerTransactionPM.GroupHash };
 
 
+    get IsCredit(){
+        return this.ledgerTransaction.ForeignAmountCredit != 0;
+    }
+
     // Properties
     public IconCode: string;
 
@@ -1631,6 +1645,9 @@ class BankLineModel extends BaseComponent {
 
     }
 
+    get IsCredit(){
+        return this.pageLine.CreditAmount != 0;
+    }
     get GroupHash() { return this.pageLine.GroupHash };
 
     //#region Properties

@@ -208,6 +208,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPM;
             this.isVoidingInvoice = this.entityPM.SetVoided;
+
+            if(entityPM.IsAutoCredit)
+            {
+                entityPM.SetApproved = false;
+            }
+
             this.isApprovingInvoice = entityPM.SetApproved;
             this.invoice = new ARInvoice();
 
@@ -334,6 +340,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPM = theEntityPM;
             this.isVoidingInvoice = entityPM.SetVoided;
+
+            if (entityPM.IsAutoCredit)
+            {
+                entityPM.SetApproved = false;
+            }
+
             this.isApprovingInvoice = entityPM.SetApproved;
 
             this.invoice = invoiceRepository.GetSingleInvoice(entityPM.Id);
