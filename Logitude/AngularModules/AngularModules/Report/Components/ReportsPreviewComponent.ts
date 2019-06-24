@@ -415,6 +415,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                 this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
                                 this.StopBusyIndicator();
                                 this.IsUsedReportsRunUsingWR = false;
+                                isStopStimulSoftReportsub = true;
 
                             }
                             if (!pmResponse.HasError) {

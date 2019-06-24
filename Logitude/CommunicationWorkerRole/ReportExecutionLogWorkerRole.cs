@@ -143,11 +143,9 @@ namespace CommunicationWorkerRole
                                 else
                                 {
                                     this.UpdateReportExecutionLog(null, reportExecutionLog, reportExecutionLogRepository, "F" , "Report fliter not found");
+                                    queueservice.Complete();
 
                                 }
-
-
-                                queueservice.Complete();
 
                                 LogDoneItemInMemory();
                             }
