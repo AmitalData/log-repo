@@ -849,7 +849,92 @@ namespace Logitude.Server.Tools.QueueService
             this.Complete();
         }
 
+        public void DelayAndReturnBackToQueue(TimeSpan delayTime,string myMessageId)
+        {
+            if (!string.IsNullOrEmpty(this.myMessageId))
+            {
+                using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    int seconds = (int)delayTime.TotalSeconds;
+                    string strConnString = TenantServerConfigration.GetDbConnection(this.Tenant);
+                    QueueResponse response = new QueueResponse();
+                    DataTable tblQueue = new DataTable();
 
-       
+                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                    {
+
+                        using (OracleConnection cn = new OracleConnection(strConnString))
+                        {
+                            OracleCommand cmd = new OracleCommand();
+                            cmd.Connection = cn;
+                            cmd.CommandText = DbContextBaseUtil.GetStoredProcedureName("Queue_DelayMessageandChangeStatusTozero", LogitudeDBSchema.LOGITUDE_MAIN, cmd.Connection.ConnectionString);
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+
+                            OracleParameter messageIdPar = new OracleParameter("MessageId", OracleDbType.Number, 18);
+                            OracleParameter delayPar = new OracleParameter("DelaySeconds", OracleDbType.Number);
+
+                            messageIdPar.Direction = ParameterDirection.Input;
+                            delayPar.Direction = ParameterDirection.Input;
+
+                            messageIdPar.Value = this.myMessageId;
+                            delayPar.Value = seconds;
+
+                            cmd.Parameters.Add(messageIdPar);
+                            cmd.Parameters.Add(delayPar);
+
+                            try
+                            {
+                                cn.Open();
+                                var output = cmd.ExecuteNonQuery();
+                                cn.Close();
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Console.WriteLine("Exception: {0}", ex.ToString());
+                                throw;
+                            }
+
+                            cn.Close();
+                        }
+
+
+                    }
+                    else
+                    {
+                        using (SqlConnection cn = new SqlConnection(strConnString))
+                        {
+                            SqlCommand cmd = new SqlCommand("[dbo].[Queue_DelayMessageandChangeStatusTozero]", cn);
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                            SqlParameter delayPar = new SqlParameter("@DelaySeconds", SqlDbType.Int);
+
+
+                            messageIdPar.Direction = ParameterDirection.Input;
+                            delayPar.Direction = ParameterDirection.Input;
+
+                            messageIdPar.Value = this.myMessageId;
+                            delayPar.Value = seconds;
+
+                            cmd.Parameters.Add(messageIdPar);
+                            cmd.Parameters.Add(delayPar);
+
+                            cn.Open();
+                            var output = cmd.ExecuteNonQuery();
+                            cn.Close();
+
+                            this.CurrentMessageId = null;
+
+                        }
+                    }
+
+                    scope.Complete();
+                }
+            }
+
+        }
+
+
+
     }
 }
