@@ -193,7 +193,7 @@
                                                                         <table style="-webkit-border-radius: 14px 14px 14px 14px; background-color:#F5F5F5">
 
                                                                             <tr>
-                                                                                <td style="width:150px"><div>
+                                                                                <td style="width:150px;min-width:150px"><div>
     <img  style="width:120px;height:80px;border:1px solid #A0A0A0" *ngIf="item.ImageId" class="CenterCenter"  [attr.id]="item.Name" src="{{item.ImageId}}" />
 
 </div></td>
@@ -207,19 +207,21 @@
                                                                                                     </div>
                                                                                             </td>
                                                                                             <td style="width:15px"><div></div></td>
-                                                                                            <td>
+                                                                                            <td style="text-align:left">
                                                                                                 Effictive till: {{item.EffictiveDate | DateTimePipe:'SD'}}
                                                                                             </td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td colspan="2">
-                                                                                                Remarks: {{item.Remarks}}
+                                                                                            <td colspan="3">
+                                                                                                <div class="TextTrimming" style="max-width:300px">
+                                                                                                    Remarks: {{item.Remarks}}
+                                                                                                    </div>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>
                                                                                 </td>
-                                                                                <td style="width:100px;font-size:x-large;font-weight:bold">
-                                                                                    {{item.price | NumbersPipe:'N2'}} {{item.Currency}}
+                                                                                <td style="width:100px;max-width:165px;font-size:x-large;font-weight:bold">
+                                                                                        {{item.price | NumbersPipe:'N2'}} {{item.Currency}}
                                                                                 </td>
                                                                                 <td style="width:5px"><div></div></td>
                                                                             </tr>

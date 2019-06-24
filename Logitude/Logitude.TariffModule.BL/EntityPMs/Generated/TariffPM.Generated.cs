@@ -1192,6 +1192,52 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string concurrencyGUID ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConcurrencyGUID  
+	   {
+	    
+	     get
+		{
+		   return concurrencyGUID;
+		 }
+		 set
+		 {
+		   if(concurrencyGUID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConcurrencyGUID",OldValue=concurrencyGUID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   concurrencyGUID=value;
+		   }
+			
+		 }
+	   }
+	  private string newConcurrencyGUID ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NewConcurrencyGUID  
+	   {
+	    
+	     get
+		{
+		   return newConcurrencyGUID;
+		 }
+		 set
+		 {
+		   if(newConcurrencyGUID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewConcurrencyGUID",OldValue=newConcurrencyGUID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   newConcurrencyGUID=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

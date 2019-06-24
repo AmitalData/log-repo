@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class ArchivoExportadoDataProvider: BaseDataProvider
+    public class ArchivoExportadoDataProvider : BaseDataProvider
     {
         [Key]
         public int Id { get; set; }
@@ -123,6 +123,8 @@ namespace WebFreight.Web.DataProviders
 
         public double? ExpectedPayables { get; set; }
         public double? Profit { get; set; }
-
+        public DateTime? ETD { get; set; }
+        public string CustomerRef1 { get; set; }
+        public string CustomerRef2 { get; set; }
     }
 }

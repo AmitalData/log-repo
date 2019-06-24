@@ -4229,6 +4229,10 @@ export class ShipmentPM {
     public get ShipmentDirectionConverted() { return this.shipmentDirectionConverted; }
     public set ShipmentDirectionConverted(newValue: boolean) { if (this.shipmentDirectionConverted != newValue) { this.shipmentDirectionConverted = newValue; this.MarkAsDirty("ShipmentDirectionConverted"); } }
 
+    private packagesDeleted: boolean;
+    public get PackagesDeleted() { return this.packagesDeleted; }
+    public set PackagesDeleted(newValue: boolean) { if (this.packagesDeleted != newValue) { this.packagesDeleted = newValue; this.MarkAsDirty("PackagesDeleted"); } }
+
     public OldEntityPM: ShipmentPM;
 
     private aWBOCIPMs: AWBOCIPM[];

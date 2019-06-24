@@ -458,7 +458,7 @@
 
                                                 <td *ngIf="FullAccounting && AccountingPaymentMethodCode == 'CH'"
                                                     style="width:150px; left: -10px;">
-                                                    <LogLabel [ObjectFieldName]="'StatusCode'" [NoObjectField]="true"
+                                                    <LogLabel [ObjectFieldName]="'StatusCode'" [ObjectTableName]="'ARPaymentCheque'"
                                                         [DataContext]="DataContext"></LogLabel>
                                                 </td>
 

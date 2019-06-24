@@ -25,6 +25,7 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.AccountingModel.DomainServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -76,6 +77,33 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
         //    }
         //}
+
+        public HttpResponseMessage GetPaymentChequeByChequeNumber( string ChequeNumber)
+        {
+            try
+            {
+                try
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                    PaymentChequeQueryService paymentChequeQueryService = new PaymentChequeQueryService(MyContext);
+                    if (ChequeNumber == "undefined") ChequeNumber = null;
+                    PaymentChequePM entity = paymentChequeQueryService.GetPaymentChequeByChequeNo( ChequeNumber, authToken.Tenant);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, entity);
+                }
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 }
