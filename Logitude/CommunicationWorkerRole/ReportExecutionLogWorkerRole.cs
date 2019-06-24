@@ -247,7 +247,7 @@ namespace CommunicationWorkerRole
                 }
 
                 reportExecutionLog.StatusCode = statusCode;
-                reportExecutionLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                reportExecutionLog.DoneDate = DateTime.Now;
                 reportExecutionLogRepository.Update(reportExecutionLog);
                 reportExecutionLogRepository.SubmitChanges();
             }
