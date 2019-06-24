@@ -63,7 +63,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 objectTable = objecttableRep.GetObjectTableByName("Shipment", 0, true);
 
                 List<QueueTask> tasks = new List<QueueTask>();
-                tasks.Add(new QueueTask() { Action = "ApprovalTaskReceived", Parameters = new List<Logitude.Server.Tools.Parameter>() {
+                tasks.Add(new QueueTask() { Action = "StatusUpdate", Parameters = new List<Logitude.Server.Tools.Parameter>() {
                 new Logitude.Server.Tools.Parameter { Name = "ShipmentNumber", Value = Data.ShipmentNumber},    
                 new Logitude.Server.Tools.Parameter { Name = "Code", Value = Data.Code}
                 } });
