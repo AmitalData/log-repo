@@ -19,7 +19,7 @@ export class HouseShipment {
 
     this.FillHouseShipmentFields(ReferenceNumber, Direction, TransportMode);
     this.Helper.WaitByIdAndClick('ShipmentCreatebtn');
-  }
+  } 
 
 
   FillHouseShipmentFields(ShipperRef: string, Direction: string, TransportMode: string) {
