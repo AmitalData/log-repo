@@ -26,6 +26,7 @@ export const Components =
         AddEditTariffChargeComponent,
         AirlineDocsInTabComponent,
         AirlineGeneralTabComponent,
+        AirlineSurchargeTabComponent,
     ];
 
 export class ModuleDeclarations {
@@ -45,7 +46,9 @@ export class ModuleDeclarations {
             case "AddEditTariffChargeComponent": { myResult = AddEditTariffChargeComponent; break; }
             case "AirlineDocsInTabComponent": { myResult = AirlineDocsInTabComponent; break; }
             case "AirlineGeneralTabComponent": { myResult = AirlineGeneralTabComponent; break; }
+            case "AirlineSurchargeTabComponent": { myResult = AirlineSurchargeTabComponent; break; }
 
+                
                 
         }
 

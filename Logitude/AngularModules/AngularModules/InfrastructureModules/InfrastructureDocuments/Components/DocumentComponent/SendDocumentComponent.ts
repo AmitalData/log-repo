@@ -328,7 +328,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     ViewCommunicationLog() {
         if (this.SelectedInternalDocument.SelectedCommunicationLogViewMode) {
-            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.Cc = this.SelectedInternalDocument.SelectedCommunicationLogViewMode.CC;
             this.ToEmail = this.SelectedInternalDocument.SelectedCommunicationLogViewMode.To;
             this.Subject = this.SelectedInternalDocument.SelectedCommunicationLogViewMode.Subject;
@@ -405,7 +405,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                                 }
 
                                                 if (count == numberOfAttachment) {
-                                                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                                     this.CurrentSession.StopBusyIndicator();
                                                 }
 
 
@@ -486,13 +486,13 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                                             this.BliudAttachmentList(attachmentsLogList);
                                         }
 
-                                        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                         this.CurrentSession.StopBusyIndicator();
                                     //end region 
                                     }
 
                                 }
                                 else {
-                                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                                     this.CurrentSession.StopBusyIndicator();
                                 }
 
                             }
@@ -500,7 +500,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         }
 
                         else {
-                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                             this.CurrentSession.StopBusyIndicator();
                         }
 
 
@@ -510,13 +510,13 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
                 }
                 else {
-                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+
                     if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
                         this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
                     }
                 }
 
-
+                this.CurrentSession.StopBusyIndicator();
                 this.ShowBusyIndicator = false;
             });
 
@@ -553,7 +553,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
             this.ReloadFroalaEditor();
         }
         else {
-            this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+            this.CurrentSession.StartBusyIndicatorLoading();
             var docoutId = this.DocumentOutId;
             if (templateId) docoutId = "";
 
@@ -615,8 +615,10 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                         this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
                     }
                 }
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                this.CurrentSession.StopBusyIndicator();
                 this.ShowBusyIndicator = false;
+
+
             });
         }
 
@@ -624,14 +626,14 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
     LoadDocumentTypeTemplates(selectId: string) {
 
-        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
+        this.CurrentSession.StartBusyIndicatorLoading();
         this.SelectId = selectId;
         this.ReportTemplates = new Array<DocumentTypeTemplateViewModel>();
         this.DocumenttypetemplateLists = new Array<DocumentTypeTemplateViewModel>();
         this._documentTypeTemplateListExtendedService.getDocumentTypeTemplateListsForDocumentType(this.CurrentDocumentType.Id, this.CurrentDocumentType.Tenant).subscribe(res => {
 
             var pmResponse: ServiceResponse = res;
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
@@ -850,7 +852,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
 
         if (!filter.ToEmail) {
             this.ShowMessage("Please specify at least one recepient", "Logitude Message");
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             return;
         }
 
@@ -858,20 +860,20 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         if (!this.CheckIsValidEmails(filter.ToEmail)) {
 
             this.ShowMessage("Some of To e- mails are Invalid", "Logitude Message");
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             return;
         }
 
 
         if (filter.Cc != null && !this.CheckIsValidEmails(filter.Cc)) {
             this.ShowMessage("Some of Cc e-mails are Invalid", "Logitude Message");
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             return;
         }
 
         if (filter.Bcc != null && !this.CheckIsValidEmails(filter.Bcc)) {
             this.ShowMessage("Some of Bcc e-mails are Invalid", "Logitude Message");
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             return;
         }
 
@@ -890,7 +892,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         if (totalsize > 15) {
             this.ShowMessage("The maximum size of documents you can attach is 15 MB. Please send the documents in separated emails", "Attachment Limit");
             //this.ShowMessage("The file you are trying to send exceeds the 15 MB attachment limit.", "Attachment Limit");
-            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+             this.CurrentSession.StopBusyIndicator();
             return;
         }
 
@@ -952,7 +954,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                 });
             }
             else {
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                 this.CurrentSession.StopBusyIndicator();
                 this.IsSendDocumentFailed = true;
                 if (response.ErrorsArray && response.ErrorsArray.length > 0) {
                     this.ShowMessage(response.ErrorsArray[0], "Logitude Message");
@@ -1581,6 +1583,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                     }
 
                     this.ShowBusyIndicator = true;
+                    this.CurrentSession.StartBusyIndicatorLoading();
                     this.SelectedDocumentTypeTemplateViewModel.IsLoad = false;
                     this.LoadHtmlTemplateData(this.RefreshTemplateId);
 
