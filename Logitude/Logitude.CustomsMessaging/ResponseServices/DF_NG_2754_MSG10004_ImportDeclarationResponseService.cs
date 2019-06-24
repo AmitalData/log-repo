@@ -39,6 +39,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         //private List<SupplierInvoiceItemsTaxesModPM> _SupplierInvoiceItemsTaxesModificationPMList;
         //public UnifreightIIG.Common.CommonIIGInterface.IResponseHeaderOrFault _ResponseHeaderExeption;
         public bool _IsSubmitDeclarationResponse { get; set; }
+        public bool _IsRetrieveDeclarationResponse { get; set; }
         decimal? totGeneralTaxCalc = 0;
         decimal? totPurchaseCalc = 0;
         decimal? totVatCalc = 0;
@@ -735,7 +736,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             myDeclarationUpdateService.IsFromCustomsFeedback = true;
             myDeclarationUpdateService.Update(_MyDeclarationPM, true);
 
-            if (!_IsSubmitDeclarationResponse && _MyDeclarationPM.IsCourierDeclaration) //Task 48913
+            if (_MyDeclarationPM.IsCourierDeclaration)
             {
                 DeclarationPendingQueryService myCourierPendingReasonQueryService = new DeclarationPendingQueryService(context);
                 DeclarationPendingPM declarationPendingPM_900 = myCourierPendingReasonQueryService.GetSingle(_MyDeclarationPM.Id, "900", false, false);

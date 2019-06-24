@@ -1172,6 +1172,32 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
+        public HttpResponseMessage GetCheckFreightAmountsByIncotermWithDefault(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                ICustomContext myContext = CustomContext.GetContext(tenant);
+                DeclarationQueryService queryService = new DeclarationQueryService(myContext);
+
+                string isNoIncotermCheck = GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", tenant); 
+                if (isNoIncotermCheck == "Y")
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, false);
+                }
+
+                var result = queryService.CheckFreightAmountsByIncoterm(declarationId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetDeclarationClosureMethod(string declarationId, int tenant)
         {
             try

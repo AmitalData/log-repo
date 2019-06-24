@@ -91,6 +91,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     public NewInvoices: SupplierInvoicePM[] = [];
    
     _SkipAutoInsurance: boolean = false;
+    _IsNoIncotermCheck: string = "N";
+
     constructor//(private cd: ChangeDetectorRef) {
         () {
         super();
@@ -233,6 +235,17 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
 
+        var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        customsSettingExtendedListService.GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", this.EntityPM.Tenant)
+            .subscribe((response: ServiceResponse) => {
+                let obj = response.Result;
+                if (obj) {
+                    let DefaultValue = obj['DefaultValue'];
+                    if (!AppTool.IsNullOrEmpty(DefaultValue)) {
+                        this._IsNoIncotermCheck = DefaultValue;
+                    }
+                }
+            });
         
         customsSettingExtendedListService.GetSkipAutoInsurancePromise(this.declarationPM.CustomerCode, this.declarationPM.Tenant).subscribe(myResult => {
             var res: ServiceResponse = myResult;
@@ -621,20 +634,23 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
                         SessionLocator.CurrentSession.StopBusyIndicator();
+                        if (this._IsNoIncotermCheck == "Y") {
+                            this.ConfirmWindowYesButton();
+                        }
+                        else {
+                            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                            confirmWindow.Show(msg);
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                        var confirmWindow = new ConfirmWindow();
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                        confirmWindow.Show(msg);
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                            if (confirmWindow.Yes) {
-                                this.ConfirmWindowYesButton();
-                            }
-                        });
-                        this.closeWindow = false;
-
+                                if (confirmWindow.Yes) {
+                                    this.ConfirmWindowYesButton();
+                                }
+                            });
+                            this.closeWindow = false;
+                        }
 
                     }
                     else {
@@ -653,22 +669,25 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
                     if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
 
-
                         SessionLocator.CurrentSession.StopBusyIndicator();
+                        if (this._IsNoIncotermCheck == "Y") {
+                            this.ConfirmWindowYesButton();
+                        }
+                        else {
+                            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                            confirmWindow.Show(msg);
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                        var confirmWindow = new ConfirmWindow();
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                        confirmWindow.Show(msg);
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
+                                if (confirmWindow.Yes) {
+                                    this.ConfirmWindowYesButton();
+                                }
+                            });
+                            this.closeWindow = false;
+                        }
 
-                            if (confirmWindow.Yes) {
-                                this.ConfirmWindowYesButton();
-                            }
-                        });
-
-                        this.closeWindow = false;
                     }
                     else {
                         this.closeWindow = false;
@@ -847,20 +866,23 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
                     SessionLocator.CurrentSession.StopBusyIndicator();
+                    if (this._IsNoIncotermCheck == "Y") {
+                        this.ConfirmWindowYesButton();
+                    }
+                    else {
+                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                        confirmWindow.Show(msg);
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                    confirmWindow.Show(msg);
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                        if (confirmWindow.Yes) {
-                            this.ConfirmWindowYesButton();
-                        }
-                    });
-
-                    this.closeWindow = false;
+                            if (confirmWindow.Yes) {
+                                this.ConfirmWindowYesButton();
+                            }
+                        });
+                        this.closeWindow = false;
+                    }
                 }
                 else {
                     this.closeWindow = true;
@@ -874,21 +896,23 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
                     SessionLocator.CurrentSession.StopBusyIndicator();
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    if (this._IsNoIncotermCheck == "Y") {
+                        this.ConfirmWindowYesButton();
+                    }
+                    else {
+                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                        confirmWindow.Show(msg);
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                    confirmWindow.Show(msg);
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                        if (confirmWindow.Yes) {
-                            this.ConfirmWindowYesButton();
-                        }
-                    });
-
-                    this.closeWindow = false;
+                            if (confirmWindow.Yes) {
+                                this.ConfirmWindowYesButton();
+                            }
+                        });
+                        this.closeWindow = false;
+                    }
                 }
                 else {
                     if (!this.loadingNextItems) {
