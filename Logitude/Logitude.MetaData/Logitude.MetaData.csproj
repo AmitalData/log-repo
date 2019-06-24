@@ -179,6 +179,12 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="EntityFiles\CommonDataModel\AirlineAreasPort.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommonDataModel\AirlineArea.lxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="EntityFiles\CommonDataModel\CheckDigitControlAlgorithm.lxml" />
     <None Include="EntityFiles\CommonDataModel\NumberFormat.lxml">
       <SubType>Designer</SubType>

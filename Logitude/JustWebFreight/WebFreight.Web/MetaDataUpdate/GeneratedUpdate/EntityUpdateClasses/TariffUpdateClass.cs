@@ -3397,6 +3397,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature TariffFeature_TARRIFAPPROVEVERSION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TARRIFAPPROVEVERSION", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tariff.Features.TARRIFAPPROVEVERSION", NameTextCodeDefaultText = @"Approve Version" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
+		   Feature TariffFeature_UPDATESURCHARGES = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATESURCHARGES", FeatureTypeCode = "ACT", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TariffObjectTable.Id, Tenant = 0, NameTextCodeCode = "Tariff.Features.UPDATESURCHARGES", NameTextCodeDefaultText = @"Update Surcharges" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
    
 	    
 		}
@@ -3535,6 +3537,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 Code =  "TDLD",
                 EnglishName =  "Tariff Downloaded",
                 LocalName =  "Tariff Downloaded",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = TariffObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "SUCU",
+                EnglishName =  "Surcharges Updated",
+                LocalName =  "Surcharges Updated",
                 IsManualEntry =  false,
                 ShortView =  true,
                 IsAgentView =  false,

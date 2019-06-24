@@ -23,7 +23,7 @@ import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
     moduleId: module.id,
     templateUrl: './DWDateComponent.html',
     inputs: ['DataContext', 'Operation', 'ObjectFieldName', 'SelectedValue'],
-       
+
 })
 
 
@@ -34,13 +34,12 @@ export class DWDateComponent extends BaseComponent {
     DataContext: any;
     ObjectFieldName: string;
     Item: any;
-    IsFirstTime: boolean = true;
     IsLoad: boolean = false;
 
     @Output() ValueChanged = new EventEmitter();
     constructor() {
         super();
-  
+
     }
 
     BetweenDateValue2: Date;
@@ -56,8 +55,8 @@ export class DWDateComponent extends BaseComponent {
     ShowInterval: boolean = false;
     ShowLogDatePicker: boolean = false;
 
-    ngOnInit() { 
-    
+    ngOnInit() {
+
         this.FillListRange();
         this.ShowControl();
         this.InitializeComponent();
@@ -70,16 +69,12 @@ export class DWDateComponent extends BaseComponent {
     }
     public set Operation(newValue: string) {
         if (this.operation != newValue) {
-
-            if (!this.IsFirstTime) this.SetDefultValue(this.operation, newValue);
+            this.DataContext.TextValue = "";
+            this.SetDefultValue(this.operation, newValue);
             this.operation = newValue;
-          
-            if (!this.IsFirstTime) {
-                this.ShowControl();
-                this.DataContext.TextValue = "";
-              this.SetValue();
-            }
-            this.IsFirstTime = false;
+            this.ShowControl();
+
+            this.SetValue();
 
         }
     }
@@ -135,10 +130,12 @@ export class DWDateComponent extends BaseComponent {
 
 
     DatePickerBetweenValue2Change(value: Date) {
+
         if (this.IsDateValueChange(value, this.BetweenDateValue2)) {
             this.BetweenDateValue2 = value;
             this.SetValue();
         }
+
     }
 
 
@@ -163,16 +160,13 @@ export class DWDateComponent extends BaseComponent {
         }
     }
 
+
     SetDefultValue(operation, newoperation) {
 
-      if ((operation == "Previous" && newoperation != "Next") || (operation == "Next" && newoperation != "Previous")) {
-            this.IntervalValue = 1;
-            this.SelectedRange = "Day";
-        } else if ((operation == "Current" && newoperation != "Current")) {
+        if ((operation == "Previous" && newoperation != "Next") || (operation == "Next" && newoperation != "Previous") || (operation == "Current" && newoperation != "Current")) {
             this.IntervalValue = 1;
             this.SelectedRange = "Day";
         }
-
     }
 
     SetValue() {
@@ -182,21 +176,21 @@ export class DWDateComponent extends BaseComponent {
             if (this.DateValue) {
                 var myFormats = DateTool.GetDateFormats(this.DateValue);
                 if (myFormats) {
-                    selectedValue =  this.GetDateFormats(myFormats);
+                    selectedValue = this.GetDateFormats(myFormats);
                 }
-            } 
-            
-        } else if (this.Operation == "Previous" || this.Operation == "Next" ) {
+            }
+
+        } else if (this.Operation == "Previous" || this.Operation == "Next") {
             selectedValue = this.Operation;
             selectedValue += "^";
-            selectedValue += (!AppTool.IsNullOrEmpty(this.IntervalValue) ? this.IntervalValue :0);
+            selectedValue += (!AppTool.IsNullOrEmpty(this.IntervalValue) ? this.IntervalValue : 0);
             selectedValue += "^";
             selectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange : "");
 
         } else if (this.Operation == "Current") {
             selectedValue = this.Operation;
             selectedValue += "^";
-            selectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange:"");
+            selectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange : "");
 
         }
         else if (this.Operation == "Between") {
@@ -210,7 +204,7 @@ export class DWDateComponent extends BaseComponent {
             if (this.BetweenDateValue2) {
                 var myFormats = DateTool.GetDateFormats(this.BetweenDateValue2);
                 if (myFormats) {
-                    selectedValue += ("^"+this.GetDateFormats(myFormats));
+                    selectedValue += ("^" + this.GetDateFormats(myFormats));
                 }
             }
 
@@ -252,7 +246,7 @@ export class DWDateComponent extends BaseComponent {
         this.IsLoad = true;
     }
 
-    ConvertDateToString(value:any) {
+    ConvertDateToString(value: any) {
         var date = new Date(value);
         var year = date.getUTCFullYear();
         var month = date.getUTCMonth() + 1;

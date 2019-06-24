@@ -21,6 +21,8 @@ import { ChargesTypeListService } from '../../../../Common/Services/StandardList
 import { ChargesTypeList } from '../../../../Common/EntityLists/ChargesTypeList';
 import { DatePipe } from '@angular/common';
 import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/TariffVersionExtendedPMService';
+import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
+import { UpdateTariffArgs } from '../../../Args';
 declare var ResultAsArray: any;
 
 @Component({
@@ -43,7 +45,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public CurrentVersion: TariffVersionPM;
     private CurrentSession = SessionLocator.SelectedSession;
     private ChargesTypeListService: ChargesTypeListService;
-    private FilName: string = "";
+    public IsUpdateSurchargesButtonVisible: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -160,12 +162,20 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     SetUIProperties() {
         var isApproveVersionButtonVisible: boolean = false;
+        var isUpdateSurchargesButtonVisible: boolean = false;
 
-        if (this.IsDraftVersion && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
-            isApproveVersionButtonVisible = true;
+        if (this.IsDraftVersion) {
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "TARRIFAPPROVEVERSION")) {
+                isApproveVersionButtonVisible = true;
+            }
+
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATESURCHARGES")) {
+                isUpdateSurchargesButtonVisible = true;
+            }
         }
 
         this.IsApproveVersionButtonVisible = isApproveVersionButtonVisible;
+        this.IsUpdateSurchargesButtonVisible = isUpdateSurchargesButtonVisible;
     }
 
     public AllChargesTypes: ChargesTypeList[];
@@ -203,56 +213,128 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public Surcharge9PriceVisibility: boolean;
     public Surcharge10PriceVisibility: boolean;
 
+    private tariffCharges: CodeNameClass[] = [];
     SetSurchargesLabelsAndVisibility() {
+        this.tariffCharges = [];
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge1Id)[0];
             this.Surcharge1PriceLabel = chargeType.Code;
             this.Surcharge1PriceVisibility = true;
+
+            var chargeItem1: CodeNameClass = new CodeNameClass();
+            chargeItem1.Code = chargeType.Code;
+            chargeItem1.Name = chargeType.MeasurementCode;
+            chargeItem1.Code_Int = 1;
+            this.tariffCharges.push(chargeItem1);
         }
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge2Id)[0];
             this.Surcharge2PriceLabel = chargeType.Code;
             this.Surcharge2PriceVisibility = true;
+
+            var chargeItem2: CodeNameClass = new CodeNameClass();
+            chargeItem2.Code = chargeType.Code;
+            chargeItem2.Name = chargeType.MeasurementCode;
+            chargeItem2.Code_Int = 2;
+            this.tariffCharges.push(chargeItem2);
         }
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge3Id)[0];
             this.Surcharge3PriceLabel = chargeType.Code;
             this.Surcharge3PriceVisibility = true;
+
+            var chargeItem3: CodeNameClass = new CodeNameClass();
+            chargeItem3.Code = chargeType.Code;
+            chargeItem3.Name = chargeType.MeasurementCode;
+            chargeItem3.Code_Int = 3;
+            this.tariffCharges.push(chargeItem3);
         }
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge4Id)[0];
             this.Surcharge4PriceLabel = chargeType.Code;
             this.Surcharge4PriceVisibility = true;
+
+            var chargeItem4: CodeNameClass = new CodeNameClass();
+            chargeItem4.Code = chargeType.Code;
+            chargeItem4.Name = chargeType.MeasurementCode;
+            chargeItem4.Code_Int = 4;
+            this.tariffCharges.push(chargeItem4);
         }
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge5Id)[0];
             this.Surcharge5PriceLabel = chargeType.Code;
             this.Surcharge5PriceVisibility = true;
+
+            var chargeItem5: CodeNameClass = new CodeNameClass();
+            chargeItem5.Code = chargeType.Code;
+            chargeItem5.Name = chargeType.MeasurementCode;
+            chargeItem5.Code_Int = 5;
+            this.tariffCharges.push(chargeItem5);
         }
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge6Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge6Id)[0];
             this.Surcharge6PriceLabel = chargeType.Code;
             this.Surcharge6PriceVisibility = true;
+
+            var chargeItem6: CodeNameClass = new CodeNameClass();
+            chargeItem6.Code = chargeType.Code;
+            chargeItem6.Name = chargeType.MeasurementCode;
+            chargeItem6.Code_Int = 6;
+            this.tariffCharges.push(chargeItem6);
         }
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge7Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge7Id)[0];
             this.Surcharge7PriceLabel = chargeType.Code;
             this.Surcharge7PriceVisibility = true;
+
+            var chargeItem7: CodeNameClass = new CodeNameClass();
+            chargeItem7.Code = chargeType.Code;
+            chargeItem7.Name = chargeType.MeasurementCode;
+            chargeItem7.Code_Int = 7;
+            this.tariffCharges.push(chargeItem7);
         }
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge8Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge8Id)[0];
             this.Surcharge8PriceLabel = chargeType.Code;
             this.Surcharge8PriceVisibility = true;
+
+            var chargeItem8: CodeNameClass = new CodeNameClass();
+            chargeItem8.Code = chargeType.Code;
+            chargeItem8.Name = chargeType.MeasurementCode;
+            chargeItem8.Code_Int = 8;
+            this.tariffCharges.push(chargeItem8);
         }
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge9Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge9Id)[0];
             this.Surcharge9PriceLabel = chargeType.Code;
             this.Surcharge9PriceVisibility = true;
+
+            var chargeItem9: CodeNameClass = new CodeNameClass();
+            chargeItem9.Code = chargeType.Code;
+            chargeItem9.Name = chargeType.MeasurementCode;
+            chargeItem9.Code_Int = 9;
+            this.tariffCharges.push(chargeItem9);
         }
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge10Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge10Id)[0];
             this.Surcharge10PriceLabel = chargeType.Code;
             this.Surcharge10PriceVisibility = true;
+
+            var chargeItem10: CodeNameClass = new CodeNameClass();
+            chargeItem10.Code = chargeType.Code;
+            chargeItem10.Name = chargeType.MeasurementCode;
+            chargeItem10.Code_Int = 10;
+            this.tariffCharges.push(chargeItem10);
         }
     }
 
@@ -452,6 +534,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         itemPM.ExpirationDate = this.ExpirationDate;
         itemPM.Tenant = SessionLocator.Tenant;
         itemPM.Version = this.CurrentVersion.Version;
+        itemPM.Index = 0;
 
         var Version: TariffVersionPM = this.EntityPM.TariffVersions.filter(p => p.Version == itemPM.Version)[0];
         if (Version) {
@@ -667,9 +750,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             errors.push("Invalid Tariff Lines");
         }
 
-        if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
-            errors.push("Approving past version is not allowed, please update the dates");
-        }
+        //if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+        //    errors.push("Approving past version is not allowed, please update the dates");
+        //}
 
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
@@ -765,6 +848,19 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         });
 
         logWindow.Show('./TariffModule/Components/EditTabs/Tariff/TariffDatesValidationComponent');
+    }
+
+    UpdateSurchargesClicked() {
+        var args: UpdateTariffArgs = new UpdateTariffArgs();
+        args.Version = this.CurrentVersion;
+        args.TariffCharges = this.tariffCharges;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 600;
+        logWindow.WindowArgs = args;
+        logWindow.Title = "Tariff Surchage Update";
+        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UpdateSurchargesComponent');
     }
 }
 
@@ -1267,6 +1363,20 @@ export class TariffLineData extends BaseComponent {
 
         else {
             return FontTool.Red;
+        }
+    }
+
+    get StartDate() { return this.EntityPM.StartDate; }
+    set StartDate(value: Date) {
+        if (this.EntityPM.StartDate != value) {
+            this.EntityPM.StartDate = value;
+        }
+    }
+
+    get ExpirationDate() { return this.EntityPM.ExpirationDate; }
+    set ExpirationDate(value: Date) {
+        if (this.EntityPM.ExpirationDate != value) {
+            this.EntityPM.ExpirationDate = value;
         }
     }
 

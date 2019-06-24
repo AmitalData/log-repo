@@ -66,7 +66,7 @@ export class SchedulerDateListTemplate {
                     windowArgs.TextValue = "";
                 }
                 windowArgs.DisplayMode = true;
-
+                 
                 var wind = new LogitudeWindow();
 
                 wind.Width = 960;
