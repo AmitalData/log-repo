@@ -29,6 +29,7 @@ export class AreasTabComponent extends BaseComponent implements OnInit {
     public ObsList: TariffHeaderItem[];
     public ObjectTableName: string = "Airline";
     public TenantPM: TenantPM;
+    public ItemsSource = [];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public ShowActiveTarrifsString: string = "";
     public ShowAllTarrifsString: string = "";

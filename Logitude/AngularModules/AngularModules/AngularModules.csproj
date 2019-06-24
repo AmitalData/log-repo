@@ -2048,6 +2048,7 @@
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffTabsContentComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
@@ -6416,6 +6417,7 @@
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffTabsContentComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\MenuButtons\TariffMenuButtonsHandler.ts" />

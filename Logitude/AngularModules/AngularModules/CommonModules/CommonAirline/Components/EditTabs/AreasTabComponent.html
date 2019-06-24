@@ -1,1 +1,66 @@
-areas
+
+<div class="TabHolder">
+    <table>
+        <tr style="height:5px">
+            <td></td>
+        </tr>
+        <tr style="height:1px;">
+            <td style="vertical-align:top">
+                <table>
+                    <tr style="height:30px">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:100px">
+                                        <button class="Button">New Area</button>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="height:5px">
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:top">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 150px;">aaa{{'AirlineArea.F.Name' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 170px;">sss{{'AirlineArea.F.Description' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 150px;">dd{{'AirlineArea.F.CreatedByUserName' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 150px;">fff{{'AirlineArea.F.CreateDate' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 150px;">gggg{{'AirlineArea.F.UpdatedByUserName' | TextCodeTranslationPipe}}</td>
+                                            <td style="width: 150px;">hhhhh{{'AirlineArea.F.UpdateDate' | TextCodeTranslationPipe}}</td>
+
+                                            <td style="width: 50px;"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody">
+                                    <table>
+                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let item of ItemsSource" (click)="Selecting(item)">
+                                            <td class="GridViewCell" style="width: 200px;"></td>
+                                        </tr>
+                                    </table>
+                                    </div>
+                                </div>
+                            
+                                 </td>
+                            </tr>
+                       </table>
+                 </td>
+            </tr>
+        <tr>
+            <td>
+<div></div>
+            </td>
+        </tr>
+        </table>
+
+    </div>
