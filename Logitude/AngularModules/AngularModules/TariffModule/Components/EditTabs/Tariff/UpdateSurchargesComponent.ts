@@ -17,6 +17,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public DataContext = this;
     public ObjectTableName = "Tariff";
     public EntityPM: TariffVersionPM;
+    public Logs= [];
     public ValidationErrorsList: string[] = [];
     public TariffChargesObsList: TariffCharge[];
     constructor() {
