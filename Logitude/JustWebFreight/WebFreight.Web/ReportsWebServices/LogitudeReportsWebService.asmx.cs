@@ -7349,7 +7349,7 @@ namespace WebFreight.Web.ReportsWebServices
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
             IQueryable<ShipmentDataView> iQueryable = shipmentRepository.GetShipmentViewsByTenant(tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+            Contact loggedContact = contactRepository.GetSingleContactByEmail(GetAuthenticatedUser(tenant), tenant);
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
@@ -10541,7 +10541,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             //logged user
             ContactRepository contactRepo = new ContactRepository(tenant);
-            Contact loggedContact = contactRepo.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
+            Contact loggedContact = contactRepo.GetSingleContactByEmail(GetAuthenticatedUser(tenant), tenant);
             totalData.PrintedByUser = showLocals ? loggedContact.LocalName : loggedContact.EnglishName;
 
             //customerId
@@ -13259,11 +13259,24 @@ namespace WebFreight.Web.ReportsWebServices
             return automationTestReportDataProvider;
         }
 
-   
+
 
         #endregion
 
-        
+        private string GetAuthenticatedUser(int tenant)
+        {
+            string email = "";
+            if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            {
+                email = HttpContext.Current.User.Identity.Name;
+            }
+            else
+            {
+                email = "system@tenant" + tenant.ToString() + ".com";
+            }
+
+            return email;
+        }
 
 
         private ContactPM GetLoggedContact(int tenant)

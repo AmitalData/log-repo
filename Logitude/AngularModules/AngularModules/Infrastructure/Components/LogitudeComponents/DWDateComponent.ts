@@ -23,7 +23,7 @@ import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
     moduleId: module.id,
     templateUrl: './DWDateComponent.html',
     inputs: ['DataContext', 'Operation', 'ObjectFieldName', 'SelectedValue'],
-       
+
 })
 
 
@@ -34,14 +34,17 @@ export class DWDateComponent extends BaseComponent {
     DataContext: any;
     ObjectFieldName: string;
     Item: any;
-    IsFirstTime: boolean = true;
     IsLoad: boolean = false;
 
     @Output() ValueChanged = new EventEmitter();
     constructor() {
         super();
-  
+
     }
+
+    BetweenDateValue2: Date;
+    BetweenDateValue1: Date;
+
 
     DateValue: Date;
     SelectedRange: string = "Day";
@@ -52,8 +55,8 @@ export class DWDateComponent extends BaseComponent {
     ShowInterval: boolean = false;
     ShowLogDatePicker: boolean = false;
 
-    ngOnInit() { 
-    
+    ngOnInit() {
+
         this.FillListRange();
         this.ShowControl();
         this.InitializeComponent();
@@ -66,26 +69,22 @@ export class DWDateComponent extends BaseComponent {
     }
     public set Operation(newValue: string) {
         if (this.operation != newValue) {
-
-            if (!this.IsFirstTime) this.SetDefultValue(this.operation, newValue);
+            this.DataContext.TextValue = "";
+            this.SetDefultValue(this.operation, newValue);
             this.operation = newValue;
-          
-            if (!this.IsFirstTime) {
-                this.ShowControl();
-                this.DataContext.TextValue = "";
-              this.SetValue();
-            }
-            this.IsFirstTime = false;
+            this.ShowControl();
+
+            this.SetValue();
 
         }
     }
+
 
     ShowControl() {
 
         this.ShowLogDatePicker = false;
         this.ShowRange = false;
         this.ShowInterval = false;
-
 
         if (this.Operation == "Before" || this.Operation == "After") {
             this.ShowLogDatePicker = true;
@@ -94,8 +93,6 @@ export class DWDateComponent extends BaseComponent {
             if (this.Operation != "Current") {
                 this.ShowInterval = true;
             }
-        } else {
-            this.ShowLogDatePicker = true;
         }
     }
 
@@ -116,13 +113,44 @@ export class DWDateComponent extends BaseComponent {
     }
 
     DatePickerValueChange(value: Date) {
-        var value1:string = value != null ? value.toString():"";
-        var value2:string = this.DateValue != null ? this.DateValue.toString():"";
-        if (value1 != value2) {
+        if (this.IsDateValueChange(value, this.DateValue)) {
             this.DateValue = value;
             this.SetValue();
         }
     }
+
+
+
+    DatePickerBetweenValue1Change(value: Date) {
+        if (this.IsDateValueChange(value, this.BetweenDateValue1)) {
+            this.BetweenDateValue1 = value;
+            this.SetValue();
+        }
+    }
+
+
+    DatePickerBetweenValue2Change(value: Date) {
+
+        if (this.IsDateValueChange(value, this.BetweenDateValue2)) {
+            this.BetweenDateValue2 = value;
+            this.SetValue();
+        }
+
+    }
+
+
+
+    IsDateValueChange(value1, value2) {
+        var isChange: boolean = false;
+        var valueA: string = value1 != null ? value1.toString() : "";
+        var valueB: string = value2 != null ? value2.toString() : "";
+
+        if (valueA != valueB) {
+            isChange = true;
+        }
+        return isChange;
+    }
+
 
     SelectedIntervalChanged(value) {
 
@@ -132,22 +160,101 @@ export class DWDateComponent extends BaseComponent {
         }
     }
 
+
     SetDefultValue(operation, newoperation) {
 
-        if ((operation == "After" && newoperation != "Before") || (operation == "Before" && newoperation != "After")) {
-          //  this.DateValue = null;
+        if ((operation == "Previous" && newoperation != "Next") || (operation == "Next" && newoperation != "Previous") || (operation == "Current" && newoperation != "Current")) {
+            this.IntervalValue = 1;
+            this.SelectedRange = "Day";
         }
-        else if ((operation == "Previous" && newoperation != "Next") || (operation == "Next" && newoperation != "Previous")) {
-            this.IntervalValue = 1;
-            this.SelectedRange = "Day";
-        } else if ((operation == "Current" && newoperation != "Current")) {
-            this.IntervalValue = 1;
-            this.SelectedRange = "Day";
+    }
+
+    SetValue() {
+        var selectedValue = "";
+
+        if (this.Operation == "Before" || this.Operation == "After") {
+            if (this.DateValue) {
+                var myFormats = DateTool.GetDateFormats(this.DateValue);
+                if (myFormats) {
+                    selectedValue = this.GetDateFormats(myFormats);
+                }
+            }
+
+        } else if (this.Operation == "Previous" || this.Operation == "Next") {
+            selectedValue = this.Operation;
+            selectedValue += "^";
+            selectedValue += (!AppTool.IsNullOrEmpty(this.IntervalValue) ? this.IntervalValue : 0);
+            selectedValue += "^";
+            selectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange : "");
+
+        } else if (this.Operation == "Current") {
+            selectedValue = this.Operation;
+            selectedValue += "^";
+            selectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange : "");
+
+        }
+        else if (this.Operation == "Between") {
+            if (this.BetweenDateValue1) {
+                var myFormats = DateTool.GetDateFormats(this.BetweenDateValue1);
+                if (myFormats) {
+                    selectedValue = this.GetDateFormats(myFormats);
+                }
+            }
+
+            if (this.BetweenDateValue2) {
+                var myFormats = DateTool.GetDateFormats(this.BetweenDateValue2);
+                if (myFormats) {
+                    selectedValue += ("^" + this.GetDateFormats(myFormats));
+                }
+            }
+
+
+        }
+
+
+        if (this.DataContext.TextValue != selectedValue) {
+            this.ValueChanged.emit(selectedValue);
         }
 
     }
 
-    GetDateFormats(myFormats:any) {
+    InitializeComponent() {
+
+        if (this.SelectedValue) {
+            if (this.Operation == "Before" || this.Operation == "After") {
+                this.DateValue = this.ConvertDateToString(this.SelectedValue);
+            }
+
+            else if (this.Operation == "Previous" || this.Operation == "Next") {
+
+                var values: string[] = this.SelectedValue.toString().split('^');
+                if (values.length > 1) this.IntervalValue = Number(values[1]);
+                if (values.length > 2) this.SelectedRange = values[2];
+            }
+
+            else if (this.Operation == "Current") {
+                var values: string[] = this.SelectedValue.toString().split('^');
+                if (values.length > 1) this.SelectedRange = values[1];
+            }
+
+            else if (this.Operation == "Between") {
+                var dateBetweenValues = this.SelectedValue.toString().split('^');
+                if (dateBetweenValues[0]) this.BetweenDateValue1 = this.ConvertDateToString(dateBetweenValues[0]);
+                if (dateBetweenValues[1]) this.BetweenDateValue2 = this.ConvertDateToString(dateBetweenValues[1]);
+            }
+        }
+        this.IsLoad = true;
+    }
+
+    ConvertDateToString(value: any) {
+        var date = new Date(value);
+        var year = date.getUTCFullYear();
+        var month = date.getUTCMonth() + 1;
+        var day = date.getUTCDate() + 1;
+        var dateString = month + "/" + day + "/" + year;
+        return new Date(dateString);
+    }
+    GetDateFormats(myFormats: any) {
         var result = "";
         if (myFormats) {
 
@@ -162,70 +269,6 @@ export class DWDateComponent extends BaseComponent {
     }
 
 
-    SetValue() {
-        var selectedValue = "";
-
-        if (this.Operation == "Before" || this.Operation == "After") {
-            if (this.DateValue) {
-                var myFormats = DateTool.GetDateFormats(this.DateValue);
-                if (myFormats) {
-                    selectedValue =  this.GetDateFormats(myFormats);
-                }
-            } 
-            
-        } else if (this.Operation == "Previous" || this.Operation == "Next" ) {
-            selectedValue = this.Operation;
-            selectedValue += "^";
-            selectedValue += (!AppTool.IsNullOrEmpty(this.IntervalValue) ? this.IntervalValue :0);
-            selectedValue += "^";
-            selectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange : "");
-
-        } else if (this.Operation == "Current") {
-            selectedValue = this.Operation;
-            selectedValue += "^";
-            selectedValue += (!AppTool.IsNullOrEmpty(this.SelectedRange) ? this.SelectedRange:"");
-
-        }
-
-        if (this.DataContext.TextValue != selectedValue) {
-            this.ValueChanged.emit(selectedValue);
-        }
-
-    }
-
-    InitializeComponent() {
-
-        if (this.Operation == "Before" || this.Operation == "After") {
-            if (this.SelectedValue) {
-                var date = new Date(this.SelectedValue);
-                var year = date.getUTCFullYear();
-                var month = date.getUTCMonth() + 1;
-                var day = date.getUTCDate() +2;
-                var value = month + "/" + day + "/" + year;
-                this.DateValue = new Date(value);
-            }
- 
-        }
-
-        else if (this.Operation == "Previous" || this.Operation == "Next") {
-            if (this.SelectedValue) {
-                var values: string[] = this.SelectedValue.toString().split('^');
-                if (values.length > 1) this.IntervalValue = Number(values[1]);
-                if (values.length > 2) this.SelectedRange = values[2];
-            }
-            
-        }
-
-        else if (this.Operation == "Current") {
-            if (this.SelectedValue) {
-                var values: string[] = this.SelectedValue.toString().split('^');
-                if (values.length > 1) this.SelectedRange = values[1];
-            }
-        
-        }
-
-        this.IsLoad = true;
-    }
 
 
 

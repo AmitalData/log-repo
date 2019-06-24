@@ -3698,17 +3698,18 @@ User/Pass",
         private void button42_Click(object sender, EventArgs e)
         {
 
-            string text = "APP4030";
+            //string text = "APP4030";
 
-            var chars = Regex.Matches(text, @"^[a-zA-Z]+$");
-            //Regex rg = new Regex(@"^[a-zA-Z]+$");
-            //   bool match = rg.IsMatch(text);
-               //   match = rg.Split(text);
-            //if (match.Count() > 0)
-            //{
+            //string input = "1030-015849-1";
+            //input = input.Replace("-", "");
+            //var array = Regex.Matches(input, @"\D+|\d+")
+            //                 .Cast<Match>()
+            //                 .Select(m => m.Value)
+            //                 .ToArray();
 
-
-            //}
+            //TaxReportQueryService taxReportQueryService = new TaxReportQueryService(1064);
+            //TaxReportPM taxReportPM = taxReportQueryService.GetSingle("1-1913", false, false);
+            //TaxReportService.CreateTaxReportLines(taxReportPM, 1064);
 
 
         }
