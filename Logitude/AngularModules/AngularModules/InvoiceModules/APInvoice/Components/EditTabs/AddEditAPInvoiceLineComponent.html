@@ -181,7 +181,7 @@
                                     <LogLabel [ObjectFieldName]="'InvoiceCurrencyAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'InvoiceCurrencyAmount'" [Text]="DataContext.InvoiceCurrencyAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [InputType]="'sigdouble'" [ObjectFieldName]="'InvoiceCurrencyAmount'" [Text]="DataContext.InvoiceCurrencyAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
                                 <td>
                                     <div></div>
@@ -195,7 +195,7 @@
                                 </td>
 
                                 <td>
-                                    <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'OpenAmount'" [Text]="DataContext.OpenAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'OpenAmount'" [Text]="DataContext.OpenAmount" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                 </td>
 
                                 <td>

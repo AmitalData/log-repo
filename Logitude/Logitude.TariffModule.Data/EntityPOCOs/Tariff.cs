@@ -170,6 +170,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string Surcharge10UOM { get; set; }
 	      
         public virtual Measurement Surcharge10U { get; set; }
+        [Column("ConcurrencyGUID")]
+	    public string ConcurrencyGUID { get; set; }
     }
 }
 	 

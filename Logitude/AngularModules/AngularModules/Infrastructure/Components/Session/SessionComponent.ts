@@ -534,7 +534,7 @@ export class SessionComponent {
 
     //public DestroyS
 
-    private isDestroingSession: boolean = false;
+    public isDestroingSession: boolean = false;
     public DestroySession() {
         this.isDestroingSession = true;
 

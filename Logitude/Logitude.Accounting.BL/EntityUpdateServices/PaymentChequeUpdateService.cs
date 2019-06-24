@@ -99,8 +99,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     TypeCode="0",
                     StatusCode="2",
                     CreatedByUserId = entityPM.CreatedByUserId,
-                    AccountingEntityCode = "9",
-                    AccountingEntityId = entityPM.Id,
+                    AccountingEntityCode = paymentPM != null ? "5": "9",
+                    AccountingEntityId = entityPM.APPaymentId != null? entityPM.APPaymentId : entityPM.Id,
                     AccountingEntityReference = paymentPM != null ? paymentPM.PaymentNo : entityPM.ChequeNumber,
                     UpdateDate = entityPM.UpdateDate,
                     UpdatedByUserId= entityPM.UpdatedByUserId,
@@ -167,7 +167,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //}
                 journal.JournalLines.Add(journalLine1);
                 journal.JournalLines.Add(journalLine2);
-                journalUpdateService.Update(journal, true);
+               journalUpdateService.Update(journal, true);
                 entityPM.JournalNumber = journal.JournalNumber;
             }
             ValidateEntity(entityPM);

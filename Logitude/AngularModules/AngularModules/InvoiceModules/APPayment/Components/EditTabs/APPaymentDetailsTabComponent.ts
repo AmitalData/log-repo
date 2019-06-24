@@ -32,6 +32,7 @@ import {BankAccountPMService} from '../../../../Accounting/Services/StandardPMs/
 import {BankAccountPM} from  '../../../../Accounting/EntityPMs/BankAccountPM';
 import {FullAccountingSettingPM} from '../../../../Accounting/EntityPMs/FullAccountingSettingPM';
 import { FullAccountingSettingPMService } from '../../../../Accounting/Services/StandardPMs/FullAccountingSettingPMService';
+import { PaymentChequeExtendedPMService } from '../../../../Accounting/Services/ExtendedPMs/PaymentChequeExtendedPMService';
 
 @Component({
     moduleId: module.id,
@@ -55,19 +56,26 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public LocalCurrencyCode = "";
     private CurrentSession = SessionLocator.SelectedSession;
     public fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
-
+    PaymentChequePMService: PaymentChequeExtendedPMService = new PaymentChequeExtendedPMService();
+    IsChequeLinkVisibile:boolean = false;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+            this.IsSplitComponentOpened  = this.isRTL;
+
         }
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.EnableNegativeOffsetAPPayments = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments;
         this.GetFullAccountingSettings();
-      
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ChequeOrPaymentRef) &&  this.EntityPM.AutomaticPaymentCheque) {
+            this.IsChequeLinkVisibile = true;
+       
+        }
+       
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EnableMultiCurrency")) {
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyAPPayments) {
                 this.IsMultiCurrency = true;
@@ -85,23 +93,24 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
     }
     public ShowSplitButton: boolean = false;
-    IsSplitComponentOpened: boolean = true;
+    IsSplitComponentOpened: boolean;
 
     token: any;
     SplitButtonClicked() {
 
         this.IsSplitComponentOpened = !this.IsSplitComponentOpened;
         if (!this.IsSplitComponentOpened) {
-            this.AutomaticPaymentCheque=false;
-            this.PaymentChequeActivated = false;
+            this.AutomaticPaymentCheque=!this.isRTL;
+            this.PaymentChequeActivated = !this.isRTL;
             if (AppTool.IsNullOrEmpty(this.ChequeOrPaymentRef)) {
-                this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, true);
+                this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, this.isRTL);
             }
         }
         else {
-            this.PaymentChequeActivated = true;
-           this.AutomaticPaymentCheque=true;
-            this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, false);
+            this.PaymentChequeActivated = this.isRTL;
+            this.AutomaticPaymentCheque = this.isRTL;
+            this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, !this.isRTL);
+            this.ChequeOrPaymentRef = null;
         }
 
         this.ShowSplitButton = true;
@@ -109,7 +118,30 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
      
     }
+    entityId: string;
+    ViewPaymentCheque() {
 
+        this.PaymentChequePMService.getPaymentChequeByChequeNumber(this.EntityPM.ChequeOrPaymentRef).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (myResponse != null) {
+
+                var res = myResponse.Result;
+                var entityId = res.Id;
+                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                    .then(cmpRef => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "PaymentCheque", BackButtonLabel: "PaymentCheque" });
+                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                            this.BuildScreenData();
+                        });
+                    });
+            }
+
+        });
+
+      
+    }
+    
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public  GetFullAccountingSettings() {
       
@@ -347,6 +379,20 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private RefreshScreen() {
         this.SetUIProperties();
         this.LoadData();
+        this.CollapseSplitButton();
+    }
+    ChequeNumber: string;
+    IsSplitButtonVisibile: boolean = false;
+    CollapseSplitButton() {
+        if (this.PaymentMethodCode == "CH" && this.AutomaticPaymentCheque) {
+            this.IsSplitButtonVisibile = false;
+           
+        }
+      
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.ChequeOrPaymentRef) && this.EntityPM.AutomaticPaymentCheque) {
+            this.IsChequeLinkVisibile = true;
+
+        }
     }
     get IsScreenEnabled() {
         var result = true;
@@ -903,11 +949,13 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     SetAutomaticPaymentCheque(value: string){
-    if (this.PaymentMethodCode == "CH") {
+        if (this.PaymentMethodCode == "CH" && this.PaymentChequeActivated) {
         this.EntityPM.AutomaticPaymentCheque = true;
+        this.IsSplitButtonVisibile = true;
     }
     else {
         this.EntityPM.AutomaticPaymentCheque = false;
+        this.IsSplitButtonVisibile = false;
      }
 
     }

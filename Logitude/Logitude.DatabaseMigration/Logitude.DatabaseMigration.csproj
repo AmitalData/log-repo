@@ -1121,6 +1121,38 @@
     <Compile Include="Migrations\201906190804240_AbedAdddNewFieldsShowHeaderLabelsPackagesToQuoteTemplateSettings.Designer.cs">
       <DependentUpon>201906190804240_AbedAdddNewFieldsShowHeaderLabelsPackagesToQuoteTemplateSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906191055164_APPaymentChequeNumberMigration.cs" />
+    <Compile Include="Migrations\201906191055164_APPaymentChequeNumberMigration.Designer.cs">
+      <DependentUpon>201906191055164_APPaymentChequeNumberMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906191234278_APPAymentPaymentChequeIdMigration.cs" />
+    <Compile Include="Migrations\201906191234278_APPAymentPaymentChequeIdMigration.Designer.cs">
+      <DependentUpon>201906191234278_APPAymentPaymentChequeIdMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906191108387_AddOccasionsTables_Maheera.cs" />
+    <Compile Include="Migrations\201906191108387_AddOccasionsTables_Maheera.Designer.cs">
+      <DependentUpon>201906191108387_AddOccasionsTables_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.cs" />
+    <Compile Include="Migrations\201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.Designer.cs">
+      <DependentUpon>201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.cs" />
+    <Compile Include="Migrations\201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.Designer.cs">
+      <DependentUpon>201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906201245296_AddTariffConcurrencyGUID.cs" />
+    <Compile Include="Migrations\201906201245296_AddTariffConcurrencyGUID.Designer.cs">
+      <DependentUpon>201906201245296_AddTariffConcurrencyGUID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906230909109_MakeTarrifConcurrencyGUIDRequired.cs" />
+    <Compile Include="Migrations\201906230909109_MakeTarrifConcurrencyGUIDRequired.Designer.cs">
+      <DependentUpon>201906230909109_MakeTarrifConcurrencyGUIDRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906231635221_MakeTariffVersionDatesNullable.cs" />
+    <Compile Include="Migrations\201906231635221_MakeTariffVersionDatesNullable.Designer.cs">
+      <DependentUpon>201906231635221_MakeTariffVersionDatesNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1903,6 +1935,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906190804240_AbedAdddNewFieldsShowHeaderLabelsPackagesToQuoteTemplateSettings.resx">
       <DependentUpon>201906190804240_AbedAdddNewFieldsShowHeaderLabelsPackagesToQuoteTemplateSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906191055164_APPaymentChequeNumberMigration.resx">
+      <DependentUpon>201906191055164_APPaymentChequeNumberMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906191234278_APPAymentPaymentChequeIdMigration.resx">
+      <DependentUpon>201906191234278_APPAymentPaymentChequeIdMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906191108387_AddOccasionsTables_Maheera.resx">
+      <DependentUpon>201906191108387_AddOccasionsTables_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.resx">
+      <DependentUpon>201906230644178_DeleteAPPaymentunnecessaryFieldsMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.resx">
+      <DependentUpon>201906230806174_APPaymentAutomaticPaymentChequeFieldMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906201245296_AddTariffConcurrencyGUID.resx">
+      <DependentUpon>201906201245296_AddTariffConcurrencyGUID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906230909109_MakeTarrifConcurrencyGUIDRequired.resx">
+      <DependentUpon>201906230909109_MakeTarrifConcurrencyGUIDRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906231635221_MakeTariffVersionDatesNullable.resx">
+      <DependentUpon>201906231635221_MakeTariffVersionDatesNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

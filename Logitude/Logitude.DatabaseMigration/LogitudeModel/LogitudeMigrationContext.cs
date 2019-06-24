@@ -2993,6 +2993,10 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         public IDbSet<TicketCreatedByType> TicketCreatedByTypes { get; set; }
         public IDbSet<TicketSource> TicketSources { get; set; }
+
+        public IDbSet<Occasion> Occasions { get; set; }
+        public IDbSet<OccasionType> OccasionTypes { get; set; }
+        public IDbSet<OccasionStatus> OccasionStatuses { get; set; }
         #endregion
 
         #region Social Context
@@ -3685,6 +3689,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new TicketSourceMap());
             modelBuilder.Configurations.Add(new TicketCreatedByTypeMap());
+            modelBuilder.Configurations.Add(new OccasionMap());
+            modelBuilder.Configurations.Add(new OccasionStatusMap());
+            modelBuilder.Configurations.Add(new OccasionTypeMap());
             #endregion
 
             #region Booking

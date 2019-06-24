@@ -23,13 +23,22 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
         {
             AddPOCOPropertyName(POCOPropertyNames.Id);
             AddPOCOPropertyName(POCOPropertyNames.Tenant);
+            AddPOCOPropertyName(POCOPropertyNames.ConcurrencyGUID);
 
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
+
+                if (entityPM.NewConcurrencyGUID == null)
+                {
+                    entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+                }
             }
-            
+
+            entityPOCO.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+            entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
+
             entityPM.SetAsInActive = false;
             entityPM.SetAsReActive = false;
             entityPM.TariffLinesAdded = false;
@@ -40,7 +49,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 
         public void CustomPOCOToPM(TariffPM entityPM, Tariff entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
         }
 
         private void BuildSearchFields(TariffPM entityPM, Tariff entityPOCO, bool isNewEntity)

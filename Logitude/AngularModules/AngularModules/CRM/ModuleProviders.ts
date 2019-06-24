@@ -1,4 +1,4 @@
-﻿import {ActivityListService} from './Services/StandardLists/ActivityListService';
+import {ActivityListService} from './Services/StandardLists/ActivityListService';
 import {ActivityOwnerHistoryListService} from './Services/StandardLists/ActivityOwnerHistoryListService';
 import {ActivityPriorityListService} from './Services/StandardLists/ActivityPriorityListService';
 import {ActivityStatusListService} from './Services/StandardLists/ActivityStatusListService';
@@ -49,7 +49,11 @@ import {TicketPMService} from './Services/StandardPMs/TicketPMService';
 import {TicketSeverityPMService} from './Services/StandardPMs/TicketSeverityPMService';
 import {TicketStagePMService} from './Services/StandardPMs/TicketStagePMService';
 import { TicketTypePMService } from './Services/StandardPMs/TicketTypePMService';
- 
+import { OccasionTypeListService } from './Services/StandardLists/OccasionTypeListService';
+import { OccasionStatusListService } from './Services/StandardLists/OccasionStatusListService';
+import { OccasionTypePMService } from './Services/StandardPMs/OccasionTypePMService';
+
+
 // Menu Buttons 
 import {TicketMenuButtonsHandler} from './Components/MenuButtons/TicketMenuButtonsHandler';
 import {ActivityMenuButtonsHandler} from './Components/MenuButtons/ActivityMenuButtonsHandler';
@@ -117,7 +121,9 @@ export class ModuleProviders {
             case "TicketStagePMService": { myResult = new TicketStagePMService(); break; }
             case "TicketTypePMService": { myResult = new TicketTypePMService(); break; }
  
-                
+            case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
+            case "OccasionStatusListService": { myResult = new OccasionStatusListService(); break; }
+            case "OccasionTypePMService": { myResult = new OccasionTypePMService(); break; }
 
             //Menu Buttons
             case "TicketMenuButtonsHandler": { myResult = new TicketMenuButtonsHandler(); break; }
