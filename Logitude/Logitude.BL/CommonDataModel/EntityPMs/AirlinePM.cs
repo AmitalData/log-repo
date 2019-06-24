@@ -326,6 +326,36 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
             }
         }
 
+
+        private List<AirlineAreaPM> airlineAreas;
+        [Include]
+        [Association("AirlineAreaAirline", "Id", "AirlineId")]
+        [Composition]
+        public virtual List<AirlineAreaPM> AirlineAreas
+        {
+            get
+            {
+
+                if (this.airlineAreas == null)
+                {
+                    airlineAreas = new List<AirlineAreaPM>();
+                }
+                return this.airlineAreas;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    airlineAreas = value;
+                }
+            }
+        }
+
+
+
+
+
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
         public string ExternalAccountingBusinessArea { get; set; }

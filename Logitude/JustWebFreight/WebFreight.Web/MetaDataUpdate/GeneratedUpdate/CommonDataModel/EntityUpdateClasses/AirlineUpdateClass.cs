@@ -5297,6 +5297,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                  
 			   TextCode AirlineEventsTextCode_TH11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature AirlineEventsFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "Airline.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
+ 
+                 
+			   TextCode AirlineAreasTextCode_TH12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Airline.TH.Areas", DefaultText = "Areas",LocalDefaultText = "Areas", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature AirlineAreasFeature_TH12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Airline.Tab.Areas", ObjectTableId = AirlineObjectTable.Id, Tenant = 0, NameTextCodeCode = "AirlineFeatures.ALAR", NameTextCodeDefaultText = "Areas", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -5325,6 +5329,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ALDI",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AirlineDocsInTabComponent", FeatureId = AirlineDocsInFeature_TH10.Id, ControlPath = "", ObjectTableId = AirlineObjectTable.Id, TabNameTextCodeId = AirlineDocsInTextCode_TH10.Id, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ALEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = AirlineEventsFeature_TH11.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = AirlineObjectTable.Id, TabNameTextCodeId = AirlineEventsTextCode_TH11.Id, Tenant = 0, IndexOrder = 10 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ALAR",HtmlComponentName = "",HtmlComponentUrl = "./CommonModules/CommonAirline/Components/EditTabs/AreasTabComponent", FeatureId = AirlineAreasFeature_TH12.Id, ControlPath = "Simplog.FreightLib.Views.Areas", ObjectTableId = AirlineObjectTable.Id, TabNameTextCodeId = AirlineAreasTextCode_TH12.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	

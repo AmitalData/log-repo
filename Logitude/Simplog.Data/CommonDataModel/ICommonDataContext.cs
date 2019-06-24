@@ -28,6 +28,9 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<Department> Departments { get; }
         IDbSet<Branch> Branches { get; }
         IDbSet<Airline> Airlines { get; }
+        IDbSet<AirlineArea> AirlineAreas { get; }
+        IDbSet<AirlineAreasPort> AirlineAreasPorts { get; }
+
         IDbSet<ShippingLine> ShippingLines { get; }
         IDbSet<Trucker> Truckers { get; }
         IDbSet<Tenant> Tenants { get; }
