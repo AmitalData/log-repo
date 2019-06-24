@@ -12,21 +12,26 @@ export class NewAPInvoice {
     constructor() {
     }
    
-    CreateNewAPInvoice(VendorName : string,InvoiceNumer : string){
+    CreateNewAPInvoice(VendorName: string, InvoiceNumer: string) {
+        //console.log("this is the first one");
         browser.ignoreSynchronization = true;
         this.Helper.WaitByIdAndClick('NewAPInvoice');
+        this.Helper.WaitBusyIndicatorToShow();
+        this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('APInvoice_VendorId',VendorName);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem',0);
         this.Helper.WaitBusyIndicator();
-        //browser.sleep(5000);
+        ////browser.sleep(5000);
         this.Helper.WaitByIdAndFill('APInvoice_InvoiceNumber',InvoiceNumer);
         this.Helper.WaitByIdAndFill('APInvoice_AmountInInvoiceCurrency','1000');
-        this.Helper.WaitByIdAndFill('APInvoice_InvoiceCurrencyId','NIS');
+        this.Helper.WaitByIdAndFill('APInvoice_InvoiceCurrencyId', 'NIS');
+       // console.log("this is the second one");
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem',0);
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('date_APInvoice_InvoiceDate','10/06/2019');
         this.Helper.WaitByIdAndFill('date_APInvoice_DueDate','10/06/2019');
-        this.Helper.WaitByIdAndFill('APInvoice_VATNumber','123456789');
+        this.Helper.WaitByIdAndFill('APInvoice_VATNumber', '123456789');
+        this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('Ok-AddAPInvoice');
         this.Helper.WaitWindowClosed();
 
@@ -41,9 +46,9 @@ export class NewAPInvoice {
         this.Helper.WaitBusyIndicator();
         //browser.sleep(6000);
 
-       this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
-       this.Helper.WaitBusyIndicator();
-       browser.sleep(10000);
+      // this.Helper.WaitByIdAndClick('APInvoice.B.Approve');
+      // this.Helper.WaitBusyIndicator();
+     //  browser.sleep(10000);
        
 
        //this.Helper.WaitByIdAndClick('EditBackbutton');
