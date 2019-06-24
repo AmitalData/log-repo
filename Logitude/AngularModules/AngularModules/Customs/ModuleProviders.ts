@@ -215,6 +215,7 @@ import { RefundCustomerActivityTypeListService } from './Services/StandardLists/
 import { TransferCargoMethodTypeListService } from './Services/StandardLists/TransferCargoMethodTypeListService';
 import { UpdateCodeListService } from './Services/StandardLists/UpdateCodeListService';
 import { GatepassReturnCodeListService } from './Services/StandardLists/GatepassReturnCodeListService';
+import { CourierCustomStatusListService } from './Services/StandardLists/CourierCustomStatusListService';
 import { PendingByKeywordListService } from './Services/StandardLists/PendingByKeywordListService';
 
 
@@ -562,6 +563,7 @@ export class ModuleProviders {
             case "GatepassReturnCodeListService": { myResult = new GatepassReturnCodeListService(); break; }
             case "PendingByKeywordListService": { myResult = new PendingByKeywordListService(); break; }
                 
+            case "CourierCustomStatusListService": { myResult = new CourierCustomStatusListService(); break; }
             //#endregion                
 
             //#region StandardPMs

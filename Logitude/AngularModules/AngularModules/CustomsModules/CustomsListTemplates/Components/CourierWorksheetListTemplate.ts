@@ -342,7 +342,7 @@ export class CourierWorksheetListTemplate {
         //DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
     }
 
-
+    get IsDisplayOnly() { return this._CourierWorksheetSharedDataService.IsDisplayOnly }
     get WebAPICourierGWMessageECTHRDataMaman() { return this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman }
     IsWebAPICourierGWMessageECTHRDataMamanEnable: boolean = false;
 

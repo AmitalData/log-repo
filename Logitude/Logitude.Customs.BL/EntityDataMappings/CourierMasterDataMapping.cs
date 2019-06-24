@@ -46,6 +46,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.WeightValueName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.StorageSiteName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.IntegratorName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.IntegratorNumber);
 
             CustomsAirlineRepository rep = new CustomsAirlineRepository(entityPM.Tenant);
             UserRepository userRep = new UserRepository(entityPM.Tenant);
@@ -121,7 +122,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 if (cardPM != null)
                 {
                     entityPM.IntegratorName = cardPM.LocalName;
-                    //entityPM.IntegratorNumber = cardPM.VatNumber;
+                    entityPM.IntegratorNumber = cardPM.Code;
                 }
             }
 
