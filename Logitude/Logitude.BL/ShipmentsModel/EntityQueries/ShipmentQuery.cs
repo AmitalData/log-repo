@@ -2039,12 +2039,24 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 if (!string.IsNullOrEmpty(myFirstPickup.FromPartnerCardId))
                                 {
-                                    Address myPartnerAddress = addressRepository.GetMainAddressByCardId(myFirstPickup.FromPartnerCardId, tenant);
-                                    if (myPartnerAddress != null)
+                                    if (!string.IsNullOrEmpty(myFirstPickup.FromAddressId))
                                     {
-                                        shipmentPM.FirstPickupLocation = myPartnerAddress.City;
+                                        Address myPartnerAddress = addressRepository.GetSingleAddress(myFirstPickup.FromAddressId, tenant);
+                                        if (myPartnerAddress != null)
+                                        {
+                                            shipmentPM.FirstPickupLocation = myPartnerAddress.City;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Address myPartnerAddress = addressRepository.GetMainAddressByCardId(myFirstPickup.FromPartnerCardId, tenant);
+                                        if (myPartnerAddress != null)
+                                        {
+                                            shipmentPM.FirstPickupLocation = myPartnerAddress.City;
+                                        }
                                     }
                                 }
+
 
                                 break;
                             }
