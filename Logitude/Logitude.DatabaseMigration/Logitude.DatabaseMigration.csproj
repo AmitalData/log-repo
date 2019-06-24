@@ -1978,6 +1978,9 @@
     <EmbeddedResource Include="Migrations\201906240820132_HybridTenantState_LastQueueDateTime.resx">
       <DependentUpon>201906240820132_HybridTenantState_LastQueueDateTime.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906240850455_AbedAddIsIsParentTenantToDWHSetting.resx">
+      <DependentUpon>201906240850455_AbedAddIsIsParentTenantToDWHSetting.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
