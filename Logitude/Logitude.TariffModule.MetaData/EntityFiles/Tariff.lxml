@@ -111,6 +111,7 @@
     <EventType Code="&quot;VNAP&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Version Approved&quot;" LocalName="&quot;Version Approved&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;TUPL&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Tariff Uploaded&quot;" LocalName="&quot;Tariff Uploaded&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
     <EventType Code="&quot;TDLD&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Tariff Downloaded&quot;" LocalName="&quot;Tariff Downloaded&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
+    <EventType Code="&quot;SUCU&quot;" ObjectTableName="&quot;Tariff&quot;" EnglishName="&quot;Surcharges Updated&quot;" LocalName="&quot;Surcharges Updated&quot;" IsManualEntry="false" ShortView="true" IsAgentView="false" IsCustomerView="false" IsSharedLogisticsEnabled="false" AllowedInAutomation="false" ManualActivatedFollowUp="false" IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons MenuButtonGroupType="&quot;TariffEdit&quot;" MenuButtonGroupName="&quot;TariffEditButtonsGroup&quot;">
@@ -123,5 +124,6 @@
   <AdditionalTextCodes />
   <AdditionalFeatures>
     <Feature Code="&quot;TARRIFAPPROVEVERSION&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Tariff.Features.TARRIFAPPROVEVERSION&quot;" FeatureDefaultText="&quot;Approve Version&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
+    <Feature Code="&quot;UPDATESURCHARGES&quot;" FeatureTypeCode="&quot;ACT&quot;" FeatureTextCodeCode="&quot;Tariff.Features.UPDATESURCHARGES&quot;" FeatureDefaultText="&quot;Update Surcharges&quot;" IsPackagable="false" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
