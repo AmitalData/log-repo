@@ -99,7 +99,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                     LastStatusDateUTC = DateTime.UtcNow,
                     QueueName = "externaltasksqueue" + Data.Tenant + 1,
                     Priority = 1,
-
+                    EntityReference = Data.ShipmentNumber
                 };
 
                 communicationLogRepository.Add(commLog);

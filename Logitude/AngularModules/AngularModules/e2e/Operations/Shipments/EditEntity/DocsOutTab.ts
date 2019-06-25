@@ -14,19 +14,17 @@ export class DocsOutTabComponent {
         this.Helper.WaitByIdAndClick('Shipment.TH.DocsOut');
     }
 
-    
-    public DocsInTab() {
-        this.Helper.WaitByIdAndClick('Shipment.TH.DocsIn');
-    }
-
     QuickSearchDocOut(docsOutId: string, docOutRow: string, searchTerm: string) {
         this.UseDocsOutSearchBox('SearchFieldsId_0_0', searchTerm, docsOutId, docOutRow);
     }
 
     UseDocsOutSearchBox(searchFeildId: string, searchByRef: string, docOutId: string, docOutRow: string) {
         this.Helper.WaitByIdAndFill(searchFeildId, searchByRef);
-        this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick(docOutRow);
         this.Helper.WaitByIdAndClick(docOutId);
     }
+
+
+
+
 }

@@ -347,6 +347,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   DeclarationDate = f.DeclarationDate,
                                   DeclarationNumber = f.DeclarationNumber,
                                   ARInvoices = f.ARInvoices,
+                                  Notes = f.Notes,
                               };
 
             entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);

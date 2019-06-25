@@ -23,6 +23,7 @@ import {TariffVersionPM} from '../../EntityPMs/TariffVersionPM';
 
 import {TariffLinePM} from '../../EntityPMs/TariffLinePM';
 import {TariffPMInitService} from '../../EntityPMInitServices/TariffPMInitService';
+import {TariffValidator} from '../../Validators/TariffValidator';
 
 @Injectable()
 
@@ -83,6 +84,12 @@ export class TariffPMService {
                 validator = new ClassLevelValidator();
                  
                 var errorsArray = validator.Validate("Tariff", entityPM);
+                var customValidator :TariffValidator = new TariffValidator();
+                var validationErrorsArr = customValidator.Validate(entityPM);
+				if(validationErrorsArr)
+				{
+					errorsArray = errorsArray.concat(validationErrorsArr);
+				}
                  
 
                 var serviceResponse: ServiceResponse;
@@ -138,6 +145,12 @@ export class TariffPMService {
                 validator = new ClassLevelValidator();
                
                 var errorsArray = validator.Validate("Tariff", entityPM);
+                var customValidator :TariffValidator = new TariffValidator();
+                var validationErrorsArr = customValidator.Validate(entityPM);
+				if(validationErrorsArr)
+				{
+					errorsArray = errorsArray.concat(validationErrorsArr);
+				}
                  
 
                 var serviceResponse: ServiceResponse;
@@ -216,6 +229,7 @@ export class TariffPMService {
             }
 			
                this.MapTariffVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapActiveVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -236,6 +250,22 @@ export class TariffPMService {
 					                 }
 							 
             entityPM.OldEntityPM.TariffVersions.push(newTariffVersionPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.ActiveVersions = [];
+            for (var item in entityPM.ActiveVersions) {
+            var myTariffVersionPM = entityPM.ActiveVersions[item];
+            var newTariffVersionPM: TariffVersionPM = this.clone(myTariffVersionPM);
+						
+                newTariffVersionPM.TariffLines = [];
+                for (var k in myTariffVersionPM.TariffLines) {
+				    var myTariffLinePM =myTariffVersionPM.TariffLines[k];
+				    var newTariffLinePM=this.clone(myTariffVersionPM.TariffLines[k]);
+                    newTariffVersionPM.TariffLines.push(newTariffLinePM);
+
+					                 }
+							 
+            entityPM.OldEntityPM.ActiveVersions.push(newTariffVersionPM);
             }
 			   
 		}
@@ -441,6 +471,111 @@ export class TariffPMService {
                         
                         deletedPM.OldEntityPM = null;
                         entityPM.TariffLines.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+ 
+    MapActiveVersions(entityPM: TariffPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldActiveVersions: TariffVersionPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldActiveVersions = entityPM.OldEntityPM.ActiveVersions;
+        }
+
+        entityPM.ActiveVersions = new Array<TariffVersionPM>();
+        for (var item in jsonPM.ActiveVersions) {
+            var jItem = jsonPM.ActiveVersions[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newTariffVersionPM: TariffVersionPM;
+	  
+            if (mapParent) {
+                newTariffVersionPM = new TariffVersionPM(entityPM);
+            }
+            else
+            {
+                newTariffVersionPM = new TariffVersionPM(null);
+            }
+                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newTariffVersionPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newTariffVersionPM.UniqueKey = Guid.newGuid();
+                newTariffVersionPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newTariffVersionPM.OldEntityPM = this.clone(newTariffVersionPM);
+ 
+
+                this.MapTariffLines(newTariffVersionPM, jItem, mapParent);
+                newTariffVersionPM.OldEntityPM.TariffLines = [];
+                for (var k in newTariffVersionPM.TariffLines) {
+                    //var clonedInside = this.clone(newTariffVersionPM.TariffLines[k]);
+                    newTariffVersionPM.OldEntityPM.TariffLines.push(newTariffVersionPM.TariffLines[k].OldEntityPM); // clone old TariffLines//
+                }
+
+				
+            }
+            else {
+                if (newTariffVersionPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newTariffVersionPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newTariffVersionPM.ChangeSetOp = "Insert";
+                }
+ 
+
+                this.MapTariffLines(newTariffVersionPM, jItem, mapParent);
+ 
+                newTariffVersionPM.OldEntityPM = null;
+                newTariffVersionPM.EntityParentPM = null;
+            }
+			
+			 newTariffVersionPM.IsDirty = false;
+            entityPM.ActiveVersions.push(newTariffVersionPM);
+        }
+        if (oldActiveVersions) {
+            
+            for (var itemKey in oldActiveVersions) {
+                if (entityPM.ActiveVersions.filter(p=> p.UniqueKey === oldActiveVersions[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldActiveVersions[itemKey]) {
+                        //oldActiveVersions[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ActiveVersions.push(oldActiveVersions[itemKey]);
+						var oldItemJson = oldActiveVersions[itemKey];
+                        var deletedPM: TariffVersionPM = new TariffVersionPM(null);
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+                      
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+ 
+
+                        this.MapTariffLines(deletedPM, oldItemJson, mapParent);
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ActiveVersions.push(deletedPM);
                     }
                 }
             }

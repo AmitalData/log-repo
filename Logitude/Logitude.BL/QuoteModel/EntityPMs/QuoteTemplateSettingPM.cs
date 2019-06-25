@@ -254,5 +254,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         public bool ShowSaleMaxMinAmountPackages { get; set; }
         public bool ShowSaleMaxMinAmountContainers { get; set; }
+
+
+        public bool ShowHeaderLabelsPackages { get; set; }
+        public bool ShowHeaderLabelsContainers { get; set; }
     }
 }

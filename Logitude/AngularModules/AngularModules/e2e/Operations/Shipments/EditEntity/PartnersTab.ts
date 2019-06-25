@@ -15,7 +15,7 @@ export class PartnersTabComponent {
     if (shipmentType == 'D' || shipmentType == 'H') {
 
 
-      this.AddPartner('AGENT', 'Shipment_AgentId', 'TestAgentIDExport1');
+      this.AddPartner('AGENT', 'Shipment_AgentId', 'TestAgent');
       this.AddPartner('CSAEX', 'Shipment_CustomAgentExportId', 'TestCustomsAgentExport1');
       this.AddPartner('CSAIM', 'Shipment_CustomAgentImportId', 'TestCustomsAgentImport1');
 

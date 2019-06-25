@@ -1,4 +1,4 @@
-﻿
+
             <table>
 
                 <tr>
@@ -14,8 +14,9 @@
                                         <td style="width: 150px; min-width: 150px;max-width:150px">Failed Threshold</td>
                                         <td style="width: 150px; min-width: 150px;max-width:150px">Waiting Threshold</td>
                                         <td style="width: 190px; min-width: 190px;max-width:190px">Last Update Date Time</td>
+                                        <td style="width: 190px; min-width: 190px;max-width:190px">Last Queue Date Time</td>
                                         <td style="width: 100%; min-width: 100%;"></td>
-                                        
+
                                     </tr>
 
 
@@ -30,7 +31,7 @@
                                     <tr class="SimpleGridViewRow RowHover" *ngFor="let item of HybridTenantStateLists">
                                         <td>
                                             <table>
-                                                <tr [class.RowSelected]="item === SelectedHybridTenantStateList" >
+                                                <tr [class.RowSelected]="item === SelectedHybridTenantStateList">
 
                                                     <td class="GridViewCell" style="width: 70px; min-width: 70px;max-width:70px">
 
@@ -43,11 +44,11 @@
                                                     </td>
 
                                                     <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px ">
-                                                        <div  [style.color]="item.FailedQueueTextColor">{{item.FailedQueue}}</div> 
+                                                        <div [style.color]="item.FailedQueueTextColor">{{item.FailedQueue}}</div>
                                                     </td>
 
                                                     <td class="GridViewCell" style="width: 150px; min-width: 150px;max-width:150px ">
-                                                        <div [style.color]="item.WaitingQueueTextColor">{{item.WaitingQueue}}</div> 
+                                                        <div [style.color]="item.WaitingQueueTextColor">{{item.WaitingQueue}}</div>
                                                     </td>
 
 
@@ -55,9 +56,13 @@
                                                         <div [style.color]="item.LastUpdateDateTimeTextColor">{{item.LastUpdateDateTime | DateTimeToDatePipe}} {{item.LastUpdateDateTime | DateTimeToTimePipe}} </div>
                                                     </td>
 
+                                                    <td class="GridViewCell" style="width: 190px; min-width: 190px;max-width:190px">
+                                                        <div>{{item.LastQueueDateTime | DateTimeToDatePipe}} {{item.LastQueueDateTime | DateTimeToTimePipe}} </div>
+                                                    </td>
+
                                                     <td class="GridViewCell" style="position: relative;width:100%">
                                                         <div>
-                                                            
+
                                                         </div>
                                                     </td>
 
@@ -102,4 +107,3 @@
                 </tr>
 
             </table>
-    

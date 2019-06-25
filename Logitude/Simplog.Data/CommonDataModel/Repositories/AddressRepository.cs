@@ -56,6 +56,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from a in context.Addresses.Include("Country").Include("State") where a.Tenant == tenent && a.CardId == cardId && a.AddressTypeId.ToUpper() == "M" select a).FirstOrDefault();
         }
 
+        public Address GetPickupDeliveryAddressByCardId(string cardId, int tenent)
+        {
+            return (from a in context.Addresses.Include("Country").Include("State") where a.Tenant == tenent && a.CardId == cardId && a.AddressTypeId.ToUpper() == "P" select a).FirstOrDefault();
+        }
+
         public void Add(Address entity)
         {
             context.Addresses.Add(entity);

@@ -1704,11 +1704,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        public HttpResponseMessage GetDownloadShipmentPackages(string shipmentId)
+        public HttpResponseMessage GetDownloadShipmentPackages(string shipmentNumber, string shipmentId)
         {
             try
             {
-
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
@@ -1723,7 +1722,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ExportToExcelHelper helper = new ExportToExcelHelper();
                 byte[] data = this.ExportShipmentPackagesToExcel(shipmentPackages, packageTypes, tenant);
 
-                string fileName = "Shipment" + shipmentId +  DateTime.Now.ToShortDateString();
+                string fileName = "Shipment-" + shipmentNumber +  "-" +  DateTime.Now.ToShortDateString();
 
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
@@ -1732,7 +1731,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     Extension = "xls",
                     Tenant = tenant,
                     FileSize = data.Length,
-
                 };
 
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
@@ -1746,76 +1744,86 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
         public byte[] ExportShipmentPackagesToExcel(List<ShipmentPackage> shipmentPackages, List<PackageType> packageTypes, int tenant)
         {
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
 
+            IWorksheet sheet1 = workbook.Worksheets[0];
+            sheet1.Name = "Packages";
+            sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
+            sheet1.Range["A1:I1"].CellStyle.Font.Size = 10;
+            sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
+            sheet1.Range["A1:I1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range["A1:I1"].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range["A1:I1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+            sheet1.Range["A1:G1"].ColumnWidth = 15;
+            sheet1.Range["H1:I1"].ColumnWidth = 17;
+
+            DataTable dataTable1 = new DataTable();
+            dataTable1.Columns.Add("Container Type");
+            dataTable1.Columns.Add("Container #");
+            dataTable1.Columns.Add("Volume");
+            dataTable1.Columns.Add("Gross Weight");
+            dataTable1.Columns.Add("Tare");
+            dataTable1.Columns.Add("Shipper Seal");
+            dataTable1.Columns.Add("Carrier Seal");
+            dataTable1.Columns.Add("Marks & Numbers");
+            dataTable1.Columns.Add("Description");
+            
+            IWorksheet sheet2 = workbook.Worksheets[1];
+            sheet2.Name = "Package Types";
+            sheet2.Range["A1"].CellStyle.Font.Bold = true;
+            sheet2.Range["A1"].CellStyle.Font.Size = 11;
+            sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
+            sheet2.Range["A1"].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet2.Range["A1"].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet2.Range["A1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+            List<ExcelPackageType> types = new List<ExcelPackageType>();
+            if (packageTypes != null && packageTypes.Count > 0)
+            {
+                types = (from a in packageTypes
+                         where a.IsContainer == true
+                         select new ExcelPackageType()
+                         {
+                             Code = a.Code,
+                         }).ToList();
+            }
+          
             if (shipmentPackages != null && shipmentPackages.Count > 0)
             {
-                List<ExcelPackage> packages = (from a in shipmentPackages
-                                               select new ExcelPackage()
-                                               {
-                                                   ContainerType = a.PackageType == null ? null : a.PackageType.Code,
-                                                   ContainerNumber = a.ContainerNumber,
-                                                   Volume = a.Volume,
-                                                   GrossWeight = a.Weight,
-                                                   Tare = a.Tare,
-                                                   ShipperSeal = a.ShipperSeal,
-                                                   CarrierSeal = a.CarrierSeal,
-                                                   MarksAndNumbers = a.MarksAndNumbers,
-                                                   Description = a.Description,
-                                               }).ToList();
-
-                List<ExcelPackageType> types = (from a in packageTypes
-                                                where a.IsContainer == true
-                                                select new ExcelPackageType()
-                                                {
-                                                    Code = a.Code,
-                                                }).ToList();
-
-                ExcelEngine excelEngine = new ExcelEngine();
-                IApplication application = excelEngine.Excel;
-                IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
-                
-                //Packages
-                IWorksheet sheet1 = workbook.Worksheets[0];
-                sheet1.Name = "Packages";
-                sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
-                sheet1.Range["A1:I1"].CellStyle.Font.Size = 11;
-                sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
-
-                sheet1.Range["A1:G1"].ColumnWidth = 15;
-                sheet1.Range["H1:I1"].ColumnWidth = 17;
-
-                string packagesRange = "A2:A" + (packages.Count() + 1);
-
-                sheet1.Range[packagesRange].DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
-                sheet1.Range[packagesRange].DataValidation.IsSuppressDropDownArrow = false;
-
-                sheet1.Range["A1"].Text = "Container Type";
-                sheet1.Range["B1"].Text = "Container #";
-                sheet1.Range["D1"].Text = "Gross Weight";
-                sheet1.Range["F1"].Text = "Shipper Seal";
-                sheet1.Range["G1"].Text = "Carrier Seal";
-                sheet1.Range["H1"].Text = "Marks & Numbers";
-
-                DataTable dataTable1 = this.ConvertToDataTable(packages);
-                sheet1.ImportDataTable(dataTable1, true, 1, 1);
-
-                //Package Types
-                IWorksheet sheet2 = workbook.Worksheets[1];
-                sheet2.Name = "Package Types";
-                sheet2.Range["A1"].CellStyle.Font.Bold = true;
-                sheet2.Range["A1"].CellStyle.Font.Size = 11;
-                sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
-                DataTable dataTable2 = this.ConvertToDataTable(types);
-                sheet2.ImportDataTable(dataTable2, true, 1, 1);
-                string typesRange = "A2:A" + (types.Count() + 1);
-
-                workbook.Version = ExcelVersion.Excel2007;
-                workbook.SaveAs(memory);
+                foreach(ShipmentPackage package in shipmentPackages)
+                {
+                    DataRow row = dataTable1.NewRow();
+                    row[0] = package.PackageType == null ? null : package.PackageType.Code;
+                    row[1] = package.ContainerNumber;
+                    row[2] = package.Volume;
+                    row[3] = package.Weight;
+                    row[4] = package.Tare;
+                    row[5] = package.ShipperSeal;
+                    row[6] = package.CarrierSeal;
+                    row[7] = package.MarksAndNumbers;
+                    row[8] = package.Description;
+                    dataTable1.Rows.Add(row);
+                }  
             }
+            
+            sheet1.Range["A2"].EntireColumn.DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
+            sheet1.Range["A2"].EntireColumn.DataValidation.IsSuppressDropDownArrow = false;
+            sheet1.Range["A1"].DataValidation.ListOfValues = new string[0];
+            sheet1.Range["A1"].DataValidation.IsSuppressDropDownArrow = true;
+
+            DataTable dataTable2 = this.ConvertToDataTable(types);
+
+            sheet1.ImportDataTable(dataTable1, true, 1, 1);
+            sheet2.ImportDataTable(dataTable2, true, 1, 1);
+
+            workbook.Version = ExcelVersion.Excel2007;
+            workbook.SaveAs(memory);
 
             return memory.ToArray();
         }
@@ -1823,6 +1831,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
             DataTable table = new DataTable();
+            
             foreach (PropertyDescriptor prop in properties)
             {
                 table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
@@ -1833,7 +1842,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 DataRow row = table.NewRow();
                 foreach (PropertyDescriptor prop in properties)
                 {
-                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                    if (table.Columns.Contains(prop.Name))
+                    {
+                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                    }
                 }
 
                 table.Rows.Add(row);
@@ -1880,12 +1892,242 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        [ActionName("PostUploadExcelFile")]
+        public HttpResponseMessage PostUploadExcelFile(ExcelPackageFilter filter)
+        {
+            try
+            {
+                string token = System.Web.HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                filter.Tenant = authToken.Tenant;
+                byte[] fileData = Convert.FromBase64String(filter.FileData);
+
+                System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
+                IWorksheet sheet = workbook.Worksheets[0];
+
+                List<ExcelPackage> packagesResult = this.BuildPackagesExcelLines(sheet, authToken.Tenant);                
+
+                return Request.CreateResponse(HttpStatusCode.OK, packagesResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private List<ExcelPackage> BuildPackagesExcelLines(IWorksheet sheet, int tenant)
+        {
+            List<ExcelPackage> myResult = new List<ExcelPackage>();
+
+            PackageTypeRepository packageTypeRepository = new PackageTypeRepository(tenant);
+            foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
+            {
+                String[] rowData = new String[sheet.Columns.Count()];
+                ExcelPackage excelPackage = new ExcelPackage();
+                
+                for (int i = 0; i < sheet.Columns.Count(); i++)
+                {
+                    rowData[i] = row.Cells[i].Value2.ToString();
+                }
+
+                if (rowData.Length > 0)
+                {
+                    if (!string.IsNullOrEmpty(rowData[0]))
+                    {
+                        string packageTypeCode = rowData[0].Trim();
+
+                        PackageType packageType = packageTypeRepository.GetSinglePackageTypeByCode(packageTypeCode, tenant, true);
+                        if (packageType != null)
+                        {
+                            excelPackage.ContainerTypeId = packageType.Id;
+                            excelPackage.ContainerTypeCode = packageType.Code;
+                            excelPackage.ContainerTypeName = packageType.EnglishName;
+                            excelPackage.IsRefrigerated = packageType.IsRefrigerated;
+                        }
+
+                        else
+                        {
+                            excelPackage.HasErrors = true;
+                        }
+                    }
+                }
+
+                if (rowData.Length > 1)
+                {
+                    if (!string.IsNullOrEmpty(rowData[1]))
+                    {
+                        string containerNumber = rowData[1].Trim();
+
+                        if (containerNumber.Length > 20)
+                        {
+                            excelPackage.ContainerNumber = containerNumber.Substring(0, 20).ToUpper();
+                        }
+
+                        else
+                        {
+                            excelPackage.ContainerNumber = containerNumber.ToUpper();
+                        }
+                    }
+                }
+
+                if (rowData.Length > 2)
+                {
+                    if (!string.IsNullOrEmpty(rowData[2]))
+                    {
+                        string volume = rowData[2].Trim();
+                        if (this.IsNumber(volume))
+                        {
+                            excelPackage.Volume = Convert.ToDouble(volume);
+                        }
+
+                        else
+                        {
+                            excelPackage.HasErrors = true;
+                        }
+                    }
+                }
+
+                if (rowData.Length > 3)
+                {
+                    if (!string.IsNullOrEmpty(rowData[3]))
+                    {
+                        string grossWeight = rowData[3].Trim();
+                        if (this.IsNumber(grossWeight))
+                        {
+                            excelPackage.GrossWeight = Convert.ToDouble(grossWeight);
+                        }
+
+                        else
+                        {
+                            excelPackage.HasErrors = true;
+                        }
+                    }
+
+                    else
+                    {
+                        excelPackage.HasErrors = true;
+                    }
+                }
+
+                if (rowData.Length > 4)
+                {
+                    if (!string.IsNullOrEmpty(rowData[4]))
+                    {
+                        string tare = rowData[4].Trim();
+                        if (this.IsNumber(tare))
+                        {
+                            excelPackage.Tare = Convert.ToDouble(tare);
+                        }
+                    }
+                }
+
+                if (rowData.Length > 5)
+                {
+                    if (!string.IsNullOrEmpty(rowData[5]))
+                    {
+                        string shipperSeal = rowData[5].Trim();
+
+                        if (shipperSeal.Length > 15)
+                        {
+                            excelPackage.ShipperSeal = shipperSeal.Substring(0, 15);
+                        }
+
+                        else
+                        {
+                            excelPackage.ShipperSeal = shipperSeal;
+                        }
+                    }
+                }
+
+                if (rowData.Length > 6)
+                {
+                    if (!string.IsNullOrEmpty(rowData[6]))
+                    {
+                        string carrierSeal = rowData[6].Trim();
+
+                        if (carrierSeal.Length > 15)
+                        {
+                            excelPackage.CarrierSeal = carrierSeal.Substring(0, 15);
+                        }
+
+                        else
+                        {
+                            excelPackage.CarrierSeal = carrierSeal;
+                        }
+                    }
+                }
+
+                if (rowData.Length > 7)
+                {
+                    if (!string.IsNullOrEmpty(rowData[7]))
+                    {
+                        string marks = rowData[7].Trim();
+
+                        if (marks.Length > 350)
+                        {
+                            excelPackage.MarksAndNumbers = marks.Substring(0, 350);
+                        }
+
+                        else
+                        {
+                            excelPackage.MarksAndNumbers = marks;
+                        }
+                    }
+                }
+
+                if (rowData.Length > 8)
+                {
+                    if (!string.IsNullOrEmpty(rowData[8]))
+                    {
+                        string description = rowData[8].Trim();
+
+                        if (description.Length > 2000)
+                        {
+                            excelPackage.Description = description.Substring(0, 2000);
+                        }
+
+                        else
+                        {
+                            excelPackage.Description = description;
+                        }
+                    }
+                }
+
+                myResult.Add(excelPackage);
+            }
+            
+            return myResult;
+        }
+        private bool IsNumber(string text)
+        {
+            bool isNumber = false;
+
+            if (!string.IsNullOrEmpty(text))
+            {
+                double value;
+                if (Double.TryParse(text, out value))
+                {
+                    isNumber = true;
+                }
+            }
+
+            return isNumber;
+        }
     }
 }
 
 public class ExcelPackage
 {
-    public string ContainerType { get; set; }
+    public string ContainerTypeId { get; set; }
+    public string ContainerTypeCode { get; set; }
+    public string ContainerTypeName { get; set; }
     public string ContainerNumber { get; set; }
     public double? Volume { get; set; }
     public double? GrossWeight { get; set; }
@@ -1894,6 +2136,15 @@ public class ExcelPackage
     public string CarrierSeal { get; set; }
     public string MarksAndNumbers { get; set; }
     public string Description { get; set; }
+    public bool IsRefrigerated { get; set; }
+    public bool HasErrors { get; set; }
+}
+
+public class ExcelPackageFilter
+{
+    public int Tenant { get; set; }
+    public string FileData{ get; set; }
+    public string ShipmentId{ get; set; }
 }
 
 public class ExcelPackageType

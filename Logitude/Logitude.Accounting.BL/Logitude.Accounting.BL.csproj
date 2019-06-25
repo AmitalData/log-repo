@@ -188,6 +188,7 @@
     <Compile Include="CoreBL\Batch\BatchAccountingLoadTestTask.cs" />
     <Compile Include="CoreBL\Batch\BatchCreateTaxReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchFixIntegrityCheckErrorsService.cs" />
+    <Compile Include="CoreBL\Batch\BatchAccFunctionalTestTask.cs" />
     <Compile Include="CoreBL\Batch\BatchOpenFormatReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchTaxDeductionReportService.cs" />
     <Compile Include="CoreBL\Batch\BatchIntegrityCheckService.cs" />
@@ -470,6 +471,7 @@
     <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
+    <Compile Include="EntityQueryServices\JournalLineLedgerTransactionDTO.cs" />
     <Compile Include="EntityQueryServices\JournalMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalStatusTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalTypeQueryService.cs" />

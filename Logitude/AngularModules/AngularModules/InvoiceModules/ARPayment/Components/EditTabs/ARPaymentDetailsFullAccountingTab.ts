@@ -511,7 +511,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     SetBankRequired() {
 
-        if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
+        if (this.EntityPM.AccountingPaymentMethodCode == "CH" && this.Bank == null) {
 
             this.UIProperties.SetRequired("Bank", this.ObjectTableName, true);
         }
@@ -593,6 +593,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (this.AccountingPaymentMethodCode == "CH") {
                 if (AppTool.IsNullOrEmpty(this.ChequeOrPaymentRef)) {
                     this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, true);
+                }
+                if (AppTool.IsNullOrEmpty(this.Bank)) {
+                    this.UIProperties.SetRequired("Bank", this.ObjectTableName, true);
                 }
                 this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
                 this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);

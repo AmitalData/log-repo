@@ -9,6 +9,7 @@ import {TimeManagementDomainService, TimeManagementAPIHelper, TimeSheetItem, Tim
 import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {DailyTimeSheetComponent, ItemSourceItem} from '../Workspaces/TimeSheet/DailyTimeSheetComponent';
 import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
+import { TMProjectListService } from '../../Services/StandardLists/TMProjectListService';
 
 @Component({
     selector: 'NewLineComponent',
@@ -22,12 +23,14 @@ export class NewLineComponent extends BaseComponent {
     public EntityPM: TMEmployeeTimePM;
     private myDomainService: TimeManagementDomainService = new TimeManagementDomainService();
     Father: DailyTimeSheetComponent;
+    private TMProjectListService: TMProjectListService;
 
     public DateOfWorkDate: TimeSheetItemDay = new TimeSheetItemDay();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
         this.myDomainService = new TimeManagementDomainService();
+        this.TMProjectListService = new TMProjectListService();
         this.EntityPM = new TMEmployeeTimePM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
@@ -152,7 +155,22 @@ export class NewLineComponent extends BaseComponent {
     set LocationCode(value: string) {
         if (this.EntityPM.LocationCode != value) {
             this.EntityPM.LocationCode = value;
+            this.setProject(value);
         }
+    }
+
+    private setProject(value: string) {
+        if (this.TMProjectListService == null) {
+            this.TMProjectListService = new TMProjectListService();
+        }
+        this.TMProjectListService.getSingle(this.ProjectId).subscribe((myResult: ServiceResponse) => {
+            var project = myResult.Result;
+            if (project != null) {
+                this.project = project;
+            } else {
+                this.project = null;
+            }
+        });
     }
 
 
@@ -238,6 +256,10 @@ export class NewLineComponent extends BaseComponent {
         if ((this.Project != null && !AppTool.IsNullOrEmpty(this.Project.DayOffTypeCode) && this.LocationCode != "D") ||
             (this.LocationCode == "D" && this.Project != null && AppTool.IsNullOrEmpty(this.Project.DayOffTypeCode))) {
             errors.push("Project with a Day Off type requires a Day off Location");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.ProjectId) && this.LocationCode == "D") {
+            errors.push("Project is required for Day Off location");
         }
 
         this.ValidationErrorsList = errors;

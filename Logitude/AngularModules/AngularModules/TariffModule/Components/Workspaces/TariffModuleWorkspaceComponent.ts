@@ -57,7 +57,6 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     LoadAllScreenData() {
         this.LoadQueriesCounts();
     }
-
     LoadQueriesCounts() {
         this.tariffDomainService.GetTariffsCounts().subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {
@@ -74,14 +73,12 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
             });
         
     }
-
-
     CheckAirfreightCost() {
         this._entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             var logWindow = new LogitudeWindow();
+            logWindow.IsFillScreenHeight = true;
             logWindow.Width = 900;
-            logWindow.Height = 500;
-            logWindow.Title = "Search Air Freight Prices";
+            logWindow.Title = "Price Check";
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });      
     }
@@ -135,7 +132,6 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
             }
         }       
     }
-
     public ViewTariffs(code: string) {
 
         switch (code) {

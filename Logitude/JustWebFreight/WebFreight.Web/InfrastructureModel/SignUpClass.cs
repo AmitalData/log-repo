@@ -1144,6 +1144,7 @@ namespace WebFreight.Web.InfrastructureModel
                 PackageCode = signUpInfoClass.PackageCode,
                 CreateTenantFromSignUp = true,
                 TimeZoneOffset = null,
+                CheckDigitControlAlgorithmCode = "NONE",
             };
 
             //DateTime currentdate;
@@ -3055,7 +3056,7 @@ namespace WebFreight.Web.InfrastructureModel
                     SearchFields = c.SearchFields,
                     HasStates = c.HasStates,
                     IsStateRequired = c.IsStateRequired,
-
+                    IsNorthAmerica = c.IsNorthAmerica,
                 };
                 countryRepository.Add(country);
             }

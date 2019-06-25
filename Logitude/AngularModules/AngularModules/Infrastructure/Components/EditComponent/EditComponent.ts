@@ -74,6 +74,7 @@ export class EditComponent implements OnDestroy {
     @ViewChild('TabControlBody', { read: ViewContainerRef }) TabControlBodyViewContainerRef: ViewContainerRef;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsReloadNeeded: boolean = false;
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this.ComponentIndex = this.CurrentSession.GetNewEditComponentIndex();
@@ -83,7 +84,7 @@ export class EditComponent implements OnDestroy {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
     }
-
+  
     private EntityFields: any[] = null;
     public Run(args: any) {
         this.EntityId = args['EntityId'];
@@ -100,7 +101,7 @@ export class EditComponent implements OnDestroy {
         this.IsTabsHidden = this.ObjectTable.IsTabsHidden;
         this.NavigationIds = args['NavigationIds'];
         this.EntityFields = args['EntityFields'];
-
+      
         if (this.NavigationIds) {
             this.NextPreviousVisible = true;
         }

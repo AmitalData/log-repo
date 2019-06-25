@@ -46,7 +46,7 @@ namespace Simplog.Data.CommonDataModel
                 string dbConnectionInfo = currentDb.DBConnection;
                 string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-                DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+                DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
                 return connection;
             }
             else
@@ -57,7 +57,7 @@ namespace Simplog.Data.CommonDataModel
                 DbConnection connection = new SqlConnection(builder.ToString());
                 return connection;
             }
- 
+
         }
 
 
@@ -83,7 +83,7 @@ namespace Simplog.Data.CommonDataModel
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             CommonDataContext context = new CommonDataContext(connection);
 
             return context;
@@ -100,7 +100,7 @@ namespace Simplog.Data.CommonDataModel
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             CommonDataContext context = new CommonDataContext(connection);
 
             return context;
@@ -131,6 +131,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new AdvancedQueryFilterMap());
             modelBuilder.Configurations.Add(new AgentMap());
             modelBuilder.Configurations.Add(new AirlineMap());
+            modelBuilder.Configurations.Add(new AirlineAreaMap());
             modelBuilder.Configurations.Add(new APInvoiceEntityMap());
             modelBuilder.Configurations.Add(new APInvoiceLineMap());
             modelBuilder.Configurations.Add(new APInvoicePaymentMap());
@@ -444,6 +445,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CustomsShipperMap());
             modelBuilder.Configurations.Add(new CustomerDepositionMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
+            modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -473,6 +475,9 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<Department> Departments { get; set; }
         public IDbSet<Branch> Branches { get; set; }
         public IDbSet<Airline> Airlines { get; set; }
+        public IDbSet<AirlineArea> AirlineAreas { get; set; }
+        public IDbSet<AirlineAreasPort> AirlineAreasPorts { get; set; }
+
         public IDbSet<ShippingLine> ShippingLines { get; set; }
         public IDbSet<Trucker> Truckers { get; set; }
         public IDbSet<Tenant> Tenants { get; set; }
@@ -507,7 +512,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<DocumentTypeTemplate> DocumentTypeTemplates { get; set; }
         public IDbSet<TemplateFormat> TemplateFormats { get; set; }
         public IDbSet<DWHSetting> DWHSettings { get; set; }
-        
+
 
         public IDbSet<Warehouse> Warehouses
         {
@@ -979,32 +984,14 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<INTTRASettingMode> INTTRASettingModes { get; set; }
         public IDbSet<INTTRABranchRegisteredCarrier> INTTRABranchRegisteredCarriers { get; set; }
         public IDbSet<TemperatureUnit> TemperatureUnits { get; set; }
-
-        public IDbSet<DocumentFilingBackupBatch> DocumentFilingBackupBatches
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings
-        {
-            get;
-            set;
-        }
-        public IDbSet<HybridPartnersPermission> HybridPartnersPermissions {
-            get;
-            set;
-        }
-
-        public IDbSet<PaymentGatewayPartners> PaymentGatewayPartners
-        {
-            get;
-            set;
-        }
-
-       public IDbSet<CustomsShipper> CustomsShippers { get; set; }
+        public IDbSet<DocumentFilingBackupBatch> DocumentFilingBackupBatches { get; set; }
+        public IDbSet<DocumentFilingBackupSetting> DocumentFilingBackupSettings { get; set; }
+        public IDbSet<HybridPartnersPermission> HybridPartnersPermissions { get; set; }
+        public IDbSet<PaymentGatewayPartners> PaymentGatewayPartners { get; set; }
+        public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
+        public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
 
         public DbConnection GetConnection()
         {

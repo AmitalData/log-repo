@@ -19,7 +19,27 @@ import 'rxjs/add/observable/fromEvent';
 import { FormGroup } from '@angular/forms';
 import { CustomFieldClass } from '../../DataContracts/CustomFieldClass';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+import { timer } from 'rxjs/observable/timer';
+//import { timer } from 'rxjs';
+import { timeInterval, pluck, take } from 'rxjs/operators';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
+
+interface BeforeOnDestroy {
+    ngxBeforeOnDestroy();
+}
+
+type NgxInstance = BeforeOnDestroy & Object;
+type Descriptor = TypedPropertyDescriptor<Function>;
+type Key = string | symbol;
+
+export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descriptor) {
+    return {
+        value: async function (...args: any[]) {
+            await target.ngxBeforeOnDestroy();
+            return descriptor.value.apply(target, args);
+        }
+    }
+}
 
 @Component({
     moduleId: module.id,
@@ -31,7 +51,7 @@ declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
+export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewInit, OnDestroy {
     public AllowPercentage: boolean;
     public IsAccumulative: boolean;
     public ShowHelp: boolean = false;
@@ -239,7 +259,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                 }
                             });
                             //this.TextValueChanges(this.TextValue);
-                            if (this.cd) {
+                            var isDestroyed: boolean = this.cd["destroyed"];
+                            if (this.cd && isDestroyed == false) {
                                 this.cd.detectChanges();
                             }
                         }
@@ -519,6 +540,15 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
+    public ngxBeforeOnDestroy() {
+        //console.log('1. BEFORE ONDESTROY INVOKE METHOD (await 2 sec)');
+        return new Promise((resolve) => {
+            setTimeout(() => this.WaitFunction(resolve), 2000);
+        });
+    }
+
+
+    @BeforeOnDestroy
     ngOnDestroy() {
         console.log("LogTextBox:ngOnDestroy");
         this.cd = null;
@@ -529,6 +559,17 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
             this.CopyValueSubs.unsubscribe();
             this.CopyValueSubs = null;
         }
+    }
+
+    private WaitFunction(resolve) {
+        //console.log('2. EXECUTE HEAVY FUNCTION (3 sec)');
+
+        const sourcef = timer(3000)
+            .pipe(take(1))
+            .subscribe(() => {
+                resolve();
+            });
+
     }
 
     onFocus() {
@@ -579,8 +620,17 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // this.TextValue = this.DataContext[this.ObjectFieldName];
         this.keydown = false;
+
+        this.HandleMinusOnlyValue();
+
         this.GetValueFormatted(this.TextValue);
         this.LostFocus.emit(this.TextValue);
+    }
+
+    HandleMinusOnlyValue() {
+        if (this.TextValue + "" == '-' && this.InputType.toLowerCase() == 'sigdouble') {
+            this.TextValue = "0";
+        }
     }
 
     OnKeyUp(event) {
@@ -1294,6 +1344,11 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                             else {
                                 value = Number(this.TextValue);
                             }
+
+
+                            if (this.TextValue + "" == '-' && this.InputType.toLowerCase() == 'sigdouble')
+                                this.DataContext[this.ObjectFieldName] = 0;
+
                             if (!isNaN(value)) {
                                 var isok: boolean = true;
                                 if (this.InputType == 'unsdecimal' || this.InputType == 'unsinteger' || this.InputType == 'double') {
@@ -1314,7 +1369,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                                         this.DataContext[this.ObjectFieldName] = customFieldClass;
                                     }
                                     else {
-                                        this.DataContext[this.ObjectFieldName] = value;
+
+                                            this.DataContext[this.ObjectFieldName] = value;
                                     }
                                 }
                             }
@@ -1527,7 +1583,9 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                         }
                     }
 
-                    if (isNaN(Number(val))) {
+                    if(this.InputType.toLowerCase() == 'sigdouble' && ((this.TextValue + "") == '-')){
+                        // skip for minus only
+                    } else if (isNaN(Number(val))) {
                         this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));
                         suppressValidation = true;
                     }
@@ -1539,6 +1597,7 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
             }
         }
+
 
         if (!this.NoValidation && this.uiProperty != null && !suppressValidation) {
             var errors = null;

@@ -41,8 +41,7 @@ namespace Logitude.TariffModule.Data.Repositories
                    where a.Tenant == tenant
                    select a;
         }
-
-
+				 
         public Tariff GetSingle(EntityKeyFields entityKeys)
         {
             TariffKeys keys = entityKeys as TariffKeys;

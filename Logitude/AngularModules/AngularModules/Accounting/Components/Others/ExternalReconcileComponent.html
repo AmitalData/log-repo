@@ -572,7 +572,7 @@
 
                                 <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.ForeignAmount' | TextCodeTranslationPipe" [width]="'120'" [binding]="'ForeignAmount'">
                                     <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.ForeignAmountCredit!=0'>
+                                        <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.IsCredit'>
                                             <span>{{ item.ForeignAmount | NumbersPipe:'N2'  }}</span>
                                         </div>
                                     </log-cell-template>
@@ -703,7 +703,7 @@
 
                                 <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'ReconcileExternalPageLine.F.Amount' | TextCodeTranslationPipe" [width]="'120'" [binding]="'Amount'">
                                     <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                        <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.Amount<0'>
+                                        <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.IsCredit'>
                                             <span>{{ item.Amount | NumbersPipe:'N2'  }} {{item.OpenAmountCurrencySign}}</span>
                                         </div>
                                     </log-cell-template>

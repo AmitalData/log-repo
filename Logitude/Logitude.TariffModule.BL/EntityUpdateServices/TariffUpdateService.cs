@@ -11,6 +11,7 @@ using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,6 +81,19 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                 this.CreateTariffVersion(entityPM);
             }
+
+            if (entityPM.TypeCode == "ASC")
+            {
+                if (entityPM.TariffVersions.Where(d => d.StartDate != null || d.ExpirationDate != null).Any())
+                {
+                    throw new ApplicationException("Dates are not allowed in Surcharges versions");
+                }
+
+                if (entityPM.ActiveVersions.Where(d=>d.StartDate != null || d.ExpirationDate != null).Any())
+                {
+                    throw new ApplicationException("Dates are not allowed in Surcharges versions");
+                }
+            }
         }
 
         protected override void UpdateComposition(TariffPM entityPM)
@@ -93,19 +107,33 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
             Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
-            
+
+
+
             if (entityPM.TariffLinesAdded)
             {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                TariffVersionPM tariffVersion = entityPM.TariffVersions.Where(p => p.IsDraft).FirstOrDefault();
+                if (tariffVersion != null)
                 {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "TLAD",
-                    UserId = contact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = "Tariff",
-                    Notes = changesXml
-                });
+                    int count = tariffVersion.TariffLines.Where(a => a.AddedManually == true).Count();
+                    if (count > 0)
+                    {
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            Tenant = entityPM.Tenant,
+                            EventTypeCode = "TLAD",
+                            UserId = contact.Id,
+                            EntityId = entityPM.Id,
+                            ObjectTableName = "Tariff",
+                            Notes = "Tariff Lines manually added (" + count + " lines)"
+                        });
+                    }
+                }
+               
             }
+
+
+
 
             if (entityPM.SetAsInActive)
             {
@@ -160,6 +188,26 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             }
         }
 
+        protected override void CheckConcurrency(TariffPM entityPM, Tariff entityPOCO)
+        {
+            if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))
+            {
+                string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+                throw new OptimisticConcurrencyException(msg);
+            }
+
+            //if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
+            //{
+            //    if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))
+            //    {
+            //        string msg = CRMTranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+            //        throw new OptimisticConcurrencyException(msg);
+            //    }
+            //}
+
+            //base.CheckConcurrency(entityPM, entityPOCO);
+        }
+
         private void CreateTariffVersion(TariffPM entityPM)
         {
             entityPM.LastVersion += 1;
@@ -173,15 +221,23 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 CreateDate = entityPM.CreateDate,
                 CreatedByUserId = entityPM.CreatedByUserId,
                 StartDate = entityPM.StartDate,
-                ExpirationDate = entityPM.ExpirationDate,                
+                ExpirationDate = entityPM.ExpirationDate,
                 Version = entityPM.LastVersion,
                 SearchFields = entityPM.LastVersion.ToString(),
                 ChangeSetOp = ChangeSetOperation.Insert,
                 IsDraft = true,
             };
 
-            TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-            tariffVersionUpdateService.Update(tariffVersionPM, true);
+            if (entityPM.TypeCode == "ASC")
+            {
+                tariffVersionPM.StartDate = null;
+                tariffVersionPM.ExpirationDate = null;
+            }
+
+            entityPM.TariffVersions.Add(tariffVersionPM);
+
+            //TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            //tariffVersionUpdateService.Update(tariffVersionPM, true);
         }
     }
 }

@@ -47,9 +47,7 @@ namespace Logitude.TariffModule.Data
             GlobalDB currentDb;
 			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo);
             TariffModuleContext context = new TariffModuleContext(connection);
             return context;
         }

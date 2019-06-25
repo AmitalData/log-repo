@@ -62,6 +62,12 @@ namespace Logitude.TimeManagement.Data.EntityLists
        public bool ExcludeFromProrating  { get; set; }
        [DataMember]
        public string DayOffTypeCode  { get; set; }
+       [DataMember]
+       public bool BlockedForDataEntry  { get; set; }
+       [DataMember]
+       public string BudgetName  { get; set; }
+       [DataMember]
+       public string DayOffTypeName  { get; set; }
    }
 
 }

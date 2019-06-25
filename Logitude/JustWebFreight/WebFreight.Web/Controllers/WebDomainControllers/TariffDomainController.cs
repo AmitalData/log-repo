@@ -84,9 +84,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-
+        
         public HttpResponseMessage GetAvailableAirlineFreightTariffs(string FromPort,string ToPort,string BetweenDate,double Weight)
         {
             try
@@ -155,11 +153,13 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                string loggedUserEmail = authToken.Email;
 
                 ITariffModuleContext context = TariffModuleContext.GetContext(tenant);
                 TariffQueryService tariffQuery = new TariffQueryService(context);
                 TariffPM tariff = tariffQuery.GetSingle(tariffId, false, false);
-
+                ContactQuery contactQuery = new ContactQuery(tenant);
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant);
                 string fileName = "";
                 if (tariff != null)
                 {
@@ -195,7 +195,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                             storageservice.Write(data, fileInfo);
+                            this.EventTrace(tariff, type, loggedContact);
                         }
+
+
                     }
                 }
 
@@ -206,6 +209,36 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private void EventTrace(TariffPM tariffPM,string type,ContactPM loggedContact)
+        {
+            if (type == "Template")
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tariffPM.Tenant,
+                    EventTypeCode = "TDLD",
+                    UserId = loggedContact.Id,
+                    EntityId = tariffPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = "Tariff Header exported"
+                });
+            }
+            else
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tariffPM.Tenant,
+                    EventTypeCode = "TDLD",
+                    UserId = loggedContact.Id,
+                    EntityId = tariffPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = "Tariff Lines exported"
+                });
+            }
+
+
         }
         private byte[] ExportAirFreightCostLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant, string type)
         {
@@ -224,11 +257,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 table.Columns.Add("From");
                 table.Columns.Add("To");
                 table.Columns.Add("Min Price");
+
                 sheet1.InsertColumn(3, steps.Length, ExcelInsertOptions.FormatAsAfter);
                 for (int i = 0; i < steps.Length; i++)
                 {
                     table.Columns.Add(steps[i] + " KG");
                 }
+
+                table.Columns.Add("Notes");
             }
             else
             {
@@ -236,42 +272,43 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 table.Columns.Add("To");
                 table.Columns.Add("Min Price");
                 table.Columns.Add(tariff.PriceSteps + " KG");
+                table.Columns.Add("Notes");
             }
 
-            string range = "A1:D1";
+            string range = "A1:E1";
             if (steps.Length == 2)
-            {
-                range = "A1:E1";
-            }
-
-            else if (steps.Length == 3)
             {
                 range = "A1:F1";
             }
 
-            else if (steps.Length == 4)
+            else if (steps.Length == 3)
             {
                 range = "A1:G1";
             }
 
-            else if (steps.Length == 5)
+            else if (steps.Length == 4)
             {
                 range = "A1:H1";
             }
 
-            else if (steps.Length == 6)
+            else if (steps.Length == 5)
             {
                 range = "A1:I1";
             }
 
-            else if (steps.Length == 7)
+            else if (steps.Length == 6)
             {
                 range = "A1:J1";
             }
 
-            else if (steps.Length == 8)
+            else if (steps.Length == 7)
             {
                 range = "A1:K1";
+            }
+
+            else if (steps.Length == 8)
+            {
+                range = "A1:L1";
             }
 
             if (type == "Data")
@@ -321,6 +358,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             row[10] = item.Step8Price ?? null;
                         }
 
+                        row[steps.Length + 3] = item.Notes ?? null;
+
                         table.Rows.Add(row);
                     }
                 }
@@ -345,10 +384,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             IWorksheet sheet1 = workbook.Worksheets[0];
 
             DataTable table = new DataTable();
+
+            #region header
             table.Columns.Add("From");
             table.Columns.Add("To");
 
-            #region header
             int count = 0;
             ChargesTypeRepository chargesTypeRepository = new ChargesTypeRepository(tenant);
             ChargesType chargesType = null;
@@ -451,58 +491,60 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     table.Columns.Add(chargesType.Code);
                 }
             }
+
+            table.Columns.Add("Notes");
             #endregion
 
             #region range
-            string range = "A1:B1";
+            string range = "A1:C1";
             if (count == 1)
-            {
-                range = "A1:C1";
-            }
-
-            else if (count == 2)
             {
                 range = "A1:D1";
             }
 
-            else if (count == 3)
+            else if (count == 2)
             {
                 range = "A1:E1";
             }
 
-            else if (count == 4)
+            else if (count == 3)
             {
                 range = "A1:F1";
             }
 
-            else if (count == 5)
+            else if (count == 4)
             {
                 range = "A1:G1";
             }
 
-            else if (count == 6)
+            else if (count == 5)
             {
                 range = "A1:H1";
             }
 
-            else if (count == 7)
+            else if (count == 6)
             {
                 range = "A1:I1";
             }
 
-            else if (count == 8)
+            else if (count == 7)
             {
                 range = "A1:J1";
             }
 
-            else if (count == 9)
+            else if (count == 8)
             {
                 range = "A1:K1";
             }
 
-            else if (count == 10)
+            else if (count == 9)
             {
                 range = "A1:L1";
+            }
+
+            else if (count == 10)
+            {
+                range = "A1:M1";
             }
             #endregion
 
@@ -541,7 +583,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             row[6] = item.Surcharge5Price ?? null;
                         }
 
-
                         if (item.Surcharge6Price.HasValue)
                         {
                             row[7] = item.Surcharge6Price ?? null;
@@ -566,6 +607,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             row[11] = item.Surcharge10Price ?? null;
                         }
+
+                        row[count+2] = item.Notes ?? null;
 
                         table.Rows.Add(row);
                     }
@@ -643,9 +686,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                filter.Tenant = authToken.Tenant;
+
+                string loggedUserEmail = authToken.Email;
+
+                ContactQuery contactQuery = new ContactQuery(authToken.Tenant);
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, authToken.Tenant);
+
                 this.portRepository = new PortRepository(authToken.Tenant);
 
-                filter.Tenant = authToken.Tenant;
                 byte[] fileData = Convert.FromBase64String(filter.FileData);
 
                 System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
@@ -664,7 +713,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     tariffLinesResult = this.BuildAirSurchargesCostExcelLines(sheet, authToken.Tenant);
                 }
-                
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = filter.Tenant,
+                    EventTypeCode = "TUPL",
+                    UserId = loggedContact.Id,
+                    EntityId = filter.TariffId,
+                    ObjectTableName = "Tariff",
+                    Notes = filter.FileName+" uploaded ("+ tariffLinesResult.Count+" lines)"
+                });
+
                 return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
             }
 
@@ -678,12 +737,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
             int rowIndex = 0;
+            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
-                String[] rowData = new String[sheet.Columns.Count()];
+                String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
-                for (int i = 0; i < sheet.Columns.Count(); i++)
+
+                String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
+
+                for (int i = 0; i < sheet.Columns.Count() - 1; i++)
                 {
                     rowData[i] = row.Cells[i].Value2.ToString();
                 }
@@ -711,7 +775,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
                 }
-
+                
                 if (rowData.Length > 2)
                 {
                     if (this.IsNumber(rowData[2]))
@@ -723,7 +787,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         tariffLine.MinPriceText = this.TrimTo_20(rowData[2]);
                     }
                 }
-
+                
                 if (rowData.Length > 3)
                 {
                     if (this.IsNumber(rowData[3]))
@@ -808,7 +872,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length >= 10)
+                if (rowData.Length > 10)
                 {
                     if (this.IsNumber(rowData[10]))
                     {
@@ -820,6 +884,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
+                if (!string.IsNullOrEmpty(notescolumn))
+                {
+                    tariffLine.Notes = notesRowData;
+                }
+
+                tariffLine.IsUploaded = true;
                 myResult.Add(tariffLine);
                 rowIndex++;
             }
@@ -836,13 +906,17 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             List<ExcelTariffLines> myResult = new List<ExcelTariffLines>();
             int rowIndex = 0;
 
+            string notescolumn = sheet.Columns[sheet.Columns.Count() - 1].DisplayText;
+            
             foreach (IRange row in sheet.UsedRange.Rows.Skip(1))
             {
-                String[] rowData = new String[sheet.Columns.Count()];
+                String[] rowData = new String[sheet.Columns.Count() - 1];
                 ExcelTariffLines tariffLine = new ExcelTariffLines();
                 tariffLine.Index = rowIndex;
+                
+                String notesRowData = row.Cells[sheet.Columns.Count() - 1].Value2.ToString();
 
-                for (int i = 0; i < sheet.Columns.Count(); i++)
+                for (int i = 0; i < sheet.Columns.Count() - 1; i++)
                 {
                     rowData[i] = row.Cells[i].Value2.ToString();
                 }
@@ -870,7 +944,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     tariffLine.ToPortText = this.TrimTo_20(rowData[1]);
                 }
-
+                
                 if (rowData.Length > 2)
                 {
                     if (this.IsNumber(rowData[2]))
@@ -967,7 +1041,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length >= 10)
+                if (rowData.Length > 10)
                 {
                     if (this.IsNumber(rowData[10]))
                     {
@@ -979,7 +1053,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
-                if (rowData.Length >= 11)
+                if (rowData.Length > 11)
                 {
                     if (this.IsNumber(rowData[11]))
                     {
@@ -991,6 +1065,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     }
                 }
 
+                if (!string.IsNullOrEmpty(notescolumn))
+                {
+                    tariffLine.Notes = notesRowData;
+                }
+
+                tariffLine.IsUploaded = true;
                 myResult.Add(tariffLine);
                 rowIndex++;
             }
@@ -1600,6 +1680,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetTariffVersionLines(string tariffId, int version)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ITariffModuleContext iContext = TariffModuleContext.GetContext(authToken.Tenant);
+                TariffLineQueryService tariffLineQueryService = new TariffLineQueryService(iContext);                
+                List<TariffLinePM> tariffLinePMs = tariffLineQueryService.GetTariffLinesByTariffAndVersion(tariffId, version, authToken.Tenant);                
+
+                return Request.CreateResponse(HttpStatusCode.OK, tariffLinePMs);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
     }
 
     public class TariffFilterParameter
@@ -1610,6 +1711,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string TariffId { get; set; }
         public int Version { get; set; }
         public string TariffType { get; set; }
+        public string FileName { get; set; }
     }
     public class ExcelTariffLines
     {
@@ -1665,8 +1767,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string Surcharge8PriceText { get; set; }
         public string Surcharge9PriceText { get; set; }
         public string Surcharge10PriceText { get; set; }
-
+        public bool IsUploaded { get; set; }
         public int Index { get; set; }
+
+        public string Notes { get; set; }
     }
 }
 

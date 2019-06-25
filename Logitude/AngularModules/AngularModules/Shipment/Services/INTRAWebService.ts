@@ -129,6 +129,35 @@ export class INTRAWebService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    SendEBooking(myShipmentId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetSendEBooking?myShipmentId=' + myShipmentId;
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var myJsonResult = response.json();
+
+                var mappedResult: INTRAResult = new INTRAResult();
+
+                if (myJsonResult) {
+                    var jsonListKeys = Object.keys(myJsonResult);
+                    for (var key in jsonListKeys) {
+                        var property = jsonListKeys[key];
+                        mappedResult[property] = myJsonResult[property];
+                    }
+                }
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = mappedResult;
+                return serviceResponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
     MapJsonToINTTRASimulator(jsonPM: any, getCallMap: boolean = true, entity: INTTRASimulator = null) {
         if (!entity) {
             entity = new INTTRASimulator();

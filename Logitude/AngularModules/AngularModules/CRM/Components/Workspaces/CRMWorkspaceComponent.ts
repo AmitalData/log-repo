@@ -13,11 +13,18 @@ import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTran
 })
 
 export class CRMWorkspaceComponent {
+    public IsOccasionVisible: boolean = false;
     public IsContactsVisible: boolean = false;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityResourceService: EntityResourceService) {
+
         this.RunComponent();
+
+        if (FeatureLocator.HasFeaturePermession("Occasion", "Module")) {
+            this.IsOccasionVisible = true;
+        }
 
         if (FeatureLocator.HasFeaturePermession("General", "CONTACTS")) {
             this.IsContactsVisible = true;
@@ -72,6 +79,7 @@ export class CRMWorkspaceComponent {
     private Page_OPP: any = null;
     private Page_CON: any = null;
     private Page_DAS: any = null;
+    private Page_OCC: any = null;
     SelectionChanged() {
         if (this.isLoaderReady) {
             if (this.SelectedItem != null) {
@@ -175,6 +183,19 @@ export class CRMWorkspaceComponent {
                                         this.Page_DAS = cmpRef.instance;
                                         //this.Page_DAS.InitComponent();
                                     });
+                            }
+
+                            break;
+                        }
+
+                        case "OCC": {
+                            if (this.Page_OCC == null) {
+                                this._entityResourceService.getEntityResourceByTableName("Occasion", 0).subscribe(response => {
+                                    SessionLocator.DynamicLoader.Load('./CRM/Components/Workspaces/OccasionWorkspaceComponent', myLocation.viewContainerRef)
+                                        .then(cmpRef => {
+                                            this.Page_OCC = cmpRef.instance;
+                                        });
+                                });
                             }
 
                             break;

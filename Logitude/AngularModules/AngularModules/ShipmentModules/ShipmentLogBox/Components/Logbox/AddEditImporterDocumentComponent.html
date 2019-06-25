@@ -199,7 +199,7 @@
                         <div>
                             <table>
                                 <tr>
-                                    <td style="width:50%">
+                                    <td style="width:53%">
                                         <table>
                                             <tr style="height:40px;">
                                                 <td style="width:120px">
@@ -215,7 +215,7 @@
                                                         </li>
                                                     </ul>
                                                     <LogLov *ngIf="ShowTypes == true" [LogitudeForm]="myForm" style="float: left;width: 130px;margin-left: 5px;"
-                                                            [ObjectFieldName]="'DocumentTypeId'"
+                                                            [ObjectFieldName]="'DocumentTypeId'" [DependencyFilter2Value]="true"
                                                             [DataContext]="DataContext" [QueryFilterItems]="MyInActiveFilter"
                                                             (SelectedItemChanged)="OnDocumentTypeChanged($event)"
                                                             [LookUpTableName]="'DocumentType'">

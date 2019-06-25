@@ -1090,6 +1090,154 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+
+	   private List<TariffVersionPM> activeVersions;
+	 
+		     
+	   [Include]
+	   [Association("TariffActiveVersions", "Id","TariffId")]
+	   [DataMember]
+	   public virtual List<TariffVersionPM> ActiveVersions  
+	   {
+	        get
+             {
+                 if (activeVersions == null)
+                 {
+                     activeVersions = new List<TariffVersionPM>();
+                 }
+                 return activeVersions;
+              }
+             set { activeVersions = value; }
+	    }
+		   
+	   private List<TariffVersionPM>  deletedActiveVersions;
+	   public virtual List<TariffVersionPM> DeletedActiveVersions  
+	   {
+	        get
+             {
+                 if ( deletedActiveVersions == null)
+                 {
+                      deletedActiveVersions = new List<TariffVersionPM>();
+                 }
+                 return  deletedActiveVersions;
+              }
+             set {  deletedActiveVersions = value; }
+	    }
+	  	  private int tariffLinesAddedNumbers ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int TariffLinesAddedNumbers  
+	   {
+	    
+	     get
+		{
+		   return tariffLinesAddedNumbers;
+		 }
+		 set
+		 {
+		   if(tariffLinesAddedNumbers != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffLinesAddedNumbers",OldValue=tariffLinesAddedNumbers,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tariffLinesAddedNumbers=value;
+		   }
+			
+		 }
+	   }
+	  private bool tariffLinesAddedFromExcel ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool TariffLinesAddedFromExcel  
+	   {
+	    
+	     get
+		{
+		   return tariffLinesAddedFromExcel;
+		 }
+		 set
+		 {
+		   if(tariffLinesAddedFromExcel != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffLinesAddedFromExcel",OldValue=tariffLinesAddedFromExcel,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   tariffLinesAddedFromExcel=value;
+		   }
+			
+		 }
+	   }
+	  private string fileUploadedName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FileUploadedName  
+	   {
+	    
+	     get
+		{
+		   return fileUploadedName;
+		 }
+		 set
+		 {
+		   if(fileUploadedName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileUploadedName",OldValue=fileUploadedName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fileUploadedName=value;
+		   }
+			
+		 }
+	   }
+	  private string concurrencyGUID ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConcurrencyGUID  
+	   {
+	    
+	     get
+		{
+		   return concurrencyGUID;
+		 }
+		 set
+		 {
+		   if(concurrencyGUID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConcurrencyGUID",OldValue=concurrencyGUID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   concurrencyGUID=value;
+		   }
+			
+		 }
+	   }
+	  private string newConcurrencyGUID ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NewConcurrencyGUID  
+	   {
+	    
+	     get
+		{
+		   return newConcurrencyGUID;
+		 }
+		 set
+		 {
+		   if(newConcurrencyGUID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewConcurrencyGUID",OldValue=newConcurrencyGUID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   newConcurrencyGUID=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

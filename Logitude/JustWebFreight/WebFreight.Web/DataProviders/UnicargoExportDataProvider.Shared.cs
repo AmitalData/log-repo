@@ -12,6 +12,7 @@ namespace WebFreight.Web.DataProviders
 
     public class UnicargoExport
     {
+        public string ShipmentNumber { get; set; }
         public string House { get; set; }
         public string Incoterms { get; set; }
         public string MainHarmonize { get; set; }
@@ -51,7 +52,7 @@ namespace WebFreight.Web.DataProviders
         public string Agent { get; set; }
         public string ReleasingAgent { get; set; }
         public string PackageType { get; set; }
-        public int? TotalPieces { get; set; }
+        public string TotalPieces { get; set; }
         public double? Volume { get; set; }
         public double? GrossWeight { get; set; }
         public double? VolumetricWeight { get; set; }
@@ -65,9 +66,9 @@ namespace WebFreight.Web.DataProviders
         public string PickupToPartnerAddress { get; set; }
         public DateTime? PickupExpectedDeparture { get; set; }
         public DateTime? PickupExpectedArrival { get; set; }
-        public string PickupActualDeparture { get; set; }
+        public DateTime? PickupActualDeparture { get; set; }
         public string PickupToPort { get; set; }
-        public string PickupActualArrival { get; set; }
+        public DateTime? PickupActualArrival { get; set; }
         public string MainCarriageLeg1LoadingPort { get; set; }
         public string MainCarriageLeg1ViaPort1  { get; set; }
         public string MainCarriageLeg1ViaPort2 { get; set; }
@@ -79,26 +80,52 @@ namespace WebFreight.Web.DataProviders
         public DateTime? MainCarriageLeg1OBLDate { get; set; }
         public DateTime? MainCarriageLeg1CutoffDate { get; set; }
         public string MainCarriageLeg1Vessel { get; set; }
-        public string MainCarriageLeg1ETD { get; set; }
-        public string MainCarriageLeg1ETA { get; set; }
-        public string MainCarriageLeg1ATD { get; set; }
-        public string MainCarriageLeg1ATA { get; set; }
+        public DateTime? MainCarriageLeg1ETD { get; set; }
+        public DateTime? MainCarriageLeg1ETA { get; set; }
+        public DateTime? MainCarriageLeg1ATD { get; set; }
+        public DateTime? MainCarriageLeg1ATA { get; set; }
         public string Transshipment1ShippingLine { get; set; }
         public string Transshipment1VoyageNo { get; set; }
         public string Transshipment1OBL { get; set; }
         public string Transshipment1Vessel { get; set; }
-        public string Transshipment1ETD { get; set; }
-        public string Transshipment1ETA { get; set; }
-        public string Transshipment1ATD { get; set; }
-        public string Transshipment1ATA { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+        public DateTime? Transshipment1ETA { get; set; }
+        public DateTime? Transshipment1ATD { get; set; }
+        public DateTime? Transshipment1ATA { get; set; }
         public string DeliveryFromPort { get; set; }
         public string DeliveryToPartner { get; set; }
         public string DeliveryToPatnerAddress { get; set; }
         public string DeliveryFromPartner { get; set; }
         public string DeliveryTransportMode { get; set; }
-        public string DeliveryExpectedDeparture { get; set; }
-        public string DeliveryExpectedArrival { get; set; }
-        public string DeliveryActualDeparture { get; set; }
-        public string DeliveryActualArrival { get; set; }        
+        public DateTime? DeliveryExpectedDeparture { get; set; }
+        public DateTime? DeliveryExpectedArrival { get; set; }
+        public DateTime? DeliveryActualDeparture { get; set; }
+        public DateTime? DeliveryActualArrival { get; set; }
+        public string ConsigneeAddress { get; set; }
+        public string ConsigneePhone { get; set; }
+
+
+
+        public string ShipmentField1 { get; set; }
+        public string ShipmentField2 { get; set; }
+        public string ShipmentField3 { get; set; }
+        public string ShipmentField4 { get; set; }
+        public string ShipmentField5 { get; set; }
+        public string ShipmentField6 { get; set; }
+        public string ShipmentField7 { get; set; }
+        public string ShipmentField8 { get; set; }
+        public string ShipmentField9 { get; set; }
+        public string ShipmentField10 { get; set; }
+        public string ShipmentField11 { get; set; }
+        public string ShipmentField12 { get; set; }
+        public string ShipmentField13 { get; set; }
+        public string ShipmentField14 { get; set; }
+        public string ShipmentField15 { get; set; }
+        public string ShipmentField16 { get; set; }
+        public string ShipmentField17 { get; set; }
+        public string ShipmentField18 { get; set; }
+        public string ShipmentField19 { get; set; }
+        public string ShipmentField20 { get; set; }
+
     }
 }

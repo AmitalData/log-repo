@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tasks Scheduler",
-			      				    Code =  "54fe",
+			      				    Code =  "be5e",
 			      				    Name =  "TasksScheduler",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -125,6 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "TasksScheduler,TasksScheduler,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -2067,6 +2068,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "LastRunEndTime",
+					  						OldFieldName =  "LastRunEndTime",
 					  						ObjectTableName =  "TasksScheduler",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2086,6 +2088,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LastRunEndTime",
 					  						ListPropertyPath =  "LastRunEndTime",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2120,7 +2123,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "LastRunStartTimeUTC",
+					 						FieldName =  "LastEndStartTimeUTC",
+					  						OldFieldName =  "LastRunStartTimeUTC",
 					  						ObjectTableName =  "TasksScheduler",
 					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
@@ -2138,8 +2142,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "LastRunStartTimeUTC",
-					  						ListPropertyPath =  "LastRunStartTimeUTC",
+					  						PMPropertyPath =  "LastEndStartTimeUTC",
+					  						ListPropertyPath =  "LastEndStartTimeUTC",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2147,7 +2152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "LastRunStartTimeUTC",
+					  						ValidForQuerySection1 =  "LastEndStartTimeUTC",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -2156,10 +2161,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "LastRunStartTimeUTC",
-					  						DefaultText =  "LastRunStartTimeUTC",
-					  						ListFieldLable =  "LastRunStartTimeUTCListLable",
-					  						ListLableDefaultText =  "LastRunStartTimeUTC",
+					  						FullFieldLable =  "LastEndStartTimeUTC",
+					  						DefaultText =  "LastEndStartTimeUTC",
+					  						ListFieldLable =  "LastEndStartTimeUTCListLable",
+					  						ListLableDefaultText =  "LastEndStartTimeUTC",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2204,6 +2209,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature TasksSchedulerFeature_FTP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FTP", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.FTP", NameTextCodeDefaultText = @"FTP" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature TasksSchedulerFeature_SHOWUTCBUTTON = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHOWUTCBUTTON", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.SHOWUTCBUTTON", NameTextCodeDefaultText = @"Show UTC Button" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature TasksSchedulerFeature_SFTP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SFTP", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TasksSchedulerObjectTable.Id, Tenant = 0, NameTextCodeCode = "TasksScheduler.Features.SFTP", NameTextCodeDefaultText = @"SFTP" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    

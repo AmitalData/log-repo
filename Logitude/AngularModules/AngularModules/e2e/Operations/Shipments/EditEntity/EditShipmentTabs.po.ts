@@ -53,16 +53,19 @@ export class EditTabsComponent {
 
     this.Helper.WaitByIdAndClick('Shipment.TH.Overview');
     this.GeneralTabScenario.GeneralTab(ShipmentLevelCode);
-    // this.OrderTabScenario.OrderTab(ShipmentLevelCode,ShipmentType);
-    // this.PartnersTabScenario.PartnersTab(ShipmentLevelCode);
-    // this.PackagesTabScenario.PackagesTab(ShipmentLevelCode,ShipmentType);
-    // this.RoutingTabScenario.RoutingTab(ShipmentLevelCode,ShipmentType,Direction);
-    //this.PayablesTabScenario.PayablesTab(shipperRef1);
-    //this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode);
+    this.OrderTabScenario.OrderTab(ShipmentLevelCode,ShipmentType);
+    this.PartnersTabScenario.PartnersTab(ShipmentLevelCode);
+    this.PackagesTabScenario.PackagesTab(ShipmentLevelCode,ShipmentType);
+    this.RoutingTabScenario.RoutingTab(ShipmentLevelCode,ShipmentType,Direction);
+    this.PayablesTabScenario.PayablesTab(shipperRef1,ShipmentType);
+    this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode,ShipmentType);
   //  this.DocsOutTabScenario.DocsOutTab();
+  
     if(ShipmentLevelCode=='M'){
       this.ShipmentsTabScenario.ShipmentsTab();
-    }
+      }
+      this.Helper.WaitByIdAndClick('Shipment-Save');
+      this.Helper.WaitBusyIndicator();
   }
 
 }

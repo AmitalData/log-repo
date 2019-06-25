@@ -216,6 +216,19 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+
+        public IDbSet<AirlineArea> AirlineAreas
+        {
+            get;
+            set;
+        }
+
+
+        public IDbSet<AirlineAreasPort> AirlineAreasPorts
+        {
+            get;
+            set;
+        }
         public IDbSet<ShippingLine> ShippingLines
         {
             get;
@@ -893,6 +906,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CustomsShipper> CustomsShippers { get; set; }
         public IDbSet<CustomerDeposition> CustomerDepositions { get; set; }
         public IDbSet<UsersReleaseNotesDisplay> UsersReleaseNotesDisplays { get; set; }
+        public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
 
 
 
@@ -2992,6 +3006,10 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
         public IDbSet<TicketCreatedByType> TicketCreatedByTypes { get; set; }
         public IDbSet<TicketSource> TicketSources { get; set; }
+
+        public IDbSet<Occasion> Occasions { get; set; }
+        public IDbSet<OccasionType> OccasionTypes { get; set; }
+        public IDbSet<OccasionStatus> OccasionStatuses { get; set; }
         #endregion
 
         #region Social Context
@@ -3684,6 +3702,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new TicketSourceMap());
             modelBuilder.Configurations.Add(new TicketCreatedByTypeMap());
+            modelBuilder.Configurations.Add(new OccasionMap());
+            modelBuilder.Configurations.Add(new OccasionStatusMap());
+            modelBuilder.Configurations.Add(new OccasionTypeMap());
             #endregion
 
             #region Booking
@@ -4458,6 +4479,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new AdvancedQueryFilterMap());
             modelBuilder.Configurations.Add(new AgentMap());
             modelBuilder.Configurations.Add(new AirlineMap());
+            modelBuilder.Configurations.Add(new AirlineAreaMap());
+            modelBuilder.Configurations.Add(new AirlineAreasPortMap());
             modelBuilder.Configurations.Add(new APInvoiceEntityMap());
             modelBuilder.Configurations.Add(new APInvoiceLineMap());
             modelBuilder.Configurations.Add(new APInvoicePaymentMap());
@@ -4863,7 +4886,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DWObjectFieldCategoriesMap());
             modelBuilder.Configurations.Add(new SchedulerLogsMap());
             modelBuilder.Configurations.Add(new UsersReleaseNotesDisplayMap());
-
+            modelBuilder.Configurations.Add(new CheckDigitControlAlgorithmMap());
 
             base.OnModelCreating(modelBuilder);
         }

@@ -34,7 +34,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
     public _ShipmentPMService: ShipmentPMService;
     private CurrentSession = SessionLocator.SelectedSession;
-    public ToggleIsExportShipments: boolean = true;
+    public ToggleIsExportShipments: boolean = false;
     constructor(private _entityListService: EntityListService) {
         this.myShipmentDomainService = new ShipmentDomainService();
         this.myUserPMService = new UserExtendedPMService();

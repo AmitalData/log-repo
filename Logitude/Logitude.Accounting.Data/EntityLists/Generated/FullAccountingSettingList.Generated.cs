@@ -90,6 +90,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string DefaultExternalDiffGLAccountId  { get; set; }
        [DataMember]
        public string SoftwareVersion  { get; set; }
+       [DataMember]
+       public bool IsPaymentChequesActivated  { get; set; }
    }
 
 }

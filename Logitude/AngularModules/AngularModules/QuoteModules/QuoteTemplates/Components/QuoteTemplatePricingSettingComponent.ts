@@ -155,19 +155,19 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
                     this.RowTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == this.TableDesignPM.LinesDesignId)[0];
                     if (this.RowTextDesignPM) {
                         this.RowTextDesignPM.Title = "Rows";
-                        this.RowTextDesignPM.HideAlignment = true;
+                        //this.RowTextDesignPM.HideAlignment = true;
                     }
                 }
                 this.TotalLabelTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == totalsLabelTextDesignId)[0];
                 if (this.TotalLabelTextDesignPM) {
                    
                     this.TotalLabelTextDesignPM.Title = "Label";
-                    this.TotalLabelTextDesignPM.HideAlignment = true;
+                    //this.TotalLabelTextDesignPM.HideAlignment = true;
                 }
 
                 this.TotalValueTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == totalValueTextDesignId)[0];
                 if (this.TotalValueTextDesignPM) {
-                    this.TotalValueTextDesignPM.HideAlignment = true;
+                   // this.TotalValueTextDesignPM.HideAlignment = true;
                     this.TotalValueTextDesignPM.Title = "Value";
             
                 }
@@ -180,7 +180,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
                 this.GroupByTotalTextDesignPM = this.QuoteTemplateTextDesignPMLists.filter(d => d.Id == groupByTotailTextDesignId)[0];
                 if (this.GroupByTotalTextDesignPM) {
-                    this.GroupByTotalTextDesignPM.HideAlignment = true;
+                   // this.GroupByTotalTextDesignPM.HideAlignment = true;
                     this.GroupByTotalTextDesignPM.Title = "Total";
                 }
 
@@ -599,6 +599,28 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
 
 
+    ShowHeaderLabelsKey: string = Guid.newGuid();
+    get ShowHeaderLabels() {
+        var showHeaderLabels: boolean = false;
+        if (this.QuoteTemplateSettingPM) showHeaderLabels = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.ShowHeaderLabelsPackages : this.QuoteTemplateSettingPM.ShowHeaderLabelsContainers;
+        return showHeaderLabels;
+    }
+    set ShowHeaderLabels(value: boolean) {
+        if (this.QuoteTemplateSettingPM != null) {
+            if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.ShowHeaderLabelsPackages = value;
+            else this.QuoteTemplateSettingPM.ShowHeaderLabelsContainers = value;
+        }
+    }
+
+
+
+    
+
+
+
+
+
+
     DisablePricingSetting() {
         this.ShowChargeCode = false;
         this.ShowChargeName = false;
@@ -609,6 +631,8 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.ShowLocalCurrencyColumn = false;
         this.ShowChargeDescription = false;
         this.ShowSaleMaxMinAmountColumn = false;
+        this.ShowHeaderLabels = false;
+    
     }
 
 

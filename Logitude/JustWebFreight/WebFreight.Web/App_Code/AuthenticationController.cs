@@ -1436,23 +1436,25 @@ namespace WebFreight.Web
                                 AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
                                 AuthenticationToken authentication = new AuthenticationToken() { CreateDate = DateTime.Now, Email = email, Password = hashedPassword, Token = token, Tenant = user.CurrentTenant, ClientType = parameters.IsMobileLogin ? "Mobile" : parameters.ClientType };
                                 if (!user.KeepUserLoggedIn && authentication.ClientType == "Web" && user.WebTokenLifeTimeInMinutes != 0) authentication.ExpirationDate = DateTime.Now.AddMinutes(user.WebTokenLifeTimeInMinutes);
-
-                                AuthenticationToken authenticationDocument = new AuthenticationToken()
-                                {
-                                    CreateDate = DateTime.Now,
-                                    ExpirationDate = DateTime.Now.AddMinutes(15),
-                                    Email = email,
-                                    Password = hashedPassword,
-                                    Token = AuthenticationUtil.GenerateToken(),
-                                    Tenant = user.CurrentTenant,
-                                    ClientType = "DocumentDownload"
-                                };
-                                authenticationTokenRepository.Add(authenticationDocument);
                                 authenticationTokenRepository.Add(authentication);
+                                user.Token = token;
+
+                                #region Document Token
+
+                                AuthenticationToken authenticationDocument = new AuthenticationToken() { CreateDate = DateTime.Now, ExpirationDate = DateTime.Now.AddMinutes(15), Email = email, Password = hashedPassword, Token = AuthenticationUtil.GenerateToken(), Tenant = user.CurrentTenant, ClientType = "DocumentDownload" };
+                                authenticationTokenRepository.Add(authenticationDocument);
+                                user.DocumentDownloadToken = authenticationDocument.Token;
+                                if (parameters.GetInvalidDocumentToken)
+                                {
+                                    AuthenticationToken invalidDocumentToken = new AuthenticationToken() { CreateDate = DateTime.Now,ExpirationDate = DateTime.Now.AddMinutes(-5),Email = email,Password = hashedPassword,Token = AuthenticationUtil.GenerateToken(),Tenant = user.CurrentTenant,ClientType = "DocumentDownload"};
+                                    authenticationTokenRepository.Add(invalidDocumentToken);
+                                    user.InvalidDocumentToken = invalidDocumentToken.Token;
+                                }
+                                #endregion
 
                                 authenticationTokenRepository.SubmitChanges();
-                                user.Token = token;
-                                user.DocumentDownloadToken = authenticationDocument.Token;
+                              
+                              
                                 //}
                             }
                         }

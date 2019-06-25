@@ -345,6 +345,14 @@
     <Compile Include="Migrations\201904241107384_AddIsBlockingLogin.Designer.cs">
       <DependentUpon>201904241107384_AddIsBlockingLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs" />
+    <Compile Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.Designer.cs">
+      <DependentUpon>201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.cs" />
+    <Compile Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.Designer.cs">
+      <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -459,6 +467,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904241107384_AddIsBlockingLogin.resx">
       <DependentUpon>201904241107384_AddIsBlockingLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.resx">
+      <DependentUpon>201906120916074_AbedAddNewFieldCPUIntensiveWebServicesURLToSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.resx">
+      <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

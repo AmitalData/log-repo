@@ -284,6 +284,45 @@ export class TariffPM {
     public set Surcharge10UOM(newValue: string) { if (this.surcharge10UOM != newValue) { this.surcharge10UOM = newValue; this.MarkAsDirty("Surcharge10UOM"); } }
        
 	 
+     
+	private activeVersions: TariffVersionPM[];
+    get  ActiveVersions() {
+        if (this.activeVersions == null) {
+            this.activeVersions = [];
+        }
+
+        return this.activeVersions;
+    }
+    set  ActiveVersions(newValue: TariffVersionPM[]) {
+        if (this.activeVersions != newValue) {
+            this.activeVersions = newValue;
+        }
+    }
+    private tariffLinesAddedNumbers: number;
+    public get TariffLinesAddedNumbers() { return this.tariffLinesAddedNumbers; }
+    public set TariffLinesAddedNumbers(newValue: number) { if (this.tariffLinesAddedNumbers != newValue) { this.tariffLinesAddedNumbers = newValue; this.MarkAsDirty("TariffLinesAddedNumbers"); } }
+       
+	 
+    private tariffLinesAddedFromExcel: boolean;
+    public get TariffLinesAddedFromExcel() { return this.tariffLinesAddedFromExcel; }
+    public set TariffLinesAddedFromExcel(newValue: boolean) { if (this.tariffLinesAddedFromExcel != newValue) { this.tariffLinesAddedFromExcel = newValue; this.MarkAsDirty("TariffLinesAddedFromExcel"); } }
+       
+	 
+    private fileUploadedName: string;
+    public get FileUploadedName() { return this.fileUploadedName; }
+    public set FileUploadedName(newValue: string) { if (this.fileUploadedName != newValue) { this.fileUploadedName = newValue; this.MarkAsDirty("FileUploadedName"); } }
+       
+	 
+    private concurrencyGUID: string;
+    public get ConcurrencyGUID() { return this.concurrencyGUID; }
+    public set ConcurrencyGUID(newValue: string) { if (this.concurrencyGUID != newValue) { this.concurrencyGUID = newValue; this.MarkAsDirty("ConcurrencyGUID"); } }
+       
+	 
+    private newConcurrencyGUID: string;
+    public get NewConcurrencyGUID() { return this.newConcurrencyGUID; }
+    public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

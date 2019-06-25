@@ -41,6 +41,8 @@ using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.Tools.EntityService;
 using Simplog.Data.QuoteModel.Repositories;
+using Logitude.BL.QuoteModel.CustomFilters;
+		  
 namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
 { 
 
@@ -223,7 +225,10 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-				
+				                
+				QuoteTemplateCustomFilter customfilters = new QuoteTemplateCustomFilter(tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+	
                 entityPocos = genericFilter.GetFilteredQuery<QuoteTemplate>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<QuoteTemplateList> entityLists = quoteTemplateQuery.GetIQueryableEntityList(entityPocos);

@@ -93,6 +93,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ApprovedDateTime = a.ApprovedDateTime,
                                        BankAccountId = a.BankAccountId,
                                        FirstApproveDate = a.FirstApproveDate,
+                                       AutomaticPaymentCheque = a.AutomaticPaymentCheque
+                                     
                                    }).FirstOrDefault();
 
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant);
