@@ -219,7 +219,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge1Id)[0];
-            this.Surcharge1PriceLabel = chargeType.Code;
+            this.Surcharge1PriceLabel = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             this.Surcharge1PriceVisibility = true;
 
             var chargeItem1: CodeNameClass = new CodeNameClass();
@@ -231,7 +231,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge2Id)[0];
-            this.Surcharge2PriceLabel = chargeType.Code;
+            this.Surcharge2PriceLabel = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             this.Surcharge2PriceVisibility = true;
 
             var chargeItem2: CodeNameClass = new CodeNameClass();
@@ -243,7 +243,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge3Id)[0];
-            this.Surcharge3PriceLabel = chargeType.Code;
+            this.Surcharge3PriceLabel = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             this.Surcharge3PriceVisibility = true;
 
             var chargeItem3: CodeNameClass = new CodeNameClass();
@@ -255,7 +255,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge4Id)[0];
-            this.Surcharge4PriceLabel = chargeType.Code;
+            this.Surcharge4PriceLabel = chargeType.Code + " (" + chargeType.MeasurementCode+ ")";
             this.Surcharge4PriceVisibility = true;
 
             var chargeItem4: CodeNameClass = new CodeNameClass();
@@ -267,7 +267,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge5Id)[0];
-            this.Surcharge5PriceLabel = chargeType.Code;
+            this.Surcharge5PriceLabel = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             this.Surcharge5PriceVisibility = true;
 
             var chargeItem5: CodeNameClass = new CodeNameClass();
@@ -279,7 +279,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge6Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge6Id)[0];
-            this.Surcharge6PriceLabel = chargeType.Code;
+            this.Surcharge6PriceLabel = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             this.Surcharge6PriceVisibility = true;
 
             var chargeItem6: CodeNameClass = new CodeNameClass();
@@ -291,7 +291,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge7Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge7Id)[0];
-            this.Surcharge7PriceLabel = chargeType.Code;
+            this.Surcharge7PriceLabel = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             this.Surcharge7PriceVisibility = true;
 
             var chargeItem7: CodeNameClass = new CodeNameClass();
@@ -303,7 +303,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge8Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge8Id)[0];
-            this.Surcharge8PriceLabel = chargeType.Code;
+            this.Surcharge8PriceLabel = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             this.Surcharge8PriceVisibility = true;
 
             var chargeItem8: CodeNameClass = new CodeNameClass();
@@ -315,7 +315,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge9Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge9Id)[0];
-            this.Surcharge9PriceLabel = chargeType.Code;
+            this.Surcharge9PriceLabel = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             this.Surcharge9PriceVisibility = true;
 
             var chargeItem9: CodeNameClass = new CodeNameClass();
@@ -327,7 +327,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge10Id)) {
             var chargeType = this.AllChargesTypes.filter(a => a.Id == this.EntityPM.Surcharge10Id)[0];
-            this.Surcharge10PriceLabel = chargeType.Code;
+            this.Surcharge10PriceLabel = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             this.Surcharge10PriceVisibility = true;
 
             var chargeItem10: CodeNameClass = new CodeNameClass();

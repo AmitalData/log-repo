@@ -70,6 +70,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
 
 
+        public bool IsParentTenant(int tenant)
+        {
+            return (from a in this.context.DWHSettings
+                    where a.Tenant == tenant
+                    select a.IsParentTenant).FirstOrDefault();
+        }
+
+
         public List<DWHSetting> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
