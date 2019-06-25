@@ -1,4 +1,4 @@
-﻿
+
 <table *ngIf="IsResourcesReady">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td>
@@ -13,47 +13,7 @@
                     <td>
                         <table>
 
-                            <tr class="FormFieldRow">
-                                <td style="width: 100px;">
-                                    <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
 
-                                <td style="width: 250px;">
-                                    <LogTextBox [IsNewEntityCall]="IsNew" [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-
-                            <tr class="FormFieldRow">
-                                <td>
-                                    <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                </td>
-
-                                <td>
-                                    <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                </td>
-
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
 
                             <tr>
                                 <td colspan="3">
@@ -79,16 +39,9 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
-                    </td>
-
-                    <td style="width: 5px;">
-                        <div></div>
-                    </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
                 </tr>
             </table>
