@@ -474,8 +474,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     allPayablesData
                         = (from d in myShipmentsContext.ShipmentPayables
                            where d.Tenant == tenant
-                           && d.OpenAmount != null
-                           && d.OpenAmount != 0
+                          // && d.OpenAmount != null
+                           //&& d.OpenAmount != 0
                            && allShipmentsIds.Contains(d.ShipmentId)
                            group d by new { d.ShipmentId, d.ChargesTypeId, d.VendorId } into g
                            select new ChargeTypeGroupClass()
@@ -600,14 +600,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                     if (this.IncludeEstimations)
                     {
-                        if (this.HasAmount(myShipment.OpenPayablesInLocalCurrency))
+                        //if (this.HasAmount(myShipment.OpenPayablesInLocalCurrency))
                         {
                             #region Payables
                             List<ChargeTypeGroupClass> lines_Grouped = allPayablesData.Where(d => d.ShipmentId == myShipment.Id).ToList();
                             foreach (ChargeTypeGroupClass item in lines_Grouped)
                             {
-                                if (this.HasAmount(item.AmountInLocal))
-                                {
+                               // if (this.HasAmount(item.AmountInLocal))
+                               // {
                                     ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
                                     myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                                     myRecord.LineTypeCode = "EFC";
@@ -668,7 +668,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                                     myDataProvider.Shipments.Add(myRecord);
                                 }
-                            }
+                           // }
                             #endregion
                         }
 
