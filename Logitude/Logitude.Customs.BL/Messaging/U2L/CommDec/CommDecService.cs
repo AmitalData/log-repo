@@ -65,7 +65,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             MessageOut = "";
             _Stopwatch = Stopwatch.StartNew();
             MyCommunicationsParams.Subject = "CommDecService ";
-
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
             DeserilazeObject(xmlLOGICOMMDEC);
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
@@ -78,6 +78,27 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             var myQueryService = new DeclarationQueryService(_context);
 
             ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
+
+            MyGenericResponseObj.Stage = "GetSingleB4Upsert";
+            if (!String.IsNullOrWhiteSpace(_LogitudeCommDecFile.CustomFileNo))
+            {
+                string existId = myQueryService.GetIdByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, ResolvedTenant());
+                if (!String.IsNullOrWhiteSpace(existId))
+                {
+                    this._MyDeclarationPM = myQueryService.GetSingle(existId, true, false);
+                    AppendLogLine("GetSingleB4Upsert:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+                    if (this._MyDeclarationPM != null)
+                    {
+                        if (!declarationUpdateService.CheckIfUpdatingAllowed(this._MyDeclarationPM))
+                        {
+                            AppendLogLine("Updating Not Allowed For Declaration " + this._MyDeclarationPM.CustomFileNo + Environment.NewLine + Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.ToString(1000));
+                            return;
+                        }
+                    }
+                }
+            }
+
             MyGenericResponseObj.Stage = "DeclarationUpsert";
             string xmlLOGICUSTFILE = xmlLOGICOMMDEC;
             xmlLOGICUSTFILE = xmlLOGICUSTFILE.Replace("LOGICOMMDEC", "LOGICUSTFILE");
@@ -119,7 +140,6 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommDec
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
 
-            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             string courier_id = null;
             if (!String.IsNullOrWhiteSpace(MoreParams))

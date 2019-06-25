@@ -336,12 +336,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                     switch (customResponse.MessageToAgent.msgCode)
                     {
+                        case 3:
+                        case 4:
+                        case 5:
+                            notificationDefinitionCode = null;
+                            break;
                         case 7:
                             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                             this._MyDeclarationPM.CourierCustomStatusCode = "2";
                             this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
                             this._MyDeclarationPM.CourierSuspentionCode = "25";
                             declarationUpdateService.Update(this._MyDeclarationPM, true);
+                            notificationDefinitionCode = null;
                             break;
                         case 8:
                         case 9:
@@ -351,6 +357,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
                             declarationUpdateService.Update(this._MyDeclarationPM, true);
                             SendDeclarationStatusRequest(this._MyDeclarationPM);
+                            notificationDefinitionCode = null;
                             break;
                         case 17:
                             notificationDefinitionCode = "5101M";

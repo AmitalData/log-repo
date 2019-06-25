@@ -55,7 +55,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 RequestName = $" {customsResponse.HAWB} שידור שינוי אתר איחסון לבלדר ",
                 
             };
-            if (customsResponse.DeclarationIdList == null || (customsResponse.DeclarationIdList != null && customsResponse.DeclarationIdList.Count == 0))
+            if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
 
             {
                 genericRequestParams.RequestName += " ראשי - מפצל";
@@ -178,6 +178,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string StorageSiteCode { get; set; }
         public string MyMoreParams { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        public List<string> DeclarationIdList { get; set; }
+        public List<string> ServerSplitDeclarationsList { get; set; }
     }
 }

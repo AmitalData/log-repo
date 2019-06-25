@@ -319,7 +319,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-            if ($event != this.SelectedItem.Id) {
+            //if ($event != this.SelectedItem.Id) {
                 CachedDataManager.RefreshTenantTextCodes().subscribe(response => {
                     var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.Id == $event)[0];
                     this.UserItemSource.push(Query);
@@ -330,7 +330,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                     this.QueriesChangedEvent.emit(Query);
                     this.NewViewClosedEvent.emit("");
                 });
-            }
+            //}
         });
     }
 

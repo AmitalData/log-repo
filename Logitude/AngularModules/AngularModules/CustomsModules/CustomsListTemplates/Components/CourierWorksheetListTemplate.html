@@ -167,7 +167,9 @@
 
     <div *ngIf="fieldName == 'CourierPendingReasonCode'" (click)="ButtonClick($event)">
         <div (click)="ButtonClick($event)">
-            <courier-filter-button #MyDropdownMenuFilterComponent (DropdownMenuButtonClicked)="DropdownMenuButtonClicked(event);PrepareDropdownMenuFilter($event,_CourierWorksheet['DeclarationId'])">
+            <courier-filter-button #MyDropdownMenuFilterComponent
+                                   (DropdownMenuButtonClicked)="DropdownMenuButtonClicked(event);PrepareDropdownMenuFilter($event,_CourierWorksheet['DeclarationId'])"
+                                   [IsDisabled]="IsDisplayOnly">
                 <div class="class-filter-content">
                     <div>
                         <img style="width: 14px; height: 14px; position: center;" src="./Images/Icons/Actions.png" />
@@ -229,6 +231,7 @@
         <div style="text-align:right;margin-top:5px;cursor:default" (click)="ButtonClick($event)">
             <!--[IsDisabled]="_CourierWorksheet['CourierPaymentStatusCode'] == 'P'  ||_CourierWorksheet['CourierPaymentStatusCode'] == 'O'   "-->
             <split-button #currSplitButtonComponent
+                          [IsDisabled]="IsDisplayOnly"
                           [OnClickedShowMenuContent]="true"
                           (DefaultSplitButtonClicked)="PrepareSplitButtonMenuFilter()"
                           [ButtonText]="'שלח'"

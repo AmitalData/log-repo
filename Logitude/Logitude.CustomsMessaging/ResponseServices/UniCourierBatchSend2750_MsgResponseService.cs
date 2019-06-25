@@ -1,13 +1,17 @@
-﻿
+﻿using Microsoft.Practices.Unity;
+using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Testers.Messages;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -19,6 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnifreightIIG.Common.SystemTableServiceReference;
+using Logitude.CustomsMessaging.Utils;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -37,61 +42,87 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
 
-            var qs = new DeclarationCourierStatusQueryService(context);
-            List<DeclarationCourierStatusPM> listPM = new List<DeclarationCourierStatusPM>();
-            if (customResponse.DeclarationsList != null && customResponse.DeclarationsList.Count > 0)
-            {
-                listPM = qs.GetDeclarationsByIds(customResponse.DeclarationsList, requestParams.Tenant);
-            }
-            else
-            {
-                listPM = qs.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
-                    customResponse.SelectedBOLValue,
-                    customResponse.SelectedStatusValue, 
-                    customResponse.SelectedTotalInvoiceValue, 
-                    customResponse.SelectedFastIndividualProcessValue,
-                    customResponse.SelectedCustomStatusValue);
-                if (customResponse.CourierDeclarationStatusCode == "RV")
-                {
-                    var listPM2 = qs.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
-                    customResponse.SelectedStatusValue, 
-                    customResponse.SelectedTotalInvoiceValue, 
-                    customResponse.SelectedFastIndividualProcessValue,
-                    customResponse.SelectedCustomStatusValue);
-                    listPM = listPM.Concat(listPM2).ToList();
-                }
-            }
-            if (listPM.Count == 0)
-            {
-                mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Declaration) send  for master {requestParams.AppicationId} ");
-            }
-            else
+            //var repo = new DeclarationCourierStatusQueryService(context);
+            var repo = new DeclarationCourierStatusRepository(context);
+            //List<DeclarationCourierStatusPM> listPoco = new List<DeclarationCourierStatusPM>();
+            List<DeclarationCourierStatus> listPoco = new List<DeclarationCourierStatus>();
+
+            if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
 
-                listPM = listPM.Where(r => (r.CourierPaymentStatusCode == "R" || string.IsNullOrWhiteSpace(r.CourierPaymentStatusCode))).ToList();
-                if (listPM.Count == 0)
+                mess.AppendLine($"מפוצל כבר !!!");
+
+                List<DeclarationCourierStatus> ServerSplitDeclarationsList
+                    = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
+                Create2750CRS(requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList);
+            }
+            else
+            {
+                mess.AppendLine($"ראשי - מפצל");
+                mess.AppendLine($"כל ההצהרות יפוצלו.....");
+
+
+
+                if (customResponse.ClientFilterDeclarationsList != null && customResponse.ClientFilterDeclarationsList.Count > 0)
                 {
-                    mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");
+                    mess.AppendLine($"סומנו בצד הלקוח ");
+                    listPoco = repo.GetDeclarationsByIds(customResponse.ClientFilterDeclarationsList, requestParams.Tenant);
+
                 }
                 else
                 {
-                    //string inList = String.Join(",", listPM.Select(r => $"'{r.DeclarationId}'").ToArray());
-                    //string updateSql = $"Update DeclarationCourierStatuses set ='I' where DECLARATIONID in ({inList}) ";
+                    mess.AppendLine($"GetByMasterIDCourierDeclarationStatusCode");
+                    listPoco = GetByMasterIDCourierDeclarationStatusCode(customResponse, requestParams, repo);
+                }
+                if (listPoco.Count == 0)
+                {
+                    mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Declaration) send  for master {requestParams.AppicationId} ");
+                }
+                else
+                {
 
-                    //(context as CustomContext).CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-                    listPM.ChunkBy(100)
-    .ForEach(list100 =>
-    {
-        string inList = String.Join(",", list100.Select(r => $"'{r.DeclarationId}'").ToArray());
-        string updateSql = $"Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
+                    listPoco = listPoco.Where(r => (r.CourierPaymentStatusCode == "R" || string.IsNullOrWhiteSpace(r.CourierPaymentStatusCode))).ToList();
+                    if (listPoco.Count == 0)
+                    {
+                        mess.AppendLine($"יש להוסיף בדיקה לשדר מצהר תקינים ושדר הצהרה תקינים שרק הצהרות שלא שולמו ישלחו  {requestParams.AppicationId} ");
+                    }
+                    
+                }
+                if (listPoco.Count > 0)
+                {
+                    
 
-        (context as CustomContext).CommandExecuteNonQuery(requestParams.Tenant, updateSql);
-    });
 
+                    listPoco.Select(r => r.DeclarationId).ToList().ChunkBy(100)
+   .ForEach(list100 =>
+   {
+       customResponse.ServerSplitDeclarationsList = list100;
+
+       var createDCAInUCB2750_MsgMessagingService = new CRSUtil();
+       createDCAInUCB2750_MsgMessagingService
+       .CreateCRS_DCAIn<DCAInUCB2750WithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
+
+   });
+                    //Create2750CRS(requestParams, mess, objectTableId, objectTableIdCourierMaster, listPoco);
                 }
             }
 
-            foreach (var itemPM in listPM)
+            this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
+
+            //this.MyRequestSheetParam.RequestDescription = "Build Custom Zip File";
+            ///LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject(false, true);
+
+            this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
+            this.MyResponseData.UserMessage = mess.ToString();
+            this.MyResponseData.Succeeded = true;
+        }
+
+      
+
+        private static void Create2750CRS(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPoco)
+        {
+            UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(requestParams, listPoco);
+            foreach (var itemPM in listPoco)
             {
                 try
                 {
@@ -104,17 +135,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         LoggingEnabled = true,
                         LoggingObjectTableId = objectTableId,
                         LoggingEntityId = itemPM.DeclarationId,
-                        LoggingObjectTableId2= requestParams.LoggingObjectTableId,
-                        LoggingEntityId2= objectTableIdCourierMaster,
+                        LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
+                        LoggingEntityId2 = objectTableIdCourierMaster,
                         AppicationId = itemPM.DeclarationId,
                         InterfaceTypeCode = "2750",
-                        
+
                         //LoggingEntityReference = declarationNumber,
                         LoggingUserId = requestParams.LoggingUserId,
                         RequestVIA = SendRequestVIA.WebServiceBatch,
-                        
+
                     };
-                    
+
                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false);
                     LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
                     mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
@@ -127,15 +158,39 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     mess.AppendLine($"Exception!!!CreateSheetSBQMessage({itemPM.DeclarationId}) : {ee1.Message}");
                 }
             }
+        }
 
-            this.MyRequestSheetParam = this.MyRequestSheetParam ?? new RequestSheetParam();
+        private static void UpdateCOURIERDECLARATIONSTATUSCODE_Inprogress(GenericRequestParams requestParams, List<DeclarationCourierStatus> listPoco)
+        {
+            listPoco.ChunkBy(100)
+.ForEach(list100 =>
+{
+string inList = String.Join(",", list100.Select(r => $"'{r.DeclarationId}'").ToArray());
+string updateSql = $"Update DeclarationCourierStatuses set COURIERDECLARATIONSTATUSCODE='I' where DECLARATIONID in ({inList}) ";
 
-            //this.MyRequestSheetParam.RequestDescription = "Build Custom Zip File";
-            ///LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject(false, true);
+CustomContext.CommandExecuteNonQuery(requestParams.Tenant, updateSql);
+});
+        }
 
-            this.MyRequestSheetParam.RequestDescription = requestParams.RequestName;
-            this.MyResponseData.UserMessage = mess.ToString();
-            this.MyResponseData.Succeeded = true;
+        private static List<DeclarationCourierStatus> GetByMasterIDCourierDeclarationStatusCode(DCAInUCB2750WithResponseContentHeader customResponse, GenericRequestParams requestParams, DeclarationCourierStatusRepository repo)
+        {
+            List<DeclarationCourierStatus> listPoco = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "R",
+                customResponse.SelectedBOLValue,
+                customResponse.SelectedStatusValue,
+                customResponse.SelectedTotalInvoiceValue,
+                customResponse.SelectedFastIndividualProcessValue,
+                customResponse.SelectedCustomStatusValue);
+            if (customResponse.CourierDeclarationStatusCode == "RV")
+            {
+                var listPM2 = repo.GetByMasterIDCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId, "V", customResponse.SelectedBOLValue,
+                customResponse.SelectedStatusValue,
+                customResponse.SelectedTotalInvoiceValue,
+                customResponse.SelectedFastIndividualProcessValue,
+                customResponse.SelectedCustomStatusValue);
+                listPoco = listPoco.Concat(listPM2).ToList();
+            }
+
+            return listPoco;
         }
 
         public override INF_MSG_GenericResponseData GetResponse(DCAInUCB2750WithResponseContentHeader customResponse, GenericRequestParams requestParams)
