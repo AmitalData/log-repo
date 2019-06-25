@@ -94,6 +94,12 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     throw new ApplicationException("Dates are not allowed in Surcharges versions");
                 }
             }
+
+            if (entityPM.IsApprovingDraftVersion)
+            {
+                this.ApproveDraftVersion(entityPM);
+                entityPM.IsApprovingDraftVersion = false;
+            }
         }
 
         protected override void UpdateComposition(TariffPM entityPM)
@@ -238,6 +244,57 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             //TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             //tariffVersionUpdateService.Update(tariffVersionPM, true);
+        }
+
+        private void ApproveDraftVersion(TariffPM entityPM)
+        {
+            TariffVersionPM iDraftVersion = entityPM.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
+            if (iDraftVersion == null)
+            {
+                throw new ApplicationException("No Draft version to approve");
+            }
+
+            else if (iDraftVersion.TariffLines.Where(d => d.HasErrors).Count() > 0) {
+                throw new ApplicationException("Invalid Tariff Lines");
+            }
+
+            else
+            {
+                iDraftVersion.IsDraft = false;
+                iDraftVersion.ApprovedByUserId = entityPM.UpdatedByUserId;
+                iDraftVersion.ApproveDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                iDraftVersion.ChangeSetOp = ChangeSetOperation.Update;
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "VNAP",
+                    UserId = iDraftVersion.ApprovedByUserId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = "Version " + iDraftVersion.Version + " approved",
+                });
+
+                TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
+                if (iPreviousVersion != null)
+                {
+                    foreach (TariffLinePM linePM in iDraftVersion.TariffLines)
+                    {
+                        if (linePM.StartDate != null)
+                        {
+                            var iPreviousLine = iPreviousVersion.TariffLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
+                            if (iPreviousLine != null)
+                            {
+                                iPreviousLine.ExpirationDate = linePM.StartDate.Value.AddDays(-1);
+                                iPreviousLine.ChangeSetOp = ChangeSetOperation.Update;
+                            }
+                        }
+                    }
+
+                    TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                    tariffVersionUpdateService.Update(iPreviousVersion, true);
+                }
+            }
         }
     }
 }
