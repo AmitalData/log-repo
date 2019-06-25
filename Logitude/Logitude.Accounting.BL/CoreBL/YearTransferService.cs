@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     else
                     { 
                         List<String> originalJournalIds = journalPMs.Select(j => j.OriginalJournalId).ToList();
-                        List<JournalPM> notVoidedOriginalJournals = journalQueryService.GetJournalsByIds(originalJournalIds, tenant).Where(originalJournal => !originalJournal.IsVoided.HasValue || !originalJournal.IsVoided.Value).ToList();
+                        List<JournalPM> notVoidedOriginalJournals = journalQueryService.GetJournalPMsByIds(originalJournalIds, tenant).Where(originalJournal => !originalJournal.IsVoided.HasValue || !originalJournal.IsVoided.Value).ToList();
                         List<String> notVoidedOriginalIds = notVoidedOriginalJournals.Select(k => k.Id).ToList();
                         List<JournalPM> realJournals = journalPMs.Where(j => notVoidedOriginalIds.Contains(j.OriginalJournalId)).ToList();
                         if (realJournals != null)

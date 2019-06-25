@@ -39,19 +39,22 @@ export class NewVendor {
     this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'ven');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
     this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
-    this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name + DisplayNumber);
+   // this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name + DisplayNumber);
     this.Helper.WaitByIdAndFill('GLAccount_CurrencyId', 'Nis');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
-    this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
-    this.Helper.WaitWindowClosed();
-    this.Helper.WaitBusyIndicator();
-    browser.sleep(5000);
+      this.Helper.WaitByIdAndClick('Ok-AddGLAccount');
+      this.Helper.WaitBusyIndicator();
+      this.Helper.WaitWindowClosed();
+      this.Helper.WaitBusyIndicatorToShow();
+      this.Helper.WaitBusyIndicator();
+    //browser.sleep(5000);
     //this.Helper.WaitBusyIndicator();
-    // var boo=this.Helper.ItemsVisibility('3mo');
-    //if ('boo'){
-    this.Helper.WaitByIdAndClick('Vendor-SaveClose');
-    //}
+     var boo=this.Helper.ItemsVisibility('3mo');
+    if ('boo') {
+      this.Helper.WaitByIdAndClick('Vendor-SaveClose');
+      this.Helper.WaitBusyIndicator();
+    }
   }
 
 }

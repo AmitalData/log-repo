@@ -4,7 +4,7 @@
             <!--Interval and Range-->
             <td *ngIf="ShowInterval" style="width:48%;">
                 <div>
-                    <LogTextBox (ValueChanged)="SelectedIntervalChanged($event)" [HideColumns]="true" [Text]="IntervalValue" [InputType]="'integer'" [IsFreeText]="true" [DataContext]="DataContext" [NoObjectField]="true"  [NoValidation]="true"></LogTextBox>
+                    <LogTextBox (ValueChanged)="SelectedIntervalChanged($event)" [HideColumns]="true" [Text]="IntervalValue" [InputType]="'integer'" [IsFreeText]="true" [DataContext]="DataContext" [NoObjectField]="true" [NoValidation]="true"></LogTextBox>
                 </div>
             </td>
 
@@ -12,7 +12,7 @@
             <td *ngIf="ShowRange && ShowInterval" style="width:4%;"> </td>
 
 
-            <td [style.width]="ShowInterval ? '48%' : '100%'" *ngIf="ShowRange" >
+            <td [style.width]="ShowInterval ? '48%' : '100%'" *ngIf="ShowRange">
                 <div>
                     <ComboBox (SelectedItemChanged)="SelectedRangeChanged($event)" [ItemsSource]="RangeLists" [SelectedItem]="SelectedRange"></ComboBox>
                 </div>
@@ -22,28 +22,28 @@
 
             <!--Date DatePicker-->
             <td style="width:100%" *ngIf="ShowLogDatePicker">
-                <LogDatePicker (ValueChanged)="DatePickerValueChange($event)"   [HideColumns]="true"   [IsFreeValue]="true"  [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'"   [DataContext]="DataContext"></LogDatePicker>
-     
+                <LogDatePicker (ValueChanged)="DatePickerValueChange($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="DateValue" [ObjectFieldName]="'DateValue'" [DataContext]="DataContext"></LogDatePicker>
+
             </td>
 
 
 
             <!--Date Between-->
-            <td style="width:100%"  *ngIf="Operation == 'Between'">
+            <td style="width:100%" *ngIf="Operation == 'Between'">
                 <table>
                     <tr>
-                        <td  style="width:48%;">
+                        <td style="width:48%;">
                             <LogDatePicker style="width:48%" [InputType]="'date'" (ValueChanged)="DatePickerBetweenValue1Change($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="BetweenDateValue1" [ObjectFieldName]="'BetweenDateValue1'" [DataContext]="DataContext"></LogDatePicker>
                         </td>
                         <td style="width:2%"></td>
-                        <td  style="width:48%;">
-                            <LogDatePicker  style="width:48%" [InputType]="'date'"  (ValueChanged)="DatePickerBetweenValue2Change($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="BetweenDateValue2" [ObjectFieldName]="'BetweenDateValue2'" [DataContext]="DataContext"></LogDatePicker>
+                        <td style="width:48%;">
+                            <LogDatePicker style="width:48%" [InputType]="'date'" (ValueChanged)="DatePickerBetweenValue2Change($event)" [HideColumns]="true" [IsFreeValue]="true" [SelectedDateValue]="BetweenDateValue2" [ObjectFieldName]="'BetweenDateValue2'" [DataContext]="DataContext"></LogDatePicker>
                         </td>
                     </tr>
                 </table>
-               
 
-               
+
+
 
             </td>
 

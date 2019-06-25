@@ -200,10 +200,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
 
                         aPInvoice = aPInvoices.Where(d => d.Id == a.AccountingEntityId).FirstOrDefault();
-                        aPInvoice.TotalVATs = totalvats.Where(d => d.APInvoiceId == aPInvoice.Id).ToList();
+
+                   
 
                         if (aPInvoice != null)
                         {
+                            aPInvoice.TotalVATs = totalvats.Where(d => d.APInvoiceId == aPInvoice.Id).ToList();
                             VatNumber = aPInvoice.VATNumber;
                             InputVatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVATAmount);
                             InputInvoiceAmount = aPInvoice.AmountInLocalCurrency != null ? (decimal?)aPInvoice.AmountInLocalCurrency : 0;

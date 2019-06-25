@@ -257,6 +257,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     IPaymentChequeUpdateServiceExt paymentChequeUpdate = ContainerAccessor.Container.Resolve(typeof(IPaymentChequeUpdateServiceExt), "PaymentChequeUpdateServiceExt", new ParameterOverride("", 1)) as IPaymentChequeUpdateServiceExt;
                     item.PaymentChequeStatusCode = "4";
+                    item.IsCancelled = true;
                     item.ChangeSetOp = ChangeSetOperation.Update;
                     paymentChequeUpdate.Update(item);
                 }

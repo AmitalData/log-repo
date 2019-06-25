@@ -19,7 +19,7 @@ namespace WebFreight.Web.Helpers
             string result = string.Empty;
 
             if (operationCode == "Between") result = ResolveBetweenDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
-            if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
+           else if ((operationCode == "Before" || operationCode == "After")) result = ResolveBeforeAfterDateValue(fieldName, operationCode, fieldValue, tenant, isSample);
             else
             {
                 if (ValidateFieldValue(operationCode, fieldValue))
@@ -52,21 +52,23 @@ namespace WebFreight.Web.Helpers
 
                 betweenDateValue1 = string.Format("{0:yyyy-MM-dd}", DateTime.Parse(valuesBetweenDateArray[0]));
                 betweenDateValue2 = valuesBetweenDateArray.Length > 1 ? string.Format("{0:yyyy-MM-dd}", DateTime.Parse(valuesBetweenDateArray[1])) : null;
-            
-                if(!string.IsNullOrEmpty(betweenDateValue1) && !string.IsNullOrEmpty(betweenDateValue2))
+
+
+                if (!isSample)
                 {
-                    result = fieldName + ">= '" + betweenDateValue1 + "' and " + fieldName + "<= '" + betweenDateValue2 + "'" ;
+                    if (!string.IsNullOrEmpty(betweenDateValue1) && !string.IsNullOrEmpty(betweenDateValue2))
+                    {
+                        result = fieldName + ">= '" + betweenDateValue1 + "' and " + fieldName + "<= '" + betweenDateValue2 + "'";
+                    }
+                    else
+                    {
+                        string betweenDateValue = !string.IsNullOrEmpty(betweenDateValue1) ? betweenDateValue1 : betweenDateValue2;
+                        result = fieldName + ">= '" + betweenDateValue + "' and " + fieldName + "<'" + string.Format("{0:yyyy-MM-dd}", DateTime.Parse(betweenDateValue).AddDays(1)) + "'";
+                    }
                 }
                 else
                 {
-                    string betweenDateValue = !string.IsNullOrEmpty(betweenDateValue1) ? betweenDateValue1 : betweenDateValue2;
-                    result = fieldName + ">= '" + string.Format("{0:yyyy-MM-dd}", DateTime.Parse(betweenDateValue)) + "' and " + fieldName + "<'" + string.Format("{0:yyyy-MM-dd}", DateTime.Parse(betweenDateValue).AddDays(1)) + "'";
-                }
-
-                if (isSample)
-                {
-                    result = betweenDateValue1 + "   -    " + betweenDateValue2;
-
+                    result = FormatDate(DateTime.Parse(betweenDateValue1), tenant) + " - " + (!string.IsNullOrEmpty(betweenDateValue2) ? FormatDate(DateTime.Parse(betweenDateValue2), tenant) : null);
                 }
 
             }
