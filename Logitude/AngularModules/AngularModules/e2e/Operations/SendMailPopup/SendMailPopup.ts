@@ -23,7 +23,8 @@ export class SendMailPopup {
     }
 
     isSendingFailed(expectedId) {
-        this.helper.waitElementByIDPresence(expectedId);
+       // this.helper.waitElementByIDPresence(expectedId);
+       this.helper.ItemsPresent(expectedId);
         this.helper.WaitByIdAndClick('MessageWindow_Ok_0');
         this.helper.WaitByIdAndClick('Delete');
     }

@@ -62,6 +62,12 @@ export class FieldsHelper {
             EC.invisibilityOf(element(by.css(".LogitudeWindow"))), 100000)
             .then(a => { });
     }
+    waitByCss(className: string) {
+      var EC = protractor.ExpectedConditions;
+      browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000000).then(a => {
+        return true;
+      });
+    }
 
     //WaitWindowClosedRabaia() {
     //    var EC = protractor.ExpectedConditions;
