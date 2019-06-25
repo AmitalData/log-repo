@@ -24,6 +24,7 @@ namespace CommunicationWorkerRole.Tasks
         private StringBuilder Infos { get; set; }
         private StringBuilder Warnings { get; set; }
         private StringBuilder Exceptions { get; set; }
+        public string MessageId { get; set; }
         string TaskId;
         string TaskHistoryId;
         int Tenant;
@@ -58,7 +59,7 @@ namespace CommunicationWorkerRole.Tasks
                     
 
                     Task.Status = null;
-                    queueservice.Complete();
+                    //queueservice.Complete();
                     TaskSchedulerHistoryPM LastExecutionHistory = SubmitLogsData();
                     Task.LastRunEndTime = LastExecutionHistory.EndDateTime;
                     Task.LastRunEndTimeUTC = LastExecutionHistory.EndDateTimeUTC;
@@ -75,14 +76,14 @@ namespace CommunicationWorkerRole.Tasks
                 {
                     if (RetryNumber <= 1)
                     {
-                        queueservice.Delay(new TimeSpan(0, 0, 0, 30));
+                        queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 30), MessageId);
                         //Task.Retries++;
                         //ReScheduleFaildTask(Task,5);
                     }
 
                     if (RetryNumber > 1 && RetryNumber <= 2)
                     {
-                        queueservice.Delay(new TimeSpan(0, 0, 1,0));
+                        queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 1,0), MessageId);
                         //Task.Retries++;
                         //ReScheduleFaildTask(Task, 10);
                     }
@@ -324,7 +325,7 @@ namespace CommunicationWorkerRole.Tasks
             TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
             service.Update(task);
 
-            queueservice.Complete();
+            //queueservice.Complete();
         }
 
         private void ReScheduleFaildTask(TasksSchedulerPM task,int DelaySeconds)
