@@ -210,6 +210,13 @@ export class DWDateComponent extends BaseComponent {
 
 
         }
+        else if (this.Operation == "Between") {
+            if (this.BetweenDateValue1) {
+                var myFormats = DateTool.GetDateFormats(this.BetweenDateValue1);
+                if (myFormats) {
+                    selectedValue = this.GetDateFormats(myFormats);
+                }
+            }
 
 
         if (this.DataContext.TextValue != selectedValue) {
