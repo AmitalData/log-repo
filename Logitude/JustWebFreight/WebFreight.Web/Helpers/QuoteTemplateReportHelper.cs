@@ -51,6 +51,9 @@ namespace Logitude.BL.Helpers
         string cc = "";
         public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null)
         {
+
+
+            QuoteTemplateBuildArges quoteTemplateBuildArges = new QuoteTemplateBuildArges();
             IQuotesContext context = QuotesContext.GetContext(tenant);
             QuoteQuery quoteQuery = new QuoteQuery(new QuoteRepository(context));
             QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(new QuoteTemplateRepository(context));
@@ -150,16 +153,41 @@ namespace Logitude.BL.Helpers
             QuoteTemplateSectionPM headerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PH").FirstOrDefault();
 
 
-            byte[] headerdata = GetQuoteTemplatePageHeaderFooter(template, setting, quoteTemplateTextDesignsList, tenant, true, "Header");
+
+
+
+            quoteTemplateBuildArges.Tenant = tenant;
+            quoteTemplateBuildArges.IsResultPDF = true;
+            quoteTemplateBuildArges.QuotePM = quotePM;
+            quoteTemplateBuildArges.QuoteTemplateSettingPM = setting;
+            quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists = quoteTemplateTextDesignsList;
+            quoteTemplateBuildArges.QuoteTemplateTableDesignsLists = quoteTemplateTableDesignsList;
+            quoteTemplateBuildArges.QuoteTemplateTextCodePMLists = textcodes;
+            quoteTemplateBuildArges.UserTenant = userTenant != null ? (int)userTenant : tenant;
+            quoteTemplateBuildArges.UserId = userId;
+            quoteTemplateBuildArges.QuoteTemplateSectionPMLists = templateSections;
+            quoteTemplateBuildArges.QuoteTemplatePM = template;
+
+            SetSectionTypeCode(quoteTemplateBuildArges, "PH");
+            byte[] headerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
             headerHtmlString += GetBodyString(headerdata);
 
 
-            byte[] bodyData = GetQuoteTemplateHtmlReport(quotePM, template, setting, templateSections, quoteTemplateTextDesignsList, quoteTemplateTableDesignsList, textcodes, tenant, userId, false, RequestArea, userTenant);
+
+            if(setting.PageHeaderArea1Type =="Quote Header" || setting.PageHeaderArea2Type == "Quote Header" || setting.PageHeaderArea3Type == "Quote Header")
+            {
+                quoteTemplateBuildArges.HideQuoteHeaderFromPdf = true;
+            }
+
+
+            SetSectionTypeCode(quoteTemplateBuildArges,null);
+            byte[] bodyData = GetQuoteTemplateHtmlReport(quoteTemplateBuildArges, false, RequestArea);
             bodyHtmlString = GetBodyString(bodyData);
 
             QuoteTemplateSectionPM footerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PF").FirstOrDefault();
 
-            byte[] footerdata = GetQuoteTemplatePageHeaderFooter(template, setting, quoteTemplateTextDesignsList, tenant, true, "Footer");
+            SetSectionTypeCode(quoteTemplateBuildArges, "PF");
+            byte[] footerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
             footerHtmlString += GetBodyString(footerdata);
 
             HtmlToPdfConverter pdfConverter = new HtmlToPdfConverter();
@@ -247,12 +275,17 @@ namespace Logitude.BL.Helpers
 
             bodyHtmlString = htmlDocument.DocumentNode.InnerHtml;
 
-            bodyHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, bodyHtmlString, quotePM, template, userId , ref objectTabelRepository, ref objectTable);
+            bodyHtmlString = ResolveHtmlData(tenant, htmlEditorHelper, bodyHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
             pdfConverter.TriggeringMode = TriggeringMode.Auto;
             //data = pdfConverter.GetPdfBytesFromHtmlString(bodyHtmlString);
             data = pdfConverter.ConvertHtml(bodyHtmlString, null);
 
             return data;
+        }
+
+        private static void SetSectionTypeCode(QuoteTemplateBuildArges quoteTemplateBuildArges ,string sectionTypeCode )
+        {
+            quoteTemplateBuildArges.SectionTypeCode = sectionTypeCode;
         }
 
         private string ResolveHtmlData(int tenant, HtmlEditorHelper htmlEditorHelper, string htmlString, QuotePM quotePM, QuoteTemplatePM template, string userId, ref ObjectTableRepository objectTabelRepository, ref ObjectTable objectTable)
@@ -275,8 +308,16 @@ namespace Logitude.BL.Helpers
 
         #region Quote Template Page Header And Footer
 
-        public byte[] GetQuoteTemplatePageHeaderFooter(QuoteTemplatePM template, QuoteTemplateSettingPM setting, List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList, int tenant, bool isPdf, string sessiontype, bool isHtml = false)
+        public byte[] GetQuoteTemplatePageHeaderFooter(QuoteTemplateBuildArges quoteTemplateBuildArges )
         {
+           
+            QuoteTemplatePM template = quoteTemplateBuildArges.QuoteTemplatePM;
+            QuoteTemplateSettingPM setting = quoteTemplateBuildArges.QuoteTemplateSettingPM;
+            List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList = quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists;
+            int tenant = quoteTemplateBuildArges.Tenant;
+            bool isPdf = quoteTemplateBuildArges.IsResultPDF;
+            string sessiontype = quoteTemplateBuildArges.SectionTypeCode == "PH" ? "Header" : "Footer";
+
             string type = sessiontype;
             int NumberOfTd = 0;
             int CountArea = 0;
@@ -290,7 +331,7 @@ namespace Logitude.BL.Helpers
 
             int Centimeter = type == "Header" ? setting.PageHeaderAreaHeight : setting.PageFooterAreaHeight;
 
-            var per = isPdf ? 2.4 : !isHtml ? 1.25 : 1;
+            var per = isPdf ? 2.4  : 1;
             heightAreaNumber = CmToPx(Centimeter) * per;
             if (Centimeter == 1 || Centimeter == 2) heightAreaNumber -= 5;
 
@@ -347,38 +388,52 @@ namespace Logitude.BL.Helpers
             string area3FreeText = type == "Header" ? setting.PageHeaderArea3FreeText : setting.PageFooterArea3FreeText;
             string area3FreeTextDesignId = type == "Header" ? setting.PageHeaderArea3FreeTextDesignId : setting.PageFooterArea3FreeTextDesignId;
             string borderTypeCode = type == "Header" ? setting.PageHeaderBorderTypeCode : setting.PageFooterBorderTypeCode;
+
             #endregion
+
 
             if (pageArea1Type == "Logo" && area1Width > 0)
             {
-                AppendHeaderFooterAreaImage(borderTypeCode, area1Width, area1Height, image1Width, area1ImageAlignment, area1ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, (int)heightAreaNumber, isHtml);
+                AppendHeaderFooterAreaImage(borderTypeCode, area1Width, area1Height, image1Width, area1ImageAlignment, area1ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, (int)heightAreaNumber);
             }
             else if (pageArea1Type == "Text" && area1Width > 0)
             {
-                AppendHeaderFooterAreaText(borderTypeCode, area1Width, area1FreeText, area1FreeTextDesignId, quoteTemplateTextDesignsList, ref NumberOfTd, ref CountArea, widthArea1, HeightArea, HtmlTemplate, TableDesign, isPdf, isHtml);
-
+                AppendHeaderFooterAreaText(borderTypeCode, area1Width, area1FreeText, area1FreeTextDesignId, quoteTemplateTextDesignsList, ref NumberOfTd, ref CountArea, widthArea1, HeightArea, HtmlTemplate, TableDesign, isPdf);
             }
+            else if (pageArea1Type == "Quote Header" && type =="Header" && area1Width > 0)
+            {
+                AppendHeaderFooterAreaQuoteHeaderText(borderTypeCode, area1Width,  ref NumberOfTd, ref CountArea, widthArea1, HeightArea, HtmlTemplate, TableDesign, isPdf, quoteTemplateBuildArges);
+            }
+
+
 
             if (pageArea2Type == "Logo" && area2Width > 0)
             {
-                AppendHeaderFooterAreaImage(borderTypeCode, area2Width, area2Height, image2Width, area2ImageAlignment, area2ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, (int)heightAreaNumber, isHtml);
+                AppendHeaderFooterAreaImage(borderTypeCode, area2Width, area2Height, image2Width, area2ImageAlignment, area2ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, (int)heightAreaNumber);
             }
             else if (pageArea2Type == "Text" && area2Width > 0)
             {
-                AppendHeaderFooterAreaText(borderTypeCode, area2Width, area2FreeText, area2FreeTextDesignId, quoteTemplateTextDesignsList, ref NumberOfTd, ref CountArea, widthArea2, HeightArea, HtmlTemplate, TableDesign, isPdf, isHtml);
-
+                AppendHeaderFooterAreaText(borderTypeCode, area2Width, area2FreeText, area2FreeTextDesignId, quoteTemplateTextDesignsList, ref NumberOfTd, ref CountArea, widthArea2, HeightArea, HtmlTemplate, TableDesign, isPdf);
+            }
+            else if (pageArea2Type == "Quote Header" && type == "Header" && area2Width > 0)
+            {
+                AppendHeaderFooterAreaQuoteHeaderText(borderTypeCode, area2Width, ref NumberOfTd, ref CountArea, widthArea2, HeightArea, HtmlTemplate, TableDesign, isPdf, quoteTemplateBuildArges);
             }
 
             if (pageArea3Type == "Logo" && area3Width > 0)
             {
-                AppendHeaderFooterAreaImage(borderTypeCode, area3Width, area3Height, image3Width, area3ImageAlignment, area3ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, (int)heightAreaNumber, isHtml);
+                AppendHeaderFooterAreaImage(borderTypeCode, area3Width, area3Height, image3Width, area3ImageAlignment, area3ImageDetailId, tenant, ref NumberOfTd, ref CountArea, HeightArea, HtmlTemplate, TableDesign, isPdf, (int)heightAreaNumber);
             }
+
             else if (pageArea3Type == "Text" && area3Width > 0)
             {
-                AppendHeaderFooterAreaText(borderTypeCode, area3Width, area3FreeText, area3FreeTextDesignId, quoteTemplateTextDesignsList, ref NumberOfTd, ref CountArea, widthArea3, HeightArea, HtmlTemplate, TableDesign, isPdf, isHtml);
-
+                AppendHeaderFooterAreaText(borderTypeCode, area3Width, area3FreeText, area3FreeTextDesignId, quoteTemplateTextDesignsList, ref NumberOfTd, ref CountArea, widthArea3, HeightArea, HtmlTemplate, TableDesign, isPdf);
             }
 
+            else if (pageArea3Type == "Quote Header" && type == "Header" && area3Width > 0)
+            {
+                AppendHeaderFooterAreaQuoteHeaderText(borderTypeCode, area3Width, ref NumberOfTd, ref CountArea, widthArea3, HeightArea, HtmlTemplate, TableDesign, isPdf, quoteTemplateBuildArges);
+            }
 
             HtmlTemplate.Append("</tr>");
             HtmlTemplate.Append("</table>");
@@ -389,7 +444,35 @@ namespace Logitude.BL.Helpers
             return Encoding.UTF8.GetBytes(HtmlTemplate.ToString());
         }
 
-        private void AppendHeaderFooterAreaText(string borderTypeCode, double? areaWidth, string freeText, string freeTextDesignId, List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList, ref int NumberOfTd, ref int CountArea, string widthArea, string HeightArea, StringBuilder HtmlTemplate, QuoteTemplateTableDesignPM TableDesign, bool isPdf, bool isHtml = false)
+        private void AppendHeaderFooterAreaQuoteHeaderText(string borderTypeCode, double? areaWidth, ref int NumberOfTd, ref int CountArea, string widthArea, string HeightArea, StringBuilder HtmlTemplate, QuoteTemplateTableDesignPM TableDesign, bool isPdf, QuoteTemplateBuildArges quoteTemplateBuildArges)
+        {
+            if (quoteTemplateBuildArges != null)
+            {
+                string styleTd = GetStyleRowTablePageHeaderFooter(borderTypeCode, HeightArea, areaWidth, "Left", ++NumberOfTd, TableDesign, "#ffffff");
+                styleTd += "^";
+                styleTd = styleTd.Replace("'^", "");
+                string padding = isPdf ? "10px" : "5px";
+                styleTd += ";padding:" + padding + "'";
+
+
+                int tenant = quoteTemplateBuildArges.Tenant;
+ 
+                var quoteHeaderHtmlByte = GetQuoteTemplateHeader(quoteTemplateBuildArges);
+
+                string quoteHeaderHtml = "<td " + styleTd + ">" +  Encoding.UTF8.GetString(quoteHeaderHtmlByte)+ "</td>";
+
+                if (isPdf)
+                {
+                    HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+                    quoteHeaderHtml = htmlEditorHelper.ConvertNormalHtmlToEvoHtml(quoteHeaderHtml);
+                }
+
+                HtmlTemplate.Append(quoteHeaderHtml);
+      
+            }
+        }
+
+        private void AppendHeaderFooterAreaText(string borderTypeCode, double? areaWidth, string freeText, string freeTextDesignId, List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList, ref int NumberOfTd, ref int CountArea, string widthArea, string HeightArea, StringBuilder HtmlTemplate, QuoteTemplateTableDesignPM TableDesign, bool isPdf)
         {
             if (string.IsNullOrEmpty(freeText)) freeText = "";
 
@@ -404,7 +487,7 @@ namespace Logitude.BL.Helpers
 
 
 
-            var per = isPdf ? 2.5 : !isHtml ? 1.25 : 1;
+            var per = isPdf ? 2.5 : 1;
 
             string StyleSpan = GetSpanRowStyle(freeTextDesign, "", widthArea, per);
             if (freeTextDesign.Italic)
@@ -418,11 +501,11 @@ namespace Logitude.BL.Helpers
             ++CountArea;
         }
 
-        private void AppendHeaderFooterAreaImage(string borderTypeCode, double? areaWidth, int areaHeight, int imageWidth, string areaImageAlignment, string imageDetailId, int tenant, ref int NumberOfTd, ref int CountArea, string HeightArea, StringBuilder HtmlTemplate, QuoteTemplateTableDesignPM TableDesign, bool isPdf, int heightAreaNumber, bool isHtml = false)
+        private void AppendHeaderFooterAreaImage(string borderTypeCode, double? areaWidth, int areaHeight, int imageWidth, string areaImageAlignment, string imageDetailId, int tenant, ref int NumberOfTd, ref int CountArea, string HeightArea, StringBuilder HtmlTemplate, QuoteTemplateTableDesignPM TableDesign, bool isPdf, int heightAreaNumber)
         {
             string styleTd = GetStyleRowTablePageHeaderFooter(borderTypeCode, HeightArea, areaWidth, areaImageAlignment, ++NumberOfTd, TableDesign, "#ffffff");
 
-            var per = isPdf ? 2.5 : !isHtml ? 1.25 : 1;
+            var per = isPdf ? 2.5: 1;
             string Height = ((double)areaHeight * per) > heightAreaNumber ? "100%" : ((double)areaHeight * per).ToString() + "px";
             string Width = ((int)imageWidth * per) > 820 ? "100%" : ((double)imageWidth * per).ToString() + "px";
             // heightAreaNumber
@@ -444,10 +527,20 @@ namespace Logitude.BL.Helpers
         #endregion
 
 
-        public byte[] GetQuoteTemplateHtmlReport(QuotePM quotePM, QuoteTemplatePM template, QuoteTemplateSettingPM setting, List<QuoteTemplateSectionPM> templateSections, List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList, List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList, List<QuoteTemplateTextCodePM> textcodes, int tenant, string userId, bool includeHeaderFooter, string requestArea, int? userTenant = null)
+        public byte[] GetQuoteTemplateHtmlReport(QuoteTemplateBuildArges quoteTemplateBuildArges, bool includeHeaderFooter, string requestArea )
         {
+       
 
-            int tenantNumber = userTenant != null ? (int)userTenant : tenant;
+            QuotePM quotePM = quoteTemplateBuildArges.QuotePM;
+            QuoteTemplatePM template = quoteTemplateBuildArges.QuoteTemplatePM;
+            QuoteTemplateSettingPM setting = quoteTemplateBuildArges.QuoteTemplateSettingPM;
+            List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList = quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists;
+            List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList = quoteTemplateBuildArges.QuoteTemplateTableDesignsLists;
+            List<QuoteTemplateTextCodePM> textcodes = quoteTemplateBuildArges.QuoteTemplateTextCodePMLists;
+            List<QuoteTemplateSectionPM> templateSections = quoteTemplateBuildArges.QuoteTemplateSectionPMLists;
+            string userId = quoteTemplateBuildArges.UserId;
+            int tenant = quoteTemplateBuildArges.Tenant;
+
             string htmlString = "";
 
             if (requestArea == "Quote")
@@ -468,7 +561,8 @@ namespace Logitude.BL.Helpers
             {
                 QuoteTemplateSectionPM headerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PH" && !s.IsExcluded).FirstOrDefault();
 
-                byte[] headerdata = GetQuoteTemplatePageHeaderFooter(template, setting, quoteTemplateTextDesignsList, tenant, true, "Header");
+                SetSectionTypeCode(quoteTemplateBuildArges,"PH");
+                byte[] headerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
                 if (headerdata != null)
                 {
                     htmlString += GetBodyString(headerdata);
@@ -479,7 +573,8 @@ namespace Logitude.BL.Helpers
             {
                 if (section.QuoteTemplateSectionTypeCode == "PP" || section.QuoteTemplateSectionTypeCode == "PC")
                 {
-                    byte[] pricingdata = GetQuoteTemplatePricingHtmlData(section.QuoteTemplateSectionTypeCode, quotePM, template, setting, quoteTemplateTextDesignsList, quoteTemplateTableDesignsList, tenant, tenantNumber);
+                    SetSectionTypeCode(quoteTemplateBuildArges, section.QuoteTemplateSectionTypeCode);
+                    byte[] pricingdata = GetQuoteTemplatePricingHtmlData(quoteTemplateBuildArges);
 
                     if (pricingdata != null)
                     {
@@ -488,20 +583,24 @@ namespace Logitude.BL.Helpers
                 }
                 else if (section.QuoteTemplateSectionTypeCode == "QD" || section.QuoteTemplateSectionTypeCode == "QH")
                 {
+                    SetSectionTypeCode(quoteTemplateBuildArges, section.QuoteTemplateSectionTypeCode);
+
                     if (section.QuoteTemplateSectionTypeCode == "QH")
                     {
-                        byte[] quoteHeaderdata = GetQuoteTemplateHeader(template, quotePM, setting, quoteTemplateTextDesignsList, quoteTemplateTableDesignsList, textcodes, tenant);
-
-                        if (quoteHeaderdata != null)
+                        if (!quoteTemplateBuildArges.HideQuoteHeaderFromPdf)
                         {
+                            byte[] quoteHeaderdata = GetQuoteTemplateHeader(quoteTemplateBuildArges);
+                            if (quoteHeaderdata != null)
+                            {
 
-                            htmlString += Environment.NewLine + GetBodyString(quoteHeaderdata);
+                                htmlString += Environment.NewLine + GetBodyString(quoteHeaderdata);
+                            }
                         }
 
                     }
                     else
                     {
-                        byte[] quoteDetailrdata = GetQuoteTemplateDetails(template, quotePM, setting, quoteTemplateTextDesignsList, quoteTemplateTableDesignsList, textcodes, tenant);
+                        byte[] quoteDetailrdata = GetQuoteTemplateDetails(quoteTemplateBuildArges);
                         if (quoteDetailrdata != null)
                         {
                             htmlString += Environment.NewLine + GetBodyString(quoteDetailrdata);
@@ -533,18 +632,39 @@ namespace Logitude.BL.Helpers
 
             if (includeHeaderFooter)
             {
+                SetSectionTypeCode(quoteTemplateBuildArges, "PF");
                 QuoteTemplateSectionPM footerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PF" && !s.IsExcluded).FirstOrDefault();
 
-                byte[] footerdata = GetQuoteTemplatePageHeaderFooter(template, setting, quoteTemplateTextDesignsList, tenant, true, "Footer");
+                byte[] footerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
                 htmlString += Environment.NewLine + GetBodyString(footerdata);
             }
 
             return Encoding.UTF8.GetBytes(htmlString);
         }
 
-        public byte[] GetQuoteTemplatePricingHtmlData(string pricingSectionType, QuotePM quotePM, QuoteTemplatePM template, QuoteTemplateSettingPM setting, List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList, List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList, int tenant, int? userTenant = null)
+        public byte[] GetQuoteTemplatePricingHtmlData(QuoteTemplateBuildArges quoteTemplateBuildArges )
         {
-            QuoteTemplateTableDesignPM quotetemplatetableDesignPM = null;
+
+
+            QuotePM quotePM = quoteTemplateBuildArges.QuotePM;
+            QuoteTemplatePM template = quoteTemplateBuildArges.QuoteTemplatePM;
+            QuoteTemplateSettingPM setting = quoteTemplateBuildArges.QuoteTemplateSettingPM;
+            List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList = quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists;
+            List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList = quoteTemplateBuildArges.QuoteTemplateTableDesignsLists;
+            List<QuoteTemplateTextCodePM> textcodes = quoteTemplateBuildArges.QuoteTemplateTextCodePMLists;
+            int tenant = quoteTemplateBuildArges.Tenant;
+            int? userTenant = quoteTemplateBuildArges.UserTenant;
+            string pricingSectionType = quoteTemplateBuildArges.SectionTypeCode;
+
+            if(textcodes==null || textcodes.Count == 0)
+            {
+                QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
+                textcodes = quoteTemplateTextCodeQuery.GetQuoteTemplateTextCodePMsByQuoteTemplateId(template.Tenant, template.Id).ToList();
+            }
+
+
+            
+           QuoteTemplateTableDesignPM quotetemplatetableDesignPM = null;
             QuoteTemplateTextDesignPM quotetemplateTextDesignPMPricingTitle = null;
             QuoteTemplateTextDesignPM quotetemplateTextDesignPMHeader = null;
             QuoteTemplateTextDesignPM quoteTemplateTextDesignLines = null;
@@ -598,8 +718,7 @@ namespace Logitude.BL.Helpers
 
             GetCountHeader(setting, quotePM, pricingSectionType);
 
-            QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
-            List<QuoteTemplateTextCodePM> textcodes = quoteTemplateTextCodeQuery.GetQuoteTemplateTextCodePMsByQuoteTemplateId(template.Tenant, template.Id).ToList();
+    
             ChargesGroupRepository chargesGroupRepository = new ChargesGroupRepository(tenant);
             List<ChargesGroup> groups = chargesGroupRepository.GetChargesGroups(tenant).ToList();
 
@@ -1063,8 +1182,21 @@ namespace Logitude.BL.Helpers
 
         #region QuoteH eader and Details Table
 
-        public byte[] GetQuoteTemplateHeader(QuoteTemplatePM template, QuotePM quotePM, QuoteTemplateSettingPM setting, List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList, List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList, List<QuoteTemplateTextCodePM> textcodes, int tenant)
+        public byte[] GetQuoteTemplateHeader(QuoteTemplateBuildArges quoteTemplateBuildArges)
         {
+
+
+            QuotePM quotePM = quoteTemplateBuildArges.QuotePM;
+            QuoteTemplatePM template = quoteTemplateBuildArges.QuoteTemplatePM;
+            QuoteTemplateSettingPM setting = quoteTemplateBuildArges.QuoteTemplateSettingPM;
+            List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList = quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists;
+            List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList = quoteTemplateBuildArges.QuoteTemplateTableDesignsLists;
+            List<QuoteTemplateTextCodePM> textcodes = quoteTemplateBuildArges.QuoteTemplateTextCodePMLists;
+            int tenant = quoteTemplateBuildArges.Tenant;
+
+            string sessiontype = quoteTemplateBuildArges.SectionTypeCode == "PH" ? "Header" : "Footer";
+
+
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Quote", tenant).ToList();
 
             if (quotePM == null)
@@ -1357,14 +1489,18 @@ namespace Logitude.BL.Helpers
                 HtmlTemplate.Append("<td " + styleTd + ">" + "<Div " + styleLable + ">" + text + "</Div>" + "</td>");
             }
         }
-        public byte[] GetQuoteTemplateDetails(QuoteTemplatePM template, QuotePM quotePM, QuoteTemplateSettingPM setting, List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList, List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList, List<QuoteTemplateTextCodePM> textcodes, int tenant)
+        public byte[] GetQuoteTemplateDetails(QuoteTemplateBuildArges quoteTemplateBuildArges )
         {
-            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Quote", tenant).ToList();
 
-            if (quotePM == null)
-            {
-                quotePM = BuildingQuotePM();
-            }
+            QuotePM quotePM = quoteTemplateBuildArges.QuotePM;
+            QuoteTemplatePM template = quoteTemplateBuildArges.QuoteTemplatePM;
+            QuoteTemplateSettingPM setting = quoteTemplateBuildArges.QuoteTemplateSettingPM;
+            List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList = quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists;
+            List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList = quoteTemplateBuildArges.QuoteTemplateTableDesignsLists;
+            List<QuoteTemplateTextCodePM> textcodes = quoteTemplateBuildArges.QuoteTemplateTextCodePMLists;
+            int tenant = quoteTemplateBuildArges.Tenant;
+            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Quote", tenant).ToList();
+            if (quotePM == null) quotePM = BuildingQuotePM();
 
             Tenant = quotePM.Tenant;
             string FieldValue = "";
@@ -3285,5 +3421,27 @@ namespace Logitude.BL.Helpers
         public double? SaleExchangeRate { get; set; }
 
     }
+
+    public class QuoteTemplateBuildArges
+    {
+        public List<QuoteTemplateTableDesignPM> QuoteTemplateTableDesignsLists { get; set; }
+        public List<QuoteTemplateTextCodePM> QuoteTemplateTextCodePMLists { get; set; }
+        public QuotePM QuotePM { get; set; }
+        public QuoteTemplatePM QuoteTemplatePM { get; set; }
+        public QuoteTemplateSettingPM QuoteTemplateSettingPM { get; set; }
+        public List<QuoteTemplateTextDesignPM> QuoteTemplateTextDesignPMLists { get; set; }
+        public string SectionTypeCode { get; set; }
+        public bool IsResultPDF { get; set; }
+        public int Tenant { get; set; }
+        public int? UserTenant { get; set; }
+        public string UserId { get; set; }
+        public List<QuoteTemplateSectionPM> QuoteTemplateSectionPMLists { get; set; }
+
+        public bool HideQuoteHeaderFromPdf { get; set; }
+
+
+    }
+
+
 }
 

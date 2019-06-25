@@ -574,6 +574,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 //this.SaveChanges();
                 this.ClearData();
             }
+
+            this.ClearData();
         }
     }
 
