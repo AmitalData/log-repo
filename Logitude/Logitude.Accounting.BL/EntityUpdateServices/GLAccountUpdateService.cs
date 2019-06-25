@@ -636,6 +636,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
+                const string RaiseEventAWBKConst = "RaiseEventAWBK";
+                const string RaiseEventAWDAConst = "RaiseEventAWDA";
+
                 ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
                 string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
                 Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
@@ -646,7 +649,36 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         if (line.Changed)
                         {
-                            if (line.Inactive)
+                            var currentContextTag = line.CurrentContextTag ?? "";
+                            if (currentContextTag.ToString() == RaiseEventAWBKConst)
+                            {
+                                String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingBlocked", entityPM.Tenant).Replace(":", line.LineNumber + ":");
+                                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                {
+                                    EntityId = entityPM.Id,
+                                    Tenant = entityPM.Tenant,
+                                    UserId = contact.Id,
+                                    ObjectTableName = "GLAccount",
+                                    IsAddedManually = false,
+                                    EventTypeCode = "AWBK",
+                                    Notes = notes,
+                                });
+                            }
+                            else if (currentContextTag.ToString() == RaiseEventAWDAConst)
+                            {
+                                String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingLineDisabled", entityPM.Tenant).Replace(":", line.LineNumber + ":");
+                                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                {
+                                    EntityId = entityPM.Id,
+                                    Tenant = entityPM.Tenant,
+                                    UserId = contact.Id,
+                                    ObjectTableName = "GLAccount",
+                                    IsAddedManually = false,
+                                    EventTypeCode = "AWDA",
+                                    Notes = notes,
+                                });
+                            }
+                            else if (line.Inactive)
                             {
                                 string s = TranslateTextsClass.Translate("Accounting.O.LineDeactivated", entityPM.Tenant, true);
                                 string[] text = s.Split('-');
