@@ -219,62 +219,62 @@ export class DWDateComponent extends BaseComponent {
             }
 
 
-        if (this.DataContext.TextValue != selectedValue) {
-            this.ValueChanged.emit(selectedValue);
-        }
-
-    }
-
-    InitializeComponent() {
-
-        if (this.SelectedValue) {
-            if (this.Operation == "Before" || this.Operation == "After") {
-                this.DateValue = this.ConvertDateToString(this.SelectedValue);
+            if (this.DataContext.TextValue != selectedValue) {
+                this.ValueChanged.emit(selectedValue);
             }
-
-            else if (this.Operation == "Previous" || this.Operation == "Next") {
-
-                var values: string[] = this.SelectedValue.toString().split('^');
-                if (values.length > 1) this.IntervalValue = Number(values[1]);
-                if (values.length > 2) this.SelectedRange = values[2];
-            }
-
-            else if (this.Operation == "Current") {
-                var values: string[] = this.SelectedValue.toString().split('^');
-                if (values.length > 1) this.SelectedRange = values[1];
-            }
-
-            else if (this.Operation == "Between") {
-                var dateBetweenValues = this.SelectedValue.toString().split('^');
-                if (dateBetweenValues[0]) this.BetweenDateValue1 = this.ConvertDateToString(dateBetweenValues[0]);
-                if (dateBetweenValues[1]) this.BetweenDateValue2 = this.ConvertDateToString(dateBetweenValues[1]);
-            }
-        }
-        this.IsLoad = true;
-    }
-
-    ConvertDateToString(value: any) {
-        var date = new Date(value);
-        var year = date.getUTCFullYear();
-        var month = date.getUTCMonth() + 1;
-        var day = date.getUTCDate() + 1;
-        var dateString = month + "/" + day + "/" + year;
-        return new Date(dateString);
-    }
-    GetDateFormats(myFormats: any) {
-        var result = "";
-        if (myFormats) {
-
-            var myDateParts = myFormats.DateParts;
-            var stringOfYear = AppTool.PadLeft("" + myDateParts.Year, 4, '0');
-            var stringOfMonth = AppTool.PadLeft("" + myDateParts.Month, 2, '0');
-            var stringOfDay = AppTool.PadLeft("" + myDateParts.Day, 2, '0');
-            result = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay;
 
         }
-        return result;
     }
 
+        InitializeComponent() {
+
+            if (this.SelectedValue) {
+                if (this.Operation == "Before" || this.Operation == "After") {
+                    this.DateValue = this.ConvertDateToString(this.SelectedValue);
+                }
+
+                else if (this.Operation == "Previous" || this.Operation == "Next") {
+
+                    var values: string[] = this.SelectedValue.toString().split('^');
+                    if (values.length > 1) this.IntervalValue = Number(values[1]);
+                    if (values.length > 2) this.SelectedRange = values[2];
+                }
+
+                else if (this.Operation == "Current") {
+                    var values: string[] = this.SelectedValue.toString().split('^');
+                    if (values.length > 1) this.SelectedRange = values[1];
+                }
+
+                else if (this.Operation == "Between") {
+                    var dateBetweenValues = this.SelectedValue.toString().split('^');
+                    if (dateBetweenValues[0]) this.BetweenDateValue1 = this.ConvertDateToString(dateBetweenValues[0]);
+                    if (dateBetweenValues[1]) this.BetweenDateValue2 = this.ConvertDateToString(dateBetweenValues[1]);
+                }
+            }
+            this.IsLoad = true;
+        }
+
+        ConvertDateToString(value: any) {
+            var date = new Date(value);
+            var year = date.getUTCFullYear();
+            var month = date.getUTCMonth() + 1;
+            var day = date.getUTCDate() + 1;
+            var dateString = month + "/" + day + "/" + year;
+            return new Date(dateString);
+        }
+        GetDateFormats(myFormats: any) {
+            var result = "";
+            if (myFormats) {
+
+                var myDateParts = myFormats.DateParts;
+                var stringOfYear = AppTool.PadLeft("" + myDateParts.Year, 4, '0');
+                var stringOfMonth = AppTool.PadLeft("" + myDateParts.Month, 2, '0');
+                var stringOfDay = AppTool.PadLeft("" + myDateParts.Day, 2, '0');
+                result = stringOfYear + "-" + stringOfMonth + "-" + stringOfDay;
+
+            }
+            return result;
+        }
 
 
 
@@ -284,5 +284,6 @@ export class DWDateComponent extends BaseComponent {
 
 
 
-}
+
+    } 
 
