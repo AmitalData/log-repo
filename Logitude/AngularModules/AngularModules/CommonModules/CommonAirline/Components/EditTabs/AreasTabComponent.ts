@@ -30,6 +30,7 @@ export class AreasTabComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "Airline";
     public TenantPM: TenantPM;
     public ItemsSource = [];
+    public ResourcesReady: boolean = false;
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     public ShowActiveTarrifsString: string = "";
     public ShowAllTarrifsString: string = "";
@@ -44,41 +45,17 @@ export class AreasTabComponent extends BaseComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         super();
-        this._entityResourceService.getEntityResourceByTableName("TarrifHeader", 0).subscribe(response => {
+        this._entityResourceService.getEntityResourceByTableName("AirlineArea", 0).subscribe(response => {
+            this.ResourcesReady = true;
             this.EntityPM = entityArgs.EntityPM;
+            //this.EntityPM.AirlineAreas.forEach(p => p.)
             this.TenantPM = SessionLocator.TenantPM;
-            this.setLabels();
-            this.ObsList = [];
             this.FillData();
-
-            if (this.CurrentSession == null) {
-                this.ActiveTariff = "Active_-1_-1";
-                this.AllTariff = "All_-1_-1";
-            }
-
-            else {
-                var idIndex = this.CurrentSession.GetNewId("RadioButton");
-
-                this.ActiveTariff = "Active_" + idIndex;
-                this.AllTariff = "All_" + idIndex;
-
-            }
+         
         });
 
     }
-   private setLabels() {
-       this.ShowActiveTarrifsString = TextCodeTranslator.Translate('TarrifHeader.O.ShowActiveTarrifs'); 
-       this.ShowAllTarrifsString = TextCodeTranslator.Translate('TarrifHeader.O.ShowAllTarrifs'); 
-       this.AddSurchargeTarrif = TextCodeTranslator.Translate('TarrifHeader.O.AddSurchargeTarrif');
-       this.TarrifHeaderDate = TextCodeTranslator.Translate('TarrifHeader.O.Date');
-       this.TarrifHeaderCreateDate = TextCodeTranslator.Translate('TarrifHeader.O.CreateDate');
-       this.TarrifHeaderFromLocation = TextCodeTranslator.Translate('TarrifHeader.O.FromLocation');
-       this.TarrifHeaderToLocation = TextCodeTranslator.Translate('TarrifHeader.O.ToLocation');
-       this.TarrifHeaderNotes = TextCodeTranslator.Translate('TarrifHeader.O.Notes');
-       var test = TextCodeTranslator.Translate('TarrifHeader.F.MeasurementId');
 
-
-    }
 
    OpenEdit(item: TariffHeaderItem) {
        var itemPM = item.EntityPM;    
