@@ -8,7 +8,6 @@
 //------------------------------------------------------------------------------
 
 import {TariffVersionPM} from './TariffVersionPM';
-import {TariffVersionPM} from './TariffVersionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
