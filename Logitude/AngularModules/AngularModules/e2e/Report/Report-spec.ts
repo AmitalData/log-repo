@@ -20,8 +20,10 @@ describe('Report', () => {
   it('Run Report Sucssefuly', function () {
     // generalFun.GoToMainMenu('General.MH.Reports');
     // generalFun.UseSearchBox('null_Search','unpaid');
+
     searchPage.QuickSearch('Automation Test Report');
     reportGenerator.RunReportSuccessfully('RunReportSucceededDiv');
+    
     // reportGenerator.CheckBox();
     // reportGenerator.Partner();
     //reportGenerator.ChooseTemplate();

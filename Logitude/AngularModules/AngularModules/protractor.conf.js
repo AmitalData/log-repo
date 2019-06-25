@@ -1,4 +1,5 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
+const HtmlReporter = require('protractor-beautiful-reporter');
 
 exports.config = {
   allScriptsTimeout: 990000,
@@ -17,7 +18,8 @@ exports.config = {
       Direction: null,
       TransportMode: null,
       ShipmentType: null,
-    },
+      },
+      varVar: null;
   },
   capabilities: {
     'browserName': 'chrome',
@@ -55,12 +57,17 @@ exports.config = {
     else if (browser.params.Env == "logboxtest") {
         browser.params.Link = "https://test.logitudeworld.com/test";
         browser.params.Login.Email = "ahmadb@logbox.com";
-        browser.params.Login.Password = "ahmed!A123";
+        browser.params.Login.Password = "ahmed!A1231";
     }
     else if (browser.params.Env == "logbox") {
       browser.params.Link = "https://system.logbox.co.il";
       browser.params.Login.Email = "ahmadb@test.com";
       browser.params.Login.Password = "ahmed!A123";
+    }
+    else if (browser.params.Env == "logboxStaging") {
+        browser.params.Link = "https://staging.logbox.co.il";
+        browser.params.Login.Email = "ahmadb@test.com";
+        browser.params.Login.Password = "ahmed!A123";
     }
     else if (browser.params.Env == "localhost") {
       browser.params.Link = "http://localhost:4200/";
@@ -73,7 +80,10 @@ exports.config = {
       browser.params.Login.Password = "!RS123Rs";
     }
 
-    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+      jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+      jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'D:/Automation E2E reuslts/screenshots'
+      }).getJasmine2Reporter());
+
   },
 
   suites: {
@@ -84,11 +94,11 @@ exports.config = {
     //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
 
     //NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
-    // NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
-    //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
+    //NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
+    // Contact: 'e2e/Contacts/**/Contacts-spec.ts',
 
     //EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
-    //  ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
+   //  ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
 
     // ********************* FullAccounting **********************************
     //  NewChartOfAccount: 'e2e/FullAccounting/ChartOfAccount/**/ChartOfAccount-spec.ts',
@@ -97,8 +107,9 @@ exports.config = {
      Reports: 'e2e/Report/**/Report-spec.ts',
 
     //*************DocOutTab************** */
-   //DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
+    //DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
 
 
   },
 };
+

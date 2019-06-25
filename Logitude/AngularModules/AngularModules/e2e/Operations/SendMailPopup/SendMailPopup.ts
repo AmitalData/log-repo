@@ -10,32 +10,22 @@ export class SendMailPopup {
     }
 
     sendEmailToFirstUser(emailSubject: string, searchBoxId: string) {
-        this.helper.WaitBusyIndicator();
-        browser.driver.sleep(3000);
         this.helper.WaitByIdAndClick('SendMessageTobtn');
         this.helper.waitByCss('#' + searchBoxId);
-        // We are currently executing javascript code on the element because it is intractable
-
         this.helper.WaitByCssStringAndClick('.DefaultMenuItem', 'All');
         this.helper.WaitByIdAndFill(searchBoxId, 'raghad@logitudeworld.com');
-        browser.driver.sleep(2000);
-        //to check the first box
+        // Check the first box
         browser.executeScript('arguments[0].click();', element(by.id('SendMessageToCheckBox')).getWebElement());
         this.helper.WaitByIdAndClick('SaveSendMessageTobtn');
-        //this is to write exception test in subject field 
-      //  browser.driver.sleep(20000);
-    this.helper.WaitByIdAndFill('EmailSubject', emailSubject);
+        // Write exception test in subject field 
+        this.helper.WaitByIdAndFill('EmailSubject', emailSubject);
         this.helper.WaitByIdAndClick('SendMessagebtn');
-
-
     }
 
     isSendingFailed(expectedId) {
         this.helper.waitElementByIDPresence(expectedId);
         this.helper.WaitByIdAndClick('MessageWindow_Ok_0');
         this.helper.WaitByIdAndClick('Delete');
-
-
     }
 
 
