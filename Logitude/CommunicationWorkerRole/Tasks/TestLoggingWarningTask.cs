@@ -26,7 +26,7 @@ namespace CommunicationWorkerRole.Tasks
             {
                 Thread.CurrentThread.Abort();
             }
-            Thread.Sleep(60000);
+            //Thread.Sleep(60000);
 
 
         }

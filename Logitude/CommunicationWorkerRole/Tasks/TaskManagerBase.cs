@@ -325,7 +325,7 @@ namespace CommunicationWorkerRole.Tasks
             TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
             service.Update(task);
 
-            queueservice.Complete();
+            //queueservice.Complete();
         }
 
         private void ReScheduleFaildTask(TasksSchedulerPM task,int DelaySeconds)

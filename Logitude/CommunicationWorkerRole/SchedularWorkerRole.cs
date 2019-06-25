@@ -43,26 +43,41 @@ namespace CommunicationWorkerRole
 
         private void StartThreadAliveTesterThread()
         {
-            Thread thread = new Thread(CheckandRescheduleDeadThreads);
+            //Thread thread = new Thread(CheckandRescheduleDeadThreads);
+            System.Timers.Timer timer1 = new System.Timers.Timer()
+            {
+                Interval = 300000//5 Mins
+            };
+            timer1.Enabled = true;
+            timer1.Elapsed += Timer1_Elapsed; //+= new System.EventHandler(OnTimerEvent);
+        }
+
+        private void Timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            CheckandRescheduleDeadThreads();
         }
 
         private void CheckandRescheduleDeadThreads()
         {
-            TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(0);
+            var objectContext = WebFreightContext.GetContext(0);
+            TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext); 
             TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
             List<TasksSchedulerPM> InprogressTasks = TasksSchedulerQuery.GetAllInprogressTasksSchedulerPMs();
             foreach (var Task in InprogressTasks)
             {
+                //var x = Process.GetCurrentProcess().Threads;
                 var TaskThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
                 if (TaskThread == null || !TaskThread.IsAlive)
                 {
+                    //TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
                     Task.Status = null;
                     Task.Version = Task.Version + 1;
                     AddSchedulerQueue(Task);
+                    //service.Update(Task);
                 }
 
             }
-            Thread.Sleep(new TimeSpan(0, 1, 0));
+            //Thread.Sleep(new TimeSpan(0, 1, 0));
         }
 
         private void CheckandRescheduleMissingTasks()
@@ -133,11 +148,19 @@ namespace CommunicationWorkerRole
                                             Thread thread = new Thread(WRItem.Run) { Name = Task.Name };
                                             //Task.Status = "In progress";
                                             service.Update(Task);
-                                            TasksThreads.Add(thread);
+                                            var CurThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
+                                            if (CurThread != null)
+                                            {
+                                                TasksThreads.Remove(CurThread);
+                                            } 
                                             thread.Start();
-                                            queueservice.Complete();
+                                            TasksThreads.Add(thread);
+                                            //queueservice.Complete();
                                             //AddSchedulerQueue(Task);// need to be Moved
                                         }
+                                      
+                                            queueservice.Complete();
+                                        
 
                                     }
 
@@ -289,7 +312,7 @@ namespace CommunicationWorkerRole
             TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
             service.Update(task);
 
-            queueservice.Complete();
+           //queueservice.Complete();
         }
         private DateTime Next(DateTime from, DayOfWeek dayOfWeek)
         {
