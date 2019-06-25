@@ -12767,6 +12767,21 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.CountofLegalisedDocuments = Item.AMSBL;
                     shipment.ShipperInvoiceValue = Item.ValueOfGoods;
                     shipment.CurrencyofShipperInvoice = ValueOfgoodsCurrency != null ? ValueOfgoodsCurrency.Code : null;
+                    if (!string.IsNullOrEmpty(Item.FinalDistenationPortId)){
+                        
+                            PortPM port = PortQuery.GetSinglePort(Item.Tenant, Item.FinalDistenationPortId, true);
+                            if (port != null)
+                            {
+                            shipment.FinalPortofDestination = port.Code;
+                            shipment.FinalCountryofDestination = port.CountryName;
+
+                            }
+                    }
+                    if (!string.IsNullOrEmpty(Item.OnCarriageTransportModeId))
+                    {
+                        shipment.OnCarriageTransportMode = Item.OnCarriageTransportModeId == "I" ? "Inland" : Item.OnCarriageTransportModeId == "A" ? "Air" : "Ocean";
+
+                    }
                     if (!string.IsNullOrEmpty(Item.MasterShipmentDataId))
                     {
                         if (!string.IsNullOrEmpty(Item.ShipmentMasterDataStatusId))
