@@ -48,9 +48,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 mess.AppendLine($"מפוצל כבר !!!");
 
+
+                var q =
+    (from p in context.DeclarationPendings
+     where p.Status == "A"
+     select p
+    );
+
+
+                var qDeclarationPaymentPendingHold = (
+                    from p in q
+                    where customResponse.ServerSplitDeclarationsList.Contains(p.DeclarationID)
+                
+                select new MyDTO
+                    {
+                        DeclarationID =p.DeclarationID,
+                        ErrorPlace = q.Any(r => r.DeclarationID == p.DeclarationID &&
+                        p.CourierPendingReason.ErrorPlace == "1")
+                    }
+                         );
+                var listDeclarationPaymentPendingHold = qDeclarationPaymentPendingHold.ToList();
+
                 List<DeclarationCourierStatus> ServerSplitDeclarationsList
                     = repo.GetDeclarationsByIds(customResponse.ServerSplitDeclarationsList, requestParams.Tenant);
-                CreateCRS2755WithoutPending_UpdatePayment2InProgress(customResponse, requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList);
+                CreateCRS2755WithoutPending_UpdatePayment2InProgress(customResponse, requestParams, mess, objectTableId, objectTableIdCourierMaster, ServerSplitDeclarationsList, listDeclarationPaymentPendingHold);
             }
             else
             {
@@ -98,10 +119,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
         }
 
-        private static void CreateCRS2755WithoutPending_UpdatePayment2InProgress(DCAInUCB2755WithResponseContentHeader customResponse, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPoco)
+        private static void CreateCRS2755WithoutPending_UpdatePayment2InProgress(DCAInUCB2755WithResponseContentHeader customResponse, GenericRequestParams requestParams, StringBuilder mess, string objectTableId, string objectTableIdCourierMaster, List<DeclarationCourierStatus> listPoco, List<MyDTO> listDeclarationPaymentPendingHold)
         {
             string UnifreightListOnServerOnly_BankeId = SetBankIdInUnifreightListOnServerOnly(customResponse);
-            List<CourierPendingReason> allCourierPendingReason = GetAllCourierPendingReason(requestParams);
+            
 
             var realUpdatedList = new List<string>();
             foreach (var itemPoco in listPoco)
@@ -114,17 +135,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 //if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonCode))
                 //if (!String.IsNullOrWhiteSpace(itemPM.CourierPendingReasonErrorPlace))
-                if (!String.IsNullOrWhiteSpace(itemPoco.CourierPendingReasonCode))
+
+                var holdUrHorses=listDeclarationPaymentPendingHold.FirstOrDefault(r => r.DeclarationID == itemPoco.DeclarationId);
+                if (holdUrHorses!=null && holdUrHorses.ErrorPlace)
                 {
-                    //if (allCourierPendingReason.First(r => r.Code == itemPM.CourierPendingReasonCode).ErrorPlace == "1")
-                    if (allCourierPendingReason.First(r=> r.Code == itemPoco.CourierPendingReasonCode).ErrorPlace == "1")
-                    
-                    {
-                        mess.AppendLine($" קיים Pending " +
-                            $"עם עצירה בתשלום הצהרה ({itemPoco.DeclarationId})");
-                        continue;
-                    }
+                    mess.AppendLine($" קיים Pending " +
+                        $"עם עצירה בתשלום הצהרה ({itemPoco.DeclarationId})");
+                    continue;
                 }
+                
+                
                 try
                 {
                     var requestParams2755 = new GenericRequestParams()
@@ -192,5 +212,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
 
 
+    }
+    class MyDTO
+    {
+        public string DeclarationID { get; internal set; }
+        public bool ErrorPlace { get; internal set; }
     }
 }
