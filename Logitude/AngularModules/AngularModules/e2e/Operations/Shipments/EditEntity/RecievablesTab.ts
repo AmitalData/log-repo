@@ -32,9 +32,6 @@ export class ReceivablesTabComponent {
             }
 
             // expect(element(by.id('ReceivableAmount')).getAttribute('textContent')).toBe(this.amount1 + this.amount2);
-
-            this.Helper.WaitByIdAndClick('Shipment-Save');
-            this.Helper.WaitBusyIndicator();
             // this.AddARInvoice();
         }
         else if (shipmentType == 'M') {

@@ -106,6 +106,7 @@
     <Content Include="Accounting\Components\Templates\FieldTemplateComponent.html" />
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
+    <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AreasTabComponent.html" />
@@ -409,6 +410,7 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\JournalAdditionalDataPMService.ts" />
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AreasTabComponent.ts" />
@@ -2044,11 +2046,13 @@
     <Content Include="Social\Components\SocialMessagesComponent.html" />
     <Content Include="styles.css" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\SurchargeVersionTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDatesValidationComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\TariffTabsContentComponent.html" />
+    <Content Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.html" />
     <Content Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.html" />
     <Content Include="TariffModule\Components\NewEntity\NewAirFreightCostComponent.html" />
@@ -6413,10 +6417,12 @@
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="Shipment\Services\StandardPMs\FBLStockPMService.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\AddEditTariffLineComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\ChoosePortComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\SurchargeVersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffDetailsTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffGeneralTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\TariffTabsContentComponent.ts" />
+    <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\UpdateSurchargesComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionHistoryTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\EditTabs\Tariff\VersionTabComponent.ts" />
     <TypeScriptCompile Include="TariffModule\Components\MenuButtons\TariffMenuButtonsHandler.ts" />

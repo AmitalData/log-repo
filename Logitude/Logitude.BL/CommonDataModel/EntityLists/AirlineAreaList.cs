@@ -15,6 +15,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CreatedByUserId { get; set; }
         public string UpdatedByUserId { get; set; }
         public string AirlineId { get; set; }
+        public string CreatedByUserName { get; set; }
+        public string UpdatedByUserName { get; set; }
 
     }
 }

@@ -7,13 +7,13 @@ namespace Logitude.DatabaseMigration.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AbedAddIsIsParentTenantToDWHSetting : IMigrationMetadata
+    public sealed partial class ModifyTariffLineExpirationDate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AbedAddIsIsParentTenantToDWHSetting));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ModifyTariffLineExpirationDate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201906240850455_AbedAddIsIsParentTenantToDWHSetting"; }
+            get { return "201906241106069_ModifyTariffLineExpirationDate"; }
         }
         
         string IMigrationMetadata.Source

@@ -123,9 +123,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                    
                         LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
 
-                        byte[] dataProvider = reportHelper.BuildReportDataProvider(reportFliter, filters);
+                        //byte[] dataProvider = reportHelper.BuildReportDataProvider(reportFliter, filters);
+                        byte[] dataProvider = null;
+                        Thread thread = new Thread(() => { DatabaseInitializer.RunOnSeconderyDB = true; dataProvider = reportHelper.BuildReportDataProvider(reportFliter, filters); });
+                        thread.Start();
+                        thread.Join();
 
-                   
                         if (dataProvider == null)
                         {
                             throw new Exception("Data Provider is missing");
