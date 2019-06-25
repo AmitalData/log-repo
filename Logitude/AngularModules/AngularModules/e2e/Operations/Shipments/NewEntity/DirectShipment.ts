@@ -59,7 +59,6 @@ export class DirectShipment {
         this.Helper.WaitByIdAndFill('Shipment_MainCarriageToPortId', 'mvd');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       }
-
     }
     if (TransportMode == 'A') {
       this.Helper.WaitByIdAndFill('Shipment_MainCarriageCarrierId', 'BA');

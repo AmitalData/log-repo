@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.Helpers;
@@ -147,19 +148,19 @@ namespace CommunicationWorkerRole.Tasks
                     TaskSchedulerHistory.LogType = "Exception";
                     TaskSchedulerHistory.IsError = true;
                     TaskSchedulerHistory.RunResult = "Exception";
-                    TaskSchedulerHistory.LogFirstLine = Exceptions.ToString();
+                    TaskSchedulerHistory.LogFirstLine = StringHelper.TruncateLongString(Exceptions.ToString(), 1000);
                 }
                 else if (!string.IsNullOrEmpty(Warnings.ToString()))
                 {
                     TaskSchedulerHistory.LogType = "Warning";
                     TaskSchedulerHistory.RunResult = "Warning";
-                    TaskSchedulerHistory.LogFirstLine = Warnings.ToString();
+                    TaskSchedulerHistory.LogFirstLine = StringHelper.TruncateLongString(Warnings.ToString(), 1000);
                 }
                 else
                 {
                     TaskSchedulerHistory.LogType = "Info";
                     TaskSchedulerHistory.RunResult = "Succeeded";
-                    TaskSchedulerHistory.LogFirstLine = Infos.ToString();
+                    TaskSchedulerHistory.LogFirstLine = StringHelper.TruncateLongString(Infos.ToString(), 1000);
                 }
                 StringBuilder MyFinalLog = new StringBuilder();
                 MyFinalLog.AppendLine(Exceptions.ToString());
@@ -170,12 +171,12 @@ namespace CommunicationWorkerRole.Tasks
                 {
                     SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
                     SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
-                    SchedulerLog.Log = MyFinalLog.ToString();
+                    SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
                     SchedulerLogsService.Create(SchedulerLog);
                 }
                 else
                 {
-                    SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
+                    SchedulerLog.Log += StringHelper.TruncateLongString(Environment.NewLine + MyFinalLog.ToString(), 4000);
                     SchedulerLogsService.Update(SchedulerLog);
                 }
 
@@ -195,17 +196,20 @@ namespace CommunicationWorkerRole.Tasks
 
         public void LogInfo(string Message)
         {
-            this.Infos.AppendLine(Message);
+            if (!string.IsNullOrEmpty(Message))
+                this.Infos.AppendLine(Message);
         }
 
         public void Logwarning(string Message)
         {
-            this.Warnings.AppendLine(Message);
+            if (!string.IsNullOrEmpty(Message))
+                this.Warnings.AppendLine(Message);
         }
 
         public void LogException(string Message)
         {
-            this.Exceptions.AppendLine(Message);
+            if (!string.IsNullOrEmpty(Message))
+                this.Exceptions.AppendLine(Message);
         }
 
         private void AddSchedulerQueue(TasksSchedulerPM task)

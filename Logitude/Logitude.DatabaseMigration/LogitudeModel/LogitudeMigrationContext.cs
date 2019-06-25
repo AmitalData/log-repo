@@ -216,6 +216,19 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+
+        public IDbSet<AirlineArea> AirlineAreas
+        {
+            get;
+            set;
+        }
+
+
+        public IDbSet<AirlineAreasPort> AirlineAreasPorts
+        {
+            get;
+            set;
+        }
         public IDbSet<ShippingLine> ShippingLines
         {
             get;
@@ -4466,6 +4479,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new AdvancedQueryFilterMap());
             modelBuilder.Configurations.Add(new AgentMap());
             modelBuilder.Configurations.Add(new AirlineMap());
+            modelBuilder.Configurations.Add(new AirlineAreaMap());
+            modelBuilder.Configurations.Add(new AirlineAreasPortMap());
             modelBuilder.Configurations.Add(new APInvoiceEntityMap());
             modelBuilder.Configurations.Add(new APInvoiceLineMap());
             modelBuilder.Configurations.Add(new APInvoicePaymentMap());

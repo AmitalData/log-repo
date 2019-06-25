@@ -189,6 +189,291 @@
 			"response": []
 		},
 		{
+			"name": "GetCurrencyIdEUR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetCurrencyIdEUR\", function () {",
+							"     pm.response.to.have.status(200);",
+							"     ",
+							"     ",
+							"    var idvalue = (pm.response.json().Result[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"CurrencyIdEUR\",idvalue);",
+							"    if (idexist)  {",
+							"    // postman.setNextRequest(\"GetPortIdAirJFK\"); ",
+							"     }",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/currencyviews/getbyfilters?Filter1Name=Code&Filter1Operator=Contains&Filter1Value=EUR&PageSize=23",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"currencyviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "EUR"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCurrencyIdEURFromTenant0",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetCurrencyIdEURFromTenant0\", function () {",
+							"   pm.response.to.have.status(200);",
+							"",
+							"",
+							"    var idvalue = (pm.response.json().Result.filter(a => a.Code == 'EUR')[0].Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"CurrencyIdEUR\",idvalue);",
+							"    ",
+							"//  if (idexist)  {",
+							"//     postman.setNextRequest(\"GetPortIdLHRToTenant1\");  ",
+							"//     } ",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/currencyviews/getbyfilters?Tenant=0&PageSize=50&Filter1Name=Code&Filter1Operator=Contains&Filter1Value=EUR",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"currencyviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "Tenant",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "50"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "Code"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "EUR"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCurrencyIdEURToTenant1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d82322de-c772-48ca-8008-18e4efb28fc8",
+						"exec": [
+							"pm.test(\"GetCurrencyIdEURToTenant1\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"   ",
+							"    var idvalue = (pm.response.json().Id);",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							"    pm.environment.set(\"CurrencyIdEUR\",idvalue);",
+							"",
+							"   ",
+							"  ",
+							"//  if (idexist)  {",
+							"//     postman.setNextRequest(\"GetPortIdAirJFK\");  ",
+							"//     } ",
+							"    ",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd8f1157-fb0b-4542-94ff-6a47ee8ec6ec",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"type": "text",
+						"value": "{{Token}}"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{LogitudeURL}}/api/CommonDomain/GetCopyCurrencyToTenant?CurrencyId={{CurrencyIdEUR}}&CurrencyRate=4&RateDate=2019-6-24%2015:2:53.564",
+					"host": [
+						"{{LogitudeURL}}"
+					],
+					"path": [
+						"api",
+						"CommonDomain",
+						"GetCopyCurrencyToTenant"
+					],
+					"query": [
+						{
+							"key": "CurrencyId",
+							"value": "{{CurrencyIdEUR}}"
+						},
+						{
+							"key": "CurrencyRate",
+							"value": "4"
+						},
+						{
+							"key": "RateDate",
+							"value": "2019-6-24%2015:2:53.564"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GetIncotermIdCIF",
 			"event": [
 				{

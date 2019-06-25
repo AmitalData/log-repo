@@ -185,7 +185,7 @@ export class PaymentChequeGeneralTabComponent extends BaseComponent implements  
             this.account = value;
             if (value != null) {
              
-                if (value.AccountTypeCode == "3") {
+                if (value.AccountTypeCode == "3" && this.entityPM.APPaymentId == null) {
                   
                     this.UIProperties.SetValidity("PayToGLAccountId", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.VendorsGLAccount"));
                 }

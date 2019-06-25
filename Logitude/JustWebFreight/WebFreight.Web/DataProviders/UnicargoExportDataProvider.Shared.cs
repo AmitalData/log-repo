@@ -101,7 +101,8 @@ namespace WebFreight.Web.DataProviders
         public DateTime? DeliveryExpectedArrival { get; set; }
         public DateTime? DeliveryActualDeparture { get; set; }
         public DateTime? DeliveryActualArrival { get; set; }
-
+        public string ConsigneeAddress { get; set; }
+        public string ConsigneePhone { get; set; }
 
 
 

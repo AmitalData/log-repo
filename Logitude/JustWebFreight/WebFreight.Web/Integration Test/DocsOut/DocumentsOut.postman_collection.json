@@ -1,0 +1,1042 @@
+{
+	"info": {
+		"_postman_id": "26266606-8022-4848-b10d-a6e739513d76",
+		"name": "DocumentsOut",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetDocumentTypeId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3a407f41-cd36-4246-b395-1a100342cd25",
+						"exec": [
+							"pm.test(\"GetDocumentTypeId\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    ",
+							"    var idvalue1 = (pm.response.json().Result.filter(a => a.Code == '785A')[0].Id);",
+							"    var idvalue2 = (pm.response.json().Result.filter(a => a.Code == '785A')[0].ObjectTableId);",
+							"    var idvalue3 = (pm.response.json().Result.filter(a => a.Code == '785A')[0].DocumentTypeDefaultReportTemplateId);",
+							"    var idvalue4 = (pm.response.json().Result.filter(a => a.Code == '785A')[0].DocumentTypeDefaultHTMLTemplateId);",
+							"    var idvalue5 = (pm.response.json().Result.filter(a => a.Code == 'FU')[0].Id);",
+							"    ",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"    var id3exist = idvalue3 !== null;",
+							"    var id4exist = idvalue4 !== null;",
+							"    var id5exist = idvalue5 !== null;",
+							"    ",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    pm.expect(id3exist);",
+							"    pm.expect(id4exist);",
+							"    pm.expect(id5exist);",
+							"    ",
+							"    pm.environment.set(\"AirManifestId\",idvalue1);",
+							"    pm.environment.set(\"ObjectTableId\",idvalue2);",
+							"    pm.environment.set(\"documentTemplateId\",idvalue3);",
+							"    pm.environment.set(\"emailTemplateId\",idvalue4);",
+							"    pm.environment.set(\"FlightupdateId\",idvalue5);",
+							"  ",
+							" if (id1exist)  {",
+							"    postman.setNextRequest(\"CreateDocumentOutAirManifestId\");  ",
+							"    } ",
+							"    ",
+							"});",
+							"     ",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19230410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL}}/api/documenttypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=true&Tenant={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"documenttypeviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "true"
+						},
+						{
+							"key": "Tenant",
+							"value": "{{Tenant}}"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateDocumentOutAirManifestId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "239e635b-e6f1-4948-97ee-2a88d735525f",
+						"exec": [
+							"pm.test(\"GetDocumentOutAirManifestId\", function () {",
+							" ",
+							"    pm.response.to.have.status(200);",
+							"   ",
+							"    var id1value = (pm.response.json().Id);",
+							"    var id2value = (pm.response.json().SecurityId);",
+							"    var id1exist = id1value !== null;",
+							"    var id2exist = id2value !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    pm.environment.set(\"DocumentOutAirManifestId\",id1value);",
+							"    pm.environment.set(\"DocumentSecurityId\",id2value);",
+							"    ",
+							"     if (id1exist)  {",
+							"    postman.setNextRequest(\"GetDocumentTypeAirManifestId\");  ",
+							"    } ",
+							"",
+							"});",
+							"",
+							"",
+							"    "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL}}/api/DocumentOutExtended/getcreatedocumentout/?documentTypeId={{AirManifestId}}&entityId={{DirectShipmentAirExportId}}&childEntityId=&childReference=&objectTableId={{ObjectTableId}}&tenant={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"DocumentOutExtended",
+						"getcreatedocumentout",
+						""
+					],
+					"query": [
+						{
+							"key": "documentTypeId",
+							"value": "{{AirManifestId}}"
+						},
+						{
+							"key": "entityId",
+							"value": "{{DirectShipmentAirExportId}}"
+						},
+						{
+							"key": "childEntityId",
+							"value": ""
+						},
+						{
+							"key": "childReference",
+							"value": ""
+						},
+						{
+							"key": "objectTableId",
+							"value": "{{ObjectTableId}}"
+						},
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDocumentTypeAirManifestId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "357a31d4-22bd-4112-95f5-d894e9d2e134",
+						"exec": [
+							"pm.test(\"GetDocumentOutAirManifestId\", function () {",
+							" ",
+							"    pm.response.to.have.status(200);",
+							"   ",
+							"    var id1value = (pm.response.json().Id);",
+							"   ",
+							"    var id1exist = id1value !== null;",
+							"",
+							"    pm.expect(id1exist);",
+							"",
+							"    pm.environment.set(\"AirManifestId\",id1value);",
+							"",
+							"    ",
+							"        if (id1exist)  {",
+							"    postman.setNextRequest(\"GetDocumentTypeTemplateId\");  ",
+							"    } ",
+							"",
+							"});",
+							"",
+							"",
+							"    "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL}}/api/DocumentTypeExtended/GetSinglePMWithOutInclude/?id={{AirManifestId}}&tenant={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"DocumentTypeExtended",
+						"GetSinglePMWithOutInclude",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{AirManifestId}}"
+						},
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDocumentTypeTemplateId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "24b09f2f-cd76-41bb-b12e-378ffcf78b09",
+						"exec": [
+							"pm.test(\"GetDocumentTypeTemplateId\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    ",
+							"",
+							"    var idvalue1 = (pm.response.json().filter(a =>a.Name == 'Airline Manifest')[0].Id);",
+							"    var idvalue2 = (pm.response.json().filter(a =>a.Name == 'Airline Manifest')[0].Inactive);",
+							" ",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== true;",
+							"    ",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    ",
+							"    ",
+							"    pm.environment.set(\"DocumentTypeTemplateId\",idvalue1);",
+							"  ",
+							"            if (id1exist)  {",
+							"    postman.setNextRequest(\"GetDocumentTypeCopyId\");  ",
+							"    } ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL}}/api/DocumentTypeTemplateExtended/getdocumenttypetemplatelistsfordocumenttype/?documentTypeId={{AirManifestId}}&tenant={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"DocumentTypeTemplateExtended",
+						"getdocumenttypetemplatelistsfordocumenttype",
+						""
+					],
+					"query": [
+						{
+							"key": "documentTypeId",
+							"value": "{{AirManifestId}}"
+						},
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDocumentTypeCopyId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9945ed15-e99a-44b2-831e-a152532c2413",
+						"exec": [
+							"pm.test(\"GetDocumentTypeCopyId\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    ",
+							"",
+							"    var idvalue1 = (pm.response.json().DocumentTypeCopies[0].Id);",
+							"  ",
+							"    var id1exist = idvalue1 !== null;",
+							"",
+							"    pm.expect(id1exist);",
+							"    ",
+							"    ",
+							"    pm.environment.set(\"DocumentTypeCopyId\",idvalue1);",
+							"  ",
+							"    if (id1exist)  {",
+							"    postman.setNextRequest(\"GetDocumentOutCopyId\");  ",
+							"    } ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL}}/api/DocumentTypeExtended/getsingledocumenttype/?id={{AirManifestId}}&documentOutId={{DocumentOutAirManifestId}}&tenant={{Tenant}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"DocumentTypeExtended",
+						"getsingledocumenttype",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{AirManifestId}}"
+						},
+						{
+							"key": "documentOutId",
+							"value": "{{DocumentOutAirManifestId}}"
+						},
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDocumentOutCopyId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "38014ec4-ea93-4e66-a5c0-984bfc57dee7",
+						"exec": [
+							"pm.test(\"GetDocumentOutCopyId\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    ",
+							"",
+							"    var idvalue1 = (pm.response.json());",
+							"    var id1exist = idvalue1 !== null;",
+							"",
+							"    pm.expect(id1exist);",
+							"    ",
+							"    ",
+							"    pm.environment.set(\"DocumentOutCopyId\",idvalue1);",
+							"  ",
+							"      if (id1exist)  {",
+							"    postman.setNextRequest(\"UpdateDocumentOutAirManifestId\");  ",
+							"    } ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL}}/api/ExportDocument?documentTypeId={{AirManifestId}}&entityId={{DirectShipmentAirExportId}}&entityObjectTableId={{ObjectTableId}}&childEntityId=&childObjectTableId=&documentOutId={{DocumentOutAirManifestId}}&tenant={{Tenant}}&documentTypeCopyId={{DocumentTypeCopyId}}&userId={{LoggedUserId}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"ExportDocument"
+					],
+					"query": [
+						{
+							"key": "documentTypeId",
+							"value": "{{AirManifestId}}"
+						},
+						{
+							"key": "entityId",
+							"value": "{{DirectShipmentAirExportId}}"
+						},
+						{
+							"key": "entityObjectTableId",
+							"value": "{{ObjectTableId}}"
+						},
+						{
+							"key": "childEntityId",
+							"value": ""
+						},
+						{
+							"key": "childObjectTableId",
+							"value": ""
+						},
+						{
+							"key": "documentOutId",
+							"value": "{{DocumentOutAirManifestId}}"
+						},
+						{
+							"key": "tenant",
+							"value": "{{Tenant}}"
+						},
+						{
+							"key": "documentTypeCopyId",
+							"value": "{{DocumentTypeCopyId}}"
+						},
+						{
+							"key": "userId",
+							"value": "{{LoggedUserId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateDocumentOutAirManifestId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd6634bd-e77c-41d5-9090-8977b1e144f7",
+						"exec": [
+							"pm.test(\"UpdateDocumentOutAirManifestId\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   ",
+							"    ",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue2 = (pm.response.json().DocumentOutCopies);",
+							"    var idvalue3 = pm.environment.get(\"DocumentOutAirManifestId\");",
+							"    var idvalue4 = pm.environment.get(\"DocumentOutCopyId\");",
+							"",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"",
+							"",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    ",
+							"      if (idvalue3 == idvalue1 && idvalue4 == idvalue2)  {",
+							"    postman.setNextRequest(\"UpdateDocumentOutAirManifestId\");  ",
+							"    } ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "http://test.logitudeworld.com"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"UIProperties\": {\n    \"UIPropertyList\": []\n  },\n  \"IsDirty\": true,\n  \"$id\": \"1\",\n  \"id\": \"{{DocumentOutAirManifestId}}\",\n  \"tenant\": \"{{Tenant}}\",\n  \"Note\": null,\n  \"issuedDate\": null,\n  \"entityId\": \"{{DirectShipmentAirExportId}}\",\n  \"objectTableId\": \"{{ObjectTableId}}\",\n  \"issuedByUserId\": \"{{LoggedUserId}}\",\n  \"documentTypeId\": \"{{AirManifestId}}\",\n  \"issued\": true,\n  \"followUpId\": null,\n  \"followUpCount\": 0,\n  \"issuedByUserName\": \"\",\n  \"extension\": null,\n  \"documentTypeName\": \"Air Manifest\",\n  \"reportTemplate\": null,\n  \"hasFollowUp\": false,\n  \"documentTypeCode\": \"785A\",\n  \"hTMLTemplate\": null,\n  \"templateType\": \"P\",\n  \"documentTypeSubject\": null,\n  \"editableFields\": null,\n  \"documentTemplateId\": \"{{documentTemplateId}}\",\n  \"emailTemplateId\": \"{{emailTemplateId}}\",\n  \"childEntityId\": null,\n  \"childEntityReference\": null,\n  \"xamlDocumentId\": null,\n  \"documentTemplateEditorTool\": \"S\",\n  \"documentTypeObjectTableId\": \"{{ObjectTableId}}\",\n  \"needsRebuild\": false,\n  \"isBlobExist\": false,\n  \"fileSize\": null,\n  \"fileName\": null,\n  \"name\": null,\n  \"isChangeIssuedDate\": true,\n  \"documentOutCopies\": [\n  \t    {\n      \"$id\": \"2\",\n      \"Id\": \"{{DocumentOutCopyId}}\",\n      \"Tenant\": \"{{Tenant}}\",\n      \"DocumentId\": \"{{DocumentOutCopyId}}\",\n      \"DocumentOutId\": \"{{DocumentOutAirManifestId}}\",\n      \"DocumentTypeCopyId\": \"{{DocumentTypeCopyId}}\",\n      \"DocoumentTypeCopyName\": \"Air Manifest\",\n      \"DocumentTypeCopyNameWithDocumentTypeName\": \"Air Manifest\",\n      \"LastPrintedByUserId\": null,\n      \"LastPrintDate\": null,\n      \"FileSize\": null,\n      \"FileName\": \"Air Manifest\",\n      \"LastPrintedByUserName\": null,\n      \"CalculatedFileName\": \"Air Manifest\",\n      \"changeOp\": 0\n    }\n  \t],\n  \"IsAgentView\": false,\n  \"IsCustomerView\": false\n}"
+				},
+				"url": "{{URL}}/api/DocumentOutExtended"
+			},
+			"response": []
+		},
+		{
+			"name": "GetDocumentDownloadToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8e46774f-c1f7-438b-be91-4a200ae8bece",
+						"exec": [
+							"pm.test(\"GetDocumentDownloadToken\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"   ",
+							"    var idvalue1 = (pm.response.json());",
+							"    var id1exist = idvalue1 !== null;",
+							"    var expected = pm.globals.get(\"DocumentDownloadToken\");",
+							"",
+							"    pm.expect(id1exist);",
+							"    ",
+							"        if (idvalue1 !== expected){",
+							"    tests[\"TokenExpired : \" + id1exist] = responseBody.has(expected);",
+							"    ",
+							"    } ",
+							"        else  {",
+							"    tests[\"TokenValid : \" + id1exist] = responseBody.has(expected);",
+							"    }",
+							"",
+							"",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL}}/api/Authentication/GetDocumentDownloadToken?documentToken={{DocumentDownloadToken}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"Authentication",
+						"GetDocumentDownloadToken"
+					],
+					"query": [
+						{
+							"key": "documentToken",
+							"value": "{{DocumentDownloadToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PrintDocument",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4681226b-83b6-4e67-9277-50c7e21b1dac",
+						"exec": [
+							"pm.test(\"PrintDocument\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"   ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19240410/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=gkzoig0ekjfkc2qhvf1rp1k4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{URL}}/WebPages/DownloadPage.aspx?securityId={{DocumentSecurityId}}&tempId={{DocumentDownloadToken}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"WebPages",
+						"DownloadPage.aspx"
+					],
+					"query": [
+						{
+							"key": "securityId",
+							"value": "{{DocumentSecurityId}}"
+						},
+						{
+							"key": "tempId",
+							"value": "{{DocumentDownloadToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SendEmailMessageTemplate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebc83573-ce47-4df3-a070-71dffd367d2e",
+						"exec": [
+							"pm.test(\"PrintDocument\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    ",
+							"    var idvalue1 = (pm.response.json());",
+							"    var id1exist = idvalue1 === null;",
+							"    ",
+							"    pm.expect(id1exist);",
+							"    ",
+							"    if (idvalue1 !== null){",
+							"        tests[\"Email Sent Successfully \" ] = responseBody.has(idvalue1);",
+							"    }",
+							"    else {",
+							"        tests[\"Email Sent Fail \"] = responseBody.has(idvalue1);",
+							"    }",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Origin",
+						"value": "http://test.logitudeworld.com"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36 OPR/58.0.3135.132"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://test.logitudeworld.com/test/Angular19290415/index.html"
+					},
+					{
+						"key": "Cookie",
+						"value": "email_cookie=ahmadb@fnarsoft.com; ASP.NET_SessionId=ikudiyntt5hf24lrqmt3aprg"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Token",
+						"value": "{{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"HtmlString\":\"<html><head><meta http- equiv='Content- Type' content= 'text/html; charset = iso-8859-1' > <style type='text/css' style= 'display: none; '></style></head><body><p style=\\\"font-size: 16px; overflow-wrap: break-word;\\\">Integration Test</p></body></html>\",\"InternalDocumentId\":\"{{DocumentOutAirManifestId}}\",\"ToEmail\":\"ahmadb@logitudeworld.com\",\"Tenant\":\"{{Tenant}}\",\"UserId\":\"{{LoggedUserId}}\",\"ObjectTableId\":\"{{ObjectTableId}}\",\"EntityReference\":\"\",\"EntityId\":\"{{DirectShipmentAirExportId}}\",\"Subject\":\"Air Manifest\",\"Cc\":\"\",\"Bcc\":\"\",\"Attachments\":\"{{DocumentOutCopyId}},\",\"ObjectTableName\":\"Shipment\",\"From\":\"\",\"ReplyTo\":\"\"}"
+				},
+				"url": "{{URL}}/api/HtmlEditor/postsendhtmldocument"
+			},
+			"response": []
+		}
+	]
+}

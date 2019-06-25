@@ -44,6 +44,7 @@ namespace WebFreight.Web.WcfApi
                         entity.WaitingQueue = entitypm.WaitingQueue;
                         entity.FailedQueue = entitypm.FailedQueue;
                         entity.LastUpdateDateTime = DateTime.UtcNow;
+                        entity.LastQueueDateTime = entitypm.LastQueueDateTime;
                         hybridTenantStateRepository.Update(entity);
                         hybridTenantStateRepository.SubmitChanges();
                     }
