@@ -123,9 +123,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                    
                         LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
 
-                        byte[] dataProvider = reportHelper.BuildReportDataProvider(reportFliter, filters);
+                        //byte[] dataProvider = reportHelper.BuildReportDataProvider(reportFliter, filters);
+                        byte[] dataProvider = null;
+                        Thread thread = new Thread(() => { DatabaseInitializer.RunOnSeconderyDB = true; dataProvider = reportHelper.BuildReportDataProvider(reportFliter, filters); });
+                        thread.Start();
+                        thread.Join();
 
-                   
                         if (dataProvider == null)
                         {
                             throw new Exception("Data Provider is missing");
@@ -335,7 +338,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ReportExecutionLog reportExecutionLog = new ReportExecutionLog()
                 {
                     Id = reportFliter.ReportKey,
-                    CreateDate = TenantServerConfigration.GetCurrentDateTime(reportFliter.tenant),
+                    CreateDate = DateTime.Now,
                     CreatedByUserId = reportFliter.UserId,
                     ReportFilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(reportFliter) ,
                     Tenant = reportFliter.tenant,
@@ -376,12 +379,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ReportBuildResult result = new ReportBuildResult();
                 if (reportExecutionLog != null)
                 {
+                    UpdateStatusReportExecutionLog(authToken, reportExecutionLogRepository, reportExecutionLog);
+
                     result.StatusCode = reportExecutionLog.StatusCode;
                     if (result.StatusCode == "F")
                     {
                         result.HasError = true;
-                        result.ExceptionMessage = reportExecutionLog.ExceptionMessage;
+                        result.ExceptionMessage = GetUnderStandableMessageFromMessageException(reportExecutionLog.ExceptionMessage);
                     }
+
                 }
                 else
                 {
@@ -395,6 +401,33 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             {
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private string GetUnderStandableMessageFromMessageException(string exceptionMessage)
+        {
+            string result = string.Empty;
+            if (!string.IsNullOrEmpty(exceptionMessage))
+            {
+                string[] lines = exceptionMessage.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                result = lines[0];
+            }
+            return result;
+        }
+
+        private static void UpdateStatusReportExecutionLog(AuthenticationToken authToken, ReportExecutionLogRepository reportExecutionLogRepository, ReportExecutionLog reportExecutionLog)
+        {
+            if (reportExecutionLog.StatusCode == "W")
+            {
+                var nowDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                if (reportExecutionLog.CreateDate.AddMinutes(10) < nowDate)
+                {
+                    reportExecutionLog.StatusCode = "F";
+                    reportExecutionLog.ExceptionMessage = "the request has timed out";
+                    reportExecutionLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(authToken.Tenant);
+                    //reportExecutionLogRepository.Update(reportExecutionLog);
+                    //reportExecutionLogRepository.SubmitChanges();
+                }
             }
         }
 
