@@ -1238,6 +1238,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isApprovingDraftVersion ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsApprovingDraftVersion  
+	   {
+	    
+	     get
+		{
+		   return isApprovingDraftVersion;
+		 }
+		 set
+		 {
+		   if(isApprovingDraftVersion != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsApprovingDraftVersion",OldValue=isApprovingDraftVersion,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isApprovingDraftVersion=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

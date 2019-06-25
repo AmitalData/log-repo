@@ -323,6 +323,11 @@ export class TariffPM {
     public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
        
 	 
+    private isApprovingDraftVersion: boolean;
+    public get IsApprovingDraftVersion() { return this.isApprovingDraftVersion; }
+    public set IsApprovingDraftVersion(newValue: boolean) { if (this.isApprovingDraftVersion != newValue) { this.isApprovingDraftVersion = newValue; this.MarkAsDirty("IsApprovingDraftVersion"); } }
+       
+	 
 
     public OldEntityPM: TariffPM;
 		

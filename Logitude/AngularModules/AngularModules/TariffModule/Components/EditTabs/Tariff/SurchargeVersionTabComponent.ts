@@ -76,7 +76,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
                     if (this.isApproveButtonClicked) {
                         this.isApproveButtonClicked = false;
-                        this.DoApprove();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
                     if (this.isCopyButtonClicked) {
@@ -744,37 +744,43 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     private isApproveButtonClicked: boolean = false;
     ApproveVersionClicked() {
-        var errors: string[] = [];
-
-        if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
-            errors.push("Invalid Tariff Lines");
+        if (!this.isApproveButtonClicked) {
+            this.isApproveButtonClicked = true;
+            this.EntityPM.IsApprovingDraftVersion = true;
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
 
-        //if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
-        //    errors.push("Approving past version is not allowed, please update the dates");
+        //var errors: string[] = [];
+
+        //if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
+        //    errors.push("Invalid Tariff Lines");
         //}
 
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+        ////if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+        ////    errors.push("Approving past version is not allowed, please update the dates");
+        ////}
 
-        if (errors.length == 0) {
-            this.isApproveButtonClicked = true;
+        //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
 
-            if (this.EntityPM.IsDirty) {
-                this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
-            }
+        //if (errors.length == 0) {
+        //    this.isApproveButtonClicked = true;
 
-            else {
-                this.DoApprove();
-            }
-        }
+        //    if (this.EntityPM.IsDirty) {
+        //        this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
+        //    }
+
+        //    else {
+        //        this.DoApprove();
+        //    }
+        //}
     }
-    private DoApprove() {
-        this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            }
-        });
-    }
+    //private DoApprove() {
+    //    this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
+    //        if (!response.HasError) {
+    //            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+    //        }
+    //    });
+    //}
 
     CopyVersionClicked() {
         if (this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0]) {
@@ -789,15 +795,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     private isCopyButtonClicked: boolean = false;
     private DoCopy() {
-        var windowTitle = "New Copy Version";
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 450;
-        logWindow.Height = 200;
-        logWindow.WindowArgs = this.CurrentVersion;
-        logWindow.Title = windowTitle;
-        logWindow.ComponentLoaded.subscribe(s => {
-            logWindow.WindowClosed.subscribe(d => {
-                if (s && d == "ok") {
+
+
+        //var windowTitle = "New Copy Version";
+        //var logWindow = new LogitudeWindow();
+        //logWindow.Width = 450;
+        //logWindow.Height = 200;
+        //logWindow.WindowArgs = this.CurrentVersion;
+        //logWindow.Title = windowTitle;
+        //logWindow.ComponentLoaded.subscribe(s => {
+            //logWindow.WindowClosed.subscribe(d => {
+                //if (s && d == "ok") {
                     this.isCopyButtonClicked = true;
 
                     this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
@@ -809,16 +817,16 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                     copiedVersion.Version = this.EntityPM.LastVersion;
                     copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
                     copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
-                    copiedVersion.ExpirationDate = s.ExpirationDate;
+                    //copiedVersion.ExpirationDate = s.ExpirationDate;
                     copiedVersion.IsDraft = true;
-                    copiedVersion.StartDate = s.StartDate;
+                    //copiedVersion.StartDate = s.StartDate;
                     copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
                     copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
                     this.EntityPM.AddTariffVersion(copiedVersion);
                     this.loadedTariffLines.sort(p => p.Index).forEach(item => {
                         var tariffLine = new TariffLinePM(copiedVersion);
-                        tariffLine.StartDate = this.StartDate;
-                        tariffLine.ExpirationDate = this.ExpirationDate;
+                        tariffLine.StartDate = item.StartDate;
+                        tariffLine.ExpirationDate = item.ExpirationDate;
                         tariffLine.Tenant = SessionLocator.Tenant;
                         tariffLine.Version = copiedVersion.Version;
                         tariffLine.OriginPortId = item.OriginPortId;
@@ -843,11 +851,11 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                     });
 
                     this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
-                }
-            });
-        });
+               // }
+            //});
+       // });
 
-        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/TariffDatesValidationComponent');
+        //logWindow.Show('./TariffModule/Components/EditTabs/Tariff/TariffDatesValidationComponent');
     }
 
     UpdateSurchargesClicked() {
