@@ -60,9 +60,12 @@ export class EditTabsComponent {
     this.PayablesTabScenario.PayablesTab(shipperRef1,ShipmentType);
     this.ReceivablesTabScenario.RecievablesTab(ShipmentLevelCode,ShipmentType);
   //  this.DocsOutTabScenario.DocsOutTab();
+  
     if(ShipmentLevelCode=='M'){
       this.ShipmentsTabScenario.ShipmentsTab();
-    }
+      }
+      this.Helper.WaitByIdAndClick('Shipment-Save');
+      this.Helper.WaitBusyIndicator();
   }
 
 }
