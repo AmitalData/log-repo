@@ -789,15 +789,17 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     private isCopyButtonClicked: boolean = false;
     private DoCopy() {
-        var windowTitle = "New Copy Version";
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 450;
-        logWindow.Height = 200;
-        logWindow.WindowArgs = this.CurrentVersion;
-        logWindow.Title = windowTitle;
-        logWindow.ComponentLoaded.subscribe(s => {
-            logWindow.WindowClosed.subscribe(d => {
-                if (s && d == "ok") {
+
+
+        //var windowTitle = "New Copy Version";
+        //var logWindow = new LogitudeWindow();
+        //logWindow.Width = 450;
+        //logWindow.Height = 200;
+        //logWindow.WindowArgs = this.CurrentVersion;
+        //logWindow.Title = windowTitle;
+        //logWindow.ComponentLoaded.subscribe(s => {
+            //logWindow.WindowClosed.subscribe(d => {
+                //if (s && d == "ok") {
                     this.isCopyButtonClicked = true;
 
                     this.EntityPM.LastVersion = this.EntityPM.LastVersion + 1;
@@ -809,9 +811,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                     copiedVersion.Version = this.EntityPM.LastVersion;
                     copiedVersion.CreateDate = DateTool.GetCurrentDateAsUtc();
                     copiedVersion.CreatedByUserId = SessionInfo.LoggedUserId;
-                    copiedVersion.ExpirationDate = s.ExpirationDate;
+                    //copiedVersion.ExpirationDate = s.ExpirationDate;
                     copiedVersion.IsDraft = true;
-                    copiedVersion.StartDate = s.StartDate;
+                    //copiedVersion.StartDate = s.StartDate;
                     copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
                     copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
                     this.EntityPM.AddTariffVersion(copiedVersion);
@@ -843,11 +845,11 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                     });
 
                     this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
-                }
-            });
-        });
+               // }
+            //});
+       // });
 
-        logWindow.Show('./TariffModule/Components/EditTabs/Tariff/TariffDatesValidationComponent');
+        //logWindow.Show('./TariffModule/Components/EditTabs/Tariff/TariffDatesValidationComponent');
     }
 
     UpdateSurchargesClicked() {
