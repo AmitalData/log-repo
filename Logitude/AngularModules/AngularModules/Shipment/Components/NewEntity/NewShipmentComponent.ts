@@ -33,7 +33,6 @@ import {NewEntityArgs} from '../../../Infrastructure/Args';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ShipmentDomainService} from '../../Services/ShipmentDomainService';
 import {AWBStackDomainService} from '../../../Common/Services/AWBStackDomainService';
 import {CitySelectionArgs} from '../../../Common/Args';
@@ -61,7 +60,7 @@ export class NewShipmentComponent extends BaseComponent implements OnInit {
     public SessionIndex: number;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private entityResourceService: EntityResourceService) {
+    constructor() {
         super();
         this.SessionIndex = SessionLocator.Index;
         this.InitializeServices();
