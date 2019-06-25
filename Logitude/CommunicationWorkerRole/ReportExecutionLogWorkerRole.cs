@@ -135,7 +135,7 @@ namespace CommunicationWorkerRole
 
                                 if (reportFliter != null)
                                 {
-                                    Thread thread = new Thread(() => BuildReport(reportFliter, reportExecutionLog, reportExecutionLogRepository));
+                                    Thread thread = new Thread(() => BuildReport(reportFliter, reportExecutionLog, reportExecutionLogRepository, queueservice));
                                     thread.IsBackground = true;
                                     thread.Start();
                           
@@ -143,11 +143,11 @@ namespace CommunicationWorkerRole
                                 else
                                 {
                                     this.UpdateReportExecutionLog(null, reportExecutionLog, reportExecutionLogRepository, "F" , "Report fliter not found");
-
+                                    queueservice.Complete();
                                 }
 
 
-                                queueservice.Complete();
+                             
 
                                 LogDoneItemInMemory();
                             }
@@ -184,6 +184,7 @@ namespace CommunicationWorkerRole
             }
         }
 
+
         private void ConnectClient()
         {
             try
@@ -198,7 +199,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void BuildReport(ReportFliter reportFliter, ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository)
+        private void BuildReport(ReportFliter reportFliter, ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository, IQueueService queueservice)
         {
 
             try
@@ -206,13 +207,16 @@ namespace CommunicationWorkerRole
                 ReportHelper reportHelper = new ReportHelper();
                 reportHelper.BuildReport(reportFliter);
                 this.UpdateReportExecutionLog(null, reportExecutionLog, reportExecutionLogRepository, "D");
+                queueservice.Complete();
             }
             catch (Exception ex)
             {
                 if (reportExecutionLog != null && reportExecutionLogRepository != null)
                 {
-                    this.UpdateReportExecutionLog(ex, reportExecutionLog, reportExecutionLogRepository,"F");
+                    this.UpdateReportExecutionLog(ex, reportExecutionLog, reportExecutionLogRepository, "F");
                 }
+
+                queueservice.CompleteAsFailed();
             }
         }
 
@@ -242,7 +246,7 @@ namespace CommunicationWorkerRole
                 }
 
                 reportExecutionLog.StatusCode = statusCode;
-                reportExecutionLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                reportExecutionLog.DoneDate = DateTime.Now;
                 reportExecutionLogRepository.Update(reportExecutionLog);
                 reportExecutionLogRepository.SubmitChanges();
             }

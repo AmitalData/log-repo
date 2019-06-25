@@ -335,7 +335,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ReportExecutionLog reportExecutionLog = new ReportExecutionLog()
                 {
                     Id = reportFliter.ReportKey,
-                    CreateDate = TenantServerConfigration.GetCurrentDateTime(reportFliter.tenant),
+                    CreateDate = DateTime.Now,
                     CreatedByUserId = reportFliter.UserId,
                     ReportFilterXML = LogitudeXmlSerializer.SerializeObjectToXmlString(reportFliter) ,
                     Tenant = reportFliter.tenant,
