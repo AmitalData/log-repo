@@ -503,6 +503,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsProceduralFault\ModuleProceduralFault.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\ModuleCustomsRequests.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsRequests\ModuleDeclarations.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsVehicle\Components\Documents\VehicleCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleEditComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleGeneralComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsVehicle\Components\EditTabs\VehicleMoreDetailsTabComponent.ts" />
