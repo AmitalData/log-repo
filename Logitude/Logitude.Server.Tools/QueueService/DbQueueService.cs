@@ -851,7 +851,7 @@ namespace Logitude.Server.Tools.QueueService
 
         public void DelayAndReturnBackToQueue(TimeSpan delayTime,string myMessageId)
         {
-            if (!string.IsNullOrEmpty(this.myMessageId))
+            if (!string.IsNullOrEmpty(myMessageId))
             {
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required))
                 {
@@ -877,7 +877,7 @@ namespace Logitude.Server.Tools.QueueService
                             messageIdPar.Direction = ParameterDirection.Input;
                             delayPar.Direction = ParameterDirection.Input;
 
-                            messageIdPar.Value = this.myMessageId;
+                            messageIdPar.Value = myMessageId;
                             delayPar.Value = seconds;
 
                             cmd.Parameters.Add(messageIdPar);
@@ -913,7 +913,7 @@ namespace Logitude.Server.Tools.QueueService
                             messageIdPar.Direction = ParameterDirection.Input;
                             delayPar.Direction = ParameterDirection.Input;
 
-                            messageIdPar.Value = this.myMessageId;
+                            messageIdPar.Value = myMessageId;
                             delayPar.Value = seconds;
 
                             cmd.Parameters.Add(messageIdPar);

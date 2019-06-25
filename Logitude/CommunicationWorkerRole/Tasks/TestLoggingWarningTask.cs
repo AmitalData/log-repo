@@ -1,6 +1,7 @@
 ﻿
 using CommunicationWorkerRole.Tasks;
 using Simplog.Data.Helpers;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
@@ -21,7 +22,12 @@ namespace CommunicationWorkerRole.Tasks
 
             //    Logwarning("Log warning # " + i + " , Be careful !!");
             //}
-            Thread.Sleep(120000);
+            if (DateTime.Now.Minute % 5 == 0)
+            {
+                Thread.CurrentThread.Abort();
+            }
+            Thread.Sleep(60000);
+
 
         }
     }
