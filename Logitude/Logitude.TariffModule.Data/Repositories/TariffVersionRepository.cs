@@ -23,14 +23,33 @@ namespace Logitude.TariffModule.Data.Repositories
             return (from a in context.TariffVersions where a.TariffId == myEntityKeys.Id select a).ToList();
         }
 
-        public List<TariffVersion> GetActiveVersions(string tariffId, int tenant)
+        public List<TariffVersion> GetActiveVersions(string tariffId, int tenant, string typeCode)
         {
-            DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            if (typeCode == "ASC")
+            {
+                List<TariffVersion> items = new List<TariffVersion>();
 
-            return (from a in context.TariffVersions
-                    where a.TariffId == tariffId && a.Tenant == tenant && !a.IsDraft
-                    && DbFunctions.TruncateTime(a.ExpirationDate) >= DbFunctions.TruncateTime(todayDate)
-                    select a).ToList();
+                TariffVersion item=(from a in context.TariffVersions
+                        where a.TariffId == tariffId && a.Tenant == tenant && !a.IsDraft                        
+                        select a).OrderByDescending(o=>o.CreateDate).FirstOrDefault();
+
+                if (item != null)
+                {
+                    items.Add(item);
+                }
+
+                return items;
+            }
+
+            else
+            {
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                return (from a in context.TariffVersions
+                        where a.TariffId == tariffId && a.Tenant == tenant && !a.IsDraft
+                        && DbFunctions.TruncateTime(a.ExpirationDate) >= DbFunctions.TruncateTime(todayDate)
+                        select a).ToList();
+            }
         }
 
         public List<TariffVersion> GetAllVersions(string tariffId, int tenant)

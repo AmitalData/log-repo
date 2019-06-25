@@ -43,11 +43,11 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             return entityPMs;
         }
 
-        public List<TariffVersionPM> GetActiveVersions(string tariffId, int tenant)
+        public List<TariffVersionPM> GetActiveVersions(string tariffId, int tenant, string typeCode)
         {
             TariffVersionRepository repository = new TariffVersionRepository(tenant);
             List<TariffVersionPM> entityPMs = new List<TariffVersionPM>();
-            List<TariffVersion> entityPOCOs = repository.GetActiveVersions(tariffId, tenant);
+            List<TariffVersion> entityPOCOs = repository.GetActiveVersions(tariffId, tenant, typeCode);
 
             foreach (TariffVersion entityPOCO in entityPOCOs)
             {

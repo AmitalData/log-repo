@@ -1169,6 +1169,10 @@
     <Compile Include="Migrations\201906241106069_ModifyTariffLineExpirationDate.Designer.cs">
       <DependentUpon>201906241106069_ModifyTariffLineExpirationDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906240850455_AbedAddIsIsParentTenantToDWHSetting.cs" />
+    <Compile Include="Migrations\201906240850455_AbedAddIsIsParentTenantToDWHSetting.Designer.cs">
+      <DependentUpon>201906240850455_AbedAddIsIsParentTenantToDWHSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -1987,6 +1991,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906241106069_ModifyTariffLineExpirationDate.resx">
       <DependentUpon>201906241106069_ModifyTariffLineExpirationDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906240850455_AbedAddIsIsParentTenantToDWHSetting.resx">
+      <DependentUpon>201906240850455_AbedAddIsIsParentTenantToDWHSetting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
