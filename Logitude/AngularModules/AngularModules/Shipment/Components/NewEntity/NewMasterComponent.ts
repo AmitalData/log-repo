@@ -15,7 +15,6 @@ import {PortList} from '../../../Common/EntityLists/PortList';
 import {CardList} from '../../../Common/EntityLists/CardList';
 import {AirlineList} from '../../../Common/EntityLists/AirlineList';
 import {AddressList} from '../../../Common/EntityLists/AddressList';
-import {IncotermList} from '../../../Common/EntityLists/IncotermList';
 import {PackageTypeList} from '../../../Common/EntityLists/PackageTypeList';
 import {PortListService} from '../../../Common/Services/StandardLists/PortListService';
 import {CardListService} from '../../../Common/Services/StandardLists/CardListService';
@@ -24,10 +23,8 @@ import {AddressListService} from '../../../Common/Services/StandardLists/Address
 import {IncotermListService} from '../../../Common/Services/StandardLists/IncotermListService';
 import {ShipmentPMService} from '../../Services/StandardPMs/ShipmentPMService';
 import {PartnersDomainService} from '../../../Common/Services/PartnersDomainService';
-import {NewShipmentComponentArgs} from '../../Args';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ShipmentDomainService} from '../../Services/ShipmentDomainService';
 import {AWBStackDomainService} from '../../../Common/Services/AWBStackDomainService';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
@@ -47,11 +44,10 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
     public ControlColumnWidth: number = 220;
     public ValidationErrorsList: string[] = [];
     public SessionIndex: number;
-    public IsResourcesReady: boolean = false;
     public OkButtonLabel: string;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private entityResourceService: EntityResourceService) {
+    constructor() {
         super();
         this.SessionIndex = SessionLocator.Index;
         this.InitializeServices();
@@ -60,14 +56,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
         this.EntityPM.ShipmentLevelCode = "C";
         this.OkButtonLabel = TextCodeTranslator.Translate("Shipment.B.Create");
 
-        //this.BuildFiltersLists();
-        //this.OnFiltersChanged();
-        //this.LoadAllowedAirline();
-
-        this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
-            this.IsResourcesReady = true;
-            this.BuildAdditionalFields();
-        });
+        this.BuildAdditionalFields();
     }
 
     ngOnInit() {

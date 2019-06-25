@@ -58,6 +58,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs) {
         super();
+        this.CurrentSession.StartBusyIndicatorLoading();
+
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");    
         this.EntityPM = entityArgs.EntityPM;
         this.IsManifest = this.EntityPM.ARInvoiceTypeCode == "MN" ? true : false;
