@@ -72,7 +72,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
                     if (this.isApproveButtonClicked) {
                         this.isApproveButtonClicked = false;
-                        this.DoApprove();
+                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
 
                     if (this.isCopyButtonClicked) {
@@ -515,38 +515,44 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
     private isApproveButtonClicked: boolean = false;
     ApproveVersionClicked() {
-        var errors: string[] = [];
-
-        if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
-            errors.push("Invalid Tariff Lines");
-        }
-
-        if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
-            errors.push("Approving past version is not allowed, please update the dates");
-        }
-        
-        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-
-        if (errors.length == 0) {
+        if (!this.isApproveButtonClicked) {
             this.isApproveButtonClicked = true;
-
-            if (this.EntityPM.IsDirty) {
-                this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
-            }
-
-            else {
-                this.DoApprove();
-            }
+            this.EntityPM.IsApprovingDraftVersion = true;
+            this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
+
+        //var errors: string[] = [];
+
+        //if (this.CurrentVersion.TariffLines.filter(d => d.HasErrors).length > 0) {
+        //    errors.push("Invalid Tariff Lines");
+        //}
+
+        //if (DateTool.GetDateParts(this.CurrentVersion.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
+        //    errors.push("Approving past version is not allowed, please update the dates");
+        //}
+        
+        //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
+
+        //if (errors.length == 0) {
+        //    this.isApproveButtonClicked = true;
+
+        //    if (this.EntityPM.IsDirty) {
+        //        this.CurrentSession.CurrentEditComponent.SaveChanges("Saving...");
+        //    }
+
+        //    else {
+        //        this.DoApprove();
+        //    }
+        //}
     }
 
-    private DoApprove() {
-        this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            }
-        });
-    }
+    //private DoApprove() {
+    //    this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
+    //        if (!response.HasError) {
+    //            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+    //        }
+    //    });
+    //}
 
     CopyVersionClicked() {
         if (this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0]) {

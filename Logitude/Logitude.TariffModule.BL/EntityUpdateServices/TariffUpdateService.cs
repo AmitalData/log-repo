@@ -248,17 +248,34 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
         private void ApproveDraftVersion(TariffPM entityPM)
         {
+            bool isValid = true;
             TariffVersionPM iDraftVersion = entityPM.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
+
             if (iDraftVersion == null)
             {
+                isValid = false;
                 throw new ApplicationException("No Draft version to approve");
             }
 
-            else if (iDraftVersion.TariffLines.Where(d => d.HasErrors).Count() > 0) {
+            if (iDraftVersion.TariffLines.Where(d => d.HasErrors).Count() > 0)
+            {
+                isValid = false;
                 throw new ApplicationException("Invalid Tariff Lines");
             }
 
-            else
+            if (entityPM.TypeCode == "AFC")
+            {
+                if (iDraftVersion.ExpirationDate != null)
+                {
+                    if (iDraftVersion.ExpirationDate.Value.Date < entityPM.UpdateDate.Date)
+                    {
+                        isValid = false;
+                        throw new ApplicationException("Approving past version is not allowed, please update the dates");
+                    }
+                }
+            }
+
+            if(isValid)
             {
                 iDraftVersion.IsDraft = false;
                 iDraftVersion.ApprovedByUserId = entityPM.UpdatedByUserId;
@@ -275,24 +292,27 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = "Version " + iDraftVersion.Version + " approved",
                 });
 
-                TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
-                if (iPreviousVersion != null)
+                if (entityPM.TypeCode == "ASC")
                 {
-                    foreach (TariffLinePM linePM in iDraftVersion.TariffLines)
+                    TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
+                    if (iPreviousVersion != null)
                     {
-                        if (linePM.StartDate != null)
+                        foreach (TariffLinePM linePM in iDraftVersion.TariffLines)
                         {
-                            var iPreviousLine = iPreviousVersion.TariffLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
-                            if (iPreviousLine != null)
+                            if (linePM.StartDate != null)
                             {
-                                iPreviousLine.ExpirationDate = linePM.StartDate.Value.AddDays(-1);
-                                iPreviousLine.ChangeSetOp = ChangeSetOperation.Update;
+                                var iPreviousLine = iPreviousVersion.TariffLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
+                                if (iPreviousLine != null)
+                                {
+                                    iPreviousLine.ExpirationDate = linePM.StartDate.Value.AddDays(-1);
+                                    iPreviousLine.ChangeSetOp = ChangeSetOperation.Update;
+                                }
                             }
                         }
-                    }
 
-                    TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                    tariffVersionUpdateService.Update(iPreviousVersion, true);
+                        TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                        tariffVersionUpdateService.Update(iPreviousVersion, true);
+                    }
                 }
             }
         }
