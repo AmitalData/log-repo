@@ -356,10 +356,9 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
             var quoteTemplateSectionHeaderViewModel = this.EditQuoteTemplateComponent.QuoteTemplateSectionLists.filter(d => d.QuoteTemplateSectionTypeCode == "QH")[0];
             windowArgs.QuoteTemplateSectionViewModel = quoteTemplateSectionHeaderViewModel;
             windowArgs.QuoteId = this.EditQuoteTemplateComponent.QuotePM != null ? this.EditQuoteTemplateComponent.QuotePM.Id : "";
-
             windowArgs.QuoteTemplateSectionTypeName = "QuoteHeader";
             windowArgs.QuoteTemplateSectionTypeCode = "QH";
-            windowArgs.QuoteTemplateTextCodePMList = this.EditQuoteTemplateComponent.QuoteTemplateTextCodePMList;
+            windowArgs.QuoteTemplateTextCodePMList = this.EditQuoteTemplateComponent.QuoteTemplateTextCodeLists;
             windowArgs.QuotePM = this.EditQuoteTemplateComponent.QuotePM;
             var logWindow = new LogitudeWindow();
             logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.QuoteHeader" + "Settings");

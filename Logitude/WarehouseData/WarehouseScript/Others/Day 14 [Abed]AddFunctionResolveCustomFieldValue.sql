@@ -42,7 +42,7 @@ SET @MyValueOut = CONVERT(NUMERIC(38,3), @FieldValue)
 end
 
 
-ELSE if(@MyValueOut is null) begin set @MyValueOut = @FieldValue; end
+ELSE begin set @MyValueOut = null; end
 
   RETURN(@MyValueOut); 
 

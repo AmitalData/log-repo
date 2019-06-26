@@ -335,8 +335,9 @@ export class ExcelTariffLines {
 
 export class UpdateSurchargeArgs {
     TariffId: string;
-    From: string[];
-    To: string[];
-    Surcharge: string[];
+    VersionNumber: number;
+    From: string[] = [];
+    To: string[] = [];
+    Surcharge: string[] = [];
     StartDate: Date;
 }
