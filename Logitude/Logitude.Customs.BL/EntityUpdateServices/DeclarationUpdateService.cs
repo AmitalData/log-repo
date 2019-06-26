@@ -586,6 +586,26 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 text = TranslateTextsClass.Translate(declarationValidator.ErrorCode[0], myDeclarationPM.Tenant, true);
             }
 
+            //Check Importer Code
+            if (!string.IsNullOrWhiteSpace(myDeclarationPM.ImporterCode) && string.IsNullOrWhiteSpace(myDeclarationPM.ImporterId))
+            {
+                if (myDeclarationPM.ImporterCode.Length != 9)
+                {
+                    text = "אורך שדה יבואן שונה מ 9 תווים";
+                }
+                else
+                {
+                    string digit = myDeclarationPM.ImporterCode.Substring(8);
+                    int checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(myDeclarationPM.ImporterCode);
+
+                    if (digit != checkDigit.ToString())
+                    {
+                        text = TranslateTextsClass.Translate(("Customs.Declaration.O.CorrectDigit") + checkDigit.ToString(), myDeclarationPM.Tenant, true);
+                    }
+                }
+
+            }
+
             if (!string.IsNullOrWhiteSpace(text))
             {
                 LogMessagingUtil.Instance.AppendLine(text);
