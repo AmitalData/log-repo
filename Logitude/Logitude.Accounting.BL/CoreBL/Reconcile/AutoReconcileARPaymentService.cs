@@ -236,7 +236,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reconcile
 
                 if (autoReconcileRecordList.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionID) && string.IsNullOrWhiteSpace(r.JournalId)))
                 {
-                    throw new Exception("after GetByJournalsAccountingEntityIds  Not All rows have  JournalId ");
+                   // throw new Exception("after GetByJournalsAccountingEntityIds  Not All rows have  JournalId ");
                 }
             }
         }

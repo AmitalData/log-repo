@@ -184,6 +184,11 @@ export class BankAccountPM {
     public set TransferGLAcccountEnglishName(newValue: string) { if (this.transferGLAcccountEnglishName != newValue) { this.transferGLAcccountEnglishName = newValue; this.MarkAsDirty("TransferGLAcccountEnglishName"); } }
        
 	 
+    private isBankPageEvent: boolean;
+    public get IsBankPageEvent() { return this.isBankPageEvent; }
+    public set IsBankPageEvent(newValue: boolean) { if (this.isBankPageEvent != newValue) { this.isBankPageEvent = newValue; this.MarkAsDirty("IsBankPageEvent"); } }
+       
+	 
 
     public OldEntityPM: BankAccountPM;
 		
