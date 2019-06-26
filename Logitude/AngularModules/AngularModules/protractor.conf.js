@@ -18,6 +18,12 @@ exports.config = {
       TransportMode: null,
       ShipmentType: null,
       },
+
+      ReportDoc: {
+          ScenarioType: null,
+
+      },
+
       FullAccount: {
           FullAccountingType:null,
       }
@@ -39,7 +45,9 @@ exports.config = {
   onPrepare() {
     require('ts-node').register({
       project: 'e2e/tsconfig.e2e.json'
-    });
+      });
+      console.log(browser.params.Env);
+      console.log(browser.params.ReportDoc.ScenarioType);
       if (browser.params.Env == "prod") {
           browser.params.Link = "https://system.logitudeworld.com";
           browser.params.Login.Email = "razantest@protractor.com";
@@ -103,14 +111,14 @@ exports.config = {
   suites: {
     // ********************* Login **********************************
       login: 'e2e/Login/**/Login.e2e-spec.ts',
-     // FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
-    //  ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
-    //  CRM: 'e2e/CRM/**/CRMModule-spec.ts',
-    //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
+      FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
+      ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
+      CRM: 'e2e/CRM/**/CRMModule-spec.ts',
+     // 'e2e/LogBox/Login/**/Login.e2e-spec.ts'
 
-    //NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
-     // NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
-    //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
+    NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+      //NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
+      //Contact: 'e2e/Contacts/**/Contacts-spec.ts',
 
     //EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
     //  ShipmentSearch: 'e2e/Operations/**/ShipmentSearch.e2e-spec.ts',
@@ -131,7 +139,7 @@ exports.config = {
      Reports: 'e2e/Report/**/Report-spec.ts',
 
     //*************DocOutTab************** */
-   // DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
+    DocOut: 'e2e/**/DocsOut.e2e-spec.ts'
 
 
   },
