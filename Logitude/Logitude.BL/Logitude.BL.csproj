@@ -337,6 +337,7 @@
     <Compile Include="CommonDataModel\EntityPMs\AirlineAreaPM.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AirlineAreasPortQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\AirlineAreaQuery.cs" />
+    <Compile Include="CommonDataModel\Tools\DataMapping\AirlineAreaMapping.cs" />
     <Compile Include="QuoteModel\CustomFilters\QuoteTemplateCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\WarehouseCustomFilter.cs" />
     <Compile Include="CommonDataModel\DataContracts\ShipmentPickUpDeliverySL.cs" />

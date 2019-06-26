@@ -3,10 +3,6 @@ import {Http, Headers} from '@angular/http';
 import {Observable}     from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
-import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
-import {TariffPM} from '../EntityPMs/TariffPM';
-import {TariffPMService} from './StandardPMs/TariffPMService';
-import {TariffList} from '../EntityLists/TariffList';
 import { TariffSettingPM } from '../EntityPMs/TariffSettingPM';
 import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass'
 
@@ -234,6 +230,24 @@ export class TariffDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    PostUpdateSurcharge(filter: UpdateSurchargeArgs) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + "/PostUpdateSurcharge", JSON.stringify(filter), {
+                headers: authHeader,
+            }).map(response => {
+                var result = response.json();
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
+    }
 }
 
 export class TariffSummery {
@@ -250,8 +264,6 @@ export class TariffFilterParameter {
     TariffType: string;
     FileName: string;
 }
-
-
 
 export class TariffSearchSummary {
     Id: string;
@@ -319,4 +331,12 @@ export class ExcelTariffLines {
     Index: number;
     Notes: string;
     IsUploaded: boolean;
+}
+
+export class UpdateSurchargeArgs {
+    TariffId: string;
+    From: string[];
+    To: string[];
+    Surcharge: string[];
+    StartDate: Date;
 }
