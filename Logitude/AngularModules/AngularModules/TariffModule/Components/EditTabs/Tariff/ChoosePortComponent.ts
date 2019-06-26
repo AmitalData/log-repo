@@ -13,6 +13,7 @@ export class ChoosePortComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: DestinationClass;
     public ObjectTableName = "Tariff";
+    public ValidationErrorsList: string[] = [];
     constructor() {
         super();
     }
@@ -45,14 +46,32 @@ export class ChoosePortComponent extends BaseComponent {
 
 
     AddButtonClicked() {
-        var newItem: DestinationClass = new DestinationClass(this.DataContext.fatherComponent, this.DataContext.Type, this.Port)
+        var errors: string[] = [];
 
         if (this.DataContext.Type == "From") {
-            this.DataContext.fatherComponent.FromObsList.push(newItem);
+            if (this.DataContext.fatherComponent.FromObsList.filter(d => d.Code == this.Port.Code).length > 0) {
+                errors.push("Port with the same code already added");
+            }
         }
 
         else {
-            this.DataContext.fatherComponent.ToObsList.push(newItem);
-        }        
+            if (this.DataContext.fatherComponent.ToObsList.filter(d => d.Code == this.Port.Code).length > 0) {
+                errors.push("Port with the same code already added");
+            }
+        }
+
+        this.ValidationErrorsList = errors;
+        
+        if (errors.length == 0) {
+            var newItem: DestinationClass = new DestinationClass(this.DataContext.fatherComponent, this.DataContext.Type, this.Port)
+
+            if (this.DataContext.Type == "From") {
+                this.DataContext.fatherComponent.FromObsList.push(newItem);
+            }
+
+            else {
+                this.DataContext.fatherComponent.ToObsList.push(newItem);
+            }
+        }
     }
 }
