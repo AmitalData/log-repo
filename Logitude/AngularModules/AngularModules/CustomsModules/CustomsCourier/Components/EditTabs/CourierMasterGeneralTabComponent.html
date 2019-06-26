@@ -312,6 +312,7 @@
                                 [LookUpTableName]="'Customs.DeliverySiteType'">
                         </LogLov>
                     </td>
+
                 </tr>
             </table>
         </td>
@@ -326,7 +327,7 @@
                         <LogLabel [ObjectFieldName]="'TruckerId'" [ObjectTableName]="ObjectTableName"
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
-                    <td colspan="2" style="width:180px">
+                    <td style="width:150px">
                         <LogLov [ObjectFieldName]="'TruckerId'"
                                 [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"
@@ -335,9 +336,13 @@
                                 [HideAddLink]="true"
                                 [LookUpTableName]="'Card'"
                                 [DependencyFilter1Value]="'TR'"
-                                [DisplayFieldsFromList]="'Code,LocalName,EnglishName'">
+                                [DisplayFieldsFromList]="'Code,LocalName'"
+                                [HideColumns]="true"
+                                [RunToggleMode]="true">
                         </LogLov>
                     </td>
+
+                    <td style="width:30px"></td>
                 </tr>
             </table>
         </td>
