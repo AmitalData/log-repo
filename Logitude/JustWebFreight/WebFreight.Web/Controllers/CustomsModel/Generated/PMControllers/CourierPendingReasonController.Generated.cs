@@ -108,6 +108,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         //{
                            //ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "N", loggedContact.Id);
                         //}
+                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Customs.CourierPendingReason");
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -146,6 +147,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 						service.InitializeEntityPM(entityPM);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         service.Update(entityPM, true);
+                        TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Customs.CourierPendingReason");
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
                         //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("CourierPendingReason", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
