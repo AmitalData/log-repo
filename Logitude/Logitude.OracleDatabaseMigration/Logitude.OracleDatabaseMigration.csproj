@@ -320,6 +320,18 @@
     <Compile Include="Migrations\201906130950285_NewTableDeclarationPendings.Designer.cs">
       <DependentUpon>201906130950285_NewTableDeclarationPendings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906241435332_sync_null.cs" />
+    <Compile Include="Migrations\201906241435332_sync_null.Designer.cs">
+      <DependentUpon>201906241435332_sync_null.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906241448200_CustomsSettingCompanyType.cs" />
+    <Compile Include="Migrations\201906241448200_CustomsSettingCompanyType.Designer.cs">
+      <DependentUpon>201906241448200_CustomsSettingCompanyType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906250644067_InterfaceManagement_InterfaceType.cs" />
+    <Compile Include="Migrations\201906250644067_InterfaceManagement_InterfaceType.Designer.cs">
+      <DependentUpon>201906250644067_InterfaceManagement_InterfaceType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -546,6 +558,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906130950285_NewTableDeclarationPendings.resx">
       <DependentUpon>201906130950285_NewTableDeclarationPendings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906241435332_sync_null.resx">
+      <DependentUpon>201906241435332_sync_null.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906241448200_CustomsSettingCompanyType.resx">
+      <DependentUpon>201906241448200_CustomsSettingCompanyType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906250644067_InterfaceManagement_InterfaceType.resx">
+      <DependentUpon>201906250644067_InterfaceManagement_InterfaceType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
