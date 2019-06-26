@@ -38,6 +38,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     froalaEditorSetting: FroalaEditorSetting;
     public ValidationErrorsList: string[];
     QuoteTemplateSectionTypeName: string = "Packages";
+    EditQuoteTemplateComponent: any;
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 
 
@@ -56,7 +57,7 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
         this.quoteTemplateTextDesignExtendedPMService = new QuoteTemplateTextDesignExtendedPMService();
         this.quoteTemplateSectionExtendedPMService = new QuoteTemplateSectionExtendedPMService();
         
-
+      
     }
 
     ngOnInit() {
@@ -69,9 +70,14 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
         this.QuoteTemplateSectionTypeName = args.QuoteTemplateSectionTypeName
         this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
         this.QuoteTemplateSectionViewModel = args.QuoteTemplateSectionViewModel;  
-        
+        this.EditQuoteTemplateComponent = args.EditQuoteTemplateComponent;  
+     
+
+
         this.QuoteId = args.QuoteId;  
-        var areaTypeString = "Logo,Text,None";
+        var areaTypeString = "Logo,Text";
+        if (this.QuoteTemplateSectionTypeName == "Header") areaTypeString += ",Quote Header";
+        areaTypeString += ",None";
 
         this.AreaType = areaTypeString.split(',');
 
@@ -311,29 +317,65 @@ export class QuoteTemplateHeaderFooterSettingComponent extends BaseComponent imp
     EditPageArea(type: string) {
 
 
-        var windowArgs: any = {};
-        var logWindow = new LogitudeWindow();
-        windowArgs.QuoteTemplateSettingPM = this.QuoteTemplateSettingPM;
-        windowArgs.QuoteTemplateSectionTypeName = this.QuoteTemplateSectionTypeName;
-        windowArgs.AreaType = type;
 
-        if (type == "Area1") windowArgs.AreaMode = this.PageArea1Type; 
-        else if (type == "Area2") windowArgs.AreaMode = this.PageArea2Type;
-        else if (type == "Area3") windowArgs.AreaMode = this.PageArea3Type;
-      
-        logWindow.WindowArgs = windowArgs;
-        logWindow.Width = 800;
-        logWindow.Height = 600;
-        logWindow.BottomBorderForTitle = "1px solid LightGray";
-        logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.Edit" + type); 
-        logWindow.Show("./QuoteModules/QuoteTemplates/Components/PageAreaHeaderFooterComponent");
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event == "Refresh") {
-                this.IsChangeSetting = true;
-                this.RefreshQuoteTemplateSectionBodyHtml();
-            }
-        });
+        if ((type == "Area1" && this.PageArea1Type == "Quote Header") || (type == "Area2" && this.PageArea2Type == "Quote Header") || (type == "Area3" && this.PageArea3Type == "Quote Header")) {
+            this.ShowQuoteHeaderEditWindow();
+        } else {
 
+            var windowArgs: any = {};
+            var logWindow = new LogitudeWindow();
+            windowArgs.QuoteTemplateSettingPM = this.QuoteTemplateSettingPM;
+            windowArgs.QuoteTemplateSectionTypeName = this.QuoteTemplateSectionTypeName;
+            windowArgs.AreaType = type;
+
+            if (type == "Area1") windowArgs.AreaMode = this.PageArea1Type;
+            else if (type == "Area2") windowArgs.AreaMode = this.PageArea2Type;
+            else if (type == "Area3") windowArgs.AreaMode = this.PageArea3Type;
+
+            logWindow.WindowArgs = windowArgs;
+            logWindow.Width = 800;
+            logWindow.Height = 600;
+            logWindow.BottomBorderForTitle = "1px solid LightGray";
+            logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.Edit" + type);
+            logWindow.Show("./QuoteModules/QuoteTemplates/Components/PageAreaHeaderFooterComponent");
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                if ($event == "Refresh") {
+                    this.IsChangeSetting = true;
+                    this.RefreshQuoteTemplateSectionBodyHtml();
+                }
+            });
+        }
+    }
+
+
+    ShowQuoteHeaderEditWindow() {
+        if (this.EditQuoteTemplateComponent) {
+            var windowArgs: any = {};
+            windowArgs.QuoteTemplatePM = this.QuoteTemplatePM;
+            windowArgs.QuoteTemplateSettingPM = this.QuoteTemplateSettingPM;
+            var quoteTemplateSectionHeaderViewModel = this.EditQuoteTemplateComponent.QuoteTemplateSectionLists.filter(d => d.QuoteTemplateSectionTypeCode == "QH")[0];
+            windowArgs.QuoteTemplateSectionViewModel = quoteTemplateSectionHeaderViewModel;
+            windowArgs.QuoteId = this.EditQuoteTemplateComponent.QuotePM != null ? this.EditQuoteTemplateComponent.QuotePM.Id : "";
+
+            windowArgs.QuoteTemplateSectionTypeName = "QuoteHeader";
+            windowArgs.QuoteTemplateSectionTypeCode = "QH";
+            windowArgs.QuoteTemplateTextCodePMList = this.EditQuoteTemplateComponent.QuoteTemplateTextCodePMList;
+            windowArgs.QuotePM = this.EditQuoteTemplateComponent.QuotePM;
+            var logWindow = new LogitudeWindow();
+            logWindow.Title = TextCodeTranslator.Translate("QuoteTemplate.S.QuoteHeader" + "Settings");
+            logWindow.Width = 940;
+            logWindow.Height = 660;
+            logWindow.WindowArgs = windowArgs;
+
+            logWindow.Show("./QuoteModules/QuoteTemplates/Components/QuoteTemplateHeaderDetailsSettingComponent");
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                if ($event == "Refresh") {
+                    quoteTemplateSectionHeaderViewModel.IsLoaded = false;
+                    this.IsChangeSetting = true;
+                    this.RefreshQuoteTemplateSectionBodyHtml();
+                }
+            });
+        }
     }
 
     SaveChanges() {

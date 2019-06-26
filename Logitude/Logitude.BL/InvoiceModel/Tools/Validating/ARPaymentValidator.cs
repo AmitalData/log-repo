@@ -48,7 +48,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             {
                 paymentMethodCode = paymentMethod.Code;
             }
-
+           
             bool isNegativeAmountEnabled = false;
             if (paymentMethodCode == "FS")
             {
@@ -72,7 +72,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 string msg = TranslateTextsClass.Translate("ARPayment.M.CantSetFutureDatePayment", tenant);
                 throw new ApplicationException(msg);
             }
-
+           
             if (entityPM.AmountInPaymentCurrency == 0)
             {
                 bool isAllowed = false;
@@ -107,6 +107,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 {
                     throw new ApplicationException(rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.ChequeOrPaymentRef", tenant)));
                 }
+              
             }
 
             if (paymentMethodCode == "CC")
@@ -172,7 +173,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             ValidateAccountingSetting(entityPM);
-            ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account, entityPM.Bank);
+            ValidateFullAccounting(entityPM.Tenant, entityPM.BillToId, entityPM.PaymentCurrencyId, cashBook, paymentMethodCode, entityPM.RegisterDate, entityPM.BankAccountId, false, entityPM.ValueDate, entityPM.BankBranch, entityPM.Account, entityPM.Bank );
         }
 
         private static void ValidateAirlineRestriction(string myCardId, int tenant)
@@ -319,7 +320,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             return glaAccount;
         }
-
+       
         public static void ValidateFullAccounting(int tenant, string billToId, string paymentCurrencyId, CashBookPM cashBook, string code, DateTime? registerDate, string bankAccountId, bool isOut = false, DateTime? valueDate = null, string branch = null, string account = null, string bank=null)
         {
             var errors = "";
@@ -369,6 +370,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         string rmsg = TranslateTextsClass.Translate("General.M.FieldIsRequired", tenant, showLocal);
                         errors += rmsg.Replace("%FieldName", TranslateTextsClass.Translate("ARPayment.F.Bank", tenant, useLocal)) + ";";
+                    }
+                    if(code  == "CH" && valueDate != null && registerDate != null)
+                    {
+                        ValidateValueDate(valueDate, registerDate , tenant);
                     }
                 }
                 GLAccountPM glAccount = getGLAccount(billToId, tenant);
@@ -455,7 +460,17 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
+        public static void ValidateValueDate(DateTime? valueDate, DateTime? registerDate, int tenant)
+        {
+            DateTime date = registerDate.Value.AddDays(-180);
+            ContactPM contact = GetLoggedContact(tenant);
+            bool showLocal =(bool) !contact?.DontShowLocal;
+            if (valueDate < date)
+            {
+                throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.OlderThan180Days",tenant , showLocal));
+            }
 
+        }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         private static ContactPM GetLoggedContact(int tenant)
         {

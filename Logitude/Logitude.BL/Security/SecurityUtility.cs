@@ -4,6 +4,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.Validators;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -39,7 +40,7 @@ namespace Logitude.BL.Security
             throw new AutenticationException("Sorry! this user is not authorized!");
         }
 
-
+       static   ContactInformation contactinfo;
         public static void CheckContactFeature(string objectTableName, string featureCode, int tenant, string overrideEmail = null)
         {
             bool exists = false;
@@ -55,11 +56,11 @@ namespace Logitude.BL.Security
             if (!string.IsNullOrEmpty(overrideEmail))
             {
                 string email = overrideEmail;//HttpContext.Current.User.Identity.Name;
-                ContactInformation contactinfo = GetContactInfo(email, tenant);
+                 contactinfo = GetContactInfo(email, tenant);
 
                 if (contactinfo != null)
                 {
-                    if (contactinfo.IsLogitudeAdmin || contactinfo.IsApi)
+                    if (contactinfo.IsApi)
                     {
                         exists = true;
                     }
@@ -101,10 +102,11 @@ namespace Logitude.BL.Security
                     }
                     ip = currentIP;
                 }
-
+                bool showLocal = contactinfo != null ? (!contactinfo.DontShowLocalLabels) : false;
+                string objectTableLocalName = TextCodesTranslator.TranslateText(objectTableName, tenant, showLocal);
                 //AzureLog.SaveLogsInStorage(errorMessage, "E", DateTime.Now, errorMessage, null, 0, HttpContext.Current.User.Identity.Name, HttpContext.Current.User.Identity.Name, ip);
-
-                throw new Exception("Sorry! you have no permission to do this operation on " + objectTableName);
+                string error = TextCodesTranslator.TranslateText("Accounting.General.O.YouDontHavePermission", tenant, showLocal);
+                throw new Exception(error + " "+ objectTableLocalName);
             }
 
 
@@ -244,6 +246,7 @@ namespace Logitude.BL.Security
                                 IsLogitudeAdmin = isLogitudeAdmin,
                                 RolesIds = allRolesIds,
                                 PackagesCodes = allPackages,
+                                DontShowLocalLabels = contact.DontShowLocalLabels
                             };
                             //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
 

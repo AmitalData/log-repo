@@ -42,7 +42,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public AirlineAreaPM GetSinglePM(string id, int tenant)
         {
             AirlineAreaPM myResult
-                = (from a in repository.context.AirlineAreas
+                = (from a in repository.context.AirlineAreas.Include("User").Include("User.Contact")
                    where a.Id == id && a.Tenant == tenant
                    select new AirlineAreaPM()
                    {
@@ -55,6 +55,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        Tenant = a.Tenant,
                        UpdateDate = a.UpdateDate,
                        UpdatedByUserId = a.UpdatedByUserId,
+                       CreatedByUserName = a.CreatedByUser == null ? null : a.CreatedByUser.Contact.EnglishName,
+                       UpdatedByUserName = a.UpdatedByUser == null ? null : a.UpdatedByUser.Contact.EnglishName,
+
                    }).FirstOrDefault();
 
             return myResult;
@@ -65,8 +68,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         internal List<AirlineAreaPM> GetAirlineAreasPMsByAirlineId(string airlineId, int tenant)
         {
 
-            IQueryable<AirlineArea> iQueryable = (from a in repository.context.AirlineAreas
-                                                         where a.AirlineId == airlineId && a.Tenant == tenant
+            IQueryable<AirlineArea> iQueryable = (from a in repository.context.AirlineAreas.Include("User").Include("User.Contact")
+                                                  where a.AirlineId == airlineId && a.Tenant == tenant
                                                          select a);
 
             List<AirlineAreaPM> airlineAreas = this.MapPocoToPM(iQueryable);
@@ -100,8 +103,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        UpdateDate = a.UpdateDate,
                                                        CreateDate = a.CreateDate,
                                                        CreatedByUserId = a.CreatedByUserId,
-                                                       
-                                                                  }).ToList();
+                                                       CreatedByUserName = a.CreatedByUser == null ? null : a.CreatedByUser.Contact.EnglishName,
+                                                       UpdatedByUserName = a.UpdatedByUser == null ? null : a.UpdatedByUser.Contact.EnglishName,
+
+                                                   }).ToList();
             return myResult;
         }
 
@@ -120,6 +125,26 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 PortId = a.PortId,
 
                                             }).ToList();
+
+            return myResult;
+        }
+
+        public List<AirlineAreaList> GetAirlineAreasByAirlineId(string airlineId, int tenant)
+        {
+            List<AirlineAreaList> myResult = (from a in repository.context.AirlineAreas
+                                                 where a.Tenant == tenant && a.AirlineId == airlineId
+                                                 select new AirlineAreaList()
+                                                 {
+                                                     CreateDate = a.CreateDate,
+                                                     Id = a.Id,
+                                                     AirlineId = a.AirlineId,
+                                                     CreatedByUserId = a.CreatedByUserId,
+                                                     Description = a.Description,
+                                                     Name = a.Name,
+                                                     Tenant = a.Tenant,
+                                                     UpdateDate = a.UpdateDate,
+                                                     UpdatedByUserId = a.UpdatedByUserId,
+                                                 }).ToList();
 
             return myResult;
         }

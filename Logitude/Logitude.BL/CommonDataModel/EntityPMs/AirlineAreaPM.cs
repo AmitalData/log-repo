@@ -18,6 +18,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public int Tenant { get; set; }
 
+
+        [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AirlineId { get; set; }
 
@@ -41,10 +43,15 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string UpdatedByUserId { get; set; }
 
+        public string CreatedByUserName { get; set; }
+        public string UpdatedByUserName { get; set; }
+
+        [DataMember]
+        public ChangeSetOperation ChangeSetOp { get; set; }
 
         private List<AirlineAreasPortPM> airlineAreasPorts;
         [Include]
-        [Association("AirlineAreasPortAirlineArea", "Id", "AirlineAreaId")]
+        [Association("AirlineAreasPortPM", "Id", "AirlineAreaId")]
         [Composition]
         public virtual List<AirlineAreasPortPM> AirlineAreasPorts
         {
