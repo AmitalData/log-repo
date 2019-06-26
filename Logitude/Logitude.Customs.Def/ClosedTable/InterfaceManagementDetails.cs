@@ -2597,6 +2597,7 @@ namespace Logitude.Customs.Def.ClosedTable
             newPoco.SendAsDual = this.SendAsDual;
             newPoco.ResponseInterfaceCode = this.ResponseInterfaceCode;
             newPoco.SignatureTypeCode = this.SignatureTypeCode;
+            newPoco.InterfaceType = this.InterfaceType;
             //   newPoco.NeedSignature = this.NeedSignature;
         }
 
