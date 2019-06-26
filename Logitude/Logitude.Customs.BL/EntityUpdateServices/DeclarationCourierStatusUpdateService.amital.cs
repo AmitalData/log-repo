@@ -37,14 +37,25 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             DeclarationCourierStatusPM dbOccDeclarationCourierStatusPM = GetDBEntity(dirtyDeclarationCourierStatusPM);
 
-            if ((!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.CourierPendingReasonCode) && dirtyDeclarationCourierStatusPM.CourierPendingReasonCode != dbOccDeclarationCourierStatusPM.CourierPendingReasonCode)
-                 || (!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.PendingRemarks) && dirtyDeclarationCourierStatusPM.PendingRemarks != dbOccDeclarationCourierStatusPM.PendingRemarks))
+            //if ((!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.CourierPendingReasonCode) && dirtyDeclarationCourierStatusPM.CourierPendingReasonCode != dbOccDeclarationCourierStatusPM.CourierPendingReasonCode)
+            //   || (!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.PendingRemarks) && dirtyDeclarationCourierStatusPM.PendingRemarks != dbOccDeclarationCourierStatusPM.PendingRemarks))
+            if ((!string.IsNullOrEmpty(dirtyDeclarationCourierStatusPM.CourierPendingReasonList) && dirtyDeclarationCourierStatusPM.CourierPendingReasonList != dbOccDeclarationCourierStatusPM.CourierPendingReasonList))
             {
                 CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
-                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(dirtyDeclarationCourierStatusPM.CourierPendingReasonCode, false, false);
-                if (courierPendingReasonPM != null && !string.IsNullOrEmpty(courierPendingReasonPM.UnifreightStatusCode))
+                string[] courierPendingReasonList = dirtyDeclarationCourierStatusPM.CourierPendingReasonList.Split(',').Select(sValue => sValue.Trim()).ToArray();
+                //CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(dirtyDeclarationCourierStatusPM.CourierPendingReasonCode, false, false);
+                foreach (var courierPendingReason in courierPendingReasonList)
                 {
-                    RaiseEventAndStatus(null, courierPendingReasonPM.UnifreightStatusCode, myDeclarationPM, dirtyDeclarationCourierStatusPM.PendingRemarks, true);
+                    if (!string.IsNullOrWhiteSpace(courierPendingReason))
+                    {
+                        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReason, false, false);
+
+                        if (courierPendingReasonPM != null && !string.IsNullOrEmpty(courierPendingReasonPM.UnifreightStatusCode))
+                        {
+                            RaiseEventAndStatus(null, courierPendingReasonPM.UnifreightStatusCode, myDeclarationPM, dirtyDeclarationCourierStatusPM.PendingRemarks, true);
+                            return;
+                        }
+                    }
                 }
             }
         }

@@ -40,12 +40,12 @@ export class CourierPendingReasonExtendedListService {
         });
     }
 
-    DeleteCourierPendingReasonUnifreightStatus(courierPendingReasonCode: string) {
+    DeleteCourierPendingReasonUnifreightStatus(courierPendingReasonList: string) {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
         return Observable.defer(() => {
-            return this._http.delete(this._apiUrl + '/DeleteCourierPendingReasonUnifreightStatus/?' + 'courierPendingReasonCode=' + courierPendingReasonCode, { headers: authHeader }).map(response => {
+            return this._http.delete(this._apiUrl + '/DeleteCourierPendingReasonUnifreightStatus/?' + 'courierPendingReasonList=' + courierPendingReasonList, { headers: authHeader }).map(response => {
                 var myJsonResult = response.json();
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myJsonResult;

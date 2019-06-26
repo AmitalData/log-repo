@@ -165,7 +165,7 @@
         <span data-toggle="tooltip" data-placement="bottom" title="{{_CourierWorksheet['PendingRemarks']}}">{{_CourierWorksheet.CourierPendingReasonName}}</span>
     </div>
 
-    <div *ngIf="fieldName == 'CourierPendingReasonCode'" (click)="ButtonClick($event)">
+    <div *ngIf="fieldName == 'CourierPendingReasonList'" (click)="ButtonClick($event)">
         <div (click)="ButtonClick($event)">
             <courier-filter-button #MyDropdownMenuFilterComponent
                                    (DropdownMenuButtonClicked)="DropdownMenuButtonClicked(event);PrepareDropdownMenuFilter($event,_CourierWorksheet['DeclarationId'])"
@@ -178,13 +178,13 @@
 
                 <div dir="RTL" class="class-dropdownfilter-content" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose()">
                     <ul *ngIf="_IsDropdownMenuFilterReady" class="P-button-drop-menu" style="width:120px; ">
-                        <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
+                        <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] == null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Insert');">
                             <span>הזנת Pending</span>
                         </li>
-                        <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Update');">
+                        <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Update');">
                             <span>עדכון Pending</span>
                         </li>
-                        <li *ngIf="_CourierWorksheet['CourierPendingReasonCode'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
+                        <li *ngIf="_CourierWorksheet['CourierPendingReasonList'] != null" (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); CourierPendingReasonCommand($event,_CourierWorksheet['DeclarationId'],'Delete');">
                             <span>מחיקת Pending</span>
                         </li>
 

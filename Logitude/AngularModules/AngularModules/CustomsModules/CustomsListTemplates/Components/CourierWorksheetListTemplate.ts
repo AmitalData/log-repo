@@ -595,15 +595,16 @@ export class CourierWorksheetListTemplate {
                 }
                 else {
                     if (mode == "Update") {
-                        windowArgs.CourierPendingReasonCode = this._CourierWorksheet.CourierPendingReasonCode;
-                        windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
+                        windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
+                        //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
                     }
                     logitudeWindow.Width = 450;
                     logitudeWindow.Height = 280;
                     logitudeWindow.IsShowCloseButton = false;
                     logitudeWindow.Title = "סימון ב Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
                     logitudeWindow.WindowArgs = windowArgs;
-                    logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+                    //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+                    logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/DeclarationPendingsGeneralComponent');
                     logitudeWindow.WindowClosed.subscribe(($event: any) => {
                         this.RefreshData();
                     });
@@ -616,8 +617,8 @@ export class CourierWorksheetListTemplate {
 
     DeletePending(declarationCourierStatusPM: DeclarationCourierStatusPM) {
         SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-        declarationCourierStatusPM.CourierPendingReasonCode = null;
-        declarationCourierStatusPM.PendingRemarks = null;
+        declarationCourierStatusPM.CourierPendingReasonList = null;
+        //declarationCourierStatusPM.PendingRemarks = null;
         this._DeclarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
             SessionLocator.CurrentSession.StopBusyIndicator();
             this.RefreshData();

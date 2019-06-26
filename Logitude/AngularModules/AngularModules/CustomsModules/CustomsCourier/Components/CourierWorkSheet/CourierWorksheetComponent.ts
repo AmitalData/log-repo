@@ -845,7 +845,7 @@ implements OnDestroy
         });
   
         this.columns.push({
-            FieldName: 'CourierPendingReasonCode',
+            FieldName: 'CourierPendingReasonList',
             DataTypeCode: 'String',
             //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
             Styles: { width: '50px' },
