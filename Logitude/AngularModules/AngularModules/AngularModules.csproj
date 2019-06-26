@@ -145,6 +145,7 @@
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.html" />
+    <Content Include="CRMModules\CRMOccasion\Components\NewEntity\NewOccasionComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\EditProductComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsInTabComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsOutTabComponent.html" />
@@ -456,6 +457,9 @@
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\NewEntity\NewOccasionComponent.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOccasion\ModuleCRMOccasion.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOccasion\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOpportunity\Components\EditTabs\EditProductComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsOutTabComponent.ts" />

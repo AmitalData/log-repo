@@ -6625,7 +6625,7 @@ namespace WebFreight.Web.Helpers
             return result;
         }
 
-        private string ConvertNormalHtmlToEvoHtml(string html, string area = "HeaderFooter")
+        public string ConvertNormalHtmlToEvoHtml(string html, string area = "HeaderFooter")
         {
 
             if (!string.IsNullOrEmpty(html))

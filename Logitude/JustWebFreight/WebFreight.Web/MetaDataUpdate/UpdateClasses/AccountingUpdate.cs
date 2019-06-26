@@ -1838,8 +1838,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OpenFormat", DefaultText = "Open Format", LocalDefaultText = "דוח מבנה אחיד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.VendorsGLAccount", DefaultText = "Internal Cheques can be created only from APPayment for vendors GLAccount", LocalDefaultText = "ניתן להפיק המחאה לכרטיס ספק רק באמצעות הוראת תשלום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.FutureDateNotAllowed", DefaultText = "Can not enter future date", LocalDefaultText = "לא ניתן להקליד תאריך עתידי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OlderThan180Days", DefaultText = "Do not type a value date older than 180 days", LocalDefaultText = "אין להקליד תאריך ערך יותר מ- 180 ימים אחורה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);
 
-
+            
             AddTextCodes.AddTextCode(new TextCodeDetails()
             {
                 Code = "Accounting.General.O.Generate1000",

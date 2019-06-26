@@ -2476,6 +2476,25 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
         #endregion
 
+        public HttpResponseMessage GetAirlineAreas(string airlineId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                AirlineAreaQuery entityQuery = new AirlineAreaQuery(tenant);
+                List<AirlineAreaList> myResult = entityQuery.GetAirlineAreasByAirlineId(airlineId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 }

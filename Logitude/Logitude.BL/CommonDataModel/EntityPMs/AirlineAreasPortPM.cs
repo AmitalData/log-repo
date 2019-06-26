@@ -18,9 +18,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public int Tenant { get; set; }
 
+        [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AirlineAreaId { get; set; }
 
+        [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PortId { get; set; }
 

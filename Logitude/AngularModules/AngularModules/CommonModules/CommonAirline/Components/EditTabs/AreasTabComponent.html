@@ -12,7 +12,7 @@
                             <table>
                                 <tr>
                                     <td style="width:100px">
-                                        <button class="Button">New Area</button>
+                                        <button class="Button" (click)="AddEditAirlineAreaClicked()">New Area</button>
                                     </td>
                                     <td>
 
@@ -51,9 +51,9 @@
                                                         <td class="GridViewCell" style="width: 150px;">{{item.Name}}</td>
                                                         <td class="GridViewCell" style="width: 170px;">{{item.Description}}</td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.CreatedByUserName}}</td>
-                                                        <td class="GridViewCell" style="width: 150px;">{{item.CreateDate}}</td>
+                                                        <td class="GridViewCell" style="width: 150px;">{{item.CreateDate | DateTimePipe:'SD'}}</td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.UpdatedByUserName}}</td>
-                                                        <td class="GridViewCell" style="width: 150px;">{{item.UpdateDate}}</td>
+                                                        <td class="GridViewCell" style="width: 150px;">{{item.UpdateDate | DateTimePipe:'SD'}}</td>
                                                         <td class="GridViewCell" style="width: 50px;"></td>
 
                                                     </tr>

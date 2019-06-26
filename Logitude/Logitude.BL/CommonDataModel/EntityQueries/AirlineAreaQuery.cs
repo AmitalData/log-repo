@@ -128,5 +128,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return myResult;
         }
+
+        public List<AirlineAreaList> GetAirlineAreasByAirlineId(string airlineId, int tenant)
+        {
+            List<AirlineAreaList> myResult = (from a in repository.context.AirlineAreas
+                                                 where a.Tenant == tenant && a.AirlineId == airlineId
+                                                 select new AirlineAreaList()
+                                                 {
+                                                     CreateDate = a.CreateDate,
+                                                     Id = a.Id,
+                                                     AirlineId = a.AirlineId,
+                                                     CreatedByUserId = a.CreatedByUserId,
+                                                     Description = a.Description,
+                                                     Name = a.Name,
+                                                     Tenant = a.Tenant,
+                                                     UpdateDate = a.UpdateDate,
+                                                     UpdatedByUserId = a.UpdatedByUserId,
+                                                 }).ToList();
+
+            return myResult;
+        }
     }
 }
