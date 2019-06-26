@@ -120,7 +120,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         FileUploadedName, 
 	         ConcurrencyGUID, 
 	         NewConcurrencyGUID, 
-	         IsApprovingDraftVersion,
+	         IsApprovingDraftVersion, 
+	         IsSurchargeUpdate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
