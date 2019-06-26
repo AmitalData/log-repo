@@ -36,6 +36,7 @@ using System.Transactions;
 using System.Xml;
 using System.Xml.Serialization;
 using Logitude.Customs.Def.Messaging.Customs;
+using Logitude.Customs.Data.EntityPOCOs;
 
 //using Simplog.Infrastructure.SimplogUtilities;
 
@@ -1702,6 +1703,7 @@ After that Remove file  from DCA  .. ");
 
 
                 MyCustomsRequestsSheetPM.ChangeSetOp = ChangeSetOperation.Update;
+                _CustomsRequestsSheetUpdateService.CommLogStepCanCancelledAction = CommLogStepCanCancelled;
                 _CustomsRequestsSheetUpdateService.Update(MyCustomsRequestsSheetPM, true);
                 scope.Complete();
             }
@@ -1713,7 +1715,12 @@ After that Remove file  from DCA  .. ");
                 CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue
                     , "FailSheet" + curException.Message, curException);
         }
-
+        public static void CommLogStepCanCancelled(CustomsRequestsSheet entityPOCO,
+          CustomsRequestsSheetPM entityPM, DateTime? nowIs
+          )
+        {
+            LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetDomainModelService:CommLogStepCanCancelled :do nothing");
+        }
         private SheetStatusEnum GetRequestSheetStatusCodeDone(CustomsStepEnum step)
         {
             /*
