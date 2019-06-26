@@ -1,1 +1,83 @@
-areas
+
+<div class="TabHolder" *ngIf="ResourcesReady">
+    <table>
+        <tr style="height:5px">
+            <td></td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top">
+                <table>
+                    <tr style="height:30px">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width:100px">
+                                        <button class="Button" (click)="AddEditAirlineAreaClicked()">New Area</button>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="height:5px">
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:top">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="SimpleGridView">
+                                            <div class="SimpleGridViewHeader">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 150px;">{{'AirlineArea.F.Name' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width: 170px;">{{'AirlineArea.F.Description' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width: 150px;">{{'AirlineArea.F.CreatedByUserName' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width: 150px;">{{'AirlineArea.F.CreateDate' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width: 150px;">{{'AirlineArea.F.UpdatedByUserName' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width: 150px;">{{'AirlineArea.F.UpdateDate' | TextCodeTranslationPipe}}</td>
+
+                                                        <td style="width: 50px;"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <div class="SimpleGridViewBody">
+                                                <table>
+                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of EntityPM.AirlineAreas" (click)="Selecting(item)">
+                                                        <td class="GridViewCell" style="width: 150px;">{{item.Name}}</td>
+                                                        <td class="GridViewCell" style="width: 170px;">{{item.Description}}</td>
+                                                        <td class="GridViewCell" style="width: 150px;">{{item.CreatedByUserName}}</td>
+                                                        <td class="GridViewCell" style="width: 150px;">{{item.CreateDate}}</td>
+                                                        <td class="GridViewCell" style="width: 150px;">{{item.UpdatedByUserName}}</td>
+                                                        <td class="GridViewCell" style="width: 150px;">{{item.UpdateDate}}</td>
+                                                        <td class="GridViewCell" style="width: 50px;"></td>
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                     <td style="width:100px">
+<div></div>
+                                     </td>
+                                </tr>
+                            </table>
+                           
+                            
+                                 </td>
+                            </tr>
+                       </table>
+                 </td>
+            </tr>
+        <tr>
+            <td>
+<div></div>
+            </td>
+        </tr>
+        </table>
+
+    </div>

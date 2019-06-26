@@ -6,6 +6,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 
 @Component({
@@ -82,6 +83,7 @@ export class NewOccasionComponent extends BaseComponent {
     OkButtonClicked() {
         var errors: string[] = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         if (AppTool.IsNullOrEmpty(this.OccasionTypeId)) {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Occasion.F.OccasionTypeId")));

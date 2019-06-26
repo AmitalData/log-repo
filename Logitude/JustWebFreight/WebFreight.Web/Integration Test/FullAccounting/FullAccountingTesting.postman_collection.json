@@ -1,0 +1,970 @@
+{
+	"info": {
+		"_postman_id": "a9369d00-b469-4f15-bec7-d0743a15201c",
+		"name": "FullAccountingTesting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a918d90f-384d-49bc-8fb2-10ac0a489b87",
+						"exec": [
+							"pm.test(\"logged successfuly\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Token);",
+							"    var idvalue2 = (pm.response.json().CurrentTenant);",
+							"    var idvalue3 = (pm.response.json().UserId);",
+							"    var id1exist = idvalue1 !== null;",
+							"    var id2exist = idvalue2 !== null;",
+							"    var id3exist = idvalue3 !== null;",
+							"",
+							"    pm.expect(id1exist);",
+							"    pm.expect(id2exist);",
+							"    pm.expect(id3exist);",
+							"    pm.environment.set(\"Token\",idvalue1);",
+							"    pm.environment.set(\"CurrentTenant\",idvalue2);",
+							"    pm.environment.set(\"LoggedUserId\",idvalue3);",
+							"   ",
+							"   pm.environment.set(\"RandomNum\", _.random(1,50));",
+							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
+							"",
+							"    postman.setNextRequest(\"CreateApprovedJournal\");",
+							"",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"khawla@log itudeworldglobal.com\",\"Password\":\"0597485181@kh\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1109} "
+				},
+				"url": {
+					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1109",
+					"protocol": "http",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"test",
+						"api",
+						"authentication"
+					],
+					"query": [
+						{
+							"key": "tenant",
+							"value": "1109"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateApprovedJournal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7243a2b0-1398-4c75-a8bf-690df9462e98",
+						"exec": [
+							"pm.test(\"CreateJounal \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"JournalId\",idvalue1);",
+							"   tests[\"JournalIdSExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"UpdateChartOFAccount\"); ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":\"{{CurrentTenant}}\",\r\n   \"CreateDate\":\"2019-05-26T18:51:56.7660529+00:00\",\r\n   \"AccountingDate\":\"2019-05-26T00:00:00Z\",\r\n   \"TypeCode\":\"0\",\r\n   \"StatusCode\":\"2\",\r\n   \"CreatedByUserId\":\"{{LoggedUserId}}\",\r\n   \"CreatedByUserName\":\"{{LoggedUserEnglishName}}\",\r\n   \"AccountingEntityCode\":\"1\",\r\n   \"JournalLines\":[  \r\n      {  \r\n         \"$id\":\"2\",\r\n         \"Tenant\":\"{{CurrentTenant}}\",\r\n         \"Line\":1,\r\n         \"ActionCode\":\"3\",\r\n         \"DebitAccountId\":\"{{VendorGLAccountId}}\",\r\n         \"CreditAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"DocumentDate\":\"2019-05-26T00:00:00Z\",\r\n         \"AccountingDate\":\"2019-05-26T00:00:00Z\",\r\n         \"DueDate\":\"2019-05-26T00:00:00Z\",\r\n         \"LocalAmount\":100.0,\r\n         \"CurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForeignAmount\":100.0,\r\n         \"ExchangeRate\":1.0,\r\n         \"ActionTypeCode\":\"3\",\r\n         \"ActionTypeCodeEnum\":3,\r\n         \"ChangeSetOp\":1\r\n      \r\n      }\r\n   ],\r\n   \"UpdateDate\":\"2019-05-26T18:51:57.6763003+00:00\",\r\n   \"UpdatedByUserId\":\"{{LoggedUserId}}\",\r\n   \"ApproveDate\":\"2019-05-26T18:51:57.6919354Z\",\r\n   \"ApprovedByUserId\":\"{{LoggedUserId}}\",\r\n   \"SearchFields\":\"1175\",\r\n   \"AccountingEntityReference\":\"1175\",\r\n   \"IsVoided\":false,\r\n   \"JournalReconciles\":[  \r\n   ],\r\n   \"IsLedgerCreated\":true,\r\n   \"ChangeSetOp\":1,\r\n   \"EncodeBase64NVARCHARFieldsBy\":null\r\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/journals",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"journals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateGlACcount",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n \"Id\":\"{{VendorGLAccountId}}\",\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"19786\",\r\n   \"LocalName\":\"VendGlAccountLocal\",\r\n   \"EnglishName\":\"VendGlAccountEnglggish\",\r\n   \"SearchFields\":\"VendGl,VendGlAccountEnglish,VendGlAccountLocal\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\",\r\n   \"InternalNumber\":\"{{InternalNumber}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/glaccounts/",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"glaccounts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateChartOFAccount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bf8353f-8eda-448e-be80-11b298e69737",
+						"exec": [
+							"pm.test(\"UpdateChartOfAccountRev01\", function () {",
+							"   pm.response.to.have.status(200);",
+							"    var idvalue =(pm.response.json().EnglishName)=== \"PMVendorChartUpdated\" ;",
+							" ",
+							"    var idexist = idvalue !== null;",
+							"    pm.expect(idexist);",
+							" ",
+							"     tests[\"ChartOfAccountUpdatedsuccessfully : \" + idvalue ] = (idvalue);",
+							"    postman.setNextRequest(\"PostARinvoice\"); ",
+							"    ",
+							"   ",
+							"    ",
+							"});",
+							"     ",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Id",
+						"value": "{{ChartOfAccountId}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    {\r\n   \"Id\":\"{{VendorChartOfAccountId}}\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Code\": \"PMCHV\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChartUpdated\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n\r\n \r\n\r\n      "
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TESt/api/chartofaccounts",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TESt",
+						"api",
+						"chartofaccounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostARinvoice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0eca0939-b870-4586-bf02-23ae51c380a9",
+						"exec": [
+							"pm.test(\"CreateARinvoice \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"    var idvalue = (pm.response.json().InvoiceNumber);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"InvoiceId\",idvalue1);",
+							"    pm.environment.set(\"InvoiceNumber\",idvalue); ",
+							"   tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"    postman.setNextRequest(\"GETARinvoice\"); ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"InvoiceNumber\":\"PMARIN{{RandomNum}}\",\r\n   \"ARInvoiceTypeCode\":\"IN\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n   \"BillToPartnerTypeId\":\"CS\",\r\n   \"InvoiceDate\":\"2019-05-31T00:00:00Z\",\r\n   \"DueDate\":\"2019-05-31T00:00:00Z\",\r\n   \"IssuedByUserId\":\"{{LoggedUserId}}\",\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"SubTotalInLocalCurrency\":4000.0,\r\n   \"SubTotalInInvoiceCurrency\":4000.0,\r\n   \"AmountInLocalCurrency\":4000.0,\r\n   \"AmountInInvoiceCurrency\":4000.0,\r\n   \"StatusCode\":\"AD\",\r\n   \"StatusName\":\"Unpaid\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"CreateDate\":\"2019-04-10T19:10:40.2580869Z\",\r\n   \"SearchFields\":\"1066,Accounting Customer 2 \",\r\n  \"IsGeneralInvoice\": true,\r\n   \"AmountDue\":4000.0,\r\n  \r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n\r\n   \"AmountDueInLocalCurrency\":4000.0,\r\n   \"AmountDueInProfitCurrency\":2000.0,\r\n   \r\n\r\n   \"BranchId\":\"{{BranchId}}\",\r\n\r\n   \"InvoiceLines\":[  \r\n      {  \r\n      \t\"Tenant\":\"{{CurrentTenant}}\",\r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n     \r\n         \"ForiegnCurrencyAmount\":4000.0,\r\n         \"LocalCurrencyAmount\":4000.0,\r\n         \"InvoiceCurrencyAmount\":4000.0,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatAmount\":null,\r\n         \"VatTypeName\":\"Exempt\",\r\n        \r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LineNumber\":1,\r\n        \r\n         \"Quantity\":20.0,\r\n         \"UnitPrice\":200.0,\r\n         \"ViewOrder\":0,\r\n         \"MeasurementId\":null,\r\n         \"IsExchangeRateFixed\":false,\r\n        \r\n         \"ProfitCurrencyAmount\":2000.0,\r\n         \"InvoiceLocalCurrencyCode\":null,\r\n         \"InvoiceCurrencyCode\":null,\r\n         \"ChangeSetOp\":1,\r\n         \"CreditAccount\":null,\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"Notes\":null,\r\n         \"DateForInterest\":null,\r\n         \"ValueDate\":null,\r\n         \"GLAccountId\":\"1-266389\",\r\n         \"LineActionCode\":\"1\"\r\n       \r\n      }\r\n   ]\r\n  ,\r\n  \r\n   \"SetApproved\":true,\r\n  \r\n   \"TotalAmountForTaxReport\":4000.0,\r\n   \"TotaVatableAmountForTaxReport\":0.0,\r\n   \"TotalVAT\":0.0,\r\n   \"IsFullAccounting\":true\r\n   \r\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/arinvoices",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"arinvoices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETARinvoice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c8e678c7-54a1-4d6e-88cf-af1e9e0d5960",
+						"exec": [
+							"pm.test(\"GetARinvoice124\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"    ",
+							"     tests[\"ARinvoiceExsits : \" + false] = (true);",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"ARinvoieId\",idvalue);",
+							"",
+							"     tests[\"ARinvoiceExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"PostAPinvoice\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/arinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{InvoiceNumber}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending\n",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"arinvoiceviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{InvoiceNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": "CreateDate"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending\n"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostAPinvoice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33b3da4e-7a5e-48e1-a4fb-9d8cfc32e035",
+						"exec": [
+							"pm.test(\"CreateAPinvoice \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"     var idvalue = (pm.response.json().InvoiceNumber);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"InvoicePId\",idvalue1);",
+							"      pm.environment.set(\"APInvoiceNumber\",idvalue);",
+							"   tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"     postman.setNextRequest(\"GETAPinvoice\");  ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"InternalNumber\":\"Bill3005\",\r\n   \"InvoiceNumber\":\"PMAPIN{{RandomNum}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n  \r\n   \"InvoiceDate\":\"2019-05-31T00:00:00Z\",\r\n   \"PaymentTermId\":\"{{PaymentTermId}}\",\r\n   \"DueDate\":\"2019-06-10T00:00:00Z\",\r\n   \"InvoiceCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"InvoiceCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n  \r\n   \"SubTotalInLocalCurrency\":200.0,\r\n   \"SubTotalInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency\":200.0,\r\n   \"AmountInInvoiceCurrency_Summary\":200.0,\r\n   \"AmountInLocalCurrency\":200.0,\r\n   \"AmountInLocalCurrency_Summary\":200.0,\r\n   \"AmountInProfitCurrency\":100.0,\r\n   \"AmountInProfitCurrency_Summary\":null,\r\n   \"StatusCode\":\"AD\",\r\n   \"CreateDate\":\"2019-06-10T20:46:10.1943336Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n   \"IsClosed\":false,\r\n   \"ProfitCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"ProfitCurrencyExchangeRate\":2.0,\r\n \r\n   \"InvoiceExpectedAmount\":200.0,\r\n   \r\n   \"SearchFields\":\"1205,test\",\r\n  \r\n  \r\n   \"AmountDue\":200.0,\r\n   \"RefundAmount\":null,\r\n   \"AmountDueInLocalCurrency\":1200.0,\r\n   \"AmountDueInProfitCurrency\":600.0,\r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \r\n \r\n   \"VATNumber\":\"5145599\",\r\n   \"AccountingDate\":\"2019-05-31T00:00:00Z\",\r\n   \"IsExternalEntity\":false,\r\n   \"IsGeneralInvoice\":true,\r\n  \r\n   \"InvoiceLines\":[\r\n      {\r\n         \r\n         \"LineNumber\":1,\r\n         \"Tenant\":{{CurrentTenant}},\r\n         \"InvoiceCurrencyAmount\":200.0,\r\n      \r\n         \"ChargesTypeId\":\"{{ChargeId}}\",\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercentage\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"VatIsMultiPercentage\":false,\r\n      \r\n         \"OpenAmount\":null,\r\n         \"ForiegnCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n         \"ForiegnCurrencyAmount\":200.0,\r\n         \"ForiegnExchangeRate\":1.0,\r\n         \"LocalCurrencyAmount\":200.0,\r\n         \"ProfitCurrencyAmount\":100.0,\r\n       \r\n         \"CorrectionNote\":null,\r\n         \"CorrectionByUserId\":null,\r\n         \"CorrectionDate\":null,\r\n         \"AmountTypeCode\":\"NEXP\",\r\n         \"ForiegnCurrencyCode\":\"NIS\",\r\n         \"ChangeSetOp\":1,\r\n         \"DebitAccount\":null,\r\n         \"Description\":\"Air Freight\",\r\n         \"LocalDescription\":\"Air Freight\",\r\n         \"ChargeTypeGLAccountId\":\"{{CustomerGLAccountId}}\",\r\n         \"AuthorizedSignatory\":false,\r\n         \"PrepaidCollectId\":null\r\n      }\r\n   ],\r\n\r\n   \"TotalVATs\":[\r\n      {\r\n         \r\n       \"Tenant\":{{CurrentTenant}},\r\n         \"APInvoiceId\":null,\r\n         \"VatTypeId\":\"{{VatId}}\",\r\n         \"VatPercent\":0.0,\r\n         \"VatTypeName\":\"Exempt\",\r\n         \"VatTypeCell\":\"Exempt (0%)\",\r\n         \"ExternalVATCard\":null,\r\n         \"ExternalTAXItemId\":null,\r\n         \"InvoiceCurrencyVatableAmount\":200.0,\r\n         \"LocalVatableAmount\":200.0,\r\n         \"ProfitVatableAmount\":100.0,\r\n         \"InvoiceCurrencyVATAmount\":0.0,\r\n         \"LocalVATAmount\":0.0,\r\n         \"ProfitCurrencyVATAmount\":0.0,\r\n         \"ChangeSetOp\":1\r\n      }\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n\r\n   \"SetReSendQBO\":false,\r\n   \"JournalNumber\":\"1230\",\r\n   \"ShipmentConcurrencyGUID\":null,\r\n   \"ShipmentNewConcurrencyGUID\":null\r\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/apinvoices",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"apinvoices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETAPinvoice",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "47b856b0-6676-479b-98e0-23be8494bcbe",
+						"exec": [
+							"pm.test(\"GetAPinvoice\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"    ",
+							"     tests[\"APinvoiceExsits : \" + false] = (true);",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"APinvoieId\",idvalue);",
+							"",
+							"     tests[\"APinvoiceExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"PostArpayment\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/apinvoiceviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{APInvoiceNumber}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"apinvoiceviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{APInvoiceNumber}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": "CreateDate"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostArpayment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "08a6f11f-e043-4afa-9961-54bd764aaba9",
+						"exec": [
+							"pm.test(\"CreateARPayment \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"     var idvalue = (pm.response.json().PaymentNo);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"paymentId\",idvalue1);",
+							"      pm.environment.set(\"PaymentNo\",idvalue);",
+							"    ",
+							"    ",
+							"     ",
+							"   tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"   postman.setNextRequest(\"GETArpayment\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"PaymentNo\":\"PMARP{{RandomNum}}\",\r\n   \"CreateDate\":\"2019-06-10T20:14:25.5894288Z\",\r\n   \"CreatedByUserId\":\"1-82355\",\r\n  \r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n  \r\n   \"AmountInPaymentCurrency\":12000.0,\r\n   \"AmountInLocalCurrency\":12000.0,\r\n \r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \"BillToId\":\"{{CustomerId}}\",\r\n \r\n   \"StatusCode\":\"AD\",\r\n   \"IsClosed\":false,\r\n   \"PaymentCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"PaidBy\":null,\r\n   \"AccountingPaymentMethodId\":\"{{PaymentMethodId}}\",\r\n   \"AccountingPaymentMethodCode\":\"CA\",\r\n  \r\n   \"PaymentCurrencyExchangeRate\":1.0,\r\n   \"ExchangeRateDate\":null,\r\n   \"BillToAddressId\":\"{{CustomerAddressId}}\",\r\n   \"RegisterDate\":\"2019-05-31T00:00:00Z\",\r\n   \"SearchFields\":\"ARP2059,AD,CA,Accounting Customer 2 ,NIS\",\r\n   \r\n   \r\n   \"OpenAmount\":12000.0,\r\n   \r\n   \"ValueDate\":\"2019-05-31T00:00:00Z\",\r\n  \r\n   \"UpdatedByUserId\":\"1-82355\",\r\n   \"CreditCardTypeId\":null,\r\n  \r\n   \"SetVoided\":false,\r\n   \"SetApproved\":true,\r\n  \r\n \r\n   \"BillToPartnerTypeId\":\"CS\",\r\n\r\n   \r\n   \"IsFullAccounting\":true\r\n\r\n  \r\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/arpayments",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"arpayments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETArpayment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "110314d4-0ade-4ab5-9da2-28668f51277e",
+						"exec": [
+							"pm.test(\"GetARpaymnet\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"    ",
+							"     tests[\"ARpaymentExsits : \" + false] = (true);",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"APpaymentId\",idvalue);",
+							"",
+							"     tests[\"APpaymentExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(\"POSTAPpayment\");  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/arpaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{PaymentNo}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"arpaymentviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{PaymentNo}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": "CreateDate"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POSTAPpayment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1b3a55a1-8bb8-43c8-98b4-c88638bd1d32",
+						"exec": [
+							"pm.test(\"CreateAPPayment \", function () {",
+							"    pm.response.to.have.status(200);",
+							"    var idvalue1 = (pm.response.json().Id);",
+							"      var idvalue = (pm.response.json().PaymentNo);",
+							"    var id1exist = idvalue1 !== null;",
+							"    pm.expect(id1exist);",
+							"    pm.environment.set(\"APPaymentId\",idvalue1);",
+							"    pm.environment.set(\"APPaymentNo\",idvalue);",
+							"   tests[\"IdExist : \" + id1exist] = (id1exist);",
+							"   postman.setNextRequest(\"GETAPpayment\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":true,\r\n   \"PaymentNo\":\"PMAPP{{RandomNum}}\",\r\n   \"CreateDate\":\"2019-05-20T12:09:35.6\",\r\n   \"CreatedByUserId\":\"1-81443\",\r\n   \r\n   \"LocalCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"LocalCurrencyCode\":\"NIS\",\r\n   \"AmountInLocalCurrency\":100.0,\r\n   \r\n   \"AccountingPaymentMethodId\":\"{{PaymentMethodId}}\",\r\n   \"VendorId\":\"{{VendorId}}\",\r\n   \"StatusCode\":\"AD\",\r\n   \"IsClosed\":false,\r\n   \"PaymentMethodCode\":\"CA\",\r\n   \r\n   \"PaymentCurrencyId\":\"{{AccountingCurrencyId}}\",\r\n   \"AmountInPaymentCurrency\":100.0,\r\n   \"PaymentCurrencyExchangeRate\":1.0,\r\n   \"PaymentCurrencyExchangeRateDate\":null,\r\n   \"VendorAddressId\":\"{{VendorAddressId}}\",\r\n   \"RegisterDate\":\"2019-05-20T00:00:00\",\r\n   \"OpenAmount\":100.0,\r\n   \r\n   \"ValueDate\":\"2019-05-20T00:00:00\",\r\n   \"Bank\":null,\r\n   \"BankBranch\":null,\r\n   \"Account\":null,\r\n   \"SearchFields\":null,\r\n   \"CreatedByUserName\":null,\r\n   \"VendorName\":\"Clal Insurance Company\",\r\n   \"StatusName\":\"Approved\",\r\n   \r\n   \"BranchId\":\"{{BranchId}}\",\r\n   \"UpdateDate\":\"2019-05-20T12:09:35.6\",\r\n   \"UpdatedByUserId\":\"1-81443\",\r\n   \"CreditCardTypeId\":null,\r\n   \"FirstApproveDate\":null,\r\n   \"PaymentInvoices\":[\r\n\r\n   ],\r\n   \"SetVoided\":false,\r\n   \"SetApproved\":false,\r\n   \"SetCancelApproval\":false,\r\n   \"HasInvoicesErrors\":false,\r\n   \"VendorPartnerTypeId\":\"VD\",\r\n   \"SetReSendQBO\":false,\r\n   \"TaxDeductionLocalAmount\":30.00,\r\n   \"TaxDeductionPercentage\":30,\r\n   \"ApprovedByUserId\":null,\r\n   \"ApprovedDateTime\":null,\r\n   \"BankAccountId\":null,\r\n   \"BranchName\":\"Petah Tikva\"\r\n}"
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/appayments",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"appayments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETAPpayment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca77557d-8492-4d13-9f18-d22c2e471f86",
+						"exec": [
+							"pm.test(\"GetAPpaymnet\", function () {",
+							"   pm.response.to.have.status(200);",
+							"   if(pm.response.json().Result.length < 1 ){",
+							"    ",
+							"     tests[\"APpaymentExsits : \" + false] = (true);",
+							"     ",
+							"   }",
+							"   else {",
+							"    ",
+							"var idvalue=pm.response.json().Result[0].Id;",
+							"     pm.environment.set(\"APpaymentId\",idvalue);",
+							"",
+							"     tests[\"APpaymentExsits : \" + true ] = (true);",
+							"    postman.setNextRequest(null);  ",
+							"    }",
+							"   ",
+							"    ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/appaymentviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value={{APPaymentNo}}&GetCount=true&PageIndex=0&PageSize=23&SortBy=CreateDate&SortDirection=Descending",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"appaymentviews",
+						"getbyfilters"
+					],
+					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
+						{
+							"key": "Filter1Name",
+							"value": "SearchFields"
+						},
+						{
+							"key": "Filter1Operator",
+							"value": "Contains"
+						},
+						{
+							"key": "Filter1Value",
+							"value": "{{APPaymentNo}}"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
+						},
+						{
+							"key": "PageIndex",
+							"value": "0"
+						},
+						{
+							"key": "PageSize",
+							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": "CreateDate"
+						},
+						{
+							"key": "SortDirection",
+							"value": "Descending"
+						},
+						{
+							"key": null,
+							"value": null
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LogOut",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dc1963df-4617-43a7-8c46-e5d25efd2a6b",
+						"exec": [
+							"pm.test(\"Logged Out successfuly \", function () {",
+							"    pm.response.to.have.status(200);",
+							" });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"Email\":\"khawla@logitudeworld.com\",\"Password\":\"0597485181@kh\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":989} "
+				},
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/authentication/GetSignOut",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"authentication",
+						"GetSignOut"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

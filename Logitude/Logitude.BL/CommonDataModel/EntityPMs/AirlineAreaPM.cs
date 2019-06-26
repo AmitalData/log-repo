@@ -41,6 +41,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string UpdatedByUserId { get; set; }
 
+        public string CreatedByUserName { get; set; }
+        public string UpdatedByUserName { get; set; }
 
         private List<AirlineAreasPortPM> airlineAreasPorts;
         [Include]

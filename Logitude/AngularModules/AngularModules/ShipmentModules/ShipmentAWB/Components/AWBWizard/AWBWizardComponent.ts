@@ -388,6 +388,7 @@ export class AWBWizardComponent {
             this.EntityPM.TenantZeroAirlineGLSHKNeedsRegistration = masterPM.TenantZeroAirlineGLSHKNeedsRegistration;
             this.EntityPM.CarrierIsCheckDigit = masterPM.CarrierIsCheckDigit;
             this.EntityPM.CarrierIsLimitedLength = masterPM.CarrierIsLimitedLength;
+            this.EntityPM.SCI = masterPM.SCI;
             this.GetAWBSignature();
         }
 
