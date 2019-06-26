@@ -165,6 +165,7 @@ namespace DW_Editor_Tool.Helpers
             }
         }
 
+
         private static DWObjectFieldViewModel BuildObjectFieldViewModel(XmlNode fieldNode, DWObjectTableViewModel tableViewModel)
         {
             DWObjectFieldViewModel fieldViewModel = new DWObjectFieldViewModel(tableViewModel, false);

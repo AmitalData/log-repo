@@ -1,8 +1,11 @@
 ﻿
 using CommunicationWorkerRole.Tasks;
 using Simplog.Data.Helpers;
+using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading;
+
 namespace CommunicationWorkerRole.Tasks
 {
     public class TestLoggingWarningTask : TaskManagerBase
@@ -14,11 +17,17 @@ namespace CommunicationWorkerRole.Tasks
         }
         public override void StartTask()
         {
-            for (int i = 0; i <= 3; i++)
-            {
+            //for (int i = 0; i <= 3; i++)
+            //{
 
-                Logwarning("Log warning # " + i + " , Be careful !!");
+            //    Logwarning("Log warning # " + i + " , Be careful !!");
+            //}
+            if (DateTime.Now.Minute % 5 == 0)
+            {
+                Thread.CurrentThread.Abort();
             }
+            //Thread.Sleep(60000);
+
 
         }
     }

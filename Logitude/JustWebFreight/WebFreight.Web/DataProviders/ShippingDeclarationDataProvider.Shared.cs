@@ -426,5 +426,6 @@ namespace WebFreight.Web.DataProviders
         public string IssuingCarrierAgentName { get; set; }
         public string ARInvoices { get; set; }
         public string SpecialServicesTypeName { get; set; }
+        public string InlandDriver { get; set; }
     }
 }

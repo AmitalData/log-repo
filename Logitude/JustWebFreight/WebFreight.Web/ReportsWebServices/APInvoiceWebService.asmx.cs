@@ -125,9 +125,11 @@ namespace WebFreight.Web.ReportsWebServices
                 invoiceDataProvider.ShipmentNumber = invoice.MainEntityReference;
                 invoiceDataProvider.AccountingNumber = invoice.CreditAccount;
                 invoiceDataProvider.HouseNumber = invoice.HouseNumber;
+                invoiceDataProvider.MasterNumber = invoice.MasterNumber;
                 invoiceDataProvider.Notes = invoice.InternalNotes;
                 invoiceDataProvider.PaymentTerm = invoice.PaymentTermName;
                 invoiceDataProvider.InvoiceCurrency = invoice.InvoiceCurrencyCode;
+                invoiceDataProvider.ExchangeRate = invoice.InvoiceCurrencyExchangeRate == null ? 0 : invoice.InvoiceCurrencyExchangeRate;
 
                 double? invoiceSubTotals = invoice.SubTotalInInvoiceCurrency;
                 double? invoiceAmount = invoice.AmountInInvoiceCurrency;
@@ -517,6 +519,7 @@ namespace WebFreight.Web.ReportsWebServices
                     reportinvoiceline.ForeignAmount = MethodHelper.Round(invoiceline.ForiegnCurrencyAmount, 2);
                     reportinvoiceline.InvoiceAmount = MethodHelper.Round(invoiceline.InvoiceCurrencyAmount, 2);
                     reportinvoiceline.OpenAmount = payable == null ? 0 : payable.OpenAmount;
+                    reportinvoiceline.Notes = invoiceline.Notes != null ? invoiceline.Notes : "";
 
                     invoiceDataProvider.APInvoiceLinesList.Add(reportinvoiceline);
                 }

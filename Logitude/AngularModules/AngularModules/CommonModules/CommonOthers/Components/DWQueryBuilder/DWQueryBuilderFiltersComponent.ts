@@ -2,7 +2,10 @@ import { Component, Input, OnInit, ChangeDetectorRef, OnDestroy, Directive, Outp
 import { DWObjectFieldsDetails } from '../../../../CommonModules/CommonOthers/Components/DWQueryBuilder/DWQueryBuilderComponent';
 import { DWObjectTablePMService } from '../../../../Infrastructure/Services/StandardPMs/DWObjectTablePMService';
 import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
-//import { DWQueryBuilderHelper } from '../../../../Infrastructure/Helpers/DWQueryBuilderHelper';
+
+
+
+
 declare var window: any;
 
 
@@ -18,7 +21,8 @@ export class DWQueryBuilderFiltersComponent implements OnInit {
     SelectedFiltersDataSource: DWObjectFieldsDetails[] = [];
     //allFieldsWithChildrenDataSource: DWObjectFieldsDetails[] = [];
     public AndOrOps = ["And", "Or"];
-    public Types = ["Fixed Filter", "Ask User"];
+
+    public BooleanValues = ["Yes", "No", "No Value"];
     DataContext: any;
     public _DWObjectTablePMService: DWObjectTablePMService;
     public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
@@ -32,12 +36,12 @@ export class DWQueryBuilderFiltersComponent implements OnInit {
     //        this.cd.detectChanges();
     //    }
     //}
-    
+
 
     constructor(private cd: ChangeDetectorRef) {
         //this._DWQueryBuilderHelper = new DWQueryBuilderHelper();
         var ObsList = [];
-        
+
     }
 
     ngOnInit() {
@@ -72,7 +76,7 @@ export class DWQueryBuilderFiltersComponent implements OnInit {
         //    });
         //});
 
-       
+
 
         if (this.SelectedFiltersDataSourceChanged) {
             this.SelectedFiltersDataSourceChanged.subscribe((res) => {
@@ -125,7 +129,7 @@ export class DWQueryBuilderFiltersComponent implements OnInit {
 
     onDeleteFilterClick(item) {
         item.MyParentClass.SelectedFiltersDataSource = this.DeleteField(item, item.MyParentClass.SelectedFiltersDataSource);
-        item.MyParentClass.SaveChanges();
+        item.MyParentClass.ClearData();//SaveChanges();
         //var temp = this.SelectedFiltersDataSource;
         //this.SelectedFiltersDataSource = this.SelectedFiltersDataSource.filter(a => a != item);
         //var temp = this.MyParentClass.SelectedFieldsDataSource;

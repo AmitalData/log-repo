@@ -41,7 +41,10 @@
                                 [ObjectTableName]="ObjectTableName"
                                 [SelectedValue]="ProjectId"
                                 [LookUpTableName]="'TMProject'"
-                                [HideColumns]="true" (SelectedItemChanged)="Project = $event">
+                                [HideColumns]="true" (SelectedItemChanged)="Project = $event"
+                                [DependencyFilter1Value]="false"
+
+                                >
                         </LogLov>
                     </td>
                     <td>
@@ -100,7 +103,7 @@
                                 [SelectedValue]="SprintId" 
                                 [LookUpTableName]="'Sprint'"
                                 [DependencyFilter1Value]="false"
-                                [HideColumns]="true">
+                                [HideColumns]="true" [IsDecendingSort]="true">
                         </LogLov>
                     </td>
                     <td>

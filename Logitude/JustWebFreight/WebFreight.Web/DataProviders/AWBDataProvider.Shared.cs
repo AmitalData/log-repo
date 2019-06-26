@@ -225,6 +225,7 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneePrimaryContactPhone { get; set; }
 
         public string ConsolidatorName { get; set; }
+        public string MainCarriageLeg2_MAWB { get; set; }
     }
 
     public class CommodityLine

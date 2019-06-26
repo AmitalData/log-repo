@@ -139,6 +139,21 @@ export class TMProjectPM {
     public set DayOffTypeCode(newValue: string) { if (this.dayOffTypeCode != newValue) { this.dayOffTypeCode = newValue; this.MarkAsDirty("DayOffTypeCode"); } }
        
 	 
+    private blockedForDataEntry: boolean;
+    public get BlockedForDataEntry() { return this.blockedForDataEntry; }
+    public set BlockedForDataEntry(newValue: boolean) { if (this.blockedForDataEntry != newValue) { this.blockedForDataEntry = newValue; this.MarkAsDirty("BlockedForDataEntry"); } }
+       
+	 
+    private budgetName: string;
+    public get BudgetName() { return this.budgetName; }
+    public set BudgetName(newValue: string) { if (this.budgetName != newValue) { this.budgetName = newValue; this.MarkAsDirty("BudgetName"); } }
+       
+	 
+    private dayOffTypeName: string;
+    public get DayOffTypeName() { return this.dayOffTypeName; }
+    public set DayOffTypeName(newValue: string) { if (this.dayOffTypeName != newValue) { this.dayOffTypeName = newValue; this.MarkAsDirty("DayOffTypeName"); } }
+       
+	 
 
     public OldEntityPM: TMProjectPM;
 		

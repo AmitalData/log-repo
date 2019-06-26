@@ -926,6 +926,7 @@
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.AgentSharedManifest.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustomerFieldsUpdateSetting.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustomsInterface.cs" />
+    <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustomsShipper.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.RegistryDateType.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.TemperatureUnit.cs" />
     <Compile Include="Controllers\AccountingModel\AccountingEntegrityCheckController.cs" />
@@ -1739,6 +1740,7 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\FBLStockController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\CustomsTransmissionsStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentCustomsTransmissionController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\ImporterApprovalReceivedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\PrivateLabelDenialController.cs" />
     <Compile Include="Controllers\ShipmentsModel\PrivateLabelApprovalController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentCustomerTypeViewsController.Generated.cs" />
@@ -4278,6 +4280,7 @@
     <Content Include="WebServices\CommunicationLogsAzureService.asmx" />
     <Content Include="WebServices\ConvertDataProgramWebService.asmx" />
     <Content Include="WebServices\DashBoardWebService.asmx" />
+    <Content Include="WebServices\BuildDocumentReportWebService.asmx" />
     <Content Include="WebServices\DownloadTransferFileWebService.asmx" />
     <Content Include="WebServices\ExcelExportService.asmx" />
     <Content Include="WebServices\ExportDocument.asmx" />
@@ -5972,6 +5975,10 @@
     </Compile>
     <Compile Include="WebServices\DashBoardWebService.asmx.cs">
       <DependentUpon>DashBoardWebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\BuildDocumentReportWebService.asmx.cs">
+      <DependentUpon>BuildDocumentReportWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\DownloadTransferFileWebService.asmx.cs">

@@ -1,17 +1,51 @@
+
 <style type="text/css">
-     @keyframes shake {
-      0% { transform: translate(1px, 1px) rotate(0deg); }
-      10% { transform: translate(-1px, -2px) rotate(-1deg); }
-      20% { transform: translate(-3px, 0px) rotate(1deg); }
-      30% { transform: translate(3px, 2px) rotate(0deg); }
-      40% { transform: translate(1px, -1px) rotate(1deg); }
-      50% { transform: translate(-1px, 2px) rotate(-1deg); }
-      60% { transform: translate(-3px, 1px) rotate(0deg); }
-      70% { transform: translate(3px, 1px) rotate(-1deg); }
-      80% { transform: translate(-1px, -1px) rotate(1deg); }
-      90% { transform: translate(1px, 2px) rotate(0deg); }
-      100% { transform: translate(1px, -2px) rotate(-1deg); }
+    @keyframes shake {
+        0% {
+            transform: translate(1px, 1px) rotate(0deg);
+        }
+
+        10% {
+            transform: translate(-1px, -2px) rotate(-1deg);
+        }
+
+        20% {
+            transform: translate(-3px, 0px) rotate(1deg);
+        }
+
+        30% {
+            transform: translate(3px, 2px) rotate(0deg);
+        }
+
+        40% {
+            transform: translate(1px, -1px) rotate(1deg);
+        }
+
+        50% {
+            transform: translate(-1px, 2px) rotate(-1deg);
+        }
+
+        60% {
+            transform: translate(-3px, 1px) rotate(0deg);
+        }
+
+        70% {
+            transform: translate(3px, 1px) rotate(-1deg);
+        }
+
+        80% {
+            transform: translate(-1px, -1px) rotate(1deg);
+        }
+
+        90% {
+            transform: translate(1px, 2px) rotate(0deg);
+        }
+
+        100% {
+            transform: translate(1px, -2px) rotate(-1deg);
+        }
     }
+
     .RunBIButton {
         border: 1px solid #009161;
         background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(0, 145, 97, 0.6) 100%);
@@ -19,8 +53,8 @@
         background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(0, 145, 97, 0.6) ));
         background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
         background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
-
     }
+
     .RunBIButtonShake {
         border: 1px solid #EDC093;
         background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%) !important;
@@ -34,200 +68,222 @@
 </style>
 
 <div class="MediaFillAbsolute" style="background: white;">
-    <div class="MarginAbsolute10" style="top: 5px;">
+    <div class="MarginAbsolute10">
         <table>
-
-            <!-- Back Button + Title -->
-            <tr style="height: 22px;">
-                <td>
-                    <table>
-                        <tr>
-                            <td style="width: 1px;">
-                                <BackButton [Text]="'BI Reports'" (click)="BackButtonClicked()"></BackButton>
-                            </td>
-                            <td style="width:10px"></td>
-                            <td>
-                                <div class="TabTitleRow">
-                                    {{BIReportName}}
-                                </div>
-                            </td>
-                            <td>
-                                <div></div>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-
-            <tr style="height: 10px;">
-                <td></td>
-            </tr>
-
-            <!-- Filters -->
-            <tr *ngIf="SelectedFiltersDataSource" style="height: 1px;">
-                <td>
-                    <table class="BodyBackground">
-                        <tr>
-                            <td>
-                                <div class="EmailBoxMultiLinesText" style="white-space: normal;">
-                                    <div style="margin:5px;">
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <div class="EmailBoxMultiLinesText" style="white-space: normal;">
-                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" [RunReportCommand]="RunReportCommand" (RunReportComplete)="OnRunReportComplete($event)" [ComputeFiltersCommand]="ComputeFiltersCommand" (ComputeFiltersComplete)="OnComputeFiltersComplete($event)" [IsFirstTime]="true"></DWAskUserFiltersComponent>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <!--<tr><td style="height:100%;"></td></tr>-->
-                    </table>
-                </td>
-            </tr>
-
-
-            <tr style="height: 1px;">
-                <td style="display:block;border-bottom:1px solid gray;height:30px;background-color:#D1D6D8">
-                    <table>
-                        <tr style="height: 2px;">
-                            <td colspan="9">
-                                <div></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 10px;">
-                                <div></div>
-                            </td>
-
-                            <td style="width: 110px;">
-                                <button [disabled]="IsNewEntity || HasValidationError" style="width:120px;float:left;" class="Button" (click)="ExportToExcelClicked()">Export To Excel</button>
-                            </td>
-
-                            <td style="width: 5px;">
-                                <div></div>
-                            </td>
-
-                            <td *ngIf="SelectedFiltersDataSource" style="width: 57px;">
-                                <button [class.RunBIButtonShake]="IsFilterValueChanged == true" [class.RunBIButton]="IsFilterValueChanged == false" (click)="RunReportButtonClicked()">Run Report</button>
-                            </td>
-
-                            <td style="width: 5px;">
-                                <div></div>
-                            </td>
-
-                            <td style="width: 57px;">
-                                <div class="Label">
-                                    {{CountText}}
-                                </div>
-                            </td>
-
-                            <td style="width: 5px;">
-                                <div></div>
-                            </td>
-
-
-                            <td>
-                                <div></div>
-                            </td>
-
-                            <td style="float:right;width:310px; ">
-                                <table>
-                                    <tr>
-                                        <td style="width: 15px;">
-                                            <img src="./Images/Columns.png" (click)="onBIReportColumnsClick()" title="Show/Hide/Reorder Column(s)" style="cursor: pointer; height:18px;" [className]="'LeftCenter'" />
-                                        </td>
-
-                                        <td style="width: 5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td [hidden]="!HasDeletionFeature" style="width: 15px;">
-                                            <img  class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer; height:18px;" (click)="onDeleteBIReportClick()" [className]="'LeftCenter'" />
-                                        </td>
-
-                                        <td style="width: 5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td style="width: 57px;">
-                                            <button [disabled]="IsNewEntity" class="Button" (click)="EditBIReportClicked()">Edit Report</button>
-                                        </td>
-
-                                        <td style="width: 5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td style="width: 57px;">
-                                            <button [disabled]="IsNewEntity" class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
-                                        </td>
-
-                                        <td style="width: 5px;">
-                                            <div></div>
-                                        </td>
-
-                                        <td style="width: 50px;">
-                                            <button *ngIf="!HasChanges" class="Button" (click)="SaveBIReport()">
-                                                <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="'LeftCenter'" />
-                                                <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
-                                            </button>
-                                            <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveBIReport()">
-                                                <img src="./Images/Buttons/Save.Red.png" [className]="'LeftCenter'" [ngStyle]="{'margin-left': '2px'}" />
-                                                <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-
-                            <td style="width: 10px;">
-                                <div></div>
-                            </td>
-
-                        </tr>
-                        <tr style="height: 2px;">
-                            <td colspan="9">
-                                <div></div>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-
             <tr>
                 <td>
-                    <!--    [multiSortKey]="'ctrl'" [columnTypes]="columnTypes" [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"    [rowModelType]="'virtual'"   [floatingFilter]="true" [enableCellChangeFlash]="true" -->
-                    <div class="MediaFill">
-                        <ag-grid-angular style="width:100%; height:100%;"
-                                         #agGrid
-                                         id="myGrid"
-                                         [context]="context"
-                                         [enableCellChangeFlash]="true"
-                                         class="ag-theme-balham"
-                                         [rowData]="rowData"
-                                         [columnDefs]="columnDefs"
-                                         [rowSelection]="'multiple'"
-                                         [multiSortKey]="'ctrl'"
-                                         [accentedSort]="'true'"
-                                         (gridReady)="onGridReady($event)"
-                                         (sortChanged)="onSortChanged($event)"
-                                         (columnResized)="onColumnResized($event)"
-                                         (columnMoved)="onColumnMoved($event)">
-                        </ag-grid-angular>
+                    <div class="MediaFill CurvedArea">
+                        <table>
+
+                            <tr style="height: 10px;">
+                                <td></td>
+                            </tr>
+
+                            <!-- Back Button + Title -->
+                            <tr style="height: 1px;">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:10px">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 1px;">
+                                                <BackButton [Text]="'BI Reports'" (click)="BackButtonClicked()"></BackButton>
+                                            </td>
+
+                                            <td style="width:10px">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:1px;">
+                                                <div class="TabTitleRow TextTrimming">
+                                                    {{BIReportName}}
+                                                </div>
+                                            </td>
+
+                                            <td style="width:3px">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width:20px;float:left;">
+                                                <IconButton [Name]="'Edit'" [Title]="'Edit report'" [disabled]="IsNewEntity" (click)="EditBIReportClicked()"></IconButton>
+                                            </td>
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 5px;">
+                                <td></td>
+                            </tr>
+
+                            <!-- Filters -->
+                            <tr *ngIf="SelectedFiltersDataSource" style="height: 1px;">
+                                <td>
+                                    <table class="BodyBackground">
+                                        <tr>
+                                            <td>
+                                                <div class="EmailBoxMultiLinesText" style="white-space: normal;">
+                                                    <div style="margin:5px;">
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="EmailBoxMultiLinesText" style="white-space: normal;">
+                                                                        <DWAskUserFiltersComponent [SelectedFiltersDataSource]="SelectedFiltersDataSource" [RunReportCommand]="RunReportCommand" (RunReportComplete)="OnRunReportComplete($event)" [ComputeFiltersCommand]="ComputeFiltersCommand" (ComputeFiltersComplete)="OnComputeFiltersComplete($event)" [IsFirstTime]="true"></DWAskUserFiltersComponent>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!--<tr><td style="height:100%;"></td></tr>-->
+                                    </table>
+                                </td>
+                            </tr>
+
+
+                            <tr style="height: 1px;">
+                                <td style="display:block;border-bottom:1px solid gray;height:30px;background-color:#D1D6D8">
+                                    <table>
+                                        <tr style="height: 2px;">
+                                            <td colspan="9">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 10px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 120px;">
+                                                <button [disabled]="IsNewEntity || HasValidationError" class="Button" style="width:120px;float:left;" (click)="ExportToExcelClicked()">
+                                                    <img style="margin-left:2px;" class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png"/>
+                                                    <span style="line-height: 19px;margin-left:15px;text-align:center;">Download Excel</span>
+                                                </button>
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td *ngIf="SelectedFiltersDataSource" style="width: 57px;">
+                                                <button [class.RunBIButtonShake]="IsFilterValueChanged == true" [class.RunBIButton]="IsFilterValueChanged == false" (click)="RunReportButtonClicked()">Run Report</button>
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <td style="width: 57px;">
+                                                <div class="Label">
+                                                    {{CountText}}
+                                                </div>
+                                            </td>
+
+                                            <td style="width: 5px;">
+                                                <div></div>
+                                            </td>
+
+
+                                            <td>
+                                                <div></div>
+                                            </td>
+
+                                            <td style="float:right;width:240px; ">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 25px;">
+                                                            <button class="Button" style="width:25px;float:left;" (click)="onBIReportColumnsClick()"><img style="width:18px;" class="CenterCenter" title="Show/Hide/Reorder Column(s)" src="./Images/Columns.png" /></button>
+                                                            <!--<img src="./Images/Columns.png" (click)="onBIReportColumnsClick()" title="Show/Hide/Reorder Column(s)" style="cursor: pointer; height:18px;" [className]="'LeftCenter'" />-->
+                                                        </td>
+
+                                                        <td [hidden]="!HasDeletionFeature" style="width: 25px;">
+                                                            <button class="Button" style="width:25px;float:left;" (click)="onDeleteBIReportClick()"><img class="CenterCenter" title="Delete" src="./Images/Trash-can.png" /></button>
+                                                            <!--<img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer; height:18px;" (click)="onDeleteBIReportClick()" [className]="'LeftCenter'" />-->
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 57px;">
+                                                            <button [disabled]="IsNewEntity" class="Button" (click)="ShowQueryBuilderClicked()">Edit Query</button>
+                                                        </td>
+
+                                                        <td style="width: 2px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 55px;">
+                                                            <button *ngIf="!HasChanges" class="Button" (click)="SaveBIReport()">
+                                                                <img [ngStyle]="{'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="'CenterCenter'" />
+                                                                <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
+                                                            </button>
+                                                            <button *ngIf="HasChanges" class="EntityChangesButton" (click)="SaveBIReport()">
+                                                                <img src="./Images/Buttons/Save.Red.png" [className]="'CenterCenter'" [ngStyle]="{'margin-left': '2px'}" />
+                                                                <span style="line-height: 19px;vertical-align:middle;" [ngStyle]="{'margin-left': '3px'}">Save</span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+
+                                            <td style="width: 10px;">
+                                                <div></div>
+                                            </td>
+
+                                        </tr>
+                                        <tr style="height: 2px;">
+                                            <td colspan="9">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <!--    [multiSortKey]="'ctrl'" [columnTypes]="columnTypes" [suppressCsvExport]="true" [animateRows]="true"  [showToolPanel]="true"    [rowModelType]="'virtual'"   [floatingFilter]="true" [enableCellChangeFlash]="true" -->
+                                    <div class="MediaFill">
+                                        <ag-grid-angular style="width:100%; height:100%;"
+                                                         #agGrid
+                                                         id="myGrid"
+                                                         [context]="context"
+                                                         [enableCellChangeFlash]="true"
+                                                         class="ag-theme-balham"
+                                                         [rowData]="rowData"
+                                                         [columnDefs]="columnDefs"
+                                                         [rowSelection]="'multiple'"
+                                                         [multiSortKey]="'ctrl'"
+                                                         [accentedSort]="'true'"
+                                                         (gridReady)="onGridReady($event)"
+                                                         (sortChanged)="onSortChanged($event)"
+                                                         (columnResized)="onColumnResized($event)"
+                                                         (columnMoved)="onColumnMoved($event)">
+                                        </ag-grid-angular>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 20px;">
+                                <td>
+                                    <div> </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </td>
             </tr>
-
-            <tr style="height: 20px;">
-                <td>
-                    <div> </div>
-                </td>
-            </tr>
         </table>
-    </div>
+    </div>    
 </div>
 
 <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="WidthBusyIndicator"></BusyIndicator>

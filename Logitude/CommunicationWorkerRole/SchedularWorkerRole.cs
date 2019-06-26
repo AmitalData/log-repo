@@ -24,6 +24,7 @@ namespace CommunicationWorkerRole
     class SchedularWorkerRole : WorkerEntryPoint
     {
         DbQueueService queueservice;
+        private List<Thread> TasksThreads = new List<Thread>();
         int Tenant;
         public SchedularWorkerRole()
         {
@@ -34,14 +35,66 @@ namespace CommunicationWorkerRole
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "SchedularWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
-
+            CheckandRescheduleMissingTasks();
+            StartThreadAliveTesterThread();
             ConnectClient();
             return base.OnStart();
         }
+
+        private void StartThreadAliveTesterThread()
+        {
+            //Thread thread = new Thread(CheckandRescheduleDeadThreads);
+            System.Timers.Timer timer1 = new System.Timers.Timer()
+            {
+                Interval = 300000//5 Mins
+            };
+            timer1.Enabled = true;
+            timer1.Elapsed += Timer1_Elapsed; //+= new System.EventHandler(OnTimerEvent);
+        }
+
+        private void Timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            CheckandRescheduleDeadThreads();
+        }
+
+        private void CheckandRescheduleDeadThreads()
+        {
+            var objectContext = WebFreightContext.GetContext(0);
+            TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext); 
+            TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
+            List<TasksSchedulerPM> InprogressTasks = TasksSchedulerQuery.GetAllInprogressTasksSchedulerPMs();
+            foreach (var Task in InprogressTasks)
+            {
+                //var x = Process.GetCurrentProcess().Threads;
+                var TaskThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
+                if (TaskThread == null || !TaskThread.IsAlive)
+                {
+                    //TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
+                    Task.Status = null;
+                    Task.Version = Task.Version + 1;
+                    AddSchedulerQueue(Task);
+                    //service.Update(Task);
+                }
+
+            }
+            //Thread.Sleep(new TimeSpan(0, 1, 0));
+        }
+
+        private void CheckandRescheduleMissingTasks()
+        {
+            TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(0);
+            TasksSchedulerQuery TasksSchedulerQuery = new TasksSchedulerQuery(TasksSchedulerRepository);
+            List<TasksSchedulerPM> InprogressTasks = TasksSchedulerQuery.GetAllInprogressTasksSchedulerPMs();
+            foreach (var Task in InprogressTasks)
+            {
+                Task.Status = null;
+                Task.Version = Task.Version + 1;
+                AddSchedulerQueue(Task);
+            }
+        }
+
         public override void Run()
         {
-            
-           
             while (IsRunning)
             {
 
@@ -91,17 +144,27 @@ namespace CommunicationWorkerRole
                                             WRItem.Task = Task;
                                             WRItem.queueservice = queueservice;
                                             WRItem.RetryNumber = message.RetryNumber;
-                                            Thread thread = new Thread(WRItem.Run);
-                                            //queueservice.Complete();
+                                            WRItem.MessageId = message.MessageId;
+                                            Thread thread = new Thread(WRItem.Run) { Name = Task.Name };
                                             //Task.Status = "In progress";
                                             service.Update(Task);
+                                            var CurThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
+                                            if (CurThread != null)
+                                            {
+                                                TasksThreads.Remove(CurThread);
+                                            } 
                                             thread.Start();
+                                            TasksThreads.Add(thread);
+                                            //queueservice.Complete();
                                             //AddSchedulerQueue(Task);// need to be Moved
                                         }
+                                      
+                                            queueservice.Complete();
+                                        
 
                                     }
 
-                                   
+
                                     //queueservice.Complete();
 
                                     // Add New Queue for the executed WR
@@ -135,6 +198,12 @@ namespace CommunicationWorkerRole
         }
         private void AddSchedulerQueue(TasksSchedulerPM task)
         {
+            var queueservice = new DbQueueService();
+            if (task.NextRunTime < DateTime.Now)
+            {
+                task.NextRunTime = DateTime.Now;
+                task.NextRunTimeUTC = DateTime.UtcNow;
+            }
             switch (task.TriggerType)
             {
                 case "D":
@@ -142,13 +211,13 @@ namespace CommunicationWorkerRole
                         if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
                         {
                             task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+                            task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
                         }
                         else
                         {
                             task.NextRunTime = task.NextRunTime.Value.AddDays(1);
-                        } 
-                        queueservice.InitializeQueue("SchedularQueue", 0);
-                        queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() } }, null, null, null, task.NextRunTime);
+                            task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddDays(1);
+                        }
                         break;
                     }
                 case "W":
@@ -214,16 +283,16 @@ namespace CommunicationWorkerRole
                                 task.NextRunTime = NextRunTime;
                             }
                         }
-                        queueservice.InitializeQueue("SchedularQueue", 0);
-                        queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() } }, null, null, null, task.NextRunTime);
+                        //queueservice.InitializeQueue("SchedularQueue", 0);
+                        //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
                         break;
                     }
                 case "M":
                     {
                         DateTime NextRunTime;
                         task.NextRunTime = task.NextRunTime.Value.AddMonths(1);
-                        queueservice.InitializeQueue("SchedularQueue", 0);
-                        queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() } }, null, null, null, task.NextRunTime);
+                        //queueservice.InitializeQueue("SchedularQueue", 0);
+                        //queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTime);
                         break;
                     }
                 default: // Once
@@ -232,11 +301,18 @@ namespace CommunicationWorkerRole
                     }
 
             }
+            if (task.TriggerType.ToUpper() != "O")
+            {
+                queueservice.InitializeQueue("SchedularQueue", 0);
+                queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, null, null, null, task.NextRunTimeUTC);
+
+            }
+
             var objectContext = WebFreightContext.GetContext(task.Tenant);
             TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
             service.Update(task);
 
-            queueservice.Complete();
+           //queueservice.Complete();
         }
         private DateTime Next(DateTime from, DayOfWeek dayOfWeek)
         {

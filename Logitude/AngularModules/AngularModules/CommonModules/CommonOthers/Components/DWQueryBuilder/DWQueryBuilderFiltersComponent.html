@@ -102,8 +102,10 @@
                     <td style="width:7px;">
                         <div style="width:7px;"></div>
                     </td>
-                    <td style="width:100px;">
-                        <ComboBox style="width:130px;" (SelectedItemChanged)="item.FilterTypeChanged($event)" [ItemsSource]="Types" [SelectedItem]="item.FilterType"></ComboBox>
+                    <td style="width:105px;">
+
+
+                        <ComboBox style="width:130px;" (SelectedItemChanged)="item.FilterTypeChanged($event)" [ItemsSource]="item.FilterTypes" [SelectedItem]="item.FilterTypeSelected" [Binding]="'Name'"></ComboBox>
                     </td>
                     <td style="width:7px;">
                         <div style="width:7px;"></div>
@@ -112,18 +114,18 @@
                         <ComboBox style="width:130px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>
                     </td>
                     <!--<td *ngIf="item.FilterType == 'Ask User'" style="width:7px;">
-        <div style="width:7px;"></div>
-    </td>-->
+                        <div style="width:7px;"></div>
+                    </td>-->
                     <!--<td *ngIf="item.FilterType == 'Ask User'" style="width:310px;">
-        <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
-    </td>-->
+                        <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
+                    </td>-->
                     <td style="width:7px;">
                         <div style="width:7px;"></div>
                     </td>
 
-                 
-                    <td *ngIf="item.FilterType == 'Fixed Filter' || (item.FilterType == 'Ask User' && item.IsSetDefaults == true)"  [ngSwitch]="item.ParentDataTypeCode"><!--style="width:150px;"-->
 
+                    <td *ngIf="item.FilterType == 'Fixed Filter' || (item.FilterType == 'Ask User' && item.IsSetDefaults == true)" [ngSwitch]="item.ParentDataTypeCode">
+                        <!--style="width:150px;"-->
                         <!-- Text -->
                         <div *ngSwitchCase="'Text'">
                             <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
@@ -168,8 +170,8 @@
                         <div *ngSwitchCase="'Boolean'">
                             <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
                             <div style="width:180px;">
-                                <LogCheckBox (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'TextValue'" [DataContext]="item"></LogCheckBox>
-                                <!--<ComboBox *ngIf="BooleanValues" (SelectedItemChanged)="item.onTextChange($event)" [ItemsSource]="BooleanValues" [SelectedItem]="item.TextValue"></ComboBox>-->
+                                <!--<LogCheckBox (ValueChanged)="item.onTextChange($event)" [ObjectFieldName]="'TextValue'" [DataContext]="item"></LogCheckBox>-->
+                                <ComboBox *ngIf="BooleanValues" (SelectedItemChanged)="item.onTextChange($event)" [ItemsSource]="BooleanValues" [SelectedItem]="item.BoolValue"></ComboBox>
                             </div>
                         </div>
 
@@ -191,17 +193,15 @@
                         </div>
 
                         <!--Date-->
-                        <div *ngSwitchCase="'DateTime' || 'Date'" >
+                        <div *ngSwitchCase="'DateTime' || 'Date'">
 
                             <div style="width:180px;">
 
                                 <DWDate [ObjectFieldName]="item.Code"
                                         [DataContext]="item"
-                     
                                         [Operation]="item.Operation.Code"
                                         [SelectedValue]="item.TextValue"
-                                        (ValueChanged)="item.onTextChange($event)"
-                                        >
+                                        (ValueChanged)="item.onTextChange($event)">
                                 </DWDate>
 
                             </div>
@@ -224,7 +224,8 @@
                             </div>
                         </div>
                     </td>
-                    <td *ngIf="item.FilterType == 'Ask User'" ><!--[style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310"-->
+                    <td *ngIf="item.FilterType == 'Ask User'">
+                        <!--[style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310"-->
                         <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
                     </td>
                 </tr>
@@ -264,7 +265,7 @@
                                 <img class="DeleteButton" src="./Images/Trash-can.png" style="cursor: pointer;" (click)="onDeleteFilterClick(item)" />
                             </td>
                             <td style="width:150px;">
-                                <ComboBox style="width:130px;"  [ItemsSource]="item.MyParentClass.AllFieldsWithChildrenDataSource" [SelectedItem]="item" [Binding]="'DisplayName'" (SelectedItemChanged)="item.FieldValueChanged($event)"></ComboBox>
+                                <ComboBox style="width:130px;" [ItemsSource]="item.MyParentClass.AllFieldsWithChildrenDataSource" [SelectedItem]="item" [Binding]="'DisplayName'" (SelectedItemChanged)="item.FieldValueChanged($event)"></ComboBox>
                             </td>
                             <td style="width:7px;">
                                 <div style="width:7px;"></div>
@@ -282,8 +283,8 @@
                                 <div style="width:7px;"></div>
                             </td>
 
-                            <td *ngIf="item.FilterType == 'Fixed Filter' || (item.FilterType == 'Ask User' && item.IsSetDefaults == true)" [ngSwitch]="item.ParentDataTypeCode"><!--style="width:150px;"-->
-
+                            <td *ngIf="item.FilterType == 'Fixed Filter' || (item.FilterType == 'Ask User' && item.IsSetDefaults == true)" [ngSwitch]="item.ParentDataTypeCode">
+                                <!--style="width:150px;"-->
                                 <!-- Text -->
                                 <div *ngSwitchCase="'Text'">
                                     <!--<ComboBox style="width:130px;margin-right:5px;" [ItemsSource]="item.Operators" [SelectedItem]="item.Operation" [Binding]="'Name'" (SelectedItemChanged)="item.OperationValueChanged($event)"></ComboBox>-->
@@ -349,7 +350,7 @@
                                     </div>
                                 </div>
 
-                         
+
                                 <!--Date-->
                                 <div *ngSwitchCase="'DateTime' || 'Date'">
 
@@ -357,9 +358,8 @@
 
                                         <DWDate [ObjectFieldName]="item.Code"
                                                 [DataContext]="item"
-                                                
                                                 [Operation]="item.Operation.Code"
-                                                 (ValueChanged)="item.onTextChange($event)"
+                                                (ValueChanged)="item.onTextChange($event)"
                                                 [SelectedValue]="item.TextValue">
                                         </DWDate>
 
@@ -383,7 +383,8 @@
                                     </div>
                                 </div>
                             </td>
-                            <td *ngIf="item.FilterType == 'Ask User'"> <!--[style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310"--> 
+                            <td *ngIf="item.FilterType == 'Ask User'">
+                                <!--[style.width.px]="item.FilterType == 'Ask User' && item.IsSetDefaults == true ? 50: 310"-->
                                 <span class="LinkBtn" (click)="item.OpenFilterSettings()">Settings</span>
                             </td>
 

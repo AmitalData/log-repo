@@ -114,7 +114,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
             this.SearchFieldsId = "DWQueryBuilderSearchFields_" + this.CurrentSession.GetNewId("DWQueryBuilderSearchFields");
         }
 
-
+        //this.ClearData();
         //this._DWQueryBuilderHelper.FillAllFactFields("Fact_Shipments");
         this._DWObjectTableListService.getAll().subscribe(myResult => {
             this.AllTables = myResult.Result;
@@ -574,6 +574,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 //this.SaveChanges();
                 this.ClearData();
             }
+
+            this.ClearData();
         }
     }
 
@@ -1143,7 +1145,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
                     if (this.CurrentSession.CurrentWindow) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
-                    this.PreviewData(true, []);
+                    //this.PreviewData(true, []);
                     //////////////////////////////////////////
                 }
             });
@@ -1238,12 +1240,19 @@ export class DWObjectFieldsDetails extends BaseComponent {
     public TooltipId: string = null;
     public TooltipContentId: string = null;
     private CurrentSession = SessionLocator.SelectedSession;
+    public FilterTypes: ObjectFieldOperator[];
     constructor(DWObjectField: any = null, ParentClass: DWQueryBuilderComponent = null) {
         super();
         var idIndex = this.CurrentSession.GetNewId("Tooltip");
         this.TooltipId = "Tooltip_" + idIndex;
         this.TooltipContentId = "TooltipContent_" + idIndex;
         this.BaseDWObjectField = DWObjectField;
+
+        this.FilterTypes = [];
+        this.FilterTypes.push(new ObjectFieldOperator("Fixed Filter", "Fixed Filter"));
+        this.FilterTypes.push(new ObjectFieldOperator("Ask User", "Dynamic Filter"));
+        
+
         if (ParentClass != null) {
             this.MyParentClass = ParentClass;
             this.IndexOrder = ParentClass.SelectedFieldsDataSource.length;
@@ -1280,12 +1289,13 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.IsMeasurement = DWObjectField.IsMeasurement;
             this.AggregationTypeCode = DWObjectField.AggregationTypeCode;
             this.IsCustom = DWObjectField.IsCustom;
-            
-
-
+         
             if (DWObjectField.FilterType) {
                 this.FilterType = DWObjectField.FilterType;
-            }
+            } 
+            this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
+          
+
             if (DWObjectField.IsSetDefaults) {
                 this.IsSetDefaults = DWObjectField.IsSetDefaults;
             }
@@ -1461,7 +1471,27 @@ export class DWObjectFieldsDetails extends BaseComponent {
         this.operators = newValue;
     }
 
-    private textValue: any;
+    
+    private boolValue: string = "No";
+    public get BoolValue() {
+        if (this.TextValue == true) {
+            this.boolValue = "Yes";
+        }
+        else if (this.TextValue == false) {
+            this.boolValue = "No";
+        }
+        else {
+            this.boolValue = "No Value";
+        }
+        return this.boolValue;
+    }
+    public set BoolValue(newValue: any) {
+        if (this.boolValue != newValue) {
+            this.boolValue = newValue; 
+        }
+    }
+
+    private textValue: any = (this.dataTypeCode == "Boolean") ? false : null;
     public get TextValue() {
         return this.textValue;
     }
@@ -1588,11 +1618,26 @@ export class DWObjectFieldsDetails extends BaseComponent {
         //this.MyParentClass.ClearData();
     }
 
-    private filterType: string = "Fixed Filter";
+    private filterType: string = "Ask User";
     public get FilterType() { return this.filterType; }
     public set FilterType(newValue: string) { this.filterType = newValue; }
 
-    private isSetDefaults: boolean = false;
+
+
+    private filterTypeSelected: ObjectFieldOperator;
+    public get FilterTypeSelected() { return this.filterTypeSelected; }
+    public set FilterTypeSelected(newValue: ObjectFieldOperator) {
+
+        this.filterTypeSelected = newValue;
+        if (this.filterTypeSelected) {
+            this.FilterType = this.filterTypeSelected.Code;
+        }
+    }
+
+
+
+
+    private isSetDefaults: boolean = true;
     public get IsSetDefaults() { return this.isSetDefaults; }
     public set IsSetDefaults(newValue: boolean) {
         if (this.isSetDefaults != newValue) {
@@ -1609,7 +1654,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
 
     FilterTypeChanged(Value) {
-        this.FilterType = Value;
+        this.FilterTypeSelected = Value;
     }
 
     OpenFilterSettings() {
@@ -1623,7 +1668,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 500;
         logWindow.Height = 260;
-        logWindow.Title = "Ask User Settings";
+        logWindow.Title = "Dynamic Filter Settings";
         logWindow.Show('./CommonModules/CommonOthers/Components/DWQueryBuilder/DWFilterSettings');
         logWindow.WindowClosed.subscribe(($event: string) => {
             if ($event) {
@@ -1650,7 +1695,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
 
 
-        if (operation.Code == this.currentOp.Code || operation.Code == this.beforeOp.Code || operation.Code == this.afterOp.Code || operation.Code == this.previousOp.Code || operation.Code == this.nextOp.Code || operation.Code == this.currentOp.Code) {
+        if (operation.Code == this.currentOp.Code || operation.Code == this.beforeOp.Code || operation.Code == this.afterOp.Code || operation.Code == this.previousOp.Code || operation.Code == this.nextOp.Code || operation.Code == this.currentOp.Code || operation.Code == this.BetweenOp.Code) {
             this.DontSaveChanges = true;
             //this.TextValue = "";
             this.Operation = operation;
@@ -1736,7 +1781,21 @@ export class DWObjectFieldsDetails extends BaseComponent {
     @Output() ShowSampleDateCommand = new EventEmitter();
 
     onTextChange(value) {
-        this.TextValue = value;
+        if (this.DataTypeCode == "Boolean") {
+            if (value == "Yes") {
+                this.TextValue = true;
+            }
+            else if (value == "No") {
+                this.TextValue = false;
+            }
+            else {
+                this.TextValue = null;
+            }
+
+        }
+        else { 
+            this.TextValue = value;
+        }
         this.ShowSampleDateCommand.emit(this);
     }
 
@@ -1889,6 +1948,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.list.push(this.previousOp);
             this.list.push(this.currentOp);
             this.list.push(this.nextOp);
+            this.list.push(this.BetweenOp);
+            
 
         }
 
@@ -1909,7 +1970,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     lessThanOp: ObjectFieldOperator = new ObjectFieldOperator("LessThan", "Less Than");
     greaterThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("GreaterThanOrEqual", "Greater Than Or Equal");
     lessThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("LessThanOrEqual", "Less Than Or Equal");
-    BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
+ 
     IsNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNull", "Is Empty");
     IsNotNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNotNull", "Has Value");
 
@@ -1919,6 +1980,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     previousOp: ObjectFieldOperator = new ObjectFieldOperator("Previous", "Previous");
     currentOp: ObjectFieldOperator = new ObjectFieldOperator("Current", "Current");
     nextOp: ObjectFieldOperator = new ObjectFieldOperator("Next", "Next");
+    BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
 }
 
 export class ObjectFieldOperator {

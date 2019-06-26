@@ -2177,7 +2177,6 @@ namespace WebFreight.Web.ReportsWebServices
 
             //ToDate
             DateTime? toDate = null;
-
             if (filterItem_tODate != null)
             {
                 if (filterItem_tODate.FieldValue != null)
@@ -2186,11 +2185,8 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-
-
             //FromDate
             DateTime? FromDate = null;
-
             if (filterItem_FromDate != null)
             {
                 if (filterItem_FromDate.FieldValue != null)
@@ -2198,7 +2194,6 @@ namespace WebFreight.Web.ReportsWebServices
                     FromDate = (DateTime)filterItem_FromDate.FieldValue;
                 }
             }
-
 
             string branchId = null;
             totalData.BranchName = "All";
@@ -2233,9 +2228,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-
-
-
             string entityStatus = null;
             totalData.StatusName = "All";
             if (filterItem_EntityStatus != null)
@@ -2252,10 +2244,6 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
             }
-
-
-
-
 
             string CustomerId = null;
             totalData.CustomerName = "All";
@@ -2277,7 +2265,6 @@ namespace WebFreight.Web.ReportsWebServices
 
 
             bool IncludeOperationallyClosed = false;
-
             if (filterItem_IncludeOperationalyClose != null)
             {
                 if (filterItem_IncludeOperationalyClose.FieldValue != null)
@@ -2407,6 +2394,7 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.Shipper = dataView.ShipperName;
                     shipment.Pieces = Item.Quantity;
                     shipment.ContainerNr = Item.ContainerNumber;
+                    shipment.ActualETA = dataView.MainCarriageATA;
 
                     CustomFieldResolver customFieldResolver = new CustomFieldResolver();
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, dataView, shipment);
@@ -2414,10 +2402,7 @@ namespace WebFreight.Web.ReportsWebServices
                     totalData.ShipmentPackages.Add(shipment);
 
                 }
-
             }
-
-
 
             totalData.FromDate = FromDate;
             totalData.ToDate = toDate;
@@ -12782,7 +12767,42 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.CountofLegalisedDocuments = Item.AMSBL;
                     shipment.ShipperInvoiceValue = Item.ValueOfGoods;
                     shipment.CurrencyofShipperInvoice = ValueOfgoodsCurrency != null ? ValueOfgoodsCurrency.Code : null;
-                    shipment.Status = Item.ShipmentStatusName;
+                    if (!string.IsNullOrEmpty(Item.FinalDistenationPortId)){
+                        
+                            PortPM port = PortQuery.GetSinglePort(Item.Tenant, Item.FinalDistenationPortId, true);
+                            if (port != null)
+                            {
+                            shipment.FinalPortofDestination = port.Code;
+                            shipment.FinalCountryofDestination = port.CountryName;
+
+                            }
+                    }
+                    if (!string.IsNullOrEmpty(Item.OnCarriageTransportModeId))
+                    {
+                        shipment.OnCarriageTransportMode = Item.OnCarriageTransportModeId == "I" ? "Inland" : Item.OnCarriageTransportModeId == "A" ? "Air" : "Ocean";
+
+                    }
+                    if (!string.IsNullOrEmpty(Item.MasterShipmentDataId))
+                    {
+                        if (!string.IsNullOrEmpty(Item.ShipmentMasterDataStatusId))
+                        {
+                            string statusName = null;
+                            EntityStatusHelper.GetHighestStatusId(Item.ShipmentStatusId, Item.ShipmentMasterDataStatusId, Item.Tenant, ref statusName);
+                            shipment.Status = statusName;
+
+                        }
+                        else
+                        {
+                            shipment.Status = Item.ShipmentStatusName;
+                        }
+                    }
+                    else
+                    {
+                        shipment.Status = Item.ShipmentStatusName;
+
+                    }
+
+
                     shipment.Dept = ShipmentDepartment != null ? ShipmentDepartment.EnglishName : null;
                     shipment.Branch = Item.BranchName;
                     shipment.ChargeableWeight = Item.ChargeableWeight;

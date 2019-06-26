@@ -411,18 +411,21 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
                                 DeparturePortId = iPort.Id;
                             }
 
-                            DeparturePortCode = PortCode;                            
+                            DeparturePortCode = PortCode;
 
-                            if (location_From.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.DepartureActual)
+                            if (location_From.DateTime != null)
                             {
-                                DepartureDate = LocationsDate;
-                                DepartureDateIndicator = "A";
-                            }
+                                if (location_From.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.DepartureActual)
+                                {
+                                    DepartureDate = LocationsDate;
+                                    DepartureDateIndicator = "A";
+                                }
 
-                            else if (location_From.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.DepartureEstimated)
-                            {
-                                DepartureDate = LocationsDate;
-                                DepartureDateIndicator = "E";
+                                else if (location_From.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.DepartureEstimated)
+                                {
+                                    DepartureDate = LocationsDate;
+                                    DepartureDateIndicator = "E";
+                                }
                             }
                             #endregion
                         }
@@ -453,16 +456,19 @@ namespace Logitude.XSD.Analyzers.INTTRAAnalyzer
 
                             ArrivalPortCode = PortCode;
 
-                            if (location_To.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.ArrivalActual)
+                            if (location_To.DateTime != null)
                             {
-                                ArrivalDate = LocationsDate;
-                                ArrivalDateIndicator = "A";
-                            }
+                                if (location_To.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.ArrivalActual)
+                                {
+                                    ArrivalDate = LocationsDate;
+                                    ArrivalDateIndicator = "A";
+                                }
 
-                            else if (location_To.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.ArrivalEstimated)
-                            {
-                                ArrivalDate = LocationsDate;
-                                ArrivalDateIndicator = "E";
+                                else if (location_To.DateTime.DateType == INTTRA_Status.DateTimeType2DateType.ArrivalEstimated)
+                                {
+                                    ArrivalDate = LocationsDate;
+                                    ArrivalDateIndicator = "E";
+                                }
                             }
                             #endregion
                         }

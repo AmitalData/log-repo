@@ -2039,12 +2039,24 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 if (!string.IsNullOrEmpty(myFirstPickup.FromPartnerCardId))
                                 {
-                                    Address myPartnerAddress = addressRepository.GetMainAddressByCardId(myFirstPickup.FromPartnerCardId, tenant);
-                                    if (myPartnerAddress != null)
+                                    if (!string.IsNullOrEmpty(myFirstPickup.FromAddressId))
                                     {
-                                        shipmentPM.FirstPickupLocation = myPartnerAddress.City;
+                                        Address myPartnerAddress = addressRepository.GetSingleAddress(myFirstPickup.FromAddressId, tenant);
+                                        if (myPartnerAddress != null)
+                                        {
+                                            shipmentPM.FirstPickupLocation = myPartnerAddress.City;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Address myPartnerAddress = addressRepository.GetMainAddressByCardId(myFirstPickup.FromPartnerCardId, tenant);
+                                        if (myPartnerAddress != null)
+                                        {
+                                            shipmentPM.FirstPickupLocation = myPartnerAddress.City;
+                                        }
                                     }
                                 }
+
 
                                 break;
                             }
@@ -10293,6 +10305,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      Transshipment2VesselId = m.Transshipment2VesselId,
                      Transshipment3VesselId = m.Transshipment3VesselId,
                      BookingConfirmationNumber = m.BookingConfirmationNumber,
+                     IncotermId = shipment.IncotermId,
+                     ShipperAddressId = shipment.ShipperAddressId,
+                     ConsigneeAddressId = shipment.ConsigneeAddressId,
+                     Volume = shipment.Volume,
                  });
 
             return dataList;
@@ -11851,6 +11867,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     DeclarationDate = f.DeclarationDate,
                     DeclarationNumber = f.DeclarationNumber,
                     ARInvoices = f.ARInvoices,
+                    Notes = f.Notes,
                 };
 
                 List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", tenant).ToList();

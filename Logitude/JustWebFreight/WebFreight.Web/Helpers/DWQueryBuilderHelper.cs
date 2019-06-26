@@ -433,7 +433,7 @@ namespace WebFreight.Web.Helpers
             {
                 OrderByString = DWQueryParam.ColumnsSort;
             }
-            string PagingString = " ORDER BY " + OrderByString;//+ " OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
+            string PagingString = " ORDER BY " + OrderByString + " OFFSET " + DWQueryParam.PageIndex + " ROWS FETCH NEXT " + DWQueryParam.PageSize + " ROWS ONLY";
             string FinalQuery = "";
             if (Filters != null)
             {
@@ -446,8 +446,9 @@ namespace WebFreight.Web.Helpers
             }
             string TenantWhere = ".[Parent Tenant] = ";
             var DWSettings = new DWHSettingRepository(Tenant);
-            var temp = DWSettings.GetSingleDWHSetting(Tenant);
-            if (temp != null &&  temp.Tenant != temp.ParentTenant)
+            var temp = DWSettings.GetSingleDWHSetting(Tenant); 
+            var isParentTenant = DWSettings.IsParentTenant(Tenant);
+            if (!isParentTenant)//temp != null &&  temp.Tenant != temp.ParentTenant)
             {
                 TenantWhere = ".[Source Tenant] = ";
             }
@@ -471,7 +472,7 @@ namespace WebFreight.Web.Helpers
             {
                 FinalQuery = FinalQuery + " ORDER BY " + DWQueryParam.ColumnsSort;
             }
-            
+
             return FinalQuery;
         }
 

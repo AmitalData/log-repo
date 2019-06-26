@@ -474,8 +474,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     allPayablesData
                         = (from d in myShipmentsContext.ShipmentPayables
                            where d.Tenant == tenant
-                           && d.OpenAmount != null
-                           && d.OpenAmount != 0
+                          // && d.OpenAmount != null
+                           //&& d.OpenAmount != 0
                            && allShipmentsIds.Contains(d.ShipmentId)
                            group d by new { d.ShipmentId, d.ChargesTypeId, d.VendorId } into g
                            select new ChargeTypeGroupClass()
@@ -600,14 +600,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                     if (this.IncludeEstimations)
                     {
-                        if (this.HasAmount(myShipment.OpenPayablesInLocalCurrency))
+                        //if (this.HasAmount(myShipment.OpenPayablesInLocalCurrency))
                         {
                             #region Payables
                             List<ChargeTypeGroupClass> lines_Grouped = allPayablesData.Where(d => d.ShipmentId == myShipment.Id).ToList();
                             foreach (ChargeTypeGroupClass item in lines_Grouped)
                             {
-                                if (this.HasAmount(item.AmountInLocal))
-                                {
+                               // if (this.HasAmount(item.AmountInLocal))
+                               // {
                                     ArchivoExportadoShipmentItem myRecord = new ArchivoExportadoShipmentItem();
                                     myRecord.ShipmentNumber = myShipment.ShipmentNumber;
                                     myRecord.LineTypeCode = "EFC";
@@ -629,6 +629,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.ChargeableWeight = myShipment.ChargeableWeight;
                                     myRecord.Profit = this.IsLocalCurrency ? myShipment.ProfitInLocalCurrency : myShipment.ProfitInProfitCurrency;
                                     myRecord.ExpectedPayables = this.IsLocalCurrency ? item.ExpectedAmountInLocal : item.ExpectedAmountInProfit;
+                                    myRecord.ETD = myShipment.MainCarriageETD;
+                                    myRecord.CustomerRef1 = myShipment.CustomerReference1;
+                                    myRecord.CustomerRef2 = myShipment.CustomerReference2;
 
                                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
@@ -665,7 +668,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
                                     myDataProvider.Shipments.Add(myRecord);
                                 }
-                            }
+                           // }
                             #endregion
                         }
 
@@ -697,7 +700,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     myRecord.Destination = myShipment.LastFinalDestination;
                                     myRecord.ChargeableWeight = myShipment.ChargeableWeight;
                                     myRecord.Profit = this.IsLocalCurrency ? myShipment.ProfitInLocalCurrency : myShipment.ProfitInProfitCurrency;
-                                    
+                                    myRecord.ETD = myShipment.MainCarriageETD;
+                                    myRecord.CustomerRef1 = myShipment.CustomerReference1;
+                                    myRecord.CustomerRef2 = myShipment.CustomerReference2;
+
                                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
                                     if (myBranch != null)
@@ -768,7 +774,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.Destination = myShipment.LastFinalDestination;
                                 myRecord.ChargeableWeight = myShipment.ChargeableWeight;
                                 myRecord.Profit = this.IsLocalCurrency ? myShipment.ProfitInLocalCurrency : myShipment.ProfitInProfitCurrency;
-                                
+                                myRecord.ETD = myShipment.MainCarriageETD;
+                                myRecord.CustomerRef1 = myShipment.CustomerReference1;
+                                myRecord.CustomerRef2 = myShipment.CustomerReference2;
+
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
                                 if (myCurrency != null)
@@ -867,7 +876,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.Destination = myShipment.LastFinalDestination;
                                 myRecord.ChargeableWeight = myShipment.ChargeableWeight;
                                 myRecord.Profit = this.IsLocalCurrency ? myShipment.ProfitInLocalCurrency : myShipment.ProfitInProfitCurrency;
-                                
+                                myRecord.ETD = myShipment.MainCarriageETD;
+                                myRecord.CustomerRef1 = myShipment.CustomerReference1;
+                                myRecord.CustomerRef2 = myShipment.CustomerReference2;
+
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
                                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, invoice, myRecord);
 

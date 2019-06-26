@@ -82,8 +82,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             if (this.loggedContact != null)
             {
-                this.entityPM.UpdatedBy = this.loggedContact.Id;
-                this.entityPM.CreatedBy = this.loggedContact.Id;
+                this.entityPM.UpdatedBy = this.loggedContact.EnglishName;
+                this.entityPM.CreatedBy = this.loggedContact.EnglishName;
             }
 
             this.Poco = new TasksScheduler();
@@ -110,7 +110,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
             this.entityPM.UpdateDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-            if (this.loggedContact != null) this.entityPM.UpdatedBy = this.loggedContact.Id;
+            if (this.loggedContact != null) this.entityPM.UpdatedBy = this.loggedContact.EnglishName;
 
             FillNextRunDateFields();
 

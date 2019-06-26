@@ -41,7 +41,8 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         IsProrated, 
 	         ExternalProjectNumber, 
 	         ExcludeFromProrating, 
-	         DayOffTypeCode,
+	         DayOffTypeCode, 
+	         BlockedForDataEntry,
 	      }
 
 
@@ -70,7 +71,10 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 	         ExternalProjectNumber, 
 	         CategoryName, 
 	         ExcludeFromProrating, 
-	         DayOffTypeCode,
+	         DayOffTypeCode, 
+	         BlockedForDataEntry, 
+	         BudgetName, 
+	         DayOffTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -172,6 +176,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DayOffTypeCode))
             {
 				entityPOCO.DayOffTypeCode = entityPM.DayOffTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BlockedForDataEntry))
+            {
+				entityPOCO.BlockedForDataEntry = entityPM.BlockedForDataEntry;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -280,6 +289,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 					entityPM.DayOffTypeCode = entityPOCO.DayOffTypeCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BlockedForDataEntry))
+            {
+					entityPM.BlockedForDataEntry = entityPOCO.BlockedForDataEntry;
+            }
+
 		}
 
 		public void PMToOldPM(TMProjectPM entityPM, TMProjectPM oldEntityPM)
@@ -379,6 +393,11 @@ namespace Logitude.TimeManagement.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DayOffTypeCode))
             {
                 oldEntityPM.DayOffTypeCode = entityPM.DayOffTypeCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BlockedForDataEntry))
+            {
+                oldEntityPM.BlockedForDataEntry = entityPM.BlockedForDataEntry;
             }
 			
 		}
