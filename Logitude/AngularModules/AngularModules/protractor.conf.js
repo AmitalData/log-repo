@@ -1,4 +1,5 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
+const HtmlReporter = require('protractor-beautiful-reporter');
 
 exports.config = {
   allScriptsTimeout: 990000,
@@ -97,7 +98,8 @@ exports.config = {
       }
       
 
-    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+      jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+      jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'D:/Automation E2E reuslts/screenshots' }).getJasmine2Reporter());
   },
 
   suites: {
