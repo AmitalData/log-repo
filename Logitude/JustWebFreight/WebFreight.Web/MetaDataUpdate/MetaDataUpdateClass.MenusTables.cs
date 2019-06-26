@@ -125,9 +125,9 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature TeamFeature = tenantFeatures.Where(d => d.Code == "General.Features.BusinessProcessTeam" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature TasksFeature = tenantFeatures.Where(d => d.Code == "TASKS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature sharedShipmentsFeature = tenantFeatures.Where(d => d.Code == "SHAREDSHIPMENTS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
-            Feature sharedInvoicesFeature = tenantFeatures.Where(d => d.Code == "SHAREDINVOICES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature sharedInvoicesFeature = tenantFeatures.Where(d => d.Code == "SHAREDINVOICES" && d.FeatureTypeCode == "MENU").FirstOrDefault(); 
             Feature depositionFeature = tenantFeatures.Where(d => d.Code == "DEPOSITIONS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
-            Feature featureToggleFeature = tenantFeatures.Where(d => d.Code == "FEATURETOGGLES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature featureToggleFeature = tenantFeatures.Where(d => d.Code == "FEATURETOGGLES" && d.FeatureTypeCode == "MENU").FirstOrDefault(); 
             Feature createTenantFeature = tenantFeatures.Where(d => d.Code == "CREATETENANT" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             #endregion
 

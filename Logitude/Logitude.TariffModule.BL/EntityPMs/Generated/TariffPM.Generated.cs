@@ -1261,6 +1261,29 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isSurchargeUpdate ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSurchargeUpdate  
+	   {
+	    
+	     get
+		{
+		   return isSurchargeUpdate;
+		 }
+		 set
+		 {
+		   if(isSurchargeUpdate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSurchargeUpdate",OldValue=isSurchargeUpdate,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSurchargeUpdate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

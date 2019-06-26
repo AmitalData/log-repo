@@ -19,17 +19,20 @@
         line-height: 1.8em;
     }
 
-    .DescriptionTextArea {
-        border-width: 0px;
+    .CorrespondenceTextArea {
+        text-indent: 0px;
+        width: 100%;
+        background: transparent !important;
         border: none;
-        -webkit-appearance: none;
+        border-width: 0px;
+        overflow: hidden;
         outline: none;
-        border-color: transparent;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        font-size: 12px;
     }
 
-        .DescriptionTextArea:focus, input:focus {
-            outline: none;
-        }
 </style>
 
 <div class="TabHolder" style="overflow-x:auto;overflow-y:auto;height:100%;width:100%;">
@@ -195,18 +198,10 @@
                                                                         <table>
                                                                             <tr>
                                                                                 <td>
-
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td>
                                                                                     <table>
                                                                                         <tr>
 
-                                                                                            <td style="width:65px;max-width:65px;min-width:65px; vertical-align:top;">
+                                                                                            <td style="width:65px;max-width:65px;min-width:65px;">
                                                                                                 <table>
                                                                                                     <tr style="height:50px;vertical-align:top;">
                                                                                                         <td style="width:18px;">
@@ -230,69 +225,67 @@
                                                                                             </td>
 
                                                                                             <td>
-                                                                                                <table>
-                                                                                                    <tr style="height:1px;">
-                                                                                                        <td style="word-wrap: break-word;font-size:12px;text-align:left;float:left;">
-                                                                                                            <table>
-                                                                                                                <tr>
-                                                                                                                    <td>
-                                                                                                                        <div style="color:#1B90CB;font-size:12px;">
-                                                                                                                            {{item.ContactName}},
-                                                                                                                        </div>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        <div style="color:#1B90CB;font-size:12px;">
-                                                                                                                            {{item.CreateDate | DateTimeToDatePipe}},
-                                                                                                                        </div>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        <div style="color:#1B90CB;font-size:12px;">
-                                                                                                                            {{item.CreateDate | DateTimeToTimePipe}}:
-                                                                                                                        </div>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        <div [title]="item.Recipients" class="TextTrimming" style="font-size:9px;width:600px;">
-                                                                                                                            {{item.Recipients}}
-                                                                                                                        </div>
-                                                                                                                    </td>
+                                                                                                <div class="MediaFill">
+                                                                                                    <table style="table-layout: fixed;">
+                                                                                                        <tr style="height:1px;">
+                                                                                                            <td style="word-wrap: break-word;font-size:12px;text-align:left;float:left;">
+                                                                                                                <table>
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div style="color:#1B90CB;font-size:12px;">
+                                                                                                                                {{item.ContactName}},
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <div style="color:#1B90CB;font-size:12px;">
+                                                                                                                                {{item.CreateDate | DateTimeToDatePipe}},
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <div style="color:#1B90CB;font-size:12px;">
+                                                                                                                                {{item.CreateDate | DateTimeToTimePipe}}
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <div [title]="item.Recipients" class="TextTrimming" style="font-size:9px;width:600px;">
+                                                                                                                                {{item.Recipients}}
+                                                                                                                            </div>
+                                                                                                                        </td>
 
-                                                                                                                </tr>
-                                                                                                            </table>
-                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </td>                                                                                                            
+                                                                                                        </tr>
 
-                                                                                                        <td>
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                    </tr>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <div class="MediaFill">
+                                                                                                                    <textarea [attr.id]="item._TextAreaId"
+                                                                                                                              class="CorrespondenceTextArea"
+                                                                                                                              [ngStyle]="{direction: item.FlowDirection,'background': item.LineBoxBackground}"
+                                                                                                                              [ngModel]="item.Description"
+                                                                                                                              [readonly]="true"></textarea>
+                                                                                                                </div>
+                                                                                                            </td>                                                                                                            
+                                                                                                        </tr>
 
-                                                                                                    <tr>
-                                                                                                        <td>
-                                                                                                            <textarea [attr.id]="item._TextAreaId" style="width:100%;border: none;border-width:0px; overflow: hidden;resize:none; outline: none;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;
-                                                                                                      font-size:12px;"
-                                                                                                                      [ngStyle]="{direction: item.FlowDirection,'background': item.LineBoxBackground}"
-                                                                                                                      [ngModel]="item.Description"
-                                                                                                                      [readonly]="true"></textarea>
-
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                    </tr>
-
-                                                                                                </table>
+                                                                                                    </table>
+                                                                                                </div>
                                                                                             </td>
 
                                                                                             <td style="width:3px;">
                                                                                                 <div></div>
                                                                                             </td>
 
-                                                                                            <td style="width:95px;vertical-align:top; background: red;">
+                                                                                            <td style="width: 100px;">
                                                                                                 <table>
+
                                                                                                     <tr *ngIf="item.CorrespondenceHTMLBodyLinkVisibility" style="height:1px;vertical-align:top;">
                                                                                                         <td style="float:right;">
                                                                                                             <span class="hyperlink" (click)="item.ViewHTMLBody()" style="font-size:10px;padding-right:5px;padding-left:5px;">View Full Email</span>
                                                                                                         </td>
                                                                                                     </tr>
+
                                                                                                     <tr *ngIf="item.ActivityIconVisibility" style="vertical-align:bottom;">
                                                                                                         <td>
                                                                                                             <table>
@@ -326,68 +319,67 @@
                                                                                 </td>
                                                                             </tr>
 
-                                                                            <tr style="background: green;">
+                                                                            <tr style="height: 3px;">
                                                                                 <td>
-                                                                                    <table>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <!-- ShowMore -->
+                                                                            <tr style="height: 25px;">
+                                                                                <td>
+                                                                                    <table style="table-layout: fixed">
                                                                                         <tr>
-                                                                                            <td style="width:550px;">
+                                                                                            <td>
                                                                                                 <div></div>
                                                                                             </td>
 
-                                                                                            <td style="text-align: center;width:70px;">
+                                                                                            <td style="width: 60px; text-align: center;">
                                                                                                 <span *ngIf="item.ShowMoreVisibility" class="hyperlink" (click)="item.ShowMore()" style="font-size:10px">Show More</span>
                                                                                                 <span *ngIf="item.ShowLessVisibility" class="hyperlink" (click)="item.ShowLess()" style="font-size:10px">Show Less</span>
                                                                                             </td>
 
-                                                                                            <!-- *ngIf="item.TextAlignRegionVisibility" -->
-                                                                                            <td style="float:right;width:65px;">
-                                                                                                <table>
+                                                                                            <td>
+                                                                                                <table *ngIf="item.TextAlignRegionVisibility && TextAlignVisibility">
                                                                                                     <tr>
                                                                                                         <td>
-                                                                                                            <table>
-                                                                                                                <tr *ngIf="item.TextAlignVisibility">
-                                                                                                                    <td width="5px;">
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-                                                                                                                    <td style="width: 20px;height: 25px;" [ngStyle]="{background:item.BackgroundAlignLeft}">
-                                                                                                                        <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignLeftClicked()" />
-                                                                                                                    </td>
-                                                                                                                    <td width="5px;">
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-                                                                                                                    <td style="width: 20px;height: 25px;" [ngStyle]="{background: item.BackgroundAlignRight}">
-                                                                                                                        <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignRightClicked()" />
-                                                                                                                    </td>
-                                                                                                                    <td width="5px;">
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                            </table>
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background:item.BackgroundAlignLeft}">
+                                                                                                            <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignLeftClicked()" />
+                                                                                                        </td>
+
+                                                                                                        <td width="5px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 20px;" [ngStyle]="{background: item.BackgroundAlignRight}">
+                                                                                                            <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignRightClicked()" />
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </table>
-                                                                                            </td>
-
-                                                                                            <td style="width:5px;">
-                                                                                                <div></div>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>
                                                                                 </td>
                                                                             </tr>
 
-                                                                            <tr>
-                                                                                <!-- AttachmentsList -->
-                                                                                <td style="width:1px;">
+                                                                            <!-- Attachments -->
+                                                                            <tr style="height: 1px;">
+                                                                                <td>
                                                                                     <ul style="display:inline;">
                                                                                         <li *ngFor="let attach of item.AttachmentsList" style="display:inline;">
                                                                                             <img [src]="attach.FileExtension | AttatchmentIconPipe" style="width:20px;height:20px;margin-left:5px;cursor:pointer;" />
                                                                                             <span class="hyperlink" (click)="attach.ViewAttachment()" style="font-size:10px"> {{attach.FileName}}</span>
                                                                                         </li>
                                                                                     </ul>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 3px;">
+                                                                                <td>
+                                                                                    <div></div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>

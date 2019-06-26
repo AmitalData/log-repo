@@ -36,6 +36,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.AirlineAreasPorts.Include("Card") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
+        public List<AirlineAreasPort> GetAirlineAreasPortByAreaId(string areaId, int tenant)
+        {
+            return (from record in context.AirlineAreasPorts where record.AirlineAreaId == areaId && record.Tenant == tenant select record).ToList();
+        }
+
 
         public void Add(AirlineAreasPort entity)
         {

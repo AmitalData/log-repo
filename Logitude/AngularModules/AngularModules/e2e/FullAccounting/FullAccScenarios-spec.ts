@@ -25,15 +25,45 @@ describe('', function () {
     var arpayment = new NewARPayment();
     var logins = new LoginComp();
 
-       
 
 
 
-    it(' Creating Customer GLAccount Was Successfully Done', function () {
+    if (browser.params.FullAccount.FullAccountingType == 'ARPayment') {
+        it(' ARPayment Was Created Successfully  ', function () {
 
-        browser.ignoreSynchronization = true;
+            browser.ignoreSynchronization = true;
 
-        fullAccountingScenario.AccountingScenario(browser.params.FullAccount.FullAccountingType);
-                     
-    });
-});
+            fullAccountingScenario.AccountingScenario(browser.params.FullAccount.FullAccountingType);
+
+        })
+    }
+    else if (browser.params.FullAccount.FullAccountingType == 'AR') {
+        it(' Customer Was Created Successfully with Activated GLAccount And ARInvoice ', function () {
+
+            browser.ignoreSynchronization = true;
+
+            fullAccountingScenario.AccountingScenario(browser.params.FullAccount.FullAccountingType);
+
+        })
+    }
+    else if (browser.params.FullAccount.FullAccountingType == 'AP') {
+        it(' Vendor Was Created Successfully with Activated GLAccount And APInvoice ', function () {
+
+            browser.ignoreSynchronization = true;
+
+            fullAccountingScenario.AccountingScenario(browser.params.FullAccount.FullAccountingType);
+
+        })
+    }
+
+    else if (browser.params.FullAccount.FullAccountingType == 'RevGLAccount') {
+        it(' Revenue GLAccount Was successfully Created and Editted ', function () {
+
+            browser.ignoreSynchronization = true;
+
+            fullAccountingScenario.AccountingScenario(browser.params.FullAccount.FullAccountingType);
+
+        })
+    }
+
+}); 

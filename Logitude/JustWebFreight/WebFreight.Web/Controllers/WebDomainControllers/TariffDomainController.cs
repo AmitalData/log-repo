@@ -43,6 +43,7 @@ using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Server.Tools.QueueService;
 using WebFreight.Web.Helpers.APIHelpers;
+using System.Reflection;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -1710,26 +1711,75 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ITariffModuleContext tariffContext = TariffModuleContext.GetContext(authToken.Tenant);
+                TariffQueryService tariffQueryService = new TariffQueryService(tariffContext);
+                TariffPM tariff = tariffQueryService.GetSingle(args.TariffId, true, false);
+                TariffUpdateService tariffUpdateService = new TariffUpdateService(tariffContext, new Dictionary<string, IContext>(), authToken.Tenant);
+
+                if (tariff != null)
+                {                                        
+                    TariffVersionPM iDraftVersion = tariff.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();                  
+
+                    if (iDraftVersion != null)
+                    {
+                        List<FromToClass> routs = this.ComputeRoutsList(args.From, args.To, authToken.Tenant);
+                        bool isValid = this.ValidateStartDate(tariff, iDraftVersion, routs, args.StartDate);                        
+
+                        if(isValid)
+                        {
+                            foreach(FromToClass rout in routs)
+                            {
+                                TariffLinePM myLine = iDraftVersion.TariffLines.Where(d => d.OriginPortId == rout.FromCode && d.DestinationPortId == rout.ToCode).FirstOrDefault();
+                                if (myLine != null)
+                                {
+                                    myLine.ChangeSetOp = ChangeSetOperation.Update;
+                                    myLine.StartDate = args.StartDate;
+                                    
+                                    foreach (string charge in args.Surcharge)
+                                    {
+                                        string[] charge_array = charge.Split(',');
+                                        decimal value = Convert.ToDecimal(charge_array[1]);
+
+                                        PropertyInfo valuePropInfo = myLine.GetType().GetProperty("Surcharge" + charge_array[2] + "Price");
+                                        valuePropInfo.SetValue(myLine, value, null);
+                                    }
+                                }
+
+                                else
+                                {
+                                    TariffLinePM tariffLine = new TariffLinePM()
+                                    {
+                                        ChangeSetOp = ChangeSetOperation.Insert,
+                                        Version = iDraftVersion.Version,
+                                        Tenant = authToken.Tenant,
+                                        DestinationPortId = rout.ToCode,
+                                        OriginPortId = rout.FromCode,
+                                        StartDate = args.StartDate,
+                                        TariffId = args.TariffId,
+                                    };
+
+                                    foreach (string charge in args.Surcharge)
+                                    {
+                                        string[] charge_array = charge.Split(',');
+
+                                        decimal value1 = Convert.ToDecimal(charge_array[1]);
+                                        PropertyInfo valuePropInfo1 = tariffLine.GetType().GetProperty("Surcharge" + charge_array[2] + "Price");
+                                        valuePropInfo1.SetValue(tariffLine, value1, null);
+                                    }
+
+                                    iDraftVersion.TariffLines.Add(tariffLine);
+                                }
+                            }
+
+                            tariff.IsSurchargeUpdate = true;
+                            tariff.ChangeSetOp = ChangeSetOperation.Update;
+                            iDraftVersion.ChangeSetOp = ChangeSetOperation.Update;
+                            tariffUpdateService.Update(tariff, true);
+                        }                       
+                    } 
+                }
                 
-
-
-
-
-
-
-                string loggedUserEmail = authToken.Email;
-                ContactQuery contactQuery = new ContactQuery(authToken.Tenant);
-                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, authToken.Tenant);             
-                
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = authToken.Tenant,
-                    EventTypeCode = "SUCU",
-                    UserId = loggedContact.Id,
-                    EntityId = args.TariffId,
-                    ObjectTableName = "Tariff",
-                });
-
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }
 
@@ -1737,6 +1787,73 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+        private bool ValidateStartDate(TariffPM tariff, TariffVersionPM iDraftVersion, List<FromToClass> routs, DateTime startDate)
+        {
+            bool isValid = true;
+
+            TariffVersionPM iPreviousVersion = tariff.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
+            if (iPreviousVersion != null)
+            {
+                List<TariffLinePM> draftLines = iDraftVersion.TariffLines.Where(d => (routs.Select(s => s.FromCode).Contains(d.OriginPortId) && routs.Select(s => s.ToCode).Contains(d.DestinationPortId))).ToList();
+                foreach (TariffLinePM linePM in draftLines)
+                {
+                    if (linePM.StartDate != null)
+                    {
+                        var iPreviousLine = iPreviousVersion.TariffLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
+                        if (iPreviousLine != null)
+                        {
+                            if (startDate > iPreviousLine.StartDate)
+                            {
+                                isValid = false;
+                                throw new ApplicationException("New start date can't be before the current tariff start date");
+                            }
+                        }
+                    }
+                }
+            }
+
+            return isValid;
+        }
+        private List<FromToClass> ComputeRoutsList(List<string> fromList, List<string> toList, int tenant)
+        {
+            List<FromToClass> myResult = new List<FromToClass>();
+            
+            foreach (string item_from in fromList)
+            {
+                string[] from = item_from.Split(',');
+
+                if (from[0] == "Port")
+                {
+                    foreach (string item_to in toList)
+                    {
+                        string[] to = item_to.Split(',');
+
+                        if (to[0] == "Port")
+                        {
+                            FromToClass routItem = new FromToClass()
+                            {
+                                FromCode = from[1],
+                                ToCode = to[1],
+                            };
+
+                            myResult.Add(routItem);
+                        }
+                    }
+                }
+
+                else if (from[0] == "Area")
+                {
+                    AirlineAreasPortRepository airlineAreasPortRepository = new AirlineAreasPortRepository(tenant);
+                    List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(from[1], tenant);
+                    if (areasPorts != null && areasPorts.Count > 0)
+                    {
+
+                    }
+                }
+            }
+
+            return myResult;
         }
     }
 
@@ -1812,9 +1929,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
     public class UpdateSurchargeArgs
     {
         public string TariffId { get; set; }
+        public int VersionNumber { get; set; }
         public List<string> From { get; set; }
         public List<string> To { get; set; }
         public List<string> Surcharge { get; set; }
         public DateTime StartDate { get; set; }
+    }
+    public class FromToClass
+    {
+        public string FromCode { get; set; }
+        public string ToCode { get; set; }
     }
 }
