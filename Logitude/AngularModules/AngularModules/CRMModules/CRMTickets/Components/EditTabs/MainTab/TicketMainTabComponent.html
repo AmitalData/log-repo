@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .borderlist {
         list-style-position: inside;
@@ -35,102 +35,148 @@
 <div class="TabHolder" style="overflow-x:auto;overflow-y:auto;height:100%;width:100%;">
     <table style="min-width:1150px;">
         <tr>
-            <td style="width:10px;">
-                <div></div>
-            </td>
-
             <td>
                 <table>
-                    <tr style="height:5px;"></tr>
+                    <tr style="height:5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
 
                     <tr class="TabTitleRow">
-
-                        <td colspan="3">
+                        <td>
                             <table>
                                 <tr>
                                     <td>Main</td>
 
                                     <td style="width:160px">
                                         <EntityFollowComponent [EntityId]="EntityId" [ObjectTableName]="'Ticket'"></EntityFollowComponent>
-
                                     </td>
 
-                                    <td style="width:5px"></td>
+                                    <td style="width:5px">
+                                        <div></div>
+                                    </td>
                                 </tr>
                             </table>
                         </td>
-
-                     
                     </tr>
 
-                    <tr style="height: 5px;"><td colspan="3"></td></tr>
+                    <tr style="height: 5px;">
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
 
                     <tr>
                         <td>
                             <table>
-
-                                <tr class="SectionHeader" style="height:32px;">
+                                <tr>
                                     <td>
                                         <table>
-                                            <tr style="height:5px;">
-                                                <td colspan="3">
-                                                    <div></div>
+
+                                            <tr class="SectionHeader" style="height:32px;">
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:5px;">
+                                                            <td colspan="3">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-left:10px;float:left;vertical-align:central;">Correspondence</td>
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                            <td style="float:right;vertical-align:central;">
+                                                                <table>
+                                                                    <tr style="height:18px;vertical-align:central;">
+                                                                        <td style="width: 21px;height:18px; vertical-align:middle;">
+                                                                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                                                                        </td>
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                        <td style="width:2px;min-width:2px; overflow: hidden;background:Gray">
+                                                                            <div></div>
+                                                                            <!--<span style="border-width:1px;height:18px;color:#282E30; border-style: solid;width:2px;"></span>-->
+                                                                        </td>
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                        <td [title]="'Add Phone call'" style="width: 35px;vertical-align:middle;height:18px;">
+                                                                            <button class="Button" (click)="AddActivity('CL')" [disabled]="!IsTicketActivityEnabled">
+                                                                                <img style="left:5px;width:10px;height:10px;" src="./Images/Buttons/Add.over.png" />
+                                                                                <img style="left:5px;width:12px;height:12px;" src="./Images/Buttons/Call.png" />
+                                                                            </button>
+                                                                        </td>
+
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td [title]="'Add Task'" style="width: 35px;vertical-align:middle;height:18px;">
+                                                                            <button class="Button" (click)="AddActivity('TS')" [disabled]="!IsTicketActivityEnabled">
+                                                                                <img style="left:5px;width:10px;height:10px;" src="./Images/Buttons/Add.over.png" />
+                                                                                <img style="left:5px;width:12px;height:12px;" src="./Images/Buttons/Task.png" />
+                                                                            </button>
+                                                                        </td>
+
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td [title]="'Add Appointment'" style="width: 35px;vertical-align:middle;height:18px;">
+                                                                            <button class="Button" (click)="AddActivity('AP')" [disabled]="!IsTicketActivityEnabled">
+                                                                                <img style="left:5px;width:10px;height:10px;" src="./Images/Buttons/Add.over.png" />
+                                                                                <img style="left:5px;width:12px;height:12px;" src="./Images/Buttons/Appointment.png" />
+                                                                            </button>
+                                                                        </td>
+
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="height:5px;">
+                                                            <td colspan="3">
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td style="padding-left:10px;float:left;vertical-align:central;">Correspondence</td>
+
+                                            <tr style="height: 5px;">
                                                 <td>
                                                     <div></div>
                                                 </td>
-                                                <td style="float:right;vertical-align:central;">
+                                            </tr>
+
+                                            <tr style="height:32px;">
+                                                <td style="width:30px">
                                                     <table>
-                                                        <tr style="height:18px;vertical-align:central;">
-                                                            <td style="width: 21px;height:18px; vertical-align:middle;">
-                                                                <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                                                        <tr>
+                                                            <td style="width:1px;">
+                                                                <span class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('Ex')" style="font-size:16px" [ngStyle]="{color:LinkColor}"> Reply </span>
                                                             </td>
-                                                            <td style="width: 5px;">
+                                                            <td style="width:5px;">
                                                                 <div></div>
                                                             </td>
-                                                            <td style="width:2px;min-width:2px; overflow: hidden;background:Gray">
-                                                                <div></div>
-                                                                <!--<span style="border-width:1px;height:18px;color:#282E30; border-style: solid;width:2px;"></span>-->
+                                                            <td style="width:1px;">
+                                                                <span style="border:1px solid #1B90CB;"></span>
                                                             </td>
-                                                            <td style="width: 5px;">
-                                                                <div></div>
-                                                            </td>
-                                                            <td [title]="'Add Phone call'" style="width: 35px;vertical-align:middle;height:18px;">
-                                                                <button class="Button" (click)="AddActivity('CL')" [disabled]="!IsTicketActivityEnabled">
-                                                                    <img style="left:5px;width:10px;height:10px;" src="./Images/Buttons/Add.over.png" />
-                                                                    <img style="left:5px;width:12px;height:12px;" src="./Images/Buttons/Call.png" />
-                                                                </button>
-                                                            </td>
-
-                                                            <td style="width: 5px;">
+                                                            <td style="width:5px;">
                                                                 <div></div>
                                                             </td>
-
-                                                            <td [title]="'Add Task'" style="width: 35px;vertical-align:middle;height:18px;">
-                                                                <button class="Button" (click)="AddActivity('TS')" [disabled]="!IsTicketActivityEnabled">
-                                                                    <img style="left:5px;width:10px;height:10px;" src="./Images/Buttons/Add.over.png" />
-                                                                    <img style="left:5px;width:12px;height:12px;" src="./Images/Buttons/Task.png" />
-                                                                </button>
+                                                            <td style="width:1px;">
+                                                                <span class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('In')" style="font-size:16px;" [ngStyle]="{color:LinkColor}">Add Internal Note</span>
                                                             </td>
-
-                                                            <td style="width: 5px;">
-                                                                <div></div>
-                                                            </td>
-
-                                                            <td [title]="'Add Appointment'" style="width: 35px;vertical-align:middle;height:18px;">
-                                                                <button class="Button" (click)="AddActivity('AP')" [disabled]="!IsTicketActivityEnabled">
-                                                                    <img style="left:5px;width:10px;height:10px;" src="./Images/Buttons/Add.over.png" />
-                                                                    <img style="left:5px;width:12px;height:12px;" src="./Images/Buttons/Appointment.png" />
-                                                                </button>
-                                                            </td>
-
-                                                            <td style="width: 5px;">
-                                                                <div></div>
-                                                            </td>
-
                                                             <td>
                                                                 <div></div>
                                                             </td>
@@ -138,318 +184,283 @@
                                                     </table>
                                                 </td>
                                             </tr>
-                                            <tr style="height:5px;">
-                                                <td colspan="3">
-                                                    <div></div>
+
+                                            <tr>
+                                                <td>
+                                                    <div class="MediaFill">
+                                                        <SectionBox [Scrolling]="true" [HeaderHeight]="1">
+                                                            <SectionBody>
+                                                                <div>
+                                                                    <div class="borderlist" *ngFor="let item of CorrespondenceList" [ngStyle]="{'background': item.LineBoxBackground}">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+
+                                                                                            <td style="width:65px;max-width:65px;min-width:65px;">
+                                                                                                <table>
+                                                                                                    <tr style="height:50px;vertical-align:top;">
+                                                                                                        <td style="width:18px;">
+                                                                                                            <!--<img [title]="item.CorrespondenceCommunicationToolTip" style="width:12px;min-width:12px;height:12px;vertical-align:top;" [attr.src]="item.SourceText" />-->
+                                                                                                            <div *ngIf="item.SourceText != null" class="MediaFill" style="vertical-align:top;float:left;">
+                                                                                                                <HelpIcon [IconSize]='12' [Header]="'Email Delivery Status'" [Text]="item.CorrespondenceCommunicationToolTip" [IconPath]="item.SourceText"></HelpIcon>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td style="width: 50px;min-width:50px;max-width:50px; vertical-align:top;float:left;">
+                                                                                                            <img style="width:50px;min-width:50px;min-height:50px; height:50px;" src="./Images/graycustomer.png" />
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+
+                                                                                            <td style="width:5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <table>
+                                                                                                    <tr style="height:1px;">
+                                                                                                        <td style="word-wrap: break-word;font-size:12px;text-align:left;float:left;">
+                                                                                                            <table>
+                                                                                                                <tr>
+                                                                                                                    <td>
+                                                                                                                        <div style="color:#1B90CB;font-size:12px;">
+                                                                                                                            {{item.ContactName}},
+                                                                                                                        </div>
+                                                                                                                    </td>
+                                                                                                                    <td>
+                                                                                                                        <div style="color:#1B90CB;font-size:12px;">
+                                                                                                                            {{item.CreateDate | DateTimeToDatePipe}},
+                                                                                                                        </div>
+                                                                                                                    </td>
+                                                                                                                    <td>
+                                                                                                                        <div style="color:#1B90CB;font-size:12px;">
+                                                                                                                            {{item.CreateDate | DateTimeToTimePipe}}:
+                                                                                                                        </div>
+                                                                                                                    </td>
+                                                                                                                    <td>
+                                                                                                                        <div [title]="item.Recipients" class="TextTrimming" style="font-size:9px;width:600px;">
+                                                                                                                            {{item.Recipients}}
+                                                                                                                        </div>
+                                                                                                                    </td>
+
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </td>
+
+                                                                                                        <td>
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <textarea [attr.id]="item._TextAreaId" style="width:100%;border: none;border-width:0px; overflow: hidden;resize:none; outline: none;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;
+                                                                                                      font-size:12px;"
+                                                                                                                      [ngStyle]="{direction: item.FlowDirection,'background': item.LineBoxBackground}"
+                                                                                                                      [ngModel]="item.Description"
+                                                                                                                      [readonly]="true"></textarea>
+
+                                                                                                        </td>
+                                                                                                        <td>
+                                                                                                            <div></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                </table>
+                                                                                            </td>
+
+                                                                                            <td style="width:3px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td style="width: 100px;">
+                                                                                                <table>
+
+                                                                                                    <tr *ngIf="item.CorrespondenceHTMLBodyLinkVisibility" style="height:1px;vertical-align:top;">
+                                                                                                        <td style="float:right;">
+                                                                                                            <span class="hyperlink" (click)="item.ViewHTMLBody()" style="font-size:10px;padding-right:5px;padding-left:5px;">View Full Email</span>
+                                                                                                        </td>
+                                                                                                    </tr>
+
+                                                                                                    <tr *ngIf="item.ActivityIconVisibility" style="vertical-align:bottom;">
+                                                                                                        <td>
+                                                                                                            <table>
+                                                                                                                <tr style="height:40px;">
+                                                                                                                    <td style="width:35px; min-width:35px;max-width:35px;">
+                                                                                                                        <img class="CenterCenter" (click)="item.EditActivity()" [title]="item.ActivityTypeName" style="width:35px;height:40px;" [attr.src]="item.ImageSrc" />
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr style="height:3px;">
+                                                                                                                    <td>
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr style="height:1px;">
+                                                                                                                    <td style="width:35px; min-width:35px;max-width:35px;vertical-align:bottom;text-align:center;">
+                                                                                                                        <Hyperlink (click)="item.EditActivity()">Details</Hyperlink>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <tr>
+                                                                                                                    <td>
+                                                                                                                        <div></div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 3px;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <!-- ShowMore -->
+                                                                            <tr style="height: 25px;">
+                                                                                <td>
+                                                                                    <table style="table-layout: fixed">
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td style="width: 60px; text-align: center;">
+                                                                                                <span *ngIf="item.ShowMoreVisibility" class="hyperlink" (click)="item.ShowMore()" style="font-size:10px">Show More</span>
+                                                                                                <span *ngIf="item.ShowLessVisibility" class="hyperlink" (click)="item.ShowLess()" style="font-size:10px">Show Less</span>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <table *ngIf="item.TextAlignRegionVisibility && TextAlignVisibility">
+                                                                                                    <tr>
+                                                                                                        <td>
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background:item.BackgroundAlignLeft}">
+                                                                                                            <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignLeftClicked()" />
+                                                                                                        </td>
+
+                                                                                                        <td width="5px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 20px;" [ngStyle]="{background: item.BackgroundAlignRight}">
+                                                                                                            <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignRightClicked()" />
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <!-- Attachments -->
+                                                                            <tr style="height: 1px;">
+                                                                                <td>
+                                                                                    <ul style="display:inline;">
+                                                                                        <li *ngFor="let attach of item.AttachmentsList" style="display:inline;">
+                                                                                            <img [src]="attach.FileExtension | AttatchmentIconPipe" style="width:20px;height:20px;margin-left:5px;cursor:pointer;" />
+                                                                                            <span class="hyperlink" (click)="attach.ViewAttachment()" style="font-size:10px"> {{attach.FileName}}</span>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </SectionBody>
+                                                        </SectionBox>
+                                                    </div>
                                                 </td>
                                             </tr>
-                                        </table>
-                                    </td>
-                                </tr>
 
-                                <tr style="height: 5px;"></tr>
-
-                                <tr style="height:32px;">
-                                    <td style="width:30px">
-                                        <table>
-                                            <tr>
-                                                <td style="width:1px;">
-                                                    <span class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('Ex')" style="font-size:16px" [ngStyle]="{color:LinkColor}"> Reply </span>
-                                                </td>
-                                                <td style="width:5px;">
-                                                    <div></div>
-                                                </td>
-                                                <td style="width:1px;">
-                                                    <span style="border:1px solid #1B90CB;"></span>
-                                                </td>
-                                                <td style="width:5px;">
-                                                    <div></div>
-                                                </td>
-                                                <td style="width:1px;">
-                                                    <span class="hyperlink" [class.HyperlinkDisabled]="!IsTicketReplyEnabled" (click)="SendEmailCommand('In')" style="font-size:16px;" [ngStyle]="{color:LinkColor}">Add Internal Note</span>
-                                                </td>
+                                            <tr style="height:5px;">
                                                 <td>
                                                     <div></div>
                                                 </td>
                                             </tr>
+
                                         </table>
                                     </td>
-                                </tr>
 
-                                <tr>
-                                    <td>
-                                        <div class="MediaFill" style="vertical-align:top;">
-                                            <SectionBox [Scrolling]="true" [HeaderHeight]="1">
-                                                <SectionBody>
-                                                    <div style="top:2px;">
-                                                        <div class="borderlist" *ngFor="let item of CorrespondenceList" [ngStyle]="{'background': item.LineBoxBackground}">
-                                                            <table style="margin:3px;">
-                                                                <tr>
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width:65px;max-width:65px;min-width:65px; vertical-align:top;">
-                                                                                    <table>
-                                                                                        <tr style="height:50px;vertical-align:top;">
-                                                                                            <td style="width:18px;">
-                                                                                                <!--<img [title]="item.CorrespondenceCommunicationToolTip" style="width:12px;min-width:12px;height:12px;vertical-align:top;" [attr.src]="item.SourceText" />-->
-                                                                                                <div *ngIf="item.SourceText != null" class="MediaFill" style="vertical-align:top;float:left;">
-                                                                                                    <HelpIcon [IconSize]='12' [Header]="'Email Delivery Status'" [Text]="item.CorrespondenceCommunicationToolTip" [IconPath]="item.SourceText"></HelpIcon>
-                                                                                                </div>
-                                                                                            </td>
-                                                                                            <td style="width: 50px;min-width:50px;max-width:50px; vertical-align:top;float:left;">
-                                                                                                <img style="width:50px;min-width:50px;min-height:50px; height:50px;" src="./Images/graycustomer.png" />
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
-                                                                                </td>
+                                    <td style="width:10px;">
+                                        <div></div>
+                                    </td>
 
-                                                                                <td style="width:5px;">
-                                                                                    <div></div>
-                                                                                </td>
+                                    <td style="width:420px">
+                                        <div class="TabControl" style="vertical-align:top;">
+                                            <div class="TabControlHead">
+                                                <table>
+                                                    <tr>
+                                                        <td style="width:420px">
+                                                            <ul>
+                                                                <li [class.Selected]="SelectedTabCode == 'DS'" (click)="SelectedTabCode = 'DS'" style="margin-left:25px;border-left:1px solid #A3AEB9">
+                                                                    <div class="InnerChild" style="color:black;font-size:14px;border-bottom-width:0.5px;">
+                                                                        <div>Details</div>
+                                                                    </div>
+                                                                </li>
 
-                                                                                <td>
-                                                                                    <table>
-                                                                                        <tr style="height:1px;">
-                                                                                            <td style="word-wrap: break-word;font-size:12px;text-align:left;float:left;">
-                                                                                                <table>
-                                                                                                    <tr>
-                                                                                                        <td>
-                                                                                                            <div style="color:#1B90CB;font-size:12px;">
-                                                                                                                {{item.ContactName}},
-                                                                                                            </div>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <div style="color:#1B90CB;font-size:12px;">
-                                                                                                                {{item.CreateDate | DateTimeToDatePipe}},
-                                                                                                            </div>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <div style="color:#1B90CB;font-size:12px;">
-                                                                                                                {{item.CreateDate | DateTimeToTimePipe}}:
-                                                                                                            </div>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <div [title]="item.Recipients" class="TextTrimming" style="font-size:9px;width:600px;">
-                                                                                                                {{item.Recipients}}
-                                                                                                            </div>
-                                                                                                        </td>
+                                                                <li [class.Selected]="SelectedTabCode == 'OA'" (click)="SelectedTabCode = 'OA'" style="margin-left:7px;border-left:1px solid #A3AEB9">
+                                                                    <div class="InnerChild" style="color:black;font-size:14px;border-bottom-width:0.5px;">
+                                                                        <div>{{OpenActivitiesHeader}}</div>
+                                                                    </div>
+                                                                </li>
 
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                            </td>
+                                                                <li [class.Selected]="SelectedTabCode == 'PT'" (click)="SelectedTabCode = 'PT'" style="margin-left:7px;border-left:1px solid #A3AEB9">
+                                                                    <div class="InnerChild" style="color:black;font-size:14px;border-bottom-width:0.5px;">
+                                                                        <div>Posts</div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
 
-                                                                                            <td>
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                        </tr>
+                                            <div class="TabControlBody" style="vertical-align:top;">
 
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <textarea [attr.id]="item._TextAreaId" style="width:100%;border: none;border-width:0px; overflow: hidden;resize:none; outline: none;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;
-                                                                                                      font-size:12px;"
-                                                                                                          [ngStyle]="{direction: item.FlowDirection,'background': item.LineBoxBackground}"
-                                                                                                          [ngModel]="item.Description"
-                                                                                                          [readonly]="true"></textarea>
+                                                <!-- Open Activities -->
+                                                <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'OA'">
+                                                    <div class="LocationDirective" LocationDirective Code="OA"></div>
+                                                </div>
 
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <div></div>
-                                                                                            </td>
-                                                                                        </tr>
 
-                                                                                    </table>
-                                                                                </td>
-                                                                                <td style="width:3px;">
-                                                                                    <div></div>
-                                                                                </td>
-                                                                                <td style="width:95px;vertical-align:top;">
+                                                <!-- Details -->
+                                                <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'DS'" style="vertical-align:top;">
+                                                    <div class="LocationDirective" LocationDirective Code="DS"></div>
+                                                </div>
 
-                                                                                    <table>
-                                                                                        <tr *ngIf="item.CorrespondenceHTMLBodyLinkVisibility" style="height:1px;vertical-align:top;">
-                                                                                            <td style="float:right;">
-                                                                                                <span class="hyperlink" (click)="item.ViewHTMLBody()" style="font-size:10px;padding-right:5px;padding-left:5px;">View Full Email</span>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <tr *ngIf="item.ActivityIconVisibility" style="vertical-align:bottom;">
-                                                                                            <td>
-                                                                                                <table>
-                                                                                                    <tr style="height:40px;">
-                                                                                                        <td style="width:35px; min-width:35px;max-width:35px;">
-                                                                                                            <img class="CenterCenter" (click)="item.EditActivity()" [title]="item.ActivityTypeName" style="width:35px;height:40px;" [attr.src]="item.ImageSrc" />
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                    <tr style="height:3px;">
-                                                                                                        <td>
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                    <tr style="height:1px;">
-                                                                                                        <td style="width:35px; min-width:35px;max-width:35px;vertical-align:bottom;text-align:center;">
-                                                                                                            <Hyperlink (click)="item.EditActivity()">Details</Hyperlink>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                    <tr>
-                                                                                                        <td>
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
+                                                <!-- Posts -->
+                                                <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'PT'">
+                                                    <div class="LocationDirective" LocationDirective Code="PT"></div>
+                                                </div>
 
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
 
-                                                                <tr>
-                                                                    <td>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td style="width:550px;">
-                                                                                    <div></div>
-                                                                                </td>
-                                                                                <td style="text-align: center;width:70px;">
-                                                                                    <span *ngIf="item.ShowMoreVisibility" class="hyperlink" (click)="item.ShowMore()" style="font-size:10px">Show More</span>
-                                                                                    <span *ngIf="item.ShowLessVisibility" class="hyperlink" (click)="item.ShowLess()" style="font-size:10px">Show Less</span>
-                                                                                </td>
-                                                                                <td *ngIf="item.TextAlignRegionVisibility" style="float:right;width:65px;">
-                                                                                    <table>
-                                                                                        <tr>
-                                                                                            <td>
-                                                                                                <table>
-                                                                                                    <tr *ngIf="item.TextAlignVisibility">
-                                                                                                        <td width="5px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background:item.BackgroundAlignLeft}">
-                                                                                                            <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignLeftClicked()" />
-                                                                                                        </td>
-                                                                                                        <td width="5px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background: item.BackgroundAlignRight}">
-                                                                                                            <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignRightClicked()" />
-                                                                                                        </td>
-                                                                                                        <td width="5px;">
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                </table>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </table>
-                                                                                </td>
-                                                                                <td *ngIf="!item.TextAlignRegionVisibility" style="float:right;width:65px;min-width:65px;">
-                                                                                    <div></div>
-                                                                                </td>
-                                                                                <td style="width:5px;">
-                                                                                    <div></div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <!-- AttachmentsList -->
-                                                                    <td style="width:1px;">
-                                                                        <ul style="display:inline;">
-                                                                            <li *ngFor="let attach of item.AttachmentsList" style="display:inline;">
-                                                                                <img [src]="attach.FileExtension | AttatchmentIconPipe" style="width:20px;height:20px;margin-left:5px;cursor:pointer;" />
-                                                                                <span class="hyperlink" (click)="attach.ViewAttachment()" style="font-size:10px"> {{attach.FileName}}</span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </SectionBody>
-                                            </SectionBox>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
-
-                                <tr style="height:5px;"></tr>
-
                             </table>
                         </td>
-
-                        <td style="width:10px;">
-                            <div></div>
-                        </td>
-
-                        <td style="width:420px">
-                            <div class="TabControl" style="vertical-align:top;">
-                                <div class="TabControlHead">
-                                    <table>
-                                        <tr>
-                                            <td style="width:420px">
-                                                <ul>
-                                                    <li [class.Selected]="SelectedTabCode == 'DS'" (click)="SelectedTabCode = 'DS'" style="margin-left:25px;border-left:1px solid #A3AEB9">
-                                                        <div class="InnerChild" style="color:black;font-size:14px;border-bottom-width:0.5px;">
-                                                            <div>Details</div>
-                                                        </div>
-                                                    </li>
-
-                                                    <li [class.Selected]="SelectedTabCode == 'OA'" (click)="SelectedTabCode = 'OA'" style="margin-left:7px;border-left:1px solid #A3AEB9">
-                                                        <div class="InnerChild" style="color:black;font-size:14px;border-bottom-width:0.5px;">
-                                                            <div>{{OpenActivitiesHeader}}</div>
-                                                        </div>
-                                                    </li>
-
-                                                    <li [class.Selected]="SelectedTabCode == 'PT'" (click)="SelectedTabCode = 'PT'" style="margin-left:7px;border-left:1px solid #A3AEB9">
-                                                        <div class="InnerChild" style="color:black;font-size:14px;border-bottom-width:0.5px;">
-                                                            <div>Posts</div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                                <div class="TabControlBody" style="vertical-align:top;">
-
-                                    <!-- Open Activities -->
-                                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'OA'">
-                                        <div class="LocationDirective" LocationDirective Code="OA"></div>
-                                    </div>
-
-
-                                    <!-- Details -->
-                                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'DS'" style="vertical-align:top;">
-                                        <div class="LocationDirective" LocationDirective Code="DS"></div>
-                                    </div>
-
-                                    <!-- Posts -->
-                                    <div class="LocationDirectiveHolder" [hidden]="SelectedTabCode != 'PT'">
-                                        <div class="LocationDirective" LocationDirective Code="PT"></div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </td>
                     </tr>
-
                 </table>
             </td>
 
             <td style="width:10px;">
                 <div></div>
             </td>
-
         </tr>
     </table>
 </div>

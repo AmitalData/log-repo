@@ -37,6 +37,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private Card entityCard;
         private Contact loggedContact;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
+        private AirlineAreaRepository airlineArearepository;
+
         private ICommonDataContext objectContext;
         private AirlineRepository entityRepository;
         private CardRepository cardRepository;
@@ -52,6 +54,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactRepository = new ContactRepository(objectContext);
             this.cardQuery = new CardQuery(cardRepository);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
+            this.airlineArearepository = new AirlineAreaRepository(objectContext);
             this.GetLoggedContact();
         }
 
@@ -65,6 +68,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void SetChangeSet(List<CardExternalCodeByCurrencyPM> cardExternalCodeByCurrencyChangeSet)
         {
             this.cardExternalCodeByCurrencyChangeSet = cardExternalCodeByCurrencyChangeSet;
+        }
+
+
+        private List<AirlineAreaPM> airlineAreaChangeSet;
+        public void SetChangeSet(List<AirlineAreaPM> airlineAreaChangeSet)
+        {
+            this.airlineAreaChangeSet = airlineAreaChangeSet;
         }
 
         public void Create(AirlinePM entityPM)
@@ -157,6 +167,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 if (mapComposition)
                 {
                     this.SetChangeSet(this.entityPM.CardExternalCodeByCurrencies);
+                    this.SetChangeSet(this.entityPM.AirlineAreas);
+
                 }
                 if (CacheManager.CacheWrapper != null)
                 {
@@ -175,6 +187,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 this.UpdateCardExternalCodeByCurrencyCollection();
+                this.UpdateAirlineAreasCollection();
                 this.UpdateHasAdaptations();
 
                 if (!entityPM.IsHybrid)
@@ -353,6 +366,40 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+
+
+        private void UpdateAirlineAreasCollection()
+        {
+            if (airlineAreaChangeSet != null)
+            {
+                foreach (AirlineAreaPM itemPM in airlineAreaChangeSet)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateAirlineArea(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateAirlineArea(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteAirlineArea(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+
         private void CreateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             itemPM.Id = IdCounter.GetNumber("CardExternalCodeByCurrency", tenant).ToString();
@@ -374,6 +421,36 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CardExternalCodeByCurrencyMapping.MapEntity(itemPM, itemPoco, true);
             cardExternalCodeByCurrencyRepository.Add(itemPoco);
         }
+
+
+        private void CreateAirlineArea(AirlineAreaPM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("AirlineArea", tenant).ToString();
+            itemPM.AirlineId = this.entityPM.Id;
+            itemPM.Tenant = tenant;
+            itemPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            itemPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            itemPM.CreatedByUserId = loggedContact.Id;
+            itemPM.UpdatedByUserId = loggedContact.Id;
+
+            AirlineArea itemPoco = new AirlineArea()
+            {
+                Id = itemPM.Id,
+                AirlineId = itemPM.AirlineId,
+                CreateDate = itemPM.CreateDate,
+                UpdateDate = itemPM.UpdateDate,
+                CreatedByUserId = itemPM.CreatedByUserId,
+                Tenant = tenant,
+                UpdatedByUserId = itemPM.UpdatedByUserId,
+                Name=itemPM.Name,
+                Description=itemPM.Description,                
+            };
+
+            AirlineAreaMapping.MapEntity(itemPM, itemPoco, true);
+            airlineArearepository.Add(itemPoco);
+        }
+
+
         private void UpdateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             CardExternalCodeByCurrency itemPoco = cardExternalCodeByCurrencyRepository.GetSingleCardExternalCodeByCurrency(itemPM.Id, tenant);
@@ -381,6 +458,24 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             cardExternalCodeByCurrencyRepository.Update(itemPoco);
         }
+
+        private void UpdateAirlineArea(AirlineAreaPM itemPM)
+        {
+            AirlineArea itemPoco = airlineArearepository.GetSingleAirlineArea(itemPM.Id, tenant);
+            AirlineAreaMapping.MapEntity(itemPM, itemPoco, false);
+            airlineArearepository.Update(itemPoco);
+        }
+
+        private void DeleteAirlineArea(AirlineAreaPM itemPM)
+        {
+            AirlineArea itemPoco = airlineArearepository.GetSingleAirlineArea(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                airlineArearepository.Remove(itemPoco);
+            }
+        }
+
+
         private void DeleteCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             CardExternalCodeByCurrency itemPoco = cardExternalCodeByCurrencyRepository.GetSingleCardExternalCodeByCurrency(itemPM.Id, tenant);
@@ -393,6 +488,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void Submit()
         {
             cardExternalCodeByCurrencyRepository.SubmitChanges();
-        }         
+            airlineArearepository.SubmitChanges();
+
+        }
     }
 }

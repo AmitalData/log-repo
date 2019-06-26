@@ -16,5 +16,7 @@ export class AirlineAreaList {
 		CreatedByUserId: string;
 		UpdatedByUserId: string;
 		AirlineId: string;
+		CreatedByUserName: string;
+		UpdatedByUserName: string;
 	
 }

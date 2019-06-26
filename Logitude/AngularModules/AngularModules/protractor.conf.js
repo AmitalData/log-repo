@@ -1,4 +1,5 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
+const HtmlReporter = require('protractor-beautiful-reporter');
 
 exports.config = {
   allScriptsTimeout: 990000,
@@ -108,15 +109,14 @@ exports.config = {
       }
       
 
-    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+      jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+      jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'D:/Automation E2E reuslts/screenshots' }).getJasmine2Reporter());
   },
 
   suites: {
     // ********************* Login **********************************
       login: 'e2e/Login/**/Login.e2e-spec.ts',
-      FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
-     // ARPayment: 'e2e/FullAccounting/ARPayment/**/ARPayment-spec.ts',
-
+     // FullAccProcess: 'e2e/FullAccounting/**/FullAccScenarios-spec.ts',
     //  ARInvoice: 'e2e/FullAccounting/ARInvoice/**/ARInvoice-spec.ts',
     //  CRM: 'e2e/CRM/**/CRMModule-spec.ts',
     //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
@@ -141,7 +141,7 @@ exports.config = {
 
 
     //*************Report******************* */
-     //Reports: 'e2e/Report/**/Report-spec.ts',
+     Reports: 'e2e/Report/**/Report-spec.ts',
 
     //*************DocOutTab************** */
    // DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
