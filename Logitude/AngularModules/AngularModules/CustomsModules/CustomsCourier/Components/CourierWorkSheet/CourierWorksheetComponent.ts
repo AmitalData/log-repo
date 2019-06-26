@@ -814,7 +814,7 @@ implements OnDestroy
         this.columns.push({
             FieldName: 'CourierPendingReasonName',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonName"),
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
