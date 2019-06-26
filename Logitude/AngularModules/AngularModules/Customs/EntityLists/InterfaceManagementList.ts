@@ -31,6 +31,8 @@ export class InterfaceManagementList {
 	SignatureTypeName: string;
 	DcaRenameFileEnable: boolean;
 	DcaRenameFilePrefix: string;
+	InterfaceType: string;
+	InterfaceTypeName: string;
 	
 }
  

@@ -2318,6 +2318,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "1171",
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2333,6 +2334,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2407,6 +2409,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "1035",
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2421,6 +2424,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2438,6 +2442,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
+                InterfaceType = "B",
                 //  NeedSignature = false
             });
 
@@ -2458,6 +2463,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2472,6 +2478,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
+                InterfaceType = "B",
             });
 
 
@@ -2490,6 +2497,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
+                InterfaceType = "B",
                 //  NeedSignature = false
             });
 
@@ -2507,6 +2515,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
+                InterfaceType = "B",
                 //  NeedSignature = false
             });
 
@@ -2527,6 +2536,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2546,6 +2556,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
+                InterfaceType = "B",
             });
 
 

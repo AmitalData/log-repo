@@ -81,6 +81,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                              TenantSendOptionName = s.InterfaceSendOption != null ? s.InterfaceSendOption.LocalName : null,
 
                                                              HasDefinition = s.Id != null ? true : false,
+                                                              InterfaceType= a.InterfaceType,
+                                                             InterfaceTypeName = a.InterfaceType=="C"? "עמילות" : a.InterfaceType == "B" ? "בלדרות" : "הכל"
 
 
                                                          });

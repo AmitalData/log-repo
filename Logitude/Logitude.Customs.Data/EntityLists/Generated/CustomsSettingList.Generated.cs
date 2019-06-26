@@ -60,6 +60,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool AutoFillAccountType  { get; set; }
        [DataMember]
        public bool AutoUnitMeasurement  { get; set; }
+       [DataMember]
+       public string CompanyType  { get; set; }
    }
 
 }

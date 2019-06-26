@@ -55,6 +55,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DcaPrefixName3 { get; set; }
         [Column("DcaPrefixName4")]
 	    public string DcaPrefixName4 { get; set; }
+        [Column("InterfaceType")]
+	    public string InterfaceType { get; set; }
     }
 }
 	 
