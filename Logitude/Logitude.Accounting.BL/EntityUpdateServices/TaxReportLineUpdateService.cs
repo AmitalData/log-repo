@@ -72,6 +72,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
             //ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(entityPM.Tenant);
             entityPM.StatusCode = "6";
+            entityPM.VatNumber = entityPM.VatNumber != null ? entityPM.VatNumber.Trim() : null;
+            string  trimmedZeros = entityPM.VatNumber != null ? entityPM.VatNumber.Trim('0') : null;
+            bool zerosVatNumber;
             if (entityPM.OutputOrInput == "O")
             {
 
@@ -90,7 +93,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else if(entityPM.VatNumber != null)
                 {
-                    if (entityPM.VatNumber.Length > 9 || entityPM.VatNumber=="0")
+                     zerosVatNumber = trimmedZeros == "" ? true : false;
+                    if (entityPM.VatNumber.Length > 9 || (zerosVatNumber && entityPM.VatNumber != "000000000"))
                     {
                         entityPM.StatusCode = "2";
                     }
@@ -158,7 +162,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 else if (entityPM.VatNumber != null)
                 {
-                    if (entityPM.VatNumber.Length > 9 || entityPM.VatNumber =="0")
+                    zerosVatNumber = trimmedZeros == "" ? true : false;
+                    if (entityPM.VatNumber.Length > 9 || (zerosVatNumber && entityPM.VatNumber != "000000000"))
                     {
                         entityPM.StatusCode = "2";
                     }

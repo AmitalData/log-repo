@@ -259,6 +259,8 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
             //Page Header && Footer  Setting
             else if (item.QuoteTemplateSectionTypeCode == "PH" || item.QuoteTemplateSectionTypeCode == "PF") {
                 windowArgs.QuoteTemplateSectionTypeName = item.QuoteTemplateSectionTypeCode == "PH" ? "Header" : "Footer";
+                windowArgs.EditQuoteTemplateComponent = this;
+                
                 componentPath = "./QuoteModules/QuoteTemplates/Components/QuoteTemplateHeaderFooterSettingComponent";
                 logWindow.Width = (window.innerWidth / 1.476); // 1920/1300
                 logWindow.Height = 600;
@@ -296,6 +298,15 @@ export class EditQuoteTemplateComponent extends BaseComponent implements OnInit 
 
                         }
                         else {
+
+                            if (item.QuoteTemplateSectionTypeCode == "QH") {
+                                var quoteTemplateSectionHeaderViewModel = this.QuoteTemplateSectionLists.filter(d => d.QuoteTemplateSectionTypeCode == "PH")[0];
+                                if (quoteTemplateSectionHeaderViewModel) {
+                                    quoteTemplateSectionHeaderViewModel.IsLoaded = false;
+                                }
+                            }
+                      
+
                             item.IsLoaded = false;
                             this.SelectQuoteTemplateSection = item;
                         }

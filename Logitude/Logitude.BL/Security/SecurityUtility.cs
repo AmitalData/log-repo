@@ -4,6 +4,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.Validators;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -39,7 +40,7 @@ namespace Logitude.BL.Security
             throw new AutenticationException("Sorry! this user is not authorized!");
         }
 
-
+       static   ContactInformation contactinfo;
         public static void CheckContactFeature(string objectTableName, string featureCode, int tenant, string overrideEmail = null)
         {
             bool exists = false;
@@ -55,11 +56,11 @@ namespace Logitude.BL.Security
             if (!string.IsNullOrEmpty(overrideEmail))
             {
                 string email = overrideEmail;//HttpContext.Current.User.Identity.Name;
-                ContactInfo contactinfo = GetContactInfo(email, tenant);
+                 contactinfo = GetContactInfo(email, tenant);
 
                 if (contactinfo != null)
                 {
-                    if (contactinfo.IsLogitudeAdmin || contactinfo.IsApi)
+                    if (contactinfo.IsApi)
                     {
                         exists = true;
                     }
@@ -101,10 +102,11 @@ namespace Logitude.BL.Security
                     }
                     ip = currentIP;
                 }
-
+                bool showLocal = contactinfo != null ? (!contactinfo.DontShowLocalLabels) : false;
+                string objectTableLocalName = TextCodesTranslator.TranslateText(objectTableName, tenant, showLocal);
                 //AzureLog.SaveLogsInStorage(errorMessage, "E", DateTime.Now, errorMessage, null, 0, HttpContext.Current.User.Identity.Name, HttpContext.Current.User.Identity.Name, ip);
-
-                throw new Exception("Sorry! you have no permission to do this operation on " + objectTableName);
+                string error = TextCodesTranslator.TranslateText("Accounting.General.O.YouDontHavePermission", tenant, showLocal);
+                throw new Exception(error + " "+ objectTableLocalName);
             }
 
 
@@ -130,27 +132,34 @@ namespace Logitude.BL.Security
             return features;
         }
 
-        public static ContactInfo GetContactInfo(string email, int tenant, bool forceAPIFeaturesCheck = false)
+        public static ContactInformation GetContactInfo(string email, int tenant, bool forceAPIFeaturesCheck = false)
         {
             int loggedTenant = tenant;
 
-            ContactInfo myContactInfo = null;
+            ContactInformation myContactInfo = null;
            
             string key = email + "_" + tenant + "_info";
+          
 
-           
+            //if (CacheManager.CacheWrapper.Get(key) != null && !forceAPIFeaturesCheck)
+            //{
+            //    myContactInfo = (ContactInformation)CacheManager.CacheWrapper.Get(key);
+            //}
+            //else
+            //{
+
                 if (tenant == 0)
                 {
                     List<string> allPackages = GetAllPackagesCodes(email, loggedTenant, false);
 
-                    myContactInfo = new ContactInfo()
+                    myContactInfo = new ContactInformation()
                     {
                         ContactEmail = email,
                         IsLogitudeAdmin = true,
                         PackagesCodes = allPackages,
                     };
 
-                    CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                 }
 
                 else
@@ -230,18 +239,19 @@ namespace Logitude.BL.Security
 
                             List<string> allPackages = GetAllPackagesCodes(email, loggedTenant, isCustomerCare);
 
-                            myContactInfo = new ContactInfo()
+                            myContactInfo = new ContactInformation()
                             {
                                 Tenant = contact.Tenant,
                                 ContactEmail = contact.Email,
                                 IsLogitudeAdmin = isLogitudeAdmin,
                                 RolesIds = allRolesIds,
                                 PackagesCodes = allPackages,
+                                DontShowLocalLabels = contact.DontShowLocalLabels
                             };
                             //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
 
 
-                            CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
                     }
 
@@ -249,7 +259,7 @@ namespace Logitude.BL.Security
                     {
                         if (authToken != null)
                         {
-                            myContactInfo = new ContactInfo()
+                            myContactInfo = new ContactInformation()
                             {
                                 Tenant = authToken.Tenant,
                                 ContactEmail = authToken.Email,
@@ -260,12 +270,13 @@ namespace Logitude.BL.Security
                             //myContactInfo.ComputingPartnerCode = GetComputingPartnerCode(authToken);
 
 
-                            CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                            //CacheManager.CacheWrapper.Insert(key, myContactInfo, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
                     }
-                
-            }
 
+                }
+
+            //}
             return myContactInfo;
         }
 

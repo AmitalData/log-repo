@@ -13,5 +13,6 @@ namespace WebFreight.Web.DataContracts
         public DataTable SQLDataResult { get; set; }
         
         public string SQLString { get; set; }
+        public bool IsParentTenant { get; set; }
     }
 }

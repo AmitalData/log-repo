@@ -693,8 +693,11 @@ namespace WebFreight.Web.Helpers
                 FilterSerializer filterSeriazlizer = new FilterSerializer();
                 byte[] filters = filterSeriazlizer.SerializeFilterItems(queryOperations);
 
-                byte[] dataProvider = BuildReportDataProvider(reportFliter, filters);
-
+                //byte[] dataProvider = BuildReportDataProvider(reportFliter, filters);
+                byte[] dataProvider = null;
+                Thread thread = new Thread(() => { DatabaseInitializer.RunOnSeconderyDB = true; dataProvider = BuildReportDataProvider(reportFliter, filters); });
+                thread.Start();
+                thread.Join();
                 if (dataProvider == null)
                 {
                     throw new Exception("Data Provider is missing");

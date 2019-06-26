@@ -1503,6 +1503,8 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
     private StartDelete() {
+        var numberOfPackages: number = this.EntityPM.ShipmentPackages.length;
+
         for (var i = this.EntityPM.ShipmentPackages.length - 1; i >= 0; i--) {
             var shipmentPackage = this.EntityPM.ShipmentPackages[i];
 
@@ -1577,6 +1579,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         this.EntityPM.PackagesDeleted = true;
+        this.EntityPM.EventNote = numberOfPackages + " packages deleted";
         this.ItemsSource = new ObservableCollection([]);
         this.ComputeTotals();
         this.SetUIProperties();
@@ -1606,19 +1609,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             var extension: string = file.name.split('.')[1];
 
             if (extension.includes("xls")) {
-                if (this.EntityPM.ShipmentPackages.length > 0) {
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.Show("Uploading packages will result in deleting existing packages and all its data");
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            this.SelectExcelFile(fileEvent);
-                        }
-                    });
-                }
-
-                else {
-                    this.SelectExcelFile(fileEvent);
-                }
+                this.SelectExcelFile(fileEvent);
             }
 
             else {
@@ -1682,18 +1673,37 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         myDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                this.packages= response.Result;
+                this.packages = response.Result;
 
                 if (this.packages.filter(d => d.HasErrors).length > 0) {
                     var window: MessageWindow = new MessageWindow();
                     window.Show("File contains errors, please validate the data and try again");
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
-                    this.saveAfterDeletePackages = true;
-                    this.StartDelete();
-                    this.CurrentSession.CurrentEditComponent.SaveChanges();                    
+                    if (this.EntityPM.ShipmentPackages.length > 0) {
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.Show("Uploading packages will result in deleting existing packages and all its data");
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
+                            if (confirmWindow.Yes) {
+                                this.saveAfterDeletePackages = true;
+                                this.StartDelete();
+                                this.CurrentSession.CurrentEditComponent.SaveChanges();
+                            }
+                        });
+                    }
+
+                    else {
+                        this.saveAfterDeletePackages = true;
+                        this.StartDelete();
+                        this.CurrentSession.CurrentEditComponent.SaveChanges();
+                    }
                 }
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
             }
         });
     }

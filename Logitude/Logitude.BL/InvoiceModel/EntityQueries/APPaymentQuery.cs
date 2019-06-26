@@ -15,6 +15,9 @@ using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -42,6 +45,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             APInvoicePaymentRepository apInvoicePaymentRepository = new APInvoicePaymentRepository(repository.context);
             APInvoicePaymentQuery apInvoicePaymentQuery = new APInvoicePaymentQuery(apInvoicePaymentRepository);
             AccountingPaymentMethodRepository apPaymentMethodRep = new AccountingPaymentMethodRepository(repository.context);
+            Contact loggedContact = GetLogContact(tenant);
+
             APPaymentPM payment = (from a in repository.context.APPayments.Include("LocalCurrency").Include("TransferStatus").Include("Status")
                                    where a.Id == id && a.Tenant == tenant
                                    select new APPaymentPM()
@@ -80,7 +85,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        UpdateDate = a.UpdateDate,
                                        UpdatedByUserId = a.UpdatedByUserId,
-                                       VendorName = a.VendorCard == null ? "" : a.VendorCard.EnglishName,
+                                       VendorName = a.VendorCard == null ? "" : (loggedContact.DontShowLocalLabels  ? a.VendorCard.EnglishName   : a.VendorCard.LocalName  ),
                                        ExternalAccountingEntityId=a.ExternalAccountingEntityId,
                                        TransferError = a.TransferError,
                                        TransferStatusCode = a.TransferStatusCode,
@@ -93,8 +98,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ApprovedDateTime = a.ApprovedDateTime,
                                        BankAccountId = a.BankAccountId,
                                        FirstApproveDate = a.FirstApproveDate,
-                                       PaymentChequeNumber = a.PaymentChequeNumber,
-                                       PaymentChequeId = a.PaymentChequeId
+                                       AutomaticPaymentCheque = a.AutomaticPaymentCheque
+                                     
                                    }).FirstOrDefault();
 
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant);
@@ -112,6 +117,28 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
         }
 
+        public Contact  GetLogContact(int tenant)
+        {
+            ContactRepository contactRep = new ContactRepository(tenant);
+            string email = "";
+            if (AuthenticationUtil.IsAuthenticatedUserExists())
+            {
+                email = AuthenticationUtil.GetAuthenticatedUser();
+            }
+
+            else
+            {
+                email = "system@tenant" + tenant + ".com";
+            }
+           
+            Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
+           
+
+            return contact;
+
+
+
+        }
         public APPaymentPM GetSingleAPPaymentPM(string id, int tenant)
         {
             APInvoicePaymentRepository apInvoicePaymentRepository = new APInvoicePaymentRepository(repository.context);

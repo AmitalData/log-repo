@@ -43,9 +43,9 @@
                 <td>
                     <div id="{{'RunReportSucceededDiv ' | IdGeneratorPipe}}" *ngIf="IsRunReportSucceeded" style="width:0px;height:0px;"></div>
                     <div id="{{'RunReportFailedDiv ' | IdGeneratorPipe}}" *ngIf="IsRunReportFailed" style="width:0px;height:0px;"></div>
-
+                    
                     <div class="MediaFill" *ngIf="IsResourcesReady">
-                        <StimulsoftViewer style="text-align:center;" [StimulsoftArgData]="stimulsoftArg"></StimulsoftViewer>
+                        <StimulsoftViewer style="text-align:center;" [StimulsoftArgData]="StimulsoftArg"></StimulsoftViewer>
                     </div>
 
                     <div class="MediaFill" *ngIf="Report.Code == 'CUPA'">

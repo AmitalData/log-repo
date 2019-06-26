@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.Validators
 {
-  public  class ContactInfo
+  public  class ContactInformation
     {
 
         public int Tenant { get; set; }
         public string ContactEmail { get; set; }
         public bool IsLogitudeAdmin { get; set; }
         public string AccessLevelCode { get; set; }
+        public bool DontShowLocalLabels { get; set; }
         //public string ComputingPartnerCode { get; set; }
         private List<string> myRolesIds;
         public List<string> RolesIds

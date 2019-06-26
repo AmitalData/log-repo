@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Simplog.Data.Helpers;
@@ -24,6 +25,7 @@ namespace CommunicationWorkerRole.Tasks
         private StringBuilder Infos { get; set; }
         private StringBuilder Warnings { get; set; }
         private StringBuilder Exceptions { get; set; }
+        public string MessageId { get; set; }
         string TaskId;
         string TaskHistoryId;
         int Tenant;
@@ -58,7 +60,7 @@ namespace CommunicationWorkerRole.Tasks
                     
 
                     Task.Status = null;
-                    queueservice.Complete();
+                    //queueservice.Complete();
                     TaskSchedulerHistoryPM LastExecutionHistory = SubmitLogsData();
                     Task.LastRunEndTime = LastExecutionHistory.EndDateTime;
                     Task.LastRunEndTimeUTC = LastExecutionHistory.EndDateTimeUTC;
@@ -75,14 +77,14 @@ namespace CommunicationWorkerRole.Tasks
                 {
                     if (RetryNumber <= 1)
                     {
-                        queueservice.Delay(new TimeSpan(0, 0, 0, 30));
+                        queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 30), MessageId);
                         //Task.Retries++;
                         //ReScheduleFaildTask(Task,5);
                     }
 
                     if (RetryNumber > 1 && RetryNumber <= 2)
                     {
-                        queueservice.Delay(new TimeSpan(0, 0, 1,0));
+                        queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 1,0), MessageId);
                         //Task.Retries++;
                         //ReScheduleFaildTask(Task, 10);
                     }
@@ -147,19 +149,19 @@ namespace CommunicationWorkerRole.Tasks
                     TaskSchedulerHistory.LogType = "Exception";
                     TaskSchedulerHistory.IsError = true;
                     TaskSchedulerHistory.RunResult = "Exception";
-                    TaskSchedulerHistory.LogFirstLine = Exceptions.ToString();
+                    TaskSchedulerHistory.LogFirstLine = StringHelper.TruncateLongString(Exceptions.ToString(), 1000);
                 }
                 else if (!string.IsNullOrEmpty(Warnings.ToString()))
                 {
                     TaskSchedulerHistory.LogType = "Warning";
                     TaskSchedulerHistory.RunResult = "Warning";
-                    TaskSchedulerHistory.LogFirstLine = Warnings.ToString();
+                    TaskSchedulerHistory.LogFirstLine = StringHelper.TruncateLongString(Warnings.ToString(), 1000);
                 }
                 else
                 {
                     TaskSchedulerHistory.LogType = "Info";
                     TaskSchedulerHistory.RunResult = "Succeeded";
-                    TaskSchedulerHistory.LogFirstLine = Infos.ToString();
+                    TaskSchedulerHistory.LogFirstLine = StringHelper.TruncateLongString(Infos.ToString(), 1000);
                 }
                 StringBuilder MyFinalLog = new StringBuilder();
                 MyFinalLog.AppendLine(Exceptions.ToString());
@@ -170,12 +172,12 @@ namespace CommunicationWorkerRole.Tasks
                 {
                     SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskHistoryId };
                     SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
-                    SchedulerLog.Log = MyFinalLog.ToString();
+                    SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
                     SchedulerLogsService.Create(SchedulerLog);
                 }
                 else
                 {
-                    SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
+                    SchedulerLog.Log += StringHelper.TruncateLongString(Environment.NewLine + MyFinalLog.ToString(), 4000);
                     SchedulerLogsService.Update(SchedulerLog);
                 }
 
@@ -195,17 +197,20 @@ namespace CommunicationWorkerRole.Tasks
 
         public void LogInfo(string Message)
         {
-            this.Infos.AppendLine(Message);
+            if (!string.IsNullOrEmpty(Message))
+                this.Infos.AppendLine(Message);
         }
 
         public void Logwarning(string Message)
         {
-            this.Warnings.AppendLine(Message);
+            if (!string.IsNullOrEmpty(Message))
+                this.Warnings.AppendLine(Message);
         }
 
         public void LogException(string Message)
         {
-            this.Exceptions.AppendLine(Message);
+            if (!string.IsNullOrEmpty(Message))
+                this.Exceptions.AppendLine(Message);
         }
 
         private void AddSchedulerQueue(TasksSchedulerPM task)
@@ -324,7 +329,7 @@ namespace CommunicationWorkerRole.Tasks
             TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
             service.Update(task);
 
-            queueservice.Complete();
+            //queueservice.Complete();
         }
 
         private void ReScheduleFaildTask(TasksSchedulerPM task,int DelaySeconds)

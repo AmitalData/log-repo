@@ -31,9 +31,9 @@ namespace Logitude.TariffModule.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.StartDate).HasColumnName("StartDate").IsRequired();
+            this.Property(t => t.StartDate).HasColumnName("StartDate");
 
-            this.Property(t => t.ExpirationDate).HasColumnName("ExpirationDate").IsRequired();
+            this.Property(t => t.ExpirationDate).HasColumnName("ExpirationDate");
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 

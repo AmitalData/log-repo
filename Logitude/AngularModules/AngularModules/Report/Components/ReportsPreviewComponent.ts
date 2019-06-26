@@ -31,7 +31,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
     public Report: ReportList;
     public ReportGroup: ReportGroupList;
 
-
+    IsRunReportSucceeded: boolean = false;
+    IsRunReportFailed: boolean = false;
     public DataContext = this;
     public ComponentId: string;
     public FiltersAreaId: string;
@@ -49,19 +50,25 @@ export class ReportsPreviewComponent implements AfterViewInit {
     @ViewChild('CustomerChild', { read: ViewContainerRef }) customerViewContainerRef: ViewContainerRef;
     ReportsRunUsingWR: boolean = false;
     IsUsedReportsRunUsingWR: boolean = false;
-    NextRunDate: Date = null;
-    NextCheckDate: Date = null;
+
     NumberOfRequests: number = 0;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
 
-    IsHaveToggleFeature: boolean = false;
+    IsHaveRunReportViewWorkerRolwToggleFeature: boolean = false;
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
         this.FiltersAreaId = "ReportFiltersArea_" + idIndex;
 
-        if(ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+
+        //ReportRunViewWorkerRole
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RRW" && d.TenantNumber == SessionLocator.Tenant)[0];
+        if (featureToggle) {
+            this.IsHaveRunReportViewWorkerRolwToggleFeature = true;
+        }
+
     }
 
     ReportsPreview(GroupList: ReportGroupList, ReportList: ReportList, reportTemplateLists: ReportsTemplateList[], reportsRunUsingWR: boolean) {
@@ -195,9 +202,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
         }
     }
 
- 
-
-
     ValiditySelectedTemplate() {
 
         if (AppTool.IsNullOrEmpty(this.ReportFliter.DefaultTemplateId)) {
@@ -208,13 +212,12 @@ export class ReportsPreviewComponent implements AfterViewInit {
         }
     }
 
-IsRunReportSucceeded:boolean = false ;
-IsRunReportFailed:boolean = false ;
 
     GenerateReport(filter: ReportFliter, isloading: boolean) {
        this.ReportFliter = this.FillReportFilter(filter);
 
-       if (!this.IsHaveToggleFeature || (this.IsHaveToggleFeature && this.ReportFliter.ProcessType != "GenerateReport")) {
+
+       if (!this.IsHaveRunReportViewWorkerRolwToggleFeature || (this.IsHaveRunReportViewWorkerRolwToggleFeature && this.ReportFliter.ProcessType != "GenerateReport")) {
 
            this.IsRunReportSucceeded = false;
            this.IsRunReportFailed = false;
@@ -222,8 +225,7 @@ IsRunReportFailed:boolean = false ;
            this.ValiditySelectedTemplate();
 
                this.StartBusyIndicator("Generating...");
-               if (this.ReportsRunUsingWR && !this.IsUsedReportsRunUsingWR && !this.IsHaveToggleFeature) {
-                   this.NextRunDate = DateTool.AddSecond(DateTool.GetCurrentDateTimeAsUtc(), 50);
+               if (this.ReportsRunUsingWR && !this.IsHaveRunReportViewWorkerRolwToggleFeature) {
                    this.StartTimerWaitingFirststimulReportBuild();
                }
 
@@ -239,10 +241,6 @@ IsRunReportFailed:boolean = false ;
                    }
 
                    if (this.IsUsedReportsRunUsingWR) return;
-                   this.NextRunDate = null;
-                  
-
-
                    this.SetReportData(myResponse);
                    this.StopBusyIndicator();
                });
@@ -251,7 +249,7 @@ IsRunReportFailed:boolean = false ;
        }
 
        else {
-           this.StartBuildStimulReportViaWorkerRole(this.ReportFliter);
+           this.StartBuildStimulReportViaWorkerRole(this.ReportFliter,true);
        }
 }
 
@@ -262,15 +260,6 @@ IsRunReportFailed:boolean = false ;
         this.ReportFliter = this.FillReportFilter(filter);
 
          this.ValiditySelectedTemplate();
-
-
-        if (AppTool.IsNullOrEmpty(this.ReportFliter.DefaultTemplateId)) {
-            var messageWindow = new MessageWindow();
-            messageWindow.Show("Please select a template");
-            
-            return;
-        }
-
             this.NumberOfRequests += 1;
             this._reportService.GenerateReportMethod(this.ReportFliter).subscribe((myResponse: ServiceResponse) => {
                 this.IsUsedReportsRunUsingWR = false;
@@ -373,33 +362,32 @@ IsRunReportFailed:boolean = false ;
 
     }
 
-    StartBuildStimulReportViaWorkerRole(filter: ReportFliter) {
 
-        this.StartBusyIndicator("Report generating is taking longer than expected. Please wait", 400);
+    StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isUsedWorkerRoleAlalways = false) {
+        filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
 
-         filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
+        if (isUsedWorkerRoleAlalways) {
+            this.StartBusyIndicator("Generating...");
+            this.StartTimerChangeBusyIndicatorMessageAfter50Sec();
+        } else {
+            this.StartBusyIndicator("Report generating is taking longer than expected. Please wait", 400);
+        }
 
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
-
+           
             if (!myResponse.HasError) {
-
                 this.ReportFliter = myResponse.Result;
                 this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
-          
-             
-           
             } else {
+
                 filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = false;
                 this.StopBusyIndicator();
+
                 if (myResponse.HasError && myResponse.ErrorsArray && myResponse.ErrorsArray.length > 0) {
                     var messageWindow = new MessageWindow();
                     messageWindow.Show(myResponse.ErrorsArray[0]);
-                  
                 }
             }
-
-
-
         });
 
     }
@@ -411,7 +399,6 @@ IsRunReportFailed:boolean = false ;
         return Observable.interval(2000).timeInterval();
     }
     private StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub: any = null;
-
     StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
         this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub = this.initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer().subscribe(res => {
             var isStopStimulSoftReportsub = false;
@@ -424,10 +411,11 @@ IsRunReportFailed:boolean = false ;
             this._reportService.GetCheckIfStimulSoftReportIsBliud(this.ReportFliter.ReportKey, SessionLocator.Tenant).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
                         if (!isStopStimulSoftReportsub) {
-                            if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
+                            if (pmResponse.HasError || (pmResponse.Result && (pmResponse.Result.HasError || pmResponse.Result.StatusCode == "F" )) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
                                 this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
                                 this.StopBusyIndicator();
                                 this.IsUsedReportsRunUsingWR = false;
+                                isStopStimulSoftReportsub = true;
 
                             }
                             if (!pmResponse.HasError) {
@@ -464,31 +452,38 @@ IsRunReportFailed:boolean = false ;
     }
 
 
-     //Wait Result Stimul Timer
-    initializeStartTimerWaitingFirstStimulReportBuild() {
-        return Observable.interval(100).timeInterval();
-    }
 
+    //Wait Result Stimul Timer
+    IsStartTimerWaitingFirstStimulReportBuildRunning: boolean = false;
+    initializeStartTimerWaitingFirstStimulReportBuild() {
+        return Observable.interval(50000).timeInterval();
+    }
     private StartTimerWaitingFirstStimulReportBuildsub: any = null;
     StartTimerWaitingFirststimulReportBuild() {
+        this.IsStartTimerWaitingFirstStimulReportBuildRunning = true;
         this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe(res => {
-            if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
-                this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
-                return;
-            }
-
-            if (this.NextRunDate) {
-                var dateNow: Date = DateTool.GetCurrentDateTimeAsUtc();
-                if (dateNow >= this.NextRunDate ) {
-                    this.NextRunDate = null;
-                    this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
-                    this.StartBuildStimulReportViaWorkerRole(this.ReportFliter);
-                }
-            }
+            this.StartBuildStimulReportViaWorkerRole(this.ReportFliter);
+            this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
+            this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
         });
     }
 
-    
+
+
+    //Wait Result Stimul Timer
+    IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning: boolean = false;
+    initializeStartTimerChangeBusyIndicatorMessageAfter50Sec() {
+        return Observable.interval(50000).timeInterval();
+    }
+    private StartTimerChangeBusyIndicatorMessageAfter50Secsub: any = null;
+    StartTimerChangeBusyIndicatorMessageAfter50Sec() {
+        this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = true;
+        this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe(res => {
+            this.StartBusyIndicator("Report generating is taking longer than expected. Please wait", 400);
+            this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
+            this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
+        });
+    }
 
     ShowBusyIndicator: boolean = false;
     BusyIndicatorText: string = "";
@@ -501,8 +496,19 @@ IsRunReportFailed:boolean = false ;
    
     }
 
+
     StopBusyIndicator() {
 
         this.ShowBusyIndicator = false;
+
+        if (this.IsStartTimerWaitingFirstStimulReportBuildRunning) {
+            this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
+            this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
+        }
+        if (this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning) {
+            this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
+            this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
+        }
+
     }
 }

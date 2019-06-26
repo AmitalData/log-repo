@@ -20,6 +20,7 @@ namespace Logitude.CRM.BL.EntityUpdateServices
         protected override void OnCreating(OccasionPM entityPM, EntityPM entityParentPM)
         {
             entityPM.Id = IdCounter.GetNumber("Occasion", entityPM.Tenant);
+            entityPM.OccasionStatusId = "PL";
         }
 
         protected override void OnUpdating(EntityPMs.OccasionPM entityPM)

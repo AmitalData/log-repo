@@ -1,0 +1,414 @@
+
+<style type="text/css">
+    .Box {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        min-width: 100%;
+        min-height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+
+    .BoxHeader {
+        height: 25px;
+        font-size: 13px;
+        color: #1B90CB;
+        text-indent: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <!--Left Side-->
+                    <td style="width:400px;">
+                        <table>
+                            <tr style="height:200px;">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <!--From-->
+                                            <td>
+                                                <div class="Box">
+                                                    <table>
+                                                        <tr class="BoxHeader">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <label>From</label>
+                                                                        </td>
+
+                                                                        <td style="width: 50px;">
+                                                                            <div class="ToggleButton" style="height:20px;" tabindex="1">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td style="width:10px;">
+                                                                                            <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <label>Area</label>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                                
+                                                                                <div style="width:180px; right:-50px;" [id]="SearchAreaButtonId" class="ToggleButtonMenu">
+                                                                                    <div style="overflow-x:hidden; overflow-y:auto; height:200px;">
+                                                                                        <div style="margin:5px;">
+                                                                                            <table>
+                                                                                                <tr style="height:22px">
+                                                                                                    <td style="width:150px;">
+                                                                                                        <SearchBox [ObjectTableName]="'AirlineArea'" (TextChanged)="SearchText = $event" [UseTimer]="true"></SearchBox>
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                                <tr style="height:3px">
+                                                                                                    <td></td>
+                                                                                                </tr>
+
+                                                                                                <tr style="margin-top:5px; margin-left:5px; height:22px;" *ngFor="let item of AirlineAreas; let i = index">
+                                                                                                    <td style="width:22px">
+                                                                                                        <div>
+                                                                                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i, 'From')"></CheckBox>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                    <td style="width:5px"></td>
+                                                                                                    <td style="width:100%">
+                                                                                                        <div style="margin-left:5px;margin-top:0px">
+                                                                                                            <label style="font-size:small" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" *ngIf="!item.IsChecked">{{item.Name}}</label>
+                                                                                                            <label style="font-size:small;color:lightgray" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" *ngIf="item.IsChecked">{{item.Name}}</label>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                    <td style="width:100%">
+                                                                                                        <div style="width:100%"></div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 50px;">
+                                                                            <button style="height:20px;" class="Button" (click)="AddPort('From')">
+                                                                                <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                                Port
+                                                                            </button>
+                                                                        </td>
+
+                                                                        <td style="width:2px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="padding-left: 5px; padding-right: 5px;">
+                                                                <table class="FixedTable">
+                                                                    <tr style="height:3px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <ScrollViewer>
+                                                                                <ul>
+                                                                                    <li class="RecentEntityItem" style="height:25px;" *ngFor="let item of FromObsList">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="left:3px; width:30px; color:black">{{item.Indication}}</td>
+
+                                                                                                <td style="width:5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+
+                                                                                                <td>{{item.DisplayText}}</td>
+
+                                                                                                <td style="width:20px;">
+                                                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:5px" (click)="DeleteDestination(item, 'From')"></IconButton>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </ScrollViewer>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+
+                                            <td style="width:5px;">
+                                                <div></div>
+                                            </td>
+
+                                            <!--To-->
+                                            <td>
+                                                <div class="Box">
+                                                    <table>
+                                                        <tr class="BoxHeader">
+                                                            <td>
+                                                                <table>
+                                                                    <tr>
+
+                                                                        <td>
+                                                                            <label>To</label>
+                                                                        </td>
+
+                                                                        <td style="width: 50px;">
+                                                                            <button style="height:20px;" class="Button" (click)="AddArea('To')">
+                                                                                <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                                Area
+                                                                            </button>
+                                                                        </td>
+
+                                                                        <td style="width: 5px;">
+                                                                            <div></div>
+                                                                        </td>
+
+                                                                        <td style="width: 50px;">
+                                                                            <button style="height:20px;" class="Button" (click)="AddPort('To')">
+                                                                                <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                                Port
+                                                                            </button>
+                                                                        </td>
+
+                                                                        <td style="width:2px;">
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="padding-left: 5px; padding-right: 5px;">
+                                                                <table class="FixedTable">
+                                                                    <tr style="height:3px;">
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <ScrollViewer>
+                                                                                <ul>
+                                                                                    <li class="RecentEntityItem" style="height:25px;" *ngFor="let item of ToObsList">
+                                                                                        <table>
+                                                                                            <tr>
+                                                                                                <td style="left:3px; width:30px; color:black">{{item.Indication}}</td>
+
+                                                                                                <td style="width:5px;">
+                                                                                                    <div></div>
+                                                                                                </td>
+
+                                                                                                <td>{{item.DisplayText}}</td>
+
+                                                                                                <td style="width:20px;">
+                                                                                                    <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:5px" (click)="DeleteDestination(item, 'To')"></IconButton>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </ScrollViewer>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height:5px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!--Surcharges-->
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div class="Box">
+                                                    <table>
+                                                        <tr class="BoxHeader">
+                                                            <td>
+                                                                <label>Surcharges</label>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>
+                                                                <ScrollViewer>
+                                                                    <table style="margin:5px;">
+                                                                        <tr class="FormFieldRow" *ngFor="let item of TariffChargesObsList">
+                                                                            <td style="width:30px;">
+                                                                                <CheckBox [IsChecked]="item.IsChargeChecked" (Checked)="item.IsChargeChecked = $event"></CheckBox>
+                                                                            </td>
+
+                                                                            <td style="width:100px;">
+                                                                                {{item.DisplayText}}
+                                                                            </td>
+
+                                                                            <td style="width:180px;">
+                                                                                <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewPrice'" [Text]="item.NewPrice" [DataContext]="item.DataContext"></LogTextBox>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div></div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </ScrollViewer>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr style="height:5px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="width:70px;" class="Label">Start Date:</td>
+                                            <td style="width:180px;">
+                                                <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                            <td style="width: 60px;">
+                                                <button class="Button" (click)="UpdateButtonClicked()">Update</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td style=" width:10px;"></td>
+
+                    <!--Right Side-->
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="Box">
+                                        <table>
+                                            <tr class="BoxHeader">
+                                                <td>
+                                                    <label>Update Log</label>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="3" style="padding-left: 5px; padding-right: 5px;">
+                                                    <div class="MediaFill">
+                                                        <div class="SimpleGridView">
+                                                            <div class="SimpleGridViewHeader">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td style="width: 30px; max-width:30px; min-width:30px;">#</td>
+                                                                        <td style="width: 80px; max-width:80px; min-width:80px;">From</td>
+                                                                        <td style="width: 80px; max-width:80px; min-width:80px;">To</td>
+                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Start Date</td>
+                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Surcharges</td>
+                                                                        <td style="width: 100px; max-width:100px; min-width:100px;">Lines Updated</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="SimpleGridViewBody">
+                                                                <table>
+                                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of Logs"></tr>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
