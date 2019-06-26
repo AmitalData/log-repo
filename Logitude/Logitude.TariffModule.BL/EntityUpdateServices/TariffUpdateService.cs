@@ -96,8 +96,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 }
             }
 
-            this.ValidateSurchargeUniqueSeller(entityPM);
-        }
+            this.ValidateSurchargeUniqueSeller(entityPM);        
 
             if (entityPM.IsApprovingDraftVersion)
             {

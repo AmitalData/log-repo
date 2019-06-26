@@ -80,7 +80,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
         if (item.IsChecked == true) {
             if (type == "From") {
                 if (!this.FromObsList.filter(d => d.Indication == "Area" && d.DisplayText == item.Name)) {
-                    //this.BuildToggleButtonList();
+                   
 
 
                 }
