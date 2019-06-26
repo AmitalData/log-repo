@@ -153,7 +153,9 @@ export class BIReportPreviewComponent implements OnInit {
             for (var i = 0; i < columns.length; i++) {
                 if (columns[i].IsChecked) {
                     var type = this.GetColumnDataType(columns[i].DataTypeCode);
+                 
                     if (type == "dateColumn") {
+                        var dataTypeCode = columns[i].DataTypeCode;
                         this.columnDefs.push({
                             colId: columns[i].Code,
                             headerName: columns[i].Code,
@@ -164,7 +166,7 @@ export class BIReportPreviewComponent implements OnInit {
                             //cellClass: columns[i].DataTypeCode,
                             Index: columns[i].Index,
                             type: type,
-                            cellRenderer: this.DateCellRenderer,
+                            cellRenderer: dataTypeCode == "Date" ? this.DateCellRenderer : this.DateTimeCellRenderer,
                             filter: 'agDateColumnFilter'
                             //sort: sortingDirction,
                         });
@@ -326,6 +328,14 @@ export class BIReportPreviewComponent implements OnInit {
         var datepipe = new DateTimePipe();
         return datepipe.transform(params.value, "SD");
     }
+
+    private DateTimeCellRenderer(params: any) {
+        var datepipe = new DateTimePipe();
+        return datepipe.transform(params.value, "DT");
+    }
+
+    
+
 
     public methodFromParent(cell) {
         this.StartBusyIndicator("Loading ...");
