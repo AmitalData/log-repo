@@ -289,11 +289,11 @@
                                                                             </td>
 
                                                                             <td style="width:100px;">
-                                                                                {{item.ChargeCode}} ({{item.MeasurmentCode}}):
+                                                                                {{item.DisplayText}}
                                                                             </td>
 
                                                                             <td style="width:180px;">
-                                                                                <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewPrice'" [Text]="item.NewPrice" [DataContext]="DataContext"></LogTextBox>
+                                                                                <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewPrice'" [Text]="item.NewPrice" [DataContext]="item.DataContext"></LogTextBox>
                                                                             </td>
 
                                                                             <td>
