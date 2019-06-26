@@ -353,6 +353,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public void CreateTraceEventForUpdate(BankAccountPM bankAccountPM, ContactPM loggedContact,string eventNotes)
         {
+
             EventTracerArgs eventTracerArgs = new EventTracerArgs()
             {
                 EntityId = bankAccountPM.Id,

@@ -116,9 +116,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
             Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
-
-
-
+            
             if (entityPM.TariffLinesAdded)
             {
                 TariffVersionPM tariffVersion = entityPM.TariffVersions.Where(p => p.IsDraft).FirstOrDefault();
@@ -140,10 +138,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 }
 
             }
-
-
-
-
+            
             if (entityPM.SetAsInActive)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -163,6 +158,19 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                 {
                     Tenant = entityPM.Tenant,
                     EventTypeCode = "REAC",
+                    UserId = contact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = changesXml
+                });
+            }
+
+            if(entityPM.IsSurchargeUpdate)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "SUCU",
                     UserId = contact.Id,
                     EntityId = entityPM.Id,
                     ObjectTableName = "Tariff",
@@ -325,7 +333,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
             TariffQueryService tariffLineQueryService = new TariffQueryService(iContext);
             int count = tariffLineQueryService.GetActiveTariffCountByTenantAndSeller(entityPM.Tenant, entityPM.SellerId);
-            if (count > 0)
+            if (count > 1)
             {
                 throw new ApplicationException("Tariff surcharge seller should be unique");
             }

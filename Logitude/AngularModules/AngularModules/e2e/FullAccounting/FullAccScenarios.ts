@@ -6,6 +6,9 @@ import { NewARPayment } from "./ARPayment/NewARPayment";
 import { NewCustomer } from '../FullAccounting/GLAccounts/NewCustomerGLaccount';
 import { NewVendor } from '../FullAccounting/GLAccounts/NewVendorGLaccount';
 import { NewAPInvoice } from '../FullAccounting/APInvoice/NewAPInvoice';
+import { NewGLAccount } from '../FullAccounting/GLAccounts/New/NewGLaccount';
+import { EditGLAccount } from '../FullAccounting/GLAccounts/Edit/EditGLaccount';
+
 //import { NewAPInvoice } from '../APInvoice/NewAPInvoice';
 
 export class FullAccountingScenarios {
@@ -16,7 +19,9 @@ export class FullAccountingScenarios {
     private arPayment = new NewARPayment();
     private vendor = new NewVendor();
     private aPinvoice = new NewAPInvoice();
-
+    private arpayment = new NewARPayment();
+    private GLA = new NewGLAccount();
+    private EditGLA = new EditGLAccount();
 
     constructor() {
     
@@ -29,10 +34,10 @@ export class FullAccountingScenarios {
             this.Helper.WaitByIdAndClick('CRMCUS');
             this.customer.CreateNewCustomerGLAccount('CustomerGLAccount' + number);
             this.customer.ActivateCustomerGLAccount('CustomerGLAccount' + number, number);
-            this.Helper.WaitByIdAndClick('General.MH.FullAccounting');
+           this.Helper.WaitByIdAndClick('General.MH.FullAccounting');
             this.Helper.WaitByIdAndClick('FACS');
-            this.arInvoice.CreateNewARInvoice('CustomerGLAccount' + number);
-           // this.arPayment.CreateNewARPayment('CustomerGLAccount' + number);
+           this.arInvoice.CreateNewARInvoice('CustomerGLAccount' + number);
+            // this.arPayment.CreateNewARPayment('CustomerGLAccount' + number);
         }
         else if (type == 'AP') {
             var vendornumber = this.generalFunction.RandomNum();
@@ -41,13 +46,19 @@ export class FullAccountingScenarios {
             this.Helper.WaitByIdAndClick('General.MH.FullAccounting');
             this.Helper.WaitByIdAndClick('FAVND');
             this.aPinvoice.CreateNewAPInvoice('Vendor GLaccount', vendornumber);
+        }
+        else if (type == 'ARPayment') {
+            this.Helper.WaitByIdAndClick('General.MH.FullAccounting');
+            this.Helper.WaitByIdAndClick('FACS');
+            this.arpayment.CreateNewARPayment('CustomerGLAccount');
 
-
-
-
-
-
-
+        }
+        else if (type == 'RevGLAccount') {
+            var GlaccountNumber = this.generalFunction.RandomNum();
+            this.Helper.WaitByIdAndClick('General.MH.FullAccounting');
+            this.Helper.WaitByIdAndClick('FAGLAccouts');
+            this.GLA.CreateNewGLAccount('My Auto GLAccount', GlaccountNumber);
+            this.EditGLA.EditGLAccount(GlaccountNumber);
 
         }
     }

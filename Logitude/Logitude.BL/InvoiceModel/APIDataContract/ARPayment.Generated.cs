@@ -65,6 +65,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string PaymentCurrencyCode { get; set; }
     
     public DateTime? CreateDate { get; set; }
+    
+    public List<ARPaymentInvoice> PaymentInvoices { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

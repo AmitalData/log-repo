@@ -473,9 +473,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 DataTable MyData = QBHelper.GetDWQueryData(MySqlString);
                 DWQueryDataResult myResult = new DWQueryDataResult();
                 myResult.SQLDataResult = MyData;
+                var DWSettings = new DWHSettingRepository(authToken.Tenant);
+                var temp = DWSettings.GetSingleDWHSetting(authToken.Tenant);
+                myResult.IsParentTenant = DWSettings.IsParentTenant(authToken.Tenant);
                 myResult.SQLString = MySqlString;
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
-
             }
 
             catch (Exception ex)
