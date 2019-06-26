@@ -51,7 +51,8 @@ export class NewVendor {
     //browser.sleep(5000);
     //this.Helper.WaitBusyIndicator();
      var boo=this.Helper.ItemsVisibility('3mo');
-    if ('boo') {
+      if ('boo') {
+          this.Helper.WaitBusyIndicator();
       this.Helper.WaitByIdAndClick('Vendor-SaveClose');
       this.Helper.WaitBusyIndicator();
     }
