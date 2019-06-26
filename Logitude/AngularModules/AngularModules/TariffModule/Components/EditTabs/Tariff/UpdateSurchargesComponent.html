@@ -1,4 +1,3 @@
-
 <style type="text/css">
     .Box {
         position: absolute;
@@ -63,10 +62,46 @@
                                                                         </td>
 
                                                                         <td style="width: 35px;">
-                                                                            <button style="height:20px;" class="Button" (click)="AddArea('From')">
-                                                                                <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
-                                                                                Area
-                                                                            </button>
+                                                                            <div class="dropdown" style="float:right;">
+                                                                                <div tabindex="1" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
+                                                                                    <img src="./Images/ToggleIcon.png" />
+                                                                                    <label>Area</label>
+
+                                                                                    <div [id]="SearchAreaButtonId" class="ToggleButtonMenu">
+                                                                                        <div style="overflow-x: hidden;overflow-y: auto;height: 200px;">
+                                                                                            <div style="float:left;width: 100%;margin-top:5px;margin-left:5px">
+                                                                                                <table style="width:100%">
+                                                                                                    <tr style="height:22px">
+                                                                                                        <td>
+                                                                                                            <SearchBox [ObjectTableName]="'AirlineArea'" (TextChanged)="SearchText = $event" [UseTimer]="true"></SearchBox>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr style="height:3px">
+                                                                                                        <td></td>
+                                                                                                    </tr>
+                                                                                                    <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of AirlineAreas; let i = index">
+                                                                                                        <td style="width:22px">
+                                                                                                            <div style="width:22px">
+                                                                                                                <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i, 'From')"></CheckBox>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td style="width:5px"></td>
+                                                                                                        <td style="width:100%">
+                                                                                                            <div style="margin-left:5px;margin-top:0px">
+                                                                                                                <label style="font-size:small" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" *ngIf="!item.IsChecked">{{item.Name}}</label>
+                                                                                                                <label style="font-size:small;color:lightgray" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" *ngIf="item.IsChecked">{{item.Name}}</label>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td style="width:100%">
+                                                                                                            <div style="width:100%"></div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </td>
 
                                                                         <td style="width: 5px;">
@@ -249,7 +284,7 @@
                                                                             </td>
 
                                                                             <td style="width:180px;">
-                                                                                <LogTextBox [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewPrice'" [Text]="item.NewPrice" [DataContext]="DataContext"></LogTextBox>
+                                                                                <LogTextBox [InputType]="'double'" [Placeholder]="'No Update'" [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'NewPrice'" [Text]="item.NewPrice" [DataContext]="DataContext"></LogTextBox>
                                                                             </td>
 
                                                                             <td>
