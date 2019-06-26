@@ -12769,7 +12769,10 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.CountofLegalisedDocuments = Item.AMSBL;
                     shipment.ShipperInvoiceValue = Item.ValueOfGoods;
                     shipment.CurrencyofShipperInvoice = ValueOfgoodsCurrency != null ? ValueOfgoodsCurrency.Code : null;                   
-
+                    if(Item.ShipmentNumber== "E9069")
+                    {
+                        var test="z";
+                    }
                     if (Item.DirectionId == "D" && Item.TransportModeId == "I")
                     {
                         if (!string.IsNullOrEmpty(Item.MainCarriageToAddressId))
@@ -12894,6 +12897,15 @@ namespace WebFreight.Web.ReportsWebServices
                             else if (!string.IsNullOrEmpty(Item.MainCarriageToPortId))
                             {
                                 PortPM mainCarriageToPort = PortQuery.GetSinglePort(tenant, Item.MainCarriageToPortId,true);
+                                if (mainCarriageToPort != null)
+                                {
+                                    shipment.FinalCountryofDestination = mainCarriageToPort.CountryName;
+                                    shipment.FinalPortofDestination = mainCarriageToPort.Code;
+                                }
+                            }
+                            else if (!string.IsNullOrEmpty(Item.ToPortId))
+                            {
+                                PortPM mainCarriageToPort = PortQuery.GetSinglePort(tenant, Item.ToPortId, true);
                                 if (mainCarriageToPort != null)
                                 {
                                     shipment.FinalCountryofDestination = mainCarriageToPort.CountryName;
