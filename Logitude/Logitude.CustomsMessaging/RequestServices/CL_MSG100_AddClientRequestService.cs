@@ -49,7 +49,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
                 myAddClient.GeneralCustomer.ClientForeignResidentIdentification.englishBirthPlace = requestParams.EnglishBirthPlace;
                 myAddClient.GeneralCustomer.ClientForeignResidentIdentification.englishFatherName = requestParams.EnglishFatherName;
-                //myAddClient.GeneralCustomer.ClientForeignResidentIdentification.NationalIdentificatioNumber = requestParams.NationalIdentificationNumber;
+                myAddClient.GeneralCustomer.ClientForeignResidentIdentification.NationalIdentificatioNumber = requestParams.NationalIdentificationNumber;
             }
             else
             {
