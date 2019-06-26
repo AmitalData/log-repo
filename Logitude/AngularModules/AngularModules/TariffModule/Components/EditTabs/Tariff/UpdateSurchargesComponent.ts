@@ -25,6 +25,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public TariffChargesObsList: TariffCharge[];
     public AirlineAreas: AirlineAreaClass[];
+    public SearchText: string = "";
     public SearchAreaButtonId: string = "SearchAreaButtonId";
     constructor() {
         super();        
@@ -76,7 +77,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
         ToggleBTN.className = "ToggleButtonMenu";
     }
 
-    AddArea(item: AirlineAreaClass, i: number, type: string) {
+    AddArea(item: AirlineAreaClass, i: number=null, type: string=null) {
         if (item.IsChecked == true) {
             if (type == "From") {
                 if (!this.FromObsList.filter(d => d.Indication == "Area" && d.DisplayText == item.Name)) {
