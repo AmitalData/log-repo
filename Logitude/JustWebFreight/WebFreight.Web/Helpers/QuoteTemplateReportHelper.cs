@@ -1221,7 +1221,7 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("<title></title>");
             HtmlTemplate.Append("<meta charset='utf-8'>");
             HtmlTemplate.Append("</head>");
-            HtmlTemplate.Append("<body>");
+            HtmlTemplate.Append("<body>"); 
 
 
             int spaceTopQuoteHeader = 10;
