@@ -777,7 +777,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.ETD = myShipment.MainCarriageETD;
                                 myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                 myRecord.CustomerRef2 = myShipment.CustomerReference2;
-                                myRecord.ExpectedPayables = this.IsLocalCurrency ? item.ExpectedAmountInLocal : item.ExpectedAmountInProfit;
+
+                                if(this.tenant == 1255)
+                                {
+                                    if (this.IsLocalCurrency)
+                                    {
+                                        myRecord.ExpectedPayables = (from d in myShipmentsContext.ShipmentPayables
+                                                                     where d.Tenant == tenant
+                                                                     && d.ShipmentId == item.ShipmentId
+                                                                     && d.ChargesTypeId == item.ChargesTypeId
+                                                                     select d.ExpectedAmountLocal).Sum();
+                                    }
+
+                                    else
+                                    {
+                                        myRecord.ExpectedPayables = (from d in myShipmentsContext.ShipmentPayables
+                                                                     where d.Tenant == tenant
+                                                                     && d.ShipmentId == item.ShipmentId
+                                                                     && d.ChargesTypeId == item.ChargesTypeId
+                                                                     select d.ExpectedAmountInProfitCurrency).Sum();
+                                    }
+       
+                                }
 
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
