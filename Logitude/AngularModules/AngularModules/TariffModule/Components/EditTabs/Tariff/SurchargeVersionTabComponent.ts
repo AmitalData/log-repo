@@ -223,8 +223,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.Surcharge1PriceVisibility = true;
 
             var chargeItem1: CodeNameClass = new CodeNameClass();
-            chargeItem1.Code = chargeType.Code;
-            chargeItem1.Name = chargeType.MeasurementCode;
+            chargeItem1.Code = chargeType.Id;
+            chargeItem1.Name = chargeType.Code;
+            chargeItem1.DisplyText = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             chargeItem1.Code_Int = 1;
             this.tariffCharges.push(chargeItem1);
         }
@@ -235,8 +236,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.Surcharge2PriceVisibility = true;
 
             var chargeItem2: CodeNameClass = new CodeNameClass();
-            chargeItem2.Code = chargeType.Code;
-            chargeItem2.Name = chargeType.MeasurementCode;
+            chargeItem2.Code = chargeType.Id;
+            chargeItem2.Name = chargeType.Code;
+            chargeItem2.DisplyText = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             chargeItem2.Code_Int = 2;
             this.tariffCharges.push(chargeItem2);
         }
@@ -247,8 +249,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.Surcharge3PriceVisibility = true;
 
             var chargeItem3: CodeNameClass = new CodeNameClass();
-            chargeItem3.Code = chargeType.Code;
-            chargeItem3.Name = chargeType.MeasurementCode;
+            chargeItem3.Code = chargeType.Id;
+            chargeItem3.Name = chargeType.Code;
+            chargeItem3.DisplyText = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             chargeItem3.Code_Int = 3;
             this.tariffCharges.push(chargeItem3);
         }
@@ -259,8 +262,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.Surcharge4PriceVisibility = true;
 
             var chargeItem4: CodeNameClass = new CodeNameClass();
-            chargeItem4.Code = chargeType.Code;
-            chargeItem4.Name = chargeType.MeasurementCode;
+            chargeItem4.Code = chargeType.Id;
+            chargeItem4.Name = chargeType.Code;
+            chargeItem4.DisplyText = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             chargeItem4.Code_Int = 4;
             this.tariffCharges.push(chargeItem4);
         }
@@ -271,8 +275,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.Surcharge5PriceVisibility = true;
 
             var chargeItem5: CodeNameClass = new CodeNameClass();
-            chargeItem5.Code = chargeType.Code;
-            chargeItem5.Name = chargeType.MeasurementCode;
+            chargeItem5.Code = chargeType.Id;
+            chargeItem5.Name = chargeType.Code;
+            chargeItem5.DisplyText = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             chargeItem5.Code_Int = 5;
             this.tariffCharges.push(chargeItem5);
         }
@@ -283,8 +288,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.Surcharge6PriceVisibility = true;
 
             var chargeItem6: CodeNameClass = new CodeNameClass();
-            chargeItem6.Code = chargeType.Code;
-            chargeItem6.Name = chargeType.MeasurementCode;
+            chargeItem6.Code = chargeType.Id;
+            chargeItem6.Name = chargeType.Code;
+            chargeItem6.DisplyText = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             chargeItem6.Code_Int = 6;
             this.tariffCharges.push(chargeItem6);
         }
@@ -295,8 +301,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.Surcharge7PriceVisibility = true;
 
             var chargeItem7: CodeNameClass = new CodeNameClass();
-            chargeItem7.Code = chargeType.Code;
-            chargeItem7.Name = chargeType.MeasurementCode;
+            chargeItem7.Code = chargeType.Id;
+            chargeItem7.Name = chargeType.Code;
+            chargeItem7.DisplyText = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             chargeItem7.Code_Int = 7;
             this.tariffCharges.push(chargeItem7);
         }
@@ -307,8 +314,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.Surcharge8PriceVisibility = true;
 
             var chargeItem8: CodeNameClass = new CodeNameClass();
-            chargeItem8.Code = chargeType.Code;
-            chargeItem8.Name = chargeType.MeasurementCode;
+            chargeItem8.Code = chargeType.Id;
+            chargeItem8.Name = chargeType.Code;
+            chargeItem8.DisplyText = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             chargeItem8.Code_Int = 8;
             this.tariffCharges.push(chargeItem8);
         }
@@ -319,8 +327,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.Surcharge9PriceVisibility = true;
 
             var chargeItem9: CodeNameClass = new CodeNameClass();
-            chargeItem9.Code = chargeType.Code;
-            chargeItem9.Name = chargeType.MeasurementCode;
+            chargeItem9.Code = chargeType.Id;
+            chargeItem9.Name = chargeType.Code;
+            chargeItem9.DisplyText = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             chargeItem9.Code_Int = 9;
             this.tariffCharges.push(chargeItem9);
         }
@@ -331,8 +340,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.Surcharge10PriceVisibility = true;
 
             var chargeItem10: CodeNameClass = new CodeNameClass();
-            chargeItem10.Code = chargeType.Code;
-            chargeItem10.Name = chargeType.MeasurementCode;
+            chargeItem10.Code = chargeType.Id;
+            chargeItem10.Name = chargeType.Code;
+            chargeItem10.DisplyText = chargeType.Code + " (" + chargeType.MeasurementCode + ")";
             chargeItem10.Code_Int = 10;
             this.tariffCharges.push(chargeItem10);
         }

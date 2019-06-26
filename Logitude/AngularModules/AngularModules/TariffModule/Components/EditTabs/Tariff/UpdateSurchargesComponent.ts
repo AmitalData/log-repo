@@ -142,18 +142,19 @@ export class UpdateSurchargesComponent extends BaseComponent {
 
             var args: UpdateSurchargeArgs = new UpdateSurchargeArgs();
             args.TariffId = this.EntityPM.TariffId;
+            args.VersionNumber = this.EntityPM.Version;
             args.StartDate = this.StartDate;
 
             this.FromObsList.forEach(item => {
-                args.From.push(item.Indication + "," + item.Code);
+                args.From.push(item.Indication + "," + item.Id);
             });
 
             this.ToObsList.forEach(item => {
-                args.To.push(item.Indication + "," + item.Code);
+                args.To.push(item.Indication + "," + item.Id);
             });
 
             this.TariffChargesObsList.filter(d => d.IsChargeChecked).forEach(item => {
-                args.Surcharge.push(item.ChargeCode + "," + item.NewPrice);
+                args.Surcharge.push(item.ChargeId + "," + item.NewPrice + "," + item.Index);
             });
 
             var myService: TariffDomainService = new TariffDomainService();
@@ -172,13 +173,19 @@ export class UpdateSurchargesComponent extends BaseComponent {
     }    
 }
 
-export class TariffCharge {
+export class TariffCharge extends BaseComponent{
     public ChargeCode: string;
-    public MeasurmentCode: string;
-
+    public ChargeId: string;
+    public DisplayText: string;
+    public DataContext = this;
+    public Index: number;
     constructor(charge: CodeNameClass) {
-        this.ChargeCode = charge.Code;
-        this.MeasurmentCode = charge.Name;
+        super();
+
+        this.ChargeId = charge.Code;
+        this.ChargeCode = charge.Name;
+        this.DisplayText = charge.DisplyText;
+        this.Index = charge.Code_Int;
     }
 
     private isChargeChecked: boolean;
@@ -206,6 +213,7 @@ export class DestinationClass extends BaseComponent{
     public Indication: string;
     public DisplayText: string;
     public Code: string;
+    public Id: string;
     public Type: string;
     constructor(public fatherComponent: UpdateSurchargesComponent, type: string, Port: PortList) {
         super();
@@ -216,6 +224,7 @@ export class DestinationClass extends BaseComponent{
             this.Indication = "Port";
             this.DisplayText = Port.EnglishName;
             this.Code = Port.Code;
+            this.Id = Port.Id;
         }
     }
 }
