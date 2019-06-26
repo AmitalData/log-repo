@@ -63,19 +63,22 @@ export class DWDateComponent extends BaseComponent {
     }
 
 
+    IsFirstTime: boolean = true;
     private operation: string;
     public get Operation() {
         return this.operation;
     }
     public set Operation(newValue: string) {
         if (this.operation != newValue) {
-            this.DataContext.TextValue = "";
-            this.SetDefultValue(this.operation, newValue);
             this.operation = newValue;
-            this.ShowControl();
-
-            this.SetValue();
-
+            if (!this.IsFirstTime) {
+                this.DataContext.TextValue = "";
+                this.SetDefultValue(this.operation, newValue);
+                this.ShowControl();
+                this.SetValue();
+            }
+            this.IsFirstTime = false;
+  
         }
     }
 
