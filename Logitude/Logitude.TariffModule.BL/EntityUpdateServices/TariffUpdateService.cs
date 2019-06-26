@@ -99,6 +99,13 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             this.ValidateSurchargeUniqueSeller(entityPM);
         }
 
+            if (entityPM.IsApprovingDraftVersion)
+            {
+                this.ApproveDraftVersion(entityPM);
+                entityPM.IsApprovingDraftVersion = false;
+            }
+        }
+
         protected override void UpdateComposition(TariffPM entityPM)
         {
             TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
@@ -241,6 +248,77 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             //TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             //tariffVersionUpdateService.Update(tariffVersionPM, true);
+        }
+
+        private void ApproveDraftVersion(TariffPM entityPM)
+        {
+            bool isValid = true;
+            TariffVersionPM iDraftVersion = entityPM.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
+
+            if (iDraftVersion == null)
+            {
+                isValid = false;
+                throw new ApplicationException("No Draft version to approve");
+            }
+
+            if (iDraftVersion.TariffLines.Where(d => d.HasErrors).Count() > 0)
+            {
+                isValid = false;
+                throw new ApplicationException("Invalid Tariff Lines");
+            }
+
+            if (entityPM.TypeCode == "AFC")
+            {
+                if (iDraftVersion.ExpirationDate != null)
+                {
+                    if (iDraftVersion.ExpirationDate.Value.Date < entityPM.UpdateDate.Date)
+                    {
+                        isValid = false;
+                        throw new ApplicationException("Approving past version is not allowed, please update the dates");
+                    }
+                }
+            }
+
+            if(isValid)
+            {
+                iDraftVersion.IsDraft = false;
+                iDraftVersion.ApprovedByUserId = entityPM.UpdatedByUserId;
+                iDraftVersion.ApproveDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                iDraftVersion.ChangeSetOp = ChangeSetOperation.Update;
+
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "VNAP",
+                    UserId = iDraftVersion.ApprovedByUserId,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = "Version " + iDraftVersion.Version + " approved",
+                });
+
+                if (entityPM.TypeCode == "ASC")
+                {
+                    TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
+                    if (iPreviousVersion != null)
+                    {
+                        foreach (TariffLinePM linePM in iDraftVersion.TariffLines)
+                        {
+                            if (linePM.StartDate != null)
+                            {
+                                var iPreviousLine = iPreviousVersion.TariffLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
+                                if (iPreviousLine != null)
+                                {
+                                    iPreviousLine.ExpirationDate = linePM.StartDate.Value.AddDays(-1);
+                                    iPreviousLine.ChangeSetOp = ChangeSetOperation.Update;
+                                }
+                            }
+                        }
+
+                        TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                        tariffVersionUpdateService.Update(iPreviousVersion, true);
+                    }
+                }
+            }
         }
 
         private void ValidateSurchargeUniqueSeller(TariffPM entityPM)

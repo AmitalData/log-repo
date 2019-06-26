@@ -37,18 +37,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 //BankAccountQueryService bankAccountService = new BankAccountQueryService(entityPM.Tenant);
                 //BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, false, false);
                 BankAccountPM bankAccount = GetSingleBankAccountPM(entityPM);
-                if (bankAccount.ChequeCounter == null)
+                if (bankAccount != null)
                 {
-                    throw new Exception("The cheque counter did not defined for the choosen bank");
-                }
-                else
-                {
-                    entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
-                    entityPM.UniqueField = entityPM.ChequeNumber;
-                    BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                    bankAccount.ChequeCounter += 1;
-                    bankAccount.ChangeSetOp = ChangeSetOperation.Update;
-                    bankAccountUpdateService.Update(bankAccount, true);
+                    if (bankAccount.ChequeCounter == null)
+                    {
+                        throw new Exception("The cheque counter did not defined for the choosen bank");
+                    }
+                    else
+                    {
+                        entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
+                        entityPM.UniqueField = entityPM.ChequeNumber;
+                        BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(_MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        bankAccount.ChequeCounter += 1;
+                        bankAccount.ChangeSetOp = ChangeSetOperation.Update;
+                        bankAccountUpdateService.Update(bankAccount, true);
+                    }
                 }
                // ValidateEntity(entityPM);
                 //TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);

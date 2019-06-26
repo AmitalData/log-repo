@@ -10,7 +10,8 @@ export class PrintDocOut {
     }
 
     isPrintingCompleted(expectedId, closePopup) {
-        this.helper.waitElementByIDPresence(expectedId);
+       // this.helper.waitElementByIDPresence(expectedId);
+       this.helper.ItemsPresent(expectedId);
         if(closePopup) {
             this.helper.WaitByCssStringAndClick('.Button', 'Close');
         }   

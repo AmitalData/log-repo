@@ -28,6 +28,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ShipmentDomainService} from '../../Services/ShipmentDomainService';
 import {AWBStackDomainService} from '../../../Common/Services/AWBStackDomainService';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 
 @Component({
     moduleId: module.id,
@@ -59,14 +60,22 @@ export class NewMasterComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.BuildFiltersLists();
+        var listservice: EntityListService = new EntityListService();
+        var loadPr = listservice.getMock("Port");
+        loadPr.then((res: any) => {
+            res.subscribe(resp => {
 
-        if (this.IsCopyFromShipment == false && this.IsBuildFromQuote == false) {
-            this.OnFiltersChanged();
-        }
+                this.BuildFiltersLists();
 
-        this.LoadAllowedAirline();
-        //this.ScreenIsReady = true;
+                if (this.IsCopyFromShipment == false && this.IsBuildFromQuote == false) {
+                    this.OnFiltersChanged();
+                }
+
+                this.LoadAllowedAirline();
+                //this.ScreenIsReady = true;
+            });
+        });
+
     }
 
     private SourceEntityPM: ShipmentPM;

@@ -30,7 +30,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             TariffVersionQueryService tariffVersionQueryService = new TariffVersionQueryService(context);
             entityPM.TariffVersions = tariffVersionQueryService.GetDraftVersion(tariffKeys, true);
-            entityPM.ActiveVersions = tariffVersionQueryService.GetActiveVersions(entityPM.Id, entityPM.Tenant);
+            entityPM.ActiveVersions = tariffVersionQueryService.GetActiveVersions(entityPM.Id, entityPM.Tenant, entityPM.TypeCode);
         }
 
         public TariffsSummary GetCount(int tenant)

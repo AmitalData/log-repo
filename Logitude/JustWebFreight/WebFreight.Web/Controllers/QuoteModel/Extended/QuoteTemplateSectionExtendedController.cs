@@ -104,41 +104,39 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 QuoteTemplateReportHelper helper = new QuoteTemplateReportHelper();
                 IQuotesContext context = QuotesContext.GetContext(tenant);
 
-                QuoteTemplateSettingPM setting = null;
-                List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList = null;
-                List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList = null;
-                List<QuoteTemplateTextCodePM> textcodes = null;
-                QuoteTemplatePM template = null;
-                QuotePM quotePM = null;
+                QuoteTemplateBuildArges quoteTemplateBuildArges = new QuoteTemplateBuildArges();
+                quoteTemplateBuildArges.Tenant = tenant;
+                quoteTemplateBuildArges.SectionTypeCode = sectionTypeCode;
+
                 QuoteQuery quoteQuery = null;
                 if (sectionTypeCode == "PH" || sectionTypeCode == "QH" || sectionTypeCode == "QD" || sectionTypeCode == "PP" || sectionTypeCode == "PC" || sectionTypeCode == "PF")
                 {
                     QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(new QuoteTemplateRepository(context));
                     QuoteTemplateSettingQuery quoteTemplateSettingQuery = new QuoteTemplateSettingQuery(new QuoteTemplateSettingRepository(context));
 
-                    template = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
-                    setting = quoteTemplateSettingQuery.GetSinglePM(template.QuoteTemplateSettingId, tenant);
+                    quoteTemplateBuildArges.QuoteTemplatePM = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
+                    quoteTemplateBuildArges.QuoteTemplateSettingPM = quoteTemplateSettingQuery.GetSinglePM(quoteTemplateBuildArges.QuoteTemplatePM.QuoteTemplateSettingId, tenant);
 
                     QuoteTemplateTextDesignQuery quotetemplateTextDesignQuery = new QuoteTemplateTextDesignQuery(new QuoteTemplateTextDesignRepository(context));
-                    quoteTemplateTextDesignsList = quotetemplateTextDesignQuery.GetQuoteTemplateTextDesignPMsByTenant(tenant).ToList();
+                    quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists  = quotetemplateTextDesignQuery.GetQuoteTemplateTextDesignPMsByTenant(tenant).ToList();
 
-                    if (sectionTypeCode == "QH" || sectionTypeCode == "QD" ||  sectionTypeCode == "PP" || sectionTypeCode == "PC")
+                    if (sectionTypeCode == "QH" || sectionTypeCode == "QD" ||  sectionTypeCode == "PP" || sectionTypeCode == "PC" || sectionTypeCode == "PH")
                     {
                         QuoteTemplateTableDesignQuery quotetemplateTableDesignQuery = new QuoteTemplateTableDesignQuery(new QuoteTemplateTableDesignRepository(context));
-                        quoteTemplateTableDesignsList = quotetemplateTableDesignQuery.GetQuoteTemplateTableDesignPMsByTenant(tenant).ToList();
+                        quoteTemplateBuildArges.QuoteTemplateTableDesignsLists  = quotetemplateTableDesignQuery.GetQuoteTemplateTableDesignPMsByTenant(tenant).ToList();
                         if (!string.IsNullOrEmpty(quoteId))
                         {
                             
                             quoteQuery = new QuoteQuery(new QuoteRepository(context));
-                            quotePM = quoteQuery.GetSinglePM(quoteId, tenant);
+                            quoteTemplateBuildArges.QuotePM = quoteQuery.GetSinglePM(quoteId, tenant);
                         }
-                        if (quotePM == null) quotePM = helper.BuildingQuotePM();
+                        if (quoteTemplateBuildArges.QuotePM == null) quoteTemplateBuildArges.QuotePM = helper.BuildingQuotePM();
                     }
 
-                    if (sectionTypeCode == "QH" || sectionTypeCode == "QD" )
+                    if (sectionTypeCode == "QH" || sectionTypeCode == "QD" || sectionTypeCode == "PH")
                     {
                         QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
-                        textcodes = quoteTemplateTextCodeQuery.GetQuoteTemplateTextCodePMsByQuoteTemplateId(template.Tenant, template.Id).ToList();
+                        quoteTemplateBuildArges.QuoteTemplateTextCodePMLists = quoteTemplateTextCodeQuery.GetQuoteTemplateTextCodePMsByQuoteTemplateId(tenant, quoteTemplateId).ToList();
 
                     }
                 }
@@ -152,25 +150,26 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                         break;
 
                     case "PH":
-                        bodyData = helper.GetQuoteTemplatePageHeaderFooter(template, setting, quoteTemplateTextDesignsList, tenant,false,"Header",true);
+                        
+                        bodyData = helper.GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
                         break;
 
 
                     case "QH":
-                        bodyData = helper.GetQuoteTemplateHeader(template, quotePM, setting, quoteTemplateTextDesignsList, quoteTemplateTableDesignsList, textcodes, tenant);//GetQuoteTemplateHeader(quoteTemplateId, tenant, settingId, quoteId);
+                        bodyData = helper.GetQuoteTemplateHeader(quoteTemplateBuildArges);
                         break;
 
                     case "QD":
-                        bodyData = helper.GetQuoteTemplateDetails(template, quotePM, setting, quoteTemplateTextDesignsList, quoteTemplateTableDesignsList, textcodes, tenant);//GetQuoteTemplateDetails(quoteTemplateId, tenant, settingId, quoteId);
+                        bodyData = helper.GetQuoteTemplateDetails(quoteTemplateBuildArges);
                         break;
 
                     case "PP":
                     case "PC":
-                        bodyData = helper.GetQuoteTemplatePricingHtmlData(sectionTypeCode, quotePM, template, setting, quoteTemplateTextDesignsList, quoteTemplateTableDesignsList, tenant);//GetQuoteTemplatePricingHtmlData(sectionTypeCode, quoteId, quoteTemplateId, tenant);
+                        bodyData = helper.GetQuoteTemplatePricingHtmlData(quoteTemplateBuildArges);
                         break;
 
                     case "PF":
-                        bodyData = helper.GetQuoteTemplatePageHeaderFooter(template, setting, quoteTemplateTextDesignsList, tenant, false, "Footer",true);
+                        bodyData = helper.GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
                         break;
 
                     default:
@@ -192,14 +191,14 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 
                     if (!string.IsNullOrEmpty(quoteId))
                     {
-                        if (quotePM == null)
+                        if (quoteTemplateBuildArges.QuotePM == null)
                         {
                             quoteQuery = new QuoteQuery(new QuoteRepository(context));
-                            quotePM = quoteQuery.GetSinglePM(quoteId, tenant);
+                            quoteTemplateBuildArges.QuotePM = quoteQuery.GetSinglePM(quoteId, tenant);
                         }
                
                     }
-                    if (quotePM == null) quotePM = helper.BuildingQuotePM();
+                    if (quoteTemplateBuildArges.QuotePM == null) quoteTemplateBuildArges.QuotePM = helper.BuildingQuotePM();
 
                     string subject = "";
                     string from = "";
@@ -210,7 +209,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 
                     if (objectTable != null)
                     {
-                        bodyHtmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, userId, tenant, bodyHtmlString, ref subject, ref from, ref replyTo,ref cc, quotePM);
+                        bodyHtmlString = htmlEditorHelper.ResolveHtmlData("", objectTable.Id, userId, tenant, bodyHtmlString, ref subject, ref from, ref replyTo,ref cc, quoteTemplateBuildArges.QuotePM);
                     }
 
                 }

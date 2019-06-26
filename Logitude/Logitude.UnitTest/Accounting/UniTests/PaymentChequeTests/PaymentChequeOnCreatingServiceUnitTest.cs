@@ -32,7 +32,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.PaymentChequeTests
 
 
             var paymentChequeOnCreatingService = A.Fake<PaymentChequeOnCreatingService>(option => option.CallsBaseMethods());
-           // A.CallTo(() => paymentChequeOnCreatingService.GetLogContactId(entityPM.Tenant)).Returns(expectedLoggedUserId);
+            A.CallTo(() => paymentChequeOnCreatingService.GetLogContactId(entityPM.Tenant)).Returns(expectedLoggedUserId);
             A.CallTo(() => paymentChequeOnCreatingService.GetCurrentDateTime(entityPM.Tenant)).Returns(expectedDateTime);
             A.CallTo(() => paymentChequeOnCreatingService.IdCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedIdCounter);
             A.CallTo(() => paymentChequeOnCreatingService.CodeCounterWrapperGetNumber(entityPM.Tenant)).Returns(expectedCodeCounter);
@@ -71,8 +71,8 @@ namespace Logitude.UnitTest.Accounting.UniTests.PaymentChequeTests
 
             // Act
             paymentChequeOnCreatingService.OnCreating(entityPM);
-            entityPM.InternalNumber = "11";
-            entityPM.Id = "22";
+            //entityPM.InternalNumber = "11";
+            //entityPM.Id = "22";
             // Assert
 
       
