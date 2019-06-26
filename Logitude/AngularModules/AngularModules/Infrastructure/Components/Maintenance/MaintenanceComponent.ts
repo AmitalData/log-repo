@@ -96,16 +96,16 @@ export class MaintenanceComponent {
         }
     }
 
-    // Maintenance Menu    
+    // Maintenance Menu
     private AllMaintenanceMenu: MaintenanceMenuItem[];
     private BuildMaintenanceMenu() {
         this.AllMaintenanceMenu = [];
         var allMenusTables: MenusTablePM[] = window.MenusTables.filter(x => x.MenuTypeCode === "MTC").sort((a, b) => { return a.IndexOfOrder - b.IndexOfOrder });
 
-        allMenusTables.forEach(item => {           
+        allMenusTables.forEach(item => {
 
             if (FeatureLocator.IsFeatureGranted(item.FeatureId)) {
-            
+
                 if (item.Code == "MTCB") {
                     //CustomsSettingList customsSetting = DataProvider.GetCachedList<CustomsSettingList>("Customs.CustomsSetting").FirstOrDefault();
                     //if (customsSetting != null) {
@@ -158,7 +158,7 @@ export class MaintenanceComponent {
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "SYSTEMSETTINGS")) {
-            
+
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.CompanyAddress")) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
@@ -452,9 +452,9 @@ export class MaintenanceComponent {
             }
 
         }
-        
+
         let yaronWantWithoutLogiUpdate = false;// in "customs" branch do not use it !!
-         
+
         if (yaronWantWithoutLogiUpdate ||
             (SessionLocator.Tenant == 0 && !SessionLocator.LoggedUserPM.IsDistributor && window.ObjectTables.filter(d => d.Name == "Customs.CustomsSetting")[0] != null)
         ) {
@@ -498,10 +498,10 @@ export class MaintenanceComponent {
             //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             //}
 
-            
+
 
         }
-      
+
     }
     private BuildOtherMenus() {
         if (SessionLocator.Tenant == 0){// && FeatureLocator.HasFeaturePermession("General", "HYBRIDPARTNERS")) {
@@ -525,7 +525,7 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
         }
-        
+
         if (FeatureLocator.HasFeaturePermession("General", "MAINCUSTOMERS")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "Par";
@@ -541,9 +541,20 @@ export class MaintenanceComponent {
             item.Icon = "Settings"
             item.Code = "DRBO";
             item.ObjectTableName = "DropBox Connection";
-            //item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "General")[0].Id
+            //item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "General")[0].Idd
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
+
+        if (FeatureLocator.HasFeaturePermession("General", "CacheLogMenu")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "List"
+            item.Code = "CCHL";
+            item.ObjectTableName = "Cache Log";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
+
+
 
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
@@ -886,11 +897,11 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "CRLM": {
-                    var logitudeWindow = new LogitudeWindow();                    
+                    var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = "Credit Limit Settings";
                     logitudeWindow.Show('./Common/Components/Maintenance/CreditLimit/CreditLimitSettingsComponent');
                     break;
-                }                
+                }
                 case "MTBH": {
                     this._entityResourceService.getEntityResourceByTableName("BusinessHour", 0).subscribe(response => {
                         this._entityResourceService.getEntityResourceByTableName("BusinessHoursHoliday", 0).subscribe(response => {
@@ -1051,7 +1062,7 @@ export class MaintenanceComponent {
                         logWindow.IsShowCloseButton = false;
                         logWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/TenantSecurityPolicy/TenantLoginPolicyComponent');
                     });
-                    break;                                        
+                    break;
                 }
                 case "BSLG": {
                     var logWindow = new LogitudeWindow();
@@ -1223,6 +1234,16 @@ export class MaintenanceComponent {
                     break;
               }
 
+
+              case "CCHL": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Width = 800;
+                    logitudeWindow.Height = 600;
+                    logitudeWindow.Title = 'Cache Log';
+                    logitudeWindow.Show('./Infrastructure/Components/Maintenance/CacheLogComponent');
+                break;
+            }
+
                 //  case "TXRP": {
                 //    this._entityResourceService.getEntityResourceByTableName("TaxReport", 0).subscribe((resp: any) => {
                 //        SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureUser/Components/UserWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
@@ -1313,7 +1334,7 @@ export class MaintenanceComponent {
                 logitudeWindow.Height = 500;
                 logitudeWindow.Title = "Accounting Load Test";
                 logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingLoadTestComponent');
-                
+
             } break;
             case "jokersign": {
                 var logitudeWindow = new LogitudeWindow();
@@ -1326,7 +1347,7 @@ export class MaintenanceComponent {
 
                 logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/SignStationsComponent');
                 break;
-                
+
             }
             case "jokerGetAmitalRestrictOwnerModel": {
                 var servicelink = '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
@@ -1352,15 +1373,15 @@ export class MaintenanceComponent {
                 logitudeWindow.ShowCloseButton = true;
                 logitudeWindow.Height = 525;
                 logitudeWindow.Width = 750;
-                
-                
+
+
                 logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/Maintenance/LoadTestComponent');
                 break;
             }
             default: {
                 break;
             }
-                
+
         }
     }
     SearchTextChanged(text: string) {
@@ -1462,7 +1483,7 @@ class MaintenanceMenuItem {
         var myResult = "";
 
 
-        
+
 
         if (this.CategoryTypeCode == "PRS" || this.CategoryTypeCode == "CMS" || this.CategoryTypeCode == "MNG" || this.Code == "FACS" || this.Code == "ACYT") {
             switch (this.Code) {
@@ -1483,8 +1504,8 @@ class MaintenanceMenuItem {
                 case "FACS": { myResult = "Define your accounting settings"; break; }
                 //case "ACPD": { myResult = "Define your accounting periods"; break; }
                 case "ACYT": { myResult = "Year Transfer"; break; }
-                
-                    
+
+
 
             }
         }
@@ -1498,7 +1519,7 @@ class MaintenanceMenuItem {
         //if (this.Code == "MCSG") { myResult = "עמדות חתימה"; }
 
         this.DescriptionText = myResult;
-        
+
     }
     private SetImageIconSource() {
         switch (this.item.Icon) {

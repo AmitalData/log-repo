@@ -1574,6 +1574,7 @@
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\BluesnapContractController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\WebhookKeysController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BusinessRoleExtendedViewsController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\CacheLogController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CustomPickListExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryBuilderController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryColumnController.cs" />

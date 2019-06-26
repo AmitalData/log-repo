@@ -1,0 +1,226 @@
+﻿<style type="text/css">
+    .SystemDefaultsBox {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+
+    .SystemDefaultsBoxHeader {
+        height: 20px;
+        font-size: 12px;
+        color: #1B90CB;
+        text-indent: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+    .acc-table td{
+        height: 25px;
+    }
+    .subTitle{
+        color: #1b90cb;
+        font-size: 16px;
+    }
+    .CellStretched{
+        padding: 0px 5px !important;
+    }
+    .sm{
+        width: auto;
+        height: 18px;
+        padding: 0px 6px;
+        font-size: 10px;
+    }
+    .promptBox{
+        text-align: center;
+        padding: 10px;
+        background: #fff4cd;
+        width: 500px;
+        height: 85px;
+        color: #545454;
+        border-radius: 5px;
+    }
+    .DisbleBox{
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+     }
+     .disabled{
+         pointer-events: none;
+         opacity: 0.7;
+     }
+
+
+    .circleDraw {
+        background: #dd0707;
+        margin: 0 auto;
+        /* margin-top: 7px; */
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        display: block;
+        cursor: pointer;
+    }
+    .black{
+        background: #5d5d5d !important;
+    }
+
+    @-webkit-keyframes blinker {
+    0% {
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 0.0;
+    }
+    100% {
+        opacity: 1.0;
+    }
+    }
+    @-moz-keyframes blinker {
+    0% {
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 0.0;
+    }
+    100% {
+        opacity: 1.0;
+    }
+    }
+    .blink {
+        -webkit-animation: blinker 1s 50000;
+        -moz-animation: blinker 1s 50000;
+        animation: blinker 1s 50000;
+    }
+
+</style>
+
+    <table>
+        <tr>
+            <td>
+                <div class="ScrollViewer">
+                    <div class="ScrollContent">
+                        <div class="TableHolder" style="padding-top: 5px;">
+                            <table>
+
+                                <tr *ngIf="0" style="height: 30px;">
+                                    <td>
+                                        <!-- <div float-start style="width: 120px;">
+                                            <CheckBox float-start [IsChecked]="EnableLog" (Checked)="EnableLog = $event" style="margin-right: 5px;"></CheckBox>
+                                            <span float-start>Enable Logger.</span>
+                                        </div> -->
+
+                                        <!-- <div float-start (click)="EnableLog = !EnableLog" class="circleDraw black" [class.black]="!EnableLog" [class.blink]="EnableLog"> </div> -->
+                                        <!-- <button class="Button" (click)="GetCardButtonClicked()">
+                                                <div float-start (click)="EnableLog = !EnableLog" class="circleDraw black" [class.black]="!EnableLog" [class.blink]="EnableLog"> </div>
+                                        </button> -->
+                                        <!-- <div float-start *ngIf="EnableLog" class="circleDraw blink"> </div> -->
+                                    </td>
+                                </tr>
+
+                                <tr style="height: 30px;">
+                                    <td>
+                                        <button float-start class="Button" (click)="EnableLog = !EnableLog" style="margin-right:5px;width: fit-content;">
+                                                <div float-start  class="circleDraw black" [class.black]="!EnableLog" [class.blink]="EnableLog"> </div>
+                                        </button>
+
+                                        <div float-start>
+                                            <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                                        </div>
+                                        <div float-start style="width: 65px;margin: 0 5px;">
+                                            <button class="Button" (click)="ResetButtonClicked()">Reset</button>
+                                        </div>
+                                        <div float-start style="width: 65px;margin: 0 5px;">
+                                            <button class="Button" (click)="GetCardButtonClicked()">Get Card</button>
+                                        </div>
+                                        <div float-start style="padding: 2px 10px;">
+                                            Count: {{CacheKeys.length}}
+                                        </div>
+
+                                        <div style=" width: 200px;  display: inline-block;" float-end>
+                                            <SearchTextBox [ObjectTableName]="'General'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                                <!-- table -->
+                                <tr>
+                                    <td colspan="5" >
+                                        <div class="SimpleGridView">
+                                            <div class="SimpleGridViewHeader">
+                                                <table>
+                                                    <tr class="SimpleGridHeaderRow">
+                                                        <td style="padding-right: 5px; padding-left: 5px; width: 550px; max-width: 550px">Key</td>
+                                                        <td style="padding-right: 5px; padding-left: 5px; width: 100px; max-width: 100px"> Count</td>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+
+                                            <div class="SimpleGridViewBody" >
+                                                <table>
+                                                    <tr class="SimpleGridViewRow" *ngFor="let key of CacheKeys; let i=index;">
+                                                        <td class="GridViewCell" style="width:550px;">
+                                                            {{key.Key}}
+                                                        </td>
+                                                        <td class="GridViewCell" style="width: 100px;text-align: left;">
+                                                            {{key.Count}}
+                                                        </td>
+                                                        <td></td>
+
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height: 32px;">
+            <td style="vertical-align: bottom">
+                <table style="height: 22px;">
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+
+                        <!--<td style="width: 57px;">
+                            <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>-->
+
+                        <td style="width: 57px;">
+                            <button class="Button" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' |TextCodeTranslationPipe }}</button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+
+
