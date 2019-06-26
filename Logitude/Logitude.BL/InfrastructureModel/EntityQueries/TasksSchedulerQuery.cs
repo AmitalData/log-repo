@@ -343,6 +343,48 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     }).FirstOrDefault();
         }
 
+        public List<TasksSchedulerPM> GetAllInprogressTasksSchedulerPMs()
+        {
+            return (from a in repository.context.TasksSchedulers
+                    where a.Status == "In progress" && a.InActive == false
+                    select new TasksSchedulerPM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        CreateDateTime = a.CreateDateTime,
+                        CreatedBy = a.CreatedBy,
+                        Description = a.Description,
+                        Friday = a.Friday,
+                        InActive = a.InActive,
+                        IsLastRunError = a.IsLastRunError,
+                        LastRunResult = a.LastRunResult,
+                        LastRunStartTime = a.LastRunStartTime,
+                        Monday = a.Monday,
+                        Name = a.Name,
+                        NextRunTime = a.NextRunTime,
+                        RepeatInMinutes = a.RepeatInMinutes,
+                        Satarday = a.Satarday,
+                        ServiceClassName = a.ServiceClassName,
+                        StartDateTime = a.StartDateTime,
+                        Sunday = a.Sunday,
+                        Thursday = a.Thursday,
+                        TriggerType = a.TriggerType,
+                        Tuesday = a.Tuesday,
+                        UpdateDateTime = a.UpdateDateTime,
+                        UpdatedBy = a.UpdatedBy,
+                        Wednesday = a.Wednesday,
+                        Type = a.Type,
+                        NextRunTimeUTC = a.NextRunTimeUTC,
+                        StartDateTimeUTC = a.StartDateTimeUTC,
+                        LastRunStartTimeUTC = a.LastRunStartTimeUTC,
+                        Version = a.Version,
+                        Status = a.Status,
+                        Retries = a.Retries,
+                        LastRunEndTime = a.LastRunEndTime,
+                        LastRunEndTimeUTC = a.LastRunEndTimeUTC
+                    }).ToList();
+        }
+
     }
 
     public class CustomSchedulerHistory

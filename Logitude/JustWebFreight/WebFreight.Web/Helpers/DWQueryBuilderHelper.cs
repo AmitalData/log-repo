@@ -446,8 +446,9 @@ namespace WebFreight.Web.Helpers
             }
             string TenantWhere = ".[Parent Tenant] = ";
             var DWSettings = new DWHSettingRepository(Tenant);
-            var temp = DWSettings.GetSingleDWHSetting(Tenant);
-            if (temp != null &&  temp.Tenant != temp.ParentTenant)
+            var temp = DWSettings.GetSingleDWHSetting(Tenant); 
+            var isParentTenant = DWSettings.IsParentTenant(Tenant);
+            if (!isParentTenant)//temp != null &&  temp.Tenant != temp.ParentTenant)
             {
                 TenantWhere = ".[Source Tenant] = ";
             }

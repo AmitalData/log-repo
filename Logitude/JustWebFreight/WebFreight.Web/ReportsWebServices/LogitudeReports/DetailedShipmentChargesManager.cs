@@ -777,6 +777,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 myRecord.ETD = myShipment.MainCarriageETD;
                                 myRecord.CustomerRef1 = myShipment.CustomerReference1;
                                 myRecord.CustomerRef2 = myShipment.CustomerReference2;
+                                myRecord.ExpectedPayables = this.IsLocalCurrency ? item.ExpectedAmountInLocal : item.ExpectedAmountInProfit;
 
                                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, myShipment, myRecord);
 
