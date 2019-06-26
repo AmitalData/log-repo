@@ -456,7 +456,7 @@ namespace Logitude.BL.Helpers
 
 
                 int tenant = quoteTemplateBuildArges.Tenant;
- 
+                quoteTemplateBuildArges.RequestArea = "Header";
                 var quoteHeaderHtmlByte = GetQuoteTemplateHeader(quoteTemplateBuildArges);
 
                 string quoteHeaderHtml = "<td " + styleTd + ">" +  Encoding.UTF8.GetString(quoteHeaderHtmlByte)+ "</td>";
@@ -1222,7 +1222,12 @@ namespace Logitude.BL.Helpers
             HtmlTemplate.Append("<meta charset='utf-8'>");
             HtmlTemplate.Append("</head>");
             HtmlTemplate.Append("<body>");
-            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+
+
+            int spaceTopQuoteHeader = 10;
+            if (quoteTemplateBuildArges.RequestArea == "Header") spaceTopQuoteHeader = 5;
+
+            HtmlTemplate.Append("<div  style='height:" + spaceTopQuoteHeader.ToString() + "px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
 
             if (QuoteTemplaetHeaderFieldList.Count() > 0)
             {
@@ -1472,7 +1477,8 @@ namespace Logitude.BL.Helpers
                 HtmlTemplate.Append("</div>");
             }
 
-            HtmlTemplate.Append("<div  style='height:10px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+            HtmlTemplate.Append("<div  style='height:" + spaceTopQuoteHeader.ToString() + "px;'>" + " &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;   &nbsp;" + "</div>");
+ 
             HtmlTemplate.Append("</body>");
             HtmlTemplate.Append("</html>");
 
@@ -3438,8 +3444,7 @@ namespace Logitude.BL.Helpers
         public List<QuoteTemplateSectionPM> QuoteTemplateSectionPMLists { get; set; }
 
         public bool HideQuoteHeaderFromPdf { get; set; }
-
-
+        public string RequestArea { get; set; }
     }
 
 
