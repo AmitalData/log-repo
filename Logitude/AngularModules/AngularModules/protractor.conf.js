@@ -19,9 +19,15 @@ exports.config = {
       TransportMode: null,
       ShipmentType: null,
       },
+      ReportDoc: {
+          SenarioType: null,
+
+      },
       FullAccount: {
           FullAccountingType:null,
       }
+
+
   },
   capabilities: {
     'browserName': 'chrome',
@@ -96,6 +102,11 @@ exports.config = {
           browser.params.Login.Email = "ahmadb@test.com";
           browser.params.Login.Password = "ahmed!A123";
       }
+      else if (browser.params.Env == "test_1109") {
+          browser.params.Link = "https://test.logitudeworld.com/test";
+          browser.params.Login.Email = "sumaya@automation.com";
+          browser.params.Login.Password = "Sg0592463934!";
+      }
       
 
       jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
@@ -124,7 +135,7 @@ exports.config = {
     // APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
     
     
-    //ARPayment: 'FullAccounting/ARPayment/**/ARPayment-spec.ts',
+    
 
     //GLAccount: 'FullAccounting/**/GLAccounts/GlAccount-spec.ts',
 

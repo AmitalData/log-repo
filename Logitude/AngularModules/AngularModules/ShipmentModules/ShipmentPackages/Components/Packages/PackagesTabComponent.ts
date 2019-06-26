@@ -1609,19 +1609,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             var extension: string = file.name.split('.')[1];
 
             if (extension.includes("xls")) {
-                if (this.EntityPM.ShipmentPackages.length > 0) {
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.Show("Uploading packages will result in deleting existing packages and all its data");
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            this.SelectExcelFile(fileEvent);
-                        }
-                    });
-                }
-
-                else {
-                    this.SelectExcelFile(fileEvent);
-                }
+                this.SelectExcelFile(fileEvent);
             }
 
             else {
@@ -1690,16 +1678,27 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 if (this.packages.filter(d => d.HasErrors).length > 0) {
                     var window: MessageWindow = new MessageWindow();
                     window.Show("File contains errors, please validate the data and try again");
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
-                    this.saveAfterDeletePackages = true;
-
                     if (this.EntityPM.ShipmentPackages.length > 0) {
-                        this.StartDelete();
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.Show("Uploading packages will result in deleting existing packages and all its data");
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
+                            if (confirmWindow.Yes) {
+                                this.saveAfterDeletePackages = true;
+                                this.StartDelete();
+                                this.CurrentSession.CurrentEditComponent.SaveChanges();
+                            }
+                        });
                     }
 
-                    this.CurrentSession.CurrentEditComponent.SaveChanges();
+                    else {
+                        this.saveAfterDeletePackages = true;
+                        this.StartDelete();
+                        this.CurrentSession.CurrentEditComponent.SaveChanges();
+                    }
                 }
             }
 

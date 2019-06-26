@@ -195,18 +195,10 @@
                                                                         <table>
                                                                             <tr>
                                                                                 <td>
-
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-
-                                                                        <table>
-                                                                            <tr>
-                                                                                <td>
                                                                                     <table>
                                                                                         <tr>
 
-                                                                                            <td style="width:65px;max-width:65px;min-width:65px; vertical-align:top;">
+                                                                                            <td style="width:65px;max-width:65px;min-width:65px;">
                                                                                                 <table>
                                                                                                     <tr style="height:50px;vertical-align:top;">
                                                                                                         <td style="width:18px;">
@@ -286,13 +278,15 @@
                                                                                                 <div></div>
                                                                                             </td>
 
-                                                                                            <td style="width:95px;vertical-align:top; background: red;">
+                                                                                            <td style="width: 100px;">
                                                                                                 <table>
+
                                                                                                     <tr *ngIf="item.CorrespondenceHTMLBodyLinkVisibility" style="height:1px;vertical-align:top;">
                                                                                                         <td style="float:right;">
                                                                                                             <span class="hyperlink" (click)="item.ViewHTMLBody()" style="font-size:10px;padding-right:5px;padding-left:5px;">View Full Email</span>
                                                                                                         </td>
                                                                                                     </tr>
+
                                                                                                     <tr *ngIf="item.ActivityIconVisibility" style="vertical-align:bottom;">
                                                                                                         <td>
                                                                                                             <table>
@@ -326,62 +320,55 @@
                                                                                 </td>
                                                                             </tr>
 
-                                                                            <tr style="background: green;">
+                                                                            <tr style="height: 3px;">
                                                                                 <td>
-                                                                                    <table>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <!-- ShowMore -->
+                                                                            <tr style="height: 25px;">
+                                                                                <td>
+                                                                                    <table style="table-layout: fixed">
                                                                                         <tr>
-                                                                                            <td style="width:550px;">
+                                                                                            <td>
                                                                                                 <div></div>
                                                                                             </td>
 
-                                                                                            <td style="text-align: center;width:70px;">
+                                                                                            <td style="width: 60px; text-align: center;">
                                                                                                 <span *ngIf="item.ShowMoreVisibility" class="hyperlink" (click)="item.ShowMore()" style="font-size:10px">Show More</span>
                                                                                                 <span *ngIf="item.ShowLessVisibility" class="hyperlink" (click)="item.ShowLess()" style="font-size:10px">Show Less</span>
                                                                                             </td>
 
-                                                                                            <!-- *ngIf="item.TextAlignRegionVisibility" -->
-                                                                                            <td style="float:right;width:65px;">
-                                                                                                <table>
+                                                                                            <td>
+                                                                                                <table *ngIf="item.TextAlignRegionVisibility && TextAlignVisibility">
                                                                                                     <tr>
                                                                                                         <td>
-                                                                                                            <table>
-                                                                                                                <tr *ngIf="item.TextAlignVisibility">
-                                                                                                                    <td width="5px;">
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-                                                                                                                    <td style="width: 20px;height: 25px;" [ngStyle]="{background:item.BackgroundAlignLeft}">
-                                                                                                                        <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignLeftClicked()" />
-                                                                                                                    </td>
-                                                                                                                    <td width="5px;">
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-                                                                                                                    <td style="width: 20px;height: 25px;" [ngStyle]="{background: item.BackgroundAlignRight}">
-                                                                                                                        <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignRightClicked()" />
-                                                                                                                    </td>
-                                                                                                                    <td width="5px;">
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        <div></div>
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                            </table>
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 20px;height: 25px;" [ngStyle]="{background:item.BackgroundAlignLeft}">
+                                                                                                            <img src="./Images/Align-left-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignLeftClicked()" />
+                                                                                                        </td>
+
+                                                                                                        <td width="5px;">
+                                                                                                            <div></div>
+                                                                                                        </td>
+
+                                                                                                        <td style="width: 20px;" [ngStyle]="{background: item.BackgroundAlignRight}">
+                                                                                                            <img src="./Images/Align-right-icon.png" style="width: 16px;height: 22px;" (click)="item.AlignRightClicked()" />
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </table>
-                                                                                            </td>
-
-                                                                                            <td style="width:5px;">
-                                                                                                <div></div>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>
                                                                                 </td>
                                                                             </tr>
 
-                                                                            <tr>
-                                                                                <!-- AttachmentsList -->
-                                                                                <td style="width:1px;">
+                                                                            <!-- Attachments -->
+                                                                            <tr style="height: 1px;">
+                                                                                <td>
                                                                                     <ul style="display:inline;">
                                                                                         <li *ngFor="let attach of item.AttachmentsList" style="display:inline;">
                                                                                             <img [src]="attach.FileExtension | AttatchmentIconPipe" style="width:20px;height:20px;margin-left:5px;cursor:pointer;" />

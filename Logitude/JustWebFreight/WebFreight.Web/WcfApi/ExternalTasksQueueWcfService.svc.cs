@@ -46,11 +46,17 @@ namespace WebFreight.Web.WcfApi
                     CacheManager.CacheWrapper = new MockCacheWrapper();
                 }
 
-                
+
+                string enableQueueWaitOnExternalWCFService = System.Configuration.ConfigurationManager.AppSettings.Get("EnableQueueWaitOnExternalWCFService");
+                TimeSpan queueWaitTime = new TimeSpan(0, 0, 0);
+                if (enableQueueWaitOnExternalWCFService == "true")
+                {
+                    queueWaitTime = new TimeSpan(0, 0, 20);
+                }
 
                 string queueName = "externaltasksqueue" + tenant + priority;
                 DbQueueService queueservice = new DbQueueService(queueName, tenant);//QueueServiceManager.GetQueueService(queueName, 0);
-                queueResponse = queueservice.Receive(new TimeSpan(0, 0, 20));
+                queueResponse = queueservice.Receive(queueWaitTime);
 
                 // QueueClient client = Communications.GetQueueClient("externaltasksqueue" + tenant + priority);
 
