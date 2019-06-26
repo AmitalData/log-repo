@@ -1,6 +1,7 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.TariffModule.BL.EntityPMs;
+using Logitude.TariffModule.BL.EntityQueryServices;
 using Logitude.TariffModule.Data;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.Repositories;
@@ -31,13 +32,15 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
                 if (entityPM.PriceSteps == null)
                 {
-                    ITariffModuleContext iContext= TariffModuleContext.GetContext(entityPM.Tenant);
+                    ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                     TariffSetting iTariffSetting = (from d in iContext.TariffSettings where d.Tenant == entityPM.Tenant select d).FirstOrDefault();
                     if (iTariffSetting != null)
                     {
                         entityPM.PriceSteps = iTariffSetting.DefaultPriceSteps;
                     }
                 }
+
+                this.ValidateSurchargeUniqueSeller(entityPM);
             }
         }
 
@@ -47,8 +50,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             {
                 entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
             }
-
-            //DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
@@ -89,11 +90,13 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     throw new ApplicationException("Dates are not allowed in Surcharges versions");
                 }
 
-                if (entityPM.ActiveVersions.Where(d=>d.StartDate != null || d.ExpirationDate != null).Any())
+                if (entityPM.ActiveVersions.Where(d => d.StartDate != null || d.ExpirationDate != null).Any())
                 {
                     throw new ApplicationException("Dates are not allowed in Surcharges versions");
                 }
             }
+
+            this.ValidateSurchargeUniqueSeller(entityPM);
         }
 
         protected override void UpdateComposition(TariffPM entityPM)
@@ -129,7 +132,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         });
                     }
                 }
-               
+
             }
 
 
@@ -147,7 +150,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = changesXml
                 });
             }
-            
+
             if (entityPM.SetAsReActive)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -160,7 +163,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     Notes = changesXml
                 });
             }
-            
+
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -238,6 +241,17 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
             //TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             //tariffVersionUpdateService.Update(tariffVersionPM, true);
+        }
+
+        private void ValidateSurchargeUniqueSeller(TariffPM entityPM)
+        {
+            ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
+            TariffQueryService tariffLineQueryService = new TariffQueryService(iContext);
+            int count = tariffLineQueryService.GetActiveTariffCountByTenantAndSeller(entityPM.Tenant, entityPM.SellerId);
+            if (count > 0)
+            {
+                throw new ApplicationException("Tariff surcharge seller should be unique");
+            }
         }
     }
 }
