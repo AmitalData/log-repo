@@ -157,7 +157,11 @@ namespace WebFreight.Web.DataProviders
         public int NumberofDeliveries { get; set; }
         public DateTime? LastPickupArrivalDate { get; set; }
         public DateTime? LastDeliveryArrivalDate { get; set; }
-        public double? ChargeableWeight  { get; set; }
-        public string ChargeableWeightUnitCode  { get; set; }
+        public double? ChargeableWeight { get; set; }
+        public string ChargeableWeightUnitCode { get; set; }
+        public string FinalPortofDestination { get; set; }
+        public string FinalCountryofDestination{get;set;}
+        public string OnCarriageTransportMode { get; set; }
+
     }
 }
