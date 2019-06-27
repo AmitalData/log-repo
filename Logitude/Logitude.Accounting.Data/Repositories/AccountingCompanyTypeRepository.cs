@@ -27,6 +27,13 @@ namespace Logitude.Accounting.Data.Repositories
 
                     select a).FirstOrDefault();
         }
+        public AccountingCompanyType GetSingleAccountingCompanyTypeByCode(string Code, int tenant)
+        {
+            return (from a in context.AccountingCompanyTypes
+                    where a.Code == Code && a.Tenant == tenant
+
+                    select a).FirstOrDefault();
+        }
 
     }
 

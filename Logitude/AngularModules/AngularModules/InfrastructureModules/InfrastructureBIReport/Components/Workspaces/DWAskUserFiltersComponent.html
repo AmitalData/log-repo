@@ -266,8 +266,19 @@
                                     <td style="width:180px;" [ngSwitch]="item.ParentDataTypeCode">
 
                                         <!--Date-->
-                                        <div *ngSwitchCase="'DateTime' || 'Date'">
+                                        <div *ngSwitchCase="'Date'">
+                                            <div style="width:180px;">
 
+                                                <DWDate [ObjectFieldName]="item.Code"
+                                                        [DataContext]="item"
+                                                        [Operation]="item.Operation.Code"
+                                                        (ValueChanged)="item.onTextChange($event)"
+                                                        [SelectedValue]="item.TextValue">
+                                                </DWDate>
+
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="'DateTime'">
                                             <div style="width:180px;">
 
                                                 <DWDate [ObjectFieldName]="item.Code"
@@ -280,11 +291,13 @@
                                             </div>
                                         </div>
 
+
+
                                     </td>
                                     <td style="width:180px;" [ngSwitch]="item.ParentDataTypeCode">
 
                                         <!--Date-->
-                                        <div *ngSwitchCase="'DateTime' || 'Date'">
+                                        <div *ngSwitchCase="'Date'">
 
                                             <div style="width:162px;">
 
@@ -293,6 +306,18 @@
 
                                             </div>
                                         </div>
+                                        <div *ngSwitchCase="'DateTime'">
+
+                                            <div style="width:162px;">
+
+                                                <DateSampleComponent *ngIf="item.TextValue" [ShowSampleDateCommand]="item.ShowSampleDateCommand">
+                                                </DateSampleComponent>
+
+                                            </div>
+                                        </div>
+
+
+
 
                                     </td>
 

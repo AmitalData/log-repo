@@ -58,7 +58,7 @@ export class AddEditAirlineAreaComponent extends BaseComponent {
             this.EntityPM.UpdatedByUserName = SessionInfo.LoggedUserPM.EnglishName;
             this.EntityPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
             this.EntityPM.UpdateDate = DateTool.GetCurrentDateTimeAsUtc();
-
+            this.EntityPM.AirlineId = this.AirlinePM.Id;
             this.AirlinePM.AddAirlineAreaPM(this.EntityPM);
         }
         else {

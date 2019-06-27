@@ -28,6 +28,13 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).FirstOrDefault();
         }
 
+        public WithholdingTaxDeductionType GetSingleWithholdingTaxDeductionTypeByCode(string Code, int tenant)
+        {
+            return (from a in context.WithholdingTaxDeductionTypes
+                    where a.Code == Code && a.Tenant == tenant
+
+                    select a).FirstOrDefault();
+        }
 
 
 
