@@ -36,16 +36,18 @@
                     <td>
                         <table>
                             <tr class="FormFieldRow">
-                                <td style="width: 110px;">
+                                <td style="width: 80px;">
                                     <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
 
                                 </td>
 
-                                <td style="width: 180px;">
-                                    <div style="width: 120px;">
+                                <td style="width: 200px;">
+                                    <div style="width: 200px;">
                                         <LogTextBox [ObjectFieldName]="'Description'" [IsMultiline]="true" [Text]="Description" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                     </div>
                                 </td>
+
+                                <td></td>
 
                             </tr>                           
                         </table>
@@ -71,6 +73,23 @@
                                                     </td>
                                                     <td style="width:50px"><div></div></td>
                                                     <td style="width:3px"><div></div></td>
+                                                    <td><div></div></td>
+                                                    <td style="width:60px">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 50px;">
+
+                                                                    <button style="height:20px;" class="Button" (click)="ChoosePort()">
+                                                                        <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                        Port
+                                                                    </button>
+                                                                </td>
+
+                                                                <td style="width:10px"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                   
 
                                                 </tr>
                                             </table>
@@ -116,7 +135,7 @@
                                                                     <td class="GridViewCell">
                                                                         <div>
                                                                             <IconButton [IsSmall]="true" 
-                                                                                        [Name]="'Delete'" ></IconButton>
+                                                                                        [Name]="'Delete'" (click)="DeletePort(item)" ></IconButton>
                                                                         </div>
                                                                     </td>
 
@@ -151,10 +170,17 @@
                         <div></div>
                     </td>
 
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
-                    </td>
+                        <button class="RedButton" (click)="SaveButtonClicked()">Ok</button>
+                    </td>                    
                 </tr>
             </table>
         </td>

@@ -379,7 +379,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ReportBuildResult result = new ReportBuildResult();
                 if (reportExecutionLog != null)
                 {
-                    UpdateStatusReportExecutionLog(authToken, reportExecutionLogRepository, reportExecutionLog);
+                  //  UpdateStatusReportExecutionLog(authToken, reportExecutionLogRepository, reportExecutionLog);
 
                     result.StatusCode = reportExecutionLog.StatusCode;
                     if (result.StatusCode == "F")

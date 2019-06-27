@@ -41,7 +41,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string AddedByUserId { get; set; }
 
-
+        [DataMember]
+        public ChangeSetOperation ChangeSetOp { get; set; }
 
     }
 }
