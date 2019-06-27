@@ -32,7 +32,7 @@
                                         <div class="SimpleGridView">
                                             <div class="SimpleGridViewHeader">
                                                 <table>
-                                                    <tr>
+                                                    <tr class="SimpleGridHeaderRow">
                                                         <td style="width: 150px;">{{'AirlineArea.F.Name' | TextCodeTranslationPipe}}</td>
                                                         <td style="width: 170px;">{{'AirlineArea.F.Description' | TextCodeTranslationPipe}}</td>
                                                         <td style="width: 150px;">{{'AirlineArea.F.CreatedByUserName' | TextCodeTranslationPipe}}</td>
@@ -40,30 +40,43 @@
                                                         <td style="width: 150px;">{{'AirlineArea.F.UpdatedByUserName' | TextCodeTranslationPipe}}</td>
                                                         <td style="width: 150px;">{{'AirlineArea.F.UpdateDate' | TextCodeTranslationPipe}}</td>
 
-                                                        <td style="width: 50px;"></td>
+                                                        <td class="LastChild"></td>
                                                     </tr>
                                                 </table>
                                             </div>
 
                                             <div class="SimpleGridViewBody">
                                                 <table>
-                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of EntityPM.AirlineAreas" (click)="Selecting(item)">
+                                                    <tr class="SimpleGridViewRow RowHover" *ngFor="let item of EntityPM.AirlineAreas" >
                                                         <td class="GridViewCell" style="width: 150px;">{{item.Name}}</td>
                                                         <td class="GridViewCell" style="width: 170px;">{{item.Description}}</td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.CreatedByUserName}}</td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.CreateDate | DateTimePipe:'SD'}}</td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.UpdatedByUserName}}</td>
                                                         <td class="GridViewCell" style="width: 150px;">{{item.UpdateDate | DateTimePipe:'SD'}}</td>
-                                                        <td class="GridViewCell" style="width: 50px;"></td>
+                                                        <td class="LastChild">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:5px"></td>
+                                                                    <td style="width:20px">
+                                                                        <IconButton (click)="AddEditAirlineAreaClicked(item)" [IsSmall]="true"
+                                                                                    [Name]="'Edit'"></IconButton>
+                                                                    </td>
+                                                                    <td style="width:20px">
+                                                                        <IconButton (click)="DeleteAirlineAreaClicked(item)" [IsSmall]="true"
+                                                                                    [Name]="'Delete'"></IconButton>
+                                                                    </td>
+                                                                    <td><div></div></td>
+                                                                </tr>
+                                                            </table>
+                                                           
+                                                        </td>
 
                                                     </tr>
                                                 </table>
                                             </div>
                                         </div>
-                                    </td>
-                                     <td style="width:100px">
-<div></div>
-                                     </td>
+                                    </td>                                    
                                 </tr>
                             </table>
                            
