@@ -46,7 +46,7 @@ namespace CommunicationWorkerRole
             //Thread thread = new Thread(CheckandRescheduleDeadThreads);
             System.Timers.Timer timer1 = new System.Timers.Timer()
             {
-                Interval = 300000//5 Mins
+                Interval = 60000//5 Mins
             };
             timer1.Enabled = true;
             timer1.Elapsed += Timer1_Elapsed; //+= new System.EventHandler(OnTimerEvent);
