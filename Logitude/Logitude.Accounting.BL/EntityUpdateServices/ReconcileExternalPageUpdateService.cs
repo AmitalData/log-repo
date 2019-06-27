@@ -89,6 +89,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             bank.LastPageNumber = entityPM.PageNo.ToString();
             bank.LastPageCloseBalance = entityPM.CloseBalance;
             bank.LastPageEndDate = entityPM.ToDate;
+            bank.IsBankPageEvent = true;
             bank.ChangeSetOp = ChangeSetOperation.Update;
             bankService.Update(bank, true);
 
@@ -160,19 +161,35 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            
         }
 
-        //protected override void Trace(ReconcileExternalPagePM entityPM, ReconcileExternalPage entityPOCO, string changesXml)
-        //{
-        //    if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-        //    {
-        //        //create trace event with created type.
-        //    }
-        //    else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
-        //    {
+        public void CreateTraceEvent(ReconcileExternalPagePM entityPM, ContactPM loggedContact, string code)
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = entityPM.Tenant,
+                EventTypeCode = code,
+                UserId = loggedContact.Id,
+                EntityId = entityPM.Id,
+                ObjectTableName = "ReconcileExternalPage",
+                Notes = ""
+            });
 
+            
+            
+        }
+        protected override void Trace(ReconcileExternalPagePM entityPM, ReconcileExternalPage entityPOCO, string changesXml)
+        {
+            ContactPM contact= GetLoggedContact(entityPM.Tenant);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                CreateTraceEvent(entityPM, contact, "CREV");
+            }
+            else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
 
-        //    }
-        //    base.Trace(entityPM, entityPOCO, changesXml);
-        //}
+                CreateTraceEvent(entityPM, contact, "UPEV");
+            }
+            base.Trace(entityPM, entityPOCO, changesXml);
+        }
 
 
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }

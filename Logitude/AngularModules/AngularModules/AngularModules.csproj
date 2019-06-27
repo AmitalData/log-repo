@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\BankAccount\BankPageEventsComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\ManageRecoTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\BankPagesTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.html" />
@@ -107,6 +108,7 @@
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.html" />
+    <Content Include="CommonModules\CommonAirline\Components\AddEdit\ChoosePortComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AreasTabComponent.html" />
@@ -145,6 +147,7 @@
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.html" />
     <Content Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.html" />
+    <Content Include="CRMModules\CRMOccasion\Components\NewEntity\NewOccasionComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\EditProductComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsInTabComponent.html" />
     <Content Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsOutTabComponent.html" />
@@ -263,6 +266,7 @@
     <Content Include="CRMModules\CRMActivity\Components\NewEntity\NewTaskComponent.html" />
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
+    <Content Include="e2e\.vscode\protractor.conf.js" />
     <Content Include="Images\ArrowLeft.png" />
     <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
@@ -373,6 +377,7 @@
     <Content Include="InfrastructureModules\InfrastructureTenantManagement\Components\TenantManagement\PrivateLabelLoadComponent.html" />
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\BankPageEventsComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\OpenFormatReport\OpenFormatReportLogTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\TaxDeductionReport\TaxDeductionReportGeneralTabComponent.ts" />
@@ -411,6 +416,7 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\ChoosePortComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AreasTabComponent.ts" />
@@ -455,6 +461,9 @@
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\EditTabs\InboundEmailGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\EditTabs\ViewInboundLineBodyComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMInboundEmail\Components\NewEntity\NewInboundEmailComponent.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOccasion\Components\NewEntity\NewOccasionComponent.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOccasion\ModuleCRMOccasion.ts" />
+    <TypeScriptCompile Include="CRMModules\CRMOccasion\ModuleDeclarations.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOpportunity\Components\EditTabs\EditProductComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CRMModules\CRMOpportunity\Components\EditTabs\OpportunityDocsOutTabComponent.ts" />
@@ -755,6 +764,7 @@
     <TypeScriptCompile Include="e2e\LogBox\Shipments\CreateLogboxShipment.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Shipments\ShipmentSearch.e2e-spec.ts" />
     <TypeScriptCompile Include="e2e\LogBox\Shipments\ShipmentSearch.ts" />
+    <TypeScriptCompile Include="e2e\Report\SenarioTest.ts" />
     <TypeScriptCompile Include="e2e\Report\Report-spec.ts" />
     <TypeScriptCompile Include="e2e\Report\ReportGenerator.ts" />
     <TypeScriptCompile Include="e2e\Report\ReportSearch.ts" />
@@ -6605,6 +6615,7 @@
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\DeleteVehicleComponent.js.map" />
     <Content Include="CustomsModules\CustomsVehicle\Components\SendVehicle\SendVehicleComponent.js.map" />
     <Content Include="e2e\LogBox\tsconfig.e2e.json" />
+    <Content Include="e2e\.vscode\launch.json" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Common\EntityLists\AddressList.ts" />

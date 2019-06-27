@@ -329,8 +329,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         private List<AirlineAreaPM> airlineAreas;
         [Include]
-        [Association("AirlineAreaAirline", "Id", "AirlineId")]
+        [Association("AirlineAreaPM", "Id", "AirlineId")]
         [Composition]
+        [DataMember]
         public virtual List<AirlineAreaPM> AirlineAreas
         {
             get
@@ -343,11 +344,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
                 return this.airlineAreas;
             }
             set
-            {
-                if (value != null)
-                {
-                    airlineAreas = value;
-                }
+            {             
+                    airlineAreas = value;                
             }
         }
 

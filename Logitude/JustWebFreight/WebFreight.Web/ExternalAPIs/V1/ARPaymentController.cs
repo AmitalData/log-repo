@@ -50,7 +50,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     Result = Service.GetARPaymentByNumber(number, tenant);
                 }
-
+                Result.PaymentInvoices = null;
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
@@ -105,7 +105,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         scope.Complete();
 
-
+                        entity.PaymentInvoices = null;
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
                 }
@@ -167,7 +167,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                         scope.Complete();
 
-
+                        entity.PaymentInvoices = null;
                         return Request.CreateResponse(HttpStatusCode.OK, entity);
                     }
                 }

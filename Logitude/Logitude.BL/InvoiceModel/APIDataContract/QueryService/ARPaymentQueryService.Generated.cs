@@ -122,7 +122,14 @@ using Simplog.Data.InvoiceModel;
 					   				   }
 				   
 				   temp.PaymentCurrencyCode = MyEntityPM.PaymentCurrencyCode;
-				   temp.CreateDate = MyEntityPM.CreateDate;					
+				   temp.CreateDate = MyEntityPM.CreateDate;
+				if(MyEntityPM.PaymentInvoices != null && MyEntityPM.PaymentInvoices.Count > 0)
+				{
+					 ARPaymentInvoiceQueryService ARPaymentInvoiceService6 = new ARPaymentInvoiceQueryService(Tenant);
+					 temp.PaymentInvoices = ARPaymentInvoiceService6.ARPaymentInvoiceDataMapping(MyEntityPM.PaymentInvoices,Tenant);
+				}
+
+							 					
 				   return temp;
 			}
             catch (Exception ex)
@@ -231,7 +238,14 @@ using Simplog.Data.InvoiceModel;
 			
 					
 					temp.PaymentCurrencyCode = MyEntity.PaymentCurrencyCode;
-					temp.CreateDate = MyEntity.CreateDate;					   
+					temp.CreateDate = MyEntity.CreateDate;
+					if(MyEntity.PaymentInvoices != null && MyEntity.PaymentInvoices.Count > 0)
+					{
+						ARPaymentInvoiceQueryService ARPaymentInvoiceService6 = new ARPaymentInvoiceQueryService(Tenant);
+						temp.PaymentInvoices = ARPaymentInvoiceService6.ARPaymentInvoiceDataMappingAndValidatin(MyEntity.PaymentInvoices,Tenant,ComputingPartnerName);
+					}
+
+								 					   
 					   return temp;
 		    }
             catch (Exception ex)

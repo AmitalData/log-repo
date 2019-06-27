@@ -94,7 +94,9 @@ namespace Logitude.UnitTest.Accounting.UniTests.PaymentChequeTests
                 BankAccountGLAccountId = BankAccountGLAccountPM.Id,
                 BankAccountId = BankAccount.Id,
                 PaymentChequeStatusCode = PaymentChequeStatusPM.Code,
-                JournalId = journal.Id
+                JournalId = journal.Id,
+                GLAccountNumber = PayToGLAccount.DisplayNumber,
+                JournalNumber= journal.JournalNumber,
             };
 
 
@@ -118,7 +120,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.PaymentChequeTests
             Aggregate(
           () => Assert.AreEqual(PayToGLAccount.CurrencyId, paymentChequePM.GLAccountCurrencyId, "CurrencyId not matches expected CurrencyId "),
           () => Assert.AreEqual(PayToGLAccount.DisplayNumber, paymentChequePM.GLAccountNumber, "GLAccountNumber not matches expected GLAccountNumber "),
-          () => Assert.AreEqual(BankAccountGLAccountPM.DisplayNumber, paymentChequePM.BankGLAccountCurrencyId, "BankGLAccountCurrencyId not matches expected BankGLAccountCurrencyId "),
+          () => Assert.AreEqual(BankAccountGLAccountPM.CurrencyId, paymentChequePM.BankGLAccountCurrencyId, "BankGLAccountCurrencyId not matches expected BankGLAccountCurrencyId "),
           () => Assert.AreEqual(BankAccount.LocalName, paymentChequePM.BankLocalName, "BankLocalName not matches expected BankLocalName "),
           () => Assert.AreEqual(BankAccount.EnglishName, paymentChequePM.BankEnglishName, "BankEnglishName not matches expected BankEnglishName "),
           () => Assert.AreEqual(journal.Id, paymentChequePM.JournalId, "JournalId not matches expected JournalId "),

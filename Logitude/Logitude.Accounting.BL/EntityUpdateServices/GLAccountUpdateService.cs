@@ -248,6 +248,62 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
 
+            if (String.IsNullOrWhiteSpace(entityPM.DeductionTypeId) && !String.IsNullOrWhiteSpace(entityPM.DeductionTypeCode))
+            {
+                AccountingCompanyTypeQueryService queryService = new AccountingCompanyTypeQueryService(entityPM.Tenant);
+                AccountingCompanyTypePM ctype = queryService.GetByCode(entityPM.DeductionTypeCode, entityPM.Tenant);
+                if (ctype != null)
+                {
+                    entityPM.DeductionTypeId = ctype.Id;
+                    if (!String.IsNullOrWhiteSpace(ctype.LocalName))
+                    {
+                        entityPM.DeductionTypeName = ctype.LocalName;
+                    }
+                    {
+                        entityPM.DeductionTypeName = ctype.EnglishName;
+                    }
+                }
+            }
+
+
+
+            if (String.IsNullOrWhiteSpace(entityPM.AssessingOfficeCode) && !String.IsNullOrWhiteSpace(entityPM.AssessingOfficeNumber))
+            {
+                TaxWithholdingAssessOfficeQueryService queryService = new TaxWithholdingAssessOfficeQueryService(entityPM.Tenant);
+                TaxWithholdingAssessOfficePM office = queryService.GetByNumber(entityPM.AssessingOfficeNumber, entityPM.Tenant);
+                if (office != null)
+                {
+                    entityPM.AssessingOfficeCode = office.Id;
+                    if (!String.IsNullOrWhiteSpace(office.LocalName))
+                    {
+                        entityPM.AssessingOfficeName = office.LocalName;
+                    }
+                    {
+                        entityPM.AssessingOfficeName = office.Name;
+                    }
+                }
+            }
+
+            if (String.IsNullOrWhiteSpace(entityPM.DeductionFileTypeId) && !String.IsNullOrWhiteSpace(entityPM.DeductionFileTypeCode))
+            {
+                WithholdingTaxDeductionTypeQueryService queryService = new WithholdingTaxDeductionTypeQueryService(entityPM.Tenant);
+                WithholdingTaxDeductionTypePM ftype = queryService.GetByCode(entityPM.DeductionFileTypeCode, entityPM.Tenant);
+                if (ftype != null)
+                {
+                    entityPM.DeductionFileTypeId = ftype.Id;
+                    if (!String.IsNullOrWhiteSpace(ftype.LocalName))
+                    {
+                        entityPM.DeductionFileTypeName = ftype.LocalName;
+                    }
+                    {
+                        entityPM.DeductionFileTypeName = ftype.EnglishName;
+                    }
+                }
+            }
+
+
+
+
             if (entityPM.InternalNumber != null)
             {
                 GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
@@ -564,6 +620,59 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     entityPM.ChartOfAccountsTypeName = chart.TypeName;
                 }
             }
+
+            if (String.IsNullOrWhiteSpace(entityPM.DeductionTypeId) && !String.IsNullOrWhiteSpace(entityPM.DeductionTypeCode))
+            {
+                AccountingCompanyTypeQueryService queryService = new AccountingCompanyTypeQueryService(entityPM.Tenant);
+                AccountingCompanyTypePM ctype = queryService.GetByCode(entityPM.DeductionTypeCode, entityPM.Tenant);
+                if (ctype != null)
+                {
+                    entityPM.DeductionTypeId = ctype.Id;
+                    if (!String.IsNullOrWhiteSpace(ctype.LocalName))
+                    {
+                        entityPM.DeductionTypeName = ctype.LocalName;
+                    }
+                    {
+                        entityPM.DeductionTypeName = ctype.EnglishName;
+                    }
+                }
+            }
+
+
+            if (String.IsNullOrWhiteSpace(entityPM.AssessingOfficeCode) && !String.IsNullOrWhiteSpace(entityPM.AssessingOfficeNumber))
+            {
+                TaxWithholdingAssessOfficeQueryService queryService = new TaxWithholdingAssessOfficeQueryService(entityPM.Tenant);
+                TaxWithholdingAssessOfficePM office = queryService.GetByNumber(entityPM.AssessingOfficeNumber, entityPM.Tenant);
+                if (office != null)
+                {
+                    entityPM.AssessingOfficeCode = office.Id;
+                    if (!String.IsNullOrWhiteSpace(office.LocalName))
+                    {
+                        entityPM.AssessingOfficeName = office.LocalName;
+                    }
+                    {
+                        entityPM.AssessingOfficeName = office.Name;
+                    }
+                }
+            }
+
+            if (String.IsNullOrWhiteSpace(entityPM.DeductionFileTypeId) && !String.IsNullOrWhiteSpace(entityPM.DeductionFileTypeCode))
+            {
+                WithholdingTaxDeductionTypeQueryService queryService = new WithholdingTaxDeductionTypeQueryService(entityPM.Tenant);
+                WithholdingTaxDeductionTypePM ftype = queryService.GetByCode(entityPM.DeductionFileTypeCode, entityPM.Tenant);
+                if (ftype != null)
+                {
+                    entityPM.DeductionFileTypeId = ftype.Id;
+                    if (!String.IsNullOrWhiteSpace(ftype.LocalName))
+                    {
+                        entityPM.DeductionFileTypeName = ftype.LocalName;
+                    }
+                    {
+                        entityPM.DeductionFileTypeName = ftype.EnglishName;
+                    }
+                }
+            }
+
 
             if (String.IsNullOrWhiteSpace(entityPM.CustomerGLAccountId) && !String.IsNullOrWhiteSpace(entityPM.CustomerGLAccountInternalNumber))
             {

@@ -1169,9 +1169,13 @@
     <Compile Include="Migrations\201906241106069_ModifyTariffLineExpirationDate.Designer.cs">
       <DependentUpon>201906241106069_ModifyTariffLineExpirationDate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201906240850455_AbedAddIsIsParentTenantToDWHSetting.cs" />
-    <Compile Include="Migrations\201906240850455_AbedAddIsIsParentTenantToDWHSetting.Designer.cs">
-      <DependentUpon>201906240850455_AbedAddIsIsParentTenantToDWHSetting.cs</DependentUpon>
+    <Compile Include="Migrations\201906260608350_AdjustExternalProjectNumber_Maheera.cs" />
+    <Compile Include="Migrations\201906260608350_AdjustExternalProjectNumber_Maheera.Designer.cs">
+      <DependentUpon>201906260608350_AdjustExternalProjectNumber_Maheera.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906270832436_Khalid_AirlinePortArea_Delete_DescriptionColumn.cs" />
+    <Compile Include="Migrations\201906270832436_Khalid_AirlinePortArea_Delete_DescriptionColumn.Designer.cs">
+      <DependentUpon>201906270832436_Khalid_AirlinePortArea_Delete_DescriptionColumn.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
@@ -1989,11 +1993,14 @@
     <EmbeddedResource Include="Migrations\201906240850455_AbedAddIsIsParentTenantToDWHSetting.resx">
       <DependentUpon>201906240850455_AbedAddIsIsParentTenantToDWHSetting.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906260608350_AdjustExternalProjectNumber_Maheera.resx">
+      <DependentUpon>201906260608350_AdjustExternalProjectNumber_Maheera.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906241106069_ModifyTariffLineExpirationDate.resx">
       <DependentUpon>201906241106069_ModifyTariffLineExpirationDate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201906240850455_AbedAddIsIsParentTenantToDWHSetting.resx">
-      <DependentUpon>201906240850455_AbedAddIsIsParentTenantToDWHSetting.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906270832436_Khalid_AirlinePortArea_Delete_DescriptionColumn.resx">
+      <DependentUpon>201906270832436_Khalid_AirlinePortArea_Delete_DescriptionColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

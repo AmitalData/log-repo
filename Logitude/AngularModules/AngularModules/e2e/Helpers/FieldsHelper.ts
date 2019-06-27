@@ -7,7 +7,7 @@ export class FieldsHelper {
 
     WaitByCssStringAndClick(className: string, Text: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.cssContainingText(className, Text))), 100000000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.cssContainingText(className, Text))), 100000).then(a => {
             var Button = element(by.cssContainingText(className, Text)).click();
 
         });
@@ -15,7 +15,7 @@ export class FieldsHelper {
 
     WaitByIdAndClick(Id: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.id(Id))), 10000000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.id(Id))), 100000).then(a => {
             element(by.id(Id)).click();
 
         });
@@ -24,18 +24,18 @@ export class FieldsHelper {
 
     WaitByIdAndClickRabaia(Id: string) {
         var EC = protractor.ExpectedConditions;
-        return browser.wait(EC.elementToBeClickable(element(by.id(Id))), 10000000);
+        return browser.wait(EC.elementToBeClickable(element(by.id(Id))), 100000);
 
     }
 
     ItemsVisibility(Id: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.id(Id))), 100000000).then(a => function () {
+        browser.wait(EC.visibilityOf(element(by.id(Id))), 100000).then(a => function () {
         });
     }
     ItemsPresent(Id: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.presenceOf(element(by.id(Id))), 1000000000).then(a => function () {
+        browser.wait(EC.presenceOf(element(by.id(Id))), 100000).then(a => function () {
 
         });
     }
@@ -47,20 +47,26 @@ export class FieldsHelper {
 
     WaitBusyIndicator() {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.invisibilityOf(element(by.id("BusyIndecator"))),10000000).then(a => { });
+        browser.wait(EC.invisibilityOf(element(by.id("BusyIndecator"))),100000).then(a => { });
     }
 
 
     WaitBusyIndicatorToShow() {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.id("BusyIndecator"))), 100000000).then(a => { });
+        browser.wait(EC.visibilityOf(element(by.id("BusyIndecator"))), 100000).then(a => { });
     }
 
     WaitWindowClosed() {
         var EC = protractor.ExpectedConditions;
         browser.wait(
-            EC.invisibilityOf(element(by.css(".LogitudeWindow"))), 100000000)
+            EC.invisibilityOf(element(by.css(".LogitudeWindow"))), 100000)
             .then(a => { });
+    }
+    waitByCss(className: string) {
+      var EC = protractor.ExpectedConditions;
+      browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000000).then(a => {
+        return true;
+      });
     }
 
     //WaitWindowClosedRabaia() {
@@ -107,54 +113,54 @@ export class FieldsHelper {
         ////expect(t).toBe(Text);
         //browser.wait(expect(t).toBe(Text), 5000);
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.textToBePresentInElementValue($('#ARInvoiceHeaderStatusName'), 'Unpaid'), 10000).then(a => { console.log("this is inside the wait for unpaid "+a); });
+        browser.wait(EC.textToBePresentInElementValue($('#ARInvoiceHeaderStatusName'), 'Unpaid'), 10000).then(a => { console.log("this is inside the wait for unpaid " + a); });
 
     }
 
-       // this.RunComponentTimer(Id, Text);
-         //return browser.wait();
-        // var RefreshTimer : any;
-        // var Text1=element(by.id(Id)).getAttribute('textContent').then(function (OrigionalText) {            
-        //   console.log("Rabaia in promise" + Id + " " + OrigionalText.trim()); 
-        //   expect(Text).toBe(OrigionalText);
-        // RefreshTimer : any;
-        //   if (RefreshTimer) {
-        //     clearTimeout(RefreshTimer);
-        // }
-        // RefreshTimer = setInterval(() => expect(Text).toBe(OrigionalText), 200);
-        //expect(OrigionalText).toBe(Text);
-        // return receivableCurrency;
-        // });
+    // this.RunComponentTimer(Id, Text);
+    //return browser.wait();
+    // var RefreshTimer : any;
+    // var Text1=element(by.id(Id)).getAttribute('textContent').then(function (OrigionalText) {            
+    //   console.log("Rabaia in promise" + Id + " " + OrigionalText.trim()); 
+    //   expect(Text).toBe(OrigionalText);
+    // RefreshTimer : any;
+    //   if (RefreshTimer) {
+    //     clearTimeout(RefreshTimer);
+    // }
+    // RefreshTimer = setInterval(() => expect(Text).toBe(OrigionalText), 200);
+    //expect(OrigionalText).toBe(Text);
+    // return receivableCurrency;
+    // });
 
 
 
-        // browser.wait(
+    // browser.wait(
 
 
-       // console.log("Rabaia out" + Id + " " + Text);
-       // console.log( Id + " " + Text);
-        // element(by.id(Id)).getAttribute('textContent').then(function (text) {
+    // console.log("Rabaia out" + Id + " " + Text);
+    // console.log( Id + " " + Text);
+    // element(by.id(Id)).getAttribute('textContent').then(function (text) {
 
 
-        // });
-        //if (t=='Text')
+    // });
+    //if (t=='Text')
 
 
 
-        //var EC = protractor.ExpectedConditions;
-        //String foo1 = element(by.id(Id)).getText();
-        //if (foo1=='Text'){
+    //var EC = protractor.ExpectedConditions;
+    //String foo1 = element(by.id(Id)).getText();
+    //if (foo1=='Text'){
 
 
-        // var foo= browser.wait(EC.textToBePresentInElement($(Id),('Text')),500000);
-        //   if (foo)
-        //   {
-        //     console.log(Text);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-        //   }
-        //   else{
-        //     console.log('Not'+' '+Text);
-        //   }  
-    
+    // var foo= browser.wait(EC.textToBePresentInElement($(Id),('Text')),500000);
+    //   if (foo)
+    //   {
+    //     console.log(Text);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+    //   }
+    //   else{
+    //     console.log('Not'+' '+Text);
+    //   }  
+
 
 
 
@@ -170,7 +176,7 @@ export class FieldsHelper {
 
     WaitByIdAndFill(Id: string, Value: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.id(Id))),10000000000000000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.id(Id))),100000).then(a => {
             console.log("this is inside the wait for" + Id);
             var input = element(by.id(Id));
             input.clear().then(() => {
@@ -178,6 +184,17 @@ export class FieldsHelper {
                 browser.wait(EC.textToBePresentInElementValue(element(by.id(Id)), '')).then(a => {
                     input.clear();
                     input.sendKeys(Value);
+                    var Newinput = element(by.id(Id)).getAttribute('value');
+                    Newinput.then(p => {// This adjustment is added because sometimes the text is not filled correctly so this way makes sure that is the value we fill
+                        console.log(p);
+                        if (p != Value) {
+                            this.WaitByIdAndFill(Id, Value);
+
+                        }
+                    });
+                    
+                  
+                    //});
                 });
             });
 
@@ -185,9 +202,10 @@ export class FieldsHelper {
         });
     }
 
+
     WaitByCssAndClick_SelectItemFromList(className: string, index: number) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.css(className))), 10000000).then(a => {
+        browser.wait(EC.visibilityOf(element(by.css(className))), 100000).then(a => {
             var shipment = element(by.css(className)).all(by.tagName('li'));
             shipment.get(index).click();
         });
@@ -195,7 +213,7 @@ export class FieldsHelper {
 
     WaitByCssAndClick_FromTagInsideList(className: string, index: number) {// the item exists in a tag inside li
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.css(className))), 500000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.css(className))), 100000).then(a => {
             element.all(by.css(className)).get(index).click();
         });
     }
@@ -209,7 +227,7 @@ export class FieldsHelper {
 
     public ButtonClick(BtnId: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.id(BtnId))), 100000000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.id(BtnId))), 100000).then(a => {
             var button = element(by.id(BtnId)).click();
             console.log("Button Clicked");
         });

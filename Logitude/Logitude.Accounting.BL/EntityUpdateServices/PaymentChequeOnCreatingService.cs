@@ -115,8 +115,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             return myLoggedUserId;
-        }
 
+
+            
+        }
         public virtual DateTime GetCurrentDateTime(int tenant)
         {
             return TenantServerConfigration.GetCurrentDateTime(tenant);

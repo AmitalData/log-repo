@@ -952,7 +952,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             int tenant = theEntityPm.Tenant;
             ARPaymentChequePM arPaymentcheque = new ARPaymentChequePM();
-            if (setApproved)
+            if (setApproved || theEntityPm.IsExternalEntity)
             {
                 if (tenantPOCO != null && tenantPOCO.AccountingActivated)
                 {
@@ -1140,7 +1140,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         AccountingEntityId = r.ARInvoiceId,
                         LocalAmountToReconcile = Convert.ToDecimal(r.LocalAmount.GetValueOrDefault()),
                         ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()),
-                        ForeignCurrencyIdReconcile = r.ForeignCurrencyId
+                        ForeignCurrencyIdReconcile = r.ForeignCurrencyId,
+                        JournalId = journal.Id,
+                      
                     };
                     AutoReconcileRecordList.Add(item);
                 }

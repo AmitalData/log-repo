@@ -1,12 +1,13 @@
 /// <reference path="../infrastructure/components/logitudecomponents/basecomponent.ts" />
 import {Component, OnInit, Output, EventEmitter,AfterViewInit} from '@angular/core';
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
-import {} from "@angular/platform-browser/src/dom";
+import { } from "@angular/platform-browser/src/dom";
+
 @Component({
     selector: 'ComboBoxWithInCheckBox',
     moduleId: module.id,
     templateUrl: './ComboBoxWithInCheckBox.html',
-    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'WithinImage','SelectionType','CheckBoxOnly'],
+    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'WithinImage', 'SelectionType', 'CheckBoxOnly', 'IsAreasMenu'],
 })
 
 export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
@@ -37,6 +38,8 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     @Output() EditedItemSource: EventEmitter<any> = new EventEmitter();
     public CheckSource: Array<boolean>;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsAreasMenu: boolean = false;
+    public SearchAreasId: string = "SearchAreasId";
     constructor() {
         this.ItemsSource = [];
        
@@ -52,7 +55,10 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
             this.DropdownId = "Dropdown_" + idIndex;
             this.ListControlId = "List_" + idIndex;
         }
+
+        this.SearchAreasId += this.CurrentSession.GetNewId("SearchAreasId_1");
     }
+
     ngAfterViewInit() {
        
 
@@ -120,8 +126,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
             this.SetDisplayText();
         }
     }
-
-
+    
     clickItem(item: any, index: any) {
         if (this.CheckSource == null) {
             if (this.ItemsSource != null) {
@@ -177,7 +182,6 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
 
     }
 
-
     ComboBoxClicked() {
         var item = document.getElementById(this.ControlId);
         if (item != null) {
@@ -211,9 +215,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         this.SelectedItemChanged.emit(this.SelectedItem);
 
 
-    }
-
- 
+    } 
 
     ItemClicked(clickedItem: any) {
         if (this.CheckSource == null) {
@@ -255,4 +257,60 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         }
     }
 
+    ClearPlaceHolder() {
+        var temp = document.getElementById(this.SearchAreasId) as HTMLInputElement;
+        temp.placeholder = "";
+        temp.style.background = "rgba(0, 0, 0, 0)";
+        //var ToggleBTN = document.getElementById(this.SearchProductDropButtonCustomerId) as HTMLDivElement;
+        //ToggleBTN.className = "ToggleButtonMenuTemp";
+    }
+    FillPlaceHolder() {
+        if (!this.SearchText) {
+            var temp = document.getElementById(this.SearchAreasId) as HTMLInputElement;
+            temp.placeholder = "Search";
+            temp.style.background = "url(Images/Search.png) no-repeat scroll";
+            temp.style.backgroundPosition = "right center";
+            temp.style.paddingRight = "30px";
+        }
+        //var ToggleBTN = document.getElementById(this.SearchProductDropButtonCustomerId) as HTMLDivElement;
+        //ToggleBTN.className = "ToggleButtonMenu";
+    }
+    OnDeleteValue() {
+        var temp = document.getElementById(this.SearchAreasId) as HTMLInputElement;
+        temp.value = null;
+        this.SearchText = null;
+        temp.focus();
+    }
+
+    private searchText: string;
+    public get SearchText() { return this.searchText; }
+    public set SearchText(value: string) {
+        if (this.searchText != value) {
+            this.searchText = value;
+            //this.FillList();
+            //this.CD.detectChanges();
+        }
+    }
+
+    //private FillList() {
+    //    var temp: FieldsTranslationsItem[] = [];
+
+    //    if (AppTool.IsNullOrEmpty(this.SearchText)) {
+    //        this.list.forEach((item) => {
+    //            temp.push(new FieldsTranslationsItem(item, this));
+    //        })
+    //    }
+
+    //    else {
+    //        this.list.filter(d => !AppTool.IsNullOrEmpty(d.DefaultText) && d.DefaultText.toUpperCase().startsWith(this.SearchText.toUpperCase())
+    //            || !AppTool.IsNullOrEmpty(d.TranslatedText) && d.TranslatedText.toUpperCase().startsWith(this.SearchText.toUpperCase())
+    //            || !AppTool.IsNullOrEmpty(d.Code) && d.Code.toUpperCase().startsWith(this.SearchText.toUpperCase()))
+    //            .forEach((item) => {
+    //                temp.push(new FieldsTranslationsItem(item, this));
+    //            });
+    //    }
+
+    //    this.TabsList.InsertCollection(temp);
+    //    this.CountText = this.TabsList.Length;
+    //}
 }

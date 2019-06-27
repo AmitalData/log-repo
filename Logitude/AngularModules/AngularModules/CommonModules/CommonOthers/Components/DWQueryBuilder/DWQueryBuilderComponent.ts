@@ -474,7 +474,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         if (this.SelectedItem && myCurrentItem && myCurrentItem.length == 0) {
             if (this.SelectedItem.Code == '[Full Date]') {
                 this.SelectedItem.ParentDataTypeCode = "LookUp";
-                this.SelectedItem.DataTypeCode = "DateTime";
+                this.SelectedItem.DataTypeCode = "Date";
                 this.SelectedItem.HasTree = true;
             }
             if (this.SelectedItem.Name == 'Full Date') {
@@ -527,8 +527,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
         if (view.DWObjectTableCode.indexOf("DIM_") != -1) {
             //view.ParentDataTypeCode = "LookUp";
             if (view.Code == '[Full Date]') {
-                view.ParentDataTypeCode = "DateTime";
-                view.DataTypeCode = "DateTime";
+                view.ParentDataTypeCode = "Date";
+                view.DataTypeCode = "Date";
                 view.HasTree = true;
             }
             else {
@@ -1160,8 +1160,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 if (field.DWObjectTableCode && field.DWObjectTableCode.indexOf("DIM_") != -1) {
 
                     if (view.Code == '[Full Date]') {
-                        view.ParentDataTypeCode = "DateTime";
-                        view.DataTypeCode = "DateTime";
+                        view.ParentDataTypeCode = "Date";
+                        view.DataTypeCode = "Date";
                     }
                     else {
                         view.ParentDataTypeCode = "LookUp";
@@ -1742,7 +1742,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                 var view = new DWObjectFieldsDetails(field, this.MyParentClass);
                                 if (field.Code == '[Full Date]') {
                                     view.ParentDataTypeCode = field.DataTypeCode;
-                                    view.DataTypeCode = "DateTime";
+                                    view.DataTypeCode = "Date";
                                 }
                                 else {
                                     view.ParentDataTypeCode = DWObjectField.DataTypeCode;

@@ -17,6 +17,7 @@ export class NewARInvoice {
         this.Helper.WaitByIdAndFill('ARInvoice_BillToId', BillToName);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
         this.Helper.WaitBusyIndicator();
+        this.Helper.WaitByIdAndFill('ARInvoice_CustomerRef', 'Refrence');
         //browser.sleep(5000);
         this.Helper.WaitByIdAndFill('ARInvoice_InvoiceCurrencyId', 'NIS');
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
