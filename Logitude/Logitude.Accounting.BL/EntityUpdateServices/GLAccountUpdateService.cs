@@ -248,6 +248,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
 
+            if (String.IsNullOrWhiteSpace(entityPM.DeductionTypeId) && !String.IsNullOrWhiteSpace(entityPM.DeductionTypeCode))
+            {
+                AccountingCompanyTypeQueryService queryService = new AccountingCompanyTypeQueryService(entityPM.Tenant);
+                AccountingCompanyTypePM ctype = queryService.GetByCode(entityPM.DeductionTypeCode, entityPM.Tenant);
+                if (ctype != null)
+                {
+                    entityPM.DeductionTypeId = ctype.Id;
+                    if (!String.IsNullOrWhiteSpace(ctype.LocalName))
+                    {
+                        entityPM.DeductionTypeName = ctype.LocalName;
+                    }
+                    {
+                        entityPM.DeductionTypeName = ctype.EnglishName;
+                    }
+                }
+            }
+
+
+
             if (String.IsNullOrWhiteSpace(entityPM.AssessingOfficeCode) && !String.IsNullOrWhiteSpace(entityPM.AssessingOfficeNumber))
             {
                 TaxWithholdingAssessOfficeQueryService queryService = new TaxWithholdingAssessOfficeQueryService(entityPM.Tenant);
