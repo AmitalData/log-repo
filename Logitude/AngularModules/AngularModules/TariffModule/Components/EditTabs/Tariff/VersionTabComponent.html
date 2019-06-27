@@ -168,7 +168,8 @@
                                                         (SelectedItemChanged)="item.OriginPort = $event"
                                                         [DisplayMemberPath]="'Code'"
                                                         [FocusOnMe]="'true'"
-                                                        [SelectedValue]="item.OriginPortId">
+                                                        [SelectedValue]="item.OriginPortId"
+                                                        [DependencyFilter1Value]="'A'">
                                                 </LogLov>
 
                                             </div>
@@ -190,7 +191,8 @@
                                                         (SelectedItemChanged)="item.DestinationPort = $event"
                                                         [DisplayMemberPath]="'Code'"
                                                         [FocusOnMe]="'true'"
-                                                        [SelectedValue]="item.DestinationPortId">
+                                                        [SelectedValue]="item.DestinationPortId"
+                                                        [DependencyFilter1Value]="'A'">
                                                 </LogLov>
 
                                             </div>
