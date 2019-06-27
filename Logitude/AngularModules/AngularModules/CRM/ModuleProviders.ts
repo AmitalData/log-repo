@@ -53,7 +53,6 @@ import { OccasionTypeListService } from './Services/StandardLists/OccasionTypeLi
 import { OccasionStatusListService } from './Services/StandardLists/OccasionStatusListService';
 import { OccasionTypePMService } from './Services/StandardPMs/OccasionTypePMService';
 
-
 // Menu Buttons 
 import {TicketMenuButtonsHandler} from './Components/MenuButtons/TicketMenuButtonsHandler';
 import {ActivityMenuButtonsHandler} from './Components/MenuButtons/ActivityMenuButtonsHandler';
@@ -129,7 +128,7 @@ export class ModuleProviders {
             case "TicketMenuButtonsHandler": { myResult = new TicketMenuButtonsHandler(); break; }
             case "ActivityMenuButtonsHandler": { myResult = new ActivityMenuButtonsHandler(); break; }
             case "OpportunityMenuButtonsHandler": { myResult = new OpportunityMenuButtonsHandler(); break; }
-
+            case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
                 
         }
 

@@ -38,6 +38,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private Contact loggedContact;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
         private AirlineAreaRepository airlineArearepository;
+        private AirlineAreasPortRepository airlineAreasPortrepository;
 
         private ICommonDataContext objectContext;
         private AirlineRepository entityRepository;
@@ -55,6 +56,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.cardQuery = new CardQuery(cardRepository);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
             this.airlineArearepository = new AirlineAreaRepository(objectContext);
+            this.airlineAreasPortrepository = new AirlineAreasPortRepository(objectContext);
             this.GetLoggedContact();
         }
 
@@ -75,6 +77,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void SetChangeSet(List<AirlineAreaPM> airlineAreaChangeSet)
         {
             this.airlineAreaChangeSet = airlineAreaChangeSet;
+        }
+
+
+
+        private List<AirlineAreasPortPM> airlineAreasPortChangeSet;
+        public void SetChangeSet(List<AirlineAreasPortPM> airlineAreasPortChangeSet)
+        {
+            this.airlineAreasPortChangeSet = airlineAreasPortChangeSet;
         }
 
         public void Create(AirlinePM entityPM)
@@ -374,6 +384,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 foreach (AirlineAreaPM itemPM in airlineAreaChangeSet)
                 {
+                    this.SetChangeSet(itemPM.AirlineAreasPorts);
+                    this.UpdateAirlineAreasPortCollection();
+
                     switch (itemPM.ChangeSetOp)
                     {
                         case ChangeSetOperation.Insert:
@@ -391,6 +404,42 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         case ChangeSetOperation.Delete:
                             {
                                 this.DeleteAirlineArea(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+
+
+
+
+        private void UpdateAirlineAreasPortCollection()
+        {
+            if (airlineAreasPortChangeSet != null)
+            {
+                foreach (AirlineAreasPortPM itemPM in airlineAreasPortChangeSet)
+                {
+
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateAirlineAreasPort(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateAirlineAreasPort(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteAirlineAreasPort(itemPM);
                                 break;
                             }
 
@@ -451,9 +500,37 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
 
 
+
+        private void CreateAirlineAreasPort(AirlineAreasPortPM itemPM)
+        {
+            itemPM.Id = IdCounter.GetNumber("AirlineAreasPort", tenant).ToString();
+            itemPM.AirlineAreaId = itemPM.AirlineAreaId;
+            itemPM.Tenant = tenant;
+            itemPM.AddedByUserId = loggedContact.Id;
+
+            AirlineAreasPort itemPoco = new AirlineAreasPort()
+            {
+                Id = itemPM.Id,
+                AirlineAreaId = itemPM.AirlineAreaId,
+                Tenant = tenant,
+                Name = itemPM.Name,
+                AddedDate=itemPM.AddedDate,
+                PortId=itemPM.PortId,
+                AddedByUserId=itemPM.AddedByUserId,
+            };
+
+            AirlineAreasPortMapping.MapEntity(itemPM, itemPoco, true);
+            airlineAreasPortrepository.Add(itemPoco);
+        }
+
+
+
+
+
         private void UpdateCardExternalCodeByCurrency(CardExternalCodeByCurrencyPM itemPM)
         {
             CardExternalCodeByCurrency itemPoco = cardExternalCodeByCurrencyRepository.GetSingleCardExternalCodeByCurrency(itemPM.Id, tenant);
+          
             CardExternalCodeByCurrencyMapping.MapEntity(itemPM, itemPoco, false);
 
             cardExternalCodeByCurrencyRepository.Update(itemPoco);
@@ -462,6 +539,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void UpdateAirlineArea(AirlineAreaPM itemPM)
         {
             AirlineArea itemPoco = airlineArearepository.GetSingleAirlineArea(itemPM.Id, tenant);
+            itemPM.UpdatedByUserId = loggedContact.Id;
+            itemPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
             AirlineAreaMapping.MapEntity(itemPM, itemPoco, false);
             airlineArearepository.Update(itemPoco);
         }
@@ -472,6 +552,25 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (itemPoco != null)
             {
                 airlineArearepository.Remove(itemPoco);
+            }
+        }
+
+
+
+        private void UpdateAirlineAreasPort(AirlineAreasPortPM itemPM)
+        {
+            AirlineAreasPort itemPoco = airlineAreasPortrepository.GetSingleAirlineAreasPort(itemPM.Id, tenant);
+
+            AirlineAreasPortMapping.MapEntity(itemPM, itemPoco, false);
+            airlineAreasPortrepository.Update(itemPoco);
+        }
+
+        private void DeleteAirlineAreasPort(AirlineAreasPortPM itemPM)
+        {
+            AirlineAreasPort itemPoco = airlineAreasPortrepository.GetSingleAirlineAreasPort(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                airlineAreasPortrepository.Remove(itemPoco);
             }
         }
 

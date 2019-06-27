@@ -88,6 +88,7 @@ import { TariffTypeListService } from '../../TariffModule/Services/StandardLists
 
 //Occasions
 import { OccasionStatusListService } from '../../CRM/Services/StandardLists/OccasionStatusListService';
+import { OccasionTypeListService } from '../../CRM/Services/StandardLists/OccasionTypeListService';
 
 
 export class CachedDataManagerServices {
@@ -189,7 +190,7 @@ export class CachedDataManagerServices {
             case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }
             case "TariffListService": { myResult = new TariffListService(); break; }               
             case "TariffTypeListService": { myResult = new TariffTypeListService(); break; }
-                
+            case "OccasionTypeListService": { myResult = new OccasionTypeListService(); break; }
             default: {
                 alert(name + " is not declared in CachedDataManagerServices");
                 break;

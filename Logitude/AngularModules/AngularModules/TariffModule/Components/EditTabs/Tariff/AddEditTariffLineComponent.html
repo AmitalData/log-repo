@@ -23,7 +23,8 @@
                                 [DataContext]="DataContext"
                                 (SelectedItemChanged)="DataContext.OriginPort = $event"
                                 [DisplayMemberPath]="'Code'"
-                                [SelectedValue]="DataContext.OriginPortId">
+                                [SelectedValue]="DataContext.OriginPortId"
+                                [DependencyFilter1Value]="'A'">
                         </LogLov>
                     </td>
 
@@ -53,7 +54,8 @@
                                 [DisplayMemberPath]="'Code'"
                                 [DataContext]="DataContext"
                                 (SelectedItemChanged)="DataContext.DestinationPort = $event"
-                                [SelectedValue]="DataContext.DestinationPortId">
+                                [SelectedValue]="DataContext.DestinationPortId"
+                                [DependencyFilter1Value]="'A'">
                         </LogLov>
                     </td>
 

@@ -750,7 +750,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 for (int i = 0; i < sheet.Columns.Count() - 1; i++)
                 {
-                    rowData[i] = row.Cells[i].Value2.ToString();
+                    if (row.Cells[i].HasFormula)
+                    {
+                        rowData[i] = row.Cells[i].FormulaNumberValue.ToString();
+                    }
+                    else
+                    {
+                        rowData[i] = row.Cells[i].Value2.ToString();
+                    }
                 }
 
                 Port fromPort = this.GetPortDetails(rowData[0], tenant);
@@ -919,7 +926,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 for (int i = 0; i < sheet.Columns.Count() - 1; i++)
                 {
-                    rowData[i] = row.Cells[i].Value2.ToString();
+                    if (row.Cells[i].HasFormula)
+                    {
+                        rowData[i] = row.Cells[i].FormulaNumberValue.ToString();
+                    }
+                    else
+                    {
+                        rowData[i] = row.Cells[i].Value2.ToString();
+                    }
                 }
 
                 Port fromPort = this.GetPortDetails(rowData[0], tenant);
