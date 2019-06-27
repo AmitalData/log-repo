@@ -1,4 +1,5 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
+const HtmlReporter = require('protractor-beautiful-reporter');
 
 exports.config = {
   allScriptsTimeout: 990000,
@@ -18,9 +19,15 @@ exports.config = {
       TransportMode: null,
       ShipmentType: null,
       },
+      ReportDoc: {
+          ScenarioType: null,
+
+      },
       FullAccount: {
           FullAccountingType:null,
       }
+
+
   },
   capabilities: {
     'browserName': 'chrome',
@@ -95,9 +102,15 @@ exports.config = {
           browser.params.Login.Email = "ahmadb@test.com";
           browser.params.Login.Password = "ahmed!A123";
       }
+      else if (browser.params.Env == "test_1109") {
+          browser.params.Link = "https://test.logitudeworld.com/test";
+          browser.params.Login.Email = "sumaya@automation.com";
+          browser.params.Login.Password = "Sg0592463934!";
+      }
       
 
-    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+      jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+      jasmine.getEnv().addReporter(new HtmlReporter({ baseDirectory: 'D:/Automation E2E reuslts/E2E report result' }).getJasmine2Reporter());
   },
 
   suites: {
@@ -108,8 +121,8 @@ exports.config = {
     //  CRM: 'e2e/CRM/**/CRMModule-spec.ts',
     //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
 
-    //NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
-     // NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
+    NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+      NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
     //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
 
     //EditTabs: 'e2e/Operations/Shipments/EditEntity/**/EditShipmentTabs.e2e-spec.ts',
@@ -122,16 +135,17 @@ exports.config = {
     // APInvoice: 'e2e/FullAccounting/APInvoice/**/APInvoice-spec.ts',
     
     
-    //ARPayment: 'FullAccounting/ARPayment/**/ARPayment-spec.ts',
+    
 
     //GLAccount: 'FullAccounting/**/GLAccounts/GlAccount-spec.ts',
 
 
     //*************Report******************* */
+     
      Reports: 'e2e/Report/**/Report-spec.ts',
 
     //*************DocOutTab************** */
-   // DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
+    DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
 
 
   },

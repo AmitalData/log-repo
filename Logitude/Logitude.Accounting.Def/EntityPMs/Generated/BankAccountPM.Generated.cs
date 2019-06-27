@@ -756,6 +756,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool isBankPageEvent ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsBankPageEvent  
+	   {
+	    
+	     get
+		{
+		   return isBankPageEvent;
+		 }
+		 set
+		 {
+		   if(isBankPageEvent != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsBankPageEvent",OldValue=isBankPageEvent,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isBankPageEvent=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

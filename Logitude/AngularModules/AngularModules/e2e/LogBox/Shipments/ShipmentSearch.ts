@@ -18,7 +18,7 @@ export class ShipmentSearch {
    QuickSearch() {
 
        this.LogboxTab.GoToMainMenu('General.MH.Importers');
-       browser.sleep(3000);
+       this.helper.WaitBusyIndicator();
       // this.helper.WaitByCssStringAndClick('Counter',' Agent Shipments'); 
      //var shipmentsTab = this.Helper.WaitByCssAndClick_SelectItemFromList('.PagesMenu', 1);
       

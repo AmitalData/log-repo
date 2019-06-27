@@ -148,9 +148,7 @@ export class TariffTabsContentComponent implements OnDestroy {
                             this.SelectedTabItem.IsTabLoaded = true;
 
                             if (this.SelectedTabItem.Code == this.EditTabTariffType) {
-                                if (this.EditTabTariffType == "SVR") {
-                                    cmpRef.instance.GetAllChargesTypes();
-                                }
+                                
                                 cmpRef.instance.Intialize({ CurrentVersion: this.SelectedTabItem.SelectedVersion, });
                             }
                         });

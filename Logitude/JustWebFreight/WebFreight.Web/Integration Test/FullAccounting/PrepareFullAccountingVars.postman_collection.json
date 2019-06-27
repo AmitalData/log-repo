@@ -11,9 +11,9 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4e12b796-68a9-4d2c-a05b-bb8bee5fccc6",
+						"id": "a918d90f-384d-49bc-8fb2-10ac0a489b87",
 						"exec": [
-							"pm.test(\"logged successfuly \", function () {",
+							"pm.test(\"logged successfuly\", function () {",
 							"    pm.response.to.have.status(200);",
 							"    var idvalue1 = (pm.response.json().Token);",
 							"    var idvalue2 = (pm.response.json().CurrentTenant);",
@@ -29,14 +29,10 @@
 							"    pm.environment.set(\"CurrentTenant\",idvalue2);",
 							"    pm.environment.set(\"LoggedUserId\",idvalue3);",
 							"   ",
-							"    ",
+							"   pm.environment.set(\"RandomNum\", _.random(1,50));",
 							"    tests[\"BodyCointainsTokenKey : \" + id1exist] = responseBody.has(id1exist);",
-							"if(!id1exist){",
-							"    postman.setNextRequest(null);",
-							"}",
-							"else{",
-							"     postman.setNextRequest(\"GetFullAccountingSettings\");",
-							"}",
+							"",
+							"    postman.setNextRequest(\"GetFullAccountingSettings\");",
 							"",
 							"",
 							"});"
@@ -50,31 +46,31 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"Email\":\"lana@logitudeworld.com\",\"Password\":\"lanoosh188<3\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":55} "
+					"raw": "{\"Email\":\"khawla@logitudeworldglobal.com\",\"Password\":\"0597485181@kh\",\"IsUser\":true,\"GetToken\":true,\"ClientType\":\"Web\",\"Tenant\":1095}"
 				},
 				"url": {
-					"raw": "https://cloud.amital.co.il/api/authentication?tenant=55",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/authentication?tenant=1095",
+					"protocol": "http",
 					"host": [
-						"cloud",
-						"amital",
-						"co",
-						"il"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"authentication"
 					],
 					"query": [
 						{
 							"key": "tenant",
-							"value": "55"
+							"value": "1095"
 						}
 					]
 				}
@@ -92,11 +88,11 @@
 							"pm.test(\"GetFullAccountingSettings\", function () {",
 							"  pm.response.to.have.status(200);",
 							"  var idvalue1 = (pm.response.json().AccountingActivated);",
+							"  var idvalue2= (pm.response.json().VendorControlAccountId);",
 							"  var id1exist = idvalue1 !== null;",
 							"  var id1exist2= idvalue1 === true ;",
 							"  pm.environment.set(\"AccountingActivated\",idvalue1);",
-							"  ",
-							" ",
+							"  pm.environment.set(\"VendorControlAccountId\",idvalue2);  ",
 							"  if (!id1exist2){",
 							"       //throw new Error('NOt FUll Accounting Tenant');",
 							"         tests[\"Is Full Accounting Tenant :\" + false] = ( true );",
@@ -109,7 +105,7 @@
 							"  else{",
 							" // tests[\"Full Accounting Tenant : \" + true ] = ( true );",
 							"  tests[\"Is Full Accounting Tenant :\" +  true] = ( true );",
-							"  postman.setNextRequest(\"GEtAccounntingPeriods\");",
+							"  postman.setNextRequest(\"Get Chreonological Settings \");",
 							" ",
 							"}",
 							"});"
@@ -139,15 +135,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://cloud.amital.co.il/api/fullaccountingsettings/getsingle?id={{CurrentTenant}}&token={{Token}}",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/fullaccountingsettings/getsingle?id={{CurrentTenant}}&token={{Token}}",
+					"protocol": "http",
 					"host": [
-						"cloud",
-						"amital",
-						"co",
-						"il"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"fullaccountingsettings",
 						"getsingle"
@@ -160,6 +156,87 @@
 						{
 							"key": "token",
 							"value": "{{Token}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Chreonological Settings ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7def5c7a-3dfe-4880-bb6e-232afd2c1ef0",
+						"exec": [
+							"",
+							"pm.test(\"Get Chreonological Settings\", function () {",
+							"  pm.response.to.have.status(200);",
+							"  var idvalue1 = pm.response.json().IsARInvoiceChronologicalDates;",
+							"  var idvalue2 = pm.response.json().IsARPaymentChronologicalDates;",
+							"",
+							" ",
+							"  var id1exist3= idvalue1 === true ;",
+							"  var id1exist4= idvalue2 === true ;",
+							"  ",
+							"  ",
+							"  pm.environment.set(\"AccountingActivated\",idvalue1);",
+							"  ",
+							" ",
+							"  if (!id1exist4 && !id1exist3 ){",
+							"       //throw new Error('NOt FUll Accounting Tenant');",
+							"         tests[\"Chronolical check activated  :\" + false] = ( true );",
+							"         postman.setNextRequest(\"GEtAccounntingPeriods\");",
+							"        ",
+							" ",
+							"         ",
+							"          ",
+							"",
+							"  }",
+							"  else{",
+							" // tests[\"Full Accounting Tenant : \" + true ] = ( true );",
+							"  tests[\"Chronolical check activated :\" +  true] = ( true );",
+							"   postman.setNextRequest(null);",
+							" ",
+							"}",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{Token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://test.logitudeworld.com/TEST/api/accountingsettings/getsingle?id={{CurrentTenant}}",
+					"protocol": "https",
+					"host": [
+						"test",
+						"logitudeworld",
+						"com"
+					],
+					"path": [
+						"TEST",
+						"api",
+						"accountingsettings",
+						"getsingle"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{CurrentTenant}}"
 						}
 					]
 				}
@@ -233,15 +310,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://cloud.amital.co.il/api/accountingperiodviews/getbyfilters?ForceCacheRefresh=false&GetAll=true",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/accountingperiodviews/getbyfilters?ForceCacheRefresh=false&GetAll=true",
+					"protocol": "http",
 					"host": [
-						"cloud",
-						"amital",
-						"co",
-						"il"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"accountingperiodviews",
 						"getbyfilters"
@@ -277,9 +354,6 @@
 						"id": "a0e2c436-b3dd-43cf-a794-48337972bf52",
 						"exec": [
 							"",
-							"",
-							"",
-							"",
 							"pm.test(\"GetAccountingCurriency\", function () {",
 							"    pm.response.to.have.status(200);",
 							"    var idvalue1 = (pm.response.json().CurrencyId);",
@@ -313,15 +387,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://cloud.amital.co.il/api/tenants/getsingle?id={{CurrentTenant}}",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/tenants/getsingle?id={{CurrentTenant}}",
+					"protocol": "http",
 					"host": [
-						"cloud",
-						"amital",
-						"co",
-						"il"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"tenants",
 						"getsingle"
@@ -369,15 +443,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://cloud.amital.co.il/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/currencyviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&GetCount=true&PageIndex=0&PageSize=23",
+					"protocol": "http",
 					"host": [
-						"cloud",
-						"amital",
-						"co",
-						"il"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"currencyviews",
 						"getbyfilters"
@@ -460,15 +534,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://cloud.amital.co.il/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22\n\n",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/countryviews/getbyfilters?Filter1Name=Code&Filter1Operator=equals&Filter1Value=AX&PageSize=22\n\n",
+					"protocol": "http",
 					"host": [
-						"cloud",
-						"amital",
-						"co",
-						"il"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"countryviews",
 						"getbyfilters"
@@ -538,20 +612,28 @@
 					}
 				],
 				"url": {
-					"raw": "https://cloud.amital.co.il/api/vattypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=EXMPT&PageIndex=0&PageSize=23",
+					"raw": "https://test.logitudeworld.com/TEST/api/vattypeviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=EPT&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n",
 					"protocol": "https",
 					"host": [
-						"cloud",
-						"amital",
-						"co",
-						"il"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"TEST",
 						"api",
 						"vattypeviews",
 						"getbyfilters"
 					],
 					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
 						{
 							"key": "Filter1Name",
 							"value": "SearchFields"
@@ -562,7 +644,11 @@
 						},
 						{
 							"key": "Filter1Value",
-							"value": "EXMPT"
+							"value": "EPT"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
 						},
 						{
 							"key": "PageIndex",
@@ -571,6 +657,22 @@
 						{
 							"key": "PageSize",
 							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": ""
+						},
+						{
+							"key": "SortDirection",
+							"value": ""
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22EPT%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n"
+						},
+						{
+							"key": null,
+							"value": null
 						},
 						{
 							"key": null,
@@ -628,18 +730,18 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \r\n   \"Tenant\":\"{{CurrentTenant}}\",\r\n   \"IsSecured\":false,\r\n   \"Code\":\"EPT\",\r\n   \"EnglishName\":\"Exempt\",\r\n   \"LocalName\":\"f\",\r\n   \"SearchFields\":\"EXMPT\",\r\n   \"NewEntityPercentage\":0.0,\r\n   \"NewEntityPercentageDate\":\"2019-06-18T00:00:00Z\",\r\n  \r\n   \"VatTypePercentages\":[\r\n      {\r\n        \r\n         \"Tenant\":0,\r\n         \"VatTypeId\":\"1-3465\",\r\n         \"FromDate\":\"2019-06-18T00:00:00Z\",\r\n         \"Percentage\":0.0,\r\n         \"ChangeSetOp\":0\r\n      }\r\n   ]\r\n  \r\n}"
+					"raw": "{\r\n   \r\n   \"Tenant\":\"{{CurrentTenant}}\",\r\n   \"IsSecured\":false,\r\n   \"Code\":\"EPT\",\r\n   \"EnglishName\":\"Exempt\",\r\n   \"LocalName\":\"f\",\r\n   \"SearchFields\":\"EPT\",\r\n   \"NewEntityPercentage\":0.0,\r\n   \"NewEntityPercentageDate\":\"2019-06-18T00:00:00Z\",\r\n  \r\n   \"VatTypePercentages\":[\r\n      {\r\n        \r\n         \"Tenant\":0,\r\n         \"VatTypeId\":\"1-3465\",\r\n         \"FromDate\":\"2019-06-18T00:00:00Z\",\r\n         \"Percentage\":0.0,\r\n         \"ChangeSetOp\":0\r\n      }\r\n   ]\r\n  \r\n}"
 				},
 				"url": {
-					"raw": "https://cloud.amital.co.il/api/vattypes",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/vattypes",
+					"protocol": "http",
 					"host": [
-						"cloud",
-						"amital",
-						"co",
-						"il"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"vattypes"
 					]
@@ -690,15 +792,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://cloud.amital.co.il/api/paymenttermviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=cash&PageIndex=0&PageSize=23",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/paymenttermviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=cash&PageIndex=0&PageSize=23",
+					"protocol": "http",
 					"host": [
-						"cloud",
-						"amital",
-						"co",
-						"il"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"paymenttermviews",
 						"getbyfilters"
@@ -779,15 +881,15 @@
 					"raw": "{\r\n\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \r\n   \"EnglishName\":\"cash\",\r\n   \"LocalName\":\"cash local\",\r\n   \"Days\":0,\r\n   \"InActive\":false,\r\n   \"DisplayInLOV\":true,\r\n   \"SearchFields\":null,\r\n   \"IsManuallySet\":false,\r\n   \"CurrentMonth\":false,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
 				},
 				"url": {
-					"raw": "https://cloud.amital.co.il/api/paymentterms",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/paymentterms",
+					"protocol": "http",
 					"host": [
-						"cloud",
-						"amital",
-						"co",
-						"il"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"paymentterms"
 					]
@@ -837,15 +939,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://cloud.amital.co.il/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23\n",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/accountingpaymentmethodviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cash&GetCount=true&PageIndex=0&PageSize=23\n",
+					"protocol": "http",
 					"host": [
-						"cloud",
-						"amital",
-						"co",
-						"il"
+						"test",
+						"logitudeworld",
+						"com"
 					],
 					"path": [
+						"test",
 						"api",
 						"accountingpaymentmethodviews",
 						"getbyfilters"
@@ -940,18 +1042,29 @@
 					"raw": "{\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"IsSecured\":false,\r\n   \"EnglishName\":\"Cash\",\r\n   \"LocalName\":null,\r\n   \"FromDateTypeCode\":\"INV\"\r\n}"
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/paymentterms",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/paymentterms",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"paymentterms"
 					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetChronolgicalsettings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
 				}
 			},
 			"response": []
@@ -988,6 +1101,9 @@
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -995,23 +1111,41 @@
 						"key": "token",
 						"value": "{{Token}}",
 						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/branchviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main%20office&PageIndex=0&PageSize=23",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/branchviews/getbyfilters?ForceCacheRefresh=false&GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=main&GetCount=true&PageIndex=0&PageSize=23&SortBy=&SortDirection=&AdditionalFilters=[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"branchviews",
 						"getbyfilters"
 					],
 					"query": [
+						{
+							"key": "ForceCacheRefresh",
+							"value": "false"
+						},
+						{
+							"key": "GetAll",
+							"value": "false"
+						},
 						{
 							"key": "Filter1Name",
 							"value": "SearchFields"
@@ -1022,7 +1156,11 @@
 						},
 						{
 							"key": "Filter1Value",
-							"value": "main%20office"
+							"value": "main"
+						},
+						{
+							"key": "GetCount",
+							"value": "true"
 						},
 						{
 							"key": "PageIndex",
@@ -1031,6 +1169,22 @@
 						{
 							"key": "PageSize",
 							"value": "23"
+						},
+						{
+							"key": "SortBy",
+							"value": ""
+						},
+						{
+							"key": "SortDirection",
+							"value": ""
+						},
+						{
+							"key": "AdditionalFilters",
+							"value": "[{%22FieldName%22:%22SearchFields%22,%22FieldValue%22:%22main%22,%22FieldValue2%22:null,%22FieldValue3%22:null,%22Operator%22:%22Contains%22,%22IsCustom%22:false,%22DisplayInList%22:true,%22IsCustomField%22:false,%22FieldDataType%22:%22String%22,%22IgnoreFilter%22:false,%22IsCacheOnClient%22:false}]\n"
+						},
+						{
+							"key": null,
+							"value": null
 						},
 						{
 							"key": null,
@@ -1091,15 +1245,15 @@
 					"raw": "{\r\n\r\n\r\n   \"Tenant\":\"{{CurrentTenant}}\",\r\n   \r\n   \"EnglishName\":\"Main Office\",\r\n   \"LocalName\":\"Main Office\",\r\n  \r\n   \"InActive\":false,\r\n   \r\n   \"SearchFields\":\"test\",\r\n \r\n   \"IsHybrid\":false,\r\n   \"ExternalId\":null,\r\n   \"AddressId\":null,\r\n   \"Signature\":null,\r\n   \r\n   \"INTTRAContactId\":null,\r\n   \"CounterCode\":null\r\n}"
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/branches",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/branches",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"branches"
 					]
@@ -1150,15 +1304,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/chargestypeviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=air%20freight&GetCount=true&PageIndex=0&PageSize=23",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"chargestypeviews",
 						"getbyfilters"
@@ -1247,15 +1401,15 @@
 					"raw": "{\r\n   \"Tenant\":1064,\r\n  \r\n   \"Code\":\"AFT\",\r\n   \"EnglishName\":\"141\",\r\n   \"LocalName\":null,\r\n   \"ChargesGroupCode\":\"COMM\",\r\n   \"ChargesGroupId\":\"1-6036\",\r\n   \"MeasurementId\":\"1-29726\",\r\n   \"ContainerMeasurementId\":null,\r\n   \"Description\":null,\r\n   \"IsReceivable\":true,\r\n   \"IsPayable\":true,\r\n   \"IsAir\":true,\r\n   \"IsOcean\":true,\r\n   \"IsInland\":true,\r\n   \"IsAutoDisplayInShipment\":false,\r\n   \"IsAutoDisplayInConsolidation\":false,\r\n   \"IsAutoDisplayInQuote\":false,\r\n   \"DueTypeCode\":null,\r\n   \"IATACodeId\":null,\r\n   \"AWBPrintDescription\":true,\r\n   \"VatTypeId\":null,\r\n   \"ViewOrder\":100,\r\n  \r\n \r\n   \"IsCustoms\":false,\r\n   \"ComputedLocalName\":null,\r\n   \"AddedManually\":true,\r\n   \"InActive\":false,\r\n   \"MeasurementCode\":null,\r\n   \"MeasurementShortName\":null,\r\n   \"ContainerMeasurementCode\":null,\r\n   \"SearchFields\":\"11,11\",\r\n\r\n   \"PayableDebitGLAcountId\":null,\r\n   \"ReceivableCreditGLAccountId\":null,\r\n   \"IsExpense\":false\r\n ,\r\n  \r\n   \"IsExport\":true\r\n  \r\n}"
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/chargestypes",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/chargestypes",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"chargestypes"
 					]
@@ -1334,15 +1488,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCHV&PageSize=23 ",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCHV&PageSize=23 ",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"chartofaccountviews",
 						"getbyfilters"
@@ -1442,8 +1596,8 @@
 					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Code\": \"PMCHV\",\r\n    \"LocalName\": \"ספקים\",\r\n    \"Englishname\": \"PMVendorChart\",\r\n    \"TypeCode\": \"4\",\r\n    \"Inactive\": true,\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/chartofaccounts",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/chartofaccounts",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
@@ -1500,15 +1654,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCust&GetCount=true&PageIndex=0&PageSize=22\n",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/customerviews/getbyfilters?GetAll=true&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMCust&GetCount=true&PageIndex=0&PageSize=22\n",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"customerviews",
 						"getbyfilters"
@@ -1606,15 +1760,15 @@
 					"raw": "\r\n{\r\n  \"Tenant\":\"{{CurrentTenant}}\",\r\n \r\n  \"PartnerTypeId\": \"CS\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"PMCust\",\r\n    \"CountryId\": \"{{CountryId}}\"\r\n    \r\n    \r\n\r\n \r\n  \r\n  },\r\n \r\n  \"Customer\": {\r\n    \"$id\": \"3\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"PMCust\",\r\n    \"LocalName\": \"PMCust\",\r\n    \r\n    \r\n\r\n   \r\n   \r\n   \r\n    \"PartnerTypeId\": \"CS\",\r\n   \r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\",\r\n    \r\n\r\n    \r\n    \"IsCustomer\": true,\r\n    \"CustomerStatusCode\": \"ACT\",\r\n\r\n  \r\n    \"SetAsPotential\": false,\r\n    \r\n   \r\n    \"CustomerTenant\": 0\r\n  }\r\n\r\n}\r\n"
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/PartnersDomain",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/PartnersDomain",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"PartnersDomain"
 					]
@@ -1663,15 +1817,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMVend&GetCount=true&PageIndex=0&PageSize=22\n",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/vendorviews/getbyfilters?GetAll=false&Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMVend&GetCount=true&PageIndex=0&PageSize=22\n",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"vendorviews",
 						"getbyfilters"
@@ -1776,15 +1930,15 @@
 					"raw": "\r\n{\r\n  \"Tenant\":\"{{CurrentTenant}}\",\r\n \r\n  \"PartnerTypeId\": \"VD\",\r\n\r\n  \"Address\": {\r\n  \r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Description\": \"Main Address\",\r\n    \"City\": \"TEST\",\r\n    \r\n    \"AddressTypeId\": \"M\",\r\n    \r\n    \"Name\": \"PMVend\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \r\n    \r\n    \r\n    \"SearchFields\": \"PMVend,PMVend,PMVend\"\r\n \r\n  \r\n  },\r\n \r\n  \"Vendor\": {\r\n   \r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"IsSecured\": false,\r\n  \r\n    \"EnglishName\": \"PMVend\",\r\n    \"LocalName\": \"PMVend\",\r\n    \r\n    \r\n\r\n   \r\n   \r\n   \r\n    \"PartnerTypeId\": \"VD\",\r\n   \r\n    \"CityName\": \"TEST\",\r\n    \"CountryId\": \"{{CountryId}}\",\r\n    \"CountryCode\": \"1 \",\r\n    \"CountryName\": \"palestine\"\r\n  }\r\n\r\n \r\n    \r\n   \r\n  \r\n\r\n}\r\n"
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/PartnersDomain",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/PartnersDomain",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"PartnersDomain"
 					]
@@ -1839,15 +1993,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMGLCust&PageSize=23",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMGLCust&PageSize=23",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"glaccountviews",
 						"getbyfilters"
@@ -1946,15 +2100,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cust1&PageSize=23 ",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/chartofaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=Cust1&PageSize=23 ",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"chartofaccountviews",
 						"getbyfilters"
@@ -2054,8 +2208,8 @@
 					"raw": "   {\r\n   \t\"$id\": \"1\",\r\n    \"Tenant\": \"{{CurrentTenant}}\",\r\n    \"Code\": \"Cust1\",\r\n    \"LocalName\": \"לקוחות\",\r\n    \"Englishname\": \"PMCustomerChart\",\r\n    \"TypeCode\": \"3\",\r\n    \"Inactive\": true,\r\n    \"SearchFields\": \"Cust1,לקוחות,CustomerChart\",\r\n    \"ChangeSetOp\": 1\r\n \r\n}\r\n"
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/test/api/chartofaccounts",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/chartofaccounts",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
@@ -2124,15 +2278,15 @@
 					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"AccountTypeCode\":\"2\",\r\n   \"DisplayNumber\":\"PMGLCust\",\r\n   \"LocalName\":\"CustGlAccountLocal\",\r\n   \"EnglishName\":\"CustGlAccountEnglish\",\r\n   \"SearchFields\":\"PMGLCust,PMGLCust,PMGLCust\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{ChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"3\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{CustomerId}}\"\r\n}"
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/glaccounts",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/glaccounts",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"glaccounts"
 					]
@@ -2157,12 +2311,15 @@
 							"   else {",
 							"    var idvalue =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].Id);",
 							"    var idvalue2 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].InternalNumber);",
+							"      var idvalue3 =(pm.response.json().Result.filter(a => a.DisplayNumber== 'PMGLVend')[0].ControlAccountId);",
+							"  ",
 							"    var idexist = idvalue !== null;",
 							"    pm.expect(idexist);",
 							"    ",
 							" if (idexist)  {",
 							"     pm.environment.set(\"VendorGLAccountId\",idvalue);",
 							"      pm.environment.set(\"InternalNumber\",idvalue2);",
+							"      pm.environment.set(\"ControlAccountId\",idvalue3); ",
 							"     tests[\"GlAccountExists : \" + true] = (true);",
 							"      postman.setNextRequest(\"GetCustomerAddress\"); ",
 							"    }",
@@ -2189,15 +2346,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMGLVend&PageSize=23",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/glaccountviews/getbyfilters?Filter1Name=SearchFields&Filter1Operator=Contains&Filter1Value=PMGLVend&PageSize=23",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"glaccountviews",
 						"getbyfilters"
@@ -2278,15 +2435,15 @@
 					"raw": "{  \r\n   \"$id\":\"1\",\r\n   \"Tenant\":{{CurrentTenant}},\r\n   \"AccountTypeCode\":\"3\",\r\n   \"DisplayNumber\":\"PMGLVend\",\r\n   \"LocalName\":\"VendGlAccountLocal\",\r\n   \"EnglishName\":\"VendGlAccountEnglish\",\r\n   \"SearchFields\":\"VendGl,VendGlAccountEnglish,VendGlAccountLocal\",\r\n   \"IsMultiCurrency\":true,\r\n   \"RevenueExpenseType\":\"3\",\r\n   \"ChartOfAccountsId\":\"{{VendorChartOfAccountId}}\",\r\n   \"ChartOfAccountsTypeCode\":\"4\",\r\n   \"ReconcileMethodCode\":\"0\",\r\n   \"NewGLAccountCardId\":\"{{VendorId}}\"\r\n}"
 				},
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/glaccounts",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/glaccounts",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"glaccounts"
 					]
@@ -2336,15 +2493,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/cardviews/getsingle/?id={{CustomerId}}\n",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/cardviews/getsingle/?id={{CustomerId}}\n",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"cardviews",
 						"getsingle",
@@ -2402,15 +2559,15 @@
 					}
 				],
 				"url": {
-					"raw": "https://test.logitudeworld.com/TEST/api/cardviews/getsingle/?id={{VendorId}}\n",
-					"protocol": "https",
+					"raw": "http://test.logitudeworld.com/test/api/cardviews/getsingle/?id={{VendorId}}\n",
+					"protocol": "http",
 					"host": [
 						"test",
 						"logitudeworld",
 						"com"
 					],
 					"path": [
-						"TEST",
+						"test",
 						"api",
 						"cardviews",
 						"getsingle",

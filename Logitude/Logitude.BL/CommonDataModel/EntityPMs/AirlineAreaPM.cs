@@ -18,20 +18,25 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public int Tenant { get; set; }
 
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string AirlineId { get; set; }
-
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Description { get; set; }
 
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string AirlineId { get; set; }
+
+        
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Name { get; set; }
 
+        [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? CreateDate { get; set; }
 
+        [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? UpdateDate { get; set; }
 
@@ -41,13 +46,21 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string UpdatedByUserId { get; set; }
 
+
+
+        [DataMember]
         public string CreatedByUserName { get; set; }
+        [DataMember]
         public string UpdatedByUserName { get; set; }
+
+        [DataMember]
+        public ChangeSetOperation ChangeSetOp { get; set; }
 
         private List<AirlineAreasPortPM> airlineAreasPorts;
         [Include]
-        [Association("AirlineAreasPortAirlineArea", "Id", "AirlineAreaId")]
+        [Association("AirlineAreasPortPM", "Id", "AirlineAreaId")]
         [Composition]
+        [DataMember]
         public virtual List<AirlineAreasPortPM> AirlineAreasPorts
         {
             get
