@@ -11,23 +11,27 @@ export class ReceivablesTabComponent {
     }
 
 
-    public RecievablesTab(shipmentType: string) {
+    public RecievablesTab(ShipmentLevelCode: string, shipmentType: string) {
         this.Helper.WaitByIdAndClick('Shipment.TH.Receivables');
         this.Helper.WaitBusyIndicator();
         // var EC = protractor.ExpectedConditions;
         // this.Helper.WaitByIdAndClick('Shipment_EstimateProfitInSelectedCurrency');
 
-        if (shipmentType == 'D' || shipmentType == 'H') {
-            // this.Helper.WaitByIdAndClick('ATDS-Receivable');//Generate Receivables 
+        if (ShipmentLevelCode == 'D' || ShipmentLevelCode == 'H') {
             // var InvoiceAmount: any;
-            this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD');
-            this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
+            this.Helper.WaitByIdAndClick('ATDS-Receivable');//Generate Receivables 
+            if (shipmentType == '') {
+                this.amount1 = this.AddReceivables('Air Frei', '10', '10', 'USD');
+                this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
+            } else if (shipmentType == 'FCL' || shipmentType == 'LCL') {
+                this.amount1 = this.AddReceivables('ocean', '10', '10', 'USD');
+                this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
+            } else {
+                this.amount1 = this.AddReceivables('Inland', '10', '10', 'USD');
+                this.amount2 = this.AddReceivables('Order', '10', '20', 'USD');
+            }
 
-            // browser.driver.sleep(5000);
             // expect(element(by.id('ReceivableAmount')).getAttribute('textContent')).toBe(this.amount1 + this.amount2);
-
-            this.Helper.WaitByIdAndClick('Shipment-Save');
-            this.Helper.WaitBusyIndicator();
             // this.AddARInvoice();
         }
         else if (shipmentType == 'M') {

@@ -30,7 +30,7 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             TariffVersionQueryService tariffVersionQueryService = new TariffVersionQueryService(context);
             entityPM.TariffVersions = tariffVersionQueryService.GetDraftVersion(tariffKeys, true);
-            entityPM.ActiveVersions = tariffVersionQueryService.GetActiveVersions(entityPM.Id, entityPM.Tenant);
+            entityPM.ActiveVersions = tariffVersionQueryService.GetActiveVersions(entityPM.Id, entityPM.Tenant, entityPM.TypeCode);
         }
 
         public TariffsSummary GetCount(int tenant)
@@ -227,11 +227,11 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                              TariffVersion = g.Key.Version,
                          }).ToList();
             }
-            
+
             List<Tariff> TariffList = this.repository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive).ToList();
             List<TariffVersion> TariffVersionList = this.repository.GetAllTariffVersionsByTariffIds(items.Select(p => p.tariffid).ToArray(), tenant).ToList();
             Dictionary<string, string> Currencies = myCommonContext.Currencies.Where(p => p.Tenant == tenant).ToDictionary(p => p.Id, p => p.Code);
-            
+
             foreach (Tariff result in TariffList)
             {
                 List<TariffResult> resultItems = items.Where(x => x.tariffid == result.Id && TariffVersionList.Where(a => a.Version == x.TariffVersion && a.TariffId == result.Id).FirstOrDefault() != null).ToList();
@@ -284,6 +284,15 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
             byte[] datainByte = storageservice.Read(fileInfo);
             return datainByte;
+        }
+
+        public int GetActiveTariffCountByTenantAndSeller(int tenant, string sellerId)
+        {
+            List<Tariff> query = new List<Tariff>();
+            query= (from a in context.Tariffs
+                                  where a.Tenant == tenant && a.SellerId == sellerId
+                                  select a).ToList();
+            return query.Count();
         }
     }
 

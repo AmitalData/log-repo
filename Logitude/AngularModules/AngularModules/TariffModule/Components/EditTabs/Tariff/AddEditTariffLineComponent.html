@@ -15,6 +15,7 @@
                     <td style="width:100px;">
                         <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
+
                     <td style="width:220px;">
                         <LogLov [ObjectFieldName]="'OriginPortId'"
                                 [ObjectTableName]="ObjectTableName"
@@ -25,11 +26,17 @@
                                 [SelectedValue]="DataContext.OriginPortId">
                         </LogLov>
                     </td>
-                    <td *ngIf="!DataContext.OriginPortId" style="width:50px; color:red">
-                        {{OriginPortText}}
-                    </td>
+
                     <td>
-                        <div></div>
+                        <div class="MediaFill">
+                            <table *ngIf="!DataContext.OriginPortId">
+                                <tr>
+                                    <td style="color:red; padding-left: 10px;">
+                                        {{OriginPortText}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </td>
                 </tr>
 
@@ -38,6 +45,7 @@
                     <td>
                         <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
+
                     <td>
                         <LogLov [ObjectFieldName]="'DestinationPortId'"
                                 [ObjectTableName]="ObjectTableName"
@@ -48,17 +56,53 @@
                                 [SelectedValue]="DataContext.DestinationPortId">
                         </LogLov>
                     </td>
-                    <td *ngIf="!DataContext.DestinationPortId" style="width:50px; color:red">
-                        {{DestinationPortText}}
+
+                    <td>
+                        <div class="MediaFill">
+                            <table *ngIf="!DataContext.DestinationPortId">
+                                <tr>
+                                    <td style="color:red; padding-left: 10px;">
+                                        {{DestinationPortText}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </td>
+                </tr>
+
+                <!-- StartDate -->
+                <tr class="FormFieldRow" *ngIf="TariffType == 'ASC'">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
                     <td>
                         <div></div>
                     </td>
                 </tr>
 
+                <!-- ExpirationDate -->
+                <!--<tr class="FormFieldRow" *ngIf="TariffType == 'ASC'">
+                    <td>
+                        <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
+
+                    <td>
+                        <LogDatePicker [ObjectFieldName]="'ExpirationDate'" [SelectedDateValue]="ExpirationDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>-->
+
                 <!-- Air Freight Cost-->
                 <tr *ngIf="TariffType == 'AFC'" style="height:1px;">
-                    <td colspan="4">
+                    <td colspan="3">
                         <table>
                             <!-- Min -->
                             <tr class="FormFieldRow">
@@ -209,7 +253,7 @@
 
                 <!-- Air Surcharges Cost-->
                 <tr *ngIf="TariffType == 'ASC'" style="height:1px;">
-                    <td colspan="4">
+                    <td colspan="3">
                         <table>
                             <!-- Surcharge1Price -->
                             <tr *ngIf="DataContext.FatherComponent.Surcharge1PriceVisibility" class="FormFieldRow">
@@ -379,7 +423,7 @@
                         <LogLabel [ObjectFieldName]="'Notes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td style="width: 220px; top:5px;">
+                    <td style="top:5px;">
                         <table>
                             <tr>
                                 <td style="width:230px;height:60px;">
@@ -390,10 +434,14 @@
                             </tr>
                         </table>
                     </td>
+
+                    <td>
+                        <div></div>
+                    </td>
                 </tr>
 
                 <tr>
-                    <td>
+                    <td colspan="3">
                         <div></div>
                     </td>
                 </tr>

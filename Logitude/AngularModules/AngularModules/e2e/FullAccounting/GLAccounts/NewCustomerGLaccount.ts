@@ -15,7 +15,8 @@ export class NewCustomer{
   public CreateNewCustomerGLAccount(Name: string) {
 
     this.Helper.WaitByIdAndClick('NewCustomer');
-    this.Helper.WaitByIdAndFill('Customer_EnglishName',Name);
+      this.Helper.WaitByIdAndFill('Customer_EnglishName', Name);
+      this.Helper.WaitByIdAndFill('Customer_LocalName', Name);
     this.Helper.WaitByIdAndFill('Customer_Address1_Potential', 'Ramallah');
     this.Helper.WaitByIdAndFill('Customer_Address2_Potential', 'Nablus');
     this.Helper.WaitByIdAndFill('Customer_ZipCode_Potential', '00970');
@@ -44,7 +45,7 @@ export class NewCustomer{
       this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'cus');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
-      this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name+DisplayNumber);
+      //this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name+DisplayNumber);
       this.Helper.WaitByIdAndFill('GLAccount_CurrencyId','Nis');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 

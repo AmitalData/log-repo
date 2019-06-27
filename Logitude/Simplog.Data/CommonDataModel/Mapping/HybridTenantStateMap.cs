@@ -25,6 +25,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FailedQueue).HasColumnName("FailedQueue");
             this.Property(t => t.WaitingQueue).HasColumnName("WaitingQueue");
             this.Property(t => t.LastUpdateDateTime).HasColumnName("LastUpdateDateTime");
-         }
+            this.Property(t => t.LastQueueDateTime).HasColumnName("LastQueueDateTime");
+        }
     }
 }

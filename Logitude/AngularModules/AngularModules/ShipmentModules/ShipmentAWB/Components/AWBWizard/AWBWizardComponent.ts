@@ -388,6 +388,7 @@ export class AWBWizardComponent {
             this.EntityPM.TenantZeroAirlineGLSHKNeedsRegistration = masterPM.TenantZeroAirlineGLSHKNeedsRegistration;
             this.EntityPM.CarrierIsCheckDigit = masterPM.CarrierIsCheckDigit;
             this.EntityPM.CarrierIsLimitedLength = masterPM.CarrierIsLimitedLength;
+            this.EntityPM.SCI = masterPM.SCI;
             this.GetAWBSignature();
         }
 
@@ -2593,19 +2594,21 @@ export class AWBWizardComponent {
     Print() {
         var isRunningPrintingManager: boolean = false;
 
-        if (FeatureLocator.IsPackage_EAWB()) {
-            if (SessionLocator.TenantManagementJS.IsAWBStockPrepaid) {
-                var isDemoTenant = false;
+        if (!this.IsImportWizard) {
+            if (FeatureLocator.IsPackage_EAWB()) {
+                if (SessionLocator.TenantManagementJS.IsAWBStockPrepaid) {
+                    var isDemoTenant = false;
 
-                if (this.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
-                    isDemoTenant = true;
-                }
+                    if (this.TenantPM.Id == 65 || SessionLocator.TenantManagementJS.IsEAWBOnlyDemo) {
+                        isDemoTenant = true;
+                    }
 
-                if (!isDemoTenant) {
-                    if (this.EntityPM.ShipmentLevelCode != "H") {
-                        if (!AppTool.IsNullOrEmpty( this.EntityPM.TenantZeroAirlineTTY)) {
-                            if (this.EntityPM.FWBStatusCode == "NSEN") {
-                                isRunningPrintingManager = true;
+                    if (!isDemoTenant) {
+                        if (this.EntityPM.ShipmentLevelCode != "H") {
+                            if (!AppTool.IsNullOrEmpty(this.EntityPM.TenantZeroAirlineTTY)) {
+                                if (this.EntityPM.FWBStatusCode == "NSEN") {
+                                    isRunningPrintingManager = true;
+                                }
                             }
                         }
                     }
@@ -2613,7 +2616,7 @@ export class AWBWizardComponent {
             }
         }
 
-        if (isRunningPrintingManager && !this.IsImportWizard) {
+        if (isRunningPrintingManager) {
             this.RunPrintingManager(false);
         }
 

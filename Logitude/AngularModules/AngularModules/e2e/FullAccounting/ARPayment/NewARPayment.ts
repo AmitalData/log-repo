@@ -17,27 +17,32 @@ export class NewARPayment {
     CreateNewARPayment(BillToName: string) {
         browser.ignoreSynchronization = true;
         this.Helper.WaitByIdAndClick('NewARPayment');
+        this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('ARPayment_BillToId', BillToName);
         this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-        this.Helper.WaitWindowClosed();
-
+        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitByIdAndFill('ARPayment_BillToAddressId', 'Main Address');
+        this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+        this.Helper.WaitBusyIndicator();
+        this.Helper.WaitByIdAndFill('ARPayment_AmountInPaymentCurrency', '10000');
         this.Helper.WaitByIdAndFill('ARPayment_AccountingPaymentMethodId', 'Cash');
         this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0),
-        this.Helper.WaitWindowClosed();
+        this.Helper.WaitBusyIndicator();
 
-        this.Helper.WaitByIdAndFill('ARPayment_AmountInPaymentCurrency', '10000');
+       
         this.Helper.WaitByIdAndClick('ok-AddARPayment');
+        this.Helper.WaitWindowClosed();
         this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndFill('ARPayment_BranchId', 'Main Office');
         this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
-        this.Helper.WaitWindowClosed();
+//        this.Helper.WaitWindowClosed();
 
         this.Helper.WaitByIdAndClick('ARPayment.B.Approve');
         this.Helper.WaitBusyIndicator();
-
+      //  browser.sleep(6000);
         this.Helper.WaitByIdAndClick('EditBackbutton');
 
-        browser.sleep(6000);
+       // browser.sleep(6000);
 
 
 

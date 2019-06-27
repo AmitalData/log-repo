@@ -5,6 +5,7 @@ import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLoca
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
 import { AppTool } from '../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
 
 @Component({
     moduleId: module.id,
@@ -18,7 +19,6 @@ export class AddEditTariffLineComponent  {
     public ObjectTableName: string = "TariffLine";
     private CurrentSession = SessionLocator.SelectedSession;
     public ValidationErrorsList: string[];
-
     constructor() {
 
     }
@@ -60,14 +60,18 @@ export class AddEditTariffLineComponent  {
 
     OkButtonClicked() {
         var errors: string[] = [];
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
         var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId)) {
             errors.push(msg.replace("%FieldName", "To"));
         }
+
         if (AppTool.IsNullOrEmpty(this.DataContext.OriginPortId)) {
             errors.push(msg.replace("%FieldName", "From"));
         }
+
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
             this.EntityPM.AddedManually = true;
@@ -104,6 +108,8 @@ export class AddEditTariffLineComponent  {
         this.myCloner.AddField('Step6Price');
         this.myCloner.AddField('Step7Price');
         this.myCloner.AddField('Step8Price');
+        this.myCloner.AddField('StartDate');
+        this.myCloner.AddField('ExpirationDate');        
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.FatherComponent.EntityPM);
     }

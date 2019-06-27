@@ -1192,6 +1192,98 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string concurrencyGUID ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConcurrencyGUID  
+	   {
+	    
+	     get
+		{
+		   return concurrencyGUID;
+		 }
+		 set
+		 {
+		   if(concurrencyGUID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConcurrencyGUID",OldValue=concurrencyGUID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   concurrencyGUID=value;
+		   }
+			
+		 }
+	   }
+	  private string newConcurrencyGUID ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NewConcurrencyGUID  
+	   {
+	    
+	     get
+		{
+		   return newConcurrencyGUID;
+		 }
+		 set
+		 {
+		   if(newConcurrencyGUID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewConcurrencyGUID",OldValue=newConcurrencyGUID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   newConcurrencyGUID=value;
+		   }
+			
+		 }
+	   }
+	  private bool isApprovingDraftVersion ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsApprovingDraftVersion  
+	   {
+	    
+	     get
+		{
+		   return isApprovingDraftVersion;
+		 }
+		 set
+		 {
+		   if(isApprovingDraftVersion != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsApprovingDraftVersion",OldValue=isApprovingDraftVersion,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isApprovingDraftVersion=value;
+		   }
+			
+		 }
+	   }
+	  private bool isSurchargeUpdate ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSurchargeUpdate  
+	   {
+	    
+	     get
+		{
+		   return isSurchargeUpdate;
+		 }
+		 set
+		 {
+		   if(isSurchargeUpdate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSurchargeUpdate",OldValue=isSurchargeUpdate,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSurchargeUpdate=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

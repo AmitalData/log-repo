@@ -11,61 +11,36 @@
             <td>
                 <table>
                     <tr>
-                        <td style="width:100px;">
-                            <LogLabel [ObjectFieldName]="'StartDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                        </td>
 
-                        <td *ngIf="IsDraftVersion" style="width:150px;">
-                            <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
-                        </td>
-
-                        <td *ngIf="!IsDraftVersion" style="width:130px;">
-                            {{StartDate | DateTimePipe:'SD'}}
-                        </td>
-
-                        <td style="width:10px;">
+                        <td>
                             <div></div>
                         </td>
 
-                        <td style="width:120px;">
-                            <LogLabel [ObjectFieldName]="'ExpirationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td style="width:90px;">
+                            <CheckBox [IsChecked]="IsComparToChecked" (Checked)="IsComparToChecked = $event" [Text]="'Compare to'" [IsEnabled]="IsCompareEnabled"></CheckBox>
                         </td>
 
-                        <td *ngIf="IsDraftVersion" style="width:150px;">
-                            <LogDatePicker [ObjectFieldName]="'ExpirationDate'" [SelectedDateValue]="ExpirationDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                        <td style="width:190px;">
+                            <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="!IsCompareEnabled" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
                         </td>
 
-                        <td *ngIf="!IsDraftVersion" style="width:130px;">
-                            {{ExpirationDate | DateTimePipe:'SD'}}
+                        <td style="width:5px;">
+                            <div></div>
                         </td>
 
-                        <td style="float:left;min-width:495px;">
-                            <table>
-                                <tr>
-                                    <td style="width:90px;">
-                                        <CheckBox [IsChecked]="IsComparToChecked" (Checked)="IsComparToChecked = $event" [Text]="'Compare to'" [IsEnabled]="IsCompareEnabled"></CheckBox>
-                                    </td>
-                                    <td style="width:190px;">
-                                        <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="!IsCompareEnabled" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
-                                    </td>
-                                    <td style="width:5px;">
-                                        <div></div>
-                                    </td>
-                                    <td style="width:60px;">
-                                        <LogLabel [NoObjectField]="true" [Text]="'Warning'" [DataContext]="DataContext"></LogLabel>
-                                    </td>
-                                    <td style="float:left; width:50px;">
-                                        <LogTextBox [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'WarningPercentage'" [Text]="WarningPercentage" [DataContext]="DataContext"></LogTextBox>
-                                    </td>
-
-                                    <td style="width:5px;float:left;margin-left:3px;margin-top:3px;">
-                                        <div class="Label LeftCenter" style="width:5px;float:left;text-align:left;vertical-align:central;"> % </div>
-                                    </td>
-                                </tr>
-                            </table>
+                        <td style="width:60px;">
+                            <LogLabel [NoObjectField]="true" [Text]="'Warning'" [DataContext]="DataContext"></LogLabel>
                         </td>
 
-                        <td>
+                        <td style="width:50px;">
+                            <LogTextBox [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'WarningPercentage'" [Text]="WarningPercentage" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+
+                        <td style="width:1px;padding-left:3px;">
+                            %
+                        </td>
+
+                        <td style="width:50px;">
                             <div></div>
                         </td>
 
@@ -74,6 +49,14 @@
                         </td>
 
                         <td style="width:5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width: 1px" *ngIf="IsUpdateSurchargesButtonVisible">
+                            <button class="Button" (click)="UpdateSurchargesClicked()">Update Surcharges</button>
+                        </td>
+
+                        <td style="width:5px;" *ngIf="IsUpdateSurchargesButtonVisible">
                             <div></div>
                         </td>
 
@@ -191,6 +174,19 @@
                                                         [SelectedValue]="item.DestinationPortId">
                                                 </LogLov>
 
+                                            </div>
+                                        </log-cell-template>
+                                    </log-column>
+
+                                    <!-- StartDate -->
+                                    <log-column [header]="'TariffLine.F.StartDate' | TextCodeTranslationPipe" [width]="'120'">
+                                        <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
+                                            <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
+                                                <span>{{item.StartDate | DateTimePipe}}</span>
+                                            </div>
+
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogDatePicker [FocusOnMe]="true" [ObjectFieldName]="'StartDate'" [SelectedDateValue]="item.StartDate" [ObjectTableName]="'TarifflLine'" [DataContext]="item"></LogDatePicker>
                                             </div>
                                         </log-cell-template>
                                     </log-column>
@@ -471,7 +467,7 @@
                                         <log-cell-template template="let item" #logcelltemplate [IsEnabled]="false">
                                             <div style="height: 100%; width: 100%; left:5px;">
                                                 <img class="CenterCenter" *ngIf="!item.Notes" src="./Images/Notes_notexists.png" style="display: block;" />
-                                                <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes"/>
+                                                <img class="CenterCenter" *ngIf="item.Notes" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Notes" />
                                             </div>
                                         </log-cell-template>
                                     </log-column>

@@ -63,7 +63,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
-
+        //ReportRunViewWorkerRole
         var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "RRW" && d.TenantNumber == SessionLocator.Tenant)[0];
         if (featureToggle) {
             this.IsHaveRunReportViewWorkerRolwToggleFeature = true;
@@ -411,10 +411,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
             this._reportService.GetCheckIfStimulSoftReportIsBliud(this.ReportFliter.ReportKey, SessionLocator.Tenant).subscribe(res => {
                         var pmResponse: ServiceResponse = res;
                         if (!isStopStimulSoftReportsub) {
-                            if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
+                            if (pmResponse.HasError || (pmResponse.Result && (pmResponse.Result.HasError || pmResponse.Result.StatusCode == "F" )) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
                                 this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
                                 this.StopBusyIndicator();
                                 this.IsUsedReportsRunUsingWR = false;
+                                isStopStimulSoftReportsub = true;
 
                             }
                             if (!pmResponse.HasError) {

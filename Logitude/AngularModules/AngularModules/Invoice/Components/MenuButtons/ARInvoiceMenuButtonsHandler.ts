@@ -43,9 +43,16 @@ export class ARInvoiceMenuButtonsHandler {
                         case "SaveAsDraft":
                             {
                                 myButtonIsDisabled = !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
-                                button.LabelTextCodeCode = (this.EntityPM.IsConstituentInvoice) ? "General.B.Save" : "ARInvoice.B.SaveAsDraft";
 
-                                //if()
+                                if (this.EntityPM.IsConstituentInvoice) {
+                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
+                                        if (this.EntityPM.IsAutoCredit) {
+                                            myButtonIsDisabled = false;
+                                        }
+                                    }
+                                }
+
+                                button.LabelTextCodeCode = (this.EntityPM.IsConstituentInvoice) ? "General.B.Save" : "ARInvoice.B.SaveAsDraft";
 
                                 break;
                             }

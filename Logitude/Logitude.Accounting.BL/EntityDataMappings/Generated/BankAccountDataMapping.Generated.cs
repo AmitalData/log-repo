@@ -82,7 +82,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TransferGLAcccountNumber, 
 	         TransferGLAcccountLocalName, 
 	         DeferedGLAccountEnglishName, 
-	         TransferGLAcccountEnglishName,
+	         TransferGLAcccountEnglishName, 
+	         IsBankPageEvent,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

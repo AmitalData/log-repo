@@ -30,15 +30,13 @@ export class NewAirFreightCostComponent extends BaseComponent {
     private chargesTypePMService: ChargesTypeListService;
     private IdProps: string[] = [];
     private UOMProps: string[] = [];
-
+    private myService: TariffPMService;
     constructor() {
         super();
+        this.myService = new TariffPMService();
         this.chargesTypePMService = new ChargesTypeListService();
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
-        this.EntityPM = new TariffPM();
-        this.EntityPM.Tenant = SessionLocator.Tenant;
-        this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
-        this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
+        this.EntityPM = this.myService.GetNewEntityPM();
         this.FillChargesIDsAndUOMS();
 
     }
@@ -580,8 +578,8 @@ export class NewAirFreightCostComponent extends BaseComponent {
       
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.StartBusyIndicator("Creating...");
-            var myService: TariffPMService = new TariffPMService();
-            myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+            
+            this.myService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                 this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit('OK');

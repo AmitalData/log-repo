@@ -474,7 +474,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
         if (this.SelectedItem && myCurrentItem && myCurrentItem.length == 0) {
             if (this.SelectedItem.Code == '[Full Date]') {
                 this.SelectedItem.ParentDataTypeCode = "LookUp";
-                this.SelectedItem.DataTypeCode = "DateTime";
+                this.SelectedItem.DataTypeCode = "Date";
                 this.SelectedItem.HasTree = true;
             }
             if (this.SelectedItem.Name == 'Full Date') {
@@ -527,8 +527,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
         if (view.DWObjectTableCode.indexOf("DIM_") != -1) {
             //view.ParentDataTypeCode = "LookUp";
             if (view.Code == '[Full Date]') {
-                view.ParentDataTypeCode = "DateTime";
-                view.DataTypeCode = "DateTime";
+                view.ParentDataTypeCode = "Date";
+                view.DataTypeCode = "Date";
                 view.HasTree = true;
             }
             else {
@@ -574,6 +574,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 //this.SaveChanges();
                 this.ClearData();
             }
+
+            this.ClearData();
         }
     }
 
@@ -1158,8 +1160,8 @@ export class DWQueryBuilderComponent extends BaseComponent {
                 if (field.DWObjectTableCode && field.DWObjectTableCode.indexOf("DIM_") != -1) {
 
                     if (view.Code == '[Full Date]') {
-                        view.ParentDataTypeCode = "DateTime";
-                        view.DataTypeCode = "DateTime";
+                        view.ParentDataTypeCode = "Date";
+                        view.DataTypeCode = "Date";
                     }
                     else {
                         view.ParentDataTypeCode = "LookUp";
@@ -1489,7 +1491,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
     }
 
-    private textValue: any = false;
+    private textValue: any = (this.dataTypeCode == "Boolean") ? false : null;
     public get TextValue() {
         return this.textValue;
     }
@@ -1693,7 +1695,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
 
 
-        if (operation.Code == this.currentOp.Code || operation.Code == this.beforeOp.Code || operation.Code == this.afterOp.Code || operation.Code == this.previousOp.Code || operation.Code == this.nextOp.Code || operation.Code == this.currentOp.Code) {
+        if (operation.Code == this.currentOp.Code || operation.Code == this.beforeOp.Code || operation.Code == this.afterOp.Code || operation.Code == this.previousOp.Code || operation.Code == this.nextOp.Code || operation.Code == this.currentOp.Code || operation.Code == this.BetweenOp.Code) {
             this.DontSaveChanges = true;
             //this.TextValue = "";
             this.Operation = operation;
@@ -1740,7 +1742,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
                                 var view = new DWObjectFieldsDetails(field, this.MyParentClass);
                                 if (field.Code == '[Full Date]') {
                                     view.ParentDataTypeCode = field.DataTypeCode;
-                                    view.DataTypeCode = "DateTime";
+                                    view.DataTypeCode = "Date";
                                 }
                                 else {
                                     view.ParentDataTypeCode = DWObjectField.DataTypeCode;
@@ -1946,6 +1948,8 @@ export class DWObjectFieldsDetails extends BaseComponent {
             this.list.push(this.previousOp);
             this.list.push(this.currentOp);
             this.list.push(this.nextOp);
+            this.list.push(this.BetweenOp);
+            
 
         }
 
@@ -1966,7 +1970,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     lessThanOp: ObjectFieldOperator = new ObjectFieldOperator("LessThan", "Less Than");
     greaterThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("GreaterThanOrEqual", "Greater Than Or Equal");
     lessThanOrEqualOp: ObjectFieldOperator = new ObjectFieldOperator("LessThanOrEqual", "Less Than Or Equal");
-    BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
+ 
     IsNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNull", "Is Empty");
     IsNotNullOp: ObjectFieldOperator = new ObjectFieldOperator("IsNotNull", "Has Value");
 
@@ -1976,6 +1980,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
     previousOp: ObjectFieldOperator = new ObjectFieldOperator("Previous", "Previous");
     currentOp: ObjectFieldOperator = new ObjectFieldOperator("Current", "Current");
     nextOp: ObjectFieldOperator = new ObjectFieldOperator("Next", "Next");
+    BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
 }
 
 export class ObjectFieldOperator {

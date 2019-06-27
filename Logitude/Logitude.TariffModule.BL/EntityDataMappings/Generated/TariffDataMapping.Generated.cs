@@ -62,7 +62,8 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge7UOM, 
 	         Surcharge8UOM, 
 	         Surcharge9UOM, 
-	         Surcharge10UOM,
+	         Surcharge10UOM, 
+	         ConcurrencyGUID,
 	      }
 
 
@@ -116,7 +117,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         Surcharge10UOM, 
 	         TariffLinesAddedNumbers, 
 	         TariffLinesAddedFromExcel, 
-	         FileUploadedName,
+	         FileUploadedName, 
+	         ConcurrencyGUID, 
+	         NewConcurrencyGUID, 
+	         IsApprovingDraftVersion, 
+	         IsSurchargeUpdate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -323,6 +328,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10UOM))
             {
 				entityPOCO.Surcharge10UOM = entityPM.Surcharge10UOM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
+            {
+				entityPOCO.ConcurrencyGUID = entityPM.ConcurrencyGUID;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -536,6 +546,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.Surcharge10UOM = entityPOCO.Surcharge10UOM;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConcurrencyGUID))
+            {
+					entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
+            }
+
 		}
 
 		public void PMToOldPM(TariffPM entityPM, TariffPM oldEntityPM)
@@ -740,6 +755,11 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Surcharge10UOM))
             {
                 oldEntityPM.Surcharge10UOM = entityPM.Surcharge10UOM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConcurrencyGUID))
+            {
+                oldEntityPM.ConcurrencyGUID = entityPM.ConcurrencyGUID;
             }
 			
 		}

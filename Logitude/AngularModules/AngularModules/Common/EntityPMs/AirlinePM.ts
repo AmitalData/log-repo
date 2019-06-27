@@ -9,6 +9,8 @@
 
 
 import {CardExternalCodeByCurrencyPM} from './CardExternalCodeByCurrencyPM';
+
+import {AirlineAreaPM} from './AirlineAreaPM';
 import {AirlinePMCustomCode} from '../EntityPMCustomCode/AirlinePMCustomCode';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -479,6 +481,42 @@ export class AirlinePM {
         }
     }
 	    //public CardExternalCodeByCurrencies: Array<CardExternalCodeByCurrencyPMPM>= [];
+      
+	private airlineAreas: AirlineAreaPM[];
+    get  AirlineAreas() {
+        if (this.airlineAreas == null) {
+            this.airlineAreas = [];
+        }
+
+        return this.airlineAreas;
+    }
+    set  AirlineAreas(newValue: AirlineAreaPM[]) {
+        if (this.airlineAreas != newValue) {
+            this.airlineAreas = newValue;
+        }
+    }
+    public AddAirlineAreaPM(item: AirlineAreaPM) {
+        if (item != null) {
+            var index = this.AirlineAreas.indexOf(item);
+            if (index == -1) {
+
+                item.EntityParentPM = this;
+
+                this. AirlineAreas.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveAirlineAreaPM(item: AirlineAreaPM) {
+        if (item != null) {
+            var index = this.AirlineAreas.indexOf(item);
+            if (index > -1) {
+                this. AirlineAreas.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+	    //public AirlineAreas: Array<AirlineAreaPMPM>= [];
      private externalAccountingBusinessArea: string;
     public get ExternalAccountingBusinessArea() { return this.externalAccountingBusinessArea; }
     public set ExternalAccountingBusinessArea(newValue: string) { if (this.externalAccountingBusinessArea != newValue) { this.externalAccountingBusinessArea = newValue; this.MarkAsDirty("ExternalAccountingBusinessArea"); } }

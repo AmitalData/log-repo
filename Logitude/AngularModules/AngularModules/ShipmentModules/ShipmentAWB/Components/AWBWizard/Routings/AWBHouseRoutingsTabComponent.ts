@@ -6,6 +6,8 @@ import {ShipmentPM} from '../../../../../Shipment/EntityPMs/ShipmentPM';
 import {AWBWizardComponent} from '../AWBWizardComponent';
 import {ShipmentTool, RoutingHelper} from '../../../../../Shipment/Tools';
 import {PortList} from '../../../../../Common/EntityLists/PortList';
+import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
+import { PortListService } from '../../../../../Common/Services/StandardLists/PortListService';
 
 @Component({
     moduleId: module.id,
@@ -19,8 +21,13 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
     public Wizard: AWBWizardComponent;
     public DataContext: AWBHouseRoutingsTabComponent = this;
     public ObjectTableName: string;
+    private myPortListService: PortListService;
+
     constructor() {
         super();
+        if (this.myPortListService == null) {
+            this.myPortListService = new PortListService();
+        }
     }
 
     ngAfterViewInit() {
@@ -183,6 +190,7 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
             this.SetPreCarriage();
             this.FireWizardEvent();
             this.SetUIProperties();
+    
         }
     }
 
@@ -227,6 +235,7 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
             this.EntityPM.ToPortId = value;
             this.EntityPM.MainCarriageToPortId = value;
             this.EntityPM.MainCarriageFinalDestinationPortId = value;
+           
             this.SetOnCarriage();
             this.FireWizardEvent();
             this.SetUIProperties();
@@ -239,6 +248,20 @@ export class AWBHouseRoutingsTabComponent extends BaseComponent implements After
         if (this.toPort != list) {
             this.toPort = list;
             this.AddPort(list);
+
+            if (list == null) {
+                this.EntityPM.ToCountryId = null;
+                this.EntityPM.ToCountryIsEC = false;
+                this.EntityPM.FinalDistenationPortId = null;
+                ShipmentTool.ComputeSCI(this.EntityPM);
+            }
+
+            else {
+                this.EntityPM.ToCountryId = list.CountryId;
+                this.EntityPM.ToCountryIsEC = list.CountryEC;
+                this.EntityPM.FinalDistenationPortId = list.Id;
+                ShipmentTool.ComputeSCI(this.EntityPM);
+            }
 
             //var Code = list == null ? null : list.Code;
             //if (Code != this.EntityPM.MainCarriageToPortCode) {

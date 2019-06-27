@@ -247,6 +247,7 @@
     <Compile Include="ExternalServices\SignatureHubClient.cs" />
     <Compile Include="ExternalServices\SignManager.cs" />
     <Compile Include="ExternalServices\UnifreightFillingService.cs" />
+    <Compile Include="FTP\FTPLogBuilder.cs" />
     <Compile Include="FTP\FTPService.cs" />
     <Compile Include="FTP\FTPServiceExceptionThrower.cs" />
     <Compile Include="FTP\FTPServiceResponse.cs" />

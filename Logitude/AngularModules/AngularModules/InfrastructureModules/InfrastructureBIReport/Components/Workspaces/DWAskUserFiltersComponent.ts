@@ -73,6 +73,8 @@ export class DWAskUserFiltersComponent implements OnInit {
     private rowData = [];
     private totalDataLoaded = 10000;
     private loadingMsg = "Loading";
+    private isParentTenant = false;
+
     get LoadingMsg() {
         return this.loadingMsg;
     }
@@ -122,7 +124,7 @@ export class DWAskUserFiltersComponent implements OnInit {
         }
         else {
             this.CurrentSession.StopBusyIndicator();
-            this.RunReportComplete.emit({ rowData: this.rowData, Count: this.count});
+            this.RunReportComplete.emit({ rowData: this.rowData, Count: this.count, IsParentTenant: this.isParentTenant});
         }
     }
     GetRowData(QueryData: DWQueryData) {
@@ -131,9 +133,10 @@ export class DWAskUserFiltersComponent implements OnInit {
                 this.rowData = this.rowData.concat(myResult.Result.SQLDataResult);
                 this.PageIndex = this.PageIndex + 1000;
                 var dataSize = myResult.Result.SQLDataResult.length;
+                this.isParentTenant  =myResult.Result.IsParentTenant;
                 if (dataSize == 0) {
                     this.CurrentSession.StopBusyIndicator();
-                    this.RunReportComplete.emit({ rowData: this.rowData , Count: this.count});
+                    this.RunReportComplete.emit({ rowData: this.rowData, Count: this.count, IsParentTenant: this.isParentTenant});
                 }
                 else {
                     this.count = this.count + dataSize;
@@ -144,7 +147,7 @@ export class DWAskUserFiltersComponent implements OnInit {
                         this._DWQueryBuilderService.GetNewDWQueryData(QueryData).subscribe(myResult => {
                             if (!myResult.HasError) {
                                 this.CurrentSession.StopBusyIndicator();
-                                this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count});// more than 10000
+                                this.RunReportComplete.emit({ rowData: this.rowData, Msg: "MT5000", Count: this.count, IsParentTenant: this.isParentTenant});// more than 10000
                             }
                             else {
                                 this.CurrentSession.StopBusyIndicator();
@@ -265,7 +268,7 @@ export class DWAskUserFiltersComponent implements OnInit {
         this.list.push(this.previousOp);
         this.list.push(this.currentOp);
         this.list.push(this.nextOp);
-
+        this.list.push(this.BetweenOp);
         return this.list;
     }
 
@@ -274,7 +277,7 @@ export class DWAskUserFiltersComponent implements OnInit {
     previousOp: ObjectFieldOperator = new ObjectFieldOperator("Previous", "Previous");
     currentOp: ObjectFieldOperator = new ObjectFieldOperator("Current", "Current");
     nextOp: ObjectFieldOperator = new ObjectFieldOperator("Next", "Next");
-
+    BetweenOp: ObjectFieldOperator = new ObjectFieldOperator("Between", "Between");
 }
 
 export class ObjectFieldOperator {

@@ -20,6 +20,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public int WaitingQueue { get; set; }
         [DataMember]
         public DateTime LastUpdateDateTime { get; set; }
-
+        [DataMember]
+        public DateTime? LastQueueDateTime { get; set; }
     }
 }
