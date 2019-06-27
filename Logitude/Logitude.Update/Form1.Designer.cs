@@ -152,6 +152,8 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblUTariffModule = new System.Windows.Forms.Label();
+            this.button41 = new System.Windows.Forms.Button();
             this.btnUpdateTenantZeroNew = new System.Windows.Forms.Button();
             this.lblTenantNew = new System.Windows.Forms.Label();
             this.lblUGlobal = new System.Windows.Forms.Label();
@@ -166,8 +168,7 @@
             this.HarmonizeCodesButton = new System.Windows.Forms.Button();
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
-            this.button41 = new System.Windows.Forms.Button();
-            this.lblUTariffModule = new System.Windows.Forms.Label();
+            this.button42 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1394,6 +1395,27 @@
             this.tabPage1.Text = "Update";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // lblUTariffModule
+            // 
+            this.lblUTariffModule.AutoSize = true;
+            this.lblUTariffModule.Location = new System.Drawing.Point(206, 522);
+            this.lblUTariffModule.MinimumSize = new System.Drawing.Size(100, 0);
+            this.lblUTariffModule.Name = "lblUTariffModule";
+            this.lblUTariffModule.Size = new System.Drawing.Size(100, 13);
+            this.lblUTariffModule.TabIndex = 94;
+            this.lblUTariffModule.Text = "...";
+            // 
+            // button41
+            // 
+            this.button41.Location = new System.Drawing.Point(16, 517);
+            this.button41.Name = "button41";
+            this.button41.Size = new System.Drawing.Size(184, 22);
+            this.button41.TabIndex = 93;
+            this.button41.Text = "Update Tariff Module";
+            this.button41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button41.UseVisualStyleBackColor = true;
+            this.button41.Click += new System.EventHandler(this.button41_Click);
+            // 
             // btnUpdateTenantZeroNew
             // 
             this.btnUpdateTenantZeroNew.Location = new System.Drawing.Point(16, 315);
@@ -1468,6 +1490,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.button42);
             this.tabPage2.Controls.Add(this.btnCompareData);
             this.tabPage2.Controls.Add(this.button40);
             this.tabPage2.Controls.Add(this.HarmonizeCodesLabel);
@@ -1582,26 +1605,15 @@
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
             // 
-            // button41
+            // button42
             // 
-            this.button41.Location = new System.Drawing.Point(16, 517);
-            this.button41.Name = "button41";
-            this.button41.Size = new System.Drawing.Size(184, 22);
-            this.button41.TabIndex = 93;
-            this.button41.Text = "Update Tariff Module";
-            this.button41.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button41.UseVisualStyleBackColor = true;
-            this.button41.Click += new System.EventHandler(this.button41_Click);
-            // 
-            // lblUTariffModule
-            // 
-            this.lblUTariffModule.AutoSize = true;
-            this.lblUTariffModule.Location = new System.Drawing.Point(206, 522);
-            this.lblUTariffModule.MinimumSize = new System.Drawing.Size(100, 0);
-            this.lblUTariffModule.Name = "lblUTariffModule";
-            this.lblUTariffModule.Size = new System.Drawing.Size(100, 13);
-            this.lblUTariffModule.TabIndex = 94;
-            this.lblUTariffModule.Text = "...";
+            this.button42.Location = new System.Drawing.Point(271, 441);
+            this.button42.Name = "button42";
+            this.button42.Size = new System.Drawing.Size(184, 23);
+            this.button42.TabIndex = 94;
+            this.button42.Text = "Fix LogBox Docs";
+            this.button42.UseVisualStyleBackColor = true;
+            this.button42.Click += new System.EventHandler(this.button42_Click);
             // 
             // Form1
             // 
@@ -1787,6 +1799,7 @@
 		private System.Windows.Forms.Button btnCompareData;
         private System.Windows.Forms.Label lblUTariffModule;
         private System.Windows.Forms.Button button41;
+        private System.Windows.Forms.Button button42;
     }
 }
 
