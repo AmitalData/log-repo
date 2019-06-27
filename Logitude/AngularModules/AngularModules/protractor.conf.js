@@ -20,7 +20,7 @@ exports.config = {
       ShipmentType: null,
       },
       ReportDoc: {
-          SenarioType: null,
+          ScenarioType: null,
 
       },
       FullAccount: {
@@ -121,7 +121,7 @@ exports.config = {
     //  CRM: 'e2e/CRM/**/CRMModule-spec.ts',
     //  'e2e/LogBox/Login/**/Login.e2e-spec.ts',
 
-    //NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
+    NewShipment: 'e2e/Operations/Shipments/NewEntity/**/Operations.e2e-spec.ts',
       NewShipmentlogbox: 'e2e/LogBox/Shipments/**/ShipmentSearch.e2e-spec.ts',
     //  Contact: 'e2e/Contacts/**/Contacts-spec.ts',
 
@@ -141,11 +141,11 @@ exports.config = {
 
 
     //*************Report******************* */
-      //ls
-     // Reports: 'e2e/Report/**/Report-spec.ts',
+     
+     Reports: 'e2e/Report/**/Report-spec.ts',
 
     //*************DocOutTab************** */
-   // DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
+    DocOut: 'e2e/**/DocsOut.e2e-spec.ts',
 
 
   },
