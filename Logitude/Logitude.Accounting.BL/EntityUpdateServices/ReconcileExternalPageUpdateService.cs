@@ -181,7 +181,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ContactPM contact= GetLoggedContact(entityPM.Tenant);
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
-                CreateTraceEvent(entityPM, contact, "CNEV");
+                CreateTraceEvent(entityPM, contact, "CREV");
             }
             else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
