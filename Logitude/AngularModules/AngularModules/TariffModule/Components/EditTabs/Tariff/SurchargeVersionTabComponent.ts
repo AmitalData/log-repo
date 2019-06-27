@@ -256,15 +256,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
                 this['Surcharge' + index + 'PriceLabel'] = item.DisplyText;
                 this['Surcharge' + index + 'PriceVisibility'] = true;
-
-                //switch (index) {
-
-                //    case 10: {
-                //        this.Surcharge10PriceLabel = item.DisplyText;
-                //        this.Surcharge10PriceVisibility = true;
-                //        break;
-                //    }
-                //}
             }
         }
     }
