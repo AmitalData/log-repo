@@ -107,6 +107,7 @@
     <Content Include="Booking\Components\BookingWizard\NoRemainingStockComponent.html" />
     <Content Include="CommonModules\CommonAgent\Components\NewEntity\NewAgentComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.html" />
+    <Content Include="CommonModules\CommonAirline\Components\AddEdit\ChoosePortComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.html" />
     <Content Include="CommonModules\CommonAirline\Components\EditTabs\AreasTabComponent.html" />
@@ -413,6 +414,7 @@
     <TypeScriptCompile Include="Accounting\Services\StandardPMs\OpenFormatReportPMService.ts" />
     <TypeScriptCompile Include="Accounting\Validators\PaymentChequeValidator.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAreaComponent.ts" />
+    <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\ChoosePortComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineDocsInTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AirlineGeneralTabComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\EditTabs\AreasTabComponent.ts" />

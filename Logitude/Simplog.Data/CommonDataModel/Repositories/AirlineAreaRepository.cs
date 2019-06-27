@@ -33,7 +33,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public AirlineArea GetSingleAirlineArea(string id, int tenant)
         {
-            return (from record in context.AirlineAreas.Include("Card") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.AirlineAreas where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
 
 

@@ -40,14 +40,14 @@ export class AirlineAreaPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private airlineId: string;
-    public get AirlineId() { return this.airlineId; }
-    public set AirlineId(newValue: string) { if (this.airlineId != newValue) { this.airlineId = newValue; this.MarkAsDirty("AirlineId"); } }
-       
-	 
     private description: string;
     public get Description() { return this.description; }
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
+       
+	 
+    private airlineId: string;
+    public get AirlineId() { return this.airlineId; }
+    public set AirlineId(newValue: string) { if (this.airlineId != newValue) { this.airlineId = newValue; this.MarkAsDirty("AirlineId"); } }
        
 	 
     private name: string;
