@@ -53,7 +53,7 @@ namespace CustomsWorkerRole
 
                 if (General.IsUpdating())
                 {
-                    Thread.Sleep(60000);
+                    Thread.Sleep(600);
                     continue;
                 }
                 try
@@ -70,7 +70,7 @@ namespace CustomsWorkerRole
                 catch (Exception e)
                 {
                     ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR : Run() Method", null);
-                    Thread.Sleep(10000);
+                    Thread.Sleep(1000);
                 }
 
             }
@@ -195,7 +195,7 @@ namespace CustomsWorkerRole
             catch (Exception e)
             {
                 ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
-                Thread.Sleep(TimeSpan.FromSeconds(5));
+                Thread.Sleep(TimeSpan.FromSeconds(1));
                 _OnStartDone = false;
             }
 
@@ -409,7 +409,7 @@ namespace CustomsWorkerRole
 
                         if (response == null || (response != null && response.MessageId == null))
                         {
-                            Thread.Sleep(TimeSpan.FromSeconds(5));
+                            Thread.Sleep(TimeSpan.FromSeconds(1));
                             break;
                         }
 
