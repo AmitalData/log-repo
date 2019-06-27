@@ -63,7 +63,7 @@
                     <div class="SimpleGridViewHeader">
                         <table>
                             <tr>
-                                <td style="width: 110px; min-width: 110px; max-width: 110px;">Last Run Result</td>
+                                <td style="width: 30px; min-width: 30px; max-width: 30px;"></td>
                                 <td style="width: 200px; min-width: 200px; max-width: 200px;">Task Name</td>
                                 <!--<td style="width: 120px; min-width: 120px; max-width: 120px;">Create Date</td>-->
                                 <td *ngIf="ShowUTCTimeEnabled == false" style="width: 160px; min-width: 160px; max-width: 160px;">Next Run Time</td>
@@ -89,14 +89,14 @@
 
                     <div class="SimpleGridViewBody">
                         <table>
-                            <tr class="SimpleGridViewRow  RowHover RowSelected" *ngFor="let item of ItemsSource" (click)="Selecting(item)" [class.RowSelected]="item === SelectedRow">
-                                <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px;">
+                            <tr class="SimpleGridViewRow  RowHover RowSelected " *ngFor="let item of ItemsSource" (click)="Selecting(item)" [class.RowSelected]="item === SelectedRow">
+                                <td class="GridViewCell" style="width: 30px; min-width: 30px; max-width: 30px;">
                                     <div style="min-width:10px;max-width:50px">
                                         <img *ngIf="item.LastRunResult == 'Warning'" style="width: 18px;height:18px;margin-bottom: 5px;float:left;" src="./Images/WarningIcon.png" />
-                                        <img *ngIf="item.LastRunResult == 'Exception'" style="width: 18px;height:18px;margin-bottom: 5px;float:left;" src="./Images/ValidationError.png" />
-                                    </div> 
+                                        <img *ngIf="item.LastRunResult == 'Exception'" style="width: 18px;height:18px;margin-bottom: 5px;float:left;" src="./Images/Error.png" />
+                                    </div>
                                 </td>
-
+                                <!--*ngIf="item.LastRunResult == 'Exception'"-->
                                 <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width: 200px;">
                                     {{item.Name}}
                                 </td>
@@ -106,27 +106,27 @@
     </td>-->
 
                                 <td *ngIf="ShowUTCTimeEnabled == false" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
-                                    {{item.NextRunTime | DateTimePipe:'DTLL12'}}
+                                    {{item.NextRunTime | DateTimePipe:'DTL12NW'}}
                                 </td>
 
                                 <td *ngIf="ShowUTCTimeEnabled == false" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
-                                    {{item.LastRunTime | DateTimePipe:'DTLL12'}}
+                                    {{item.LastRunTime | DateTimePipe:'DTL12NW'}}
                                 </td>
 
                                 <td *ngIf="ShowUTCTimeEnabled == false" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
-                                    {{item.LastRunEndTime | DateTimePipe:'DTLL12'}}
+                                    {{item.LastRunEndTime | DateTimePipe:'DTL12NW'}}
                                 </td>
 
                                 <td *ngIf="ShowUTCTimeEnabled == true" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
-                                    {{item.NextRunTimeUTC | DateTimePipe:'DTLL12'}}
+                                    {{item.NextRunTimeUTC | DateTimePipe:'DTL12NW'}}
                                 </td>
 
                                 <td *ngIf="ShowUTCTimeEnabled == true" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
-                                    {{item.LastRunTimeUTC | DateTimePipe:'DTLL12'}}
+                                    {{item.LastRunTimeUTC | DateTimePipe:'DTL12NW'}}
                                 </td>
 
                                 <td *ngIf="ShowUTCTimeEnabled == true" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
-                                    {{item.LastRunEndTimeUTC | DateTimePipe:'DTLL12'}}
+                                    {{item.LastRunEndTimeUTC | DateTimePipe:'DTL12NW'}}
                                 </td>
 
                                 <!--<td *ngIf="ShowUTCTimeEnabled == false" class="GridViewCell" style="width: 160px; min-width: 160px; max-width: 160px;">
@@ -137,14 +137,14 @@
         {{item.StartDateUTC | DateTimePipe:'DTLL12'}}
     </td>-->
                                 <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;text-align:center;">
-                                    <span *ngIf="item.Duration <= 60">{{item.Duration | NumbersPipe:'N3'}} secs</span>
+                                    <span *ngIf="item.Duration <= 60">{{item.Duration | NumbersPipe:'N3'}} sec</span>
                                     <span *ngIf="item.Duration > 60">{{item.Duration/60 | NumbersPipe:'N3'}} mins</span>
                                 </td>
                                 <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;text-align:center;color: deepskyblue;">
                                     {{item.Status}}
                                 </td>
-                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;">
-                                    <img class="LeftCenter" src="./Images/GreenTick.png" *ngIf="item.InActive" />
+                                <td class="GridViewCell" style="width: 90px; min-width: 90px; max-width: 90px;text-align:center;">
+                                    <img class="CenterCenter" src="./Images/GreenTick.png" *ngIf="item.InActive" />
                                 </td>
 
                                 <td class="GridViewCell" style="width:30px; min-width:30px; max-width:30px;">
