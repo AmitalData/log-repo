@@ -177,6 +177,7 @@
     <Compile Include="Azure\CommunicationLogsAzureContext.cs" />
     <Compile Include="Azure\EmailSendingService.cs" />
     <Compile Include="Azure\StorageAcountDetails.cs" />
+    <Compile Include="CacheLogger.cs" />
     <Compile Include="CacheMessageSender.cs" />
     <Compile Include="ChangeSetOperation.cs" />
     <Compile Include="Contracts\UnifreightGatewayProxy.cs" />

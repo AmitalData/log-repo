@@ -364,6 +364,7 @@
     <Compile Include="Tasks\DeleteTaskSchedulerHistoriesTask.cs" />
     <Compile Include="Tasks\FTPSchedulerTask.cs" />
     <Compile Include="Tasks\SFTPSchedulerTask.cs" />
+    <Compile Include="Tasks\TestUnexpectedShutDownHandling.cs" />
     <Compile Include="Tasks\TestLoggingWarningTask.cs" />
     <Compile Include="Tasks\TestLoggingInfoWithExceptionIfCurrentMinuteisEvenTask.cs" />
     <Compile Include="TMQueueMessageBuilderWorkerRole.cs" />

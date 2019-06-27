@@ -12701,6 +12701,8 @@ namespace WebFreight.Web.ReportsWebServices
                 totalData.Shipments = new List<ShipmentDetals>();
                 foreach (ShipmentDataView Item in Shipments)
                 {
+                    bool isInlandDomesticShipment = (Item.DirectionId == "D" && Item.TransportModeId == "I");
+
                     Currency ValueOfgoodsCurrency = currencyLists.Where(d => d.Id == Item.ValueOfGoodsCurrencyId).FirstOrDefault();
                     Department ShipmentDepartment = departmentLists.Where(d => d.Id == Item.DepartmentId).FirstOrDefault();
 
@@ -12771,17 +12773,165 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.LocalInspection = Item.SalesmanUserName;
                     shipment.CountofLegalisedDocuments = Item.AMSBL;
                     shipment.ShipperInvoiceValue = Item.ValueOfGoods;
-                    shipment.CurrencyofShipperInvoice = ValueOfgoodsCurrency != null ? ValueOfgoodsCurrency.Code : null;
-                    if (!string.IsNullOrEmpty(Item.FinalDistenationPortId)){
-                        
-                            PortPM port = PortQuery.GetSinglePort(Item.Tenant, Item.FinalDistenationPortId, true);
-                            if (port != null)
+                    shipment.CurrencyofShipperInvoice = ValueOfgoodsCurrency != null ? ValueOfgoodsCurrency.Code : null;                   
+                    if(Item.ShipmentNumber== "E9069")
+                    {
+                        var test="z";
+                    }
+                    if (Item.DirectionId == "D" && Item.TransportModeId == "I")
+                    {
+                        if (!string.IsNullOrEmpty(Item.MainCarriageToAddressId))
+                        {
+                            Address myPartnerAddress = addressRepository.GetSingleAddress(Item.MainCarriageToAddressId, tenant);
+                            if (myPartnerAddress != null)
                             {
-                            shipment.FinalPortofDestination = port.Code;
-                            shipment.FinalCountryofDestination = port.CountryName;
+                               shipment.FinalCountryofDestination = myPartnerAddress.Country!=null? myPartnerAddress.Country.EnglishName:null;
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        if (myLastDelivery != null)
+                        {
+                            switch (myLastDelivery.PickUpDeliveryToTypeCode)
+                            {
+                                case "PART":
+                                    {
+                                        if (!string.IsNullOrEmpty(myLastDelivery.ToAddressId))
+                                        {
+                                            Address myPartnerAddress = addressRepository.GetSingleAddress(myLastDelivery.ToAddressId, tenant);
+                                            if (myPartnerAddress != null)
+                                            {
+                                                shipment.FinalCountryofDestination = myPartnerAddress.Country != null ? myPartnerAddress.Country.EnglishName : null;
+                                            }
+                                        }
+
+                                        break;
+                                    }
+
+                                case "PORT":
+                                    {
+                                        if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
+                                        {
+                                            PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.ToPortId,true);
+                                            if (myPort != null)
+                                            {
+                                                shipment.FinalCountryofDestination = myPort.CountryName;
+                                                  shipment.FinalPortofDestination = myPort.Code;
+
+                                                    
+                                            }
+                                        }
+
+                                        break;
+                                    }
+
+                                case "CASL":
+                                    {
+                                        string myCountry = myLastDelivery.ToAddressCountry!=null? myLastDelivery.ToAddressCountry.EnglishName:null;
+                                        if (!string.IsNullOrEmpty(myCountry))
+                                        {
+                                            shipment.FinalCountryofDestination = myCountry;
+                                            //shipment.FinalPortofDestination = myLastDelivery..Code;
+
+                                        }
+
+                                        break;
+                                    }
+                            }
+                        }
+
+                        else if (Item.DirectionId == "I" && !string.IsNullOrEmpty(Item.WarehouseLegWarehouseId))
+                        {
+                            Card warehouse = CardRepository.GetSingleCard(Item.WarehouseLegWarehouseId, tenant, true); 
+                            if (warehouse != null)
+                            {
+                                shipment.FinalCountryofDestination = warehouse.CountryName;
+                                //shipment.FinalPortofDestination = warehouse.Code;
 
                             }
+                        }
+
+                        else if (!string.IsNullOrEmpty(Item.OnCarriageToPortId))
+                        {
+                            PortPM onCarriageToPort = PortQuery.GetSinglePort(tenant, Item.OnCarriageToPortId,true);
+                            if (onCarriageToPort != null)
+                            {
+                                shipment.FinalCountryofDestination = onCarriageToPort.CountryName;
+                                shipment.FinalPortofDestination = onCarriageToPort.Code;
+
+                            }
+                        }
+
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(Item.Transshipment3ToPortId))
+                            {
+                                PortPM transshipment3ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment3ToPortId,true);
+                                if (transshipment3ToPort != null)
+                                {
+                                    shipment.FinalCountryofDestination = transshipment3ToPort.CountryName;
+                                    shipment.FinalPortofDestination = transshipment3ToPort.Code;
+
+                                }
+                            }
+
+                            else if (!string.IsNullOrEmpty(Item.Transshipment2ToPortId))
+                            {
+                                PortPM transshipment2ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment2ToPortId,true);
+                                if (transshipment2ToPort != null)
+                                {
+                                    shipment.FinalCountryofDestination = transshipment2ToPort.CountryName;
+                                    shipment.FinalPortofDestination = transshipment2ToPort.Code;
+
+                                }
+                            }
+
+                            else if (!string.IsNullOrEmpty(Item.Transshipment1ToPortId))
+                            {
+                                PortPM transshipment1ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment1ToPortId,true);
+                                if (transshipment1ToPort != null)
+                                {
+                                    shipment.FinalCountryofDestination = transshipment1ToPort.CountryName;
+                                    shipment.FinalPortofDestination = transshipment1ToPort.Code;
+
+                                }
+                            }
+
+                            else if (!string.IsNullOrEmpty(Item.MainCarriageToPortId))
+                            {
+                                PortPM mainCarriageToPort = PortQuery.GetSinglePort(tenant, Item.MainCarriageToPortId,true);
+                                if (mainCarriageToPort != null)
+                                {
+                                    shipment.FinalCountryofDestination = mainCarriageToPort.CountryName;
+                                    shipment.FinalPortofDestination = mainCarriageToPort.Code;
+                                }
+                            }
+                            else if (!string.IsNullOrEmpty(Item.ToPortId))
+                            {
+                                PortPM mainCarriageToPort = PortQuery.GetSinglePort(tenant, Item.ToPortId, true);
+                                if (mainCarriageToPort != null)
+                                {
+                                    shipment.FinalCountryofDestination = mainCarriageToPort.CountryName;
+                                    shipment.FinalPortofDestination = mainCarriageToPort.Code;
+                                }
+                            }
+                        }
                     }
+
+
+                  //  Item.FinalDistenationPortId = Item.Transshipment3ToPortId != null ? Item.Transshipment3ToPortId : Item.Transshipment2ToPortId != null ? Item.Transshipment2ToPortId : Item.Transshipment1ToPortId != null ? Item.Transshipment1ToPortId : Item.MainCarriageToPortId;
+                 //   shipment.FinalCountryofDestination = Item.LastFinalDestination;
+
+
+
+
+
+
+
+
+
                     if (!string.IsNullOrEmpty(Item.OnCarriageTransportModeId))
                     {
                         shipment.OnCarriageTransportMode = Item.OnCarriageTransportModeId == "I" ? "Inland" : Item.OnCarriageTransportModeId == "A" ? "Air" : "Ocean";
