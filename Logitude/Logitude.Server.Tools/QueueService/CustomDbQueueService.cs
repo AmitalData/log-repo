@@ -101,19 +101,20 @@ namespace Logitude.Server.Tools.QueueService
         public void SafeAbandon()
         {
 
-            if (CurrentCustomQueueResponse.Retries > 15)
-            {
-                this.SafeComplete();
-            }
-            else if (CurrentCustomQueueResponse.Retries > 10)
-            {
-                this.Delay(TimeSpan.FromMinutes(60));
-            }
-            else if (CurrentCustomQueueResponse.Retries > 5)
-            {
-                this.Delay(TimeSpan.FromMinutes(10));
-            }
-            
+            //if (CurrentCustomQueueResponse.Retries > 15)
+            //{
+            //    this.SafeComplete();
+            //}
+            //else if (CurrentCustomQueueResponse.Retries > 10)
+            //{
+            //    this.Delay(TimeSpan.FromMinutes(60));
+            //}
+            //else if (CurrentCustomQueueResponse.Retries > 5)
+            //{
+            //    this.Delay(TimeSpan.FromMinutes(10));
+            //}
+            this.SafeComplete();
+
             CurrentCustomQueueResponse.QueueStatus = QueueStatusEnum.DeadLetter;
             LogMessagingUtil.Instance.AppendLine("CustomDbQueueService:SafeAbandon:DbQueueName=" + CustomDbQueueParams.QueueCode + "QMId=" + base.CurrentMessageId);
             //this.Return();

@@ -46,16 +46,26 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             var qDeclarationPaymentPendingHold =
             (from p in context.DeclarationPendings
              where p.Status == "A"
-             group p by p.DeclarationID  into g
-             select new MyJoin  { DeclarationId =g.Key, ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1") }
+             group p by p.DeclarationID into g
+             select new MyJoin
+             {
+                 DeclarationId = g.Key,
+                 ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1"),
+
+                 //CourierPendingReason1stName = g.DefaultIfEmpty(
+                 //new DeclarationPending()
+                 //{
+                 //    CourierPendingReason = new CourierPendingReason { }
+                 //})
+                 //.FirstOrDefault().CourierPendingReason.LocalName
+
+                 CourierPendingReason1stName = g.Any() ? g.FirstOrDefault().CourierPendingReason.LocalName : null
+
+
+             }
             );
 
-            //var qDeclarationPendingListNames =
-            //(from p in context.DeclarationPendings
-             //where p.Status == "A"
-             //select new { DeclarationId = p.DeclarationID, name = p.CourierPendingReason.LocalName }
-            //);
-
+            
             IQueryable<DeclarationCourierStatusList> query = (from a in iQueryable
                                                               join d in context.Declarations.Include("GovernmentProcedureCurrent").Include("CourierCustomStatus").Include("DeclarationStatusType").Include("CustomerCard").Include("Importer").Include("AgentTalkBackType")
                                                               on a.DeclarationId equals d.Id
@@ -73,7 +83,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                               //join pendingListNames in qDeclarationPendingListNames
                                                               //on a.DeclarationId equals pendingListNames.DeclarationId
                                                               //into pendingListNamesOuterJoin
-                                                              //from pendingListNamesOuterJoinNullable in pendingListNamesOuterJoin.Select(p => p.name)
+                                                              //from pendingListNamesOuterJoinNullable in pendingListNamesOuterJoin.DefaultIfEmpty()
                                                               //from pendingListNamesOuterJoinNullable in pendingListNamesOuterJoin.ToList().ToString()
 
 
@@ -124,7 +134,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                   (
                                                                   errorPlaceOuterJoinNullable.ErrorPlace == true ? "1" : null)
                                                                   : null,
-                                                                  //CourierPendingReasonName = pendingListNamesOuterJoinNullable.ToString(),
+
+                                                                  CourierPendingReasonName = errorPlaceOuterJoinNullable != null ?
+                                                                  errorPlaceOuterJoinNullable.CourierPendingReason1stName 
+                                                                  : null,
                                                                   //CourierPendingReasonName = string.Join(",", pendingListNamesOuterJoin.Select(p => p.ToString())),
 
 
@@ -200,7 +213,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     public class MyJoin
     {
         public bool ErrorPlace { get; set; }
-        internal string DeclarationId { get; set; }
+    public string CourierPendingReason1stName { get;  set; }
+    internal string DeclarationId { get; set; }
     }
 }
 	

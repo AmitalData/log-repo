@@ -53,7 +53,7 @@ namespace CustomsWorkerRole
 
                 if (General.IsUpdating())
                 {
-                    Thread.Sleep(60000);
+                    Thread.Sleep(600);
                     continue;
                 }
                 try
@@ -70,7 +70,7 @@ namespace CustomsWorkerRole
                 catch (Exception e)
                 {
                     ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR : Run() Method", null);
-                    Thread.Sleep(10000);
+                    Thread.Sleep(1000);
                 }
 
             }
@@ -195,7 +195,7 @@ namespace CustomsWorkerRole
             catch (Exception e)
             {
                 ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
-                Thread.Sleep(TimeSpan.FromSeconds(5));
+                Thread.Sleep(TimeSpan.FromSeconds(1));
                 _OnStartDone = false;
             }
 
@@ -387,7 +387,7 @@ namespace CustomsWorkerRole
                 while (true)
                 {
                     //throw new Exception("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
                     {
                         try
                         {
@@ -409,15 +409,29 @@ namespace CustomsWorkerRole
 
                         if (response == null || (response != null && response.MessageId == null))
                         {
-                            Thread.Sleep(TimeSpan.FromSeconds(5));
+                            Thread.Sleep(TimeSpan.FromSeconds(1));
                             break;
                         }
 
 
 
                         proccesDone = true;
-                        ProcessMessage_Db(response);
-                        scope.Complete();
+                        bool successProcessMessage = ProcessMessage_Db(response);
+                        if (successProcessMessage)
+                        {
+                            _CustomDbQueueService.SafeComplete();
+                            Queue_scope.Complete();
+                        }
+                        else if (!successProcessMessage)/// IF FAILED USE NEW TRANS !!!!
+                        {
+                            Queue_scope.Dispose();//remove lock !!
+                            using (var Abandon_Queue_scope = new TransactionScope(TransactionScopeOption.RequiresNew))
+                            {
+
+                                _CustomDbQueueService.SafeAbandon();
+                                Abandon_Queue_scope.Complete();
+                            }
+                        }
                         LogDoneItemInMemory();
                     }
                 }
@@ -438,7 +452,7 @@ namespace CustomsWorkerRole
                 
                 if (String.IsNullOrWhiteSpace(analyzeClass))
                 {
-                    _CustomDbQueueService.SafeAbandon();
+                    //_CustomDbQueueService.SafeAbandon();
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method :analyzeClass ==null", null);
                     //message.DeadLetter();
                     return false;//
@@ -446,7 +460,7 @@ namespace CustomsWorkerRole
 
                 if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(analyzeClass))
                 {
-                    _CustomDbQueueService.SafeAbandon();
+                    //_CustomDbQueueService.SafeAbandon();
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + analyzeClass, null);
                     //message.DeadLetter();
                     return false;
@@ -478,7 +492,7 @@ namespace CustomsWorkerRole
 
                 
 
-                _CustomDbQueueService.SafeComplete();
+                //_CustomDbQueueService.SafeComplete();
                 return true;
 
             }
@@ -486,17 +500,19 @@ namespace CustomsWorkerRole
             {
 
                 //ExceptionHandler.HandleException(customsRequestsSheetServiceException, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method/CustomsRequestsSheetServiceException ", null);
+                
                 if (customsRequestsSheetServiceException.What2Do == CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue)
                 {
                     //message.SafeComplete();
-                    _CustomDbQueueService.SafeComplete();
+                    //_CustomDbQueueService.SafeComplete();
+                    return true;
                 }
                 else
                 {
-                    
-                    _CustomDbQueueService.SafeAbandon();
+                    //_CustomDbQueueService.SafeAbandon();
+                    return false;  
                 }
-                return false;
+                
 
             }
             catch (Exception ex)
@@ -505,7 +521,7 @@ namespace CustomsWorkerRole
                 //message.SafeComplete();
                 //_CustomDbQueueService.SafeComplete();
 
-                _CustomDbQueueService.SafeAbandon();// make try (in 5101 CRS was analyze *1000000)
+                //_CustomDbQueueService.SafeAbandon();// make try (in 5101 CRS was analyze *1000000)
                 return false;
                 //throw;
             }
