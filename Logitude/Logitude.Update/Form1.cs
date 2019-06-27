@@ -64,6 +64,7 @@ using Logitude.Accounting.BL.Utils;
 using System.Data.Common;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.InfrastructureModel;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.Update
 {
@@ -3652,6 +3653,33 @@ User/Pass",
             Thread thread = new Thread(() => UpdateModule(0, "TariffModule", lblUTariffModule));
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        private void button42_Click(object sender, EventArgs e)
+        {
+            //DocumentRepository DocR = new DocumentRepository(0); 
+            var result = new List<DocumentsFiling>();
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                DbConnection connection = DatabaseInitializer.GetConnection("logbox-main,logboxadmin,London2015!London2015!,logboxdbs.database.windows.net");// "Main,sa,Saas256,amitaldata.cloudapp.net");
+                CommonDataContext context = new CommonDataContext(connection);
+                result = (from a in context.Documents
+                              join b in context.DocumentsFilings on a.Id equals b.DocumentId
+                              where b.ForwarderDocumentId != null && b.IsDeleted == false && a.HasFile == false
+                              select b).ToList();
+                scope.Complete(); 
+            }
+           
+            foreach (var item1 in result)
+            {
+                DocumentRepository DocR = new DocumentRepository(0);
+                var item = (from a in DocR.context.DocumentsFilings 
+                              where a.Id == item1.ForwarderDocumentId
+                              select a).FirstOrDefault();
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
+                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+            }
         }
     }
 
