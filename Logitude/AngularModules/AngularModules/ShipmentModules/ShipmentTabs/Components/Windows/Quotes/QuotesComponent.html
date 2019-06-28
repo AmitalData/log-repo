@@ -1,5 +1,37 @@
-﻿
+
 <table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 1px; font-size: 13px;" class="ColorBlue">
+                        Matching Quotes
+                    </td>
+
+                    <td style="width: 1px; font-size: 13px; padding-left: 10px;" class="ColorBlue">
+                        ({{ItemsSource.length}})
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 16px;">
+                        <CheckBox [IsChecked]="IsShowingUsedSpotRateQuotes" (Checked)="IsShowingUsedSpotRateQuotes = $event"></CheckBox>
+                    </td>
+
+                    <td style="width: 1px; padding-left: 5px;" class="Label">Show used spot rate quotes</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
     <tr>
         <td>
             <div class="MediaFill">
@@ -12,10 +44,15 @@
                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">Expiration Date</td>
                                 <td style="width: 85px; min-width: 85px; max-width: 85px;">Stage</td>
                                 <td style="width: 90px; min-width: 90px; max-width: 90px;">Type</td>
-                                <td style="width: 130px; min-width: 130px; max-width: 130px;">Carrier</td>
+                                <td style="width: 120px; min-width: 120px; max-width: 120px;">Carrier</td>
                                 <td style="width: 110px; min-width: 110px; max-width: 110px;">Chargeable Weight</td>
                                 <td style="width: 110px; min-width: 110px; max-width: 110px;">Weight Difference</td>
-                                <td style="width: 25px; min-width: 25px; max-width: 25px;"><div></div></td>
+                                <td style="width: 80px; min-width: 80px; max-width: 80px;">Quote Usage</td>
+
+                                <td style="width: 25px; min-width: 25px; max-width: 25px;">
+                                    <img src="./Images/Notes_exists.png" />
+                                </td>
+
                                 <td class="LastChild">
                                     <div></div>
                                 </td>
@@ -47,7 +84,7 @@
                                     {{item.QuoteTypeName}}
                                 </td>
 
-                                <td class="GridViewCell" style="width: 130px; min-width: 130px; max-width: 130px;">
+                                <td class="GridViewCell" style="width: 120px; min-width: 120px; max-width: 120px;">
                                     {{item.CarrierName}}
                                 </td>
 
@@ -57,6 +94,10 @@
 
                                 <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
                                     {{item.WeightDiffernece | NumbersPipe:'N2'}}
+                                </td>
+
+                                <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px; text-align: right;">
+                                    {{item.UsageCount | NumbersPipe:'N0'}}
                                 </td>
 
                                 <td style="width: 25px; min-width: 25px; max-width: 25px; left:5px;">
