@@ -45,6 +45,15 @@ export class QuotesComponent {
         }
     }
 
+    private isShowingUsedSpotRateQuotes: boolean = false;
+    get IsShowingUsedSpotRateQuotes() { return this.isShowingUsedSpotRateQuotes; }
+    set IsShowingUsedSpotRateQuotes(value: boolean) {
+        if (this.isShowingUsedSpotRateQuotes != value) {
+            this.isShowingUsedSpotRateQuotes = value;
+            this.LoadData();
+        }
+    }
+
     private isGeneratePayables: boolean = true;
     get IsGeneratePayables() { return this.isGeneratePayables; }
     set IsGeneratePayables(value: boolean) {
@@ -55,7 +64,7 @@ export class QuotesComponent {
 
     LoadData() {
         this.CurrentSession.StartBusyIndicatorLoading();
-
+        this.IsNoData = false;
         this.ItemsSource = [];        
         this.BaseQuote = null;
         this.SelectedItem = null;
@@ -72,6 +81,7 @@ export class QuotesComponent {
         filters.addAdditionalFilter("CustomerId", this.EntityPM.CustomerId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("FromPortId", this.EntityPM.MainCarriageFromPortId, null, null, "StartsWith", false, false, false, "string");
         filters.addAdditionalFilter("ToPortId", this.EntityPM.MainCarriageFinalDestinationPortId, null, null, "StartsWith", false, false, false, "string");
+        filters.addAdditionalFilter("IsShowingUsedSpotRateQuotes", this.IsShowingUsedSpotRateQuotes, null, null, "Equals", true, false, false, "Boolean");
 
         if (!AppTool.IsNullOrEmpty(this.EntityPM.AgentId)) {
             filters.addAdditionalFilter("RoutingRatesAgentId", this.EntityPM.AgentId, null, null, "StartsWith", true, false, false, "string");
@@ -209,6 +219,8 @@ class QuoteItem {
     get CarrierName() { return this.Entity.CarrierName; }
     get ChargeableWeight() { return this.Entity.ChargeableWeight; }
     get GrossWeight() { return this.Entity.GrossWeight; }
+    get UsageCount() { return this.Entity.UsageCount == 0 ? null : this.Entity.UsageCount; }
+
     get Notes() { return this.Entity.Notes; }
 
     public WeightDiffernece: number = 0;
