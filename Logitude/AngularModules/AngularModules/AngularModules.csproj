@@ -500,6 +500,10 @@
     <TypeScriptCompile Include="CRMModules\CRMTickets\Components\NewEntity\NewTicketComponent.ts" />
     <TypeScriptCompile Include="Controls\Pipes\MinutesToTimePipe.ts" />
     <TypeScriptCompile Include="CRM\Components\Workspaces\OccasionWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="CRM\Services\StandardLists\OccasionListService.ts" />
+    <TypeScriptCompile Include="CRM\Services\StandardLists\OccasionStatusListService.ts" />
+    <TypeScriptCompile Include="CRM\Services\StandardLists\OccasionTypeListService.ts" />
+    <TypeScriptCompile Include="CRM\Services\StandardLists\OpportunityStageListService.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\ClaimCustomsDocumentsController.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\Documents\PointersFromClaimRelatedEntitiesSelectionComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\General\ClaimGeneralTabComponent.ts" />

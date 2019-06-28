@@ -29,6 +29,7 @@ import {TicketSourceListService} from './Services/StandardLists/TicketSourceList
 import {TicketStageListService} from './Services/StandardLists/TicketStageListService';
 import {TicketTypeListService} from './Services/StandardLists/TicketTypeListService';
 import {TimeUnitListService} from './Services/StandardLists/TimeUnitListService';
+import { OccasionListService } from './Services/StandardLists/OccasionListService';
 
 import {ActivityOwnerHistoryPMService} from './Services/StandardPMs/ActivityOwnerHistoryPMService';
 import {ActivityPMService} from './Services/StandardPMs/ActivityPMService';
@@ -98,6 +99,7 @@ export class ModuleProviders {
             case "TicketStageListService": { myResult = new TicketStageListService(); break; }
             case "TicketTypeListService": { myResult = new TicketTypeListService(); break; }
             case "TimeUnitListService": { myResult = new TimeUnitListService(); break; }
+            case "OccasionListService": { myResult = new OccasionListService(); break; }                
 
             // PM
             case "ActivityOwnerHistoryPMService": { myResult = new ActivityOwnerHistoryPMService(); break; }
