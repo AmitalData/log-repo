@@ -135,6 +135,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                 Id = d.Id,
                                                 Tenant = d.Tenant,
                                                 DefaultPriceSteps = d.DefaultPriceSteps,
+                                                DefaultWarningPercentage = d.DefaultWarningPercentage
                                             }).FirstOrDefault();
 
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);

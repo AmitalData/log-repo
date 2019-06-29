@@ -650,11 +650,6 @@ export class TenantPM {
     public set IsTestTenant(newValue: boolean) { if (this.isTestTenant != newValue) { this.isTestTenant = newValue; this.MarkAsDirty("IsTestTenant"); } }
        
 	 
-    private defaultWarningPercentage: number;
-    public get DefaultWarningPercentage() { return this.defaultWarningPercentage; }
-    public set DefaultWarningPercentage(newValue: number) { if (this.defaultWarningPercentage != newValue) { this.defaultWarningPercentage = newValue; this.MarkAsDirty("DefaultWarningPercentage"); } }
-       
-	 
     private checkDigitControlAlgorithmCode: string;
     public get CheckDigitControlAlgorithmCode() { return this.checkDigitControlAlgorithmCode; }
     public set CheckDigitControlAlgorithmCode(newValue: string) { if (this.checkDigitControlAlgorithmCode != newValue) { this.checkDigitControlAlgorithmCode = newValue; this.MarkAsDirty("CheckDigitControlAlgorithmCode"); } }

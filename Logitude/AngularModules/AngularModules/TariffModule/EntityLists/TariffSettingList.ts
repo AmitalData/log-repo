@@ -10,6 +10,7 @@ export class TariffSettingList {
    
 	Id: string;
 	Tenant: number;
+	DefaultWarningPercentage: number;
 	
 }
  

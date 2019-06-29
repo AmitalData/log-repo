@@ -8,9 +8,6 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { TariffDomainService } from '../../../TariffModule/Services/TariffDomainService';
 import { TariffSettingPMService } from '../../../TariffModule/Services/StandardPMs/TariffSettingPMService';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
-import { TenantPMService } from '../../../Common/Services/StandardPMs/TenantPMService';
-import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 
 @Component({
     moduleId: module.id,
@@ -27,11 +24,9 @@ export class TariffSettingComponent extends BaseComponent {
     private myService: TariffSettingPMService;
     private myDomainService: TariffDomainService;
     private CurrentSession = SessionLocator.SelectedSession;
-    private TenantPM: TenantPM = new TenantPM();
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
-        this.GetTenantPMMethod();
         this.myService = new TariffSettingPMService();
         this.myDomainService = new TariffDomainService();
 
@@ -56,23 +51,15 @@ export class TariffSettingComponent extends BaseComponent {
         });
     }
 
-    private GetTenantPMMethod() {
-        var myService: TenantPMService = new TenantPMService();
-        myService.get(SessionLocator.TenantPM.Id).subscribe((response: ServiceResponse) => {
-            this.TenantPM = response.Result;
-           
-        });
-    }
-
-
+    
     get DefaultWarningPercentage() {
-        if (this.TenantPM != null) {
-            return this.TenantPM.DefaultWarningPercentage;
+        if (this.EntityPM != null) {
+            return this.EntityPM.DefaultWarningPercentage;
         }
     }
     set DefaultWarningPercentage(value: number) {
-        if (this.TenantPM.DefaultWarningPercentage != value) {
-            this.TenantPM.DefaultWarningPercentage = value;
+        if (this.EntityPM.DefaultWarningPercentage != value) {
+            this.EntityPM.DefaultWarningPercentage = value;
         }
     }
 
@@ -120,18 +107,20 @@ export class TariffSettingComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
-        this.TenantPM = null;
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
-        this.UpdateTenant();
-        if (!this.EntityPM.IsDirty && !this.TenantPM.IsDirty) {
+        if (!this.EntityPM.IsDirty) {
             this.CurrentSession.CloseCurrentWindow();
         }
         else {
             var errors: string[] = [];
             Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
+
+            if (this.DefaultWarningPercentage == null || this.DefaultWarningPercentage > 100 || this.DefaultWarningPercentage < 0) {
+                errors.push("Warning Percentage must be between 0-100");
+            }
 
             var isValidSort: boolean = true;
             var SortedItemStep: number = 0;
@@ -192,23 +181,6 @@ export class TariffSettingComponent extends BaseComponent {
                     });
                 }
             }
-        }
-    }
-
-    UpdateTenant() {
-        if (this.DefaultWarningPercentage == null || this.DefaultWarningPercentage > 100 || this.DefaultWarningPercentage < 0) {
-            this.ValidationErrorsList.push("Warning Percentage must be between 0-100");
-        }
-        else {
-            var myService: TenantPMService = new TenantPMService();
-            this.TenantPM.DefaultWarningPercentage = this.DefaultWarningPercentage;
-            myService.update(this.TenantPM).subscribe((myResponse: ServiceResponse) => {
-                if (myResponse) {
-                    if (!myResponse.HasError) {
-                        InfraSettings.TenantPM = this.TenantPM;
-                    }
-                }
-            });
         }
     }
 }

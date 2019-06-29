@@ -49,6 +49,14 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.Listen();        
     }
 
+    private GetTariffSettings() {
+        this.TariffDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.warningPercentage = myResponse.Result.DefaultWarningPercentage;
+            }
+        });
+    }
+
     private SaveCompletedEvent: any = null;
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
@@ -122,7 +130,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.LoadTariffLines("currentVersion");
         }
 
-        this.warningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
+        this.GetTariffSettings();
     }
 
     private loadedTariffLines: TariffLinePM[];

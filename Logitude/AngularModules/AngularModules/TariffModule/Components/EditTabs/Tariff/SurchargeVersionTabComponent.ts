@@ -118,7 +118,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.IsComparToChecked = true;
         }
 
-        this.warningPercentage = SessionLocator.TenantPM.DefaultWarningPercentage;
+        this.GetTariffSettings();
 
 
         var iChargesTypeListService = new ChargesTypeListService();
@@ -150,7 +150,13 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         });
     }
 
-
+    private GetTariffSettings() {
+        this.TariffDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.warningPercentage = myResponse.Result.DefaultWarningPercentage;
+            }
+        });
+    }
     private loadedTariffLines: TariffLinePM[];
     private compareTariffLines: TariffLinePM[];
     private LoadTariffLines(type: string) {
