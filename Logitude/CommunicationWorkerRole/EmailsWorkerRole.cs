@@ -1010,6 +1010,20 @@ namespace CommunicationWorkerRole
 
         private async void SendCommunicationLogToChampAPI(CommunicationLog waitingCommLog, string xmlfileText)
         {
+            string iSendingURL = null;
+            string iSendingPassword = null;
+
+            if (LogitudeSettings.ChampEnv == "TEST")
+            {
+                iSendingURL = LogitudeSettings.ChampTestAPIURL;
+                iSendingPassword = LogitudeSettings.ChampTestAPIPassword;
+            }
+            else
+            {
+                iSendingURL = LogitudeSettings.ChampProdAPIURL;
+                iSendingPassword = LogitudeSettings.ChampProdAPIPassword;
+            }
+
             bool isTestingCode = false;
 
             if (waitingCommLog.CreatedByUserId == "1-77675")
@@ -1051,16 +1065,13 @@ namespace CommunicationWorkerRole
             }
 
             // https://stackoverflow.com/questions/25352462/how-to-send-xml-content-with-httpclient-postasync
-
             //string iSendingURL = "https://community.champ.aero:8444/logitude/test/NO_WAIT";
-            string iSendingURL = "https://community.champ.aero:8443/logitude/prod/NO_WAIT";
 
             StringContent content = new StringContent(xmlfileText, Encoding.ASCII, "application/xml");
-
             using (var client = new HttpClient())
             {
                 //client.DefaultRequestHeaders.Add("password", "logitudett");
-                client.DefaultRequestHeaders.Add("password", "logitudepp");
+                client.DefaultRequestHeaders.Add("password", iSendingPassword);
 
                 //var iResponse = client.PostAsync(iSendingURL, content);
                 //System.Threading.Tasks.Task iResponse = client.PostAsync(iSendingURL, content);
