@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.LogitudeCacheManager;
 using System;
@@ -272,6 +273,7 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                 string signersList = "";
                 ICommonDataContext commoncontext = CommonDataContext.GetContext(Tenant);
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(Tenant);
+                ShipmentRepository ShipmentRepo = new ShipmentRepository(Tenant);
                 DocumentsFilingPM extDocPM = documentsFilingQuery.GetSinglePM(FileInfo.DocumentsFilingId, Tenant);
                 if (!string.IsNullOrEmpty(extDocPM.SignRequestByUserEmail))
                 {
@@ -310,9 +312,23 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                             extDocPM.SignersList = signersList;
                             extDocPM.SignRequestByUserEmail = null;
                             //extDocPM.DontAddToQueue = true;
-                            if (extDocPM.IsSharedWithCustomer == true || extDocPM.IsSharedWithForwarder == true)
+                            if (extDocPM.IsSharedWithCustomer == true)
                             {
                                 extDocPM.DontAddToQueue = false;
+                                //sextDocPM.IsSharedWithForwarder = true;
+                                //extDocPM.ForwarderDocumentId = null;
+                            }
+                            if (extDocPM.IsSharedWithForwarder == true)
+                            {
+                                var DocsEntity = ShipmentRepo.GetSingleShipment(extDocPM.EntityId, extDocPM.Tenant);
+                                if (!string.IsNullOrEmpty(DocsEntity.ForwarderShipmentNumber))
+                                {
+                                    extDocPM.DontAddToQueue = false;
+                                }
+                                else
+                                {
+                                    extDocPM.DontAddToQueue = true;
+                                }
                                 //sextDocPM.IsSharedWithForwarder = true;
                                 //extDocPM.ForwarderDocumentId = null;
                             }
