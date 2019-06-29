@@ -730,7 +730,7 @@ export class TariffLineData extends BaseComponent {
 
     SetCellsComparingText() {
         if (this.ComparedEntity != null) {
-            var minPriceComparingValue = this.MinPrice - this.ComparedEntity.MinPrice;
+            var minPriceComparingValue = (AppTool.IsNullOrZero(this.MinPrice) ? 0 : this.MinPrice) - (AppTool.IsNullOrZero(this.ComparedEntity.MinPrice) ? 0 : this.ComparedEntity.MinPrice);
             if (!AppTool.IsNullOrZero(minPriceComparingValue)) {
                 this.MinPriceComparingPrice = AppTool.Round((minPriceComparingValue / this.ComparedEntity.MinPrice) * 100, 2);
                 this.MinPriceComparingTextColor = this.ComputeWarningPercentageColor(this.MinPriceComparingPrice);

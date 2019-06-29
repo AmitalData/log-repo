@@ -94,7 +94,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
-			      				    IsNewWizard =  false,
+			      				    IsNewWizard =  true,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -115,11 +115,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
+			      				    NewWizardControlName =  "./CRMModules/CRMOccasion/Components/NewEntity/NewOccasionComponent",
 			      				    DefaultText =  "Occasion",
 			      				    Code =  "4696",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "CRM",
+			      				    NewWizardComponentPath =  "./CRMModules/CRMOccasion/Components/NewEntity/NewOccasionComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -152,6 +154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
+					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeNewFormatConverter",
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -186,7 +189,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -268,6 +271,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
+					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeNewFormatConverter",
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -302,7 +306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -502,6 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
+					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeNewFormatConverter",
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -536,7 +541,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -561,6 +566,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
+					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeNewFormatConverter",
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -595,7 +601,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -953,6 +959,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "CreatedByContactName",
+					  						OldFieldName =  "CreatedByContactName",
 					  						ObjectTableName =  "Occasion",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -972,6 +979,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreatedByContactName",
 					  						ListPropertyPath =  "CreatedByContactName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1010,6 +1018,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "UpdatedByUserName",
+					  						OldFieldName =  "UpdatedByUserName",
 					  						ObjectTableName =  "Occasion",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1029,6 +1038,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UpdatedByUserName",
 					  						ListPropertyPath =  "UpdatedByUserName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1067,6 +1077,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "TypeName",
+					  						OldFieldName =  "TypeName",
 					  						ObjectTableName =  "Occasion",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1086,6 +1097,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TypeName",
 					  						ListPropertyPath =  "TypeName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1124,6 +1136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OwnerName",
+					  						OldFieldName =  "OwnerName",
 					  						ObjectTableName =  "Occasion",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1143,6 +1156,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OwnerName",
 					  						ListPropertyPath =  "OwnerName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1181,6 +1195,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "OccasionStatusName",
+					  						OldFieldName =  "OccasionStatusName",
 					  						ObjectTableName =  "Occasion",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1200,6 +1215,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OccasionStatusName",
 					  						ListPropertyPath =  "OccasionStatusName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1238,6 +1254,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "IndustryName",
+					  						OldFieldName =  "IndustryName",
 					  						ObjectTableName =  "Occasion",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1257,6 +1274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IndustryName",
 					  						ListPropertyPath =  "IndustryName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
