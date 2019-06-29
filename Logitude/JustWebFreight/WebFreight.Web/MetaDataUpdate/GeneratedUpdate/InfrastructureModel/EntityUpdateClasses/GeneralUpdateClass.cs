@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "b97d",
+			      				    Code =  "2886",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -127,6 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "General,Generals,,Id,",
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
@@ -531,6 +532,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_TariffModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TariffModule", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.TariffModule", NameTextCodeDefaultText = @"Tariffs" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
 		   Feature GeneralFeature_CREATETENANT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CREATETENANT", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CREATETENANT", NameTextCodeDefaultText = @"Create Tenant" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
+		   Feature GeneralFeature_CacheLogMenu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CacheLogMenu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CacheLogMenu", NameTextCodeDefaultText = @"Cache Log" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
    
 	    
@@ -2095,6 +2098,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralMHTariffModule = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MH.TariffModule", DefaultText = "Tariffs",LocalDefaultText = @"Tariffs", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCOthersCreateTenant = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.CreateTenant", DefaultText = "Create Tenant",LocalDefaultText = @"Create Tenant", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralMCOthersCacheLog = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.CacheLog", DefaultText = "Cache Log",LocalDefaultText = @"Cache Log", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
