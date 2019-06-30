@@ -130,7 +130,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.UpdatePaymentOpenAmount();
             ARPaymentHelper service = new ARPaymentHelper();
-            service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, payment,this.objectContext,this.myCommonContext, isVoidingInvoice, setCancelApproved);
+            service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, payment,this.objectContext,this.myCommonContext, isVoidingInvoice, setCancelApproved, theEntityPm.SetReSendQBO);
             this.BuildSearchFields();
 
             AccountingPaymentMethodRepository ARPaymentMethodRepository = new AccountingPaymentMethodRepository(objectContext);
@@ -311,11 +311,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARPaymentHelper service = new ARPaymentHelper();
             if (payment.ExternalAccountingEntityId != null || SetReSendQBO)
             {
-                service.ARPaymentQuickbooksValidating(theEntityPm, true, false, payment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved);
+                service.ARPaymentQuickbooksValidating(theEntityPm, true, false, payment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO);
             }
             else
             {
-                service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, payment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved);
+                service.ARPaymentQuickbooksValidating(theEntityPm, setApproved, false, payment, this.objectContext, this.myCommonContext, this.SetVoided, setCancelApproved, SetReSendQBO);
             }
 			this.BuildSearchFields();
 
