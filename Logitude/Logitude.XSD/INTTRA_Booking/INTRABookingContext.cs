@@ -88,6 +88,7 @@ namespace Logitude.XSD.INTTRA_Booking
             this.cardQuery = new CardQuery(Tenant);
             this.contactQuery = new ContactQuery(Tenant);
             this.shipmentMasterDataRepository = new ShipmentMasterDataRepository(shipmentContext);
+            this.shipmentQuery = new ShipmentQuery(Tenant);
             this.Shipment = shipmentRepository.GetSingleShipment(ShipmentId, Tenant);
             this.ShipmentPM = shipmentQuery.GetSinglePM(ShipmentId, Tenant);
             this.MasterData = shipmentMasterDataRepository.GetSingleMasterData(Shipment.MasterShipmentDataId);
