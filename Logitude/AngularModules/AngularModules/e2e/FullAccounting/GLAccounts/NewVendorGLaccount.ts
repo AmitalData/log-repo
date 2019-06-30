@@ -13,8 +13,9 @@ export class NewVendor {
 
   public CreateNewVendorGLAccount(Name: string) {
 
-    this.Helper.WaitByIdAndClick('General.MH.Maintenance');
-    this.Helper.WaitByIdAndClick('MaintenanceItemMTVD');
+      this.Helper.WaitByIdAndClick('General.MH.Maintenance');
+      this.Generator.GoToMainMenu('MaintenanceItemMTVD');
+    //this.Helper.WaitByIdAndClick('MaintenanceItemMTVD');
     this.Helper.WaitByIdAndClick('NewButton_Vendor');
     this.Helper.WaitByIdAndFill('Address_Name', Name);
     this.Helper.WaitByIdAndFill('Address_CountryId', 'ps');

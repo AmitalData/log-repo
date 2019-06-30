@@ -923,6 +923,9 @@ export class ARInvoiceMenuButtonsHandler {
                         this.entityArgs.EditComponent.IsReloadNeeded = true;
                         this.entityArgs.EditComponent.ReloadEntityPM();
                     }
+                    else {
+                        this.StopFlags();
+                    }
                 });
 
                 cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
