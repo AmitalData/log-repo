@@ -11,6 +11,9 @@ using System.Linq;
 using System;
 using Simplog.Server.Infrastructure.Helpers;
 using Devart.Data.Oracle;
+using System.Diagnostics;
+using Logitude.Server.Tools.Helpers;
+
 namespace Logitude.Server.Tools.Counters
 {
     public class IdCounter //: IIdCounter
@@ -189,6 +192,8 @@ namespace Logitude.Server.Tools.Counters
             string strConnString = GetConnection(tenant);
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
+                
+                var sw = Stopwatch.StartNew();
                 lock (thisLock)
                     using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
                 using (OracleConnection cn = new OracleConnection(strConnString))
@@ -231,6 +236,7 @@ namespace Logitude.Server.Tools.Counters
                     cn.Close();
                 }
 
+                LogMessagingUtil.Instance.AppendLine($"GetNumber({tableName}):took:{sw.Elapsed}");
                 return number;
             }
 
