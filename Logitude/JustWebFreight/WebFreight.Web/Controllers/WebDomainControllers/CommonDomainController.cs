@@ -311,7 +311,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         client.DefaultRequestHeaders.Accept.Add(
                         new MediaTypeWithQualityHeaderValue("application/xml"));
                         string apicreditionals = "API_15408257301181065689979";
-                        var request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
+                        var request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/param-encryption");
                         if ((LogitudeSettings.DeploymentStage == "logitudepreproduction" || LogitudeSettings.DeploymentStage == "Dev") && countryname != "Israel")
                         {
                             apicreditionals = "API_1516630314047705132569";
@@ -363,7 +363,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
 
                             //like this:
-                            request = WebRequest.Create("https://bluesnap.com/services/2/tools/param-encryption");
+                            request = WebRequest.Create("https://ws.bluesnap.com/services/2/tools/param-encryption");
                             request.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes("API_15416735830591484092606:BlueSand123"));
 
                             bytes = null;

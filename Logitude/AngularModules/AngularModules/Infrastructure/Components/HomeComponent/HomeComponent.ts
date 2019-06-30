@@ -1058,7 +1058,7 @@ export class HomeComponent implements OnDestroy{
                 link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;;;
+                link = "https://ws.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;;;
             }
         }
 
@@ -1102,7 +1102,7 @@ export class HomeComponent implements OnDestroy{
                 link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://ws.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
@@ -1147,7 +1147,7 @@ export class HomeComponent implements OnDestroy{
                 link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://ws.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
@@ -1195,7 +1195,7 @@ export class HomeComponent implements OnDestroy{
                 link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId  + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://ws.bluesnap.com/buynow/checkout?sku" + contractId  + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
@@ -1241,7 +1241,7 @@ export class HomeComponent implements OnDestroy{
                 link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://ws.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
@@ -1281,7 +1281,7 @@ export class HomeComponent implements OnDestroy{
                 link = "https://sandbox.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
             else {
-                link = "https://bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
+                link = "https://ws.bluesnap.com/buynow/checkout?sku" + contractId + "=" + numberofUsers + "&language=ENGLISH&currency=USD&custom1=" + SessionInfo.LoggedUserTenant;
             }
         }
 
