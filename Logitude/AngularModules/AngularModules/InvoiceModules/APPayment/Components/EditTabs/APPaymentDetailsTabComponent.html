@@ -549,10 +549,10 @@
                                                 <td *ngIf="IsSplitButtonVisibile">
                                                     <table>
                                                         <tr>
-                                                            <td *ngIf="PaymentChequeActivated" style="text-align:right;width:70px;color:#1B90CB;cursor:pointer;font-size:14px" (click)="SplitButtonClicked()">{{ 'Accounting.General.O.PaymentChequeOptions' | TextCodeTranslationPipe}} </td>
+                                                            <td *ngIf="PaymentChequeActivated" style="text-align:right;width:70px;color:#1B90CB;cursor:pointer;font-size:14px" (click)="SplitButtonClicked()">{{ 'Accounting.General.O.PaymentChequeManualOption' | TextCodeTranslationPipe}} </td>
                                                             <td style="width:10px"></td>
                                                             <td *ngIf="PaymentChequeActivated || ShowSplitButton" style="width: 27px; min-width: 27px;" (click)="SplitButtonClicked()">
-                                                                <img class="SplitButton" src="./Images/Split/split-icon-right.png" [class.flipHoriz]="IsSplitComponentOpened" />
+                                                                <img class="SplitButton" src="./Images/Split/split-icon-right.png" [class.flipHoriz]="IsSplitComponentOpened" [title]="SplitTooltip"/>
                                                             </td>
                                                             <td><div></div></td>
 
