@@ -63,7 +63,7 @@ namespace CustomsWorkerRole
                 success = SerialAnalyzeDcaResponseByAggregateKey.DoSerialAnalyze();
                 
                 //message.SafeComplete();
-                _CustomDbQueueService.SafeComplete();
+                //_CustomDbQueueService.SafeComplete();
                 return success;
 
             }
@@ -73,14 +73,14 @@ namespace CustomsWorkerRole
                 //ExceptionHandler.HandleException(customsRequestsSheetServiceException, DateTime.Now, 0, "", "WorkerRole", "CustomsMessagingSheetWR: ProcessMessage() Method/CustomsRequestsSheetServiceException ", null);
                 if (customsRequestsSheetServiceException.What2Do == CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue)
                 {
-                    _CustomDbQueueService.SafeComplete();
+                    //_CustomDbQueueService.SafeComplete();
                     return true;
                 }
                 else
                 {
                     //message.SetProperty<DateTime>(QueueExt.QueuePropertyNames.LastExecAt, DateTime.UtcNow);
                     //message.SafeAbandon();
-                    _CustomDbQueueService.SafeAbandon();
+                    //_CustomDbQueueService.SafeAbandon();
                     return false;
                 }
 
