@@ -3,6 +3,8 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.Helpers;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -50,6 +52,7 @@ namespace Logitude.XSD.INTTRA_Booking
 
         // Objects & Validating
         public Shipment Shipment { get; set; }
+        public ShipmentPM ShipmentPM { get; set; }
         public ShipmentMasterData MasterData { get; set; }
         public string INTTRA_Alias { get; set; }
         public string INTTRA_BookingSettingsId { get; set; }
@@ -66,11 +69,12 @@ namespace Logitude.XSD.INTTRA_Booking
         public Country FromPortCountry;
         private Country FinalPortCountry;
         public ShippingLine MainShippingLine;
-        public List<ShipmentPackage> ShipmentPackages = new List<ShipmentPackage>();
+        public List<ShipmentOrderPackage> ShipmentOrderPackages = new List<ShipmentOrderPackage>();
         private List<InsideShipmentPackage> InsidePackages = new List<InsideShipmentPackage>();
         private List<ShipmentPackageHarmonize> AllHarmonizes = new List<ShipmentPackageHarmonize>();
         public IShipmentsContext shipmentContext;
         public ShipmentRepository shipmentRepository;
+        public ShipmentQuery shipmentQuery;
         public CardQuery cardQuery;
         public ContactQuery contactQuery;
 
@@ -84,7 +88,9 @@ namespace Logitude.XSD.INTTRA_Booking
             this.cardQuery = new CardQuery(Tenant);
             this.contactQuery = new ContactQuery(Tenant);
             this.shipmentMasterDataRepository = new ShipmentMasterDataRepository(shipmentContext);
+            this.shipmentQuery = new ShipmentQuery(Tenant);
             this.Shipment = shipmentRepository.GetSingleShipment(ShipmentId, Tenant);
+            this.ShipmentPM = shipmentQuery.GetSinglePM(ShipmentId, Tenant);
             this.MasterData = shipmentMasterDataRepository.GetSingleMasterData(Shipment.MasterShipmentDataId);
             this.GetObjects_INTTRASetting();
             this.GetObjects_Partners();
@@ -94,7 +100,9 @@ namespace Logitude.XSD.INTTRA_Booking
             this.GetObjects_ShipmentCarrier();
             this.GetObjects_Branch();
             this.GetObjects_ShipmentFields();
+            this.GetObjects_ShipmentOrderPackages();
             this.IsValid = this.Errors.Count == 0 ? true : false;
+
         }
         private void GetObjects_Tenant()
         {
@@ -196,6 +204,16 @@ namespace Logitude.XSD.INTTRA_Booking
             }
 
             this.MainVessel = (from d in CommonContext.Vessels where d.Id == this.MasterData.MainCarriageVesselId select d).FirstOrDefault();
+        }
+        private void GetObjects_ShipmentOrderPackages()
+        {
+            this.ShipmentOrderPackages = (from d in shipmentContext.ShipmentOrderPackages
+                                          where d.Tenant == this.Tenant
+                                          && d.ShipmentId == this.ShipmentId
+                                          select d).ToList();
+
+           
+
         }
 
         private Address ShipperAddress;
@@ -332,7 +350,7 @@ namespace Logitude.XSD.INTTRA_Booking
         // Message Properties
         public INTTRA_Booking.MovementTypeType MovementType;
         public List<INTTRA_Booking.ReferenceInformationType> ReferenceInformations;
-        public List<INTTRA_Booking.LocationBaseType> Locations;
+        public List<INTTRA_Booking.LocationDateTimeType> Locations;
         public List<INTTRA_Booking.TransportationDetailsType> TransportationDetails;
         public List<INTTRA_Booking.PartiesType> MessagePropertiesParties;
 
@@ -389,21 +407,43 @@ namespace Logitude.XSD.INTTRA_Booking
         }
         private void BuildMessageProperties_Locations()
         {
-            this.Locations = new List<INTTRA_Booking.LocationBaseType>();
+            this.Locations = new List<INTTRA_Booking.LocationDateTimeType>();
 
-            INTTRA_Booking.LocationBaseType item_PlaceOfDelivery = new INTTRA_Booking.LocationBaseType()
+            INTTRA_Booking.LocationDateTimeType item_PlaceOfReceipt = new INTTRA_Booking.LocationDateTimeType()
+            {
+                Type = INTTRA_Booking.LocationTypeValues.PlaceOfReceipt,
+                Identifier = new LocationIdentifierType()
+                {
+                    Type = LocationIdentifierTypeValues.UNLOC,
+                    Value = this.FromPort.CombinedCode,
+                },
+                Name = this.FormatString(this.FromPort.EnglishName, 256),
+                CountryCode = this.FromPortCountry.Code.ToUpper(),
+            };
+
+            if (this.ShipmentPM.MainCarriageETD != null)
+            {
+                item_PlaceOfReceipt.DateTime = new LocationDateType()
+                {
+                    Type = DateTimeCodeTypeType.Date,
+                    DateType = LocationDateTypeValues.EarliestDeparture,
+                    Value = this.ShipmentPM.MainCarriageETD.Value,
+                };
+            }
+
+            this.Locations.Add(item_PlaceOfReceipt);
+
+            INTTRA_Booking.LocationDateTimeType item_PlaceOfDelivery = new INTTRA_Booking.LocationDateTimeType()
             {
                 Type = INTTRA_Booking.LocationTypeValues.PlaceOfDelivery,
                 Identifier = new LocationIdentifierType()
                 {
                     Type = LocationIdentifierTypeValues.UNLOC,
-                    //Value = 
+                    Value = this.FinalPort.CombinedCode,
                 },
-
-                Name = this.FormatString(this.FromPort.EnglishName, 256),
-                CountryCode = this.FromPortCountry.Code.ToUpper(),
+                Name = this.FormatString(this.FinalPort.EnglishName, 256),
+                CountryCode = this.FinalPortCountry.Code.ToUpper(),
             };
-
             this.Locations.Add(item_PlaceOfDelivery);
         }
         private void BuildMessageProperties_TransportationDetails()
@@ -449,33 +489,46 @@ namespace Logitude.XSD.INTTRA_Booking
                 }
             }
 
-            List<INTTRA_Booking.LocationBaseType> locations = new List<INTTRA_Booking.LocationBaseType>();
+            List<INTTRA_Booking.LocationDateTimeType> locations = new List<INTTRA_Booking.LocationDateTimeType>();
 
             // From
-            locations.Add(new INTTRA_Booking.LocationBaseType()
+            var location = new INTTRA_Booking.LocationDateTimeType()
             {
                 Type = INTTRA_Booking.LocationTypeValues.PortOfLoad,
                 Identifier = new LocationIdentifierType()
                 {
                     Type = LocationIdentifierTypeValues.UNLOC,
+                    Value = this.FromPort.CombinedCode,
                 },
                 Name = this.FormatString(this.FromPort.EnglishName, 256),
                 CountryCode = this.FromPortCountry.Code.ToUpper(),
-            });
+            };
+            
+            if (this.ShipmentPM.MainCarriageETD != null)
+            {
+                location.DateTime = new LocationDateType()
+                {
+                    Type = DateTimeCodeTypeType.Date,
+                    DateType = LocationDateTypeValues.EarliestDeparture,
+                    Value = this.ShipmentPM.MainCarriageETD.Value,
+                };
+            }
+            locations.Add(location);
 
             // Final
-            locations.Add(new INTTRA_Booking.LocationBaseType()
+            locations.Add(new INTTRA_Booking.LocationDateTimeType()
             {
                 Type = INTTRA_Booking.LocationTypeValues.PortOfDischarge,
                 Identifier = new LocationIdentifierType()
                 {
                     Type = LocationIdentifierTypeValues.UNLOC,
+                    Value = this.FinalPort.CombinedCode,
                 },
-                Name = this.FormatString(this.FinalPortCountry.EnglishName, 256),
+                Name = this.FormatString(this.FinalPort.EnglishName, 256),
                 CountryCode = this.FinalPortCountry.Code.ToUpper(),           
             });
 
-            //this.TransportationDetails.Location = locations.ToArray<INTTRA_Booking.LocationBaseType>();
+            transportationDetails.Location = locations.ToArray<INTTRA_Booking.LocationDateTimeType>();
             this.TransportationDetails.Add(transportationDetails);
         }
         private void BuildMessageProperties_Parties()
@@ -489,7 +542,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 {
                     Role = INTTRA_Booking.PartyTypeValues.Booker,
                     RoleSpecified  =true,
-                    Name = this.TenantObject.Company,
+                    Name = this.FormatString(this.TenantObject.Company, 35),
                     Identifier = new INTTRA_Booking.PartyIdentifierType()
                     {
                         Type  = PartyIdentifierTypeValues.PartnerAlias,
@@ -511,7 +564,7 @@ namespace Logitude.XSD.INTTRA_Booking
                 {
                     Role = INTTRA_Booking.PartyTypeValues.Forwarder,
                     RoleSpecified = true,
-                    Name = this.TenantObject.Company,
+                    Name =  this.FormatString(this.TenantObject.Company, 35),
                     Identifier = new INTTRA_Booking.PartyIdentifierType()
                     {
                         Type = PartyIdentifierTypeValues.PartnerAlias,
@@ -536,7 +589,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Carrier,
                         RoleSpecified = true,
-                        Name = myCard.EnglishName,
+                        Name = this.FormatString(myCard.EnglishName, 35),
                         Identifier = new INTTRA_Booking.PartyIdentifierType()
                         {
                             Type = PartyIdentifierTypeValues.PartnerAlias,
@@ -557,17 +610,20 @@ namespace Logitude.XSD.INTTRA_Booking
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
                     var contactPM = contactQuery.GetSinglePM(myCard.PrimaryContactId, Tenant);
-                    contacts.Add(new ContactInformationType()
+                    if (contactPM != null)
                     {
-                        Type = ContactTypeValues.InformationContact,
-                        Name = contactPM.EnglishName,
-                        CommunicationDetails = new CoordinatesType()
+                        contacts.Add(new ContactInformationType()
                         {
-                            Email = new string[] { contactPM.Email },
-                            Fax = new string[] { contactPM.Fax },
-                            Phone = new string[] { contactPM.BusinessPhone },
-                        }
-                    });
+                            Type = ContactTypeValues.InformationContact,
+                            Name = contactPM.EnglishName,
+                            CommunicationDetails = new CoordinatesType()
+                            {
+                                Email = new string[] { contactPM.Email },
+                                Fax = new string[] { contactPM.Fax },
+                                Phone = new string[] { contactPM.BusinessPhone },
+                            }
+                        });
+                    }
 
                     item.Contacts = contacts.ToArray();
                     this.MessagePropertiesParties.Add(item);
@@ -584,7 +640,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Shipper,
                         RoleSpecified = true,
-                        Name = shipper.EnglishName,
+                        Name = this.FormatString(shipper.EnglishName, 35),
                     };
 
                     if (this.ShipperAddress != null)
@@ -594,18 +650,21 @@ namespace Logitude.XSD.INTTRA_Booking
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
                     var contactPM = contactQuery.GetSinglePM(shipper.PrimaryContactId, Tenant);
-                    contacts.Add(new ContactInformationType()
+                    if(contactPM != null)
                     {
-                        Type = ContactTypeValues.InformationContact,
-                        Name = contactPM.EnglishName,
-                        CommunicationDetails = new CoordinatesType()
+                        contacts.Add(new ContactInformationType()
                         {
-                            Email = new string[] { contactPM.Email },
-                            Fax = new string[] { contactPM.Fax },
-                            Phone = new string[] { contactPM.BusinessPhone },
-                        }
-                    });
-                   
+                            Type = ContactTypeValues.InformationContact,
+                            Name = contactPM.EnglishName,
+                            CommunicationDetails = new CoordinatesType()
+                            {
+                                Email = new string[] { contactPM.Email },
+                                Fax = new string[] { contactPM.Fax },
+                                Phone = new string[] { contactPM.BusinessPhone },
+                            }
+                        });
+                    }
+
                     item.Contacts = contacts.ToArray();
                     this.MessagePropertiesParties.Add(item);
                 }    
@@ -621,7 +680,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     {
                         Role = INTTRA_Booking.PartyTypeValues.Consignee,
                         RoleSpecified = true,
-                        Name = myCard.EnglishName,
+                        Name = this.FormatString(myCard.EnglishName, 35),
                     };
 
                     if (this.ConsigneeAddress != null)
@@ -631,18 +690,21 @@ namespace Logitude.XSD.INTTRA_Booking
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
                     var contactPM = contactQuery.GetSinglePM(myCard.PrimaryContactId, Tenant);
-                    contacts.Add(new ContactInformationType()
+                    if (contactPM != null)
                     {
-                        Type = ContactTypeValues.InformationContact,
-                        Name = contactPM.EnglishName,
-                        CommunicationDetails = new CoordinatesType()
+                        contacts.Add(new ContactInformationType()
                         {
-                            Email = new string[] { contactPM.Email },
-                            Fax = new string[] { contactPM.Fax },
-                            Phone = new string[] { contactPM.BusinessPhone },
-                        }
-                    });
-
+                            Type = ContactTypeValues.InformationContact,
+                            Name = contactPM.EnglishName, 
+                            CommunicationDetails = new CoordinatesType()
+                            {
+                                Email = new string[] { contactPM.Email },
+                                Fax = new string[] { contactPM.Fax },
+                                Phone = new string[] { contactPM.BusinessPhone },
+                            }
+                        });
+                    }
+   
                     item.Contacts = contacts.ToArray();
                     this.MessagePropertiesParties.Add(item);
                 }
@@ -691,30 +753,58 @@ namespace Logitude.XSD.INTTRA_Booking
         public List<INTTRA_Booking.GoodsDetailsType> GoodsDetails;
         public List<INTTRA_Booking.EquipmentDetailsType> EquipmentDetails;
         private List<PackageType> AllPackageTypes;
-
         private void BuildMessageDetails()
-        {
-            this.AllPackageTypes = new List<PackageType>();
-            List<string> ids1 = this.ShipmentPackages.Where(d => d.PackageTypeId != null).Select(s => s.PackageTypeId).ToList();
-            List<string> ids2 = this.InsidePackages.Where(d => d.PackageTypeId != null).Select(s => s.PackageTypeId).ToList();
-            List<string> ids = ids1.Concat(ids2).ToList();
-
-            if (ids.Count > 0)
-            {
-                this.AllPackageTypes = (from d in CommonContext.PackageTypes
-                                        where d.Tenant == this.Tenant
-                                        && ids.Contains(d.Id)
-                                        select d).ToList();
-            }
-
-            this.BuildMessageDetails_EquipmentDetails();
-        }
-        private void BuildMessageDetails_EquipmentDetails()
         {
             this.GoodsDetails = new List<INTTRA_Booking.GoodsDetailsType>();
             this.EquipmentDetails = new List<INTTRA_Booking.EquipmentDetailsType>();
 
+            this.BuildMessageDetails_EquipmentDetails();
+            this.BuildMessageDetails_GoodsDetails();
+        }
+        private void BuildMessageDetails_EquipmentDetails()
+        {
+            var groupedOrders = (from d in this.ShipmentOrderPackages
+                                 group d by new { d.PackageTypeId } into g
+                                 select new
+                                 {
+                                     PackageTypeId = g.Key.PackageTypeId,
+                                     Quantity = g.Sum(s => s.Quantity),
+                                 });
 
+            List<string> ids = groupedOrders.Select(s => s.PackageTypeId).ToList();
+            this.AllPackageTypes = (from d in CommonContext.PackageTypes
+                                    where d.Tenant == this.Tenant
+                                    && ids.Contains(d.Id)
+                                    select d).ToList();
+
+            foreach (var item in this.AllPackageTypes)
+            {
+                string myTranslatedCode = computingPartnerHelper.GetComputingPartnerCodeTranslation(item.Code, "G-INTTRA", "PackageType");
+                if (string.IsNullOrEmpty(myTranslatedCode))
+                {
+                    this.Errors.Add("Partner code is required for all Package Types");
+                }
+            }
+
+
+            foreach (var item in groupedOrders)
+            {
+                INTTRA_Booking.EquipmentDetailsType itemDetails = new INTTRA_Booking.EquipmentDetailsType()
+                {
+                    EquipmentType = new EquipmentTypeType()
+                    {
+                        EquipmentTypeCode = this.AllPackageTypes.Where(a=>a.Id == item.PackageTypeId).Select(d=>d.Code).FirstOrDefault(),
+                    },
+                    NumberOfEquipment = item.Quantity+ "",
+                    ImportExportHaulage = new ImportExportHaulageType()
+                    {
+                        HaulageArrangements = ImportExportHaulageTypeHaulageArrangements.MerchantExportHaulageMerchantImportHaulage,
+                        CargoMovementType = ImportExportHaulageTypeCargoMovementType.FCLFCL,
+                        CargoMovementTypeSpecified = true,
+                    }
+                };
+                this.EquipmentDetails.Add(itemDetails);
+            }
         }
         private void BuildMessageDetails_GoodsDetails()
         {
