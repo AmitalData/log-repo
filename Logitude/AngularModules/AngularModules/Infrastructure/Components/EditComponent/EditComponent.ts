@@ -131,9 +131,10 @@ export class EditComponent implements OnDestroy {
         if (this.ObjectTableName == "CommunicationLog") {
             this.IsSaveBtnDisable = true;
         }
-
+        
+       
         this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible;
-
+        
         // Split Component
         var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
         if (!AppTool.IsNullOrEmpty(feature)) { // granted
@@ -152,7 +153,7 @@ export class EditComponent implements OnDestroy {
         if (this.EntityId || (this.EntityId && this.EntityPM.Id))
             isNewEntity = false;
 
-        if (this.ObjectTableName == "ARPayment" && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
+        if ((this.ObjectTableName == "ARPayment"  || this.ObjectTableName== "APPayment") && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
             this.IsSaveBtnVisible = false;
         }
         //

@@ -41,7 +41,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.VatNumber).HasColumnName("VatNumber").HasMaxLength(20).IsUnicode(false);
 
-            this.Property(t => t.Reference).HasColumnName("Reference").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Reference).HasColumnName("Reference").HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.ReferecneGroup).HasColumnName("ReferecneGroup").HasMaxLength(15).IsUnicode(false);
 

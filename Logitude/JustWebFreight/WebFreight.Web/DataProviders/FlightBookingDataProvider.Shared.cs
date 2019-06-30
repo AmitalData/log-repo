@@ -43,7 +43,17 @@ namespace WebFreight.Web.DataProviders
         public string ConsigneeAddress { get; set; }
         public string ShipmentNumber  { get; set; }
         public string ShipperAddress { get; set; }
-
-
+        public double? VolumetricWeight { get; set; }
+        public string VolumetricWeightUnit{ get; set; }
+        public DateTime? ShipmentCreateDate{ get; set; }
+        public string PackagesRef1 { get; set; }
+        public string PackagesRef2 { get; set; }
+        public string PackagesRef3 { get; set; }
+        public string PackagesRef4{ get; set; }
+        public string CustomAgentExport { get; set; }
+        public string CustomAgentImport { get; set; }
+        public int? HAWBsNumbers{ get; set; }
+        public string MoveType { get; set; }
+        public string SCI{ get; set; }
     }
 }

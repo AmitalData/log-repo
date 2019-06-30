@@ -1010,6 +1010,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     SetUIProperties_FullAccounting() {
         if (this.IsFullAccounting) {
             this.SetUIProperties_FullAccounting_Tax();
+            if (this.EntityPM.Id != null) {
+                this.ShowSplitButton = false;
+                this.PaymentChequeActivated = false;
+            }
             if (this.PaymentMethodCode == "CH" || this.PaymentMethodCode == "BT" || this.PaymentMethodCode == "CC") {
                 this.BankAccountIdVisibility = true;
             }
