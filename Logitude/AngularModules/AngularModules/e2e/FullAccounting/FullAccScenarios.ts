@@ -8,6 +8,10 @@ import { NewVendor } from '../FullAccounting/GLAccounts/NewVendorGLaccount';
 import { NewAPInvoice } from '../FullAccounting/APInvoice/NewAPInvoice';
 import { NewGLAccount } from '../FullAccounting/GLAccounts/New/NewGLaccount';
 import { EditGLAccount } from '../FullAccounting/GLAccounts/Edit/EditGLaccount';
+import { ChartOFAccountModule } from '../FullAccounting/ChartOfAccount/ChartOFAccountModule';
+import { NewChartOfAccount } from '../FullAccounting/ChartOfAccount/NewEntity/NewChartOfAccount';
+import { EditChartOfAccount } from '../FullAccounting/ChartOfAccount/EditEntity/EditChartOfAccount';
+import { NewAPPayment } from '../FullAccounting/APPayment/NewAPPayment';
 
 //import { NewAPInvoice } from '../APInvoice/NewAPInvoice';
 
@@ -16,19 +20,33 @@ export class FullAccountingScenarios {
     private generalFunction: GeneralFunctions = new GeneralFunctions();
     private customer = new NewCustomer();
     private arInvoice = new NewARInvoice();
+
     private arPayment = new NewARPayment();
     private vendor = new NewVendor();
     private aPinvoice = new NewAPInvoice();
     private arpayment = new NewARPayment();
     private GLA = new NewGLAccount();
     private EditGLA = new EditGLAccount();
-
+    private newChart = new NewChartOfAccount();
+    private editChart = new EditChartOfAccount();
+    private aPpayment = new NewAPPayment();
     constructor() {
     
     }
 
     AccountingScenario(type: string) {
-        if (type == 'AR') {
+        if (type == 'ChartOfAccounts') {
+            var chartOfAccountNo = this.generalFunction.RandomNumAcc();
+            this.generalFunction.GoToMainMenu('General.MH.Maintenance');
+            this.Helper.WaitByIdAndClick('ACC');
+            this.Helper.WaitByIdAndClick('MaintenanceItemMTCA');
+            this.newChart.CreateNewChartOFAccount(chartOfAccountNo, 'Revenue');
+            this.editChart.EditChartOfAccount(chartOfAccountNo);
+
+
+            
+        }
+        if (type == 'CustomerGLAccount') {
             var number = this.generalFunction.RandomNum();
             this.generalFunction.GoToMainMenu('General.MH.CRM');
             this.Helper.WaitByIdAndClick('CRMCUS');
@@ -36,16 +54,17 @@ export class FullAccountingScenarios {
             this.customer.ActivateCustomerGLAccount('CustomerGLAccount' + number, number);
            this.Helper.WaitByIdAndClick('General.MH.FullAccounting');
             this.Helper.WaitByIdAndClick('FACS');
-           this.arInvoice.CreateNewARInvoice('CustomerGLAccount' + number);
+        //   this.arInvoice.CreateNewARInvoice('CustomerGLAccount' + number);
             // this.arPayment.CreateNewARPayment('CustomerGLAccount' + number);
         }
-        else if (type == 'AP') {
+        else if (type == 'VendorGLAccount') {
             var vendornumber = this.generalFunction.RandomNum();
             this.vendor.CreateNewVendorGLAccount('Vendor GLAccount' + vendornumber);
             this.vendor.ActivateVendorGLAccount('Vendor GLAccount' + vendornumber, vendornumber);
             this.Helper.WaitByIdAndClick('General.MH.FullAccounting');
             this.Helper.WaitByIdAndClick('FAVND');
-            this.aPinvoice.CreateNewAPInvoice('Vendor GLaccount', vendornumber);
+            //  this.aPinvoice.CreateNewAPInvoice('Vendor GLaccount', vendornumber);
+           // this.aPpayment.CreateNewAPPayment('Vendor GLAccount' + vendornumber);
         }
         else if (type == 'ARPayment') {
             this.Helper.WaitByIdAndClick('General.MH.FullAccounting');

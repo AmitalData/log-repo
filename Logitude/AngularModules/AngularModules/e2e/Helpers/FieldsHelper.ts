@@ -15,7 +15,7 @@ export class FieldsHelper {
 
     WaitByIdAndClick(Id: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.elementToBeClickable(element(by.id(Id))), 100000).then(a => {
+        browser.wait(EC.elementToBeClickable(element(by.id(Id))), 1000000).then(a => {
             element(by.id(Id)).click();
 
         });
@@ -24,18 +24,18 @@ export class FieldsHelper {
 
     WaitByIdAndClickRabaia(Id: string) {
         var EC = protractor.ExpectedConditions;
-        return browser.wait(EC.elementToBeClickable(element(by.id(Id))), 100000);
+        return browser.wait(EC.elementToBeClickable(element(by.id(Id))), 1000000);
 
     }
 
     ItemsVisibility(Id: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.visibilityOf(element(by.id(Id))), 100000).then(a => function () {
+        browser.wait(EC.visibilityOf(element(by.id(Id))), 1000000).then(a => function () {
         });
     }
     ItemsPresent(Id: string) {
         var EC = protractor.ExpectedConditions;
-        browser.wait(EC.presenceOf(element(by.id(Id))), 100000).then(a => function () {
+        browser.wait(EC.presenceOf(element(by.id(Id))), 1000000).then(a => function () {
 
         });
     }

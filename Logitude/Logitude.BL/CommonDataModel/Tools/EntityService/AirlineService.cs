@@ -384,8 +384,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 foreach (AirlineAreaPM itemPM in airlineAreaChangeSet)
                 {
-                    this.SetChangeSet(itemPM.AirlineAreasPorts);
-                    this.UpdateAirlineAreasPortCollection();
+           
 
                     switch (itemPM.ChangeSetOp)
                     {
@@ -409,6 +408,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                         default: { break; }
                     }
+
+                    this.SetChangeSet(itemPM.AirlineAreasPorts);
+                    this.UpdateAirlineAreasPortCollection(itemPM);
                 }
             }
         }
@@ -416,13 +418,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
 
 
-        private void UpdateAirlineAreasPortCollection()
+        private void UpdateAirlineAreasPortCollection(AirlineAreaPM itemParentPM)
         {
             if (airlineAreasPortChangeSet != null)
             {
                 foreach (AirlineAreasPortPM itemPM in airlineAreasPortChangeSet)
                 {
-
+                    if (string.IsNullOrEmpty(itemPM.AirlineAreaId))
+                    {
+                        itemPM.AirlineAreaId = itemParentPM.Id;
+                    }
                     switch (itemPM.ChangeSetOp)
                     {
                         case ChangeSetOperation.Insert:

@@ -402,6 +402,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         } 
     }
     UploadExcel(file: any) {
+        this.FileName = null;
         if (!AppTool.IsNullOrEmpty(file.name)) {
             var name = file.name.split('.');
             if (name.length == 2) {
@@ -445,12 +446,14 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             filter.TariffType = context.EntityPM.TypeCode;
             filter.FileName = context.FileName;
             context.SendExcelToServer(filter);
+
         };
 
         reader.onerror = function (e) {
             console.log(e);
         };
         reader.readAsArrayBuffer(file);
+        context.EntityPM.FileUploadedName = this.FileName;
     }
     SendExcelToServer(filter: any) {
         this.TariffDomainService.PostUploadExcelFile(filter).subscribe((response: ServiceResponse) => {
