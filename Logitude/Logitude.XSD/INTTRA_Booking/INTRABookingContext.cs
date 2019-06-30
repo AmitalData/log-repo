@@ -66,7 +66,7 @@ namespace Logitude.XSD.INTTRA_Booking
         public Country FromPortCountry;
         private Country FinalPortCountry;
         public ShippingLine MainShippingLine;
-        public List<ShipmentPackage> ShipmentPackages = new List<ShipmentPackage>();
+        public List<ShipmentOrderPackage> ShipmentOrderPackages = new List<ShipmentOrderPackage>();
         private List<InsideShipmentPackage> InsidePackages = new List<InsideShipmentPackage>();
         private List<ShipmentPackageHarmonize> AllHarmonizes = new List<ShipmentPackageHarmonize>();
         public IShipmentsContext shipmentContext;
@@ -94,7 +94,9 @@ namespace Logitude.XSD.INTTRA_Booking
             this.GetObjects_ShipmentCarrier();
             this.GetObjects_Branch();
             this.GetObjects_ShipmentFields();
+            this.GetObjects_ShipmentOrderPackages();
             this.IsValid = this.Errors.Count == 0 ? true : false;
+
         }
         private void GetObjects_Tenant()
         {
@@ -196,6 +198,16 @@ namespace Logitude.XSD.INTTRA_Booking
             }
 
             this.MainVessel = (from d in CommonContext.Vessels where d.Id == this.MasterData.MainCarriageVesselId select d).FirstOrDefault();
+        }
+        private void GetObjects_ShipmentOrderPackages()
+        {
+            this.ShipmentOrderPackages = (from d in shipmentContext.ShipmentOrderPackages
+                                          where d.Tenant == this.Tenant
+                                          && d.ShipmentId == this.ShipmentId
+                                          select d).ToList();
+
+           
+
         }
 
         private Address ShipperAddress;
@@ -557,17 +569,20 @@ namespace Logitude.XSD.INTTRA_Booking
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
                     var contactPM = contactQuery.GetSinglePM(myCard.PrimaryContactId, Tenant);
-                    contacts.Add(new ContactInformationType()
+                    if (contactPM != null)
                     {
-                        Type = ContactTypeValues.InformationContact,
-                        Name = contactPM.EnglishName,
-                        CommunicationDetails = new CoordinatesType()
+                        contacts.Add(new ContactInformationType()
                         {
-                            Email = new string[] { contactPM.Email },
-                            Fax = new string[] { contactPM.Fax },
-                            Phone = new string[] { contactPM.BusinessPhone },
-                        }
-                    });
+                            Type = ContactTypeValues.InformationContact,
+                            Name = contactPM.EnglishName,
+                            CommunicationDetails = new CoordinatesType()
+                            {
+                                Email = new string[] { contactPM.Email },
+                                Fax = new string[] { contactPM.Fax },
+                                Phone = new string[] { contactPM.BusinessPhone },
+                            }
+                        });
+                    }
 
                     item.Contacts = contacts.ToArray();
                     this.MessagePropertiesParties.Add(item);
@@ -594,18 +609,21 @@ namespace Logitude.XSD.INTTRA_Booking
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
                     var contactPM = contactQuery.GetSinglePM(shipper.PrimaryContactId, Tenant);
-                    contacts.Add(new ContactInformationType()
+                    if(contactPM != null)
                     {
-                        Type = ContactTypeValues.InformationContact,
-                        Name = contactPM.EnglishName,
-                        CommunicationDetails = new CoordinatesType()
+                        contacts.Add(new ContactInformationType()
                         {
-                            Email = new string[] { contactPM.Email },
-                            Fax = new string[] { contactPM.Fax },
-                            Phone = new string[] { contactPM.BusinessPhone },
-                        }
-                    });
-                   
+                            Type = ContactTypeValues.InformationContact,
+                            Name = contactPM.EnglishName,
+                            CommunicationDetails = new CoordinatesType()
+                            {
+                                Email = new string[] { contactPM.Email },
+                                Fax = new string[] { contactPM.Fax },
+                                Phone = new string[] { contactPM.BusinessPhone },
+                            }
+                        });
+                    }
+
                     item.Contacts = contacts.ToArray();
                     this.MessagePropertiesParties.Add(item);
                 }    
@@ -631,18 +649,21 @@ namespace Logitude.XSD.INTTRA_Booking
 
                     var contacts = new List<INTTRA_Booking.ContactInformationType>();
                     var contactPM = contactQuery.GetSinglePM(myCard.PrimaryContactId, Tenant);
-                    contacts.Add(new ContactInformationType()
+                    if (contactPM != null)
                     {
-                        Type = ContactTypeValues.InformationContact,
-                        Name = contactPM.EnglishName,
-                        CommunicationDetails = new CoordinatesType()
+                        contacts.Add(new ContactInformationType()
                         {
-                            Email = new string[] { contactPM.Email },
-                            Fax = new string[] { contactPM.Fax },
-                            Phone = new string[] { contactPM.BusinessPhone },
-                        }
-                    });
-
+                            Type = ContactTypeValues.InformationContact,
+                            Name = contactPM.EnglishName,
+                            CommunicationDetails = new CoordinatesType()
+                            {
+                                Email = new string[] { contactPM.Email },
+                                Fax = new string[] { contactPM.Fax },
+                                Phone = new string[] { contactPM.BusinessPhone },
+                            }
+                        });
+                    }
+   
                     item.Contacts = contacts.ToArray();
                     this.MessagePropertiesParties.Add(item);
                 }
@@ -691,30 +712,47 @@ namespace Logitude.XSD.INTTRA_Booking
         public List<INTTRA_Booking.GoodsDetailsType> GoodsDetails;
         public List<INTTRA_Booking.EquipmentDetailsType> EquipmentDetails;
         private List<PackageType> AllPackageTypes;
-
         private void BuildMessageDetails()
-        {
-            this.AllPackageTypes = new List<PackageType>();
-            List<string> ids1 = this.ShipmentPackages.Where(d => d.PackageTypeId != null).Select(s => s.PackageTypeId).ToList();
-            List<string> ids2 = this.InsidePackages.Where(d => d.PackageTypeId != null).Select(s => s.PackageTypeId).ToList();
-            List<string> ids = ids1.Concat(ids2).ToList();
-
-            if (ids.Count > 0)
-            {
-                this.AllPackageTypes = (from d in CommonContext.PackageTypes
-                                        where d.Tenant == this.Tenant
-                                        && ids.Contains(d.Id)
-                                        select d).ToList();
-            }
-
-            this.BuildMessageDetails_EquipmentDetails();
-        }
-        private void BuildMessageDetails_EquipmentDetails()
         {
             this.GoodsDetails = new List<INTTRA_Booking.GoodsDetailsType>();
             this.EquipmentDetails = new List<INTTRA_Booking.EquipmentDetailsType>();
 
+            this.BuildMessageDetails_EquipmentDetails();
+            this.BuildMessageDetails_GoodsDetails();
+        }
+        private void BuildMessageDetails_EquipmentDetails()
+        {
+            var groupedOrders = (from d in this.ShipmentOrderPackages
+                                 group d by new { d.PackageTypeId } into g
+                                 select new
+                                 {
+                                     PackageTypeId = g.Key.PackageTypeId,
+                                     Quantity = g.Sum(s => s.Quantity),
+                                 });
 
+            List<string> ids = groupedOrders.Select(s => s.PackageTypeId).ToList();
+            this.AllPackageTypes = (from d in CommonContext.PackageTypes
+                                    where d.Tenant == this.Tenant
+                                    && ids.Contains(d.Id)
+                                    select d).ToList();
+
+            foreach (var item in groupedOrders)
+            {
+                INTTRA_Booking.EquipmentDetailsType itemDetails = new INTTRA_Booking.EquipmentDetailsType()
+                {
+                    EquipmentType = new EquipmentTypeType()
+                    {
+                        EquipmentTypeCode = this.AllPackageTypes.Where(a=>a.Id == item.PackageTypeId).Select(d=>d.Code).FirstOrDefault(),
+                    },
+                    NumberOfEquipment = item.Quantity+ "",
+                    ImportExportHaulage = new ImportExportHaulageType()
+                    {
+                        HaulageArrangements = ImportExportHaulageTypeHaulageArrangements.MerchantExportHaulageMerchantImportHaulage,
+                        CargoMovementType = ImportExportHaulageTypeCargoMovementType.FCLFCL,
+                    }
+                };
+                this.EquipmentDetails.Add(itemDetails);
+            }
         }
         private void BuildMessageDetails_GoodsDetails()
         {
