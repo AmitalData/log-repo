@@ -596,6 +596,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
+            tariffLine.StartDate = item.StartDate;
+            //tariffLine.StartDateText = item.StartDateText;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
