@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     TraceEventRepository traceEventsRepository = new TraceEventRepository(tenant);
                     TraceEventQuery traceEventQuery = new TraceEventQuery(traceEventsRepository);
                     IQueryable<TraceEventPM> myResult = traceEventQuery.GetTraceEventPMsByTenantByEntityId(tenant, entityId, objectTableId).OrderByDescending(s => s.LogDateTime);
-
+                    List<TraceEventPM> list = myResult.ToList();
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);
                 }
