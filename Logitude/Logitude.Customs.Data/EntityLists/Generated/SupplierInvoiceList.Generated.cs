@@ -90,6 +90,8 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? InvoiceAmountInUSD  { get; set; }
        [DataMember]
        public string ChangeInSupplierInvoice  { get; set; }
+       [DataMember]
+       public string InvoiceCurrencyTypeName  { get; set; }
    }
 
 }
