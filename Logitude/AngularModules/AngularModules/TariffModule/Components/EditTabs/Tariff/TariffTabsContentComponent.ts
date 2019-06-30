@@ -57,26 +57,38 @@ export class TariffTabsContentComponent implements OnDestroy {
         var datePipe: DatePipe = new DatePipe("en-US");
         var from: string = "";
         var to: string = "";
-        var header: string = "Version";
+        var header: string = "";
         var index: number = 0;
 
         var todayDate = DateTool.GetCurrentDateAsUtc();
 
         var draftVersion: TariffVersionPM = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
         if (draftVersion != null) {
-            from = datePipe.transform(draftVersion.StartDate, 'dd/MMM/yy');
-            to = datePipe.transform(draftVersion.ExpirationDate, 'dd/MMM/yy');
-            
-            header = from + " - " + to;
+            if (this.EntityPM.TypeCode == "ASC") {
+                header = "Version " + draftVersion.Version;
+            }
+
+            else {
+                from = datePipe.transform(draftVersion.StartDate, 'dd/MMM/yy');
+                to = datePipe.transform(draftVersion.ExpirationDate, 'dd/MMM/yy');
+                header = from + " - " + to;
+            }
+
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, draftVersion));
             index++;
         }
                 
         this.EntityPM.ActiveVersions.sort((a, b) => { return (a.Version === b.Version) ? 0 : (a.Version > b.Version) ? -1 : 1 }).forEach(item => {
-            from = datePipe.transform(item.StartDate, 'dd/MMM/yy');
-            to = datePipe.transform(item.ExpirationDate, 'dd/MMM/yy');
-            
-            header = from + " - " + to;
+            if (this.EntityPM.TypeCode == "ASC") {
+                header = "Version " + item.Version;
+            }
+
+            else {
+                from = datePipe.transform(item.StartDate, 'dd/MMM/yy');
+                to = datePipe.transform(item.ExpirationDate, 'dd/MMM/yy');
+                header = from + " - " + to;
+            }
+
             this.Tabs.push(new TariffDetailsTab(index, this.EditTabTariffType, header, item));
             index++;
         });

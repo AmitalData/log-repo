@@ -58,7 +58,7 @@ namespace Logitude.XSD.INTTRA_Booking
                     Value = new DateTime(this.Context.TodayDateTime.Year, this.Context.TodayDateTime.Month, this.Context.TodayDateTime.Day, this.Context.TodayDateTime.Hour, this.Context.TodayDateTime.Minute, this.Context.TodayDateTime.Second),
                 },
                 MovementType = this.Context.MovementType,
-
+                Location = this.Context.Locations.ToArray<INTTRA_Booking.LocationDateTimeType>(),
                 ReferenceInformation = this.Context.ReferenceInformations.ToArray<INTTRA_Booking.ReferenceInformationType>(),
                 TransportationDetails = this.Context.TransportationDetails.ToArray(),
                 Party = this.Context.MessagePropertiesParties.ToArray(),
