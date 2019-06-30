@@ -45,6 +45,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public IsDraftVersion: boolean = true;
     public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
+    private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsUpdateSurchargesButtonVisible: boolean = false;
     constructor(public entityArgs: EntityArgs) {
@@ -416,13 +417,22 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         var datePipe: DatePipe = new DatePipe("en-US");
 
         this.compareToVersions.filter(a => a.Version != this.CurrentVersion.Version).forEach(item => {
-            var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-            var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+
             var newVersion: VersionClass = new VersionClass();
             newVersion.Version = item.Version;
             newVersion.ParentVersionNumber = item.ParentVersionNumber;
-            newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
             newVersion.Id = item.TariffId;
+
+            if (this.EntityPM.TypeCode == "ASC") {
+                newVersion.Name = "Version " + item.Version;
+            }
+
+            else {
+                var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
+                var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+                newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+            }
+
             this.VersionsList.push(newVersion);
         });
 
@@ -518,6 +528,14 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
     UploadExcel(file: any) {
+        this.FileName = null;
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.FileName = name[0];
+            }
+        }
+
         if (file && file.size > 0) {
             this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
@@ -561,7 +579,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             console.log(e);
         };
         reader.readAsArrayBuffer(file);
-       // context.EntityPM.FileUploadedName = file.Name;
+        context.EntityPM.FileUploadedName = this.FileName;
 
     }
     SendExcelToServer(filter: any) {
