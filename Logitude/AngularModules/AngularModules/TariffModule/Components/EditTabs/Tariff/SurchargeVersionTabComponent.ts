@@ -817,6 +817,13 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         logWindow.Height = 600;
         logWindow.WindowArgs = args;
         logWindow.Title = "Tariff Surchage Update";
+
+        logWindow.WindowClosed.subscribe((s: any) => {
+            if (s == "ok") {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+        });
+
         logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UpdateSurchargesComponent');
     }
 }

@@ -360,7 +360,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                               && d.TypeCode == "ASC"
                               select d).Count();
 
-                if (iCount > 1)
+                if (iCount >= 1)
                 {
                     throw new ApplicationException("Tariff surcharge seller should be unique");
                 }
