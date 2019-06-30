@@ -18,7 +18,7 @@ export class PayablesTabComponent {
         this.Helper.ItemsVisibility('ATDSPayable-payable');
         this.Helper.WaitByIdAndClick('ATDSPayable-payable');//Auto-display 
 
-        // this.Helper.WaitByCssButtonClick('RedButton','Yes');
+         //this.Helper.WaitByCssButtonClick('RedButton','Yes');
         //var InvoiceAmount: any;
         if (ShipmentType == '') {
             this.amount1 = this.AddPayables('Air Frei', '10', '10');
