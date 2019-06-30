@@ -15,32 +15,33 @@ using Logitude.TariffModule.Data.EntityPOCOs;
 using Logitude.TariffModule.Data.EntityLists;
 
 namespace Logitude.TariffModule.Data.EntityListQueryServices
-{ 
+{
 
     public partial class TariffSettingListQueryService
     {
-	    private IQueryable<TariffSettingList> GetIqueryableList(IQueryable<TariffSetting> iQueryable)
+        private IQueryable<TariffSettingList> GetIqueryableList(IQueryable<TariffSetting> iQueryable)
         {
-		IQueryable<TariffSettingList> query = (from a in iQueryable
-                                            select new TariffSettingList()
-											{
-                     
-					                          Id = a.Id,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<TariffSettingList> query = (from a in iQueryable
+                                                   select new TariffSettingList()
+                                                   {
 
-		private IQueryable<TariffSetting> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TariffSetting> iQueryable, int tenant)
+                                                       Id = a.Id,
+                                                       DefaultWarningPercentage = a.DefaultWarningPercentage,
+                                                       Tenant = a.Tenant,
+                                                   });
+            return query;
+        }
+
+        private IQueryable<TariffSetting> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<TariffSetting> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<TariffSetting> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<TariffSetting> iQueryable, int tenant)
+            return iQueryable;
+        }
+        private IQueryable<TariffSetting> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<TariffSetting> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-		
-			}
+            return iQueryable;
+        }
+
+    }
 
 
 }

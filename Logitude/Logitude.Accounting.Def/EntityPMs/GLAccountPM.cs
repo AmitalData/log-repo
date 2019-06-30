@@ -14,5 +14,11 @@ namespace Logitude.Accounting.Def.EntityPMs
         public string Application { get; set; }
 
         public bool PassedFromAPI { get; set; }
+
+        public string DeductionTypeCode { get; set; }
+
+        public string AssessingOfficeNumber { get; set; }
+
+
     }
 }

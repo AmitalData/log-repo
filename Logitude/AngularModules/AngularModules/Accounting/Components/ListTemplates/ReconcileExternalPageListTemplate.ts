@@ -1,4 +1,4 @@
-﻿import {Component,ChangeDetectorRef} from '@angular/core'; 
+import {Component,ChangeDetectorRef} from '@angular/core'; 
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
@@ -8,6 +8,10 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
+import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
+
 
 @Component({
     moduleId: module.id,
@@ -20,7 +24,7 @@ export class ReconcileExternalPageListTemplate {
     public fieldName: any;
     public AdditionalData: any;
 
-
+   public CurrentSession = SessionLocator.SelectedSession;
     public isRTL: boolean = false;
 
 
@@ -37,6 +41,23 @@ export class ReconcileExternalPageListTemplate {
         if (!isDestroyed) {
             this.CD.detectChanges();
         }
+    }
+    ViewEvents(line: any) {
+       
+
+        var entityPM = this.rowData;
+        var windowArgs: EntityArgs = new EntityArgs();
+        windowArgs.ObjectTableName = "ReconcileExternalPage";
+        windowArgs.EntityPM = entityPM;
+        //this.entityArgs = new EntityArgs();
+       // this.entityArgs.EntityPM = entityPM;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 950;
+        logWindow.Height = 600;
+        logWindow.Title = TextCodeTranslator.Translate("ReconcileExternalPage") +  " "+ TextCodeTranslator.Translate("AccountingPeriod.TH.Events");
+        logWindow.WindowArgs = windowArgs;
+        this.CurrentSession.SessionEvent.emit("noselect");
+        logWindow.Show('./Accounting/Components/EditTabs/BankAccount/BankPageEventsComponent');
     }
 
     Abs(number: number) {

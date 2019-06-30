@@ -59,7 +59,13 @@ namespace Logitude.CRM.BL.EntityDataMappings
 	         OwnerId, 
 	         IndustryId, 
 	         OccasionTypeId, 
-	         OccasionStatusId,
+	         OccasionStatusId, 
+	         CreatedByContactName, 
+	         UpdatedByUserName, 
+	         TypeName, 
+	         OwnerName, 
+	         OccasionStatusName, 
+	         IndustryName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

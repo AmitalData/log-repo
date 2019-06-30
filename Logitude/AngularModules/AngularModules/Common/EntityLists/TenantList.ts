@@ -102,7 +102,6 @@ export class TenantList {
 		CBSA: string;
 		CAAT: string;
 		IsTestTenant: boolean;
-		DefaultWarningPercentage: number;
 		CheckDigitControlAlgorithmCode: string;
 	
 }

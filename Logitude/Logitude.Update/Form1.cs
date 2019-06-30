@@ -65,6 +65,7 @@ using System.Data.Common;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using System.Text.RegularExpressions;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.Update
 {
@@ -86,6 +87,10 @@ namespace Logitude.Update
                 LogitudeSettings.Id = setting.Id;
                 LogitudeSettings.ChampEnv = setting.ChampEnv;
                 LogitudeSettings.ChampURL = setting.ChampURL;
+                LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+                LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+                LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+                LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
                 LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
                 LogitudeSettings.DeploymentStage = setting.DeploymentStage;
                 LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
@@ -3695,7 +3700,7 @@ User/Pass",
             
         }
 
-        private void button42_Click(object sender, EventArgs e)
+        private void button42_Click_FixingDouplicated(object sender, EventArgs e)
         {
 
             //string text = "APP4030";
@@ -3712,6 +3717,33 @@ User/Pass",
             //TaxReportService.CreateTaxReportLines(taxReportPM, 1064);
 
 
+        }
+
+        private void button42_Click(object sender, EventArgs e)
+        {
+            //DocumentRepository DocR = new DocumentRepository(0); 
+            var result = new List<DocumentsFiling>();
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                DbConnection connection = DatabaseInitializer.GetConnection("logbox-main,logboxadmin,London2015!London2015!,logboxdbs.database.windows.net");// "Main,sa,Saas256,amitaldata.cloudapp.net");
+                CommonDataContext context = new CommonDataContext(connection);
+                result = (from a in context.Documents
+                              join b in context.DocumentsFilings on a.Id equals b.DocumentId
+                              where b.ForwarderDocumentId != null && b.IsDeleted == false && a.HasFile == false
+                              select b).ToList();
+                scope.Complete(); 
+            }
+           
+            foreach (var item1 in result)
+            {
+                DocumentRepository DocR = new DocumentRepository(0);
+                var item = (from a in DocR.context.DocumentsFilings 
+                              where a.Id == item1.ForwarderDocumentId
+                              select a).FirstOrDefault();
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
+                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+            }
         }
     }
 

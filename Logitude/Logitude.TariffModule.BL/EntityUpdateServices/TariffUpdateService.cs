@@ -330,16 +330,19 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
         private void ValidateSurchargeUniqueSeller(TariffPM entityPM)
         {
-            ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
-            int iCount = (from d in iContext.Tariffs
-                          where d.Tenant == entityPM.Tenant
-                          && d.SellerId == entityPM.SellerId
-                          && d.TypeCode == "ASC"
-                          select d).Count();
-
-            if (iCount > 1)
+            if(entityPM.TypeCode == "ASC")
             {
-                throw new ApplicationException("Tariff surcharge seller should be unique");
+                ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
+                int iCount = (from d in iContext.Tariffs
+                              where d.Tenant == entityPM.Tenant
+                              && d.SellerId == entityPM.SellerId
+                              && d.TypeCode == "ASC"
+                              select d).Count();
+
+                if (iCount > 1)
+                {
+                    throw new ApplicationException("Tariff surcharge seller should be unique");
+                }
             }
         }
     }
