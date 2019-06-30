@@ -2008,6 +2008,34 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         //    }
         //}
 
+        public HttpResponseMessage GetOccasionsSummary()
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.CheckContactFeature("Occasion", "READ", tenant);
+
+                    ICRMContext myContext = CRMContext.GetContext(tenant);
+                    OccasionSummary myResult = new OccasionSummary() { Id = tenant };
+                    myResult.AllOccasionsCount = (from d in myContext.Occasions where d.Tenant == tenant select d).Count();
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         private string FixFilter(string filter)
         {
             string myResult = filter;
@@ -2052,5 +2080,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string ActivityId { get; set; }
         public string Summary { get; set; }
         public bool Post { get; set; }
+    }
+
+    public class OccasionSummary
+    {
+        public int Id { get; set; }
+        public int AllOccasionsCount { get; set; }
     }
 }

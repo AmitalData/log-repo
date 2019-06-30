@@ -67,6 +67,10 @@ export class MaintenanceComponent {
             this.PagesMenu.push(new Menu("TKT", "Tickets"));
         }
 
+        if (FeatureLocator.HasFeaturePermession("General", "General.Occasion.OccasionType")) {
+            this.PagesMenu.push(new Menu("OCS", "Occasions"));
+        }
+
         if (FeatureLocator.HasFeaturePermession("General", "CUSTOMS")) {
             this.PagesMenu.push(new Menu("CSM", TextCodeTranslator.Translate("General.MC.Custom.Customs")));
         }

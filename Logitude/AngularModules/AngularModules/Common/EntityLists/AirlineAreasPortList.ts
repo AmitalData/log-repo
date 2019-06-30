@@ -11,7 +11,6 @@ export class AirlineAreasPortList {
 		AirlineAreaId: string;
 		PortId: string;
 		Tenant: number;
-		Description: string;
 		Name: string;
 		AddedDate: Date;
 		AddedByUserId: string;
