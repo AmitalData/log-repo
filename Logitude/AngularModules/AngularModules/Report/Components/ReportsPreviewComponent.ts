@@ -420,10 +420,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
                     if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
                         if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
                             this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
-                            this.StopBusyIndicator();
                             this.IsUsedReportsRunUsingWR = false;
                             this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
-
+                            this.StopBusyIndicator();
                         }
 
                         if (!pmResponse.HasError) {
