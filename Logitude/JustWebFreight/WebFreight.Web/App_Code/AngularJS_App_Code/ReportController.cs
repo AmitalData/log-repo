@@ -34,6 +34,7 @@ using System.Xml.Serialization;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Helpers.DataProviderHelpers;
 using WebFreight.Web.ReportsWebServices;
 using WebFreight.Web.ReportsWebServices.LogitudeReports;
 using WebFreight.Web.Security;
@@ -136,6 +137,22 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                         else
                         {
+
+
+                            #region Test Report
+                            if (reportFliter.ReportCode == "ATRE")
+                            {
+                                MemoryStream memorystream = new MemoryStream(dataProvider);
+                                XmlSerializer serializer = new XmlSerializer(typeof(AutomationTestReportDataProvider));
+                                var automationTestReportDataProvider = (AutomationTestReportDataProvider)serializer.Deserialize(memorystream);
+                                if(automationTestReportDataProvider != null&& automationTestReportDataProvider.IsException)
+                                {
+                                    throw new Exception("Exception Test");
+                                }
+                            }
+                            #endregion
+
+                            
                             if (reportFliter.ReportCode == "CUPA")
                             {
                                 MemoryStream memorystream = new MemoryStream(dataProvider);
@@ -379,7 +396,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ReportBuildResult result = new ReportBuildResult();
                 if (reportExecutionLog != null)
                 {
-                    UpdateStatusReportExecutionLog(authToken, reportExecutionLogRepository, reportExecutionLog);
+                  //  UpdateStatusReportExecutionLog(authToken, reportExecutionLogRepository, reportExecutionLog);
 
                     result.StatusCode = reportExecutionLog.StatusCode;
                     if (result.StatusCode == "F")

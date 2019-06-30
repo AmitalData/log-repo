@@ -353,6 +353,10 @@
     <Compile Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.Designer.cs">
       <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906291619247_AddChampFields_Maheera.cs" />
+    <Compile Include="Migrations\201906291619247_AddChampFields_Maheera.Designer.cs">
+      <DependentUpon>201906291619247_AddChampFields_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
@@ -473,6 +477,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906231629362_MakeTariffVersionDatesNullable.resx">
       <DependentUpon>201906231629362_MakeTariffVersionDatesNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906291619247_AddChampFields_Maheera.resx">
+      <DependentUpon>201906291619247_AddChampFields_Maheera.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

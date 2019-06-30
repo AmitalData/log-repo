@@ -331,6 +331,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [Include]
         [Association("AirlineAreaPM", "Id", "AirlineId")]
         [Composition]
+        [DataMember]
         public virtual List<AirlineAreaPM> AirlineAreas
         {
             get

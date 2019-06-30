@@ -331,6 +331,8 @@ export class ExcelTariffLines {
     Index: number;
     Notes: string;
     IsUploaded: boolean;
+    StartDate: Date;
+    StartDateText: string;
 }
 
 export class UpdateSurchargeArgs {

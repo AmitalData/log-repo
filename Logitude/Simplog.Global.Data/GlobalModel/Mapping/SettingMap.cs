@@ -66,8 +66,11 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.OceanInsightsToken).HasMaxLength(200).IsUnicode(false);
             this.Property(t => t.ReleaseNotesURL).HasMaxLength(600).IsUnicode(false);
             this.Property(t => t.CPUIntensiveWebServicesURL).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.ChampProdAPIURL).IsRequired().HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.ChampProdAPIPassword).IsRequired().HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.ChampTestAPIURL).IsRequired().HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.ChampTestAPIPassword).IsRequired().HasMaxLength(40).IsUnicode(false);
 
-            
 
             // Table & Column Mappings
             this.ToTable("Settings");
@@ -115,8 +118,13 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ReportsRunUsingWR).HasColumnName("ReportsRunUsingWR");
             this.Property(t => t.DWNextRunTime).HasColumnName("DWNextRunTime");
             this.Property(t => t.CPUIntensiveWebServicesURL).HasColumnName("CPUIntensiveWebServicesURL");
+            this.Property(t => t.ChampProdAPIURL).HasColumnName("ChampProdAPIURL");
+            this.Property(t => t.ChampProdAPIPassword).HasColumnName("ChampProdAPIPassword");
+            this.Property(t => t.ChampTestAPIPassword).HasColumnName("ChampTestAPIPassword");
+            this.Property(t => t.ChampTestAPIURL).HasColumnName("ChampTestAPIURL");
 
-            
+
+
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {

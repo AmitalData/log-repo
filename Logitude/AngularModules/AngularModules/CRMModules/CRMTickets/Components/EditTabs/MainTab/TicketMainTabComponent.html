@@ -19,17 +19,20 @@
         line-height: 1.8em;
     }
 
-    .DescriptionTextArea {
-        border-width: 0px;
+    .CorrespondenceTextArea {
+        text-indent: 0px;
+        width: 100%;
+        background: transparent !important;
         border: none;
-        -webkit-appearance: none;
+        border-width: 0px;
+        overflow: hidden;
         outline: none;
-        border-color: transparent;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        font-size: 12px;
     }
 
-        .DescriptionTextArea:focus, input:focus {
-            outline: none;
-        }
 </style>
 
 <div class="TabHolder" style="overflow-x:auto;overflow-y:auto;height:100%;width:100%;">
@@ -222,56 +225,52 @@
                                                                                             </td>
 
                                                                                             <td>
-                                                                                                <table>
-                                                                                                    <tr style="height:1px;">
-                                                                                                        <td style="word-wrap: break-word;font-size:12px;text-align:left;float:left;">
-                                                                                                            <table>
-                                                                                                                <tr>
-                                                                                                                    <td>
-                                                                                                                        <div style="color:#1B90CB;font-size:12px;">
-                                                                                                                            {{item.ContactName}},
-                                                                                                                        </div>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        <div style="color:#1B90CB;font-size:12px;">
-                                                                                                                            {{item.CreateDate | DateTimeToDatePipe}},
-                                                                                                                        </div>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        <div style="color:#1B90CB;font-size:12px;">
-                                                                                                                            {{item.CreateDate | DateTimeToTimePipe}}:
-                                                                                                                        </div>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                        <div [title]="item.Recipients" class="TextTrimming" style="font-size:9px;width:600px;">
-                                                                                                                            {{item.Recipients}}
-                                                                                                                        </div>
-                                                                                                                    </td>
+                                                                                                <div class="MediaFill">
+                                                                                                    <table style="table-layout: fixed;">
+                                                                                                        <tr style="height:1px;">
+                                                                                                            <td style="word-wrap: break-word;font-size:12px;text-align:left;float:left;">
+                                                                                                                <table>
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div style="color:#1B90CB;font-size:12px;">
+                                                                                                                                {{item.ContactName}},
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <div style="color:#1B90CB;font-size:12px;">
+                                                                                                                                {{item.CreateDate | DateTimeToDatePipe}},
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <div style="color:#1B90CB;font-size:12px;">
+                                                                                                                                {{item.CreateDate | DateTimeToTimePipe}}
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <div [title]="item.Recipients" class="TextTrimming" style="font-size:9px;width:600px;">
+                                                                                                                                {{item.Recipients}}
+                                                                                                                            </div>
+                                                                                                                        </td>
 
-                                                                                                                </tr>
-                                                                                                            </table>
-                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </table>
+                                                                                                            </td>                                                                                                            
+                                                                                                        </tr>
 
-                                                                                                        <td>
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                    </tr>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <div class="MediaFill">
+                                                                                                                    <textarea [attr.id]="item._TextAreaId"
+                                                                                                                              class="CorrespondenceTextArea"
+                                                                                                                              [ngStyle]="{direction: item.FlowDirection,'background': item.LineBoxBackground}"
+                                                                                                                              [ngModel]="item.Description"
+                                                                                                                              [readonly]="true"></textarea>
+                                                                                                                </div>
+                                                                                                            </td>                                                                                                            
+                                                                                                        </tr>
 
-                                                                                                    <tr>
-                                                                                                        <td>
-                                                                                                            <textarea [attr.id]="item._TextAreaId" style="width:100%;border: none;border-width:0px; overflow: hidden;resize:none; outline: none;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;
-                                                                                                      font-size:12px;"
-                                                                                                                      [ngStyle]="{direction: item.FlowDirection,'background': item.LineBoxBackground}"
-                                                                                                                      [ngModel]="item.Description"
-                                                                                                                      [readonly]="true"></textarea>
-
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <div></div>
-                                                                                                        </td>
-                                                                                                    </tr>
-
-                                                                                                </table>
+                                                                                                    </table>
+                                                                                                </div>
                                                                                             </td>
 
                                                                                             <td style="width:3px;">
@@ -341,7 +340,7 @@
                                                                                             </td>
 
                                                                                             <td>
-                                                                                                <table *ngIf="item.TextAlignRegionVisibility && TextAlignVisibility">
+                                                                                                <table *ngIf="item.TextAlignRegionVisibility && item.TextAlignVisibility">
                                                                                                     <tr>
                                                                                                         <td>
                                                                                                             <div></div>
@@ -375,6 +374,12 @@
                                                                                             <span class="hyperlink" (click)="attach.ViewAttachment()" style="font-size:10px"> {{attach.FileName}}</span>
                                                                                         </li>
                                                                                     </ul>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 3px;">
+                                                                                <td>
+                                                                                    <div></div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>

@@ -1,4 +1,4 @@
-﻿import {Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
@@ -1467,6 +1467,35 @@ export class CRMDomainService {
             }).catch(ServiceHelper.HandleServiceError);
         });
     }
+
+    GetOccasionsSummary() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetOccasionsSummary';
+
+        return Observable.defer(() => {
+            return this._http.get(url, { headers: authHeader }).map(response => {
+
+                var myJsonResult = response.json();
+                var myResult = new OccasionSummary();
+
+                if (myJsonResult) {
+                    var jsonListKeys = Object.keys(myJsonResult);
+                    for (var key in jsonListKeys) {
+                        var property = jsonListKeys[key];
+                        myResult[property] = myJsonResult[property];
+                    }
+                }
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
 }
 
 export class DailySpotlightClass {
@@ -1498,4 +1527,9 @@ export class CRMSummary {
     public MyOpenDataCount: number;
     public AllOpenDataCount: number;
     public OpenByStageCount: number;
+}
+
+export class OccasionSummary {
+    public Id: number;
+    public AllOccasionsCount: number;
 }

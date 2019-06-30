@@ -178,7 +178,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CBSA { get; set; }
         public string CAAT { get; set; }
         public bool IsTestTenant { get; set; }
-        public double? DefaultWarningPercentage { get; set; }
 
         [ForeignKey("CheckDigitControlAlgorithmCode")]
         public virtual CheckDigitControlAlgorithm CheckDigitControlAlgorithm { get; set; }

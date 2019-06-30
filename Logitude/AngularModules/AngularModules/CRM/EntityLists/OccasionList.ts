@@ -24,6 +24,12 @@ export class OccasionList {
 	IndustryId: string;
 	OccasionTypeId: string;
 	OccasionStatusId: string;
+	CreatedByContactName: string;
+	UpdatedByUserName: string;
+	TypeName: string;
+	OwnerName: string;
+	OccasionStatusName: string;
+	IndustryName: string;
 	
 }
  

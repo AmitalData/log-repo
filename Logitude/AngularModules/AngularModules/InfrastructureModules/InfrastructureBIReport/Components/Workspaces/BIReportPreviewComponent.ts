@@ -95,6 +95,7 @@ export class BIReportPreviewComponent implements OnInit {
     private IsSorting = false;
     private IsResizing = false;
     private ReportXML: any;
+    private isParentTenant: false;
     public LoadBIReportData() {
         if (this.DWQueryId != null) {
             this._InfrastructureDomainService.GetByBIReportId(this.EntityId, this.DWQueryId).subscribe(myResult => {
@@ -104,7 +105,7 @@ export class BIReportPreviewComponent implements OnInit {
                     this.BIReportXMLData = result;
                     this.EntityPM = result.BIReportPM;
                     this.BIReportName = this.EntityPM != null ? this.EntityPM.Name : "";
-                    this.BuildColumns(result);
+                   // this.BuildColumns(result);
                     this.BuildRows(result);
                 }
             });
@@ -112,6 +113,7 @@ export class BIReportPreviewComponent implements OnInit {
     }
 
     public UpdateAGGrid(arg: BIReportXMLData, msg = null, count = 0) {
+      
         var sortsList = [];
         if (arg.BITabularViewSettings != null && arg.BITabularViewSettings.Columns != null) {
             arg.BITabularViewSettings.Columns.forEach(item => {
@@ -151,7 +153,9 @@ export class BIReportPreviewComponent implements OnInit {
             for (var i = 0; i < columns.length; i++) {
                 if (columns[i].IsChecked) {
                     var type = this.GetColumnDataType(columns[i].DataTypeCode);
+                 
                     if (type == "dateColumn") {
+                        var dataTypeCode = columns[i].DataTypeCode;
                         this.columnDefs.push({
                             colId: columns[i].Code,
                             headerName: columns[i].Code,
@@ -162,7 +166,7 @@ export class BIReportPreviewComponent implements OnInit {
                             //cellClass: columns[i].DataTypeCode,
                             Index: columns[i].Index,
                             type: type,
-                            cellRenderer: this.DateCellRenderer,
+                            cellRenderer: dataTypeCode == "Date" ? this.DateCellRenderer : this.DateTimeCellRenderer,
                             filter: 'agDateColumnFilter'
                             //sort: sortingDirction,
                         });
@@ -220,18 +224,31 @@ export class BIReportPreviewComponent implements OnInit {
                         });
                     }
                     else if (columns[i].Code == "Shipment Number") {
-                        this.columnDefs.push({
-                            colId: columns[i].Code,
-                            headerName: columns[i].Code,
-                            field: columns[i].Code,
-                            sortable: true,
-                            filter: true,
-                            width: columns[i].Width,
-                            resizable: true,
-                            Index: columns[i].Index,
-                            //type: type,
-                            cellRendererFramework: EditShipmentLinkRendererComponent,
-                        });
+                        if (this.isParentTenant) {
+                            this.columnDefs.push({
+                                colId: columns[i].Code,
+                                headerName: columns[i].Code,
+                                field: columns[i].Code,
+                                sortable: true,
+                                filter: true,
+                                width: columns[i].Width,
+                                resizable: true,
+                                Index: columns[i].Index,
+                            });
+                        }
+                        else {
+                            this.columnDefs.push({
+                                colId: columns[i].Code,
+                                headerName: columns[i].Code,
+                                field: columns[i].Code,
+                                sortable: true,
+                                filter: true,
+                                width: columns[i].Width,
+                                resizable: true,
+                                Index: columns[i].Index,
+                                cellRendererFramework: EditShipmentLinkRendererComponent,
+                            });
+                        }
                     }
                     else {
                         this.columnDefs.push({
@@ -311,6 +328,14 @@ export class BIReportPreviewComponent implements OnInit {
         var datepipe = new DateTimePipe();
         return datepipe.transform(params.value, "SD");
     }
+
+    private DateTimeCellRenderer(params: any) {
+        var datepipe = new DateTimePipe();
+        return datepipe.transform(params.value, "DT");
+    }
+
+    
+
 
     public methodFromParent(cell) {
         this.StartBusyIndicator("Loading ...");
@@ -622,6 +647,8 @@ export class BIReportPreviewComponent implements OnInit {
         else {
             this.HasValidationError = false;
             this.rowData = MyData.rowData;
+            this.isParentTenant = MyData.IsParentTenant;
+            this.BuildColumns(this.BIReportXMLData);
             this.timerToken = setTimeout(() => this.UpdateAGGrid(this.ReportXML, MyData.Msg, MyData.Count), 500);
             this.StopBusyIndicator();
         }

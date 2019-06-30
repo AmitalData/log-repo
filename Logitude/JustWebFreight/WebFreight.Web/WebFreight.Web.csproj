@@ -1646,6 +1646,7 @@
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\BluesnapContractController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\WebhookKeysController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\BusinessRoleExtendedViewsController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\CacheLogController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CustomPickListExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryBuilderController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DWQueryColumnController.cs" />
@@ -6240,6 +6241,7 @@
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
     <Folder Include="images\ToolBar\" />
+    <Folder Include="Integration Test\FullAccounting\" />
     <Folder Include="JustConfig\" />
     <Folder Include="Logitude\BL\InfrastructureModel\" />
     <Folder Include="MessageModel\" />
