@@ -2830,7 +2830,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
     //#endregion
 
-    OnItemPriceLostFocus(value: number) {
+    OnItemPriceLostFocus(ItemPriceTextBox: any) {
 
         if (this.doCalculate) {
             if (isNaN(this.ItemPrice)) this.ItemPrice = 0;
@@ -2842,6 +2842,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
         this.oldvalue = this.entityPM.ItemPrice;
         this.doCalculate = false;
+        ItemPriceTextBox.TextValue = this.oldvalue;
     }
 
     GetQuantityType(isChangeInvoiceQuantityType: boolean = true) {
