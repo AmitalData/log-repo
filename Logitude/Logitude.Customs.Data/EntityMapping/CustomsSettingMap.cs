@@ -64,6 +64,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.AutoFillAccountType).HasColumnName("AutoFillAccountType");
 
             this.Property(t => t.AutoUnitMeasurement).HasColumnName("AutoUnitMeasurement");
+
+            this.Property(t => t.CompanyType).HasColumnName("CompanyType").IsRequired().HasMaxLength(1).IsUnicode(false);
         }
     }
 }

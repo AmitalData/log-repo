@@ -58,6 +58,20 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" שידור הגשה בלדר " + customsResponse.master + " "
             };
+
+            if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
+
+            {
+                genericRequestParams.RequestName += " ראשי - מפצל";
+                genericRequestParams.SplitterModeLetCreateMyType = false;
+
+            }
+            else
+            {
+                genericRequestParams.RequestName += " מפוצל";
+                genericRequestParams.SplitterModeLetCreateMyType = true;
+
+            }
             return genericRequestParams;
         }
 
@@ -100,7 +114,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = LoggingUserId,
                 master = master,
                 tenant = tenant,
-                DeclarationsList = DeclarationsList,
+                ClientFilterDeclarationsList = DeclarationsList,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
@@ -193,7 +207,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public string MyMoreParams { get; set; }
         public string InternalBankId { get; set; }
-        public List<string> DeclarationsList { get; set; }
+        public List<string> ClientFilterDeclarationsList { get; set; }
+        public List<string> ServerSplitDeclarationsList { get; set; }
+        
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }

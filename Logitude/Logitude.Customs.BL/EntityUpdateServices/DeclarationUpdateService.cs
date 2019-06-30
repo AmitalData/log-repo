@@ -586,6 +586,26 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 text = TranslateTextsClass.Translate(declarationValidator.ErrorCode[0], myDeclarationPM.Tenant, true);
             }
 
+            //Check Importer Code
+            if (!string.IsNullOrWhiteSpace(myDeclarationPM.ImporterCode) && string.IsNullOrWhiteSpace(myDeclarationPM.ImporterId))
+            {
+                if (myDeclarationPM.ImporterCode.Length != 9)
+                {
+                    text = "אורך שדה יבואן שונה מ 9 תווים";
+                }
+                else
+                {
+                    string digit = myDeclarationPM.ImporterCode.Substring(8);
+                    int checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(myDeclarationPM.ImporterCode);
+
+                    if (digit != checkDigit.ToString())
+                    {
+                        text = TranslateTextsClass.Translate(("Customs.Declaration.O.CorrectDigit") + checkDigit.ToString(), myDeclarationPM.Tenant, true);
+                    }
+                }
+
+            }
+
             if (!string.IsNullOrWhiteSpace(text))
             {
                 LogMessagingUtil.Instance.AppendLine(text);
@@ -939,13 +959,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 switch (eventContextTagModel.CallProccessID)
                 {
                     case EventContextTagModel.ProccessEnum.DF_NG_5018_MSG14004_ImportDeclarationCancellation:
-                    case EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate:
                     case EventContextTagModel.ProccessEnum.DE_NG_5107_MSG10_AcceptanceOrRejectionMessageResponseService: // moran 2.11.14 - Task 8597
                     case EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService:                        
                         {
                             if (!string.IsNullOrWhiteSpace(eventContextTagModel.EventCode))
                             {
                                 DoUpdateNotification(dirtyDeclarationPM, loggingUserId, eventContextTagModel.EventCode); // moran 11.8.14 - Task 7086
+                            }
+                        }
+                        break;
+                    case EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate:
+                        {
+                            if (!string.IsNullOrWhiteSpace(eventContextTagModel.EventCode) && !dirtyDeclarationPM.IsCourierDeclaration)
+                            {
+                                DoUpdateNotification(dirtyDeclarationPM, loggingUserId, eventContextTagModel.EventCode); 
                             }
                         }
                         break;

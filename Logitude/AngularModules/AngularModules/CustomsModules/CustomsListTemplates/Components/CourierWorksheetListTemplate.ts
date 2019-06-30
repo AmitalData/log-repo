@@ -39,6 +39,8 @@ import { retry } from 'rxjs/operator/retry';
 import { forEach } from "@angular/router/src/utils/collection";
 import { DeclarationMamanSpecialActionList } from "../../../Customs/EntityLists/DeclarationMamanSpecialActionList";
 import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
+import { CourierPendingReasonListService } from '../../../Customs/Services/StandardLists/CourierPendingReasonListService';
+import { CourierPendingReasonList } from '../../../Customs/EntityLists/CourierPendingReasonList';
 
 @Component({
     moduleId: module.id,
@@ -79,7 +81,7 @@ export class CourierWorksheetListTemplate {
     IsMamanSticker: boolean = false;
     IsSban: boolean = false;
     IsMamanEnabled: boolean = false;
-
+    
     private _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
     private _CourierMasterService: CourierMasterService = new CourierMasterService();
     private _DeclarationMamanSpecialActionListService: DeclarationMamanSpecialActionListService = new DeclarationMamanSpecialActionListService();
@@ -99,7 +101,7 @@ export class CourierWorksheetListTemplate {
     //@ViewChild('MySplitButtonComponent', { read: SplitButtonComponent }) MySplitButtonComponent: SplitButtonComponent;
 
     constructor(private _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, private CD: ChangeDetectorRef) {
-
+        
     }
 
     //[AdditionalData] = "{rowIndex:row.rowIndex,gridId:LogGridId,RowOutEvent:RowOutEvent,RowOverEvent:RowOverEvent}"
@@ -241,6 +243,7 @@ export class CourierWorksheetListTemplate {
         this.SuspentionReasonText = this._CourierWorksheet.CourierCustomStatusName;
 
         this.BuildDeclarationsCheckBox();
+        //this.getCourierPendingReasonName(this._CourierWorksheet.CourierPendingReasonList);
         this.CD.detectChanges();
     }
 
@@ -334,16 +337,42 @@ export class CourierWorksheetListTemplate {
 
     ButtonClick(event) {
         this._CourierWorksheetSharedDataService.SupperssOnRowSelectedAction = true;
-
-
+        
         //event.stopPropagation();
         //this.RowSelect()
         this.DropdownDisplayClose();//this.MySplitButtonComponent.DropdownDisplayClose();//SplitButtonComponent.EnsureLastSplitButtonIsClosed();
         //DropdownMenuFilterComponent.EnsureLastDropdownMenuIsClosed();
     }
 
-
+    get IsDisplayOnly() { return this._CourierWorksheetSharedDataService.IsDisplayOnly }
     get WebAPICourierGWMessageECTHRDataMaman() { return this._CourierWorksheetSharedDataService.WebAPICourierGWMessageECTHRDataMaman }
+    //get CourierPendingReasonListToolTip() { return this.CourierPendingReasonListToolTip ; }
+    get CourierPendingReasonListToolTip() { return this.getCourierPendingReasonName(this._CourierWorksheet.CourierPendingReasonList); }
+    
+    set CourierPendingReasonListToolTip(value: string) {
+        if (this.CourierPendingReasonListToolTip != value) {
+            this.CourierPendingReasonListToolTip = value;
+        }
+    }
+
+    getCourierPendingReasonName(courierPendingReason: string) {
+        var toolTip = courierPendingReason
+        if (!AppTool.IsNullOrEmpty(toolTip) && toolTip.indexOf(',') < 0) {
+            if (this._CourierWorksheet != null && this._CourierWorksheet.CourierPendingReasonName != null) {
+                toolTip = this._CourierWorksheet.CourierPendingReasonName;
+            }
+            else {
+                var myCourierPendingReasonListService = new CourierPendingReasonListService();
+                myCourierPendingReasonListService.getSingleFromCache(toolTip)
+                    .subscribe(serviceResponse => {
+                        var CourierPendingReason = serviceResponse.Result as CourierPendingReasonList;
+                        toolTip = CourierPendingReason.LocalName;
+                    });
+            }
+        }
+        return toolTip;
+    }
+
     IsWebAPICourierGWMessageECTHRDataMamanEnable: boolean = false;
 
     GetSendECTHRDataMaman(event) {
@@ -594,20 +623,22 @@ export class CourierWorksheetListTemplate {
                     });
                 }
                 else {
-                    if (mode == "Update") {
-                        windowArgs.CourierPendingReasonCode = this._CourierWorksheet.CourierPendingReasonCode;
-                        windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
-                    }
+                    //if (mode == "Update") {
+                        windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
+                        //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
+                    //}
                     logitudeWindow.Width = 450;
                     logitudeWindow.Height = 280;
                     logitudeWindow.IsShowCloseButton = false;
                     logitudeWindow.Title = "סימון ב Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
                     logitudeWindow.WindowArgs = windowArgs;
-                    logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+                    //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+                    logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/DeclarationPendingsGeneralComponent');
                     logitudeWindow.WindowClosed.subscribe(($event: any) => {
                         this.RefreshData();
                     });
                 }
+                
             }
         });
 
@@ -616,8 +647,8 @@ export class CourierWorksheetListTemplate {
 
     DeletePending(declarationCourierStatusPM: DeclarationCourierStatusPM) {
         SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-        declarationCourierStatusPM.CourierPendingReasonCode = null;
-        declarationCourierStatusPM.PendingRemarks = null;
+        declarationCourierStatusPM.CourierPendingReasonList = null;
+        //declarationCourierStatusPM.PendingRemarks = null;
         this._DeclarationCourierStatusPMService.update(declarationCourierStatusPM).subscribe((response: ServiceResponse) => {
             SessionLocator.CurrentSession.StopBusyIndicator();
             this.RefreshData();

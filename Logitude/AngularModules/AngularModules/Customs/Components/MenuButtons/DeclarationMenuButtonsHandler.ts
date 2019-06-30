@@ -1151,7 +1151,8 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         logitudeWindow.IsShowCloseButton = false;
         logitudeWindow.Title = TextCodeTranslator.Translate("Customs.CourierMaster.O.MarkPending");
         logitudeWindow.WindowArgs = windowArgs;
-        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+        //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/DeclarationPendingsGeneralComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             //this._CourierWorksheetSharedDataService.SendNextMessage("DoRefresh");
         });
@@ -1163,7 +1164,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         this.declarationCourierStatusPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
             SessionLocator.CurrentSession.StopBusyIndicator();
             var declarationCourierStatusPM: DeclarationCourierStatusPM = response.Result;
-            if (declarationCourierStatusPM != null && (!AppTool.IsNullOrEmpty(declarationCourierStatusPM.CourierPendingReasonCode) || !AppTool.IsNullOrEmpty(declarationCourierStatusPM.PendingRemarks))) {
+            if (declarationCourierStatusPM != null && (!AppTool.IsNullOrEmpty(declarationCourierStatusPM.CourierPendingReasonList))) {
                 var confirm = new ConfirmWindow();
                 confirm.Width = 350;
                 confirm.Height = 200;

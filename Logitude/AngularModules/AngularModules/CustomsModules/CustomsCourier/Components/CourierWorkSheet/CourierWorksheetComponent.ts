@@ -814,7 +814,7 @@ implements OnDestroy
         this.columns.push({
             FieldName: 'CourierPendingReasonName',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonName"),
+            Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.CourierPendingReasonList"),
             Styles: { width: '150px' },
             IsCustomTemplate: true,
             ServerSideSortable: false,
@@ -845,7 +845,7 @@ implements OnDestroy
         });
   
         this.columns.push({
-            FieldName: 'CourierPendingReasonCode',
+            FieldName: 'CourierPendingReasonList',
             DataTypeCode: 'String',
             //Display: TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.F.IsClosedForFollowUp"),
             Styles: { width: '50px' },
@@ -1463,6 +1463,7 @@ implements OnDestroy
 
     DisplayOnlyCheck() {
         this.IsDisplayOnly = false;
+        this._CourierWorksheetSharedDataService.IsDisplayOnly = false;
 
         //Check if changing StorageSiteCode
         this._CourierMasterValidator.SetEntityPM(this.entityPM);
@@ -1473,12 +1474,21 @@ implements OnDestroy
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
                     this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                    this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
         });
     }
 
     SendUncorrectDocuments() {
+
+        if (this._DOC_U_Total == 0) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            return;
+        }
 
         var currRequestParams = new SendUnCorrectDocumentsRequestParams();
         currRequestParams.LoggingEnabled = true;

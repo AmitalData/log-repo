@@ -102,7 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Procedural Fault",
-			      				    Code =  "df31",
+			      				    Code =  "c413",
 			      				    Name =  "Customs.ProceduralFault Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

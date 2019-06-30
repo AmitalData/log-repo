@@ -77,7 +77,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     throw new Exception("While canceling its must Set CommLogStepCanCancellAction !!!");
                 }
-                CommLogStepCanCancelledAction(entityPOCO, entityPM, null);
+                else
+                {
+                    CommLogStepCanCancelledAction(entityPOCO, entityPM, null);
+                }
+                
                 Request2715(entityPOCO);
                 RequestCourier(entityPOCO);
 
