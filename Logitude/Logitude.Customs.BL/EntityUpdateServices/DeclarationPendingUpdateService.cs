@@ -24,20 +24,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class DeclarationPendingUpdateService //: EntityUpdateService<DeclarationPending, DeclarationPendingPM, DeclarationPM>
     {
-        protected override void OnCreating(DeclarationPendingPM entityPM, DeclarationPM entityParentPM)
+        protected override void OnCreating(DeclarationPendingPM entityPM, EntityPM entityParentPM)
         {
-            if (entityParentPM == null)
-            {
-                return;
-            }
-            entityPM.DeclarationID = entityParentPM.Id;
-            entityPM.Tenant = entityParentPM.Tenant;
-
             base.OnCreating(entityPM, entityParentPM);
         }
 
-
-        protected override void AfterUpdating(DeclarationPendingPM entityPM, DeclarationPM entityParentPM)
+        protected override void AfterUpdating(DeclarationPendingPM entityPM, EntityPM entityParentPM)
         {
             ICustomContext context = MainContext as CustomContext;
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
@@ -70,7 +62,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
         }
-        
+
 
     }
 }
