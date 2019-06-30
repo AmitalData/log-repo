@@ -123,7 +123,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 List<PaymentChequePM> PaymentCheques = GetPaymentChequesByAPPaymentId(entityPM);
                 if (PaymentCheques.Count == 0)
                 {
-                    if (setApproved && (entityPM.AutomaticPaymentCheque || string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef)))
+                    if (setApproved && (entityPM.AutomaticPaymentCheque || string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef)) && entityPM.PaymentMethodCode=="CH")
                     {
                         SecurityUtility.CheckContactFeature("PaymentCheque", "NEW", entityPM.Tenant);
                          VendorGLAccount = GetGLAccountByCard(entityPM);
