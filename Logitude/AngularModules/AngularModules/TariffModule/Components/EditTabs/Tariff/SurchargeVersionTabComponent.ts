@@ -416,13 +416,22 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         var datePipe: DatePipe = new DatePipe("en-US");
 
         this.compareToVersions.filter(a => a.Version != this.CurrentVersion.Version).forEach(item => {
-            var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-            var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+
             var newVersion: VersionClass = new VersionClass();
             newVersion.Version = item.Version;
             newVersion.ParentVersionNumber = item.ParentVersionNumber;
-            newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
             newVersion.Id = item.TariffId;
+
+            if (this.EntityPM.TypeCode == "ASC") {
+                newVersion.Name = "Version " + item.Version;
+            }
+
+            else {
+                var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
+                var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+                newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+            }
+
             this.VersionsList.push(newVersion);
         });
 

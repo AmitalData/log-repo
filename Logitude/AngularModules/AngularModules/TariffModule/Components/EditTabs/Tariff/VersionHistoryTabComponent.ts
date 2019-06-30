@@ -292,12 +292,20 @@ export class VersionHistoryTabComponent implements OnDestroy {
         var datePipe: DatePipe = new DatePipe("en-US");
 
         this.versions.filter(d => !d.IsDraft).forEach(item => {
-            var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-            var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
 
             var newVersion: CodeNameClass = new CodeNameClass();
             newVersion.Code_Int = item.Version;
-            newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+
+            if (this.EntityPM.TypeCode == "ASC") {
+                newVersion.Name = "Version " + item.Version;
+            }
+
+            else {
+                var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
+                var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+                newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+            }
+
 
             this.VersionsList.push(newVersion);
         });
