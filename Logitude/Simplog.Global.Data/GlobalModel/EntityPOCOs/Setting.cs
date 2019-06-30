@@ -13,6 +13,10 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string Id { get; set; }
         public string LogitudeURL { get; set; }
         public string ChampURL { get; set; }
+        public string ChampTestAPIURL { get; set; }
+        public string ChampTestAPIPassword { get; set; }
+        public string ChampProdAPIURL { get; set; }
+        public string ChampProdAPIPassword { get; set; }
         public string DeploymentStage { get; set; }
         public string ChampEnv { get; set; }
         public string CustomerCareIP { get; set; }

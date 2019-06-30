@@ -11,7 +11,8 @@ import { PortList } from '../../../../Common/EntityLists/PortList';
 
 export class ChoosePortComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
-    public DataContext: DestinationClass;
+    public DataContext: ChoosePortComponent= this;
+    public ParentClass: DestinationClass;
     public ObjectTableName = "AirlineAreasPort";
     public ValidationErrorsList: string[] = [];
     constructor() {
@@ -19,7 +20,7 @@ export class ChoosePortComponent extends BaseComponent {
     }
 
     SetDataContext(dataContext: DestinationClass) {
-        this.DataContext = dataContext;        
+        this.ParentClass = dataContext;        
     }
 
     private portId: string;
@@ -47,21 +48,24 @@ export class ChoosePortComponent extends BaseComponent {
 
     AddButtonClicked() {
         var errors: string[] = [];
-
-        if (this.DataContext.fatherComponent.ItemList.filter(d => d.Code == this.Port.Code).length > 0) {
-            errors.push("Port with the same code already added");
-        }
-        else if (this.Port == null || this.PortId) {
+        if (this.Port == null || this.PortId == null) {
             errors.push("Please Choose port");
         }
+
+        else if (this.ParentClass.fatherComponent.ItemList.filter(d => d.Code == this.Port.Code).length > 0) {
+            errors.push("Port with the same code already added");
+        }
+        
 
     
 
         this.ValidationErrorsList = errors;
         
         if (errors.length == 0) {
-            var newItem: DestinationClass = new DestinationClass(this.DataContext.fatherComponent, this.Port,true)
-            this.DataContext.fatherComponent.ItemList.push(newItem);
+            var newItem: DestinationClass = new DestinationClass(this.ParentClass.fatherComponent, this.Port,true)
+            this.ParentClass.fatherComponent.ItemList.push(newItem);
+            this.Port = null;
+            this.PortId = null;
 
         }
     }

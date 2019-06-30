@@ -15,62 +15,73 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.EntityLists;
 
 namespace Logitude.CRM.Data.EntityListQueryServices
-{ 
+{
 
     public partial class OccasionListQueryService
     {
-	    private IQueryable<OccasionList> GetIqueryableList(IQueryable<Occasion> iQueryable)
+        private IQueryable<OccasionList> GetIqueryableList(IQueryable<Occasion> iQueryable)
         {
-		IQueryable<OccasionList> query = (from a in iQueryable
-                                            select new OccasionList()
-											{
-                     
-					                          Id = a.Id,
-					
-					                          Tenant = a.Tenant,
-					
-					                          CreateDate = a.CreateDate,
-					
-					                          CreatedByUserId = a.CreatedByUserId,
-					
-					                          UpdateDate = a.UpdateDate,
-					
-					                          UpdatedByUserId = a.UpdatedByUserId,
-					
-					                          SearchFields = a.SearchFields,
-					
-					                          Name = a.Name,
-					
-					                          StartDateTime = a.StartDateTime,
-					
-					                          EndDateTime = a.EndDateTime,
-					
-					                          Goal = a.Goal,
-					
-					                          Location = a.Location,
-					
-					                          OwnerId = a.OwnerId,
-					
-					                          IndustryId = a.IndustryId,
-					
-					                          OccasionTypeId = a.OccasionTypeId,
-					
-					                          OccasionStatusId = a.OccasionStatusId,
-					
-		                    	            });
-            return query;
-		}
+            IQueryable<OccasionList> query = (from a in iQueryable
+                                              select new OccasionList()
+                                              {
 
-		private IQueryable<Occasion> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<Occasion> iQueryable, int tenant)
+                                                  Id = a.Id,
+
+                                                  Tenant = a.Tenant,
+
+                                                  CreateDate = a.CreateDate,
+
+                                                  CreatedByUserId = a.CreatedByUserId,
+
+                                                  UpdateDate = a.UpdateDate,
+
+                                                  UpdatedByUserId = a.UpdatedByUserId,
+
+                                                  SearchFields = a.SearchFields,
+
+                                                  Name = a.Name,
+
+                                                  StartDateTime = a.StartDateTime,
+
+                                                  EndDateTime = a.EndDateTime,
+
+                                                  Goal = a.Goal,
+
+                                                  Location = a.Location,
+
+                                                  OwnerId = a.OwnerId,
+
+                                                  IndustryId = a.IndustryId,
+
+                                                  OccasionTypeId = a.OccasionTypeId,
+
+                                                  OccasionStatusId = a.OccasionStatusId,
+
+                                                  OwnerName = a.Owner == null ? "" : a.Owner.Contact.EnglishName,
+
+                                                  TypeName = a.OccasionType == null ? "" : a.OccasionType.Name,
+
+                                                  OccasionStatusName = a.OccasionStatus == null ? "" : a.OccasionStatus.Name,
+
+                                                  CreatedByContactName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+
+                                                  UpdatedByUserName = a.UpdatedByUser != null ? a.UpdatedByUser.Contact.EnglishName : null,
+
+                                                  IndustryName = a.Industry == null ? "" : a.Industry.Name,
+                                              });
+            return query;
+        }
+
+        private IQueryable<Occasion> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Occasion> iQueryable, int tenant)
         {
             return iQueryable;
         }
-				private IQueryable<Occasion> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<Occasion> iQueryable, int tenant)
+        private IQueryable<Occasion> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<Occasion> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
-		
-			}
+            return iQueryable;
+        }
+
+    }
 
 
 }

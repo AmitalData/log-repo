@@ -67,112 +67,149 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //    entityPM.PaymentChequeLines.Add(paymentChequeLine);
             //}
         }
-        protected override void OnUpdating(PaymentChequePM entityPM)
+        protected override void OnUpdating(PaymentChequePM paymentChequePM)
         {
 
-            if (entityPM.PaymentChequeStatusCode == "2")
+            if (paymentChequePM.PaymentChequeStatusCode == "2")
             {
-                BankAccountQueryService bankAccountService = new BankAccountQueryService(entityPM.Tenant);
-                BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, false, false);
-                if (bankAccount.ChequeCounter == null)
+                if (paymentChequePM.BankAccountId != null)
                 {
-                    throw new Exception("The cheque counter did not defined for the choosen bank");
+
+                    paymentChequePM.ForeignAmount = paymentChequePM.LocalAmount;
+
+                    BankAccountPM bankAccount = UpdateBankAccount(paymentChequePM);
+                    APPaymentPM paymentPM = GetAPPayment(paymentChequePM);
+
+                    if (paymentPM == null)
+                    {
+                        JournalPM journal = GetNewJournal(paymentChequePM, paymentPM);
+
+                        if (paymentChequePM.ForeignAmount == null) paymentChequePM.ForeignAmount = 0;
+
+                        string creditAccount = FillCreditAccount(paymentChequePM, bankAccount);
+
+                        AddJournalLines(paymentChequePM, paymentPM, journal, creditAccount);
+
+                        JournalUpdateService journalUpdateService = new JournalUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                        journalUpdateService.Update(journal, true);
+
+                        paymentChequePM.JournalNumber = journal.JournalNumber;
+                    }
                 }
                 else
                 {
-                    entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
-                    entityPM.UniqueField = entityPM.ChequeNumber;
-                    BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                    bankAccount.ChequeCounter += 1;
-                    bankAccount.ChangeSetOp = ChangeSetOperation.Update;
-                    bankAccountUpdateService.Update(bankAccount, true);
+                    throw new ApplicationException("No bank account connected to payment cheque");
                 }
-              
-                TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
-                TenantPM currentTenant = tenantQuery.GetSinglePM(entityPM.Tenant);
-                entityPM.ForeignAmount = entityPM.LocalAmount;
-                APPaymentPM paymentPM = GetAPPayment(entityPM);
-                JournalUpdateService journalUpdateService = new JournalUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                JournalPM journal = new JournalPM
-                {
-                    CreateDate = entityPM.CreateDate,
-                    TypeCode="0",
-                    StatusCode="2",
-                    CreatedByUserId = entityPM.CreatedByUserId,
-                    AccountingEntityCode = paymentPM != null ? "5": "9",
-                    AccountingEntityId = entityPM.APPaymentId != null? entityPM.APPaymentId : entityPM.Id,
-                    AccountingEntityReference = paymentPM != null ? paymentPM.PaymentNo : entityPM.ChequeNumber,
-                    UpdateDate = entityPM.UpdateDate,
-                    UpdatedByUserId= entityPM.UpdatedByUserId,
-                    ApproveDate = entityPM.CreateDate,
-                    ApprovedByUserId = entityPM.CreatedByUserId,
-                    ChangeSetOp= ChangeSetOperation.Insert,
-                    Tenant =entityPM.Tenant,
-                    AccountingDate = (DateTime)entityPM.CreateDate,
-
-                };
-                if (entityPM.ForeignAmount == null) entityPM.ForeignAmount = 0;
-                string creditAccount = null;
-                if (bankAccount.TransferGLAcccountId != null)
-                {
-                    creditAccount = bankAccount.TransferGLAcccountId;
-                }
-                else
-                {
-                    creditAccount = entityPM.BankAccountGLAccountId;
-                }
-               
-                JournalLinePM journalLine1 = new JournalLinePM()
-                {
-                    ActionCode = "1",
-                   CreditAccountId = creditAccount,
-                   DocumentDate = entityPM.CreateDate,
-                    AccountingDate = (DateTime)entityPM.CreateDate,
-
-                    DueDate = (DateTime)entityPM.ValueDate,
-                   LocalAmount=(decimal) entityPM.LocalAmount,
-                   CurrencyId = entityPM.CurrencyId,
-                   ForeignAmount = (decimal)entityPM.ForeignAmount,
-                   ExchangeRate = entityPM.ExchangeRate,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
-                    Reference2 = entityPM.ChequeNumber,
-
-
-                };
-                JournalLinePM journalLine2 = new JournalLinePM()
-                {
-                    ActionCode = "2",
-                    DebitAccountId = entityPM.PayToGLAccountId,
-                    DocumentDate = entityPM.CreateDate,
-                    AccountingDate = (DateTime)entityPM.CreateDate,
-                    DueDate = (DateTime)entityPM.ValueDate,
-                    LocalAmount = (decimal)entityPM.LocalAmount,
-                    CurrencyId = entityPM.CurrencyId,
-                    ForeignAmount = (decimal)entityPM.ForeignAmount,
-                    ExchangeRate = entityPM.ExchangeRate,
-                    ChangeSetOp = ChangeSetOperation.Insert,
-                    Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
-                    Reference2 = entityPM.ChequeNumber,
-
-
-                };
-                //if(currentTenant.CurrencyId == entityPM.BankGLAccountCurrencyId)
-                //{
-                //    journalLine1.ExchangeRate = 1;
-                //    journalLine2.ExchangeRate = 1;
-                //    journalLine1.ForeignAmount =(decimal) entityPM.LocalAmount;
-                //    journalLine2.ForeignAmount = (decimal)entityPM.LocalAmount;
-                   
-                //}
-                journal.JournalLines.Add(journalLine1);
-                journal.JournalLines.Add(journalLine2);
-               journalUpdateService.Update(journal, true);
-                entityPM.JournalNumber = journal.JournalNumber;
             }
-            ValidateEntity(entityPM);
-            entityPM.UpdateDate = DateTime.Now;
-            entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+
+            ValidateEntity(paymentChequePM);
+            paymentChequePM.UpdateDate = DateTime.Now;
+            paymentChequePM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(paymentChequePM.Tenant);
+        }
+
+        private static string FillCreditAccount(PaymentChequePM paymentChequePM, BankAccountPM bankAccount)
+        {
+            string creditAccount;
+            if (bankAccount.TransferGLAcccountId != null)
+                creditAccount = bankAccount.TransferGLAcccountId;
+            else
+                creditAccount = paymentChequePM.BankAccountGLAccountId;
+            return creditAccount;
+        }
+
+        private static void AddJournalLines(PaymentChequePM entityPM, APPaymentPM paymentPM, JournalPM journal, string creditAccount)
+        {
+            JournalLinePM journalLine1 = new JournalLinePM()
+            {
+                ActionCode = "1",
+                CreditAccountId = creditAccount,
+                DocumentDate = entityPM.CreateDate,
+                AccountingDate = (DateTime)entityPM.CreateDate,
+
+                DueDate = (DateTime)entityPM.ValueDate,
+                LocalAmount = (decimal)entityPM.LocalAmount,
+                CurrencyId = entityPM.CurrencyId,
+                ForeignAmount = (decimal)entityPM.ForeignAmount,
+                ExchangeRate = entityPM.ExchangeRate,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
+                Reference2 = entityPM.ChequeNumber,
+
+
+            };
+            JournalLinePM journalLine2 = new JournalLinePM()
+            {
+                ActionCode = "2",
+                DebitAccountId = entityPM.PayToGLAccountId,
+                DocumentDate = entityPM.CreateDate,
+                AccountingDate = (DateTime)entityPM.CreateDate,
+                DueDate = (DateTime)entityPM.ValueDate,
+                LocalAmount = (decimal)entityPM.LocalAmount,
+                CurrencyId = entityPM.CurrencyId,
+                ForeignAmount = (decimal)entityPM.ForeignAmount,
+                ExchangeRate = entityPM.ExchangeRate,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
+                Reference2 = entityPM.ChequeNumber,
+
+
+            };
+
+            //if(currentTenant.CurrencyId == entityPM.BankGLAccountCurrencyId)
+            //{
+            //    journalLine1.ExchangeRate = 1;
+            //    journalLine2.ExchangeRate = 1;
+            //    journalLine1.ForeignAmount =(decimal) entityPM.LocalAmount;
+            //    journalLine2.ForeignAmount = (decimal)entityPM.LocalAmount;
+
+            //}
+
+            journal.JournalLines.Add(journalLine1);
+            journal.JournalLines.Add(journalLine2);
+        }
+
+        private static JournalPM GetNewJournal(PaymentChequePM entityPM, APPaymentPM paymentPM)
+        {
+            return new JournalPM
+            {
+                CreateDate = entityPM.CreateDate,
+                TypeCode = "0",
+                StatusCode = "2",
+                CreatedByUserId = entityPM.CreatedByUserId,
+                AccountingEntityCode = paymentPM != null ? "5" : "9",
+                AccountingEntityId = entityPM.APPaymentId != null ? entityPM.APPaymentId : entityPM.Id,
+                AccountingEntityReference = paymentPM != null ? paymentPM.PaymentNo : entityPM.ChequeNumber,
+                UpdateDate = entityPM.UpdateDate,
+                UpdatedByUserId = entityPM.UpdatedByUserId,
+                ApproveDate = entityPM.CreateDate,
+                ApprovedByUserId = entityPM.CreatedByUserId,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                Tenant = entityPM.Tenant,
+                AccountingDate = (DateTime)entityPM.CreateDate,
+
+            };
+        }
+
+        private BankAccountPM UpdateBankAccount(PaymentChequePM entityPM)
+        {
+            BankAccountQueryService bankAccountService = new BankAccountQueryService(entityPM.Tenant);
+            BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, false, false);
+            if (bankAccount.ChequeCounter == null)
+            {
+                throw new Exception("The cheque counter did not defined for the choosen bank");
+            }
+            else
+            {
+                entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
+                entityPM.UniqueField = entityPM.ChequeNumber;
+
+                BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                bankAccount.ChequeCounter += 1;
+                bankAccount.ChangeSetOp = ChangeSetOperation.Update;
+                bankAccountUpdateService.Update(bankAccount, true);
+            }
+
+            return bankAccount;
         }
 
         public  APPaymentPM GetAPPayment(PaymentChequePM paymentCheque)
@@ -275,12 +312,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.APPaymentId == null)
             {
                 ValidateGLAccountAccountType(entityPM);
+             
+            }
+            else if(entityPM.APPaymentId != null && (entityPM.IsCancelled || entityPM.PaymentChequeStatusCode == "4"))
+            {
+                PreventCancellingPaymentCheque(entityPM);
             }
           
           
         }
 
-
+        public void PreventCancellingPaymentCheque(PaymentChequePM paymentCheque)
+        {
+            throw new Exception("You cant cancel an internal payment cheque, you need to cancel APPayment.");
+        }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         bool showLocals;
         public bool SetShowLocalLabels(PaymentChequePM entityPM)

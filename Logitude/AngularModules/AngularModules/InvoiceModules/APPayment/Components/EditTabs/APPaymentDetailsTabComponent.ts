@@ -96,12 +96,14 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     IsSplitComponentOpened: boolean;
 
     token: any;
+    SplitTooltip: string = "";
     SplitButtonClicked() {
 
         this.IsSplitComponentOpened = !this.IsSplitComponentOpened;
         if (!this.IsSplitComponentOpened) {
             this.AutomaticPaymentCheque=!this.isRTL;
             this.PaymentChequeActivated = !this.isRTL;
+            this.SplitTooltip = TextCodeTranslator.Translate("Accounting.General.O.PaymentChequeAutomaticOption");
             if (AppTool.IsNullOrEmpty(this.ChequeOrPaymentRef)) {
                 this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, this.isRTL);
             }
@@ -109,6 +111,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         else {
             this.PaymentChequeActivated = this.isRTL;
             this.AutomaticPaymentCheque = this.isRTL;
+            this.SplitTooltip = TextCodeTranslator.Translate("Accounting.General.O.PaymentChequeManualOption");
             this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, !this.isRTL);
             this.ChequeOrPaymentRef = null;
         }
@@ -730,8 +733,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                 this.PaymentCurrencyId = list.InvoiceCurrencyId;
             }
-
-            this.EntityPM.VendorName = list.EnglishName;
+            if (SessionLocator.LoggedUserPM.DontShowLocal) {
+                this.EntityPM.VendorName = list.EnglishName;
+            }
+            else {
+                this.EntityPM.VendorName = list.LocalName;
+            }
             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
             this.LoadAddress();
         }
@@ -1010,6 +1017,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     SetUIProperties_FullAccounting() {
         if (this.IsFullAccounting) {
             this.SetUIProperties_FullAccounting_Tax();
+            if (this.EntityPM.Id != null) {
+                this.ShowSplitButton = false;
+                this.PaymentChequeActivated = false;
+            }
             if (this.PaymentMethodCode == "CH" || this.PaymentMethodCode == "BT" || this.PaymentMethodCode == "CC") {
                 this.BankAccountIdVisibility = true;
             }

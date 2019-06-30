@@ -17,6 +17,10 @@ namespace Simplog.Server.Infrastructure
         public static string Id { get; set; }
         public static string LogitudeURL { get; set; }
         public static string ChampURL { get; set; }
+        public static string ChampTestAPIURL { get; set; }
+        public static string ChampTestAPIPassword { get; set; }
+        public static string ChampProdAPIURL { get; set; }
+        public static string ChampProdAPIPassword { get; set; }
         public static string DeploymentStage { get; set; }
         public static string ChampEnv { get; set; }
         public static string CustomerCareIP { get; set; }
