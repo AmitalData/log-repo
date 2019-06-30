@@ -722,15 +722,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     tariffLinesResult = this.BuildAirSurchargesCostExcelLines(sheet, authToken.Tenant);
                 }
 
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = filter.Tenant,
-                    EventTypeCode = "TUPL",
-                    UserId = loggedContact.Id,
-                    EntityId = filter.TariffId,
-                    ObjectTableName = "Tariff",
-                    Notes = filter.FileName + " uploaded (" + tariffLinesResult.Count + " lines)"
-                });
 
                 return Request.CreateResponse(HttpStatusCode.OK, tariffLinesResult);
             }

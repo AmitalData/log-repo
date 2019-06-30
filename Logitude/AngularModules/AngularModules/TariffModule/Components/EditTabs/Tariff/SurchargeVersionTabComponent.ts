@@ -45,6 +45,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public IsDraftVersion: boolean = true;
     public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
+    private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsUpdateSurchargesButtonVisible: boolean = false;
     constructor(public entityArgs: EntityArgs) {
@@ -518,6 +519,14 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
     UploadExcel(file: any) {
+        this.FileName = null;
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.FileName = name[0];
+            }
+        }
+
         if (file && file.size > 0) {
             this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
@@ -561,7 +570,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             console.log(e);
         };
         reader.readAsArrayBuffer(file);
-       // context.EntityPM.FileUploadedName = file.Name;
+        context.EntityPM.FileUploadedName = this.FileName;
 
     }
     SendExcelToServer(filter: any) {
