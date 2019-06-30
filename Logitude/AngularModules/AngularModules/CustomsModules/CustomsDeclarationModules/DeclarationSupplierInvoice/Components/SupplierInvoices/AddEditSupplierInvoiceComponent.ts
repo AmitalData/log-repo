@@ -2231,6 +2231,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             var commissionList: VendorCommissionList[] = this.CustomerCommissionsList.filter(d => d.VendorId == this.EntityPM.VendorId);
             if (commissionList != null && commissionList.length > 0) {
+                var commissionMsgText: string = "";
                 for (let commission of commissionList) {
                     if (commission) {
                         if (commission.CommisionPercentage) {
@@ -2252,29 +2253,11 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                                 if (modTypeI10.Amount != newAmount || modTypeI10.CurrencyTypeCode != newCurrency) {
                                     //somthing changed, amount or currency
                                     //ask user to change it
-                                    var confirm = new ConfirmWindow;
                                     var msgTxt = TextCodeTranslator.Translate("Customs.Declaration.O.CommissionChangedFromTo");
+                                    msgTxt = msgTxt.replace("#typeCode", modTypeI10.TypeCode);
                                     msgTxt = msgTxt.replace("#oldValue", modTypeI10.Amount.toFixed(2).toString() + " " + modTypeI10.CurrencyTypeCode);
                                     msgTxt = msgTxt.replace("#newValue", newAmount.toFixed(2).toString() + " " + newCurrency); // new values
-                                    confirm.Show(msgTxt);
-
-                                    confirm.WindowClosed.subscribe((event: any) => {
-                                        if (confirm.Yes) {
-                                            //update record
-                                            modTypeI10.CurrencyTypeCode = newCurrency;
-                                            modTypeI10.CurrencyTypeName = this.invoiceCurrencyName;
-                                            modTypeI10.Amount = newAmount;
-
-                                            this.UpdateModificationsList();
-
-                                            confirm.Close();
-                                        }
-                                        else {
-                                            //don't update
-                                            confirm.Close();
-                                        }
-                                    });
-
+                                    commissionMsgText = commissionMsgText.concat("\n" + msgTxt);
                                 }
                                 else {
                                     // same currency and amount
@@ -2305,6 +2288,30 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                         }
                     }
                 }
+
+
+                if (commissionMsgText != "") {
+                    //somthing changed, amount or currency
+                    //ask user to change it
+                    var confirm = new ConfirmWindow;
+                    commissionMsgText = commissionMsgText.concat("\n" + "האם לעדכן נתונים?");
+                    confirm.Width = 300;
+                    confirm.Height = 200;
+                    confirm.Show(commissionMsgText);
+                    confirm.WindowClosed.subscribe((event: any) => {
+                        if (confirm.Yes) {
+                            //update records
+                            this.UpdateModificationsByType(commissionList);
+                            confirm.Close();
+                        }
+                        else {
+                            //don't update
+                            confirm.Close();
+                        }
+                    });
+                }
+
+
             } else {
                 //No commission for this vendor , delete existing commission ?
                 var msg = "לא קיימים נתוני עמלה לספק זה , האם למחוק נתוני עמלה קיימים ?";
@@ -2339,6 +2346,39 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         } else {
             console.log("[!] Cannot calculate commession percentage, some fields are required!");
         }
+    }
+
+
+    UpdateModificationsByType(commissionList: VendorCommissionList[]) {
+        for (let commission of commissionList) {
+            if (commission) {
+                if (commission.CommisionPercentage) {
+
+                    //init new mod values
+                    var newCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
+                    var newAmount = this.precisionRound((commission.CommisionPercentage / 100) * this.EntityPM.InvoiceAmount, 2);
+
+                    // if commission found:
+                    // 1- update Field VendorCommisionPercentage.SupplierInvoice
+                    this.EntityPM.VendorComissionPercentage = commission.CommisionPercentage;
+                    console.log("[!] invoice commission changed to:", this.EntityPM.VendorComissionPercentage);
+
+                    // 2- In case there’s mod record , update it
+                    var modTypeI10 = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == commission.ModificationsTypeCode)[0];
+                    if (modTypeI10) {
+                        // 3- In case there’s record with same type 
+                        //    and it's with different currency OR value ask user
+                        if (modTypeI10.Amount != newAmount || modTypeI10.CurrencyTypeCode != newCurrency) {
+                            modTypeI10.CurrencyTypeCode = newCurrency;
+                            modTypeI10.CurrencyTypeName = this.invoiceCurrencyName;
+                            modTypeI10.Amount = newAmount;
+                            modTypeI10.TypeCode = commission.ModificationsTypeCode;
+                        }
+                    }
+                }
+            }
+        }
+        this.UpdateModificationsList();
     }
 
     UpdateModificationsList() {
