@@ -19,7 +19,7 @@ import {AppTool, DateTool, FontTool} from '../../../../Infrastructure/Tools';
 import {TarrifChargePM} from '../../../../Common/EntityPMs/TarrifChargePM';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import { AirlineAreaPM } from '../../../../Common/EntityPMs/AirlineAreaPM';
-
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 @Component({
     moduleId: module.id,
     templateUrl: './AreasTabComponent.html',
@@ -47,7 +47,12 @@ export class AreasTabComponent extends BaseComponent implements OnInit {
     public AddEditAirlineAreaClicked(EditedEntity: AirlineAreaPM=null) {
         this._entityResourceService.getEntityResourceByTableName("AirlineAreasPort", 0).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
-            logitudeWindow.Title = "Edit Area";
+            if (EditedEntity == null) {
+                logitudeWindow.Title = "New Area";
+            }
+            else {
+                logitudeWindow.Title = "Edit Area";
+            }
             logitudeWindow.Width = 700;
             logitudeWindow.Height = 650;
             var isNew: boolean = false;
@@ -66,7 +71,14 @@ export class AreasTabComponent extends BaseComponent implements OnInit {
 
     public DeleteAirlineAreaClicked(EditedEntity: AirlineAreaPM = null) {
         if (EditedEntity) {
-            this.EntityPM.RemoveAirlineAreaPM(EditedEntity);
+            var window: ConfirmWindow = new ConfirmWindow();
+            window.Show("Are you sure you want to delete this area?");
+            window.WindowClosed.subscribe((event: any) => {
+                if (window.Yes) {
+                    this.EntityPM.RemoveAirlineAreaPM(EditedEntity);
+                }
+            });
+            
         }
     }
 

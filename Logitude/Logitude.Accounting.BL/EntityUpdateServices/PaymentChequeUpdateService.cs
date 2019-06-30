@@ -278,12 +278,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.APPaymentId == null)
             {
                 ValidateGLAccountAccountType(entityPM);
+             
+            }
+            else if(entityPM.APPaymentId != null && (entityPM.IsCancelled || entityPM.PaymentChequeStatusCode == "4"))
+            {
+                PreventCancellingPaymentCheque(entityPM);
             }
           
           
         }
 
-
+        public void PreventCancellingPaymentCheque(PaymentChequePM paymentCheque)
+        {
+            throw new Exception("You cant cancel an internal payment cheque, you need to cancel APPayment.");
+        }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         bool showLocals;
         public bool SetShowLocalLabels(PaymentChequePM entityPM)
