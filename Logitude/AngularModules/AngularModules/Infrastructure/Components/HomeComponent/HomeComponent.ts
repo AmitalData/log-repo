@@ -1527,7 +1527,7 @@ export class HomeComponent implements OnDestroy{
             this.setCookie("CurrentTenant", SessionLocator.Tenant.toString(), 1);
             var link = "https://checkout.bluesnap.com/jsp/account_login.jsp";
             if (!AppTool.IsNullOrEmpty(temp)) {         
-                link = "https://www.bluesnap.com/jsp/entrance.jsp?target=cp&token=" + temp + "&pageToShow=my_account.jsp"
+                link = "https://ws.bluesnap.com/jsp/entrance.jsp?target=cp&token=" + temp + "&pageToShow=my_account.jsp"
             }
             var win = window.open(link, '_blank');
             win.focus();
