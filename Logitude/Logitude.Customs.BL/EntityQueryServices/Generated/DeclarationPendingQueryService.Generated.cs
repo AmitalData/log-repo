@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class DeclarationPendingQueryService: EntityQueryService<DeclarationPending,DeclarationPendingKeys,DeclarationPendingPM,DeclarationPM,DeclarationKeys>
+   public partial class DeclarationPendingQueryService: EntityQueryService<DeclarationPending,DeclarationPendingKeys,DeclarationPendingPM,object,DeclarationPendingKeys>
    {
    
         DeclarationPendingRepository repository;

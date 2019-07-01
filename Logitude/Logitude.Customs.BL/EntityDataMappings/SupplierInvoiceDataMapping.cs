@@ -14,32 +14,33 @@ using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
-   
-   public partial class SupplierInvoiceDataMapping: IMapping<SupplierInvoicePM, SupplierInvoice>
-   {
+
+    public partial class SupplierInvoiceDataMapping : IMapping<SupplierInvoicePM, SupplierInvoice>
+    {
 
         public void CustomPMToPOCO(SupplierInvoicePM entityPM, SupplierInvoice entityPOCO)
         {
             CustomMappedPOCOProperties.Add(POCOPropertyNames.DeclarationId);
             CustomMappedPOCOProperties.Add(POCOPropertyNames.InvoiceCounterKey);
-            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
-              
-                entityPOCO.DeclarationId = entityPM.DeclarationId;             
-                entityPOCO.InvoiceCounterKey = entityPM.InvoiceCounterKey;               
+
+                entityPOCO.DeclarationId = entityPM.DeclarationId;
+                entityPOCO.InvoiceCounterKey = entityPM.InvoiceCounterKey;
                 entityPOCO.Tenant = entityPM.Tenant;
 
             }
 
-    
+
         }
 
         public void CustomPOCOToPM(SupplierInvoicePM entityPM, SupplierInvoice entityPOCO)
         {
             CustomMappedPMProperties.Add(PMPropertyNames.IssueCountryName);
             CustomMappedPMProperties.Add(PMPropertyNames.PreferenceDocumentTypeName);
+            CustomMappedPMProperties.Add(PMPropertyNames.InvoiceCurrencyTypeName);
 
             if (entityPOCO.IssueCountryCode != null)
             {
@@ -64,9 +65,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPOCO.Tenant);
             entityPM.IsValueForCustomsOnly = declarationQueryService.GetIsValueForCustomsOnlyFromDeclaration(entityPOCO.DeclarationId, entityPOCO.Tenant);
+
+            if (entityPOCO.InvoiceCurrencyTypeCode != null)
+            {
+                CurrencyTypeQueryService currencyTypeQueryService = new CurrencyTypeQueryService(entityPOCO.Tenant);
+                CurrencyTypePM currencyTypePM = currencyTypeQueryService.GetSingle(entityPOCO.InvoiceCurrencyTypeCode, false, true);
+                entityPM.InvoiceCurrencyTypeName = currencyTypePM.LocalName;
+            }
         }
-   }
-
-
+    }
 }
+
+
+
    
