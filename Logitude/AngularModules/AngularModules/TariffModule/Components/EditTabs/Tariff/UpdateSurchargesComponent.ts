@@ -165,6 +165,10 @@ export class UpdateSurchargesComponent extends BaseComponent {
                     this.isUpdateDone = true;
                 }
 
+                else {
+                    this.ValidationErrorsList = response.ErrorsArray;
+                }
+
                 this.CurrentSession.StopBusyIndicator();
             });
         }

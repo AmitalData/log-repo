@@ -818,6 +818,11 @@ export class EditComponent implements OnDestroy {
             if (this.SingleDetailsTab) {
                 SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditTabComponent", this.TabControlBodyViewContainerRef)
                     .then(cmpRef => {
+
+                        if (this.PreSelectedTabCode != null) {
+                            this.entityArgs.PreSelectedTabCode = this.PreSelectedTabCode;
+                        }
+
                         cmpRef.instance.CurrentlySelected = true;
                         cmpRef.instance.Run(this.SingleDetailsTab.Code, this.SingleDetailsTab.HtmlComponentUrl);
                     });
