@@ -515,6 +515,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         private void InvoiceInsert()
         {
             //CheckExist();
+            ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
+            DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
 
             var myQueryService = new CustomsVendorQueryService(this._context);
 
@@ -556,7 +558,16 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 }
                 else
                 {
-                    this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                    if (mode == "INSERT_UPDATE_DELETE")
+                    {
+                        this._MySupplierInvoicePM = new Logitude.Customs.Def.EntityPMs.SupplierInvoicePM();
+                        this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Insert;
+                    }
+                    else
+                    {
+                        this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+                     
                 }
             }
 
