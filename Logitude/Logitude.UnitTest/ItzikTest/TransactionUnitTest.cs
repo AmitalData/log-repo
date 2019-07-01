@@ -12,7 +12,7 @@ namespace Logitude.UnitTest.ItzikTest
     [TestClass]
     public class TransactionUnitTest
     {
-        [TestMethod]
+        
         public void AmbientScope_ALLcomplete_Success()
         {
             using (var scope = new TransactionScope())
@@ -26,7 +26,7 @@ namespace Logitude.UnitTest.ItzikTest
 
             }
         }
-        [TestMethod]
+        
         public void AmbientScope_InnerDispose_ShouldThrow_TransactionAbortedException()
         {
 
@@ -51,7 +51,7 @@ namespace Logitude.UnitTest.ItzikTest
         }
 
 
-        [TestMethod]
+        
         public void AmbientScope_InnerThrowExceptionwithoutComplete_ShouldThrow_TransactionAbortedException()
         {
 
@@ -156,7 +156,7 @@ namespace Logitude.UnitTest.ItzikTest
             
         }
 
-        [TestMethod]
+        
         public void RequiresNewScope_InnerThrowExceptionwithoutComplete_Should_NNNOOOTTT_Throw_TransactionAbortedException()
         {
 
@@ -186,7 +186,7 @@ namespace Logitude.UnitTest.ItzikTest
 
 
         }
-        [TestMethod]
+        
         public void When_some_transaction_disposes_without_error_or_complete_ShouldThrow_TransactionAbortedException()
         {
             // entering an ambient transaction
