@@ -178,7 +178,8 @@ namespace CommunicationWorkerRole.Tasks
                 }
                 else
                 {
-                    SchedulerLog.Log += StringHelper.TruncateLongString(Environment.NewLine + MyFinalLog.ToString(), 4000);
+                    SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
+                    SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
                     SchedulerLogsService.Update(SchedulerLog);
                 }
 
@@ -231,7 +232,8 @@ namespace CommunicationWorkerRole.Tasks
                     }
                     else
                     {
-                        SchedulerLog.Log += StringHelper.TruncateLongString(Environment.NewLine + MyFinalLog.ToString(), 4000);
+                        SchedulerLog.Log += Environment.NewLine + MyFinalLog.ToString();
+                        SchedulerLog.Log = StringHelper.TruncateLongString(SchedulerLog.Log, 4000);
                         SchedulerLogsService.Update(SchedulerLog);
                     }
 

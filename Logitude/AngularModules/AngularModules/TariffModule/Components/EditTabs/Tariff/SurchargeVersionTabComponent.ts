@@ -43,10 +43,12 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
-    public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
+    private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsUpdateSurchargesButtonVisible: boolean = false;
+    public IsFirstDraft: boolean = false;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -373,6 +375,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     set IsComparToChecked(value: boolean) {
         if (this.isComparToChecked != value) {
             this.isComparToChecked = value;
+            this.UIProperties.SetEnabled("WarningPercentage", null, value);
             this.ComparingCalculations(false);
         }
     }
@@ -396,6 +399,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.ComparedToVersionPM = this.compareToVersions.filter(d => d.Version == this.SelectedVersion.Version)[0];
             this.ComparingCalculations(true);
         }
+
     }
 
     private compareToVersions: TariffVersionPM[];
@@ -433,19 +437,15 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             }
 
             this.VersionsList.push(newVersion);
+
         });
 
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
-
-        if (this.SelectedVersion == null) {
+        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsComparToChecked);
+        if (this.VersionsList == null || (this.VersionsList != null && this.VersionsList.length == 0)) {
             this.isComparToChecked = false;
-            this.IsCompareEnabled = false;
+            this.IsFirstDraft = true;
         }
-        else {
-            this.IsCompareEnabled = true;
-        }
-
-        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsCompareEnabled);
     }    
 
     ComparingCalculations(load: boolean) {
@@ -527,6 +527,14 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
     UploadExcel(file: any) {
+        this.FileName = null;
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.FileName = name[0];
+            }
+        }
+
         if (file && file.size > 0) {
             this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
@@ -570,7 +578,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             console.log(e);
         };
         reader.readAsArrayBuffer(file);
-       // context.EntityPM.FileUploadedName = file.Name;
+        context.EntityPM.FileUploadedName = this.FileName;
 
     }
     SendExcelToServer(filter: any) {
@@ -808,6 +816,13 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         logWindow.Height = 600;
         logWindow.WindowArgs = args;
         logWindow.Title = "Tariff Surchage Update";
+
+        logWindow.WindowClosed.subscribe((s: any) => {
+            if (s == "ok") {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+        });
+
         logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UpdateSurchargesComponent');
     }
 }

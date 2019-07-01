@@ -1676,13 +1676,16 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                 this.packages = response.Result;
 
                 if (this.packages.filter(d => d.HasErrors).length > 0) {
-                    var window: MessageWindow = new MessageWindow();
-                    window.Show("File contains errors, please validate the data and try again");
                     this.CurrentSession.StopBusyIndicator();
+
+                    var window: MessageWindow = new MessageWindow();
+                    window.Show("File contains errors, please validate the data and try again");                    
                 }
 
                 else {
                     if (this.EntityPM.ShipmentPackages.length > 0) {
+                        this.CurrentSession.StopBusyIndicator();
+
                         var confirmWindow = new ConfirmWindow();
                         confirmWindow.Show("Uploading packages will result in deleting existing packages and all its data");
                         confirmWindow.WindowClosed.subscribe((event: any) => {

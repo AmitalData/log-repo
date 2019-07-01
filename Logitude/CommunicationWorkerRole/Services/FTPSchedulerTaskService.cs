@@ -15,17 +15,35 @@ namespace CommunicationWorkerRole.Services
 {
     public class FTPSchedulerTaskService
     {
-        ////private SchedulerDetails schedulerDetails { get; set; }
-        ////private FTPService ftpService { get; set; }
-        //public FTPSchedulerTaskService()
-        //{
-        //    //schedulerDetails = theSchedulerDetails;
-           
-        //}
+        
 
+        public FTPSchedulerTaskService()
+        {
+            this.WarningsList = new List<string>();
+            this.MessagesList = new List<string>();
+        }
+
+        public List<string> WarningsList { get; set; }
+        public List<string> MessagesList { get; set; }
+
+        private void AddWarning(string warningMessage)
+        {
+            if (!string.IsNullOrEmpty(warningMessage) && !this.WarningsList.Contains(warningMessage))
+            {
+                this.WarningsList.Add(warningMessage);
+            }
+        }
+
+        private void AddMessage(string message)
+        {
+            if (!string.IsNullOrEmpty(message) && !this.MessagesList.Contains(message))
+            {
+                this.MessagesList.Add(message);
+            }
+        }
         public void ReadFTPFilesBySchedulerDetailsToAnalyzeQueue(SchedulerDetails schedulerDetails)
         {
-            FTPService ftpService = new FTPService(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
+            FTPServiceMod ftpService = new FTPServiceMod(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
 
             List<string> directoryFiles = GetFilteredDirectoryFileNamesByFTPDetails(schedulerDetails);
 
@@ -41,19 +59,41 @@ namespace CommunicationWorkerRole.Services
             }
         }
 
-        public byte[] DownloadFTPFile(SchedulerDetails schedulerDetails, FTPService ftpService, string fileName)
+        public byte[] DownloadFTPFile(SchedulerDetails schedulerDetails, FTPServiceMod ftpService, string fileName)
         {
-            string p_message;
-            string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
-            byte[] fileData = ftpService.Download(filePath, out p_message);
+           
+                string p_message;
+                string p_status;
+                string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
+                byte[] fileData = ftpService.Download(filePath, out p_status, out p_message);
+
+            AddStatusMessage(p_message, p_status);
+
             return fileData;
+          
         }
 
-        private void DeleteFTPFile(SchedulerDetails schedulerDetails, FTPService ftpService, string fileName)
+        private void DeleteFTPFile(SchedulerDetails schedulerDetails, FTPServiceMod ftpService, string fileName)
         {
+
             string p_message;
+            string p_status;
             string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
-            ftpService.Delete(filePath);
+            ftpService.Delete(filePath, out p_message, out p_status);
+
+            AddStatusMessage(p_message, p_status);
+        }
+
+        private void AddStatusMessage(string p_message, string p_status)
+        {
+            if (p_status == "-1")
+            {
+                AddWarning(p_message);
+            }
+            else
+            {
+                AddMessage(p_message);
+            }
         }
 
 
@@ -86,34 +126,46 @@ namespace CommunicationWorkerRole.Services
 
         public List<string> GetFilteredDirectoryFileNamesByFTPDetails(SchedulerDetails schedulerDetails)
         {
-            FTPService ftpService = new FTPService(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
+            FTPServiceMod ftpService = new FTPServiceMod(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
+            List<string> directoryFiles = new List<string>();
 
-            List<string> directoryFiles = ftpService.DirectoryListSimple(schedulerDetails.FTPDetails.Folder).Where(f => !string.IsNullOrWhiteSpace(f) && !string.IsNullOrWhiteSpace(Path.GetExtension(f))).ToList();
+            string pattern = (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Prefix) ? schedulerDetails.FTPDetails.Prefix : "") + "*" + (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Suffix) ? schedulerDetails.FTPDetails.Suffix : "") +
+               (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Extension) ? "." + schedulerDetails.FTPDetails.Extension.TrimStart('.') : "");
 
-            if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Extension))
             {
-                directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
-                Path.GetExtension(f).TrimStart('.')
-                .Equals(schedulerDetails.FTPDetails.Extension, StringComparison.CurrentCultureIgnoreCase)))
-                .ToList();
-            }
+                string p_message = "";
+                string p_status = "";
+                directoryFiles = ftpService.DirectoryListSimple(schedulerDetails.FTPDetails.Folder, out p_message,out p_status, pattern).Where(f => !string.IsNullOrWhiteSpace(f) && !string.IsNullOrWhiteSpace(Path.GetExtension(f))).ToList();
 
-            if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Prefix))
-            {
-                directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
-                f.StartsWith(schedulerDetails.FTPDetails.Prefix, StringComparison.CurrentCultureIgnoreCase)))
-                .ToList();
-            }
+                //if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Extension))
+                //{
+                //    directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
+                //    Path.GetExtension(f).TrimStart('.')
+                //    .Equals(schedulerDetails.FTPDetails.Extension, StringComparison.CurrentCultureIgnoreCase)))
+                //    .ToList();
+                //}
 
-            if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Suffix))
-            {
-                directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
-                f.Replace(Path.GetExtension(f), "")
-                .EndsWith(schedulerDetails.FTPDetails.Suffix, StringComparison.CurrentCultureIgnoreCase)))
-                .ToList();
-            }
+                //if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Prefix))
+                //{
+                //    directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
+                //    f.StartsWith(schedulerDetails.FTPDetails.Prefix, StringComparison.CurrentCultureIgnoreCase)))
+                //    .ToList();
+                //}
 
-            return directoryFiles;
+                //if (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Suffix))
+                //{
+                //    directoryFiles = directoryFiles.Where(f => (!string.IsNullOrEmpty(f) &&
+                //    f.Replace(Path.GetExtension(f), "")
+                //    .EndsWith(schedulerDetails.FTPDetails.Suffix, StringComparison.CurrentCultureIgnoreCase)))
+                //    .ToList();
+                //}
+
+                AddStatusMessage(p_message, p_status);
+
+                return directoryFiles;
+
+
+            }
         }
 
         private void AddToAnalyzeQueue(string fileName, byte[] fileData, SchedulerDetails schedulerDetails)

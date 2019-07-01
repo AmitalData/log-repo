@@ -117,6 +117,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
         }
     }
 
+    private isUpdateDone: boolean = false;
     UpdateButtonClicked() {
         var errors: string[] = [];
 
@@ -161,7 +162,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
             var myService: TariffDomainService = new TariffDomainService();
             myService.PostUpdateSurcharge(args).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
-                    
+                    this.isUpdateDone = true;
                 }
 
                 this.CurrentSession.StopBusyIndicator();
@@ -170,7 +171,14 @@ export class UpdateSurchargesComponent extends BaseComponent {
     }
 
     CloseButtonClicked() {
-        this.CurrentSession.CloseCurrentWindow();
+        if (this.isUpdateDone) {
+            this.CurrentSession.CloseCurrentWindowEmit("ok");
+            this.isUpdateDone = true;
+        }
+
+        else {
+            this.CurrentSession.CloseCurrentWindow();
+        }        
     }    
 }
 
@@ -187,6 +195,18 @@ export class TariffCharge extends BaseComponent{
         this.ChargeCode = charge.Name;
         this.DisplayText = charge.DisplyText;
         this.Index = charge.Code_Int;
+
+        this.SetUIProperties();
+    }
+
+    SetUIProperties() {
+        var newPriceEnabled: boolean = false;
+
+        if (this.IsChargeChecked) {
+            newPriceEnabled = true;
+        }
+
+        this.UIProperties.SetEnabled("NewPrice", null, newPriceEnabled);
     }
 
     private isChargeChecked: boolean;
@@ -196,6 +216,8 @@ export class TariffCharge extends BaseComponent{
     set IsChargeChecked(value: boolean) {
         if (this.isChargeChecked != value) {
             this.isChargeChecked = value;
+
+            this.SetUIProperties();
         }
     }
 

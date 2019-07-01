@@ -116,7 +116,28 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             ContactRepository contactRep = new ContactRepository(commonContext);
             Contact contact = contactRep.GetSingleContactByEmail(AuthenticationUtil.GetAuthenticatedUser(), entityPM.Tenant);
-            
+
+
+            if (!string.IsNullOrEmpty(entityPM.FileUploadedName))
+            {
+                int numberOfLines = 0;
+               TariffVersionPM version= entityPM.TariffVersions.Where(prop => prop.IsDraft == true).FirstOrDefault();
+
+                if (version != null)
+                {
+                    numberOfLines= version.TariffLines.Where(p=>p.ChangeSetOp!=ChangeSetOperation.Delete).ToList().Count;
+                }
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = entityPM.Tenant,
+                    EventTypeCode = "TUPL",
+                    UserId = contact.Id,
+                    EntityId = entityPM.Id,
+                    ObjectTableName = "Tariff",
+                    Notes = entityPM.FileUploadedName + " uploaded (" + numberOfLines + " lines)"
+                });
+
+            }
             if (entityPM.TariffLinesAdded)
             {
                 TariffVersionPM tariffVersion = entityPM.TariffVersions.Where(p => p.IsDraft).FirstOrDefault();
@@ -334,12 +355,13 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             {
                 ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                 int iCount = (from d in iContext.Tariffs
-                              where d.Tenant == entityPM.Tenant
+                              where d.Tenant == entityPM.Tenant 
+                              && d.Id != entityPM.Id
                               && d.SellerId == entityPM.SellerId
                               && d.TypeCode == "ASC"
                               select d).Count();
 
-                if (iCount > 1)
+                if (iCount >= 1)
                 {
                     throw new ApplicationException("Tariff surcharge seller should be unique");
                 }
