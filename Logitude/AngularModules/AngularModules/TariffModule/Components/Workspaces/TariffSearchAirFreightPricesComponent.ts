@@ -148,6 +148,22 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         return weigh_Kg;    
     }
 
+    PriceClick(item: TariffSearchSummary) {
+        if (item) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({
+                        EntityId: item.Id,
+                        ObjectTableName: "Tariff",
+                        SelectedTabCode: item.VersionId,
+
+                    });
+                });
+        }
+
+    }
+
 
 
     private SetUIProperties() {
