@@ -44,8 +44,18 @@ namespace CommunicationWorkerRole.Tasks
 				//GetFTPFilesBySchedulerDetails(schedulerDetails);
 				FTPSchedulerTaskService fTPSchedulerTaskService = new FTPSchedulerTaskService();
 				fTPSchedulerTaskService.ReadFTPFilesBySchedulerDetailsToAnalyzeQueue(schedulerDetails);
-               
-			}
+
+                foreach (var warning in fTPSchedulerTaskService.WarningsList)
+                {
+                    this.Logwarning(warning);
+                }
+
+                foreach (var message in fTPSchedulerTaskService.MessagesList)
+                {
+                    this.LogInfo(message);
+                }
+
+            }
 
 		}
 

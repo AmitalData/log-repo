@@ -54,7 +54,8 @@ export class NewCustomer{
      this.Helper.WaitBusyIndicator();
      //this.Helper.WaitBusyIndicator();
      var boo=this.Helper.ItemsVisibility('3mo');
-     if ('boo'){
+      if ('boo') {
+          this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('Customer-SaveClose');
      }
    

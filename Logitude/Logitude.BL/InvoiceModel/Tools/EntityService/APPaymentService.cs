@@ -84,7 +84,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentRepository.Add(payment);
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
-            this.CreateFullAccountingPaymentCheque(theEntityPm);
+            paymentCheque= this.CreateFullAccountingPaymentCheque(theEntityPm);
             if(paymentCheque != null)
             {
                 payment.ChequeOrPaymentRef = paymentCheque.ChequeNumber;
@@ -116,14 +116,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         PaymentChequePM paymentCheque;
 
         GLAccountPM VendorGLAccount;
-        private void CreateFullAccountingPaymentCheque(APPaymentPM entityPM )
+        private PaymentChequePM CreateFullAccountingPaymentCheque(APPaymentPM entityPM )
         {
             FullAccountingSettingPM accountingSettings = GetFullAccountingSettings(tenant);
             if (accountingSettings.AccountingActivated && accountingSettings.IsPaymentChequesActivated) {
                 List<PaymentChequePM> PaymentCheques = GetPaymentChequesByAPPaymentId(entityPM);
                 if (PaymentCheques.Count == 0)
                 {
-                    if (setApproved && (entityPM.AutomaticPaymentCheque || string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef)))
+                    if (setApproved && (entityPM.AutomaticPaymentCheque || string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef)) && entityPM.PaymentMethodCode=="CH")
                     {
                         SecurityUtility.CheckContactFeature("PaymentCheque", "NEW", entityPM.Tenant);
                          VendorGLAccount = GetGLAccountByCard(entityPM);
@@ -136,6 +136,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
             }
+
+            return paymentCheque;
         }
         private List<PaymentChequePM> GetPaymentChequesByAPPaymentId(APPaymentPM entityPM)
         {
@@ -1027,7 +1029,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void AddAPPaymentJournalAndJournalLines(APPaymentPM paymentPM, bool setApproved)
         {
             int tenant = paymentPM.Tenant;
-            if (setApproved && !paymentPM.AutomaticPaymentCheque)
+            if (setApproved )
             {
 
                 TenantRepository tenantRepository = new TenantRepository(tenant);

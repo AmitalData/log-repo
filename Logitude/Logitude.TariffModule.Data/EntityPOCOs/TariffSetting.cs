@@ -25,6 +25,8 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string DefaultPriceSteps { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+        [Column("DefaultWarningPercentage")]
+	    public double? DefaultWarningPercentage { get; set; }
     }
 }
 	 

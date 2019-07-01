@@ -1,5 +1,6 @@
 ﻿using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.Data.EntityPOCOs;
+using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
+                entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+
                 if (entityParentPM != null)
                 {
                     entityParentPM.LastVersion = entityPM.Version;

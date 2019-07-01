@@ -246,6 +246,8 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
                     tariffsSummary.EffictiveDate = result.ExpirationDate;
                     tariffsSummary.Remarks = result.Description;
                     tariffsSummary.decimalprice = item.price;
+                    tariffsSummary.VersionId = item.TariffVersion+"";
+                    tariffsSummary.Id = item.tariffid;
                     byte[] filedata = DownloadFile(airline.ImageDetailId, "jpg", tenant, "images");
                     string resultImage = "";
                     if (filedata != null)

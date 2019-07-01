@@ -221,7 +221,8 @@
                                                                                     </table>
                                                                                 </td>
                                                                                 <td style="width:100px;max-width:165px;font-size:x-large;font-weight:bold">
-                                                                                        {{item.price | NumbersPipe:'N2'}} {{item.Currency}}
+                                                                                    <span class="hyperlink" style="font-size:x-large;font-weight:bold" (click)="PriceClick(item)"> {{item.price | NumbersPipe:'N2'}}</span>
+                                                                                    {{item.Currency}}
                                                                                 </td>
                                                                                 <td style="width:5px"><div></div></td>
                                                                             </tr>

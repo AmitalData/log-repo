@@ -43,6 +43,7 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
             entityPM.SetAsReActive = false;
             entityPM.TariffLinesAdded = false;
             entityPM.IsSurchargeUpdate = false;
+            entityPM.FileUploadedName = null;
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);

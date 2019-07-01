@@ -4,12 +4,16 @@ import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirec
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { TariffDomainService, TariffSummery } from '../../Services/TariffDomainService';
+import { TariffDomainService, TariffSummery, TariffFilterParameter} from '../../Services/TariffDomainService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { BatchTaskExecutionPM } from '../../../Infrastructure/EntityPMs/BatchTaskExecutionPM';
 import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+
+declare var ResultAsArray: any;
 
 @Component({
     selector: 'TariffModuleWorkspaceComponent',
@@ -20,6 +24,8 @@ import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/Batc
 
 export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
+    private DocumentExtendedService: DocumentsFilingExtendedPMService;
+
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     constructor(private _entityResourceService: EntityResourceService, private tariffDomainService: TariffDomainService) {
         this.RunComponent();
@@ -192,6 +198,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
     }
 
     private InitComponent() {
+        this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
         this.LoadAllScreenData();
     }
 
@@ -235,7 +242,92 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
+
+    // Generate from Excel 
+    private FileName: string;
+    GenerateExcelTariffsClicked(fileEvent) {
+        var file = fileEvent.target.files[0];
+
+        if (file) {
+            var extension: string = file.name.split('.')[1];
+
+            if (extension.includes("xls")) {
+                var file = fileEvent.target.files[0];
+                this.UploadExcel(file);
+            }
+
+            else {
+                var messageWindow: MessageWindow = new MessageWindow();
+                messageWindow.Show("You have to upload excel files only");
+            }
+        } 
+    }
+    UploadExcel(file: any) {
+        this.FileName = null;
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.FileName = name[0];
+            }
+        }
+        if (file && file.size > 0) {
+            this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    var myResult = response.Result;
+                    if (myResult) {
+                        this.StartUploadingExcelFile(file);
+                    }
+                }
+            });
+        }
+    }
+    StartUploadingExcelFile(file: any) {
+        if (file && file.size > 0) {
+            var filebuffer = file.slice(0, file.size);
+            this.ConvertArrayBufferToBase64(filebuffer, this);
+        }
+    }
+    ConvertArrayBufferToBase64(file: any, context: any) {
+        var reader: FileReader = new FileReader();
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var binary = '';
+            var bytes = new Uint8Array(ResultAsArray(e));
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+
+            var filter = new TariffFilterParameter();
+            filter.FileData = window.btoa(binary);
+            filter.FileName = context.FileName;
+            context.SendExcelToServer(filter);
+        };
+
+        reader.onerror = function (e) {
+            console.log(e);
+        };
+        reader.readAsArrayBuffer(file);
+    }
+    SendExcelToServer(filter: any) {
+        this.CurrentSession.StartBusyIndicator("Generating...");
+        this.tariffDomainService.GenerateTariffsFromExcel(filter).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                //this.batchEntity = response.Result;
+
+                //if (this.batchEntity != null) {
+                //    this.timer = setInterval(() => { this.GetBTE(); }, this.timerInterval);
+                //}
+                this.CurrentSession.StopBusyIndicator();
+            }
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                var window = new MessageWindow();
+                window.Show(response.ErrorsArray[0]);
+            }
+        });
+    }
+
     GetBTE() {
         if (!this.IsLoading) {
             this.IsLoading = true;

@@ -723,11 +723,11 @@
                                                                                                 {{item[Column.DisplayName.replace('[', '').replace(']','')] | NumbersPipe:'N2'}}
                                                                                             </div>
 
-                                                                                            <div *ngIf="Column.DataTypeCode == 'Date'" style="text-align:right;padding-right:4px;">
+                                                                                            <div *ngIf="Column.DataTypeCode == 'Date'" >
                                                                                                 {{item[Column.DisplayName.replace('[', '').replace(']','')] | DateTimePipe:'SD'}}
                                                                                             </div>
                                                                                             
-                                                                                            <div *ngIf="Column.DataTypeCode == 'DateTime'" style="text-align:right;padding-right:4px;">
+                                                                                            <div *ngIf="Column.DataTypeCode == 'DateTime'" >
                                                                                                 {{item[Column.DisplayName.replace('[', '').replace(']','')] | DateTimePipe:'DT'}}
                                                                                              
                                                                                             </div>
