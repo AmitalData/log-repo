@@ -52,10 +52,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
-        if (this.EntityPM.TariffVersions == null || (this.EntityPM.TariffVersions != null && this.EntityPM.TariffVersions.length == 1)) {
-            this.isComparToChecked = false;
-            this.IsFirstDraft = true;
-        }
         this.EntityArgs = entityArgs;
         this.Listen();
     }
@@ -120,7 +116,10 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
 
-     
+        if (this.IsDraftVersion) {
+            this.IsComparToChecked = true;
+        }
+
         this.GetTariffSettings();
 
 
@@ -438,10 +437,15 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             }
 
             this.VersionsList.push(newVersion);
+
         });
 
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
         this.UIProperties.SetEnabled("WarningPercentage", null, this.IsComparToChecked);
+        if (this.VersionsList == null || (this.VersionsList != null && this.VersionsList.length == 0)) {
+            this.isComparToChecked = false;
+            this.IsFirstDraft = true;
+        }
     }    
 
     ComparingCalculations(load: boolean) {
