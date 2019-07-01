@@ -2692,6 +2692,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
 
+    CustomsCountryChanged($event) {
+        this.CustomsCountry = $event;
+    }
 
     customsCountry: CustomsCountryPM;
     get CustomsCountry() { return this.customsCountry; }
@@ -2805,6 +2808,15 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public get OriginCountryCode()
     { return this.entityPM.OriginCountryCode; }
     public set OriginCountryCode(newValue: string) {
+        if (newValue) {
+            this._CustomsCountryListService.getSingle(newValue).subscribe((res) => {
+                var entity = res.Result;
+                if (entity) {
+                    this.CustomsCountry = entity;
+                    this.OriginCountryName = this.CustomsCountry.LocalName;
+                }
+            });
+        }
         this.entityPM.OriginCountryCode = newValue;
     }
 
@@ -2830,7 +2842,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
 
     //#endregion
 
-    OnItemPriceLostFocus(value: number) {
+    OnItemPriceLostFocus(ItemPriceTextBox: any) {
 
         if (this.doCalculate) {
             if (isNaN(this.ItemPrice)) this.ItemPrice = 0;
@@ -2842,6 +2854,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
         this.oldvalue = this.entityPM.ItemPrice;
         this.doCalculate = false;
+        ItemPriceTextBox.TextValue = this.oldvalue;
     }
 
     GetQuantityType(isChangeInvoiceQuantityType: boolean = true) {

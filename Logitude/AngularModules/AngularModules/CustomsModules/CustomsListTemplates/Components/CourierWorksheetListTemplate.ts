@@ -41,6 +41,7 @@ import { DeclarationMamanSpecialActionList } from "../../../Customs/EntityLists/
 import { EntityResourceService } from "../../../Infrastructure/Services/EntityResourceService";
 import { CourierPendingReasonListService } from '../../../Customs/Services/StandardLists/CourierPendingReasonListService';
 import { CourierPendingReasonList } from '../../../Customs/EntityLists/CourierPendingReasonList';
+import { DeclarationPendingPMService } from '../../../Customs/Services/StandardPMs/DeclarationPendingPMService';
 
 @Component({
     moduleId: module.id,
@@ -83,6 +84,7 @@ export class CourierWorksheetListTemplate {
     IsMamanEnabled: boolean = false;
     
     private _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
+    private declarationPendingPMService: DeclarationPendingPMService = new DeclarationPendingPMService();
     private _CourierMasterService: CourierMasterService = new CourierMasterService();
     private _DeclarationMamanSpecialActionListService: DeclarationMamanSpecialActionListService = new DeclarationMamanSpecialActionListService();
     private _DeclarationMamanSpecialActionPMService: DeclarationMamanSpecialActionPMService = new DeclarationMamanSpecialActionPMService;
@@ -599,13 +601,15 @@ export class CourierWorksheetListTemplate {
         var logitudeWindow = new LogitudeWindow();
         var windowArgs: any = {};
         var declarationIdList = [];
-
-        this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
+        
+        //this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
+        this.declarationPendingPMService.get(declarationId, "").subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 declarationIdList.push(response.Result);
                 windowArgs.DeclarationIdList = declarationIdList;
                 windowArgs.CourierHawb = this._CourierWorksheet.CourierHawb;
                 windowArgs.Mode = mode;
+                windowArgs.DeclarationId = declarationId;
 
                 if (mode == "Delete") {
                     var confirm = new ConfirmWindow();
@@ -627,10 +631,10 @@ export class CourierWorksheetListTemplate {
                         windowArgs.CourierPendingReasonList = this._CourierWorksheet.CourierPendingReasonList;
                         //windowArgs.PendingRemarks = this._CourierWorksheet.PendingRemarks;
                     //}
-                    logitudeWindow.Width = 450;
-                    logitudeWindow.Height = 280;
+                    logitudeWindow.Width = 750;
+                    logitudeWindow.Height = 580;
                     logitudeWindow.IsShowCloseButton = false;
-                    logitudeWindow.Title = "סימון ב Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+                    logitudeWindow.Title = "Pending";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
                     logitudeWindow.WindowArgs = windowArgs;
                     //logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/CourierPendingReasonGeneralComponent');
                     logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierPendingReason/DeclarationPendingsGeneralComponent');

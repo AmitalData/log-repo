@@ -820,8 +820,8 @@
                                             <span>{{item.ItemPrice | NumbersPipe:'N2'}}</span>
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
-                                            <LogTextBoxV2 [ObjectFieldName]="'ItemPrice'" [InputType]="'decimal'" [DataContext]="item" [FocusOnMe]="true" [IsAccumulative]="true"
-                                                        [Text]="item.ItemPrice" [ObjectTableName]="ObjectTableName" [HideColumns]="true" (LostFocus)="item.OnItemPriceLostFocus($event)" [DebounceTime]="0"></LogTextBoxV2>
+                                            <LogTextBoxV2 #ItemPriceTextBox [ObjectFieldName]="'ItemPrice'" [InputType]="'decimal'" [DataContext]="item" [FocusOnMe]="true" [IsAccumulative]="true"
+                                                        [Text]="item.ItemPrice" [ObjectTableName]="ObjectTableName" [HideColumns]="true" (LostFocus)="item.OnItemPriceLostFocus(ItemPriceTextBox)" [DebounceTime]="0"></LogTextBoxV2>
 
 
                                         </div>
@@ -839,7 +839,7 @@
                                             <LogLov [ObjectFieldName]="'OriginCountryCode'"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="item"
-                                                    (SelectedItemChanged)="item.CustomsCountry = $event"
+                                                    (SelectedItemChanged)="item.CustomsCountryChanged($event)"
                                                     [LookUpTableName]="'Customs.CustomsCountry'"
                                                     [HideColumns]="true"
                                                     [SelectedValue]="OriginCountryCode"

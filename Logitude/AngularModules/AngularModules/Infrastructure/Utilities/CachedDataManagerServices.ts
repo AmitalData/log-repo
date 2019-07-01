@@ -65,9 +65,10 @@ import {CustomBankListService} from '../../Customs/Services/StandardLists/Custom
 import {CustomsHouseTypeListService} from '../../Customs/Services/StandardLists/CustomsHouseTypeListService'; 
 import {CustomsSettingListService} from '../../Customs/Services/StandardLists/CustomsSettingListService'; 
 import {CustomsHouseTypeAdditionalListService} from '../../Customs/Services/StandardLists/CustomsHouseTypeAdditionalListService'; 
-import {GovernmentProcedureTypeListService} from '../../Customs/Services/StandardLists/GovernmentProcedureTypeListService'; 
+import { GovernmentProcedureTypeListService } from '../../Customs/Services/StandardLists/GovernmentProcedureTypeListService';
+import { CourierPendingReasonListService } from '../../Customs/Services/StandardLists/CourierPendingReasonListService'; 
 
-// Business Process 
+// Business Process
 import {BusinessRoleListService} from '../Services/StandardLists/BusinessRoleListService'; 
 import {BusinessProcessQueueListService } from '../Services/StandardLists/BusinessProcessQueueListService'; 
 import {TeamListService} from '../Services/StandardLists/TeamListService'; 
@@ -165,6 +166,7 @@ export class CachedDataManagerServices {
             case "Customs.CustomsSettingListService": { myResult = new CustomsSettingListService(); break; }
             case "Customs.CustomsHouseTypeAdditionalListService": { myResult = new CustomsHouseTypeAdditionalListService(); break; }
             case "Customs.GovernmentProcedureTypeListService": { myResult = new GovernmentProcedureTypeListService(); break; }
+            case "Customs.CourierPendingReasonListService": { myResult = new CourierPendingReasonListService(); break; }
             case "JournalActionTypeListService": { myResult = new JournalActionTypeListService(); break; }
             case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }
             case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }

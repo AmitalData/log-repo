@@ -101,7 +101,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         VendorComissionPercentage, 
 	         IsValueForCustomsOnly, 
 	         InvoiceAmountInUSD, 
-	         ChangeInSupplierInvoice,
+	         ChangeInSupplierInvoice, 
+	         InvoiceCurrencyTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
