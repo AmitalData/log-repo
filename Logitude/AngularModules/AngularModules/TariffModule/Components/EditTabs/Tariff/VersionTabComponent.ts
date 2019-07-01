@@ -38,13 +38,14 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
-    public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsFirstDraft = false;
+
     constructor(public entityArgs: EntityArgs) {
         super();
-        this.EntityPM = entityArgs.EntityPM;
+        this.EntityPM = entityArgs.EntityPM;       
         this.EntityArgs = entityArgs;
         this.Listen();        
     }
@@ -289,6 +290,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     set IsComparToChecked(value: boolean) {
         if (this.isComparToChecked != value) {
             this.isComparToChecked = value;
+            this.UIProperties.SetEnabled("WarningPercentage", null, value);
             this.ComparingCalculations(false);
         }
     }
@@ -665,16 +667,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         });
 
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
+        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsComparToChecked);
 
-        if (this.SelectedVersion == null) {
+        if (this.VersionsList == null || (this.VersionsList != null && this.VersionsList.length == 0)) {
             this.isComparToChecked = false;
-            this.IsCompareEnabled = false;
+            this.IsFirstDraft = true;
         }
-        else {
-            this.IsCompareEnabled = true;
-        }
-
-        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsCompareEnabled);
     }
     
     private selectedVersion: VersionClass;
@@ -685,6 +683,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.ComparedToVersionPM = this.compareToVersions.filter(d => d.Version == this.SelectedVersion.Version)[0];
             this.ComparingCalculations(true);
         }
+
     }
 
     ComparingCalculations(load: boolean) {

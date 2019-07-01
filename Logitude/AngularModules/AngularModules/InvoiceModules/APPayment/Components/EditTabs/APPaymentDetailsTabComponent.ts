@@ -33,6 +33,8 @@ import {BankAccountPM} from  '../../../../Accounting/EntityPMs/BankAccountPM';
 import {FullAccountingSettingPM} from '../../../../Accounting/EntityPMs/FullAccountingSettingPM';
 import { FullAccountingSettingPMService } from '../../../../Accounting/Services/StandardPMs/FullAccountingSettingPMService';
 import { PaymentChequeExtendedPMService } from '../../../../Accounting/Services/ExtendedPMs/PaymentChequeExtendedPMService';
+import { GLAccountListService } from '../../../../Accounting/Services/StandardLists/GLAccountListService';
+import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
 
 @Component({
     moduleId: module.id,
@@ -73,9 +75,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.GetFullAccountingSettings();
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ChequeOrPaymentRef) &&  this.EntityPM.AutomaticPaymentCheque) {
             this.IsChequeLinkVisibile = true;
-       
+
         }
-       
+
         if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EnableMultiCurrency")) {
             if (ObjectsLocator.AccountingSettingPM.EnableMultiCurrencyAPPayments) {
                 this.IsMultiCurrency = true;
@@ -119,7 +121,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         this.ShowSplitButton = true;
        // this.cd.detectChanges();
 
-     
+
     }
     entityId: string;
     ViewPaymentCheque() {
@@ -142,12 +144,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         });
 
-      
+
     }
-    
+
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public  GetFullAccountingSettings() {
-      
+
 
         this.fullAccountingSettingPMService.get(SessionLocator.TenantPM.Id.toString()).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
@@ -155,11 +157,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
                     var res = myResponse.Result;
                     this.FullAccountingSetting = res;
-                    
-                    
+
+
                   this.PaymentChequeActivated = this.FullAccountingSetting.IsPaymentChequesActivated && this.IsFullAccounting;
                 }
-           
+
         });
 
     }
@@ -225,6 +227,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     CardListService: CardListService;
+    _GLAccountListService: GLAccountListService = new GLAccountListService();
     PartnersDomainService: PartnersDomainService;
     AddressListService: AddressListService;
     GLAccountWithholdingService: GLAccountWithholdingTaxExtendedPMService;
@@ -389,9 +392,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     CollapseSplitButton() {
         if (this.PaymentMethodCode == "CH" && this.AutomaticPaymentCheque) {
             this.IsSplitButtonVisibile = false;
-           
+
         }
-      
+
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ChequeOrPaymentRef) && this.EntityPM.AutomaticPaymentCheque) {
             this.IsChequeLinkVisibile = true;
 
@@ -690,6 +693,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (this.EntityPM != null) {
             if (this.EntityPM.VendorId != value) {
                 this.EntityPM.VendorId = value;
+
                 if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
                     this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
                 }
@@ -711,8 +715,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.EntityPM.VendorPartnerTypeId = null;
         }
         else {
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.CardListService.getSingle(this.EntityPM.VendorId).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
+                this.CurrentSession.StopBusyIndicator();
                 if (!myResponse.HasError) {
                     var cardList: CardList = myResponse.Result;
                     if (cardList != null) {
@@ -725,6 +731,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private FillDataFromCardList(list: CardList) {
         if (list == null) {
             this.GLAccountId = null;
+            this.vendorGLAccount = null;
+            this.deductionFileNumber = null;
             this.VendorAddressId = null;
             this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
         }
@@ -741,8 +749,37 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
             this.LoadAddress();
+
+
+            if(this.IsFullAccounting)
+                this.GetConnectedGLAccount();
+
         }
     }
+
+    vendorGLAccount: GLAccountList;
+    deductionFileNumber: string;
+    GetConnectedGLAccount() {
+        if (this.GLAccountId)
+        {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            this._GLAccountListService.getSingle(this.GLAccountId).subscribe(myResult => {
+                console.log("[_GLAccountListService.getSingle]", myResult);
+                this.CurrentSession.StopBusyIndicator();
+
+                var myResponse: ServiceResponse = myResult;
+                if (!myResponse.HasError) {
+                    var gla: GLAccountList = myResponse.Result;
+                    this.vendorGLAccount = gla;
+                    this.deductionFileNumber = gla ? gla.DeductionFileNumber :null;
+                }
+            });
+        }else{
+            this.vendorGLAccount = null;
+            this.deductionFileNumber = null;
+        }
+    }
+
     private LoadAddress() {
         this.PartnersDomainService.GetBillingOrMainAddressListByCardId(this.EntityPM.VendorId).subscribe((resp: any) => {
             if (resp != null) {
@@ -849,8 +886,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
     }
-    
-  
+
+
     get AutomaticPaymentCheque() { return this.EntityPM.AutomaticPaymentCheque; }
     set AutomaticPaymentCheque(value: boolean) {
         if (this.EntityPM.AutomaticPaymentCheque != value) {
@@ -948,7 +985,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             if (this.EntityPM.PaymentMethodCode != value) {
                 this.EntityPM.PaymentMethodCode = value;
                 this.SetAutomaticPaymentCheque(value);
-               
+
 
                 this.SetUIProperties_FullAccounting(); // for BankAccountId
             }
@@ -1041,7 +1078,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
              {
                 this.UIProperties.SetRequired("BankAccountId", this.ObjectTableName, false);
             }
-           
+
         }
     }
     SetUIProperties_FullAccounting_Tax() {

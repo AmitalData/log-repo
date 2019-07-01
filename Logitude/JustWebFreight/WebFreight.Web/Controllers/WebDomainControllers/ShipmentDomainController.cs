@@ -1722,7 +1722,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ExportToExcelHelper helper = new ExportToExcelHelper();
                 byte[] data = this.ExportShipmentPackagesToExcel(shipmentPackages, packageTypes, tenant);
 
-                string fileName = "Shipment-" + shipmentNumber +  "-" +  DateTime.Now.ToShortDateString();
+                string fileName = "Shipment-" + shipmentNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
 
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
@@ -1746,86 +1746,94 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         }
         public byte[] ExportShipmentPackagesToExcel(List<ShipmentPackage> shipmentPackages, List<PackageType> packageTypes, int tenant)
         {
-            System.IO.MemoryStream memory = new System.IO.MemoryStream();
-            ExcelEngine excelEngine = new ExcelEngine();
-            IApplication application = excelEngine.Excel;
-            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
-
-            IWorksheet sheet1 = workbook.Worksheets[0];
-            sheet1.Name = "Packages";
-            sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
-            sheet1.Range["A1:I1"].CellStyle.Font.Size = 10;
-            sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
-            sheet1.Range["A1:I1"].CellStyle.Font.Color = ExcelKnownColors.White;
-            sheet1.Range["A1:I1"].CellStyle.Color = System.Drawing.Color.Gray;
-            sheet1.Range["A1:I1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-
-            sheet1.Range["A1:G1"].ColumnWidth = 15;
-            sheet1.Range["H1:I1"].ColumnWidth = 17;
-
-            DataTable dataTable1 = new DataTable();
-            dataTable1.Columns.Add("Container Type");
-            dataTable1.Columns.Add("Container #");
-            dataTable1.Columns.Add("Volume");
-            dataTable1.Columns.Add("Gross Weight");
-            dataTable1.Columns.Add("Tare");
-            dataTable1.Columns.Add("Shipper Seal");
-            dataTable1.Columns.Add("Carrier Seal");
-            dataTable1.Columns.Add("Marks & Numbers");
-            dataTable1.Columns.Add("Description");
-            
-            IWorksheet sheet2 = workbook.Worksheets[1];
-            sheet2.Name = "Package Types";
-            sheet2.Range["A1"].CellStyle.Font.Bold = true;
-            sheet2.Range["A1"].CellStyle.Font.Size = 11;
-            sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
-            sheet2.Range["A1"].CellStyle.Font.Color = ExcelKnownColors.White;
-            sheet2.Range["A1"].CellStyle.Color = System.Drawing.Color.Gray;
-            sheet2.Range["A1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-
-            List<ExcelPackageType> types = new List<ExcelPackageType>();
-            if (packageTypes != null && packageTypes.Count > 0)
+            try
             {
-                types = (from a in packageTypes
-                         where a.IsContainer == true
-                         select new ExcelPackageType()
-                         {
-                             Code = a.Code,
-                         }).ToList();
-            }
-          
-            if (shipmentPackages != null && shipmentPackages.Count > 0)
-            {
-                foreach(ShipmentPackage package in shipmentPackages)
+                System.IO.MemoryStream memory = new System.IO.MemoryStream();
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                IWorkbook workbook = excelEngine.Excel.Workbooks.Create(2);
+
+                IWorksheet sheet1 = workbook.Worksheets[0];
+                sheet1.Name = "Packages";
+                sheet1.Range["A1:I1"].CellStyle.Font.Bold = true;
+                sheet1.Range["A1:I1"].CellStyle.Font.Size = 10;
+                sheet1.Range["A1:I1"].CellStyle.Font.FontName = "Calibri";
+                sheet1.Range["A1:I1"].CellStyle.Font.Color = ExcelKnownColors.White;
+                sheet1.Range["A1:I1"].CellStyle.Color = System.Drawing.Color.Gray;
+                sheet1.Range["A1:I1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+                sheet1.Range["A1:G1"].ColumnWidth = 15;
+                sheet1.Range["H1:I1"].ColumnWidth = 17;
+
+                DataTable dataTable1 = new DataTable();
+                dataTable1.Columns.Add("Container Type");
+                dataTable1.Columns.Add("Container #");
+                dataTable1.Columns.Add("Volume");
+                dataTable1.Columns.Add("Gross Weight");
+                dataTable1.Columns.Add("Tare");
+                dataTable1.Columns.Add("Shipper Seal");
+                dataTable1.Columns.Add("Carrier Seal");
+                dataTable1.Columns.Add("Marks & Numbers");
+                dataTable1.Columns.Add("Description");
+
+                IWorksheet sheet2 = workbook.Worksheets[1];
+                sheet2.Name = "Package Types";
+                sheet2.Range["A1"].CellStyle.Font.Bold = true;
+                sheet2.Range["A1"].CellStyle.Font.Size = 11;
+                sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
+                sheet2.Range["A1"].CellStyle.Font.Color = ExcelKnownColors.White;
+                sheet2.Range["A1"].CellStyle.Color = System.Drawing.Color.Gray;
+                sheet2.Range["A1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+
+                List<ExcelPackageType> types = new List<ExcelPackageType>();
+                if (packageTypes != null && packageTypes.Count > 0)
                 {
-                    DataRow row = dataTable1.NewRow();
-                    row[0] = package.PackageType == null ? null : package.PackageType.Code;
-                    row[1] = package.ContainerNumber;
-                    row[2] = package.Volume;
-                    row[3] = package.Weight;
-                    row[4] = package.Tare;
-                    row[5] = package.ShipperSeal;
-                    row[6] = package.CarrierSeal;
-                    row[7] = package.MarksAndNumbers;
-                    row[8] = package.Description;
-                    dataTable1.Rows.Add(row);
-                }  
+                    types = (from a in packageTypes
+                             where a.IsContainer == true
+                             select new ExcelPackageType()
+                             {
+                                 Code = a.Code,
+                             }).ToList();
+                }
+
+                if (shipmentPackages != null && shipmentPackages.Count > 0)
+                {
+                    foreach (ShipmentPackage package in shipmentPackages)
+                    {
+                        DataRow row = dataTable1.NewRow();
+                        row[0] = package.PackageType == null ? null : package.PackageType.Code;
+                        row[1] = package.ContainerNumber;
+                        row[2] = package.Volume;
+                        row[3] = package.Weight;
+                        row[4] = package.Tare;
+                        row[5] = package.ShipperSeal;
+                        row[6] = package.CarrierSeal;
+                        row[7] = package.MarksAndNumbers;
+                        row[8] = package.Description;
+                        dataTable1.Rows.Add(row);
+                    }
+                }
+
+                sheet1.Range["A2"].EntireColumn.DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
+                sheet1.Range["A2"].EntireColumn.DataValidation.IsSuppressDropDownArrow = false;
+                sheet1.Range["A1"].DataValidation.ListOfValues = new string[0];
+                sheet1.Range["A1"].DataValidation.IsSuppressDropDownArrow = true;
+
+                DataTable dataTable2 = this.ConvertToDataTable(types);
+
+                sheet1.ImportDataTable(dataTable1, true, 1, 1);
+                sheet2.ImportDataTable(dataTable2, true, 1, 1);
+
+                workbook.Version = ExcelVersion.Excel2007;
+                workbook.SaveAs(memory);
+
+                return memory.ToArray();
             }
-            
-            sheet1.Range["A2"].EntireColumn.DataValidation.ListOfValues = types.Select(s => s.Code).ToArray();
-            sheet1.Range["A2"].EntireColumn.DataValidation.IsSuppressDropDownArrow = false;
-            sheet1.Range["A1"].DataValidation.ListOfValues = new string[0];
-            sheet1.Range["A1"].DataValidation.IsSuppressDropDownArrow = true;
 
-            DataTable dataTable2 = this.ConvertToDataTable(types);
-
-            sheet1.ImportDataTable(dataTable1, true, 1, 1);
-            sheet2.ImportDataTable(dataTable2, true, 1, 1);
-
-            workbook.Version = ExcelVersion.Excel2007;
-            workbook.SaveAs(memory);
-
-            return memory.ToArray();
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
         private DataTable ConvertToDataTable<T>(IList<T> data)
         {

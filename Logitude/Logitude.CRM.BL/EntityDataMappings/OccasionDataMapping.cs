@@ -14,6 +14,8 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.CRM.Data.EntityKeys;
 
 namespace Logitude.CRM.BL.EntityDataMappings
 {
@@ -32,7 +34,42 @@ namespace Logitude.CRM.BL.EntityDataMappings
 
         public void CustomPOCOToPM(OccasionPM entityPM, Occasion entityPOCO)
         {
-            //throw new NotImplementedException();
+            this.CustomMappedPMProperties.Add(PMPropertyNames.TypeName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.OwnerName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.OccasionStatusName);
+
+            if (!string.IsNullOrEmpty(entityPOCO.OccasionTypeId))
+            {
+                OccasionTypeRepository iRepository = new OccasionTypeRepository(entityPOCO.Tenant);
+                OccasionTypeKeys iKeys = new OccasionTypeKeys() { Id = entityPOCO.OccasionTypeId };
+                OccasionType iEntity = iRepository.GetSingle(iKeys);
+                if (iEntity != null)
+                {
+                    entityPM.TypeName = iEntity.Name;
+                }
+            }
+
+
+            if (!string.IsNullOrEmpty(entityPOCO.OwnerId))
+            {
+                UserRepository userRepository = new UserRepository(entityPOCO.Tenant);
+                User user = userRepository.GetSingleUser(entityPOCO.OwnerId, entityPOCO.Tenant, false);
+                if (user != null)
+                {
+                    entityPM.OwnerName = user.Contact.EnglishName;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPOCO.OccasionStatusId))
+            {
+                OccasionStatusRepository iRepository = new OccasionStatusRepository(entityPOCO.Tenant);
+                OccasionStatusKeys iKeys = new OccasionStatusKeys() { Code = entityPOCO.OccasionStatusId };
+                OccasionStatus iEntity = iRepository.GetSingle(iKeys);
+                if (iEntity != null)
+                {
+                    entityPM.OccasionStatusName = iEntity.Name;
+                }
+            }
         }
 
         private void BuildSearchFields(OccasionPM entityPM, Occasion entityPOCO, bool p)
