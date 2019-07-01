@@ -273,6 +273,7 @@ export class TariffSearchSummary {
     ImageId: string;
     Name: string;
     Currency: string;
+    VersionId: string;
 }
 
 export class ExcelTariffLines {

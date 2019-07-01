@@ -329,21 +329,27 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     TariffVersionPM iPreviousVersion = entityPM.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
                     if (iPreviousVersion != null)
                     {
+                        TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
+                        List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
+
                         foreach (TariffLinePM linePM in iDraftVersion.TariffLines)
                         {
                             if (linePM.StartDate != null)
                             {
-                                var iPreviousLine = iPreviousVersion.TariffLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
+                                //var iPreviousLine = iPreviousVersion.TariffLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
+                                var iPreviousLine = iPreviousVersionLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
                                 if (iPreviousLine != null)
                                 {
                                     iPreviousLine.ExpirationDate = linePM.StartDate.Value.AddDays(-1);
-                                    iPreviousLine.ChangeSetOp = ChangeSetOperation.Update;
+                                    iTariffLineRepository.Update(iPreviousLine);
+                                    //iPreviousLine.ChangeSetOp = ChangeSetOperation.Update;
                                 }
                             }
                         }
 
-                        TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                        tariffVersionUpdateService.Update(iPreviousVersion, true);
+                        iTariffLineRepository.SubmitChanges();
+                        //TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                        //tariffVersionUpdateService.Update(iPreviousVersion, true);
                     }
                 }
             }
