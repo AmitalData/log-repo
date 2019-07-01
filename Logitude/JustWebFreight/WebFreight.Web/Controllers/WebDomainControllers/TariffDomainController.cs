@@ -181,8 +181,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             data = this.ExportAirSurchargesCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
-
-                        fileName = "Tariffs" + DateTime.Now.ToShortDateString();
+                        
+                        fileName = "Tariff-" + tariff.TariffNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
 
                         if (data != null)
                         {
@@ -199,8 +199,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             storageservice.Write(data, fileInfo);
                             this.EventTrace(tariff, type, loggedContact);
                         }
-
-
                     }
                 }
 
@@ -619,7 +617,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     string dateRange = "C2:C" + (tariffLines.Count + 1);
                     sheet1.Range[dateRange].ColumnWidth = 14;
-                    sheet1.Range[dateRange].NumberFormat = "dd/mm/yyyy";
+                    sheet1.Range[dateRange].NumberFormat = "dd/MM/yyyy";
                 }
             }
 
