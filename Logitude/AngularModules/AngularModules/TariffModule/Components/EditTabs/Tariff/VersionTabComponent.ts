@@ -41,9 +41,15 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsFirstDraft = false;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
+        if (this.EntityPM.TariffVersions == null || (this.EntityPM.TariffVersions != null && this.EntityPM.TariffVersions.length == 1)) {
+            this.isComparToChecked = false;
+            this.IsFirstDraft = true;
+        }
         this.EntityArgs = entityArgs;
         this.Listen();        
     }
@@ -665,11 +671,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         });
 
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
-
-        if (this.SelectedVersion == null) {
-            this.isComparToChecked = false;
-        }
-    
         this.UIProperties.SetEnabled("WarningPercentage", null, this.IsComparToChecked);
     }
     
@@ -681,6 +682,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.ComparedToVersionPM = this.compareToVersions.filter(d => d.Version == this.SelectedVersion.Version)[0];
             this.ComparingCalculations(true);
         }
+
     }
 
     ComparingCalculations(load: boolean) {

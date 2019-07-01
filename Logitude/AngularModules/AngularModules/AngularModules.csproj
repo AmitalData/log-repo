@@ -963,6 +963,7 @@
     <Content Include="SharedLogistics\Components\TenantAccessSettingsComponent.html" />
     <Content Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.html" />
     <Content Include="SharedLogistics\Components\Workspaces\SharedShipmentsWorkspaceComponent.html" />
+    <Content Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.html" />
     <Content Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.html" />
@@ -3407,6 +3408,7 @@
     <TypeScriptCompile Include="SharedLogistics\Components\TenantAccessSettingsComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedInvoicesWorkspaceComponent.ts" />
     <TypeScriptCompile Include="SharedLogistics\Components\Workspaces\SharedShipmentsWorkspaceComponent.ts" />
+    <TypeScriptCompile Include="ShipmentModules\ShipmentINTTRA\Components\Wizard\SimulatorBookingComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\DepositionRequestComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\LogBoxPackagesComponent.ts" />
     <TypeScriptCompile Include="ShipmentModules\ShipmentLogBox\Components\Logbox\ECommercePaymentRequestMobileComponent.ts" />
