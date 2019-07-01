@@ -112,7 +112,19 @@ export class TariffTabsContentComponent implements OnDestroy {
             }
 
             else {
-                this.SelectionChanged(this.Tabs[0]);
+                if (!AppTool.IsNullOrEmpty(this.CurrentSession.CurrentEditComponent.PreSelectedTabCode)) {
+                    var SelectedTab: TariffDetailsTab = this.Tabs.filter(p => p.SelectedVersion != null ? (p.SelectedVersion.Version == +this.CurrentSession.CurrentEditComponent.PreSelectedTabCode):0)[0];
+                    if (SelectedTab) {
+                        this.SelectionChanged(SelectedTab);
+                    }
+                    else {
+                        this.SelectionChanged(this.Tabs[0]);
+                    }
+                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = null;
+                }
+                else {
+                    this.SelectionChanged(this.Tabs[0]);
+                }
             }
         }
 
