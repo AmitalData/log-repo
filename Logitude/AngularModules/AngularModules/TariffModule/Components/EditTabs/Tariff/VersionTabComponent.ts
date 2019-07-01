@@ -38,7 +38,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
-    public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -289,6 +288,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     set IsComparToChecked(value: boolean) {
         if (this.isComparToChecked != value) {
             this.isComparToChecked = value;
+            this.UIProperties.SetEnabled("WarningPercentage", null, value);
             this.ComparingCalculations(false);
         }
     }
@@ -668,13 +668,9 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
 
         if (this.SelectedVersion == null) {
             this.isComparToChecked = false;
-            this.IsCompareEnabled = false;
         }
-        else {
-            this.IsCompareEnabled = true;
-        }
-
-        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsCompareEnabled);
+    
+        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsComparToChecked);
     }
     
     private selectedVersion: VersionClass;

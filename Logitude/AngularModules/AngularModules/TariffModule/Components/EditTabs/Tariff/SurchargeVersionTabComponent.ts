@@ -43,7 +43,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
-    public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
     private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -374,6 +373,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     set IsComparToChecked(value: boolean) {
         if (this.isComparToChecked != value) {
             this.isComparToChecked = value;
+            this.UIProperties.SetEnabled("WarningPercentage", null, value);
             this.ComparingCalculations(false);
         }
     }
@@ -440,13 +440,9 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         if (this.SelectedVersion == null) {
             this.isComparToChecked = false;
-            this.IsCompareEnabled = false;
-        }
-        else {
-            this.IsCompareEnabled = true;
         }
 
-        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsCompareEnabled);
+        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsComparToChecked);
     }    
 
     ComparingCalculations(load: boolean) {

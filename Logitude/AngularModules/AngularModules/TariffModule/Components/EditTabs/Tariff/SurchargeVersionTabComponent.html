@@ -17,11 +17,11 @@
                         </td>
 
                         <td style="width:90px;">
-                            <CheckBox [IsChecked]="IsComparToChecked" (Checked)="IsComparToChecked = $event" [Text]="'Compare to'" [IsEnabled]="IsCompareEnabled"></CheckBox>
+                            <CheckBox [IsChecked]="IsComparToChecked" (Checked)="IsComparToChecked = $event" [Text]="'Compare to'" [IsEnabled]="IsComparToChecked"></CheckBox>
                         </td>
 
                         <td style="width:190px;">
-                            <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="!IsCompareEnabled" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
+                            <ComboBox [ItemsSource]="VersionsList" [IsDisabled]="!IsComparToChecked" [Binding]="'Name'" [SelectedItem]="SelectedVersion" (SelectedItemChanged)="SelectedVersion = $event"></ComboBox>
                         </td>
 
                         <td style="width:5px;">

@@ -355,7 +355,8 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             {
                 ITariffModuleContext iContext = TariffModuleContext.GetContext(entityPM.Tenant);
                 int iCount = (from d in iContext.Tariffs
-                              where d.Tenant == entityPM.Tenant
+                              where d.Tenant == entityPM.Tenant 
+                              && d.Id != entityPM.Id
                               && d.SellerId == entityPM.SellerId
                               && d.TypeCode == "ASC"
                               select d).Count();
