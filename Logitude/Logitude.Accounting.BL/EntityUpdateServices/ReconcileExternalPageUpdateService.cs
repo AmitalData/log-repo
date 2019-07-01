@@ -126,6 +126,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 bankAccount.LastPageCloseBalance = prevPage==null ? 0 : prevPage.CloseBalance;
                 bankAccount.LastPageEndDate = prevPage == null ? DateTime.Now : prevPage.ToDate;
                 bankAccount.LastPageNumber = prevPage == null ? null : prevPage.PageNo.ToString();
+                bankAccount.IsBankPageEvent = true;
                 bankAccount.ChangeSetOp = ChangeSetOperation.Update;
                 bankService.Update(bankAccount, true);
 
@@ -183,10 +184,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 CreateTraceEvent(entityPM, contact, "CREV");
             }
-            else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            else if (entityPM.ChangeSetOp == ChangeSetOperation.Update )
             {
 
                 CreateTraceEvent(entityPM, contact, "UPEV");
+                if(entityPOCO.StatusCode !="3" && entityPM.StatusCode == "3")
+                {
+                    CreateTraceEvent(entityPM, contact, "CNEV");
+
+                }
             }
             base.Trace(entityPM, entityPOCO, changesXml);
         }
