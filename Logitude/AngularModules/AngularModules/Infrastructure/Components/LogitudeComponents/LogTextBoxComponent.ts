@@ -89,6 +89,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     @Input() Max: number;
     @Input() Min: number;
     @Input() RowsCount: number = 2;
+    public textboxHeight: string = '100%';
 
     isFirstTime: boolean = true;
     private text: any;
@@ -253,7 +254,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 }
                             });
                             //this.TextValueChanges(this.TextValue);
-                            var isDestroyed: boolean = this.cd && this.cd['destroyed']; 
+                            var isDestroyed: boolean = this.cd && this.cd['destroyed'];
                             if (!isDestroyed) {
                                 this.cd.detectChanges();
                             }
