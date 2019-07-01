@@ -113,7 +113,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         else {
             this.PaymentChequeActivated = this.isRTL;
             this.AutomaticPaymentCheque = this.isRTL;
-            this.SplitTooltip = TextCodeTranslator.Translate("Accounting.General.O.PaymentChequeManualOption");
+            this.SplitTooltip = "";
             this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, !this.isRTL);
             this.ChequeOrPaymentRef = null;
         }

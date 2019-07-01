@@ -1,12 +1,11 @@
-import { Component, OnDestroy, ViewChildren, QueryList } from '@angular/core';
+import { Component, ViewChildren, QueryList, OnDestroy } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { TariffPM } from '../../../EntityPMs/TariffPM';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM'
 import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { LocationDirective } from '../../../../Infrastructure/Utilities/LocationDirective';
-import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/TariffVersionExtendedPMService';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 
 @Component({
     moduleId: module.id,
@@ -16,28 +15,33 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 export class TariffTabsContentComponent implements OnDestroy {
     public EntityPM: TariffPM;
     public Tabs: TariffDetailsTab[] = [];
-    private CurrentSession = SessionLocator.SelectedSession;
+    //private CurrentSession = SessionLocator.SelectedSession;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private EditTabTariffType = "VR";
-
-    constructor() {
+    constructor(public entityArgs: EntityArgs) {
         this.Listen();
     }
 
-    private SaveCompletedEvent: any = null;
-    private Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
-            this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                if (isSaveSuccess) {
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.CurrentSession.FireEvent("LoadEventTabData");
+    private CurrentSessionSelectedEvent: any = null;
+    Listen() {
+        this.CurrentSessionSelectedEvent = this.entityArgs.EditComponent.CurrentSession.SessionSeleced.subscribe((isSessionSeleced: boolean) => {
+            if (isSessionSeleced) {
+                if (!this.AllLocations) {
+                   
+                    if (this.timerToken) {
+                        clearTimeout(this.timerToken);
+                    }
+
+                    this.Retries = 0;
+
+                    this.RunComponent();
                 }
-            });
-        }
+            }
+        });
     }
 
     ngOnDestroy() {
-        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.CurrentSessionSelectedEvent);
     }
 
     Run(args: any) {
@@ -108,16 +112,20 @@ export class TariffTabsContentComponent implements OnDestroy {
             }
 
             else {
-                if (!AppTool.IsNullOrEmpty(this.CurrentSession.CurrentEditComponent.PreSelectedTabCode)) {
-                    var SelectedTab: TariffDetailsTab = this.Tabs.filter(p => p.SelectedVersion != null ? (p.SelectedVersion.Version == +this.CurrentSession.CurrentEditComponent.PreSelectedTabCode):0)[0];
+                if (!AppTool.IsNullOrEmpty(this.entityArgs.EditComponent.PreSelectedTabCode)) {
+                    var SelectedTab: TariffDetailsTab = this.Tabs.filter(p => p.VersionPM != null ? (p.VersionPM.Version == + this.entityArgs.EditComponent.PreSelectedTabCode) : 0)[0];
+
                     if (SelectedTab) {
                         this.SelectionChanged(SelectedTab);
                     }
+
                     else {
                         this.SelectionChanged(this.Tabs[0]);
                     }
-                    this.CurrentSession.CurrentEditComponent.PreSelectedTabCode = null;
+
+                    this.entityArgs.EditComponent.PreSelectedTabCode = null;
                 }
+
                 else {
                     this.SelectionChanged(this.Tabs[0]);
                 }
@@ -171,9 +179,8 @@ export class TariffTabsContentComponent implements OnDestroy {
                         SessionLocator.DynamicLoader.Load(this.SelectedTabItem.ComponentPath, location.viewContainerRef).then(cmpRef => {
                             this.SelectedTabItem.IsTabLoaded = true;
 
-                            if (this.SelectedTabItem.Code == this.EditTabTariffType) {
-                                
-                                cmpRef.instance.Intialize({ CurrentVersion: this.SelectedTabItem.SelectedVersion, });
+                            if (this.SelectedTabItem.VersionPM) {                                
+                                cmpRef.instance.Intialize({ CurrentVersion: this.SelectedTabItem.VersionPM });
                             }
                         });
                     }
@@ -191,7 +198,7 @@ class TariffDetailsTab {
     public IsSelected: boolean = false;
     public IsTabLoaded: boolean = false;
     public IsDraft: boolean = false;
-    public SelectedVersion: TariffVersionPM;
+    public VersionPM: TariffVersionPM;
     constructor(index: number, code: string, header: string, version: TariffVersionPM = null) {
         this.Index = index;
         this.Code = code;
@@ -200,14 +207,14 @@ class TariffDetailsTab {
         switch (this.Code) {
             case "VR": {
                 this.IsDraft = version.IsDraft;
-                this.SelectedVersion = version;
+                this.VersionPM = version;
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/VersionTabComponent";
                 break;
             }
 
             case "SVR": {
                 this.IsDraft = version.IsDraft;
-                this.SelectedVersion = version;
+                this.VersionPM = version;
                 this.ComponentPath = "./TariffModule/Components/EditTabs/Tariff/SurchargeVersionTabComponent";
                 break;
             }

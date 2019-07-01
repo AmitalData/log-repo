@@ -193,7 +193,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     StartBalanceForeignList = ledgerTransactionBalanceService.Response.StartBalanceForeignList,
                     StartBalanceLocal = ledgerTransactionBalanceService.Response.StartBalanceLocal,
                     TotalRowCount = ledgerTransactionBalanceService.Response.TotalRowCount,
-                    SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionBalanceService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
+                    YearTransferLedgerTransactionIds = ledgerTransactionBalanceService.Response.YearTransferLedgerTransactionIds,
+
+                SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionBalanceService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
                     
                 };
 

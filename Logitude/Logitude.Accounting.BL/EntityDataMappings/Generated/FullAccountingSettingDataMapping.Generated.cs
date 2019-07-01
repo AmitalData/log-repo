@@ -46,7 +46,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DefaultDifferencesGLAccountId, 
 	         DefaultExternalDiffGLAccountId, 
 	         SoftwareVersion, 
-	         IsPaymentChequesActivated,
+	         IsPaymentChequesActivated, 
+	         GLAccounterCounterLength,
 	      }
 
 
@@ -94,7 +95,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DefaultDifferencesGLAccountId, 
 	         DefaultExternalDiffGLAccountId, 
 	         SoftwareVersion, 
-	         IsPaymentChequesActivated,
+	         IsPaymentChequesActivated, 
+	         GLAccounterCounterLength,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -221,6 +223,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentChequesActivated))
             {
 				entityPOCO.IsPaymentChequesActivated = entityPM.IsPaymentChequesActivated;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccounterCounterLength))
+            {
+				entityPOCO.GLAccounterCounterLength = entityPM.GLAccounterCounterLength;
 			}
 			}
 
@@ -352,6 +359,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.IsPaymentChequesActivated = entityPOCO.IsPaymentChequesActivated;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.GLAccounterCounterLength))
+            {
+					entityPM.GLAccounterCounterLength = entityPOCO.GLAccounterCounterLength;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -476,6 +488,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsPaymentChequesActivated))
             {
                 oldEntityPM.IsPaymentChequesActivated = entityPM.IsPaymentChequesActivated;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.GLAccounterCounterLength))
+            {
+                oldEntityPM.GLAccounterCounterLength = entityPM.GLAccounterCounterLength;
             }
 			
 		}

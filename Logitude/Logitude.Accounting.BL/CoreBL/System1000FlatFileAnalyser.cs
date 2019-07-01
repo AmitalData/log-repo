@@ -78,7 +78,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 string text = TranslateTextsClassTranslate("System1000.O.FailedWhilePerforming", 0, useLocal);
 
-                throw new Exception("LoadSystem1000FromFile(FileContent) {text} CreateVendorLinesDTOFromFile ", e);
+                throw new Exception($"LoadSystem1000FromFile(FileContent) {text} CreateVendorLinesDTOFromFile ", e);
             }
 
 

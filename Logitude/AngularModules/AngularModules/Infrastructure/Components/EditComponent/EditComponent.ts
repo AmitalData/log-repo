@@ -73,7 +73,7 @@ export class EditComponent implements OnDestroy {
     @ViewChild('WindowLocation', { read: ViewContainerRef }) WindowLocationViewContainerRef: ViewContainerRef;
     @ViewChild('TabControlBody', { read: ViewContainerRef }) TabControlBodyViewContainerRef: ViewContainerRef;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    private CurrentSession = SessionLocator.SelectedSession;
+    public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));

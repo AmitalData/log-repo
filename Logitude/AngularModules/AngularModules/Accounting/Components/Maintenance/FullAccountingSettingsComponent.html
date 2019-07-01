@@ -457,15 +457,28 @@
 
                                                     <!-- SoftwareVersion -->
                                                     <tr class="FormFieldRow">
-                                                            <td>
-                                                                <LogLabel [ObjectFieldName]="'SoftwareVersion'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                            </td>
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'SoftwareVersion'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
 
-                                                            <td colspan="2">
-                                                                <LogTextBox [ObjectFieldName]="'SoftwareVersion'" [ObjectTableName]="ObjectTableName"
-                                                                            [InputType]="'text'" [DataContext]="DataContext"></LogTextBox>
-                                                            </td>
-                                                        </tr>
+                                                        <td colspan="2">
+                                                            <LogTextBox [ObjectFieldName]="'SoftwareVersion'" [ObjectTableName]="ObjectTableName"
+                                                                        [InputType]="'text'" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+                                                    </tr>
+
+                                                    <!-- GLAccounterCounterLength -->
+                                                    <tr class="FormFieldRow">
+                                                        <td>
+                                                            <LogLabel [ObjectFieldName]="'GLAccounterCounterLength'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <LogTextBox [ObjectFieldName]="'GLAccounterCounterLength'" [ObjectTableName]="ObjectTableName"
+                                                                        [Max]="9999999999"
+                                                                        [InputType]="'integer'" [DataContext]="DataContext"></LogTextBox>
+                                                        </td>
+                                                    </tr>
 
                                                     <tr><td><div></div></td></tr>
                                                 </table>
