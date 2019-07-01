@@ -293,7 +293,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
 
 
         //check rowscount
-        // if (this.IsMultiline) {
+        // if (this.IsMultiline) { // commented due single line expand window
             setTimeout(() => {
 
                 if (this.RowsCount) {
