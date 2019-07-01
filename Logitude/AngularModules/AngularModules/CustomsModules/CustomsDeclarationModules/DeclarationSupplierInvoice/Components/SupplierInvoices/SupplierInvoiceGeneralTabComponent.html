@@ -839,7 +839,7 @@
                                             <LogLov [ObjectFieldName]="'OriginCountryCode'"
                                                     [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="item"
-                                                    (SelectedItemChanged)="item.CustomsCountry = $event"
+                                                    (SelectedItemChanged)="item.CustomsCountryChanged($event)"
                                                     [LookUpTableName]="'Customs.CustomsCountry'"
                                                     [HideColumns]="true"
                                                     [SelectedValue]="OriginCountryCode"
