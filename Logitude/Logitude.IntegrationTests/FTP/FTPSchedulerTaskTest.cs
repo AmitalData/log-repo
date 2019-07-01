@@ -14,6 +14,43 @@ namespace Logitude.IntegrationTests.FTP
     [TestClass]
     public class FTPSchedulerTaskTest
     {
+
+        //[TestMethod]
+        //public void Upload_INTRA_FTPFiles_Test()
+        //{
+
+
+        //    SchedulerDetails schedulerDetails = new SchedulerDetails()
+        //    {
+        //        Tenant = 1,
+        //        FTPDetails = new FTPSchedulerDetails()
+        //        {
+        //            Folder = "inbound",
+        //            From = "My FTP Server",
+        //            Host = "ftp.inttraworks.inttra.com",
+        //            Password = "Fm640gDl",
+        //            Subject = "test",
+        //            UserName = "c0464340",
+                    
+        //        }
+        //    };
+
+        //    FTPService ftpService = new FTPService(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
+        //    string folderPath = Environment.CurrentDirectory.Replace(@"bin\Debug", "FTPFiles");
+        //    //string filePath = HttpContext.Current.Server.MapPath(".") + "\\bin\\" + "exceptionslogfile.txt";
+        //    foreach (string file in Directory.EnumerateFiles(folderPath))
+        //    {
+
+        //        byte[] contents = File.ReadAllBytes(file);
+        //        string p_message;
+        //        string fileName = Path.GetFileName(file);
+        //        ftpService.Upload(fileName, schedulerDetails.FTPDetails.Folder, contents, out p_message);
+        //        //ftpService.Upload(fileName, settingsData.folder, filedata, out p_message);
+        //    }
+
+
+        //}
+
         [TestMethod]
         public void Upload_Download_FTPFiles_Pdf_Extension_Test()
         {
