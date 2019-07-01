@@ -319,6 +319,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        [ActionName("PostValidateShipmentMasterArgs")]
         public HttpResponseMessage PostValidateShipmentMasterArgs(ValidateShipmentMasterArgs args)
         {
             try
