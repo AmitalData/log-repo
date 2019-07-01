@@ -4,6 +4,7 @@ using Logitude.Accounting.BL.CoreBL.Mapping;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -54,7 +55,11 @@ namespace Logitude.Accounting.BL.CoreBL
             AccountBalance = new AccountBalanceM() { Tenant = _Tenant };
             _StringBuilder = new StringBuilder();
         }
-        public void CalculateBalance(string  DateTypeCode,DateTime theDate, bool inclusiveTheDateLTransaction = false, bool verbose = false)
+        public void CalculateBalance(
+            bool openBalancePlease_ReCalcYearTransfer,
+            string  DateTypeCode,DateTime theDate,
+            
+            bool inclusiveTheDateLTransaction = false, bool verbose = false)
         {
             _TheDate = theDate;
             _DateTypeCode = DateTypeCode;
@@ -130,9 +135,56 @@ namespace Logitude.Accounting.BL.CoreBL
                     _HaveAccountingQueued = AnyAccountingQueued();
                     LogIt("AnyAccountingQueued");
                     AccountBalance.HaveAccountingQueued = _HaveAccountingQueued;
+                    ;
 
+
+                    List<CurrencySum> yearTransferLedgerTransactionCurrencySum = new List<CurrencySum>();
+                    if (openBalancePlease_ReCalcYearTransfer)
+                    {
+                        var openBalanceDate = DateUntillNotInclude;
+                        if (DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate
+                            && openBalanceDate.Month == 1 && openBalanceDate.Day == 1)
+                        {
+
+                            var myLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
+                            var qYearTransferLedgerTransaction = myLedgerTransactionRepository
+                                .GetYearTransferLedgerTransaction(_GLAccountId, openBalanceDate.Year, _Tenant);
+                            var yearTransferLedgerTransaction = qYearTransferLedgerTransaction.ToList();
+                            AccountBalance.YearTransferLedgerTransactionIds = yearTransferLedgerTransaction.Select(r => r.Id).ToList();
+
+                            yearTransferLedgerTransactionCurrencySum =
+    (from lt in yearTransferLedgerTransaction
+     group lt by new
+     {
+         lt.AccountId,
+         lt.CurrencyId
+     }
+         into groupBy_currency
+     select new CurrencySum()
+     {
+         AccountId = groupBy_currency.Key.AccountId,
+         CurrencyId = groupBy_currency.Key.CurrencyId,
+         //LocalAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountCredit) * -1,
+         //LocalAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountDebit) * -1,
+         //ForeignAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountCredit) * -1,
+         //ForeignAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountDebit) * -1,
+
+         LocalAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountCredit) ,
+         LocalAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountDebit) ,
+         ForeignAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountCredit) ,
+         ForeignAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountDebit) ,
+
+
+     }).ToList();
+
+
+
+
+                        }
+                    }
 
                     var totals = (from rec in currencySumUntillMounth.Concat(theMounthCurrencySum)
+                                  .Concat(yearTransferLedgerTransactionCurrencySum)
                                   group rec by rec.CurrencyId into gCurrencyId
                                   select new CurrencySum()
                                   {
@@ -145,6 +197,15 @@ namespace Logitude.Accounting.BL.CoreBL
                                   }
                      ).ToList();
 
+
+
+                    
+              
+
+
+
+                    
+                    
                     AccountBalance.Totals = totals;
                     AccountBalance.TotalLocalAmountDebit = AccountBalance.Totals.Sum(r => r.LocalAmountDebit);
                     AccountBalance.TotalLocalAmountCredit = AccountBalance.Totals.Sum(r => r.LocalAmountCredit);
@@ -234,7 +295,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public bool IncludeChildAccounts { get; set; }
         public bool IncludeRelatedCurrenciesAccount { get; set; }
 
-
+        public bool OpenBalancePlease_ReCalcYearTransfer { get; set; }
         public DateTime accoutingDate { get; set; }
         public bool includeAccoutingDateLTransaction { get; set; }
         public bool verbose { get; set; }
@@ -256,6 +317,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public decimal? TotalLocalAmountDebit { get; set; }
 
         public decimal? TotalLocalAmountCredit { get; set; }
+        public List<string> YearTransferLedgerTransactionIds { get; internal set; }
 
         internal List<CallBackBalance> GetCallBackBalanceOfCurrency(string currencyId)
         {
