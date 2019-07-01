@@ -227,6 +227,7 @@
     <TextCode Code="&quot;APPayment.M.AmountPaidNotLess&quot;" DefaultText="&quot;Amount Paid can't be less than&quot;" LocalDefaultText="&quot;סכום לתשלום לא יכול להיות קטן מ-&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APPayment.M.CantPayMinusValue&quot;" DefaultText="&quot;Can't pay minus value&quot;" LocalDefaultText="&quot;לא ניתן לשלם סכום במינוס&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;APPayment.M.AmountPaidLessOrEqual&quot;" DefaultText="&quot;Amount Paid must be less than or equals to&quot;" LocalDefaultText="&quot;סכום לתשלום חייב להיות שווה או פחות מ-&quot;" TextCodeTypeCode="&quot;M&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;APPayment.O.NoDeductionFileNumber&quot;" DefaultText="&quot;Vendor Deduction File Number not specified&quot;" LocalDefaultText="&quot;לא הוגדר מספר תיק ניכויים בכרטיס הספק&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature Code="&quot;DOCSOUT&quot;" FeatureTypeCode="&quot;AREA&quot;" FeatureTextCodeCode="&quot;APPayment.Features.DocsOut&quot;" FeatureDefaultText="&quot;Docs Out&quot;" IsPackagable="true" IsOld="false" IsCoreFeature="false" IsBusinessUnitEnabled="false" />

@@ -181,8 +181,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         {
                             data = this.ExportAirSurchargesCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
-
-                        fileName = "Tariffs" + DateTime.Now.ToShortDateString();
+                        
+                        fileName = "Tariff-" + tariff.TariffNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
 
                         if (data != null)
                         {
@@ -199,8 +199,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             storageservice.Write(data, fileInfo);
                             this.EventTrace(tariff, type, loggedContact);
                         }
-
-
                     }
                 }
 
@@ -619,7 +617,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     string dateRange = "C2:C" + (tariffLines.Count + 1);
                     sheet1.Range[dateRange].ColumnWidth = 14;
-                    sheet1.Range[dateRange].NumberFormat = "dd/mm/yyyy";
+                    sheet1.Range[dateRange].NumberFormat = "dd/MM/yyyy";
                 }
             }
 
@@ -1867,7 +1865,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     if (iDraftVersion != null)
                     {
                         List<FromToClass> routs = this.ComputeRoutsList(args.From, args.To, authToken.Tenant);
-                        bool isValid = this.ValidateStartDate(tariff, iDraftVersion, routs, args.StartDate);                        
+                        bool isValid = this.ValidateStartDate(tariff, iDraftVersion, routs, args.StartDate, tariffContext);                        
 
                         if(isValid)
                         {
@@ -1931,22 +1929,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private bool ValidateStartDate(TariffPM tariff, TariffVersionPM iDraftVersion, List<FromToClass> routs, DateTime startDate)
+        private bool ValidateStartDate(TariffPM tariff, TariffVersionPM iDraftVersion, List<FromToClass> routs, DateTime startDate, ITariffModuleContext tariffContext)
         {
             bool isValid = true;
 
             TariffVersionPM iPreviousVersion = tariff.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
             if (iPreviousVersion != null)
             {
+                List<TariffLine> iPreviousLines = tariffContext.TariffLines.Where(d => d.Version == iPreviousVersion.Version && d.TariffId == tariff.Id).ToList();
+
                 List<TariffLinePM> draftLines = iDraftVersion.TariffLines.Where(d => (routs.Select(s => s.FromCode).Contains(d.OriginPortId) && routs.Select(s => s.ToCode).Contains(d.DestinationPortId))).ToList();
                 foreach (TariffLinePM linePM in draftLines)
                 {
                     if (linePM.StartDate != null)
                     {
-                        var iPreviousLine = iPreviousVersion.TariffLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
+                        TariffLine iPreviousLine = iPreviousLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
                         if (iPreviousLine != null)
                         {
-                            if (startDate > iPreviousLine.StartDate)
+                            if (startDate < iPreviousLine.StartDate)
                             {
                                 isValid = false;
                                 throw new ApplicationException("New start date can't be before the current tariff start date");
