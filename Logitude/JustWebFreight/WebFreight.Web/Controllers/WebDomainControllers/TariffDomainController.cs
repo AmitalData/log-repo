@@ -927,10 +927,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     TariffVersion lastVersion = versions.Where(d => d.Version == 50).FirstOrDefault();
                     tariff.LastStartDate = lastVersion.StartDate;
                     tariff.LastExpirationDate = lastVersion.ExpirationDate;
-
                     iContext.Tariffs.Add(tariff);
                     airlines.Remove(airline);
-
                     iContext.SaveChanges();
                 }
             }
@@ -944,8 +942,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             var next = random.NextDouble();
             return (minValue + ((decimal)next * (maxValue - minValue)))/ 2m;
         }
-
-        public List<ExcelTariffLines> UniqueRandomList(List<ExcelTariffLines> tariffLines, int maxRange, int totalRandomnoCount)
+        private List<ExcelTariffLines> UniqueRandomList(List<ExcelTariffLines> tariffLines, int maxRange, int totalRandomnoCount)
         {
             List<ExcelTariffLines> tariffList_random = new List<ExcelTariffLines>();
             int count = 0;
