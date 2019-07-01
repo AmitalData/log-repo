@@ -492,7 +492,7 @@
   </DataContracts>
   <AdditionalTextCodes>
     <TextCode Code="&quot;GLAccount.O.NoCreditDefined&quot;" DefaultText="&quot;Credit balance not defined&quot;" LocalDefaultText="&quot;לא הוגדרה מסגרת אשראי ללקוח&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
-    <TextCode Code="&quot;GLAccount.O.CreditStatus &quot;" DefaultText="&quot;Credit Status&quot;" LocalDefaultText="&quot;מסגרת אשרא&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
+    <TextCode Code="&quot;GLAccount.O.CreditStatus &quot;" DefaultText="&quot;Credit Status&quot;" LocalDefaultText="&quot;מצב אשראי&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
     <TextCode Code="&quot;GLAccount.O.Queries&quot;" DefaultText="&quot;GL Accounts Queries&quot;" LocalDefaultText="&quot;שאילתות כרטיסים&quot;" TextCodeTypeCode="&quot;O&quot;" IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
