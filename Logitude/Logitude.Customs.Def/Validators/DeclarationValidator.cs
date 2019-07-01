@@ -66,7 +66,7 @@ namespace Logitude.Customs.Def.Validators
                 else if (declaration.ImporterCode.Length == 9 && string.IsNullOrWhiteSpace(declaration.ImporterId))
                 {
                     string digit = declaration.ImporterCode.Substring(8);
-                    int checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(declaration.ImporterCode);
+                    int checkDigit = LuhnAlgorithm.CalculateLuhnAlgorithm(declaration.ImporterCode.Substring(0,8));
 
                     if (digit != checkDigit.ToString())
                     {

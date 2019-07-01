@@ -89,6 +89,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     @Input() Max: number;
     @Input() Min: number;
     @Input() RowsCount: number = 2;
+    public textboxHeight: string = '100%';
 
     isFirstTime: boolean = true;
     private text: any;
@@ -253,7 +254,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 }
                             });
                             //this.TextValueChanges(this.TextValue);
-                            var isDestroyed: boolean = this.cd && this.cd['destroyed']; 
+                            var isDestroyed: boolean = this.cd && this.cd['destroyed'];
                             if (!isDestroyed) {
                                 this.cd.detectChanges();
                             }
@@ -284,6 +285,30 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             }, 1);
 
         }
+
+
+        //check rowscount
+        // if (this.IsMultiline) {
+            setTimeout(() => {
+
+                if (this.RowsCount) {
+
+                    //calculate height: (rowcount * 18 row height) + 8 padding
+                    this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+                } else {
+                    var _element = document.getElementById(this.InputId)
+                    var elHeight = _element.clientHeight;
+                    var calculatedRowsCount = (elHeight / 18);
+                    var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
+
+                    this.RowsCount = ___roundedCalculatedRowsCountHaha;
+                    this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+
+                }
+
+            }, 100);
+        // }
+
     }
 
     RunComponent() {
@@ -1667,6 +1692,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         windowArgs.ObjectTableName = this.ObjectTableName;
         windowArgs.ObjectFieldName = this.ObjectFieldName;
         windowArgs.TextValue = this.TextValue;
+        windowArgs.RowsCount = this.RowsCount;
 
         var wind = new LogitudeWindow();
         // wind.IsFullScreen = true;

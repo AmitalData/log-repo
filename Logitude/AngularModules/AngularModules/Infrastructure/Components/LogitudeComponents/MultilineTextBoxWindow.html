@@ -5,8 +5,9 @@
 
                 <textarea
                 [(ngModel)]="Text"
-                style="height: 100%;"
-                >
+                style="height: 100%;font-size:12px;font-family: Arial;"
+                [readonly]="DisplayMode"
+                (keydown)="OnKeyDown($event)">
 
                       </textarea>
         </td>

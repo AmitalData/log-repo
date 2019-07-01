@@ -2692,6 +2692,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
     }
 
+    CustomsCountryChanged($event) {
+        this.CustomsCountry = $event;
+    }
 
     customsCountry: CustomsCountryPM;
     get CustomsCountry() { return this.customsCountry; }
@@ -2805,6 +2808,15 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public get OriginCountryCode()
     { return this.entityPM.OriginCountryCode; }
     public set OriginCountryCode(newValue: string) {
+        if (newValue) {
+            this._CustomsCountryListService.getSingle(newValue).subscribe((res) => {
+                var entity = res.Result;
+                if (entity) {
+                    this.CustomsCountry = entity;
+                    this.OriginCountryName = this.CustomsCountry.LocalName;
+                }
+            });
+        }
         this.entityPM.OriginCountryCode = newValue;
     }
 

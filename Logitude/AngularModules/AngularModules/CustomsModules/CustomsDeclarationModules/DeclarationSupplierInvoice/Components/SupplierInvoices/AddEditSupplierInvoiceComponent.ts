@@ -2274,9 +2274,9 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                                 newMod.DeclarationId = this.EntityPM.DeclarationId;
                                 newMod.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
                                 newMod.TypeCode = commission.ModificationsTypeCode;
-                                newMod.TypeName = this.typeNameForI10;
+                                newMod.TypeName = commission.ModificationsTypeName;
                                 newMod.CurrencyTypeCode = newCurrency;
-                                newMod.CurrencyTypeName = this.invoiceCurrencyName;
+                                newMod.CurrencyTypeName = this.EntityPM.InvoiceCurrencyTypeName;
                                 newMod.Amount = newAmount;
 
                                 this.EntityPM.SupplierInvoiceModifications.push(newMod);
@@ -2370,9 +2370,10 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                         //    and it's with different currency OR value ask user
                         if (modTypeI10.Amount != newAmount || modTypeI10.CurrencyTypeCode != newCurrency) {
                             modTypeI10.CurrencyTypeCode = newCurrency;
-                            modTypeI10.CurrencyTypeName = this.invoiceCurrencyName;
+                            modTypeI10.CurrencyTypeName = this.EntityPM.InvoiceCurrencyTypeName;
                             modTypeI10.Amount = newAmount;
                             modTypeI10.TypeCode = commission.ModificationsTypeCode;
+                            modTypeI10.TypeName = commission.ModificationsTypeName;
                         }
                     }
                 }
@@ -2401,6 +2402,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         });
 
     }
+
     DropdownDisplayClose() {
         this._DropdownDisplay = 'none';
     }
