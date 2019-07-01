@@ -37,7 +37,6 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public ObjectTableName: string = "Tariff";
     public TariffsLinesSource: ObservableCollection;
     public DataContext = this;
-    private EntityArgs: EntityArgs;
     public IsResourcesReady: boolean = false;
     private TariffDomainService: TariffDomainService;
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
@@ -48,12 +47,59 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     private CurrentSession = SessionLocator.SelectedSession;
     public IsUpdateSurchargesButtonVisible: boolean = false;
     public IsFirstDraft: boolean = false;
-
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
-        this.EntityArgs = entityArgs;
         this.Listen();
+    }
+
+    public AllChargesTypes: ChargesTypeList[];
+    public AllMeasurements: MeasurementList[];
+    Intialize(args: any) {
+        this.TariffsLinesSource = new ObservableCollection([]);
+        this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
+        this.TariffDomainService = new TariffDomainService();
+
+        this.CurrentVersion = args['CurrentVersion'];
+
+        if (this.CurrentVersion != null) {
+            this.IsDraftVersion = this.CurrentVersion.IsDraft;
+        }
+
+        if (this.IsDraftVersion) {
+            this.IsComparToChecked = true;
+        }
+
+        this.GetTariffSettings();
+
+
+        var iChargesTypeListService = new ChargesTypeListService();
+        var iMeasurementListService = new MeasurementListService();
+
+        iChargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllChargesTypes = myResponse.Result;
+
+                iMeasurementListService.getAllFromCache().subscribe((myResponse2: ServiceResponse) => {
+                    if (!myResponse2.HasError) {
+                        this.AllMeasurements = myResponse2.Result;
+
+                        this.LoadCompareToVersions();
+
+                        this.SetUIProperties();
+                        this.SetSurchargesLabelsAndVisibility();
+
+                        if (this.CurrentVersion.IsDraft) {
+                            this.FillTariffLines(this.CurrentVersion.TariffLines);
+                        }
+
+                        else {
+                            this.LoadTariffLines("currentVersion");
+                        }
+                    }
+                });
+            }
+        });
     }
 
     private SaveCompletedEvent: any = null;
@@ -102,55 +148,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
 
-    public AllChargesTypes: ChargesTypeList[];
-    public AllMeasurements: MeasurementList[];
-    Intialize(args: any) {
-        this.TariffsLinesSource = new ObservableCollection([]);
-        this.EntityPM = this.EntityArgs.EntityPM;
-        this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
-        this.TariffDomainService = new TariffDomainService();
 
-        this.CurrentVersion = args['CurrentVersion'];
-
-        if (this.CurrentVersion != null) {
-            this.IsDraftVersion = this.CurrentVersion.IsDraft;
-        }
-
-        if (this.IsDraftVersion) {
-            this.IsComparToChecked = true;
-        }
-
-        this.GetTariffSettings();
-
-
-        var iChargesTypeListService = new ChargesTypeListService();
-        var iMeasurementListService = new MeasurementListService();
-
-        iChargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.AllChargesTypes = myResponse.Result;
-
-                iMeasurementListService.getAllFromCache().subscribe((myResponse2: ServiceResponse) => {
-                    if (!myResponse2.HasError) {
-                        this.AllMeasurements = myResponse2.Result;
-
-                        this.LoadCompareToVersions();
-
-                        this.SetUIProperties();
-                        this.SetSurchargesLabelsAndVisibility();
-
-                        if (this.CurrentVersion.IsDraft) {
-                            this.FillTariffLines(this.CurrentVersion.TariffLines);
-                        }
-
-                        else {
-                            this.LoadTariffLines("currentVersion");
-                        }
-                    }
-                });
-            }
-        });
-    }
 
     private GetTariffSettings() {
         this.TariffDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {

@@ -755,7 +755,8 @@ export class HomeComponent implements OnDestroy{
 
             if (this.SelectedTabItem.IsSessionLoaded) {
                 SessionLocator.SelectedSession = this.SelectedTabItem.SessionComponent;    
-                this.CurrentSession = SessionLocator.SelectedSession;           
+                this.CurrentSession = SessionLocator.SelectedSession;
+                this.CurrentSession.SessionSeleced.emit(true);
             }
 
             else {
