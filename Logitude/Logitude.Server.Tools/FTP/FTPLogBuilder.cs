@@ -1,30 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.FTP
 {
-    public class FTPLogBuilder
+    public static class FTPLogBuilder
     {
         //public StringBuilder Logs { get; set; }
 
-        public string AppendLogLine(string message, string currentLogString)
+        public static string  AppendLogLine(string message, string currentLogString)
         {
             string newLogMessage = DateTime.UtcNow.ToString("u") + " " + message;
 
             return currentLogString + Environment.NewLine + newLogMessage;
         }
 
-        public string BuildLogLine(string message)
+        public static string BuildLogLine(string message)
         {
             string newLogMessage = DateTime.UtcNow.ToString("u") + " " + message;
 
             return newLogMessage;
         }
 
-        public string GetFileSizeString(long? fileBytes)
+        public static string GetFileSizeString(long? fileBytes)
         {
             double Byte = 1024;
             string FileSize = "";
@@ -56,6 +57,44 @@ namespace Logitude.Server.Tools.FTP
             }
 
             return FileSize;
+        }
+
+
+        public static string GetFTPErrorFromFtpStatusCode(WebException ex, string host, string user, string remoteFile, string operation)
+        {
+
+            string errorMessage = "";
+            var ftpResponse = ex.Response as FtpWebResponse;
+            switch (ftpResponse.StatusCode)
+            {
+                case FtpStatusCode.NotLoggedIn:
+                    errorMessage += "Failed to perform 'Logon' to Host:'" + host + "' ,User:'" + user + Environment.NewLine + ftpResponse.StatusDescription;
+                    break;
+                case FtpStatusCode.ActionNotTakenFileUnavailable:
+                    errorMessage += "Failed to " + operation + " " + remoteFile + " file" + Environment.NewLine + ftpResponse.StatusDescription;
+                    break;
+                default:
+                    errorMessage += "Failed to " + operation + " " + (!string.IsNullOrEmpty(remoteFile) ? remoteFile + " file" : "") + Environment.NewLine + ftpResponse.StatusDescription + Environment.NewLine + ex.Message;
+                    break;
+            }
+
+            errorMessage = DateTime.Now.ToString() + " : " + errorMessage;
+
+            return errorMessage;
+        }
+
+        public static string WildcardToRegex(string p_pattern)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(p_pattern)) p_pattern = "*";
+                p_pattern = Wildcard.WildcardToRegex(p_pattern);
+                return (p_pattern);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 

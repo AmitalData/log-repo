@@ -741,8 +741,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                 this.PaymentCurrencyId = list.InvoiceCurrencyId;
             }
-
-            this.EntityPM.VendorName = list.EnglishName;
+            if (SessionLocator.LoggedUserPM.DontShowLocal) {
+                this.EntityPM.VendorName = list.EnglishName;
+            }
+            else {
+                this.EntityPM.VendorName = list.LocalName;
+            }
             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
             this.LoadAddress();
 

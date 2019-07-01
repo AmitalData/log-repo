@@ -213,44 +213,47 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
 
+
     GenerateReport(filter: ReportFliter, isloading: boolean) {
-       this.ReportFliter = this.FillReportFilter(filter);
+
+        if (!this.ShowBusyIndicator) {
+            this.ShowBusyIndicator = true;
+            this.ReportFliter = this.FillReportFilter(filter);
+            if (!this.IsHaveRunReportViewWorkerRolwToggleFeature || (this.IsHaveRunReportViewWorkerRolwToggleFeature && this.ReportFliter.ProcessType != "GenerateReport")) {
+
+                this.IsRunReportSucceeded = false;
+                this.IsRunReportFailed = false;
+
+                this.ValiditySelectedTemplate();
+
+                this.StartBusyIndicator("Generating...");
+                if (this.ReportsRunUsingWR && !this.IsHaveRunReportViewWorkerRolwToggleFeature) {
+                    this.StartTimerWaitingFirststimulReportBuild();
+                }
+
+                this.NumberOfRequests += 1;
+                this.ReportFliter.NumberOfRequests = this.NumberOfRequests;
+                this._reportService.GenerateReportMethod(this.ReportFliter).subscribe((myResponse: ServiceResponse) => {
+
+                    var myResult = myResponse.Result;
+                    if (myResult && !myResponse.HasError) {
+                        if (myResult[0] && myResult[0].NumberOfRequest != this.NumberOfRequests) {
+                            return;
+                        }
+                    }
+
+                    if (this.IsUsedReportsRunUsingWR) return;
+                    this.SetReportData(myResponse);
+                    this.StopBusyIndicator();
+                });
 
 
-       if (!this.IsHaveRunReportViewWorkerRolwToggleFeature || (this.IsHaveRunReportViewWorkerRolwToggleFeature && this.ReportFliter.ProcessType != "GenerateReport")) {
+            }
 
-           this.IsRunReportSucceeded = false;
-           this.IsRunReportFailed = false;
-
-           this.ValiditySelectedTemplate();
-
-               this.StartBusyIndicator("Generating...");
-               if (this.ReportsRunUsingWR && !this.IsHaveRunReportViewWorkerRolwToggleFeature) {
-                   this.StartTimerWaitingFirststimulReportBuild();
-               }
-
-               this.NumberOfRequests += 1;
-               this.ReportFliter.NumberOfRequests = this.NumberOfRequests;
-               this._reportService.GenerateReportMethod(this.ReportFliter).subscribe((myResponse: ServiceResponse) => {
-
-                   var myResult = myResponse.Result;
-                   if (myResult && !myResponse.HasError) {
-                       if (myResult[0] && myResult[0].NumberOfRequest != this.NumberOfRequests) {
-                           return;
-                       }
-                   }
-
-                   if (this.IsUsedReportsRunUsingWR) return;
-                   this.SetReportData(myResponse);
-                   this.StopBusyIndicator();
-               });
-
-           
-       }
-
-       else {
-           this.StartBuildStimulReportViaWorkerRole(this.ReportFliter,true);
-       }
+            else {
+                this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true);
+            }
+        }
 }
 
     GenerateReportViewWorkerRole(filter: ReportFliter) {
@@ -399,54 +402,56 @@ export class ReportsPreviewComponent implements AfterViewInit {
         return Observable.interval(2000).timeInterval();
     }
     private StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub: any = null;
+    IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer: boolean = false;
     StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
-        this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub = this.initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer().subscribe(res => {
-            var isStopStimulSoftReportsub = false;
-            if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
+    
+        this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = true;
+
+        this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub = this.initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer().subscribe(respose => {
+            if ((this.CurrentSession && this.CurrentSession.isDestroingSession) || !this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer ) {
                 this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
-                isStopStimulSoftReportsub = true;
+                this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
                 return;
             }
+            if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
 
-            this._reportService.GetCheckIfStimulSoftReportIsBliud(this.ReportFliter.ReportKey, SessionLocator.Tenant).subscribe(res => {
-                        var pmResponse: ServiceResponse = res;
-                        if (!isStopStimulSoftReportsub) {
-                            if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
-                                this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
-                                this.StopBusyIndicator();
-                                this.IsUsedReportsRunUsingWR = false;
-                                isStopStimulSoftReportsub = true;
+                this._reportService.GetCheckIfStimulSoftReportIsBliud(this.ReportFliter.ReportKey, SessionLocator.Tenant).subscribe(res => {
+                    var pmResponse: ServiceResponse = res;
+                    if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+                        if (pmResponse.HasError || (pmResponse.Result && pmResponse.Result.HasError) || (pmResponse.Result && pmResponse.Result.StatusCode == "D")) {
+                            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+                            this.IsUsedReportsRunUsingWR = false;
+                            this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
+                            this.StopBusyIndicator();
+                        }
 
-                            }
-                            if (!pmResponse.HasError) {
-                                var result: ReportBuildResult = pmResponse.Result;
-                                if (result) {
-                                    if (result.HasError) {
-                                        var messageWindow = new MessageWindow();
-                                        messageWindow.Show(result.ExceptionMessage);
-                                    }
-                                    else if (result.StatusCode == "D") {
-                                        this.ReportFliter.ProcessType = "ReportsRunUsingWR";
-                                        this.GenerateReportViewWorkerRole(this.ReportFliter);
-                                    }
-
-                                }
-
-                            }
-                            else {
-                                if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                        if (!pmResponse.HasError) {
+                            var result: ReportBuildResult = pmResponse.Result;
+                            if (result) {
+                                if (result.HasError) {
                                     var messageWindow = new MessageWindow();
-                                    messageWindow.Show(pmResponse.ErrorsArray[0]);
+                                    messageWindow.Show(result.ExceptionMessage);
                                 }
+                                else if (result.StatusCode == "D") {
+                                    this.ReportFliter.ProcessType = "ReportsRunUsingWR";
+                                    this.GenerateReportViewWorkerRole(this.ReportFliter);
+                                }
+
                             }
 
                         }
+                        else {
+                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                                var messageWindow = new MessageWindow();
+                                messageWindow.Show(pmResponse.ErrorsArray[0]);
+                            }
+                        }
 
-                    });
-                
-            
+                    }
 
+                });
 
+            }
         });
 
     }
@@ -462,9 +467,12 @@ export class ReportsPreviewComponent implements AfterViewInit {
     StartTimerWaitingFirststimulReportBuild() {
         this.IsStartTimerWaitingFirstStimulReportBuildRunning = true;
         this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe(res => {
-            this.StartBuildStimulReportViaWorkerRole(this.ReportFliter);
-            this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
-            this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
+
+            if (this.IsStartTimerWaitingFirstStimulReportBuildRunning) {
+                this.StartBuildStimulReportViaWorkerRole(this.ReportFliter);
+                this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
+                this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
+            }
         });
     }
 
@@ -479,9 +487,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
     StartTimerChangeBusyIndicatorMessageAfter50Sec() {
         this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = true;
         this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe(res => {
-            this.StartBusyIndicator("Report generating is taking longer than expected. Please wait", 400);
-            this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
-            this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
+            if (this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning) {
+                this.StartBusyIndicator("Report generating is taking longer than expected. Please wait", 400);
+                this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
+                this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
+            }
         });
     }
 
@@ -510,5 +520,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
             this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
         }
 
+
+        if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+            this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
+        }
     }
 }
