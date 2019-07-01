@@ -120,10 +120,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
 
-        if (this.IsDraftVersion) {
-            this.IsComparToChecked = true;
-        }
-
+     
         this.GetTariffSettings();
 
 

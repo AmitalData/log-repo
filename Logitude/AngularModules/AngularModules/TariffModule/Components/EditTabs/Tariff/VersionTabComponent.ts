@@ -118,10 +118,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
         }
 
-        if (this.IsDraftVersion) {
-            this.IsComparToChecked = true;
-        }
-
         this.LoadCompareToVersions();
 
         this.SetUIProperties();
