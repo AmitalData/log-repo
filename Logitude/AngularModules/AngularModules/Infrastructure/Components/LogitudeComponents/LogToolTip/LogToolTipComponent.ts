@@ -1,5 +1,6 @@
+import { TextCodeTranslator } from './../../../Utilities/TextCodeTranslator';
 import { ObjectsLocator } from './../../../Locators/ObjectsLocator';
-import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
 import { AppTool } from './../../../Tools';
 
 @Component({
@@ -9,22 +10,33 @@ import { AppTool } from './../../../Tools';
     styleUrls: ['./LogToolTipComponent.css']
 })
 
-export class LogToolTipComponent {
+export class LogToolTipComponent implements AfterViewInit {
+
     public isRTL: boolean = false;
 
 
     @Input() public title: string;
     @Input() public name: string = 'no1';
     @Input() public direction: string = 'bottomright';
+    @Input() public mode: string = 'info';
 
     constructor() {
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
+    }
+    ngAfterViewInit(): void {
+
+        switch (this.mode) {
+            case 'Warning':
+                this.title = TextCodeTranslator.Translate("General.O.Warning"); // "Warning";
+                break;
+
+            default:
+                break;
+        }
 
     }
-
-
     private isMouseIn: boolean = false;
     OnMouseOver() {
         this.isMouseIn = true;
