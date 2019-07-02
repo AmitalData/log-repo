@@ -96,7 +96,7 @@ export class CMConnectedDeclarationTabComponent extends BaseComponent {
             SessionLocator.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.BuildColumns();
+                    //this.BuildColumns();
                     this.LoadConnectedItems();
                 }
             });

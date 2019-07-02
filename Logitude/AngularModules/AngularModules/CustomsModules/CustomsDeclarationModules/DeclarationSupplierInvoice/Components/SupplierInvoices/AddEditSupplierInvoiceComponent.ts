@@ -90,6 +90,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     public NewInvoices: SupplierInvoicePM[] = [];
    
     _SkipAutoInsurance: boolean = false;
+    _IsNoIncotermCheck: string = "N";
+
     constructor//(private cd: ChangeDetectorRef) {
         () {
         super();
@@ -231,7 +233,16 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         }
 
         var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
-
+        customsSettingExtendedListService.GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", this.EntityPM.Tenant)
+            .subscribe((response: ServiceResponse) => {
+                let obj = response.Result;
+                if (obj) {
+                    let DefaultValue = obj['DefaultValue'];
+                    if (!AppTool.IsNullOrEmpty(DefaultValue)) {
+                        this._IsNoIncotermCheck = DefaultValue;
+                    }
+                }
+            });
         
         customsSettingExtendedListService.GetSkipAutoInsurancePromise(this.declarationPM.CustomerCode, this.declarationPM.Tenant).subscribe(myResult => {
             var res: ServiceResponse = myResult;
@@ -620,18 +631,22 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
                         SessionLocator.CurrentSession.StopBusyIndicator();
+                        if (this._IsNoIncotermCheck == "Y") {
+                            this.ConfirmWindowYesButton();
+                        }
+                        else {
+                            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                            confirmWindow.Show(msg);
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                        var confirmWindow = new ConfirmWindow();
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                        confirmWindow.Show(msg);
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                            if (confirmWindow.Yes) {
-                                this.ConfirmWindowYesButton();
-                            }
-                        });
+                                if (confirmWindow.Yes) {
+                                    this.ConfirmWindowYesButton();
+                                }
+                            });
+                        }
                         this.closeWindow = false;
 
 
@@ -652,22 +667,25 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
                     if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
 
-
                         SessionLocator.CurrentSession.StopBusyIndicator();
+                        if (this._IsNoIncotermCheck == "Y") {
+                            this.ConfirmWindowYesButton();
+                        }
+                        else {
+                            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                            confirmWindow.Show(msg);
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                        var confirmWindow = new ConfirmWindow();
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                        confirmWindow.Show(msg);
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
+                                if (confirmWindow.Yes) {
+                                    this.ConfirmWindowYesButton();
+                                }
+                            });
+                            this.closeWindow = false;
+                        }
 
-                            if (confirmWindow.Yes) {
-                                this.ConfirmWindowYesButton();
-                            }
-                        });
-
-                        this.closeWindow = false;
                     }
                     else {
                         this.closeWindow = false;
@@ -846,20 +864,23 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
                     SessionLocator.CurrentSession.StopBusyIndicator();
+                    if (this._IsNoIncotermCheck == "Y") {
+                        this.ConfirmWindowYesButton();
+                    }
+                    else {
+                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                        confirmWindow.Show(msg);
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                    confirmWindow.Show(msg);
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                        if (confirmWindow.Yes) {
-                            this.ConfirmWindowYesButton();
-                        }
-                    });
-
-                    this.closeWindow = false;
+                            if (confirmWindow.Yes) {
+                                this.ConfirmWindowYesButton();
+                            }
+                        });
+                        this.closeWindow = false;
+                    }
                 }
                 else {
                     this.closeWindow = true;
@@ -873,21 +894,23 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
                     SessionLocator.CurrentSession.StopBusyIndicator();
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    if (this._IsNoIncotermCheck == "Y") {
+                        this.ConfirmWindowYesButton();
+                    }
+                    else {
+                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                        confirmWindow.Show(msg);
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                    confirmWindow.Show(msg);
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                        if (confirmWindow.Yes) {
-                            this.ConfirmWindowYesButton();
-                        }
-                    });
-
-                    this.closeWindow = false;
+                            if (confirmWindow.Yes) {
+                                this.ConfirmWindowYesButton();
+                            }
+                        });
+                        this.closeWindow = false;
+                    }
                 }
                 else {
                     if (!this.loadingNextItems) {
@@ -1461,6 +1484,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         }
 
         // SupplierInvoiceItem
+        var emptyItems: string[] = [];
         for (let item of this.EntityPM.SupplierInvoiceItems) {
             Validator.TryValidateObject(item, "Customs.SupplierInvoiceItem", errors);
             //Validator.TryValidateObject(item, new ValidationContext(item, null, null), errors);
@@ -1469,6 +1493,26 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 itemModification.ChangeSetOp = "None";
             }
 
+            if (AppTool.IsNullOrEmpty(item.ItemDescription) && AppTool.IsNullOrEmpty(item.ClassificationCode) && AppTool.IsNullOrEmpty(item.ItemCode) && AppTool.IsNullOrEmpty(item.TradeAgreementCode) && AppTool.IsNullOrEmpty(item.InvoiceQuantity) && AppTool.IsNullOrEmpty(item.InvoiceQuantityType) && AppTool.IsNullOrEmpty(item.ItemPrice) && AppTool.IsNullOrEmpty(item.OriginCountryCode)) {
+                emptyItems.push(item.SequenceNumeric.toString());
+            }
+        }
+
+        if (emptyItems != null && emptyItems.length > 0) {
+            if (emptyItems.length == 1) {
+                var emptyMessage: string = "שים לב שורה  ";
+                emptyMessage = emptyMessage.concat(emptyItems[0] + " ריקה");
+                errors.push(emptyMessage);
+            }
+            else {
+                var emptyMessage: string = "שים לב שורות  ";
+                for (let invoiceItem of emptyItems) {
+                    emptyMessage = emptyMessage.concat(invoiceItem + ",");
+                }
+                var newStr: string = emptyMessage.substring(0, emptyMessage.length - 1);
+                emptyMessage = newStr.concat(" ריקות");
+                errors.push(emptyMessage);
+            }
         }
 
         // IncotermCode
