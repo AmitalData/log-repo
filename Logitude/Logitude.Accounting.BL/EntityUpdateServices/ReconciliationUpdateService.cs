@@ -375,6 +375,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 repoLedger.ResetDraftOpenReconciliation(entityPM.AccountId, entityPM.Tenant);
             }
 
+            // incase insert changeset: the accountCurrencyId is null, so I will fill it 
+            if(entityPM.ChangeSetOp == ChangeSetOperation.Insert && entityPM.AccountId != null)
+            {
+                FillGLAccountsFields(entityPM);
+            }
+
             // update connected ARPayment 
             ARPaymentReconciliationService arpRecoService = new ARPaymentReconciliationService(entityPM.Tenant);
             arpRecoService.UpdatePaymentOpenAmountAndStatusForReconciliaiton(entityPM);
@@ -382,6 +388,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
+        private static void FillGLAccountsFields(ReconciliationPM entityPM)
+        {
+            GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
+            GLAccountPM account = query.GetSingle(entityPM.AccountId, false, false);
+            if (account != null)
+            {
+                entityPM.AccountName = account.LocalName;
+                entityPM.AccountNumber = account.DisplayNumber;
+                entityPM.AccountCurrencyId = account.CurrencyId;
+                entityPM.CurrencyCode = account.CurrencyCode;
+                entityPM.AccountReconcileMethodCode = account.ReconcileMethodCode;
+            }
+        }
 
         protected override void Validate(ReconciliationPM entityPM)
         {
