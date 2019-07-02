@@ -1487,10 +1487,12 @@ class MaintenanceMenuItem {
                 myResult = TextCodeTranslator.TranslateTablePlural(this.item.ObjectTableName);
             }
         }
+
+        this.TranslatedName = myResult;
         if (this.Code == "MASC") {
+
             this.TranslatedName = "Scheduler";
         }
-        this.TranslatedName = myResult;
         if (AppTool.IsNullOrEmpty(this.TranslatedName)) {
             this.TranslatedName = this.Code;
         }
