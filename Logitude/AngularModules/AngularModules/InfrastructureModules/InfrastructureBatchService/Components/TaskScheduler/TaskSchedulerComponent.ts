@@ -98,8 +98,21 @@ export class TaskSchedulerComponent implements OnInit  {
             this.FixedItemsSource.push(new TaskSchedulerItemClass(item, this));
         });
 
-       
+        if (this.filterTypeCode) {
+
+            if (this.filterTypeCode == "AL") {
+                this.ItemsSource = this.FixedItemsSource;
+            }
+            else if (this.filterTypeCode == "IN") {
+                this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == true);
+            }
+            else {
+                this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);;
+            }
+        }
+        else {
             this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);
+        }
         
 
         this.CurrentSession.StopBusyIndicator();
