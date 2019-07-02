@@ -73,7 +73,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             courierMasterMamanModel.SystemDate = String.Format("{0:yyMMdd}", DateTime.Now);
             courierMasterMamanModel.Forwarder = forwarder;
             courierMasterMamanModel.Internet = " ";
-            courierMasterMamanModel.HAWB = _CourierMasterPM.HAWB != null ? _CourierMasterPM.HAWB : "";
+            if (!string.IsNullOrEmpty(_CourierMasterPM.HAWB))
+            {
+                courierMasterMamanModel.HAWB = new String(_CourierMasterPM.HAWB.Where(Char.IsDigit).ToArray());
+            }
 
             StringBuilder messageToMaman = new StringBuilder(444);
             messageToMaman.Append(courierMasterMamanModel.MAWB.PadLeft(8,'0'));
