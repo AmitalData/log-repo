@@ -107,7 +107,7 @@ namespace WebFreight.Web.Security
                 string email = HttpContext.Current.User.Identity.Name;
 
                 if (HttpContext.Current.Items!=null)
-                {
+                { 
                     string val = HttpContext.Current.Items["Session"] as string;
                     if (val == "SessionExpiration")
                     {

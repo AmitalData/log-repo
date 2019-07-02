@@ -293,7 +293,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
 
 
         //check rowscount
-        if (this.IsMultiline) {
+        // if (this.IsMultiline) { // commented due single line expand window
             setTimeout(() => {
 
                 if (this.RowsCount) {
@@ -312,7 +312,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                 }
 
             }, 100);
-        }
+        // }
 
     }
 
@@ -1716,6 +1716,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
         // windowArgs.ObjectTableName = this.ObjectTableName;
         // windowArgs.ObjectFieldName = this.ObjectFieldName;
         windowArgs.TextValue = this.TextValue;
+        windowArgs.RowsCount = this.RowsCount;
 
         var wind = new LogitudeWindow();
         // wind.IsFullScreen = true;

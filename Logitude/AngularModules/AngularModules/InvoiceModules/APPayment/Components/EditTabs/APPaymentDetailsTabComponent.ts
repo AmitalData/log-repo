@@ -105,7 +105,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (!this.IsSplitComponentOpened) {
             this.AutomaticPaymentCheque=!this.isRTL;
             this.PaymentChequeActivated = !this.isRTL;
-            this.SplitTooltip = TextCodeTranslator.Translate("Accounting.General.O.PaymentChequeAutomaticOption");
+            this.SplitTooltip = this.isRTL ? TextCodeTranslator.Translate("Accounting.General.O.PaymentChequeAutomaticOption") : "";
             if (AppTool.IsNullOrEmpty(this.ChequeOrPaymentRef)) {
                 this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, this.isRTL);
             }
@@ -113,7 +113,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         else {
             this.PaymentChequeActivated = this.isRTL;
             this.AutomaticPaymentCheque = this.isRTL;
-            this.SplitTooltip = "";
+            this.SplitTooltip = this.isRTL ? "" : TextCodeTranslator.Translate("Accounting.General.O.PaymentChequeAutomaticOption") ;
             this.UIProperties.SetRequired("ChequeOrPaymentRef", this.ObjectTableName, !this.isRTL);
             this.ChequeOrPaymentRef = null;
         }

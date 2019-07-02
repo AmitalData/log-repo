@@ -32,7 +32,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     public TariffsLinesSource: ObservableCollection;
     public DeletedTariffsLines: TariffLineData [] = [];
     public DataContext = this;
-    private EntityArgs: EntityArgs;
     public IsResourcesReady: boolean = false;
     private TariffDomainService: TariffDomainService;
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
@@ -42,12 +41,41 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsFirstDraft = false;
-
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;       
-        this.EntityArgs = entityArgs;
         this.Listen();        
+    }
+
+    Intialize(args: any) {
+        this.TariffsLinesSource = new ObservableCollection([]);
+        this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
+        this.TariffDomainService = new TariffDomainService();
+
+        this.CurrentVersion = args['CurrentVersion'];
+
+        if (this.CurrentVersion != null) {
+            this.IsDraftVersion = this.CurrentVersion.IsDraft;
+        }
+
+        if (this.IsDraftVersion) {
+            this.IsComparToChecked = true;
+        }
+
+        this.LoadCompareToVersions();
+
+        this.SetUIProperties();
+        this.SetStepsLabelsAndVisibility();
+
+        if (this.CurrentVersion.IsDraft) {
+            this.FillTariffLines(this.CurrentVersion.TariffLines);
+        }
+
+        else {
+            this.LoadTariffLines("currentVersion");
+        }
+
+        this.GetTariffSettings();
     }
 
     private GetTariffSettings() {
@@ -102,37 +130,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
     
-    Intialize(args: any) {
-        this.TariffsLinesSource = new ObservableCollection([]);
-        this.EntityPM = this.EntityArgs.EntityPM;
-        this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
-        this.TariffDomainService = new TariffDomainService();
-
-        this.CurrentVersion = args['CurrentVersion'];
-
-        if (this.CurrentVersion != null) {
-            this.IsDraftVersion = this.CurrentVersion.IsDraft;
-        }
-
-        if (this.IsDraftVersion) {
-            this.IsComparToChecked = true;
-        }
-
-        this.LoadCompareToVersions();
-
-        this.SetUIProperties();
-        this.SetStepsLabelsAndVisibility();
-
-        if (this.CurrentVersion.IsDraft) {
-            this.FillTariffLines(this.CurrentVersion.TariffLines);
-        }
-
-        else {
-            this.LoadTariffLines("currentVersion");
-        }
-
-        this.GetTariffSettings();
-    }
 
     private loadedTariffLines: TariffLinePM[];
     private compareTariffLines: TariffLinePM[];
