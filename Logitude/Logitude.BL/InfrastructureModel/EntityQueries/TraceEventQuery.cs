@@ -136,7 +136,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    };
 
 
-
+            List<TraceEventPM> list = traceEvents.ToList();
             return traceEvents;
         }
 

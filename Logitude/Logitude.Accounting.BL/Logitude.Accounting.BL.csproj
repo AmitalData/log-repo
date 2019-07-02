@@ -158,6 +158,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportLineTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TaxReportStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VatReportStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\WithholdingTaxDeductionTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AccountingEntityStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ARPaymentChequeStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AutomaticReconcileStruct.Generated.cs" />

@@ -986,6 +986,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? gLAccounterCounterLength ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? GLAccounterCounterLength  
+	   {
+	    
+	     get
+		{
+		   return gLAccounterCounterLength;
+		 }
+		 set
+		 {
+		   if(gLAccounterCounterLength != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccounterCounterLength",OldValue=gLAccounterCounterLength,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   gLAccounterCounterLength=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

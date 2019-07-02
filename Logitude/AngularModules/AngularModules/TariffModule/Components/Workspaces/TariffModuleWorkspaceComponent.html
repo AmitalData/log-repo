@@ -127,12 +127,20 @@
                             <div>Tariffs Generator</div>
                             <div>
                                 <p class="QueryLink" (click)="GenerateTariffsClicked()">Generate</p>
-
                             </div>
-                           
+                            <div>
+                                <input class="QueryLink" style="display: none;float:left;background-color:white"
+                                       type="file" (change)="GenerateExcelTariffsClicked($event)"
+                                       (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
+                                       #fileInput>
+                                <a href="#" style="text-decoration:none;float:left;background-color:white">
+                                    <button style="background-color:white" (click)="fileInput.click()">Generate From Excel</button>
+                                </a>
+                            </div>
                         </div>
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         <div class="QueriesSection">
@@ -142,14 +150,13 @@
                             <div>
                                 <p class="QueryLink" (click)="CheckAirfreightCost()">Price Check</p>
                             </div>
-                            </div>
+                        </div>
                     </td>
-                    <td>
-
-                    </td>
+                    <td></td>
                 </tr>
+
+
             </table>
-           
 
         </td>
     </tr>

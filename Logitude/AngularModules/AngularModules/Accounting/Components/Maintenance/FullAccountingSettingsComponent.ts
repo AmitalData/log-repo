@@ -131,12 +131,12 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
             this.SetUIProperties();
         }
     }
-    
+
     get IsPaymentChequesActivated() { return this.EntityPM.IsPaymentChequesActivated; }
     set IsPaymentChequesActivated(value: boolean) {
         if (this.EntityPM.IsPaymentChequesActivated != value) {
             this.EntityPM.IsPaymentChequesActivated = value;
-            
+
             this.SetUIProperties();
         }
     }
@@ -145,6 +145,14 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     set DeductionFileNumber(value: string) {
         if (this.EntityPM.DeductionFileNumber != value) {
             this.EntityPM.DeductionFileNumber = value;
+        }
+    }
+
+
+    get GLAccounterCounterLength() { return this.EntityPM.GLAccounterCounterLength; }
+    set GLAccounterCounterLength(value: number) {
+        if (this.EntityPM.GLAccounterCounterLength != value) {
+            this.EntityPM.GLAccounterCounterLength = value;
         }
     }
 

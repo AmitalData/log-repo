@@ -631,6 +631,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     }
     public class LedgerTransactionBalanceResponse : LedgerTransactionBalanceFilterCallBack
     {
+        public List<string> YearTransferLedgerTransactionIds;
+
         //[XmlIgnore]
         public List<LedgerTransactionList> MyLedgerTransactionList { get; set; }
 
@@ -656,7 +658,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public int? TotalRowCount { get; set; }
         public List<string> AllIdAccounts { get; set; }
         public DateTime? MaxCreateAt { get; set; }
-        
+        public List<string> YearTransferLedgerTransactionIds { get; set; }
     }
 
 

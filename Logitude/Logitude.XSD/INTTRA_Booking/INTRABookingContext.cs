@@ -786,14 +786,13 @@ namespace Logitude.XSD.INTTRA_Booking
                 }
             }
 
-
             foreach (var item in groupedOrders)
             {
                 INTTRA_Booking.EquipmentDetailsType itemDetails = new INTTRA_Booking.EquipmentDetailsType()
                 {
                     EquipmentType = new EquipmentTypeType()
                     {
-                        EquipmentTypeCode = this.AllPackageTypes.Where(a=>a.Id == item.PackageTypeId).Select(d=>d.Code).FirstOrDefault(),
+                        EquipmentTypeCode = computingPartnerHelper.GetComputingPartnerCodeTranslation( this.AllPackageTypes.Where(a=>a.Id == item.PackageTypeId).Select(d=>d.Code).FirstOrDefault(), "G-INTTRA", "PackageType"),
                     },
                     NumberOfEquipment = item.Quantity+ "",
                     ImportExportHaulage = new ImportExportHaulageType()
