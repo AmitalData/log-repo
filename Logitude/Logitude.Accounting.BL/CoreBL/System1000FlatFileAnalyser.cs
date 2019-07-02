@@ -170,7 +170,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                    GLAccountWithholdingTaxPM newLine = CreateNewLineFromDTO(vendorLineDTO, oneVendor); 
+                    GLAccountWithholdingTaxPM newLine = CreateNewLineFromDTO(vendorLineDTO, oneVendor);
+                    newLine.CurrentContextTag = GLAccountWithholdingTaxUpdateService.RaiseEventAWNCConst;
                     newLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                     gLAccountPM.GLAccountWithholdingTaxes.Add(newLine);
                     gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;

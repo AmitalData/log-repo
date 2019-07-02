@@ -31,13 +31,14 @@ export class WithholdingTaxDeductionTypeListService {
     }
 
     getSingle(id: string) {
-	   
+	    var callTime = new Date();
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
-        return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, { headers: authHeader }).map(response => {
 
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, {
+                headers: authHeader
+            }).map(response => {
                 var list = response.json();
                     
                 var entity: WithholdingTaxDeductionTypeList;
@@ -45,54 +46,60 @@ export class WithholdingTaxDeductionTypeListService {
 				{
                    entity = this.MapJsonToEntityList(list);
                 }   
-
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
                 serviceResponse.Result = entity;  
 				serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
+			    var servertime = response.headers.get('ServerExecutionTime');
                 PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WithholdingTaxDeductionType", "GetSingleList", 'id=' + id); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        });
+        }
+
+        );
     }
 
     getAll() {
-        
+
+	   var callTime = new Date();
 	   var authHeader = new Headers();
        authHeader.append('Token', SessionInfo.Token);
-        var callTime = new Date();
        return Observable.defer(() => {
-            return this._http.get(this._apiUrl+'/getall', { headers: authHeader }).map(response => {
+            return this._http.get(this._apiUrl+'/getall', {
+                headers: authHeader
+            }).map(response => {
 
               var allLists = response.json();
               var _mappedListsArray: Array< WithholdingTaxDeductionTypeList> = [];
 		      if(allLists)
 			  {
-				for (var key in  allLists) {				
+				for (var key in  allLists) {
+				
 				   var entity: WithholdingTaxDeductionTypeList;
                    entity = this.MapJsonToEntityList(allLists[key]);
 				   _mappedListsArray.push(entity);
+
 				 }
                }
-
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse(); 
-                serviceResponse.Result = _mappedListsArray;
+                serviceResponse.Result = _mappedListsArray;  
 				serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WithholdingTaxDeductionType", "GetAllLists", ""); 
+			    var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WithholdingTaxDeductionType", "GetAll", ""); 
 
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
-        });
+        }
+
+        );
     }
+
 	
     getByFilters(filters: ApiQueryFilters) {
 
-        var callTime = new Date();
-		                        
+	   var callTime = new Date();       
         var urlparameters = '/getbyfilters?';
         var mykeys = Object.keys(filters);
         var addtionalFiltersValues = null;
@@ -144,16 +151,145 @@ export class WithholdingTaxDeductionTypeListService {
 				 }
                 }   
 
-                serviceResponse.Result = _mappedListsArray;       
-				serviceResponse.CallTime = callTime;
-                var servertime = response.headers.get('ServerExecutionTime');
-                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WithholdingTaxDeductionType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
-				           
+                serviceResponse.Result = _mappedListsArray;      
+		        serviceResponse.CallTime = callTime;
+			    var servertime = response.headers.get('ServerExecutionTime');
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "WithholdingTaxDeductionType", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                 				
+				            
                 return serviceResponse;
             }).catch(ServiceHelper.HandleServiceError);
         });        
     }
 
+    getSingleFromCache(id: string) {
+
+	   var callTime = new Date(); 	    
+		 if (!SessionLocator.UseCachedData) {
+            return this.getSingle(id);
+        }
+
+        var serviceResponse: ServiceResponse;
+        serviceResponse = new ServiceResponse();
+
+        if (WithholdingTaxDeductionTypeListService.CachedData.length > 0) {
+
+            return Observable.defer(() => {
+
+                var filteredData = WithholdingTaxDeductionTypeListService.CachedData.filter(a => a.Id === id)[0];
+				serviceResponse.CallTime = callTime;
+				serviceResponse.Result = filteredData; 
+                return Observable.of(serviceResponse);
+
+            });
+        }
+        else {
+
+            return CachedDataManager.GetClosedTableData("WithholdingTaxDeductionType").map(cachedJson=> {
+
+                var _mappedListsArray: Array<WithholdingTaxDeductionTypeList> = [];
+                if (cachedJson) {
+                    for (var key in cachedJson) {
+
+                        var entity: WithholdingTaxDeductionTypeList;
+                        entity = this.MapJsonToEntityList(cachedJson[key]);
+                        _mappedListsArray.push(entity);
+
+                    }
+                }
+
+                WithholdingTaxDeductionTypeListService.CachedData = _mappedListsArray;
+
+                var filteredData = WithholdingTaxDeductionTypeListService.CachedData.filter(a => a.Id === id)[0];
+				serviceResponse.Result = filteredData; 
+				serviceResponse.CallTime = callTime;
+			     
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "WithholdingTaxDeductionType", "GetSingleListFromCache", 'id=' + id); 
+
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+
+        }
+
+    }
+
+    getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
+
+	     var callTime = new Date(); 	           
+		 if (!SessionLocator.UseCachedData) {
+            return this.getByFilters(filters);
+        }
+
+        var mykeys = Object.keys(filters);
+        var addtionalFiltersValues = null;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = filters[propName];
+            if (propName == "AdditionalFilters" && propValue.length > 0)
+                addtionalFiltersValues = JSON.stringify(propValue);
+        }
+
+        var serviceResponse: ServiceResponse;
+        serviceResponse = new ServiceResponse();
+
+        if (WithholdingTaxDeductionTypeListService.CachedData.length > 0) {
+
+            return Observable.defer(() => {
+                if(filters.GetAll)
+				{
+					serviceResponse.Result = WithholdingTaxDeductionTypeListService.CachedData; 
+				}
+				else
+				{
+					var filteredData = InfraGenericFilter.GetFilteredArray(WithholdingTaxDeductionTypeListService.CachedData, filters);
+					serviceResponse.Result = filteredData; 
+					serviceResponse.CallTime = callTime;
+				}
+                return Observable.of(serviceResponse);
+
+            });
+        }
+        else {
+
+            return CachedDataManager.GetClosedTableData("WithholdingTaxDeductionType").map(cachedJson=> {
+
+                var _mappedListsArray: Array<WithholdingTaxDeductionTypeList> = [];
+                if (cachedJson) {
+                    for (var key in cachedJson) {
+
+                        var entity: WithholdingTaxDeductionTypeList;
+                        entity = this.MapJsonToEntityList(cachedJson[key]);
+                        _mappedListsArray.push(entity);
+
+                    }
+                }
+
+
+
+                WithholdingTaxDeductionTypeListService.CachedData = _mappedListsArray;
+                if(filters.GetAll)
+				{
+					serviceResponse.Result = _mappedListsArray; 
+				}
+				else
+				{
+							
+					_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
+
+							      
+			   
+                PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "WithholdingTaxDeductionType", "GetAllFromCache", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+                 	
+					serviceResponse.Result = _mappedListsArray; 
+					serviceResponse.CallTime = callTime;
+				}
+                return serviceResponse;
+
+            }).catch(ServiceHelper.HandleServiceError);
+
+        }		 
+    }
 	
 	    MapJsonToEntityList(jsonList: any) {
        

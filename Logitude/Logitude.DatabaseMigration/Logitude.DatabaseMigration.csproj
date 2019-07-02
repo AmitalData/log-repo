@@ -1197,6 +1197,10 @@
     <Compile Include="Migrations\201907010924063_NewField_FullAccountingSetting_GLAccountCounterLength.Designer.cs">
       <DependentUpon>201907010924063_NewField_FullAccountingSetting_GLAccountCounterLength.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.cs" />
+    <Compile Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.Designer.cs">
+      <DependentUpon>201907010918213_WithholdingTaxDeductionTypeMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2036,6 +2040,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907010924063_NewField_FullAccountingSetting_GLAccountCounterLength.resx">
       <DependentUpon>201907010924063_NewField_FullAccountingSetting_GLAccountCounterLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.resx">
+      <DependentUpon>201907010918213_WithholdingTaxDeductionTypeMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
