@@ -42,7 +42,7 @@ export class NewCustomer{
       this.Helper.WaitWindowClosed();
       this.Helper.WaitByIdAndClick('Customer.TH.Accounting');
       this.Helper.WaitByIdAndClick('Activate');
-      this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'cus');
+      this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'cust');
       this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
       this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
       //this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name+DisplayNumber);
