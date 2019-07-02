@@ -2294,10 +2294,12 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     //somthing changed, amount or currency
                     //ask user to change it
                     var confirm = new ConfirmWindow;
-                    commissionMsgText = commissionMsgText.concat("\n" + "האם לעדכן נתונים?");
-                    confirm.Width = 300;
+                    var commissionFullMessage: string = "נתוני ההתאמות וההפחתות השתנו:";
+                    commissionMsgText = commissionMsgText.concat("\n" + "האם לאשר את עדכון הסכומים?");
+                    commissionFullMessage = commissionFullMessage.concat(commissionMsgText);
+                    confirm.Width = 350;
                     confirm.Height = 200;
-                    confirm.Show(commissionMsgText);
+                    confirm.Show(commissionFullMessage);
                     confirm.WindowClosed.subscribe((event: any) => {
                         if (confirm.Yes) {
                             //update records
