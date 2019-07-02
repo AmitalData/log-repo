@@ -302,9 +302,9 @@ export class TaskSchedulerComponent implements OnInit  {
        
         filters = new ApiQueryFilters();
         //filters.SortBy = "StatusDate";
-        //filters.SortDirection = "Descending";
+     // filters.SortDirection = "Desc";
         //sortingCol = "StartDateTime";
-        sortingDir = "descending"; 
+        sortingDir = "desc"; 
         if (!this.SelectedRow) {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
                 filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");

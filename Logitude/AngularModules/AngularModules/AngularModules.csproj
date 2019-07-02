@@ -263,6 +263,7 @@
     <Content Include="CRMModules\CRMActivity\Components\NewEntity\NewTaskComponent.html" />
     <Content Include="Customs\Components\ListTemplates\EndDateComponent.html" />
     <Content Include="Customs\Components\ListTemplates\SupplierInvoiceItemListTemplate.html" />
+    <Content Include="Images\Error.png" />
     <Content Include="Images\ArrowLeft.png" />
     <Content Include="Images\ArrowRight.png" />
     <Content Include="Images\arrow_right_w.png" />
