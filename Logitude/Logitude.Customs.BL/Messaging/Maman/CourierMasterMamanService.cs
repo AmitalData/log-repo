@@ -50,7 +50,10 @@ namespace Logitude.Customs.BL.Messaging.Maman
             //string space = " ";
             courierMasterMamanModel.MAWB = _CourierMasterPM.MAWB != null ? _CourierMasterPM.MAWB : "";
             courierMasterMamanModel.AirlineId = _CourierMasterPM.AirlinePrefix != null ? _CourierMasterPM.AirlinePrefix : "";
-            courierMasterMamanModel.HAWBShort = _CourierMasterPM.ShortHAWB != null ? _CourierMasterPM.ShortHAWB : "";
+            if (!string.IsNullOrEmpty(_CourierMasterPM.ShortHAWB))
+            {
+                courierMasterMamanModel.HAWBShort = new String(_CourierMasterPM.ShortHAWB.Where(Char.IsDigit).ToArray());
+            }
             courierMasterMamanModel.GatewayPortCode = _CourierMasterPM.GatewayPortCode != null ? _CourierMasterPM.GatewayPortCode.Substring(_CourierMasterPM.GatewayPortCode.Length - 3) : "";
             courierMasterMamanModel.Weight = "K";
             courierMasterMamanModel.PackageQuantity = _CourierMasterPM.PackageQuantity > 0 && _CourierMasterPM.PackageQuantity.ToString().Length <= 4 ? _CourierMasterPM.PackageQuantity.ToString() : "";
@@ -73,10 +76,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             courierMasterMamanModel.SystemDate = String.Format("{0:yyMMdd}", DateTime.Now);
             courierMasterMamanModel.Forwarder = forwarder;
             courierMasterMamanModel.Internet = " ";
-            if (!string.IsNullOrEmpty(_CourierMasterPM.HAWB))
-            {
-                courierMasterMamanModel.HAWB = new String(_CourierMasterPM.HAWB.Where(Char.IsDigit).ToArray());
-            }
+            courierMasterMamanModel.HAWB = _CourierMasterPM.HAWB != null ? _CourierMasterPM.HAWB : "";
 
             StringBuilder messageToMaman = new StringBuilder(444);
             messageToMaman.Append(courierMasterMamanModel.MAWB.PadLeft(8,'0'));
