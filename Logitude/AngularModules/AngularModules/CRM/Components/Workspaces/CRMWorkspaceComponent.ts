@@ -219,6 +219,7 @@ export class CRMWorkspaceComponent {
             case "OPP": { myResult = "Opportunities"; break; }
             case "CON": { myResult = TextCodeTranslator.Translate("General.MH.Contacts"); break; }
             case "DAS": { myResult = "Dashboard"; break; }
+            case "OCC": { myResult = "Occasion"; break; }
         }
 
         return myResult;

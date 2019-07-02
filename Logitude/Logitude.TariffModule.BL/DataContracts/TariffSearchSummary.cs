@@ -18,6 +18,7 @@ namespace Logitude.TariffModule.BL.DataContracts
         public string ImageId { get; set; }
         public decimal? decimalprice { get; set; }
         public string Currency { get; set; }
+        public string VersionId { get; set; }
 
 
     }

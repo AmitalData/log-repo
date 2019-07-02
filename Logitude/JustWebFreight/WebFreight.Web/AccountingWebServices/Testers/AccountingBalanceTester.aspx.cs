@@ -180,7 +180,12 @@ namespace WebFreight.Web.AccountingWebServices.Testers
 
                 var ac = new AccountBalanceByDateCodeService(null, param.Tenant, param.GLAccountId, null);
                 ac.ReSetAccountList(param.IncludeChildAccounts, param.IncludeRelatedCurrenciesAccount);
-                ac.CalculateBalance(GLAccountTotalDateTypeValues.Accountingdate, param.accoutingDate, param.includeAccoutingDateLTransaction, param.verbose);
+                
+                ac.CalculateBalance(param.OpenBalancePlease_ReCalcYearTransfer,  GLAccountTotalDateTypeValues.Accountingdate, param.accoutingDate,
+                    
+                    param.includeAccoutingDateLTransaction,
+                    
+                    param.verbose);
                 var SerializeObjectByte = LogitudeXmlSerializer.SerializeObject<List<CurrencySum>>(ac.AccountBalance.Totals);
                 //ac.AccountBalance.Totals
 
@@ -848,6 +853,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 HaveAccountingQueued = ledgerTransactionBalanceService.Response.HaveAccountingQueued,
                 StartBalanceLocal = ledgerTransactionBalanceService.Response.StartBalanceLocal,
                 TotalRowCount = ledgerTransactionBalanceService.Response.TotalRowCount,
+                YearTransferLedgerTransactionIds = ledgerTransactionBalanceService.Response.YearTransferLedgerTransactionIds,
                 SearchFields = ledgerTransactionBalanceService.Response.SearchFields,
                 OmitAllBalance = ledgerTransactionBalanceService.Response.OmitAllBalance,
                 //BeginOfYearLocalAmountBalance = ledgerTransactionBalanceService.Response.BeginOfYearLocalAmountBalance,

@@ -314,12 +314,7 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                             extDocPM.SignersList = signersList;
                             extDocPM.SignRequestByUserEmail = null;
                             //extDocPM.DontAddToQueue = true;
-                            if (extDocPM.IsSharedWithCustomer == true)
-                            {
-                                extDocPM.DontAddToQueue = false;
-                                //sextDocPM.IsSharedWithForwarder = true;
-                                //extDocPM.ForwarderDocumentId = null;
-                            }
+                            
                             if (extDocPM.IsSharedWithForwarder == true)
                             {
                                 var DocsEntity = ShipmentRepo.GetSingleShipment(extDocPM.EntityId, extDocPM.Tenant);
@@ -337,6 +332,12 @@ namespace WebFreight.Web.App_Code.LogBoxSignTool
                             else
                             {
                                 extDocPM.DontAddToQueue = true;
+                            }
+                            if (extDocPM.IsSharedWithCustomer == true)
+                            {
+                                extDocPM.DontAddToQueue = false;
+                                //sextDocPM.IsSharedWithForwarder = true;
+                                //extDocPM.ForwarderDocumentId = null;
                             }
                             Service.Update(extDocPM, false);
 

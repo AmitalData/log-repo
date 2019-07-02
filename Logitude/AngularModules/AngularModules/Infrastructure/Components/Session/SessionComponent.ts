@@ -31,6 +31,7 @@ export class SessionComponent {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @Output() SessionEvent: EventEmitter<any> = new EventEmitter();
     @Output() SessionInitialize: EventEmitter<any> = new EventEmitter();
+    @Output() SessionSeleced: EventEmitter<boolean> = new EventEmitter();
     public MainMenuComponent: MainMenuComponent;
     entityResourceService: EntityResourceService = new EntityResourceService();
     constructor(private temp: PubSubFiltersChangeEventService, public ChangeDetectorRef: ChangeDetectorRef) {

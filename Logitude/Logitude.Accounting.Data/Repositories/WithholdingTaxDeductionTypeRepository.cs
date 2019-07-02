@@ -36,7 +36,12 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).FirstOrDefault();
         }
 
-
+        public List<WithholdingTaxDeductionType> GetAll()
+        {
+            return (from a in context.WithholdingTaxDeductionTypes
+                    
+                    select a).ToList();
+        }
 
     }
 
