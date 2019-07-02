@@ -25,6 +25,8 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.BL;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 {
@@ -4108,33 +4110,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         public void FillWithholdingTaxDeductionTypes()
         {
 
-            WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository = new WithholdingTaxDeductionTypeRepository(0);
-            Dictionary<string, WithholdingTaxDeductionType> TenantWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
+          
+                var repo = new WithholdingTaxDeductionTypeRepository(0);
+                var dic = repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
+                new FillCloseTables().FillCloseTable<
+                                    WithholdingTaxDeductionType,
+                                    WithholdingTaxDeductionTypeDetails,
+                                    WithholdingTaxDeductionTypeRepository>(repo, dic);
+            
 
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "01", EnglishName = "Interest", LocalName = "ריבית", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "02", EnglishName = "Insurance Commision", LocalName = "עמלת ביטוח", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository = new WithholdingTaxDeductionTypeRepository(0);
+            //Dictionary<string, WithholdingTaxDeductionType> TenantWithholdingTaxDeductionTypes = withholdingTaxDeductionTypeRepository.GetAll(0).ToDictionary(d => d.Code, a => a);
 
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "03", EnglishName = "Wage", LocalName = "שכר", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "01", EnglishName = "Interest", LocalName = "ריבית", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "02", EnglishName = "Insurance Commision", LocalName = "עמלת ביטוח", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
 
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "05", EnglishName = "Services", LocalName = "שירותים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "06", EnglishName = "Construction Payment", LocalName = "תשלומי בניה", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "07", EnglishName = "Payment for foreigner(Deduction by the businesss)", LocalName = "תשלום לתושב זר(נוכה ע\"י העסק)", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "08", EnglishName = "Payment for foreigner(Deduction by the bank)", LocalName = "תשלום לתושב זר(נוכה ע\"י הבנק)", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "11", EnglishName = "Illegal fund payment", LocalName = "תשלום שלא כדין מקופת גמל", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "12", EnglishName = "Refud", LocalName = "החזר תשלום למעביד מקופת גמל לפיצויים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "13", EnglishName = "", LocalName = "תשלומים בעד שכיורת מקרקעין שניתן לתבוע כהוצאה", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "14", EnglishName = "", LocalName = "תשלום מקרן השתלמות לעצמאי", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "15", EnglishName = "Payout Payment or profit derived from gambling", LocalName = "תשלומים מהשתכרות או רווח שמקורם בהימורים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "18", EnglishName = "Dividend Payment", LocalName = "תשלום דיבידנד", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "19", EnglishName = "", LocalName = "רווח הון מפדיון מניות/אופציות", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "20", EnglishName = "", LocalName = "סעיף מיוחד לביטוח לאומי", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "21", EnglishName = "", LocalName = "הכנסה מהפקת חשמל במסלול פטור", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-            AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "22", EnglishName = "", LocalName = "הכנסה מהפקת חשמל במסלול מס מופחת", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
-        
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "03", EnglishName = "Wage", LocalName = "שכר", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "05", EnglishName = "Services", LocalName = "שירותים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "06", EnglishName = "Construction Payment", LocalName = "תשלומי בניה", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "07", EnglishName = "Payment for foreigner(Deduction by the businesss)", LocalName = "תשלום לתושב זר(נוכה ע\"י העסק)", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "08", EnglishName = "Payment for foreigner(Deduction by the bank)", LocalName = "תשלום לתושב זר(נוכה ע\"י הבנק)", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "11", EnglishName = "Illegal fund payment", LocalName = "תשלום שלא כדין מקופת גמל", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "12", EnglishName = "Refud", LocalName = "החזר תשלום למעביד מקופת גמל לפיצויים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "13", EnglishName = "", LocalName = "תשלומים בעד שכיורת מקרקעין שניתן לתבוע כהוצאה", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "14", EnglishName = "", LocalName = "תשלום מקרן השתלמות לעצמאי", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "15", EnglishName = "Payout Payment or profit derived from gambling", LocalName = "תשלומים מהשתכרות או רווח שמקורם בהימורים", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "18", EnglishName = "Dividend Payment", LocalName = "תשלום דיבידנד", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "19", EnglishName = "", LocalName = "רווח הון מפדיון מניות/אופציות", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "20", EnglishName = "", LocalName = "סעיף מיוחד לביטוח לאומי", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "21", EnglishName = "", LocalName = "הכנסה מהפקת חשמל במסלול פטור", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
+            //AddClosedTables.AddWithholdingTaxDeductionType(new WithholdingTaxDeductionTypeDetails() { Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0), Code = "22", EnglishName = "", LocalName = "הכנסה מהפקת חשמל במסלול מס מופחת", Tenant = 0 }, withholdingTaxDeductionTypeRepository);
 
 
 
-            withholdingTaxDeductionTypeRepository.SubmitChanges();
+
+            //withholdingTaxDeductionTypeRepository.SubmitChanges();
 
         }
 
@@ -4143,7 +4154,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
         #endregion
 
 
-     
+
 
         public void CreateCounters(int tenant)
         {

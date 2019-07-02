@@ -2401,7 +2401,6 @@
     <Compile Include="MetaDataUpdate\DetailClasses\TaxWithholdingAssessOfficeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\WarehouseTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\UsoCFDIDetails.cs" />
-    <Compile Include="MetaDataUpdate\DetailClasses\WithholdingTaxDeductionTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\CommonDataModelUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\CommonDataModel\EntityUpdateClasses\AccountingSystemUpdateClass.cs" />
