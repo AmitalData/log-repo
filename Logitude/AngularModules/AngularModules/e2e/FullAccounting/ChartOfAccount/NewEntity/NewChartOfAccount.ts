@@ -21,12 +21,12 @@ export class NewChartOfAccount {
         this.Helper.WaitByIdAndFill('ChartOfAccount_EnglishName', Type + ChartOfAccountNo);
         this.Helper.WaitByIdAndFill('ChartOfAccount_LocalName', Type + ChartOfAccountNo);
         if (Type == 'Revenue') {
-            this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Revenue');
+            this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Reven');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
            // this.Helper.WaitBusyIndicator();
         }
         else if (Type == 'Customer') {
-            this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Customer');
+            this.Helper.WaitByIdAndFill('ChartOfAccount_TypeCode', 'Custom');
             this.Helper.WaitByCssAndClick_SelectItemFromList('.DropDownList', 0);
            // this.Helper.WaitBusyIndicator();
 
