@@ -113,12 +113,12 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 vatNumber = invoice.VatNumber;
                             }
-                            SetReferenceFields(outputreference);
+                          
                             TaxReportLinePM line = new TaxReportLinePM()
                             {
                                 VatNumber = vatNumber,
-                                Reference = reference,
-                                ReferecneGroup = referenceGroup,
+                                Reference = outputreference,
+                                ReferecneGroup = "0000",
                                 ReferenceDate = invoice.InvoiceDate,
                                 JournalId = a.Id,
                                 OutputOrInput = "O",
