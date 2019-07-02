@@ -197,7 +197,7 @@ export class ShipmentDomainService {
 
             var mappedEntity: ValidateShipmentMasterArgs = this.MapJsonToValidateShipmentMasterArgs(args, false);
 
-            return this._http.post(this._apiUrl, JSON.stringify(mappedEntity),
+            return this._http.post(this._apiUrl + "/PostValidateShipmentMasterArgs", JSON.stringify(mappedEntity),
                 { headers: authHeader }).map((res) => {
                     var myJsonResult = res.json();
                     return myJsonResult;

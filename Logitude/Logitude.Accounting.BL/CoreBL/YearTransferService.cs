@@ -316,7 +316,11 @@ namespace Logitude.Accounting.BL.CoreBL
                 );
 
             var CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1 = endOfYearUserInput.AddDays(1);
-            endAccountBalanceService.CalculateBalance(GLAccountTotalDateTypeValues.Accountingdate,CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1, false, true);
+            bool openBalancePlease_ReCalcYearTransfer = true;//yaron :irrlavant end of year
+
+            endAccountBalanceService.CalculateBalance(
+openBalancePlease_ReCalcYearTransfer, 
+GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1, false, true);
 
             var totals = (from rec in endAccountBalanceService.AccountBalance.verbose.CurrencySumUntillMounth.Union(endAccountBalanceService.AccountBalance.verbose.TheMounthCurrencySum)
                           group rec by new

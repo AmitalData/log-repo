@@ -37,21 +37,69 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     public ObjectTableName: string = "Tariff";
     public TariffsLinesSource: ObservableCollection;
     public DataContext = this;
-    private EntityArgs: EntityArgs;
     public IsResourcesReady: boolean = false;
     private TariffDomainService: TariffDomainService;
     private DocumentExtendedService: DocumentsFilingExtendedPMService;
     public IsApproveVersionButtonVisible: boolean = false;
     public IsDraftVersion: boolean = true;
-    public IsCompareEnabled: boolean = false;
     public CurrentVersion: TariffVersionPM;
+    private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsUpdateSurchargesButtonVisible: boolean = false;
+    public IsFirstDraft: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
-        this.EntityArgs = entityArgs;
         this.Listen();
+    }
+
+    public AllChargesTypes: ChargesTypeList[];
+    public AllMeasurements: MeasurementList[];
+    Intialize(args: any) {
+        this.TariffsLinesSource = new ObservableCollection([]);
+        this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
+        this.TariffDomainService = new TariffDomainService();
+
+        this.CurrentVersion = args['CurrentVersion'];
+
+        if (this.CurrentVersion != null) {
+            this.IsDraftVersion = this.CurrentVersion.IsDraft;
+        }
+
+        if (this.IsDraftVersion) {
+            this.IsComparToChecked = true;
+        }
+
+        this.GetTariffSettings();
+
+
+        var iChargesTypeListService = new ChargesTypeListService();
+        var iMeasurementListService = new MeasurementListService();
+
+        iChargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllChargesTypes = myResponse.Result;
+
+                iMeasurementListService.getAllFromCache().subscribe((myResponse2: ServiceResponse) => {
+                    if (!myResponse2.HasError) {
+                        this.AllMeasurements = myResponse2.Result;
+
+                        this.LoadCompareToVersions();
+
+                        this.SetUIProperties();
+                        this.SetSurchargesLabelsAndVisibility();
+
+                        if (this.CurrentVersion.IsDraft) {
+                            this.FillTariffLines(this.CurrentVersion.TariffLines);
+                        }
+
+                        else {
+                            this.LoadTariffLines("currentVersion");
+                        }
+                    }
+                });
+            }
+        });
     }
 
     private SaveCompletedEvent: any = null;
@@ -100,55 +148,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
 
-    public AllChargesTypes: ChargesTypeList[];
-    public AllMeasurements: MeasurementList[];
-    Intialize(args: any) {
-        this.TariffsLinesSource = new ObservableCollection([]);
-        this.EntityPM = this.EntityArgs.EntityPM;
-        this.DocumentExtendedService = new DocumentsFilingExtendedPMService();
-        this.TariffDomainService = new TariffDomainService();
 
-        this.CurrentVersion = args['CurrentVersion'];
-
-        if (this.CurrentVersion != null) {
-            this.IsDraftVersion = this.CurrentVersion.IsDraft;
-        }
-
-        if (this.IsDraftVersion) {
-            this.IsComparToChecked = true;
-        }
-
-        this.GetTariffSettings();
-
-
-        var iChargesTypeListService = new ChargesTypeListService();
-        var iMeasurementListService = new MeasurementListService();
-
-        iChargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                this.AllChargesTypes = myResponse.Result;
-
-                iMeasurementListService.getAllFromCache().subscribe((myResponse2: ServiceResponse) => {
-                    if (!myResponse2.HasError) {
-                        this.AllMeasurements = myResponse2.Result;
-
-                        this.LoadCompareToVersions();
-
-                        this.SetUIProperties();
-                        this.SetSurchargesLabelsAndVisibility();
-
-                        if (this.CurrentVersion.IsDraft) {
-                            this.FillTariffLines(this.CurrentVersion.TariffLines);
-                        }
-
-                        else {
-                            this.LoadTariffLines("currentVersion");
-                        }
-                    }
-                });
-            }
-        });
-    }
 
     private GetTariffSettings() {
         this.TariffDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
@@ -373,6 +373,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
     set IsComparToChecked(value: boolean) {
         if (this.isComparToChecked != value) {
             this.isComparToChecked = value;
+            this.UIProperties.SetEnabled("WarningPercentage", null, value);
             this.ComparingCalculations(false);
         }
     }
@@ -396,6 +397,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             this.ComparedToVersionPM = this.compareToVersions.filter(d => d.Version == this.SelectedVersion.Version)[0];
             this.ComparingCalculations(true);
         }
+
     }
 
     private compareToVersions: TariffVersionPM[];
@@ -416,27 +418,32 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         var datePipe: DatePipe = new DatePipe("en-US");
 
         this.compareToVersions.filter(a => a.Version != this.CurrentVersion.Version).forEach(item => {
-            var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-            var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+
             var newVersion: VersionClass = new VersionClass();
             newVersion.Version = item.Version;
             newVersion.ParentVersionNumber = item.ParentVersionNumber;
-            newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
             newVersion.Id = item.TariffId;
+
+            if (this.EntityPM.TypeCode == "ASC") {
+                newVersion.Name = "Version " + item.Version;
+            }
+
+            else {
+                var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
+                var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
+                newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
+            }
+
             this.VersionsList.push(newVersion);
+
         });
 
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
-
-        if (this.SelectedVersion == null) {
+        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsComparToChecked);
+        if (this.VersionsList == null || (this.VersionsList != null && this.VersionsList.length == 0)) {
             this.isComparToChecked = false;
-            this.IsCompareEnabled = false;
+            this.IsFirstDraft = true;
         }
-        else {
-            this.IsCompareEnabled = true;
-        }
-
-        this.UIProperties.SetEnabled("WarningPercentage", null, this.IsCompareEnabled);
     }    
 
     ComparingCalculations(load: boolean) {
@@ -518,6 +525,14 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         }
     }
     UploadExcel(file: any) {
+        this.FileName = null;
+        if (!AppTool.IsNullOrEmpty(file.name)) {
+            var name = file.name.split('.');
+            if (name.length == 2) {
+                this.FileName = name[0];
+            }
+        }
+
         if (file && file.size > 0) {
             this.DocumentExtendedService.GetFileSizeAndUnit(file.size).subscribe((response: ServiceResponse) => {
                 if (!response.HasError) {
@@ -561,7 +576,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             console.log(e);
         };
         reader.readAsArrayBuffer(file);
-       // context.EntityPM.FileUploadedName = file.Name;
+        context.EntityPM.FileUploadedName = this.FileName;
 
     }
     SendExcelToServer(filter: any) {
@@ -596,6 +611,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             tariffLine.ErrorText = item.ErrorText;
             tariffLine.Index = item.Index;
             tariffLine.Notes = item.Notes;
+            tariffLine.StartDate = item.StartDate;
+            //tariffLine.StartDateText = item.StartDateText;
 
             if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1Id)) {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
@@ -797,6 +814,13 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
         logWindow.Height = 600;
         logWindow.WindowArgs = args;
         logWindow.Title = "Tariff Surchage Update";
+
+        logWindow.WindowClosed.subscribe((s: any) => {
+            if (s == "ok") {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
+        });
+
         logWindow.Show('./TariffModule/Components/EditTabs/Tariff/UpdateSurchargesComponent');
     }
 }

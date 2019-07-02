@@ -27,6 +27,8 @@ namespace WarehouseData
         public string DWObjectTableCode { get; set; }
         public List<DWObjectFieldDB> DWObjectFieldDBLists { get; set; }
 
+        public string FieldIndexes { get; set; }
+
     }
 
     public class DWObjectFieldDB

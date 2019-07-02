@@ -98,6 +98,22 @@ export class TaskSchedulerComponent implements OnInit  {
             this.FixedItemsSource.push(new TaskSchedulerItemClass(item, this));
         });
 
+        if (this.filterTypeCode) {
+
+            if (this.filterTypeCode == "AL") {
+                this.ItemsSource = this.FixedItemsSource;
+            }
+            else if (this.filterTypeCode == "IN") {
+                this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == true);
+            }
+            else {
+                this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);;
+            }
+        }
+        else {
+            this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);
+        }
+
         this.CurrentSession.StopBusyIndicator();
     }
 
@@ -286,7 +302,9 @@ export class TaskSchedulerComponent implements OnInit  {
        
         filters = new ApiQueryFilters();
         //filters.SortBy = "StatusDate";
-        //filters.SortDirection = "Descending";
+     // filters.SortDirection = "Desc";
+        //sortingCol = "StartDateTime";
+        sortingDir = "desc"; 
         if (!this.SelectedRow) {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
                 filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
@@ -301,8 +319,6 @@ export class TaskSchedulerComponent implements OnInit  {
                 filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
             }
         }
-         
-
 
         filters.GetCount = getCount;
         filters.PageIndex = skip;
@@ -379,7 +395,7 @@ export class TaskSchedulerComponent implements OnInit  {
         this.LoadTaskHistories();
     }
 
-    private filterTypeCode: string = "AL";
+    private filterTypeCode: string = "AC";
     public get FilterTypeCode() { return this.filterTypeCode; }
     public set FilterTypeCode(value: string) {
         if (this.filterTypeCode != value) {
@@ -390,7 +406,7 @@ export class TaskSchedulerComponent implements OnInit  {
             else if (value == "IN") {
                 this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == true);
             }
-            else {
+            else{
                 this.ItemsSource = this.FixedItemsSource;
             }
         }

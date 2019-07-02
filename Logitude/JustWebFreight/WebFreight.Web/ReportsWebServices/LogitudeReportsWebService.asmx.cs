@@ -10889,6 +10889,7 @@ namespace WebFreight.Web.ReportsWebServices
                 StartBalanceForeignList = ledgerTransactionBalanceService.Response.StartBalanceForeignList,
                 StartBalanceLocal = ledgerTransactionBalanceService.Response.StartBalanceLocal,
                 TotalRowCount = ledgerTransactionBalanceService.Response.TotalRowCount,
+                YearTransferLedgerTransactionIds = ledgerTransactionBalanceService.Response.YearTransferLedgerTransactionIds,
                 SuppressCumulativeDueMultiCurrencyInPeriod = ledgerTransactionBalanceService.Response.SuppressCumulativeDueMultiCurrencyInPeriod
 
             };
@@ -13491,40 +13492,34 @@ namespace WebFreight.Web.ReportsWebServices
         private AutomationTestReportDataProvider GetAutomationTestReportDataProvider(byte[] xmlFilters, int tenant)
         {
             AutomationTestReportDataProvider automationTestReportDataProvider = new AutomationTestReportDataProvider();
-
-            bool isException = false;
-
+            
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
             QueryFilterItem filterItem_IsException = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsException").FirstOrDefault();
 
-
             if (filterItem_IsException != null)
             {
                 if (filterItem_IsException.FieldValue != null)
                 {
-                    isException = (bool)filterItem_IsException.FieldValue;
+                    automationTestReportDataProvider.IsException  = (bool)filterItem_IsException.FieldValue;
                 }
             }
 
-            if (isException)
+            if (!automationTestReportDataProvider.IsException)
             {
-                throw new Exception("Exception Test");
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+                var tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
+                if (tenantManagementPM != null)
+                {
+                    automationTestReportDataProvider.TenantName = tenantManagementPM.Name;
+                    automationTestReportDataProvider.PackageName = tenantManagementPM.PackageName;
+                    automationTestReportDataProvider.CreateDate = tenantManagementPM.CreateDate;
+                    automationTestReportDataProvider.UpdateDate = tenantManagementPM.UpdateDate;
+                    automationTestReportDataProvider.Notes = tenantManagementPM.Notes;
+                }
             }
 
-
-            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
-            var tenantManagementPM =  tenantManagementQuery.GetSinglePM(tenant);
-            if (tenantManagementPM != null)
-            {
-                automationTestReportDataProvider.TenantName = tenantManagementPM.Name;
-                automationTestReportDataProvider.PackageName = tenantManagementPM.PackageName;
-                automationTestReportDataProvider.CreateDate = tenantManagementPM.CreateDate;
-                automationTestReportDataProvider.UpdateDate = tenantManagementPM.UpdateDate;
-                automationTestReportDataProvider.Notes = tenantManagementPM.Notes;
-            }
-            
             return automationTestReportDataProvider;
         }
 

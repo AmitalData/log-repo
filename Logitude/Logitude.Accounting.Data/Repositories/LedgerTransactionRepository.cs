@@ -470,9 +470,53 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                      select record);
             return q;
         }
-        
-        
-               public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
+        public IQueryable<LedgerTransaction> GetYearTransferLedgerTransaction(string gLAccountId, int year, int tenant)
+        {
+
+            var qYearTransferJournals =
+                (from j in context.Journals
+                 where j.Tenant == tenant
+                 where j.AccountingEntityCode == "11"//yeartransfer
+                 select j
+                );
+            DateTime beginOfYear = new DateTime(year, 1, 1);
+
+            IQueryable<LedgerTransaction> qLedgerTransaction = null;
+            if (context.ToString().StartsWith("Fake"))
+            {
+                qLedgerTransaction = (from record in context.LedgerTransactions
+
+                                      where record.Tenant == tenant && record.AccountId == gLAccountId
+                                      where record.AccountingDate.Date == beginOfYear
+                                      select record
+                 );
+            }
+            else
+            {
+                qLedgerTransaction = (from record in context.LedgerTransactions
+
+                 where record.Tenant == tenant && record.AccountId == gLAccountId
+                 where EntityFunctions.TruncateTime(record.AccountingDate) == beginOfYear
+                 select record
+                 );
+
+            }
+
+            var qYeartransferLedgerTransaction =
+                (from record in qLedgerTransaction
+
+                     //context.LedgerTransactions
+                     //where record.Tenant == tenant && record.AccountId == gLAccountId
+                     //where EntityFunctions.TruncateTime(record.AccountingDate) == beginOfYear
+
+                 join j in qYearTransferJournals
+on record.JournalId equals j.Id
+
+                 select record);
+            return qYeartransferLedgerTransaction;
+        }
+
+        public List<GLAccountTotalByMonth> CalcGLAccountTotalByMonthByDateType(string DateTypeCode, DateTime fromDate, DateTime accoutingDateUntillNotInclude, int tenant, IQueryable<string> listOfAccId = null)
         {
             var fromDateOnlyDate = fromDate.Date;
             var DateUntillNotIncludeOnlyDate = accoutingDateUntillNotInclude.Date

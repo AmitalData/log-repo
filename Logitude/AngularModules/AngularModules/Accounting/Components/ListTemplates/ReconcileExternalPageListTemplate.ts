@@ -49,13 +49,13 @@ export class ReconcileExternalPageListTemplate {
         var windowArgs: EntityArgs = new EntityArgs();
         windowArgs.ObjectTableName = "ReconcileExternalPage";
         windowArgs.EntityPM = entityPM;
-        //this.entityArgs = new EntityArgs();
-       // this.entityArgs.EntityPM = entityPM;
+      
         var logWindow = new LogitudeWindow();
         logWindow.Width = 950;
         logWindow.Height = 600;
         logWindow.Title = TextCodeTranslator.Translate("ReconcileExternalPage") +  " "+ TextCodeTranslator.Translate("AccountingPeriod.TH.Events");
         logWindow.WindowArgs = windowArgs;
+       
         this.CurrentSession.SessionEvent.emit("noselect");
         logWindow.Show('./Accounting/Components/EditTabs/BankAccount/BankPageEventsComponent');
     }
