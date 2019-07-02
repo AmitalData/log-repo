@@ -554,6 +554,12 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
                         }
                     }
+                    if (this._INVOICE.ChangeInSupplierInvoice == "2")
+                    {
+                        this._MySupplierInvoicePM.ChangeInSupplierInvoice = "2";
+                        this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+                    }
+
                     return;
                 }
                 else
