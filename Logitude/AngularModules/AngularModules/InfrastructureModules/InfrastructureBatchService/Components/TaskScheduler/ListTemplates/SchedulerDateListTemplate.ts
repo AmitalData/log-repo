@@ -33,7 +33,7 @@ export class SchedulerDateListTemplate {
 
             var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
             if (startDate.getFullYear() > 1970 && endDate.getFullYear() > 1970) {
-                this.dateValue = seconds + " Seconds";
+                this.dateValue = seconds + " sec";
             }
         }
         else if (fieldName == "Log") {

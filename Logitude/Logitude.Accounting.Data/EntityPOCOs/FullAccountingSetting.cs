@@ -123,6 +123,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string SoftwareVersion { get; set; }
         [Column("IsPaymentChequesActivated")]
 	    public bool IsPaymentChequesActivated { get; set; }
+        [Column("GLAccounterCounterLength")]
+	    public int? GLAccounterCounterLength { get; set; }
     }
 }
 	 

@@ -21,8 +21,41 @@ namespace Logitude.UnitTest.Accounting.UniTests
     {
 
         [TestMethod]
+        public void Run_ByAccountingDate_YearTransfer()
+        {
+            bool myYearTransferTest = true;
+            var myIAccountingContext = GetIAccountingContextDateType(myYearTransferTest);
+            var fltr = new LedgerTransactionBalanceFilter()
+            {
+                Tenant = _MyTenant,
+                GLAccountId = _MainGLAccountIdTeva,
+                IncludeRelatedCurrenciesAccount = false,
+                IncludeChildAccounts = false,
+                //CurrencyId = _CurrencyIdEUR,
+                From = new DateTime(2018, 01, 1),
+                To = new DateTime(2018, 11, 1),
+                PageSize = 100,
+                PageStartAtRecordIndex = 0,
+                DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate
+            };
+            var classUnderTest = new LedgerTransactionBalanceService(myIAccountingContext, fltr);
+
+
+            //Act 
+            classUnderTest.Run();
+            Assert.IsNotNull(classUnderTest.Response);
+            Assert.AreEqual(150m, classUnderTest.Response.StartBalanceLocal);
+            Assert.AreEqual(400m, classUnderTest.Response.EndBalanceLocal);
+            Assert.IsNotNull(classUnderTest.Response.MyLedgerTransactionList);
+            Assert.AreEqual(2, classUnderTest.Response.MyLedgerTransactionList.Count());
+            Assert.AreEqual("2", classUnderTest.Response.MyLedgerTransactionList.First().Id);
+            Assert.AreEqual("3", classUnderTest.Response.MyLedgerTransactionList.Last().Id);
+        }
+
+        [TestMethod]
         public void Run_ByAccountingDate()
         {
+            
             var myIAccountingContext = GetIAccountingContextDateType();
             var fltr = new LedgerTransactionBalanceFilter()
             {
@@ -150,7 +183,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
 
-        IAccountingContext GetIAccountingContextDateType()
+        IAccountingContext GetIAccountingContextDateType(bool myYearTransferTest=false)
         {
             var accountingCurrency = _CurrencyIdUSD;
             var myGLAccount = new GLAccount()
@@ -219,6 +252,10 @@ namespace Logitude.UnitTest.Accounting.UniTests
             var currDate = _StartDate.AddMonths(2);
             int myId = 1;
             var mockLedgerTransaction = new MockObjectSet<LedgerTransaction>();
+
+            
+
+
             var listLedgerTransaction = new List<LedgerTransaction>()
             {
                  new LedgerTransaction()
@@ -227,12 +264,13 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     CreateDate =currDate,
                     Tenant=_MyTenant,
                     AccountId = _MainGLAccountIdTeva,
-                    AccountingDate = new DateTime(yyyy, 6, 1),
+                    AccountingDate = new DateTime(yyyy, 1, 1),
                     DueDate= new DateTime(yyyy, 7, 10),
                     DocumentDate= new DateTime(yyyy, 5, 15),
                     LocalAmountDebit = 50,
                     CurrencyId = _CurrencyIdUSD,
                     ForeignAmountDebit = 50,
+                    JournalId="YearTransferTest"
 
                  },
                  new LedgerTransaction()
@@ -265,6 +303,23 @@ namespace Logitude.UnitTest.Accounting.UniTests
                  },
             };
 
+            var mockJournal = new MockObjectSet<Journal>();
+            if (myYearTransferTest)
+            {
+                var l=listLedgerTransaction.First();
+                mockJournal.Add(
+
+                    new Journal()
+                    {
+                        Id = l.JournalId,
+                        AccountingDate = l.AccountingDate,
+                        Tenant = l.Tenant,
+                        AccountingEntityCode = "11",
+                    }
+                );
+
+                
+            }
             listLedgerTransaction.ForEach(
                 tran =>
                 {
@@ -287,7 +342,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
             A.CallTo(() => fakeIAccountingContext.Journals)
-                .Returns(new MockObjectSet<Journal>());
+                .Returns(mockJournal);
             A.CallTo(() => fakeIAccountingContext.JournalLines)
                 .Returns(new MockObjectSet<JournalLine>());
 

@@ -12,13 +12,13 @@
         white-space: nowrap;
     }
 </style>
-<div *ngIf="fieldName != 'Duration' && fieldName != 'Log'" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;">{{dateValue | DateTimePipe:'DTLL12'}}</div>
-<div *ngIf="fieldName == 'Duration'" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;">{{dateValue}}</div>
+<div *ngIf="fieldName != 'Duration' && fieldName != 'Log'" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;">{{dateValue | DateTimePipe:'DTL12NW'}}</div>
+<div *ngIf="fieldName == 'Duration'" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;">{{dateValue | NumbersPipe:'N3'}}</div>
 <table *ngIf="fieldName == 'Log'" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;">
     <tr>
         <td style="min-width:10px;width:10px;max-width:50px">
             <img *ngIf="Type == 'Warning'" style="width: 18px;height:18px;margin-bottom: 5px;float:left;" src="./Images/WarningIcon.png" />
-            <img *ngIf="Type == 'Exception'" style="width: 18px;height:18px;margin-bottom: 5px;float:left;" src="./Images/ValidationError.png" />
+            <img *ngIf="Type == 'Exception'" style="width: 18px;height:18px;margin-bottom: 5px;float:left;" src="./Images/Error.png" />
             <img *ngIf="Type == 'Info'" style="width: 18px;height:18px;margin-bottom: 5px;float:left;" src="./Images/Info.png" />
 
         </td>
