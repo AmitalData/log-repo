@@ -40,7 +40,7 @@ export class FullAccountingScenarios {
             this.generalFunction.GoToMainMenu('General.MH.Maintenance');
             this.Helper.WaitByIdAndClick('ACC');
             this.Helper.WaitByIdAndClick('MaintenanceItemMTCA');
-            this.newChart.CreateNewChartOFAccount(chartOfAccountNo, 'Revenue');
+            this.newChart.CreateNewChartOFAccount(chartOfAccountNo, 'Customer');
             this.editChart.EditChartOfAccount(chartOfAccountNo);
 
 
