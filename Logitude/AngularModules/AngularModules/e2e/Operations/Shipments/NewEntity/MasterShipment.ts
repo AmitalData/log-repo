@@ -18,22 +18,30 @@ export class MasterShipment {
     this.Helper.WaitByIdAndClick('NEWMASTER');
     this.ShipmentModes.SelectDicrctionTransportMode( Direction,TransportMode, ShipmentType);
 
-    this.FillMasterShipmentFields(ReferenceNumber,TransportMode);
+    this.FillMasterShipmentFields(ReferenceNumber,TransportMode,Direction);
     this.Helper.WaitByIdAndClick('MasterCreatebtn');
 
   }
-  FillMasterShipmentFields(ShipperRef: string,TransportMode:string) {
+  FillMasterShipmentFields(ShipperRef: string,TransportMode:string, Direction: string) {
     this.Helper.WaitByIdAndFill('Master_AgentId', 'TestAgentExport1');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('Master_AgentReference1_1', ShipperRef);
-
+    if(Direction == 'Domestic'){
+      this.Helper.WaitByIdAndFill('Master_MainCarriageFromPortId', 'eze');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      
+      this.Helper.WaitByIdAndFill('Master_MainCarriageToPortId', 'eze');
+      this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
+      }
+      else{
     this.Helper.WaitByIdAndFill('Master_MainCarriageFromPortId', 'eze');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
     this.Helper.WaitByIdAndFill('Master_MainCarriageToPortId', 'mvd');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
+      }
     // this.Helper.WaitByIdAndFill('Master_MainCarriageCarrierId', 'TestAirlineL8');
     // this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
 
