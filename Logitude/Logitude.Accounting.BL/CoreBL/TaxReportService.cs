@@ -87,6 +87,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 decimal? VatAmount = 0;
                 decimal? InvoiceAmount = 0;
+              
                 foreach (TaxReportData a in TaxReportJournalData)
                 {
                     string vatNumber = null;
@@ -112,11 +113,12 @@ namespace Logitude.Accounting.BL.CoreBL
                             {
                                 vatNumber = invoice.VatNumber;
                             }
+                            SetReferenceFields(outputreference);
                             TaxReportLinePM line = new TaxReportLinePM()
                             {
                                 VatNumber = vatNumber,
-                                Reference = outputreference,
-                                ReferecneGroup = "0000",
+                                Reference = reference,
+                                ReferecneGroup = referenceGroup,
                                 ReferenceDate = invoice.InvoiceDate,
                                 JournalId = a.Id,
                                 OutputOrInput = "O",
@@ -370,7 +372,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     Reference = Reference.Replace("-", "");
                 }
-
+                if(Reference.Length > 20)
+                {
+                    Reference = Reference.Substring(0, 19);
+                }
                 var array = Regex.Matches(Reference, @"\D+|\d+")
                     .Cast<Match>()
                     .Select(m => m.Value)
