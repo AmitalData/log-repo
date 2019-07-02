@@ -48,12 +48,12 @@ namespace CommunicationWorkerRole
                         }
 
                         LogDoneItemInMemory();
-                        Thread.Sleep(10000);
+                        Thread.Sleep(60000);
                     }
                     catch (Exception ex)
                     {
                         ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "FTP To AnalyzeQueue WorkerRole", ex.Message, null);
-                        Thread.Sleep(10000);
+                        Thread.Sleep(60000);
                     }
 
                 }
