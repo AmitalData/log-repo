@@ -301,21 +301,23 @@ export class TaskSchedulerComponent implements OnInit  {
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
        
         filters = new ApiQueryFilters();
-        //filters.SortBy = "StatusDate";
-     // filters.SortDirection = "Desc";
-        //sortingCol = "StartDateTime";
-        sortingDir = "desc"; 
+
+        sortingDir = "Descending"; 
         if (!this.SelectedRow) {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
                 filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+                
             }
+            sortingCol = "NextRunTime";
             filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
         }
         else {
             if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
                 if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
                     filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+                   
                 }
+                sortingCol = "StartDateTimeUTC";
                 filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
             }
         }
