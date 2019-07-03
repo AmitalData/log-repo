@@ -162,13 +162,14 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button42 = new System.Windows.Forms.Button();
             this.btnCompareData = new System.Windows.Forms.Button();
             this.button40 = new System.Windows.Forms.Button();
             this.HarmonizeCodesLabel = new System.Windows.Forms.Label();
             this.HarmonizeCodesButton = new System.Windows.Forms.Button();
             this.btnDownloadMrt = new System.Windows.Forms.Button();
             this.EncryptionDocumentLabel = new System.Windows.Forms.Label();
-            this.button42 = new System.Windows.Forms.Button();
+            this.button43 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -1490,6 +1491,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.button43);
             this.tabPage2.Controls.Add(this.button42);
             this.tabPage2.Controls.Add(this.btnCompareData);
             this.tabPage2.Controls.Add(this.button40);
@@ -1546,6 +1548,16 @@
             this.tabPage2.Size = new System.Drawing.Size(743, 558);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
+            // 
+            // button42
+            // 
+            this.button42.Location = new System.Drawing.Point(271, 441);
+            this.button42.Name = "button42";
+            this.button42.Size = new System.Drawing.Size(184, 23);
+            this.button42.TabIndex = 94;
+            this.button42.Text = "Fix LogBox Docs";
+            this.button42.UseVisualStyleBackColor = true;
+            this.button42.Click += new System.EventHandler(this.button42_Click);
             // 
             // btnCompareData
             // 
@@ -1605,15 +1617,15 @@
             this.EncryptionDocumentLabel.TabIndex = 82;
             this.EncryptionDocumentLabel.Text = "...";
             // 
-            // button42
+            // button43
             // 
-            this.button42.Location = new System.Drawing.Point(271, 441);
-            this.button42.Name = "button42";
-            this.button42.Size = new System.Drawing.Size(184, 23);
-            this.button42.TabIndex = 94;
-            this.button42.Text = "Fix LogBox Docs";
-            this.button42.UseVisualStyleBackColor = true;
-            this.button42.Click += new System.EventHandler(this.button42_Click);
+            this.button43.Location = new System.Drawing.Point(271, 476);
+            this.button43.Name = "button43";
+            this.button43.Size = new System.Drawing.Size(184, 25);
+            this.button43.TabIndex = 95;
+            this.button43.Text = "button43";
+            this.button43.UseVisualStyleBackColor = true;
+            this.button43.Click += new System.EventHandler(this.button43_Click);
             // 
             // Form1
             // 
@@ -1800,6 +1812,7 @@
         private System.Windows.Forms.Label lblUTariffModule;
         private System.Windows.Forms.Button button41;
         private System.Windows.Forms.Button button42;
+        private System.Windows.Forms.Button button43;
     }
 }
 
