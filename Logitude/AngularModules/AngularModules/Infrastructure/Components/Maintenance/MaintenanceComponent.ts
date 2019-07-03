@@ -1128,7 +1128,7 @@ export class MaintenanceComponent {
                         }
 
 
-                        logWindow.Title = "Schedulers";
+                        logWindow.Title = "Scheduler";
                         logWindow.IsShowCloseButton = true;
                         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/MainSchedulerComponent');
                     });
@@ -1489,6 +1489,10 @@ class MaintenanceMenuItem {
         }
 
         this.TranslatedName = myResult;
+        if (this.Code == "MASC") {
+
+            this.TranslatedName = "Scheduler";
+        }
         if (AppTool.IsNullOrEmpty(this.TranslatedName)) {
             this.TranslatedName = this.Code;
         }

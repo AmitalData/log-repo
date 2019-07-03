@@ -97,7 +97,6 @@ export class TaskSchedulerComponent implements OnInit  {
             this.ItemsSource.push(new TaskSchedulerItemClass(item, this));
             this.FixedItemsSource.push(new TaskSchedulerItemClass(item, this));
         });
-
         if (this.filterTypeCode) {
 
             if (this.filterTypeCode == "AL") {
@@ -113,6 +112,9 @@ export class TaskSchedulerComponent implements OnInit  {
         else {
             this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);
         }
+      
+        
+        
 
         this.CurrentSession.StopBusyIndicator();
     }
@@ -303,8 +305,8 @@ export class TaskSchedulerComponent implements OnInit  {
         filters = new ApiQueryFilters();
         //filters.SortBy = "StatusDate";
      // filters.SortDirection = "Desc";
-        //sortingCol = "StartDateTime";
-        sortingDir = "desc"; 
+        sortingCol = "StartDateTimeUTC";
+        sortingDir = "descending"; 
         if (!this.SelectedRow) {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
                 filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
