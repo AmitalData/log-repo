@@ -245,6 +245,12 @@ namespace CommunicationWorkerRole
                     reportExecutionLog.ExceptionMessage = exceptionMessage;
                 }
 
+                if (!string.IsNullOrEmpty(reportExecutionLog.ExceptionMessage) && reportExecutionLog.ExceptionMessage.Length >= 4000)
+                {
+                    reportExecutionLog.ExceptionMessage = reportExecutionLog.ExceptionMessage.Substring(0, 3999);
+
+                }
+
                 reportExecutionLog.StatusCode = statusCode;
                 reportExecutionLog.DoneDate = DateTime.Now;
                 reportExecutionLogRepository.Update(reportExecutionLog);
