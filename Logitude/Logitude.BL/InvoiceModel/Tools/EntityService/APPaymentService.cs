@@ -280,6 +280,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentCheque.PaymentChequeStatusCode = "4";
             paymentCheque.IsCancelled = true;
             paymentCheque.ChangeSetOp = ChangeSetOperation.Update;
+            paymentCheque.CancelledByAPPayment = true;
             paymentChequeUpdate.Update(paymentCheque);
         }
         private void VoidJournal(JournalPM journalPM, APPaymentPM aPPaymentPM)
