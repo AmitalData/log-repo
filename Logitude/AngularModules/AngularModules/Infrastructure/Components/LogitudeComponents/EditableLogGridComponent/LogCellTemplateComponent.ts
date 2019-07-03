@@ -359,9 +359,10 @@ export class LogCellTemplateComponent implements OnDestroy {
 
     OnBlurEventImplementation(_thisComponent: LogCellTemplateComponent) {
         if (!SessionLocator.SustainFocusOnCell) {
-          this.focusTimerToken = setTimeout(() => {
+          //this.focusTimerToken = setTimeout(() => {
+          //  ElementProperities(_thisComponent);
+          //}, 1);
             ElementProperities(_thisComponent);
-          }, 1);
             if (_thisComponent.EventSub) {
                 _thisComponent.EventSub.unsubscribe();
                 _thisComponent.IsClickedOnce = false;
