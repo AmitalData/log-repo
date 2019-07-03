@@ -162,8 +162,8 @@ export class TaskSchedulerComponent implements OnInit  {
         
         newItem.Type = this.SchedulerType;
         var logWindow = new LogitudeWindow();
-        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 730 : 620;
-        logWindow.Width = 800;
+        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 820 : 750;
+        logWindow.Width = 900;
         logWindow.Title = this.SchedulerType + " Scheduler Details";
         logWindow.DataContext = new TaskSchedulerItemClass(newItem, this, true);
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
@@ -500,7 +500,10 @@ export class TaskSchedulerItemClass extends BaseComponent {
     get RepeatInMinutes() { return this.EntityPM.RepeatInMinutes; }
     set RepeatInMinutes(newValue: number) {
         if (this.EntityPM.RepeatInMinutes != newValue) {
-            this.EntityPM.RepeatInMinutes = newValue;
+            
+            
+                this.EntityPM.RepeatInMinutes = newValue;
+            
         }
     }
 
