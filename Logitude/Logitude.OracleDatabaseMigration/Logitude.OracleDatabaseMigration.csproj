@@ -332,6 +332,10 @@
     <Compile Include="Migrations\201906250644067_InterfaceManagement_InterfaceType.Designer.cs">
       <DependentUpon>201906250644067_InterfaceManagement_InterfaceType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907030608414_AddMigrationPhysicalCheckChassis.cs" />
+    <Compile Include="Migrations\201907030608414_AddMigrationPhysicalCheckChassis.Designer.cs">
+      <DependentUpon>201907030608414_AddMigrationPhysicalCheckChassis.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -567,6 +571,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906250644067_InterfaceManagement_InterfaceType.resx">
       <DependentUpon>201906250644067_InterfaceManagement_InterfaceType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907030608414_AddMigrationPhysicalCheckChassis.resx">
+      <DependentUpon>201907030608414_AddMigrationPhysicalCheckChassis.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
