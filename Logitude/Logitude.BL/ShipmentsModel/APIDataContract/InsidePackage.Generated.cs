@@ -16,28 +16,27 @@ using System.Xml.Serialization;
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
    
-    public class Container
+    public class InsidePackage
     {
 
 	    
-	[XmlAttribute]
     public string Id { get; set; }
     
-    public PackageType ContainerType { get; set; }
+    public string Type { get; set; }
     
-    public string ContainerNumber { get; set; }
+    public int? Quantity { get; set; }
+    
+    public double? Width { get; set; }
+    
+    public double? Length { get; set; }
+    
+    public double? Height { get; set; }
     
     public double? Volume { get; set; }
     
     public double? GrossWeight { get; set; }
     
-    public double? Tare { get; set; }
-    
-    public string Seal { get; set; }
-    
-    public string Seal2 { get; set; }
-    
-    public string MarksAndNumbers { get; set; }
+    public string Commodity { get; set; }
     
     public string Reference1 { get; set; }
     
@@ -45,13 +44,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public string Reference3 { get; set; }
     
-    public string CommodityNumber { get; set; }
-    
-    public int? Pieces { get; set; }
-    
     public string Reference4 { get; set; }
     
-    public List<InsidePackage> InsidePackages { get; set; }
+    public string Description { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

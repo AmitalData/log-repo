@@ -808,7 +808,8 @@ using Simplog.Data.QuoteModel;
 						 
 					}
 			
-					
+					 
+
 					if(MyEntity.QuoteCharges != null && MyEntity.QuoteCharges.Count > 0)
 					{
 						QuoteChargeQueryService QuoteChargeService36 = new QuoteChargeQueryService(Tenant);
@@ -877,7 +878,8 @@ using Simplog.Data.QuoteModel;
 					temp.PackageType4Quantity = MyEntity.PackageType4Quantity;
 					temp.PackageType5Quantity = MyEntity.PackageType5Quantity;
 					temp.NumberOfPackages = MyEntity.PackagesQuantity;
-					temp.VolumetricWeight = MyEntity.VolumetricWeight;
+					temp.VolumetricWeight = MyEntity.VolumetricWeight; 
+
 					if(MyEntity.QuotePackages != null && MyEntity.QuotePackages.Count > 0)
 					{
 						QuotePackageQueryService QuotePackageService36 = new QuotePackageQueryService(Tenant);

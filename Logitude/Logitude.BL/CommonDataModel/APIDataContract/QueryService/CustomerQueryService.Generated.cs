@@ -156,7 +156,8 @@ using Simplog.Data.CommonDataModel;
 						 
 					}
 			
-					
+					 
+
 					if(MyEntity.Contacts != null && MyEntity.Contacts.Count > 0)
 					{
 						ContactQueryService ContactService4 = new ContactQueryService(Tenant);

@@ -381,6 +381,7 @@ using <#=myspacestring#>
 								 {
 								 //int i = 0;
 								 string type = GetmyDataType(field);
+								 string customType = GetmyCustomDataType(field);
 								 var IsMulti = ((XElement)field).Attributes().Where(a => a.Name == "IsMulti").FirstOrDefault().Value; 
 						 
 								 string IsCustomType = ((XElement)field).Attributes().Where(a => a.Name == "IsCustomType").FirstOrDefault().Value;
@@ -398,12 +399,12 @@ using <#=myspacestring#>
 								 IsManualMapping = myBool.Value;
 								 }
 								 if(IsCustomType == "true" || IgnoreCustomTypeCheck == "true"){
-								 if(IsMulti == "true"){  #>
+								 if(IsMulti == "true"){  #> 
 
-					if(<#+if(IsComposition == "true"){#>temp<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#> != null <#+if(IgnoreCustomTypeCheck == "false"){#>&& <#+if(IsComposition == "true"){#>temp<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>.Count > 0<#+}#>)
+					if(<#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#> != null <#+if(IgnoreCustomTypeCheck == "false"){#>&& <#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#>.Count > 0<#+}#>)
 					{
 						<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>QueryService <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#> = new <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>QueryService(Tenant);
-						temp.<#=FieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){#>temp<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant,ComputingPartnerName);
+						temp.<#=FieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant,ComputingPartnerName);
 					}
 
 								 <#+} else {#>
@@ -604,6 +605,16 @@ private string GetmyPropertyName(dynamic property)
 			  result = result + "?";
           }
 		  return result;
+
+        }
+
+		 private string GetmyCustomDataType(dynamic field)
+        {
+			
+			string typecode = ((XElement)field).Attributes().Where(a => a.Name == "FieldsDataType").FirstOrDefault().Value.Trim('"');
+			var temp = typecode.Split('<'); 
+			return temp[0];
+	
 
         }
 #>

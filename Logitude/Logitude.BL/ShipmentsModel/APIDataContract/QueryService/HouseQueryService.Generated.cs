@@ -434,21 +434,24 @@ using Simplog.Data.ShipmentsModel;
 					
 					temp.House = MyEntity.HouseNo;
 					temp.HAWBDate = MyEntity.HouseDate;
-					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
+					temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods; 
+
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
 						AirPackageQueryService AirPackageService18 = new AirPackageQueryService(Tenant);
 						temp.ShipmentPackages = AirPackageService18.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
 					}
 
-								 
+								  
+
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
 						OceanOrInlandPackageQueryService OceanOrInlandPackageService18 = new OceanOrInlandPackageQueryService(Tenant);
 						temp.ShipmentPackages = OceanOrInlandPackageService18.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
 					}
 
-								 
+								  
+
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
 						ContainerQueryService ContainerService18 = new ContainerQueryService(Tenant);
@@ -511,14 +514,16 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-					
+					 
+
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
 						PickUpQueryService PickUpService18 = new PickUpQueryService(Tenant);
 						temp.ShipmentPickUps = PickUpService18.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName);
 					}
 
-								 
+								  
+
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
 						DeliveryQueryService DeliveryService18 = new DeliveryQueryService(Tenant);
@@ -544,14 +549,16 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-					
+					 
+
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
 						ReceivableQueryService ReceivableService18 = new ReceivableQueryService(Tenant);
 						temp.ShipmentReceivables = ReceivableService18.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
 					}
 
-								 
+								  
+
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
 						PayableQueryService PayableService18 = new PayableQueryService(Tenant);

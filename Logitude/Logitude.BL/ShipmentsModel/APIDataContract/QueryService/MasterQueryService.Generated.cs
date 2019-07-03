@@ -438,14 +438,16 @@ using Simplog.Data.ShipmentsModel;
 						 
 					}
 			
-					
+					 
+
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
 						DeliveryQueryService DeliveryService18 = new DeliveryQueryService(Tenant);
 						temp.ShipmentDeliveries = DeliveryService18.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName);
 					}
 
-								 
+								  
+
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
 						PickUpQueryService PickUpService18 = new PickUpQueryService(Tenant);
@@ -459,7 +461,8 @@ using Simplog.Data.ShipmentsModel;
 					 customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
 				}		
 			
-					
+					 
+
 					if(MyEntity.Houses != null && MyEntity.Houses.Count > 0)
 					{
 						HouseQueryService HouseService18 = new HouseQueryService(Tenant);
@@ -481,14 +484,16 @@ using Simplog.Data.ShipmentsModel;
 					
 					temp.MainCarriageATA = MyEntity.MainCarriageATA;
 					temp.MainCarriageATD = MyEntity.MainCarriageATD;
-					temp.IsAccountingClosed = MyEntity.IsAccountingClosed;
+					temp.IsAccountingClosed = MyEntity.IsAccountingClosed; 
+
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
 						ReceivableQueryService ReceivableService18 = new ReceivableQueryService(Tenant);
 						temp.ShipmentReceivables = ReceivableService18.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName);
 					}
 
-								 
+								  
+
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
 						PayableQueryService PayableService18 = new PayableQueryService(Tenant);
