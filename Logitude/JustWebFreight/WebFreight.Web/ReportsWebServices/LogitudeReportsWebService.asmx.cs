@@ -13506,6 +13506,13 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
+
+            if (automationTestReportDataProvider.IsException)
+            {
+                throw new Exception("Exception Test");
+            }
+
+
             if (!automationTestReportDataProvider.IsException)
             {
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
