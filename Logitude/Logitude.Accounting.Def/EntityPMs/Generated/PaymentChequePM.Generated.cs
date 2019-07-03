@@ -1136,6 +1136,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool cancelledByAPPayment ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool CancelledByAPPayment  
+	   {
+	    
+	     get
+		{
+		   return cancelledByAPPayment;
+		 }
+		 set
+		 {
+		   if(cancelledByAPPayment != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CancelledByAPPayment",OldValue=cancelledByAPPayment,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   cancelledByAPPayment=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
