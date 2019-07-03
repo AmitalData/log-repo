@@ -212,6 +212,7 @@
                               (keydown)="OnKeyDown($event)"
                               [id]="InputId" style="box-shadow:none;border:1px solid transparent; font-size:12px; font-family:inherit;"
                               ondrop="return false"
+                              [style.text-align]="isRTL?'right':'left'"
                               (paste)="OnPaste($event)"></textarea>
 
                     <div *ngIf="!IsDisabled && isMouseOver" [class.collapse-btn]="isExpanded"
