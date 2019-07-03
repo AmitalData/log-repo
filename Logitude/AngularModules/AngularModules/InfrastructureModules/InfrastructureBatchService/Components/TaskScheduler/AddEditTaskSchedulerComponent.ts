@@ -280,6 +280,7 @@ export class AddEditTaskSchedulerComponent  {
         
         if (this.DataContext.StartDateTime == null) {
             errors.push(msg.replace("%FieldName", "Start Date Time"));
+            console.log("error");
         }
 
         if (AppTool.IsNullOrEmpty(this.DataContext.ServiceClassName)) {
