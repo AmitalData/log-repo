@@ -59,7 +59,7 @@ export class DownloadPackagesFileComponent {
         var tempDate = new Date();
         var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
 
-        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + this.FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + "ShipmentPackages" + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007";
+        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + this.FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + "ShipmentPackages" + "_" + MyDate;
         {
             window.open(url);
         }
