@@ -401,18 +401,28 @@ export class ReportsPreviewComponent implements AfterViewInit {
     initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
         return Observable.interval(2000).timeInterval();
     }
+
+
+
     private StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub: any = null;
     IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer: boolean = false;
     StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer() {
-    
-        this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = true;
+        if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
+            this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
+        }
 
+        this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = true;
         this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub = this.initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer().subscribe(respose => {
+
+
             if ((this.CurrentSession && this.CurrentSession.isDestroingSession) || !this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer ) {
                 this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
                 this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
                 return;
             }
+
+
+
             if (this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
 
                 this._reportService.GetCheckIfStimulSoftReportIsBliud(this.ReportFliter.ReportKey, SessionLocator.Tenant).subscribe(res => {
@@ -465,8 +475,22 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
     private StartTimerWaitingFirstStimulReportBuildsub: any = null;
     StartTimerWaitingFirststimulReportBuild() {
+
+        if (this.IsStartTimerWaitingFirstStimulReportBuildRunning) {
+            this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
+        }
+       
+
         this.IsStartTimerWaitingFirstStimulReportBuildRunning = true;
         this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe(res => {
+
+            if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
+                this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
+                this.IsStartTimerWaitingFirstStimulReportBuildRunning = false;
+                return;
+            }
+
+
 
             if (this.IsStartTimerWaitingFirstStimulReportBuildRunning) {
                 this.StartBuildStimulReportViaWorkerRole(this.ReportFliter);
@@ -485,8 +509,21 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
     private StartTimerChangeBusyIndicatorMessageAfter50Secsub: any = null;
     StartTimerChangeBusyIndicatorMessageAfter50Sec() {
+
+        if (this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning) {
+            this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
+        }
+
+
         this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = true;
         this.StartTimerChangeBusyIndicatorMessageAfter50Secsub = this.initializeStartTimerChangeBusyIndicatorMessageAfter50Sec().subscribe(res => {
+
+            if (this.CurrentSession && this.CurrentSession.isDestroingSession) {
+                this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
+                this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning = false;
+                return;
+            }
+
             if (this.IsStartTimerChangeBusyIndicatorMessageAfter50SecsRunning) {
                 this.StartBusyIndicator("Report generating is taking longer than expected. Please wait", 400);
                 this.StartTimerChangeBusyIndicatorMessageAfter50Secsub.unsubscribe();
@@ -509,7 +546,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     StopBusyIndicator() {
 
-        this.ShowBusyIndicator = false;
+      
 
         if (this.IsStartTimerWaitingFirstStimulReportBuildRunning) {
             this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
@@ -525,5 +562,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
             this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
             this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
         }
+
+
+        this.ShowBusyIndicator = false;
+
     }
 }
