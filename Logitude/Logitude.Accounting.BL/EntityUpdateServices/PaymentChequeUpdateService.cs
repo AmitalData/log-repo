@@ -314,7 +314,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ValidateGLAccountAccountType(entityPM);
              
             }
-            else if(entityPM.APPaymentId != null && (entityPM.IsCancelled || entityPM.PaymentChequeStatusCode == "4"))
+            else if(entityPM.APPaymentId != null && (entityPM.IsCancelled || entityPM.PaymentChequeStatusCode == "4") && !entityPM.CancelledByAPPayment)
             {
                 PreventCancellingPaymentCheque(entityPM);
             }
