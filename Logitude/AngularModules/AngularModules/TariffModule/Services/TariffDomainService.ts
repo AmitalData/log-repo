@@ -79,6 +79,25 @@ export class TariffDomainService {
         });
     }
 
+    GenerateTariffsFromExcel(filter: TariffFilterParameter) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return Observable.defer(() => {
+            return this._http.post(this._apiUrl + "/PostGenerateTariffsFromExcel", JSON.stringify(filter), {
+                headers: authHeader,
+            }).map(response => {
+                var result = response.json();
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }).catch(ServiceHelper.HandleServiceError);
+        }
+        );
+    }
+
+    
     GetTenantTariffSetting() {
 
         var authHeader = new Headers();
@@ -273,6 +292,7 @@ export class TariffSearchSummary {
     ImageId: string;
     Name: string;
     Currency: string;
+    VersionId: string;
 }
 
 export class ExcelTariffLines {

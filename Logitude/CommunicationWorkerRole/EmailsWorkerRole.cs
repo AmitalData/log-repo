@@ -1013,15 +1013,15 @@ namespace CommunicationWorkerRole
             string iSendingURL = null;
             string iSendingPassword = null;
 
-            if (LogitudeSettings.ChampEnv == "TEST")
-            {
-                iSendingURL = LogitudeSettings.ChampTestAPIURL;
-                iSendingPassword = LogitudeSettings.ChampTestAPIPassword;
-            }
-            else
+            if (LogitudeSettings.ChampEnv == "PROD")
             {
                 iSendingURL = LogitudeSettings.ChampProdAPIURL;
                 iSendingPassword = LogitudeSettings.ChampProdAPIPassword;
+            }
+            else
+            {
+                iSendingURL = LogitudeSettings.ChampTestAPIURL;
+                iSendingPassword = LogitudeSettings.ChampTestAPIPassword;
             }
 
             bool isTestingCode = false;

@@ -212,13 +212,14 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                              Retries = a.Retries,
                              LastRunEndTime = a.LastRunEndTime,
                              LastRunEndTimeUTC = a.LastRunEndTimeUTC
-                         }).ToList();
+                         }).ToList().OrderByDescending(x => x.CreateDateTime);
 
             foreach (var Task in Tasks)
             {
                 Task.Duration = GetTaskAvarageDuration(Task.Id);
             }
-            return Tasks;
+
+            return Tasks.ToList();
         }
 
         private double GetTaskAvarageDuration(string taskId)

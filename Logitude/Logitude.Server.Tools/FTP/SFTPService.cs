@@ -17,7 +17,7 @@ namespace Logitude.Server.Tools.FTP
         private string _start_path = "";
         private string _pattern = "";
         private List<FileParam> _files;
-        FTPLogBuilder fTPLogBuilder = new FTPLogBuilder();
+       
         public SFTPService()
         {
             Initialize();
@@ -84,7 +84,7 @@ namespace Logitude.Server.Tools.FTP
                 p_message = "Successfully connected to Host:'" + p_host + "' ,User:'" + p_user;
                 p_message += "', directory:'" + sftp.RemotePath + "'";
 
-                p_message = fTPLogBuilder.BuildLogLine(p_message);
+                p_message = FTPLogBuilder.BuildLogLine(p_message);
                 p_status = "0";
             }
             catch (Exception ex)
@@ -282,7 +282,7 @@ namespace Logitude.Server.Tools.FTP
                 MyFinally();
             }
 
-            p_message = fTPLogBuilder.BuildLogLine(p_message);
+            p_message = FTPLogBuilder.BuildLogLine(p_message);
         }
 
         private bool IsRemoteFileExist(string p_filename)
@@ -334,7 +334,7 @@ namespace Logitude.Server.Tools.FTP
             string v_temp_filename = "", v_temp_filename_full = "";
             try
             {
-                p_message = fTPLogBuilder.BuildLogLine("Start uploading file " + p_filename + " file to " +sftp.SSHHost + sftp.RemotePath);
+                p_message = FTPLogBuilder.BuildLogLine("Start uploading file " + p_filename + " file to " +sftp.SSHHost + sftp.RemotePath);
                 if (sftp == null)
                 {
                     throw new Exception("The 'Sftp' object is null" +
@@ -344,7 +344,7 @@ namespace Logitude.Server.Tools.FTP
                 {
                     //p_message = "Parameter 'FileName' is missing";
 
-                    p_message = fTPLogBuilder.AppendLogLine("Parameter 'FileName' is missing", p_message);
+                    p_message = FTPLogBuilder.AppendLogLine("Parameter 'FileName' is missing", p_message);
                     p_status = "-1";
                     return;
                 }
@@ -389,7 +389,7 @@ namespace Logitude.Server.Tools.FTP
                 //if (uploadAsTemp) v_1 = " with 'Upload As Temp File' property ";
                 //p_message = "File '" + p_filename + "' was successfully uploaded to '" + sftp.SSHHost + sftp.RemotePath + sftp.RemoteFile + v_1;
 
-                p_message = fTPLogBuilder.AppendLogLine("File '" + p_filename + "' was successfully uploaded to '" + sftp.SSHHost + sftp.RemotePath + sftp.RemoteFile + v_1, p_message);
+                p_message = FTPLogBuilder.AppendLogLine("File '" + p_filename + "' was successfully uploaded to '" + sftp.SSHHost + sftp.RemotePath + sftp.RemoteFile + v_1, p_message);
                 p_status = "0";
             }
             catch (Exception ex)
@@ -402,7 +402,7 @@ namespace Logitude.Server.Tools.FTP
                 if (ex.InnerException != null)
                     error_p_message += Environment.NewLine + ex.InnerException.Message;
                 p_status = "-1";
-                p_message = fTPLogBuilder.AppendLogLine("Parameter 'FileName' is missing", p_message);
+                p_message = FTPLogBuilder.AppendLogLine("Parameter 'FileName' is missing", p_message);
             }
             finally
             {
@@ -590,7 +590,7 @@ namespace Logitude.Server.Tools.FTP
                 MyFinally();
             }
 
-            p_message = fTPLogBuilder.BuildLogLine(p_message);
+            p_message = FTPLogBuilder.BuildLogLine(p_message);
 
             return filesList;
         }
@@ -606,7 +606,7 @@ namespace Logitude.Server.Tools.FTP
             {
                 sftp.RemoteFile = p_filename;
 
-                p_message = fTPLogBuilder.BuildLogLine("Start downloading file " + sftp.RemotePath + p_filename + " " + fTPLogBuilder.GetFileSizeString(sftp.FileAttributes.Size));
+                p_message = FTPLogBuilder.BuildLogLine("Start downloading file " + sftp.RemotePath + p_filename + " " + FTPLogBuilder.GetFileSizeString(sftp.FileAttributes.Size));
                  
                 sftp.SetDownloadStream(downloadStream);
                 //sftp.LocalFile = p_localpath + @"\" + p_filename;
@@ -617,7 +617,7 @@ namespace Logitude.Server.Tools.FTP
                     // p_continue = true;
                     p_status = "-2";
                     //p_message = "Failed to download file '" + sftp.RemotePath + p_filename + ", file doesn't exist";
-                    p_message = fTPLogBuilder.AppendLogLine("Failed to download file '" + sftp.RemotePath + p_filename + ", file doesn't exist", p_message);
+                    p_message = FTPLogBuilder.AppendLogLine("Failed to download file '" + sftp.RemotePath + p_filename + ", file doesn't exist", p_message);
                     return null;
                 }
                 else
@@ -625,7 +625,7 @@ namespace Logitude.Server.Tools.FTP
                     //sftp.do
                     sftp.Download();
                     // p_message = "File '" + p_filename + "' was successfully downloaded";// to '" + sftp.LocalFile + "'";
-                    p_message = fTPLogBuilder.AppendLogLine("File '" + p_filename + "' was successfully downloaded", p_message);
+                    p_message = FTPLogBuilder.AppendLogLine("File '" + p_filename + "' was successfully downloaded", p_message);
                     if (sftp.RemotePath != "") p_message += " in directory '" + sftp.RemotePath + "'";
                     p_status = "1";
                     // p_continue = false;
@@ -637,7 +637,7 @@ namespace Logitude.Server.Tools.FTP
                 //p_message = "Failed to download file '" + sftp.RemotePath + p_filename;//"' to local path '" + sftp.LocalFile + "'";
                 //p_message += Environment.NewLine + ex.Message;
 
-                p_message = fTPLogBuilder.AppendLogLine("Failed to download file '" + sftp.RemotePath + p_filename + Environment.NewLine + ex.Message, p_message);
+                p_message = FTPLogBuilder.AppendLogLine("Failed to download file '" + sftp.RemotePath + p_filename + Environment.NewLine + ex.Message, p_message);
                 if (ex.InnerException != null)
                     p_message += Environment.NewLine + ex.InnerException.Message;
                 p_status = "-1";

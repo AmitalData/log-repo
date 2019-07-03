@@ -129,15 +129,28 @@
                                                     <LogLabel [ObjectFieldName]="'VendorId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td style="width:230px; ">
+                                                <td style="width:210px; ">
                                                     <LogLov [ObjectFieldName]="'VendorId'"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="VendorId"
                                                             [LookUpTableName]="'Card'"
+                                                            [HideLastColumn]="true"
                                                             [DependencyFilter1Value]="'AG,AL,CG,SG,SL,TR,VD,WH'"
                                                             [DependencyFilter1IsList]="true">
                                                     </LogLov>
+
+                                                </td>
+
+                                                <td style="width: 15px;">
+                                                    <div>
+                                                        <LogToolTip *ngIf="vendorGLAccount && !deductionFileNumber" [direction]="isRTL?'bottomleft':'bottomright'"
+                                                            [mode]="'Warning'">
+                                                            {{'APPayment.O.NoDeductionFileNumber' | TextCodeTranslationPipe}}
+                                                            <br />
+                                                            <!-- <br /> -->
+                                                        </LogToolTip>
+                                                    </div>
                                                 </td>
 
                                                 <td>
@@ -157,6 +170,7 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Address'"
+                                                            [HideLastColumn]="true"
                                                             [SelectedValue]="VendorAddressId"
                                                             [DependencyFilter1Value]="VendorId">
                                                     </LogLov>
@@ -179,6 +193,7 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="AccountingPaymentMethodId"
+                                                            [HideLastColumn]="true"
                                                             [DependencyFilter2Value]="'true'"
                                                             [LookUpTableName]="'AccountingPaymentMethod'">
                                                     </LogLov>
@@ -196,27 +211,27 @@
                                                     <LogLabel [ObjectFieldName]="'TaxDeductionPercentage'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td colspan="2">
-                                                    <table>
-                                                        <tr>
-                                                            <td style="width:192px;">
-                                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'TaxDeductionPercentage'" [Text]="TaxDeductionPercentage" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                            </td>
+                                                <td >
+                                                    <div style="width:191px;">
+                                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'TaxDeductionPercentage'" [Text]="TaxDeductionPercentage"
+                                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                    </div>
+                                                </td>
 
-                                                            <td style="width:5px;">
-                                                                <div></div>
-                                                            </td>
+                                                <td style="width: 15px;">
+                                                    <div>
+                                                        <LogToolTip *ngIf="IsNoVendorTax" [direction]="isRTL?'bottomleft':'bottomright'"
+                                                            [mode]="'Warning'"
+                                                            [name]="'NoVendorTax'">
+                                                                {{'APPayment.M.NoVendorTaxWithholdingPercentage' | TextCodeTranslationPipe}}
+                                                                <br />
+                                                                <br />
+                                                        </LogToolTip>
+                                                    </div>
+                                                </td>
 
-                                                            <td  *ngIf="IsNoVendorTax" style="width: 20px;">
-                                                                <div float-start style="display: block;">
-                                                                    <HelpIcon [IconSize]='18' [Header]="'Warning'" [Text]="'APPayment.M.NoVendorTaxWithholdingPercentage' | TextCodeTranslationPipe" [IconPath]="'./Images/Warning_icon_24.png'"></HelpIcon>
-                                                                 </div>
-                                                            </td>
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                <td>
+                                                    <div></div>
                                                 </td>
                                             </tr>
 
@@ -227,10 +242,14 @@
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [Text]="AmountInPaymentCurrency" [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                    <div style="width:191px;">
+                                                        <LogTextBox [HideColumns]="true" [ObjectFieldName]="'AmountInPaymentCurrency'" [Text]="AmountInPaymentCurrency"
+                                                            [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'" [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"></LogTextBox>
+                                                    </div>
                                                 </td>
 
-                                                <td>
+                                                <td colspan="2">
                                                     <div></div>
                                                 </td>
                                             </tr>
@@ -552,7 +571,7 @@
                                                             <td *ngIf="PaymentChequeActivated" style="text-align:right;width:70px;color:#1B90CB;cursor:pointer;font-size:14px" (click)="SplitButtonClicked()">{{ 'Accounting.General.O.PaymentChequeManualOption' | TextCodeTranslationPipe}} </td>
                                                             <td style="width:10px"></td>
                                                             <td *ngIf="PaymentChequeActivated || ShowSplitButton" style="width: 27px; min-width: 27px;" (click)="SplitButtonClicked()">
-                                                                <img class="SplitButton" src="./Images/Split/split-icon-right.png" [class.flipHoriz]="IsSplitComponentOpened" [title]="SplitTooltip"/>
+                                                                <img class="SplitButton" src="./Images/Split/split-icon-right.png" [class.flipHoriz]="IsSplitComponentOpened"   [title]="SplitTooltip"/>
                                                             </td>
                                                             <td><div></div></td>
 
@@ -565,11 +584,11 @@
                                                 <td *ngIf="IsChequeLinkVisibile">
                                                     <table>
                                                         <tr>
-                                                         
+
                                                             <td style="width:50px;text-align:center">
                                                                 <a style="font-size:12px; color:green" (click)="ViewPaymentCheque(item)">{{EntityPM.ChequeOrPaymentRef}}</a>
                                                             </td>
-                                                            
+
                                                             <td><div></div></td>
 
                                                         </tr>

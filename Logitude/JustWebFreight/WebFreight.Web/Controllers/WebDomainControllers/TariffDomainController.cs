@@ -182,7 +182,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             data = this.ExportAirSurchargesCostLinesToExcel(tariff, tariffVersion.TariffLines, tenant, type);
                         }
 
-                        fileName = "Tariffs" + DateTime.Now.ToShortDateString();
+                        fileName = "Tariff-" + tariff.TariffNumber + "-" + String.Format("{0:dd-MM-yyyy}", TenantServerConfigration.GetCurrentDateTime(tenant));
 
                         if (data != null)
                         {
@@ -199,8 +199,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             storageservice.Write(data, fileInfo);
                             this.EventTrace(tariff, type, loggedContact);
                         }
-
-
                     }
                 }
 
@@ -619,14 +617,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     string dateRange = "C2:C" + (tariffLines.Count + 1);
                     sheet1.Range[dateRange].ColumnWidth = 14;
-                    sheet1.Range[dateRange].NumberFormat = "dd/mm/yyyy";
+                    sheet1.Range[dateRange].NumberFormat = "dd/MM/yyyy";
                 }
             }
 
             sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
             sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
             sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
-            
+
             sheet1.ImportDataTable(table, true, 1, 1);
             workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory);
@@ -730,6 +728,241 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        [ActionName("PostGenerateTariffsFromExcel")]
+        public HttpResponseMessage PostGenerateTariffsFromExcel(TariffFilterParameter filter)
+        {
+            try
+            {
+                string token = System.Web.HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                filter.Tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+
+                ContactQuery contactQuery = new ContactQuery(authToken.Tenant);
+                ContactPM loggedContact = contactQuery.GetContactByEmailOnly(loggedUserEmail, authToken.Tenant);
+
+                this.portRepository = new PortRepository(authToken.Tenant);
+
+                byte[] fileData = Convert.FromBase64String(filter.FileData);
+
+                System.IO.MemoryStream stream = new System.IO.MemoryStream(fileData);
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                IWorkbook workbook = excelEngine.Excel.Workbooks.Open(stream);
+                IWorksheet sheet = workbook.Worksheets[0];
+
+                List<ExcelTariffLines> tariffLinesResult = new List<ExcelTariffLines>();
+                tariffLinesResult = this.BuildAirFreightCostExcelLines(sheet, authToken.Tenant);
+
+                this.GenerateExcel(tariffLinesResult, loggedUserEmail, authToken.Tenant);
+
+                //TariffsExcelGeneratorArgs args = new TariffsExcelGeneratorArgs() {
+                //    LoggedUserEmail = loggedUserEmail,
+                //    Tenant = authToken.Tenant, 
+                //    TariffLines = tariffLinesResult,
+                //};
+                //var stringwriter = new System.IO.StringWriter();
+                //var serializer = new XmlSerializer(typeof(TariffsExcelGeneratorArgs));
+                //serializer.Serialize(stringwriter, args);
+                //string xmlParameters = stringwriter.ToString();
+
+                //BatchTaskExecutionPM taskExe = new BatchTaskExecutionPM()
+                //{
+                //    Subject = "Generate Tariffs From Excel",
+                //    Tenant = authToken.Tenant,
+                //    ChangeSetOp = ChangeSetOperation.Insert,
+                //    ClassName = "WebFreight.Web.Helpers.APIHelpers.TariffGeneratorFromExcel,WebFreight.Web",
+                //    CreateDate = DateTime.Now,
+                //    PrametersXml = xmlParameters,
+                //    StatusCode = "C",
+                //};
+
+                //IInfrastructureContext MyContext = InfrastructureContext.GetContext(authToken.Tenant);
+                //BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), authToken.Tenant);
+                //bteUpdateService.Update(taskExe, true);
+
+                //// 2- Send to queue
+                //IQueueService queueservice = new DbQueueService();
+                //queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+                //queueservice.Send(new Dictionary<string, string>()
+                //{
+                //    { "BatchTaskExecutionId", taskExe.Id },
+                //    { "Tenant", authToken.Tenant.ToString() }
+                //});
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private void GenerateExcel(List<ExcelTariffLines> tariffLines, string loggedUserEmail, int tenant)
+        {
+            ITariffModuleContext iContext = TariffModuleContext.GetContext(tenant);
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            UserRepository userRepository = new UserRepository(context);
+            TariffSetting iTariffSetting = (from d in iContext.TariffSettings where d.Tenant == tenant select d).FirstOrDefault();
+
+            if (iTariffSetting != null)
+            {
+                Random random = new Random();
+                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                User loggedUser = userRepository.GetSingleUserByEmail(loggedUserEmail, tenant, false);
+                List<Card> airlines = context.Cards.Where(d => d.Tenant == tenant && d.PartnerTypeId == "AL").Take(20).ToList();
+                List<string> currencyIds = context.Currencies.Where(d => d.Tenant == tenant).Select(s => s.Id).ToList();
+
+                for (int i = 0; i < 20; i++)
+                {
+                    List<TariffVersion> versions = new List<TariffVersion>();
+                    List<ExcelTariffLines> randomTariffList = this.UniqueRandomList(tariffLines, tariffLines.Count(), 70);
+
+                    Card airline = airlines[random.Next(airlines.Count)];
+                    Tariff tariff = new Tariff()
+                    {
+                        Id = IdCounter.GetNumber("Tariff", tenant),
+                        TariffNumber = CodeCounter.GetNumber("Tariff", tenant).ToString(),
+                        PriceSteps = iTariffSetting.DefaultPriceSteps,
+                        Tenant = tenant,
+                        CreateDate = todayDate,
+                        UpdateDate = todayDate,
+                        CreatedByUserId = loggedUser.Id,
+                        UpdatedByUserId = loggedUser.Id,
+                        SellerId = airline.Id,
+                        Name = "Test Tariff From Excel" + i,
+                        StartDate = todayDate.AddMonths(i),
+                        ExpirationDate = todayDate.AddYears(1),
+                        CurrencyId = currencyIds[random.Next(currencyIds.Count)],
+                        LastVersion = 50,
+                        TypeCode = "AFC",
+                        ConcurrencyGUID = Guid.NewGuid().ToString(),
+                        SearchFields = "Test Tariff From Excel " + i + "," + airline.EnglishName,
+                    };
+                    TariffVersion draftVersion = new TariffVersion()
+                    {
+                        TariffId = tariff.Id,
+                        Version = 1,
+                        IsDraft = true,
+                        CreateDate = todayDate,
+                        CreatedByUserId = loggedUser.Id,
+                        StartDate = todayDate,
+                        ExpirationDate = todayDate.AddYears(1),
+                        Tenant = tenant,
+                    };
+                    TariffVersion activeVersion = new TariffVersion()
+                    {
+                        TariffId = tariff.Id,
+                        Version = 2,
+                        IsDraft = false,
+                        CreateDate = todayDate,
+                        CreatedByUserId = loggedUser.Id,
+                        StartDate = todayDate.AddMonths(-1),
+                        ExpirationDate = todayDate.AddMonths(2),
+                        Tenant = tenant,
+                        ApproveDate = todayDate,
+                        ApprovedByUserId = loggedUser.Id,
+                        ParentVersionNumber = 1,
+                    };
+                    iContext.TariffVersions.Add(draftVersion);
+                    iContext.TariffVersions.Add(activeVersion);
+                    versions.Add(draftVersion);
+                    versions.Add(activeVersion);
+
+                    for (int j = 3; j <= 50; j++)
+                    {
+                        TariffVersion version = new TariffVersion()
+                        {
+                            TariffId = tariff.Id,
+                            Version = j,
+                            IsDraft = false,
+                            CreateDate = todayDate,
+                            CreatedByUserId = loggedUser.Id,
+                            StartDate = todayDate.AddMonths(-(j - 1)),
+                            ExpirationDate = todayDate.AddMonths(-j),
+                            Tenant = tenant,
+                            ApproveDate = todayDate,
+                            ApprovedByUserId = loggedUser.Id,
+                            ParentVersionNumber = j - 1,
+                        };
+                        iContext.TariffVersions.Add(version);
+                        versions.Add(version);
+                    }
+
+                    foreach (TariffVersion item in versions)
+                    {
+                        for (int k = 0; k < randomTariffList.Count(); k++)
+                        {
+                            TariffLine line = new TariffLine()
+                            {
+                                Id = IdCounter.GetNumber("TariffLine", tenant),
+                                Tenant = tenant,
+                                TariffId = tariff.Id,
+                                Version = item.Version,
+                                StartDate = item.StartDate,
+                                ExpirationDate = item.ExpirationDate,
+                                OriginPortId = randomTariffList.ElementAt(k).FromPortId,
+                                DestinationPortId = randomTariffList.ElementAt(k).ToPortId,
+                                Index = k,
+                                LineUniqueKey = randomTariffList.ElementAt(k).FromPortCode + "," + randomTariffList.ElementAt(k).ToPortCode,
+                                LineUniqueKeyText = randomTariffList.ElementAt(k).FromPortCode + "," + randomTariffList.ElementAt(k).ToPortCode + k,
+                            };
+                            // Generate Random Lines
+                            line.MinPrice = randomTariffList.ElementAt(k).MinPrice.Value;
+                            line.Step1Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step1Price.Value), 3, MidpointRounding.AwayFromZero);
+                            line.Step2Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step2Price.Value), 3, MidpointRounding.AwayFromZero);
+                            line.Step3Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step3Price.Value), 3, MidpointRounding.AwayFromZero);
+                            line.Step4Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step4Price.Value), 3, MidpointRounding.AwayFromZero);
+                            line.Step5Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step5Price.Value), 3, MidpointRounding.AwayFromZero);
+                            line.Step6Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step6Price.Value), 3, MidpointRounding.AwayFromZero);
+                            line.Step7Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step7Price.Value), 3, MidpointRounding.AwayFromZero);
+                            line.Step8Price = decimal.Round(RandomStepPrice(randomTariffList.ElementAt(k).Step8Price.Value), 3, MidpointRounding.AwayFromZero);
+                            iContext.TariffLines.Add(line);
+                        }
+                    }
+
+                    TariffVersion lastVersion = versions.Where(d => d.Version == 50).FirstOrDefault();
+                    tariff.LastStartDate = lastVersion.StartDate;
+                    tariff.LastExpirationDate = lastVersion.ExpirationDate;
+                    iContext.Tariffs.Add(tariff);
+                    airlines.Remove(airline);
+                    iContext.SaveChanges();
+                }
+            }
+        }
+
+        private static readonly Random random = new Random();
+        private decimal RandomStepPrice(decimal value)
+        {
+            var minValue = 1;
+            var maxValue = 10;
+            var next = random.NextDouble();
+            return (minValue + ((decimal)next * (maxValue - minValue)))/ 2m;
+        }
+        private List<ExcelTariffLines> UniqueRandomList(List<ExcelTariffLines> tariffLines, int maxRange, int totalRandomnoCount)
+        {
+            List<ExcelTariffLines> tariffList_random = new List<ExcelTariffLines>();
+            int count = 0;
+            Random random = new Random();
+            List<ExcelTariffLines> listRange = new List<ExcelTariffLines>();
+            for (int i = 0; i < totalRandomnoCount; i++)
+            {
+                listRange.Add(tariffLines.ElementAt(i));
+            }
+            while (listRange.Count > 0)
+            {
+                int item = random.Next(maxRange);
+                if (!tariffList_random.Contains(tariffLines.ElementAt(item)) && listRange.Count > 0)
+                {
+                    tariffList_random.Add(tariffLines.ElementAt(item));
+                    listRange.Remove(tariffLines.ElementAt(count));
+                    count++;
+                }
+            }
+            return tariffList_random;
         }
 
         private List<ExcelTariffLines> BuildAirFreightCostExcelLines(IWorksheet sheet, int tenant)
@@ -1173,7 +1406,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 error = true;
 
-                if(item.FromPortIsNotAir)
+                if (item.FromPortIsNotAir)
                 {
                     if (string.IsNullOrEmpty(errorText))
                     {
@@ -1196,7 +1429,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         errorText = errorText + ", Missing Origin Port";
                     }
-                }                
+                }
             }
 
             if (!string.IsNullOrEmpty(item.ToPortText) && string.IsNullOrEmpty(item.ToPortId))
@@ -1861,24 +2094,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 TariffUpdateService tariffUpdateService = new TariffUpdateService(tariffContext, new Dictionary<string, IContext>(), authToken.Tenant);
 
                 if (tariff != null)
-                {                                        
-                    TariffVersionPM iDraftVersion = tariff.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();                  
+                {
+                    TariffVersionPM iDraftVersion = tariff.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
 
                     if (iDraftVersion != null)
                     {
                         List<FromToClass> routs = this.ComputeRoutsList(args.From, args.To, authToken.Tenant);
-                        bool isValid = this.ValidateStartDate(tariff, iDraftVersion, routs, args.StartDate);                        
+                        bool isValid = this.ValidateStartDate(tariff, iDraftVersion, routs, args.StartDate, tariffContext);
 
-                        if(isValid)
+                        if (isValid)
                         {
-                            foreach(FromToClass rout in routs)
+                            foreach (FromToClass rout in routs)
                             {
                                 TariffLinePM myLine = iDraftVersion.TariffLines.Where(d => d.OriginPortId == rout.FromCode && d.DestinationPortId == rout.ToCode).FirstOrDefault();
                                 if (myLine != null)
                                 {
                                     myLine.ChangeSetOp = ChangeSetOperation.Update;
                                     myLine.StartDate = args.StartDate;
-                                    
+
                                     foreach (string charge in args.Surcharge)
                                     {
                                         string[] charge_array = charge.Split(',');
@@ -1919,10 +2152,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             tariff.ChangeSetOp = ChangeSetOperation.Update;
                             iDraftVersion.ChangeSetOp = ChangeSetOperation.Update;
                             tariffUpdateService.Update(tariff, true);
-                        }                       
-                    } 
+                        }
+                    }
                 }
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, "ok");
             }
 
@@ -1931,22 +2164,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        private bool ValidateStartDate(TariffPM tariff, TariffVersionPM iDraftVersion, List<FromToClass> routs, DateTime startDate)
+        private bool ValidateStartDate(TariffPM tariff, TariffVersionPM iDraftVersion, List<FromToClass> routs, DateTime startDate, ITariffModuleContext tariffContext)
         {
             bool isValid = true;
 
             TariffVersionPM iPreviousVersion = tariff.ActiveVersions.OrderByDescending(o => o.CreateDate).FirstOrDefault();
             if (iPreviousVersion != null)
             {
+                List<TariffLine> iPreviousLines = tariffContext.TariffLines.Where(d => d.Version == iPreviousVersion.Version && d.TariffId == tariff.Id).ToList();
+
                 List<TariffLinePM> draftLines = iDraftVersion.TariffLines.Where(d => (routs.Select(s => s.FromCode).Contains(d.OriginPortId) && routs.Select(s => s.ToCode).Contains(d.DestinationPortId))).ToList();
                 foreach (TariffLinePM linePM in draftLines)
                 {
                     if (linePM.StartDate != null)
                     {
-                        var iPreviousLine = iPreviousVersion.TariffLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
+                        TariffLine iPreviousLine = iPreviousLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
                         if (iPreviousLine != null)
                         {
-                            if (startDate > iPreviousLine.StartDate)
+                            if (startDate < iPreviousLine.StartDate)
                             {
                                 isValid = false;
                                 throw new ApplicationException("New start date can't be before the current tariff start date");
@@ -1961,7 +2196,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private List<FromToClass> ComputeRoutsList(List<string> fromList, List<string> toList, int tenant)
         {
             List<FromToClass> myResult = new List<FromToClass>();
-            
+
             foreach (string item_from in fromList)
             {
                 string[] from = item_from.Split(',');

@@ -13,12 +13,13 @@ export class PayablesTabComponent {
 
 
     public PayablesTab(shipperRef1: string, ShipmentType: string) {
-
+        this.Helper.WaitBusyIndicator();
         this.Helper.WaitByIdAndClick('Shipment.TH.Payables');
+        this.Helper.WaitBusyIndicator();
         this.Helper.ItemsVisibility('ATDSPayable-payable');
         this.Helper.WaitByIdAndClick('ATDSPayable-payable');//Auto-display 
 
-        // this.Helper.WaitByCssButtonClick('RedButton','Yes');
+         //this.Helper.WaitByCssButtonClick('RedButton','Yes');
         //var InvoiceAmount: any;
         if (ShipmentType == '') {
             this.amount1 = this.AddPayables('Air Frei', '10', '10');

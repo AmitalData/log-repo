@@ -40,7 +40,8 @@ export class NewARPayment {
         this.Helper.WaitByIdAndClick('ARPayment.B.Approve');
         this.Helper.WaitBusyIndicator();
       //  browser.sleep(6000);
-        this.Helper.WaitByIdAndClick('EditBackbutton');
+       // this.Helper.WaitByIdAndClick('EditBackbutton');
+
 
        // browser.sleep(6000);
 

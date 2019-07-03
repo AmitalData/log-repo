@@ -745,8 +745,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
             {
-             //   const string RaiseEventAWBKConst = "RaiseEventAWBK";
-             //   const string RaiseEventAWDAConst = "RaiseEventAWDA";
 
                 ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
                 string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
@@ -784,6 +782,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                     ObjectTableName = "GLAccount",
                                     IsAddedManually = false,
                                     EventTypeCode = "AWDA",
+                                    Notes = notes,
+                                });
+                            }
+                            else if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventAWNCConst)
+                            {
+                                String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingLineCreated", entityPM.Tenant).Replace(":", line.LineNumber + ":");
+                                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                {
+                                    EntityId = entityPM.Id,
+                                    Tenant = entityPM.Tenant,
+                                    UserId = contact.Id,
+                                    ObjectTableName = "GLAccount",
+                                    IsAddedManually = false,
+                                    EventTypeCode = "AWNC",
                                     Notes = notes,
                                 });
                             }

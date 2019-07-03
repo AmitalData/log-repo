@@ -25,6 +25,7 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.BL;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.Server.Tools.Counters;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {

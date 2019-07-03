@@ -517,7 +517,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "HybridPartner")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-
+       
         if (FeatureLocator.HasFeaturePermession("General", "SCHEDULERS")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "MNG";
@@ -528,7 +528,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "TasksScheduler")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-        }
+        } 
 
         if (FeatureLocator.HasFeaturePermession("General", "MAINCUSTOMERS")) {
             var item = new MenusTablePM();
@@ -1128,7 +1128,7 @@ export class MaintenanceComponent {
                         }
 
 
-                        logWindow.Title = "Schedulers";
+                        logWindow.Title = "Scheduler";
                         logWindow.IsShowCloseButton = true;
                         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/MainSchedulerComponent');
                     });
@@ -1489,6 +1489,10 @@ class MaintenanceMenuItem {
         }
 
         this.TranslatedName = myResult;
+        if (this.Code == "MASC") {
+
+            this.TranslatedName = "Scheduler";
+        }
         if (AppTool.IsNullOrEmpty(this.TranslatedName)) {
             this.TranslatedName = this.Code;
         }
