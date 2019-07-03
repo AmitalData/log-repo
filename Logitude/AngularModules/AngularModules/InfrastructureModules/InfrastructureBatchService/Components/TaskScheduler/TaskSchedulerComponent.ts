@@ -419,6 +419,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     public EntityPM: TasksSchedulerPM;
     public ObjectTableName: string = "TasksScheduler";
     public IsNew: boolean = false;
+    private newValueinDateFormat: Date;
 
  
 
@@ -484,13 +485,16 @@ export class TaskSchedulerItemClass extends BaseComponent {
             this.EntityPM.TriggerType = newValue;
         }
     }
-
+   
     get StartDateTime() { return this.EntityPM.StartDateTime; }
     set StartDateTime(newValue: Date) {
+
         if (this.EntityPM.StartDateTime != newValue) {
             this.EntityPM.StartDateTime = newValue;
-            this.EntityPM.StartDateTimeUTC = new Date(newValue.getUTCFullYear(), newValue.getUTCMonth(), newValue.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds(), newValue.getUTCMilliseconds());
-        }
+            this.newValueinDateFormat = new Date(newValue);
+            this.EntityPM.StartDateTimeUTC = new Date(this.newValueinDateFormat.getUTCFullYear(), this.newValueinDateFormat.getUTCMonth(), this.newValueinDateFormat.getUTCDate(), this.newValueinDateFormat.getUTCHours(), this.newValueinDateFormat.getUTCMinutes(), this.newValueinDateFormat.getUTCSeconds(), this.newValueinDateFormat.getUTCMilliseconds());
+           
+        } 
     }
 
     get RepeatInMinutes() { return this.EntityPM.RepeatInMinutes; }
