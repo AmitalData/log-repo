@@ -3,7 +3,7 @@ import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 import {Validator} from '../../Infrastructure/Validators/Validator';
-
+import { LuhnAlgorithm } from '../../Customs/Utilities/LuhnAlgorithm';
 import {DeclarationPM}          from '../EntityPMs/DeclarationPM';
 import {SupplierInvoiceItemPM}  from '../EntityPMs/SupplierInvoiceItemPM';
 
@@ -487,12 +487,35 @@ export class DeclarationValidator {
         }
     }
 
+    //Check if ImporterCode Valid
+    public CheckIsImporterCodeValid() {
+
+        if (this._DeclarationPM != null && !AppTool.IsNullOrEmpty(this._DeclarationPM.ImporterCode)) {
+
+            if (this._DeclarationPM.ImporterCode.length < 9) {
+                this.ValidationErrorMessageCodes.push("מספר יבואן קצר מידיי");
+            }
+            else if (this._DeclarationPM.ImporterCode.length > 9) {
+                this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
+            }
+            else {
+                var digit: string = this._DeclarationPM.ImporterCode.toString().substring(8);
+                var checkDigit: number = LuhnAlgorithm.CalculateLuhnAlgorithm(this._DeclarationPM.ImporterCode.substring(0, 8));
+
+                if (digit != checkDigit.toString()) {
+                    this.ValidationErrorMessageCodes.push(TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString());
+                }
+            }
+        
+        }
+    }
   
     public Validate(entityPM: DeclarationPM) {
    
         var result = [];
         this._DeclarationPM = entityPM;
         this.EmptyConsignmentPackageCheck();
+        this.CheckIsImporterCodeValid();
 
         return this.ValidationErrorMessageCodes;
     }
