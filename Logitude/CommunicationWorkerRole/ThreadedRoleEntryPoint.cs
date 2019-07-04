@@ -233,10 +233,35 @@ namespace CommunicationWorkerRole
         List<BatchServicesDefinitionPM> BatchServicesDefinitions;
         private void UpdateRunningWR()
         {
-            
+            string SpecialBatchCode = null;
+            var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
+            if (iAppSettings != null)
+            {
+                if (iAppSettings["BatchCode"] != null)
+                {
+                    SpecialBatchCode = iAppSettings["BatchCode"].ToString();
+                }
+            }
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
             List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
+            if (!string.IsNullOrEmpty(SpecialBatchCode))
+            {
+                var temp = SpecialBatchCode.Split(',');
+                if (temp.Length > 0)
+                {
+                    var BatchCode = temp[0].ToLower();
+                    var IsActivate = temp[1].ToLower();
+                    if (IsActivate == "true")
+                    {
+                        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
+                    }
+                    else
+                    {
+                        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
+                    }
+                }
+            }
             if (BatchServicesDefinitions == null)
             {
                 BatchServicesDefinitions = BatchServicesDefinitionsTemp;
