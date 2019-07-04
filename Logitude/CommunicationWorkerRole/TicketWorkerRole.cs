@@ -44,7 +44,9 @@ namespace CommunicationWorkerRole
                     {
                         this.Tenant = 0;
 
-                        queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+                        //queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+                        queueservice = new DbQueueService();
+                        queueservice.InitializeQueue(queueName, 0);
                         var response = queueservice.Receive();
                         LastActivity = DateTime.UtcNow;
                         if (response.MessageId != null)
@@ -173,7 +175,7 @@ namespace CommunicationWorkerRole
             IQueueService queueservice = QueueServiceManager.GetQueueService("ticketqueue", Tenant);
             ticketEscalationRep = new TicketEscalationRepository(myTicket.Tenant);
             List<TicketEscalation> myEscalations = ticketEscalationRep.GetTicketEscalations(myTicket.Id, myTicket.Tenant).ToList();
-            TicketEscalation myTicketEscalation = myEscalations.Where( a=>a.IsClose == false && a.EscalationFor == type).OrderBy(a => a.DueDate).FirstOrDefault();
+            TicketEscalation myTicketEscalation = myEscalations.Where(a => a.IsClose == false && a.EscalationFor == type).OrderBy(a => a.DueDate).FirstOrDefault();
 
             if (myTicketEscalation != null)
             {
@@ -189,7 +191,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void SendEmailAlerts(TicketEscalation myCurrentTicket,TicketPM myTicket )
+        private void SendEmailAlerts(TicketEscalation myCurrentTicket, TicketPM myTicket)
         {
             this.CreateCommunicationLog(myCurrentTicket, myTicket);
             this.AddEscalationEvent(myCurrentTicket, myTicket);
@@ -199,7 +201,7 @@ namespace CommunicationWorkerRole
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(Tenant);
             DocumentRepository documentRepository = new DocumentRepository(commonContext);
-            CommunicationLogRepository  communicationLogRepository = new CommunicationLogRepository(commonContext);
+            CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
 
             string body = BuildAlertEmailHTML(myCurrentTicket, myTicket);
@@ -284,18 +286,18 @@ namespace CommunicationWorkerRole
 
             try
             {
-				//IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", Tenant);
-				//Dictionary<string, string> message = new Dictionary<string, string>() 
-				//    {
-				//        { "CommunicationLogId", myCommunicationLogId}, 
-				//        { "Tenant", Tenant.ToString() }, 
-				//    };
+                //IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", Tenant);
+                //Dictionary<string, string> message = new Dictionary<string, string>() 
+                //    {
+                //        { "CommunicationLogId", myCommunicationLogId}, 
+                //        { "Tenant", Tenant.ToString() }, 
+                //    };
 
-				//queueservice.Send(message);
+                //queueservice.Send(message);
 
-				DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
-				queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
-			}
+                DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } });
+            }
 
             catch (Exception ex)
             {
@@ -342,7 +344,7 @@ namespace CommunicationWorkerRole
 
             EnvelopeHtmlTemplate.Append(//font-size:11px;
                 "<p style='border-style:solid;border-radius:7px;border-color:#385D8A;background-color:#4F81BD;font-family:Century;text-align:center;color:white;vertical-align: middle;padding:5px'>"
-                + "Automatic e<span style='font-family:Arial'>-</span>mail Notification" + "<br />" +"Ticket # "+ myTicket.TicketNumber
+                + "Automatic e<span style='font-family:Arial'>-</span>mail Notification" + "<br />" + "Ticket # " + myTicket.TicketNumber
                 + "</p>"
              );
 
@@ -375,7 +377,7 @@ namespace CommunicationWorkerRole
             EnvelopeHtmlTemplate.Append(HtmlTemplate.ToString());
 
             EnvelopeHtmlTemplate.Append("<br/><br/>");
-           
+
             EnvelopeHtmlTemplate.Append("</p>");
             EnvelopeHtmlTemplate.Append("</div>");
             EnvelopeHtmlTemplate.Append("<br/>");
