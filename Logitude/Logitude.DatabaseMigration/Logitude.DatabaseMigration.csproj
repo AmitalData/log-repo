@@ -1205,6 +1205,10 @@
     <Compile Include="Migrations\201907031511508_NewTable_GLAccountCounters.Designer.cs">
       <DependentUpon>201907031511508_NewTable_GLAccountCounters.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907040926273_AddConstraints_GLAccountCounters.cs" />
+    <Compile Include="Migrations\201907040926273_AddConstraints_GLAccountCounters.Designer.cs">
+      <DependentUpon>201907040926273_AddConstraints_GLAccountCounters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2050,6 +2054,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907031511508_NewTable_GLAccountCounters.resx">
       <DependentUpon>201907031511508_NewTable_GLAccountCounters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907040926273_AddConstraints_GLAccountCounters.resx">
+      <DependentUpon>201907040926273_AddConstraints_GLAccountCounters.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
