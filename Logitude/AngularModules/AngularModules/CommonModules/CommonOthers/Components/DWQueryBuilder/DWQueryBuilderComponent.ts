@@ -1293,7 +1293,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             if (DWObjectField.FilterType) {
                 this.FilterType = DWObjectField.FilterType;
             } 
-            this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
+           
           
 
             if (DWObjectField.IsSetDefaults) {
@@ -1306,6 +1306,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
             //this.Name = DWObjectField.Name;
         }
+
+        this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
+
+
+
 
     }
 
@@ -1950,8 +1955,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
 
         if (field.ParentDataTypeCode == "DateTime" || field.ParentDataTypeCode == "Date") {
-            this.list.push(this.beforeOp);
+
             this.list.push(this.afterOp);
+            this.list.push(this.beforeOp);
             this.list.push(this.previousOp);
             this.list.push(this.currentOp);
             this.list.push(this.nextOp);
