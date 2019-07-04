@@ -133,7 +133,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CBSA).HasColumnName("CBSA");
             this.Property(t => t.CAAT).HasColumnName("CAAT");
             this.Property(t => t.CheckDigitControlAlgorithmCode).HasColumnName("CheckDigitControlAlgorithmCode");
-
+            this.Property(t => t.ApplyVATForAllPartners).HasColumnName("ApplyVATForAllPartners");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

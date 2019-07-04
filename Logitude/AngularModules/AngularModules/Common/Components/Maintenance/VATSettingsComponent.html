@@ -1,10 +1,320 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+<style type="text/css">
+    .SystemDefaultsBox {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
 
-</body>
-</html>
+    .SystemDefaultsBoxHeader {
+        height: 20px;
+        font-size: 12px;
+        color: #1B90CB;
+        text-indent: 5px;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(245, 245, 245, 1) 0%,rgba(243, 243, 243, 1) 50.24%,rgba(236, 236, 236, 1) 69.98%,rgba(224, 224, 224, 1) 84.35%,rgba(207, 207, 207, 1) 96.04%,rgba(199, 199, 199, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(245, 245, 245, 1) ),color-stop(0.5024,rgba(243, 243, 243, 1) ),color-stop(0.6998,rgba(236, 236, 236, 1) ),color-stop(0.8435,rgba(224, 224, 224, 1) ),color-stop(0.9604,rgba(207, 207, 207, 1) ),color-stop(1,rgba(199, 199, 199, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#F5F5F5', endColorstr='#C7C7C7' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(245, 245, 245, 1) 0%, rgba(243, 243, 243, 1) 50.24%, rgba(236, 236, 236, 1) 69.98%, rgba(224, 224, 224, 1) 84.35%, rgba(207, 207, 207, 1) 96.04%, rgba(199, 199, 199, 1) 100%);
+    }
+</style>
+
+<table *ngIf="IsVisibile">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <ScrollViewer>
+                <div class="TableHolder" style="padding-top: 5px;">
+                    <table>
+
+                        <tr>
+                            <td>
+                                <table>
+                                    <!-- VAT Settings-->
+                                    <tr>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="height: 100%">
+                                                        <div class="SystemDefaultsBox">
+                                                            <table>
+                                                                <tr class="SystemDefaultsBoxHeader">
+                                                                    <td>VAT Number Settings - Authorized dealer number</td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td style="padding-left: 5px; padding-right: 5px;">
+                                                                        <table class="FixedTable">
+                                                                            <tr class="FormFieldRow">
+                                                                                <td style="width: 155px;">
+                                                                                    <LogLabel [ObjectFieldName]="'ApplyVATForAllPartners'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td style="width:240px;">
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <RadioButton [Name]="'ApplyVATRadio'" [IsChecked]="ApplyVATForCustomers" (Checked)="SetApplyVAT('C')" [Text]="'Customers'" ></RadioButton>
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px; min-width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <RadioButton [Name]="'ApplyVATRadio'" [IsChecked]="ApplyVATForAllPartners" (Checked)="SetApplyVAT('A')" [Text]="'All Partners'"></RadioButton>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'VatFormatTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <LogLov [ObjectFieldName]="'VatFormatTypeCode'"
+                                                                                            [ObjectTableName]="ObjectTableName"
+                                                                                            [DataContext]="DataContext"
+                                                                                            [LookUpTableName]="'VatFormatType'"
+                                                                                            [SelectedValue]="VatFormatTypeCode">
+                                                                                    </LogLov>
+
+                                                                                </td>
+
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'VatFormatCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <LogLov [ObjectFieldName]="'VatFormatCountryId'"
+                                                                                            [ObjectTableName]="ObjectTableName"
+                                                                                            [DataContext]="DataContext"
+                                                                                            [LookUpTableName]="'Country'"
+                                                                                            [SelectedValue]="VatFormatCountryId">
+                                                                                    </LogLov>
+
+                                                                                </td>
+
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <!-- IsNumeric -->
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'IsNumeric'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <RadioButton [Name]="'CustomerActivationRadio'" [IsChecked]="IsNumeric" (Checked)="SetCustomerActivationRadio('N')" [Text]="'Numeric'" [IsEnabled]="IsNumericEnabled"></RadioButton>
+                                                                                            </td>
+
+                                                                                            <td style="width: 5px; min-width: 5px;">
+                                                                                                <div></div>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <RadioButton [Name]="'CustomerActivationRadio'" [IsChecked]="IsAlphaNumeric" (Checked)="SetCustomerActivationRadio('A')" [Text]="'Alpha-Numeric'" [IsEnabled]="IsNumericEnabled"></RadioButton>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <!-- VatSize -->
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'VatSize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <div style="width:100px;">
+                                                                                        <LogTextBox [ObjectFieldName]="'VatSize'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </div>
+                                                                                </td>
+
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <!-- CheckDigitControlAlgorithmCode -->
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'CheckDigitControlAlgorithmCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <LogLov [ObjectFieldName]="'CheckDigitControlAlgorithmCode'"
+                                                                                            [ObjectTableName]="'Tenant'"
+                                                                                            [DataContext]="DataContext"
+                                                                                            [LookUpTableName]="'CheckDigitControlAlgorithm'"
+                                                                                            [SelectedValue]="CheckDigitControlAlgorithmCode">
+                                                                                    </LogLov>
+
+                                                                                </td>
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <!-- Mandatory -->
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'VatMandatoryTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <LogLov [ObjectFieldName]="'VatMandatoryTypeCode'"
+                                                                                            [ObjectTableName]="'Tenant'"
+                                                                                            [DataContext]="DataContext"
+                                                                                            [LookUpTableName]="'VatMandatoryType'"
+                                                                                            [SelectedValue]="VatMandatoryTypeCode">
+                                                                                    </LogLov>
+
+                                                                                </td>
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'VatMandatoryCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <LogLov [ObjectFieldName]="'VatMandatoryCountryId'"
+                                                                                            [ObjectTableName]="'Tenant'"
+                                                                                            [DataContext]="DataContext"
+                                                                                            [LookUpTableName]="'Country'"
+                                                                                            [SelectedValue]="VatMandatoryCountryId">
+                                                                                    </LogLov>
+
+                                                                                </td>
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td colspan="3">
+                                                                                    <table>
+                                                                                        <tr>
+                                                                                            <td style="width: 230px;">
+                                                                                                <LogLabel [ObjectFieldName]="'VatMandatoryForPotentialCustomers'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                            </td>
+
+                                                                                            <td>
+                                                                                                <LogCheckBox [ObjectFieldName]="'VatMandatoryForPotentialCustomers'" [Checked]="VatMandatoryForPotentialCustomers" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsDisabled]="!IsVatMandatoryForPotentialCustomers"></LogCheckBox>
+                                                                                            </td>
+                                                                                            <td><div></div></td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'VatUniqueTypeCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <LogLov [ObjectFieldName]="'VatUniqueTypeCode'"
+                                                                                            [ObjectTableName]="'Tenant'"
+                                                                                            [DataContext]="DataContext"
+                                                                                            [LookUpTableName]="'VatUniqueType'"
+                                                                                            [SelectedValue]="VatUniqueTypeCode">
+                                                                                    </LogLov>
+
+                                                                                </td>
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <tr class="FormFieldRow">
+                                                                                <td>
+                                                                                    <LogLabel [ObjectFieldName]="'VatUniqueCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                </td>
+
+                                                                                <td>
+                                                                                    <LogLov [ObjectFieldName]="'VatUniqueCountryId'"
+                                                                                            [ObjectTableName]="'Tenant'"
+                                                                                            [DataContext]="DataContext"
+                                                                                            [LookUpTableName]="'Country'"
+                                                                                            [SelectedValue]="VatUniqueCountryId">
+                                                                                    </LogLov>
+
+                                                                                </td>
+                                                                                <td><div></div></td>
+                                                                            </tr>
+
+                                                                            <tr><td colspan="3"><div></div></td></tr>
+                                                                        </table>
+
+                                                                    </td>
+
+                                                                </tr>
+
+                                                            </table>
+
+                                                        </div>
+
+                                                    </td>
+
+                                                    <td style="width: 4px;">
+                                                        <div></div>
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr style="height:10px"> <td> <div></div></td></tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </ScrollViewer>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

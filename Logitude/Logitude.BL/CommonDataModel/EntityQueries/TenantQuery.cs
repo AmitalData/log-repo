@@ -150,6 +150,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CBSA = a.CBSA,
                                                 IsTestTenant = a.IsTestTenant,
                                                 CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
+                                                ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -309,6 +310,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         CBSA = tt.CBSA,
                         IsTestTenant = tt.IsTestTenant,
                         CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
+                        ApplyVATForAllPartners = tt.ApplyVATForAllPartners,
                     };
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -474,6 +476,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CBSA = tt.CBSA,
                     IsTestTenant = tt.IsTestTenant,
                     CheckDigitControlAlgorithmCode = tt.CheckDigitControlAlgorithmCode,
+                    ApplyVATForAllPartners = tt.ApplyVATForAllPartners,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -621,7 +624,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            CBSA = a.CBSA,
                                            IsTestTenant = a.IsTestTenant,
                                            CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
+                                           ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -768,7 +771,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        CBSA = a.CBSA,
                                        IsTestTenant = a.IsTestTenant,
                                        CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
+                                       ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -919,7 +922,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                CBSA = a.CBSA,
                                                IsTestTenant = a.IsTestTenant,
                                                CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
+                                               ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1069,7 +1072,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            CBSA = a.CBSA,
                                            IsTestTenant = a.IsTestTenant,
                                            CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
+                                           ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1211,7 +1214,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        CBSA = a.CBSA,
                                        IsTestTenant = a.IsTestTenant,
                                        CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
+                                       ApplyVATForAllPartners = a.ApplyVATForAllPartners,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1388,6 +1391,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CBSA = myPOCO.CBSA,
                     IsTestTenant = myPOCO.IsTestTenant,
                     CheckDigitControlAlgorithmCode = myPOCO.CheckDigitControlAlgorithmCode,
+                    ApplyVATForAllPartners = myPOCO.ApplyVATForAllPartners,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1520,7 +1524,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CBSA = a.CBSA,
                                                 IsTestTenant = a.IsTestTenant,
                                                 CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
-
                                             };
             return result;
         }

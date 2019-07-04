@@ -52,7 +52,7 @@ export class VATSettingsComponent extends BaseComponent {
                 }
                 else {
                     this.isAlphaNumeric = !this.IsNumeric;
-                    this.GetQuestionnairesByTenant();
+                    this.applyVATForCustomers = !this.ApplyVATForAllPartners;
                     this.SetUIProperties();
                     this.IsVisibile = true;
                 }
@@ -72,7 +72,7 @@ export class VATSettingsComponent extends BaseComponent {
                 }
 
                 this.isAlphaNumeric = !this.IsNumeric;
-                this.GetQuestionnairesByTenant();
+                this.applyVATForCustomers = !this.ApplyVATForAllPartners;
                 this.SetUIProperties();
                 this.IsVisibile = true;
             }
@@ -84,164 +84,8 @@ export class VATSettingsComponent extends BaseComponent {
         this.SetUIProperties_VatUnique();
         this.SetUIProperties_VatMandatory();
         this.SetUIProperties_VatFormat();
-        this.SetCustomerPotentialTelProperties();
-        this.SetCustomerPotentialFaxProperties();
     }
-    private SetCustomerPotentialTelProperties() {
-        if (!this.IsCustomerTelRequired) {
-            if (this.IsPotentialTelRequired) {
-                this.IsCustomerTelRequired = true;
-                this.UIProperties.SetEnabled("IsCustomerTelRequired", this.ObjectTableName, false);
-            }
-            else {
-                this.IsCustomerTelRequired = false;
-                this.UIProperties.SetEnabled("IsCustomerTelRequired", this.ObjectTableName, true);
-            }
-        }
-
-        else {
-            if (this.IsPotentialTelRequired) {
-                this.UIProperties.SetEnabled("IsCustomerTelRequired", this.ObjectTableName, false);
-            }
-            else {
-                this.UIProperties.SetEnabled("IsCustomerTelRequired", this.ObjectTableName, true);
-            }
-        }
-    }
-    private SetCustomerPotentialFaxProperties() {
-        if (!this.IsCustomerFaxRequired) {
-            if (this.IsPotentialFaxRequired) {
-                this.IsCustomerFaxRequired = true;
-                this.UIProperties.SetEnabled("IsCustomerFaxRequired", this.ObjectTableName, false);
-            }
-            else {
-                this.IsCustomerFaxRequired = false;
-                this.UIProperties.SetEnabled("IsCustomerFaxRequired", this.ObjectTableName, true);
-            }
-
-            //FirePropertyChanged("IsCustomerFaxRequired");
-        }
-
-        else {
-            if (this.IsPotentialFaxRequired) {
-                this.UIProperties.SetEnabled("IsCustomerFaxRequired", this.ObjectTableName, false);
-            }
-            else {
-                this.UIProperties.SetEnabled("IsCustomerFaxRequired", this.ObjectTableName, true);
-            }
-        }
-    }
-
-    //Questionnaire
-    private GetQuestionnairesByTenant() {
-        this.QuestionnaireList = [];
-        var service: QuestionnaireListService = new QuestionnaireListService();
-        service.getAll().subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                var list: QuestionnaireList[] = response.Result;
-                if (list != null) {
-                    list = list.filter(q => q.InActive == false);
-                }
-                list.forEach(item => {
-                    this.QuestionnaireList.push(item);
-                });
-
-                var None: QuestionnaireList = new QuestionnaireList();
-                None.Name = "None";
-                this.QuestionnaireList.push(None);
-            }
-        });
-    }
-
-    private questionnaireSelected: QuestionnaireList;
-    get QuestionnaireSelected() {
-        if (!AppTool.IsNullOrEmpty(this.tenantPM.DefaultQuestionnaireId)) {
-            if (QuestionnaireList != null) {
-                this.questionnaireSelected = this.QuestionnaireList.filter(d => d.Id == this.tenantPM.DefaultQuestionnaireId)[0];
-            }
-        }
-
-        else if (this.tenantPM.DefaultQuestionnaireId == null) {
-            this.questionnaireSelected = this.QuestionnaireList.filter(d => d.Name == "None")[0];
-        }
-
-        return this.questionnaireSelected;
-    }
-    set QuestionnaireSelected(value: QuestionnaireList) {
-        this.questionnaireSelected = value;
-
-        if (this.questionnaireSelected.Name == "None") {
-            this.tenantPM.DefaultQuestionnaireId = null;
-        }
-        else {
-            this.tenantPM.DefaultQuestionnaireId = this.questionnaireSelected.Id;
-        }
-    }
-
-    get DefaultQuestionnaireId() {
-        return this.tenantPM.DefaultQuestionnaireId;
-    }
-    set DefaultQuestionnaireId(value: string) {
-        this.tenantPM.DefaultQuestionnaireId = value;
-    }
-
-    //Settings
-    get IsCustomerTelRequired() { return this.tenantPM.IsCustomerTelRequired; }
-    set IsCustomerTelRequired(value: boolean) {
-        if (this.tenantPM.IsCustomerTelRequired != value) {
-            this.tenantPM.IsCustomerTelRequired = value;
-            this.SetCustomerPotentialTelProperties();
-        }
-    }
-
-    get IsCustomerFaxRequired() { return this.tenantPM.IsCustomerFaxRequired; }
-    set IsCustomerFaxRequired(value: boolean) {
-        if (this.tenantPM.IsCustomerFaxRequired != value) {
-            this.tenantPM.IsCustomerFaxRequired = value;
-
-            this.SetCustomerPotentialFaxProperties();
-        }
-    }
-
-    get IsPickDelAdrsRequired() { return this.tenantPM.IsPickDelAdrsRequired; }
-    set IsPickDelAdrsRequired(value: boolean) {
-        if (this.tenantPM.IsPickDelAdrsRequired != value) {
-            this.tenantPM.IsPickDelAdrsRequired = value;
-        }
-    }
-
-    get IsCustomerAddress1Required() { return this.tenantPM.IsCustomerAddress1Required; }
-    set IsCustomerAddress1Required(value: boolean) {
-        if (this.tenantPM.IsCustomerAddress1Required != value) {
-            this.tenantPM.IsCustomerAddress1Required = value;
-        }
-    }
-
-    get HasPrimaryContact() { return this.tenantPM.HasPrimaryContact; }
-    set HasPrimaryContact(value: boolean) {
-        if (this.tenantPM.HasPrimaryContact != value) {
-            this.tenantPM.HasPrimaryContact = value;
-        }
-    }
-
-    get IsPotentialTelRequired() { return this.tenantPM.IsPotentialTelRequired; }
-    set IsPotentialTelRequired(value: boolean) {
-        if (this.tenantPM.IsPotentialTelRequired != value) {
-            this.tenantPM.IsPotentialTelRequired = value;
-            this.SetCustomerPotentialTelProperties();
-        }
-    }
-
-    get IsPotentialFaxRequired() { return this.tenantPM.IsPotentialFaxRequired; }
-    set IsPotentialFaxRequired(value: boolean) {
-        if (this.tenantPM.IsPotentialFaxRequired != value) {
-            this.tenantPM.IsPotentialFaxRequired = value;
-            this.SetCustomerPotentialFaxProperties();
-        }
-    }
-
-    //VAT Settings
-
+    
     //VAT format by country
     get VatFormatTypeCode() { return this.tenantPM.VatFormatTypeCode; }
     set VatFormatTypeCode(value: string) {
@@ -295,8 +139,6 @@ export class VATSettingsComponent extends BaseComponent {
     }
 
     private SetUIProperties_VatFormat() {
-
-
         this.UIProperties.SetEnabled("CheckDigitControlAlgorithmCode", this.ObjectTableName, this.VatFormatTypeCode == "NOF" ? false : true);
 
         if (this.VatFormatTypeCode == "FSC") {
@@ -489,6 +331,32 @@ export class VATSettingsComponent extends BaseComponent {
         }
         else {
             this.IsAlphaNumeric = false;
+        }
+    }
+
+    get ApplyVATForAllPartners() { return this.tenantPM.ApplyVATForAllPartners; }
+    set ApplyVATForAllPartners(value: boolean) {
+        if (this.tenantPM.ApplyVATForAllPartners != value) {
+            this.applyVATForCustomers = !value;
+            this.tenantPM.ApplyVATForAllPartners = value;
+        }
+    }
+
+    private applyVATForCustomers;
+    get ApplyVATForCustomers() { return this.applyVATForCustomers; }
+    set ApplyVATForCustomers(value: boolean) {
+        if (this.applyVATForCustomers != value) {
+            this.applyVATForCustomers = value;
+            this.tenantPM.ApplyVATForAllPartners = !value;
+        }
+    }
+
+    SetApplyVAT(code: string) {
+        if (code == 'C') {
+            this.ApplyVATForAllPartners = false;
+        }
+        else {
+            this.ApplyVATForCustomers = false;
         }
     }
 }

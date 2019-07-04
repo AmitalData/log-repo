@@ -182,5 +182,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("CheckDigitControlAlgorithmCode")]
         public virtual CheckDigitControlAlgorithm CheckDigitControlAlgorithm { get; set; }
         public string CheckDigitControlAlgorithmCode { get; set; }
+
+        public bool ApplyVATForAllPartners { get; set; }
     }
 }
