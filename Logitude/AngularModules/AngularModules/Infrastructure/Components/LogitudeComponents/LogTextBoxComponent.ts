@@ -92,6 +92,20 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
     @Input() Max: number;
     @Input() Min: number;
     @Input() RowsCount: number;
+    // @Input() ForceDirection: string; // for now, its working only for multiline textbox,
+
+
+    private _ForceDirection : string;
+    @Input() public get ForceDirection() : string {
+        return this._ForceDirection;
+    }
+    public set ForceDirection(v : string) {
+        this._ForceDirection = v;
+        this.isRTL = this.ForceDirection == "rtl";
+
+    }
+
+
     private firstDigit: string = ",";
     private secondDigit: string = ".";
     isFirstTime: boolean = true;
@@ -194,6 +208,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
         this.setDigits();
         //this.CurrentSession.isShiftClicked = false;
         //this.CurrentSession.isTabWithShiftClicked = false;
+
     }
     keydown: boolean;
     isCtrlKeyDown: boolean = false;
@@ -291,30 +306,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
 
         }
 
-
-        //check rowscount
-        // if (this.IsMultiline) { // commented due single line expand window
-            setTimeout(() => {
-
-                if (this.RowsCount) {
-
-                    //calculate height: (rowcount * 18 row height) + 8 padding
-                    this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
-                } else {
-                    var _element = document.getElementById(this.InputId)
-                    var elHeight = _element.clientHeight;
-                    var calculatedRowsCount = (elHeight / 18);
-                    var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
-
-                    this.RowsCount = ___roundedCalculatedRowsCountHaha;
-                    this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
-
-                }
-
-            }, 100);
-        // }
+        this.setRowsCount();
 
     }
+
 
     RunComponent() {
         var input = document.getElementById(this.InputId);
@@ -1717,6 +1712,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
         // windowArgs.ObjectFieldName = this.ObjectFieldName;
         windowArgs.TextValue = this.TextValue;
         windowArgs.RowsCount = this.RowsCount;
+        windowArgs.IsTextBoxRTL = this.isRTL;
 
         var wind = new LogitudeWindow();
         // wind.IsFullScreen = true;
@@ -1738,4 +1734,27 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
             }
         });
     }
+
+    setRowsCount() {
+        //check rowscount
+        // if (this.IsMultiline) { // commented due single line expand window
+
+        setTimeout(() => {
+            if (this.RowsCount) {
+                //calculate height: (rowcount * 18 row height) + 8 padding
+                this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+            }
+            else {
+                var _element = document.getElementById(this.InputId);
+                var elHeight = _element.clientHeight;
+                var calculatedRowsCount = (elHeight / 18);
+                var ___roundedCalculatedRowsCountHaha = Math.trunc(calculatedRowsCount);
+                this.RowsCount = ___roundedCalculatedRowsCountHaha;
+                this.textboxHeight = ((this.RowsCount * 18) + 8) + 'px';
+            }
+        }, 100);
+    }
+
+
 }
+
