@@ -336,13 +336,52 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         {
                             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
                             {
+                                bool hasContainerInsidePackages = false;
                                 if (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "FTL")
                                 {
                                     item.IsContainer = true;
                                 }
 
-                                item.Volume = ComputeHelper.ComputeVolume(item, entityPM);
+                                if (!item.IsContainer)
+                                {
+                                    if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
+                                    {
+                                        throw new ApplicationException("Inside Packages allowed in FCL/FTL shipments only");
+                                    }
+                                   
+                                }
+                                else
+                                {
+                                    if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
+                                    {
+                                        if (item.Quantity == null)
+                                        {
+                                            throw new ApplicationException("Inside Packages Quantity is required");
+                                        }
+
+                                        hasContainerInsidePackages = true;
+                                        item.Weight = 0;
+                                        item.Volume = 0;
+                                        item.InsideShipmentPackages.ForEach(inside =>
+                                        {
+                                            if (inside.Weight != null)
+                                            {
+                                                item.Weight += inside.Weight;
+                                            }
+
+                                            if (inside.Volume != null)
+                                            {
+                                                item.Volume += inside.Volume;
+                                            }
+                                        });
+                                    }
+                                }
+                                if (!hasContainerInsidePackages)
+                                {
+                                    item.Volume = ComputeHelper.ComputeVolume(item, entityPM);
+                                }
                                 item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
+                                hasContainerInsidePackages = false;
                             }
                         }
 
