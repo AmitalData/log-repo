@@ -425,7 +425,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(entityPM.CollateralId) && !string.IsNullOrWhiteSpace(entityPM.CustomsDocId)) // Send automatically if from Collateral screen
+            if (!string.IsNullOrWhiteSpace(entityPM.CollateralId)
+                //&& !string.IsNullOrWhiteSpace(entityPM.CustomsDocId)) 
+                && string.IsNullOrWhiteSpace(entityPM.CustomsDocId))
+            // Send automatically if from Collateral screen
             {
                 send = true;
             }
