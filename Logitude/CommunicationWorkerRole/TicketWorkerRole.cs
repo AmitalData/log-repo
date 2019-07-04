@@ -44,7 +44,9 @@ namespace CommunicationWorkerRole
                     {
                         this.Tenant = 0;
 
-                        queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+                        //queueservice = QueueServiceManager.GetQueueService(queueName, 0);
+                        queueservice = new DbQueueService();
+                        queueservice.InitializeQueue(queueName, 0);
                         var response = queueservice.Receive();
                         LastActivity = DateTime.UtcNow;
                         if (response.MessageId != null)
