@@ -109,6 +109,19 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+        //public ARPaymentPM SetARPaymentInvoicesIds(ARPayment payment, ARPaymentPM paymentPM)
+        //{
+        //    if(payment.PaymentInvoices.Count >0)
+        //    {
+        //        foreach(ARPaymentInvoicePM paymentInvoice in payment.PaymentInvoices)
+        //        {
+
+        //            paymentPM.PaymentInvoices
+
+        //        }
+        //    }
+        //}
+
        
 
 

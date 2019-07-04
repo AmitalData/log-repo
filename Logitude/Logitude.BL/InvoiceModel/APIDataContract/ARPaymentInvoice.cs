@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,8 @@ namespace Logitude.BL.InvoiceModel.APIDataContract
    
         public double? LocalAmount { get; set; }
         public double? ForeignAmount { get; set; }
-     
-        public string ForeignCurrencyId { get; set; }
-  
+
+        public Currency ForeignCurrency { get; set; }
         public string ARInvoiceNumber { get; set; }
     
     }
