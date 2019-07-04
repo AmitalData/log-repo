@@ -432,6 +432,7 @@ export class DWQueryBuilderComponent extends BaseComponent {
     ShowOrderArrows(item) {
         this.FieldSelectedItem = item;
     }
+    
     //ShowOrderArrows(item) {
     //}
     btnDown_Click(selectedItem) {
