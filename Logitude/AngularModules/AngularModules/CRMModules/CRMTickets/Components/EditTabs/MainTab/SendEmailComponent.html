@@ -157,7 +157,7 @@
                                                 <EmailSearchTextBox [EmailsText]="CCs" (EmailsTextChanged)="CCs = $event" (ValidationErrorsListChanged)="ValidateEmails($event)"></EmailSearchTextBox>
                                             </div>
                                         </td>
-                                    
+
                                         <td style="width:10px;">
                                             <div></div>
                                         </td>
@@ -175,7 +175,7 @@
                                                 <EmailSearchTextBox [EmailsText]="InternalUsers" [IsUsersList]="true" (EmailsTextChanged)="InternalUsers = $event"></EmailSearchTextBox>
                                             </div>
                                         </td>
-                                       
+
                                         <td style="width:10px;">
                                             <div></div>
                                         </td>
@@ -224,7 +224,7 @@
                                                         </table>
                                                     </td>
                                                     <td><div></div></td>
-                                                    
+
                                                     <td style="text-align:center;width:50px;">
                                                         <table>
                                                             <tr *ngIf="TextAlignRegionVisibility">
@@ -258,7 +258,9 @@
                                     <tr>
                                         <td colspan="3">
                                             <div style="height: 100%; width: 100%;">
-                                                <LogTextBox [NoObjectField]="true"  [ngStyle]="{direction: FlowDirection}" [IsMultiline]="true" [HideColumns]="true" [ObjectFieldName]="'CorrespondenceLine'" [Text]="CorrespondenceLine" [DataContext]="DataContext"></LogTextBox>
+                                                <LogTextBox
+                                                    [NoObjectField]="true" [ForceDirection]="FlowDirection" [IsMultiline]="true"
+                                                    [HideColumns]="true" [ObjectFieldName]="'CorrespondenceLine'" [Text]="CorrespondenceLine" [DataContext]="DataContext"></LogTextBox>
                                             </div>
                                         </td>
                                     </tr>

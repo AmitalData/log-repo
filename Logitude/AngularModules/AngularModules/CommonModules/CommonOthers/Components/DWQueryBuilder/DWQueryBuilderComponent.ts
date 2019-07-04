@@ -1293,7 +1293,7 @@ export class DWObjectFieldsDetails extends BaseComponent {
             if (DWObjectField.FilterType) {
                 this.FilterType = DWObjectField.FilterType;
             } 
-            this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
+           
           
 
             if (DWObjectField.IsSetDefaults) {
@@ -1306,6 +1306,11 @@ export class DWObjectFieldsDetails extends BaseComponent {
 
             //this.Name = DWObjectField.Name;
         }
+
+        this.FilterTypeSelected = this.FilterTypes.filter(d => d.Code == this.FilterType)[0];
+
+
+
 
     }
 
@@ -1435,6 +1440,13 @@ export class DWObjectFieldsDetails extends BaseComponent {
             var MyTable = this.MyParentClass.AllTables.filter(a => a.Code == this.DimensionTableCode);
             if (MyTable && MyTable.length > 0) {
                 this.Code = MyTable[0].DefaultFilterBy;
+                if (this.code && this.MyParentClass && this.MyParentClass.AllFieldsDataSource) {
+                    var field = this.MyParentClass.AllFieldsDataSource.filter(d => d.Code == this.code && d.DWObjectTableCode == this.DimensionTableCode)[0];
+                    if (field) {
+                        this.LOVAdditionalColumns = field.LOVAdditionalColumns;
+                    }
+                }
+
                 this.DWObjectTableCode = MyTable[0].Code;
                 this.DisplayName = this.ComputeDisplayName(this);//(AppTool.IsNullOrEmpty(this.DisplayName)) ? (this.DWObjectTableCode + ' ' + this.Code) : (this.DisplayName);
                 this.ParentDimTabelName = this.DimensionTableCode;
@@ -1943,8 +1955,9 @@ export class DWObjectFieldsDetails extends BaseComponent {
         }
 
         if (field.ParentDataTypeCode == "DateTime" || field.ParentDataTypeCode == "Date") {
-            this.list.push(this.beforeOp);
+
             this.list.push(this.afterOp);
+            this.list.push(this.beforeOp);
             this.list.push(this.previousOp);
             this.list.push(this.currentOp);
             this.list.push(this.nextOp);

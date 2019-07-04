@@ -75,8 +75,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.Report = ReportList;
         this.ReportGroup = GroupList;
         this.ReportsTemplateLists = reportTemplateLists;
-        this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName; 
-        this.FilterControlName = ReportList.FilterControlName; 
+        this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName;
+        this.FilterControlName = ReportList.FilterControlName;
         this.ReportsRunUsingWR = reportsRunUsingWR;
         this.RunComponent();
     }
@@ -140,7 +140,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
             }
         }
     }
-    
+
     private BuildStimulsoft() {
         if (this.isLoaderReady) {
             var Component = document.getElementById(this.ComponentId);
@@ -169,9 +169,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 if (this.ReportsTemplateLists && this.ReportsTemplateLists.filter(d => d.Id == this.Report.DefaultTemplateId)[0]) {
                     this.StimulsoftArg.TemplateDescription = this.ReportsTemplateLists.filter(d => d.Id == this.Report.DefaultTemplateId)[0].Description;
                 }
-  
+
                 this.ComputeSize(Component.clientWidth, Component.clientHeight);
-                
+
                 window.onresize = (e) => {
                     this.ComputeSize(Component.clientWidth, Component.clientHeight);
                 };
@@ -254,23 +254,23 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true);
             }
         }
-}
+    }
 
     GenerateReportViewWorkerRole(filter: ReportFliter) {
 
-        this.IsRunReportSucceeded= false ;
-        this.IsRunReportFailed = false ;
+        this.IsRunReportSucceeded = false;
+        this.IsRunReportFailed = false;
         this.ReportFliter = this.FillReportFilter(filter);
 
-         this.ValiditySelectedTemplate();
-            this.NumberOfRequests += 1;
-            this._reportService.GenerateReportMethod(this.ReportFliter).subscribe((myResponse: ServiceResponse) => {
-                this.IsUsedReportsRunUsingWR = false;
-                this.SetReportData(myResponse);
-                this.StopBusyIndicator();
-            });
+        this.ValiditySelectedTemplate();
+        this.NumberOfRequests += 1;
+        this._reportService.GenerateReportMethod(this.ReportFliter).subscribe((myResponse: ServiceResponse) => {
+            this.IsUsedReportsRunUsingWR = false;
+            this.SetReportData(myResponse);
+            this.StopBusyIndicator();
+        });
 
-        
+
     }
 
 
@@ -279,40 +279,40 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     SetReportData(myResponse: ServiceResponse) {
 
-            if (myResponse.HasError) {
-                var messageWindow = new MessageWindow();
-                messageWindow.Show(myResponse.ErrorsArray[0]);
-                this.IsRunReportFailed = true;
-      
-            }
-
-            else {
-              this.IsRunReportSucceeded = true;
-                var myResult = myResponse.Result;
-                if (myResult) {
-
-                    if (this.ReportFliter != null) {
-                        this.StimulsoftArg.ReportFliter = this.ReportFliter;
-                    }
-
-                    this.StimulsoftArg.NumberOfPage = this.ReportFliter.NumberOfPage;
-                    this.StimulsoftArg.PartnersObslist = this.PartnersObslist;
-                    this.StimulsoftArg.EditableFieldLists = myResult;
-
-                    if (this.StimulsoftArg && this.StimulsoftArg.StimulsoftViewerComponent) {
-                        this.StimulsoftArg.StimulsoftViewerComponent.SetStimualData();
-                    }
-
-                    this.cd.detectChanges();
-                }
-            }
+        if (myResponse.HasError) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Show(myResponse.ErrorsArray[0]);
+            this.IsRunReportFailed = true;
 
         }
 
+        else {
+            this.IsRunReportSucceeded = true;
+            var myResult = myResponse.Result;
+            if (myResult) {
+
+                if (this.ReportFliter != null) {
+                    this.StimulsoftArg.ReportFliter = this.ReportFliter;
+                }
+
+                this.StimulsoftArg.NumberOfPage = this.ReportFliter.NumberOfPage;
+                this.StimulsoftArg.PartnersObslist = this.PartnersObslist;
+                this.StimulsoftArg.EditableFieldLists = myResult;
+
+                if (this.StimulsoftArg && this.StimulsoftArg.StimulsoftViewerComponent) {
+                    this.StimulsoftArg.StimulsoftViewerComponent.SetStimualData();
+                }
+
+                this.cd.detectChanges();
+            }
+        }
+
+    }
+
     FillReportFilter(filter: ReportFliter) {
 
-         if (this.StimulsoftArg) filter.DefaultTemplateId = this.StimulsoftArg.DefaultTemplateId;
-          else filter.DefaultTemplateId = this.Report.DefaultTemplateId;
+        if (this.StimulsoftArg) filter.DefaultTemplateId = this.StimulsoftArg.DefaultTemplateId;
+        else filter.DefaultTemplateId = this.Report.DefaultTemplateId;
 
         filter.ReportsRunUsingWR = false;
         filter.Tenant = SessionLocator.Tenant;
@@ -323,7 +323,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         filter.DefaultTemplateVsersion = 1;
         filter.UserId = SessionLocator.LoggedUserId;
         filter.ReportId = this.Report.Id;
-       
+
         if (this.ReportsTemplateLists) {
             var reportTemplate: any = this.ReportsTemplateLists.filter(d => d.Id == filter.DefaultTemplateId)[0];
             if (reportTemplate) {
@@ -332,16 +332,16 @@ export class ReportsPreviewComponent implements AfterViewInit {
             }
         }
 
-        return filter ;
+        return filter;
 
     }
 
     SetFilterCotrolHeight(filterConrolHeight: number) {
-    // Ayman: no need for this anymore
+        // Ayman: no need for this anymore
         //this.FilterConrolHeight = filterConrolHeight;
-       // this.ResizeWindow(window.innerHeight, window.innerWidth);
+        // this.ResizeWindow(window.innerHeight, window.innerWidth);
     }
-    
+
     BackButtonClicked() {
         if (this.ComponentRef) {
             this.ComponentRef.destroy();
@@ -355,7 +355,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     AddPartner(partnerType: string, partnerId: string) {
         var entityPartner: EntityPartner = new EntityPartner(partnerType, partnerId, false);
-    
+
         this.PartnersObslist.push(entityPartner);
 
     }
@@ -377,7 +377,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         }
 
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
-           
+
             if (!myResponse.HasError) {
                 this.ReportFliter = myResponse.Result;
                 this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
@@ -540,7 +540,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.ShowBusyIndicator = true;
         this.BusyIndicatorText = message;
         this.WidthBusyIndicator = width;
-   
+
     }
 
 
