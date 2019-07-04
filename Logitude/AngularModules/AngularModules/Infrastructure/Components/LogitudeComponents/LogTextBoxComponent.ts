@@ -1011,6 +1011,14 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                     }
 
                     else {
+
+                        if (!AppTool.IsNullOrEmpty(this.TextValue)) {
+                            var selection = window.getSelection().toString();
+                            if (selection == this.TextValue) {
+                                return key;
+                            }
+                        }
+
                         if (keyChar == "+") {
                             if (selectionStart(input) == 0) {
                                 if (!AppTool.IsNullOrEmpty(this.TextValue)) {
@@ -1111,7 +1119,6 @@ export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewIni
                             }
                         }
                     }
-
 
                     if (isOk) {
                         return key;
