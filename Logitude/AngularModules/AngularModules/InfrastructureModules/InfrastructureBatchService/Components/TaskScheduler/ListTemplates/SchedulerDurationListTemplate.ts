@@ -22,7 +22,7 @@ export class SchedulerDurationListTemplate {
         var startDate = new Date(rowData["StartDateTime"]);
         var endDate = new Date(rowData["EndDateTime"]);
 
-        var seconds = (endDate.getTime() - startDate.getTime()) / 1000;
+        var seconds = ((endDate.getTime() - startDate.getTime()) / 1000);
         if (startDate.getFullYear() > 1970 && endDate.getFullYear() > 1970) {
             this.dateValue = seconds;
         }
