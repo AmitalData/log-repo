@@ -44,6 +44,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             string folder = "";
             string username = "";
             string password = "";
+            bool useSFTP = false;
 
             var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
             var pmCustomsPartnerFtp = myCustomsPartnerFtpQueryService.GetBy(tenant, CustomsPartnerFtpDetails.InterfaceName_SubManifest, CustomsPartnerFtpDetails.PartnerCode_Mamam, CustomsPartnerFtpDetails.TypeCode_Out);
@@ -71,6 +72,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                     folder = fTPDetail.Folder;
                     username = fTPDetail.UserName;
                     password = fTPDetail.Password;
+                    useSFTP = fTPDetail.UseSFTP;
                 }
 
                 //if (communicationSubject == "BOL")
@@ -78,7 +80,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 //    communicationSubject = "BL";
                 //}
                 //string filename = FileName;
-                var settings = new CommunicationLogSettings() { host = host, folder = folder, username = username, password = password, filename = FileName };
+                var settings = new CommunicationLogSettings() { host = host, folder = folder, username = username, password = password, filename = FileName,UseSFTP = useSFTP };
                 var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
 
                 Document document = new Document()
@@ -183,5 +185,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         public string username { get; set; }
         public string password { get; set; }
         public string filename { get; set; }
+
+        public bool UseSFTP { get; set; }
     }
 }

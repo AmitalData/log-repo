@@ -383,8 +383,9 @@ namespace Logitude.CRM.BL.WorkRoles
         {
             try
             {
-                IQueueService queueservice = QueueServiceManager.GetQueueService("ticketqueue", Tenant);
-
+                //IQueueService queueservice = QueueServiceManager.GetQueueService("ticketqueue", Tenant);
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ticketqueue", 0);
                 if (myNearestDueDate != null)
                 {
                     DateTime myCreateDate = TenantServerConfigration.GetCurrentDateTime(Tenant);
