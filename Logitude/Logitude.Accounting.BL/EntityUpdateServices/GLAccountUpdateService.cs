@@ -78,6 +78,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (!String.IsNullOrWhiteSpace(entityPM.ChartOfAccountsId) && (entityPM.ChartOfAccountsId.ToLower() == "bla" || entityPM.ChartOfAccountsId.ToLower() == "get")) entityPM.ChartOfAccountsId = null;
             if (!String.IsNullOrWhiteSpace(entityPM.ChartOfAccountsTypeCode) && (entityPM.ChartOfAccountsTypeCode.ToLower() == "bla" || entityPM.ChartOfAccountsTypeCode.ToLower() == "get")) entityPM.ChartOfAccountsTypeCode = null;
+            if (!String.IsNullOrWhiteSpace(entityPM.DeductionTypeId) && (entityPM.DeductionTypeId.ToLower() == "bla" || entityPM.DeductionTypeId.ToLower() == "get")) entityPM.DeductionTypeId = null;
+            if (!String.IsNullOrWhiteSpace(entityPM.AssessingOfficeCode) && (entityPM.AssessingOfficeCode.ToLower() == "bla" || entityPM.AssessingOfficeCode.ToLower() == "get")) entityPM.AssessingOfficeCode = null;
+            if (!String.IsNullOrWhiteSpace(entityPM.DeductionFileTypeId) && (entityPM.DeductionFileTypeId.ToLower() == "bla" || entityPM.DeductionFileTypeId.ToLower() == "get")) entityPM.DeductionFileTypeId = null;
 
 
             if (entityPM.AccountTypeCode == "4") // Job
