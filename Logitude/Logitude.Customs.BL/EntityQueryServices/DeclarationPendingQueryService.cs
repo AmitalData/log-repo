@@ -15,7 +15,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
     {
 
 
-        public List<DeclarationPendingPM> GetDeclarationPendingsByDeclrationId(string declarationId, int tenant)
+        public List<DeclarationPendingPM> GetDeclarationPendingsByDeclarationId(string declarationId, int tenant)
         {
 
             List<DeclarationPending> Pendings;

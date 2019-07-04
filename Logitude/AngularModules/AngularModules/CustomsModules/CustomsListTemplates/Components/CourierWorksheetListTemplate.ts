@@ -42,6 +42,7 @@ import { EntityResourceService } from "../../../Infrastructure/Services/EntityRe
 import { CourierPendingReasonListService } from '../../../Customs/Services/StandardLists/CourierPendingReasonListService';
 import { CourierPendingReasonList } from '../../../Customs/EntityLists/CourierPendingReasonList';
 import { DeclarationPendingPMService } from '../../../Customs/Services/StandardPMs/DeclarationPendingPMService';
+import { DeclarationExtendedListService } from '../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     moduleId: module.id,
@@ -90,6 +91,7 @@ export class CourierWorksheetListTemplate {
     private _DeclarationMamanSpecialActionPMService: DeclarationMamanSpecialActionPMService = new DeclarationMamanSpecialActionPMService;
     private _DeclarationWebService: DeclarationWebService = new DeclarationWebService;
     private _DeclarationCourierStatusWebService: DeclarationCourierStatusWebService = new DeclarationCourierStatusWebService();
+    _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
 
     FirePreventSelect() {
         SessionLocator.CurrentSession.PseventRowSelectEvent.emit("CourierWorksheetListTemplate.SendSplitButton");
@@ -603,7 +605,8 @@ export class CourierWorksheetListTemplate {
         var declarationIdList = [];
         
         //this._DeclarationCourierStatusPMService.get(declarationId).subscribe((response: ServiceResponse) => {
-        this.declarationPendingPMService.get(declarationId, "").subscribe((response: ServiceResponse) => {
+        //this.declarationPendingPMService.get(declarationId, "").subscribe((response: ServiceResponse) => {
+        this._DeclarationExtendedListService.GetDeclarationPendingListPMByDeclarationId(declarationId).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 declarationIdList.push(response.Result);
                 windowArgs.DeclarationIdList = declarationIdList;

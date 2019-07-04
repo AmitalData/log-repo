@@ -14,7 +14,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class PendingByKeywordQueryService : EntityQueryService<PendingByKeyword, PendingByKeywordKeys, PendingByKeywordPM, object, PendingByKeywordKeys>
     {
-        public string GetCourierPendingReasonCodeBykeyWords(string keyWordsList, int tenant)
+        public List<string> GetCourierPendingReasonCodeBykeyWords(string keyWordsList, int tenant)
         {
             return repository.GetCourierPendingReasonCodeBykeyWords(keyWordsList, tenant);
         }

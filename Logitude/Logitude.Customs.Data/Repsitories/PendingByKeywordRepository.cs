@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public string GetCourierPendingReasonCodeBykeyWords(string keyWordsList, int tenant)
+        public List<string> GetCourierPendingReasonCodeBykeyWords(string keyWordsList, int tenant)
         {
             keyWordsList = keyWordsList.ToLower();
             keyWordsList = keyWordsList.Replace(" ", ",");
@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.Repsitories
             {
                 keyWordsList = keyWordsList.Replace(",,", ",");
             }
-           
+            List<string> pendingReasonCodeList = null;
             List<string> keyWordsList2 = keyWordsList.Split(',').ToList();
             foreach (string word in keyWordsList2)
             {
@@ -39,9 +39,9 @@ namespace Logitude.Customs.Data.Repsitories
                 PendingByKeyword pendingByKeyword = (from a in context.PendingByKeywords
                                                      where a.Tenant == tenant && a.KeywordsList.Contains(wordtemp)
                                                      select a).FirstOrDefault();
-                if (pendingByKeyword != null && !String.IsNullOrWhiteSpace(pendingByKeyword.CourierPendingReasonCode)) return pendingByKeyword.CourierPendingReasonCode;
+                if (pendingByKeyword != null && !String.IsNullOrWhiteSpace(pendingByKeyword.CourierPendingReasonCode)) pendingReasonCodeList.Add(pendingByKeyword.CourierPendingReasonCode);
             }
-            return null;
+            return pendingReasonCodeList;
         }
 
     }

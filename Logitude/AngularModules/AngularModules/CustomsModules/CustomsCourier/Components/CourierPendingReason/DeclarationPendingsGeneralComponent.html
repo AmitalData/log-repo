@@ -40,7 +40,7 @@
                                                 (RowEnded)="OnRowEnded($event)"
                                                 (Ondblclick)="OnFocus()"
                                                 [IsReadOnly]="IsDisplayOnly"
-                                                [ItemSource]="ItemsSource"
+                                                [ItemSource]="DeclarationPendingItemsSource"
                                                 (SelectedItemChanged)="OnRowSelected($event)"
                                                 [SelectedRow]="SelectedRow">
 
@@ -49,7 +49,7 @@
                                 <log-column [header]="'Customs.DeclarationCourierStatus.F.CourierPendingReasonCode' | TextCodeTranslationPipe" [binding]="'CourierPendingReasonCode'" [width]="'130'" [Alignment]="'right'">
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{item.CourierPendingReasonName}}</span>
+                                            <span>{{CourierPendingReasonName}}</span>
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
                                             <LogLov #CourierPendingReasonLovBox
@@ -75,11 +75,11 @@
                                 <log-column [header]="'Customs.DeclarationCourierStatus.F.PendingRemarks' | TextCodeTranslationPipe" [binding]="'PendingRemarks'" [width]="'150'" [Editable]="true" [Alignment]="'right'">
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{item.PendingRemarks}}</span>
+                                            <span>{{PendingRemarks}}</span>
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
                                             <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'PendingRemarks'" [InputType]="'ntext'" [DataContext]="item"
-                                                        [Text]="item.PendingRemarks" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                        [Text]="PendingRemarks" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
                                         </div>
                                     </log-cell-template>

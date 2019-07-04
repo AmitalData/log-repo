@@ -144,6 +144,38 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+
+        public HttpResponseMessage GetDeclarationPendingListPMByDeclarationId(string declarationId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+                DeclarationRepository declarationRep = new DeclarationRepository(customContext);
+                 if (string.IsNullOrWhiteSpace(declarationId))
+                {
+                    //return null;
+                    return Request.CreateResponse(HttpStatusCode.OK, declarationId);
+                }
+
+                DeclarationQueryService declarationQuery = new DeclarationQueryService(customContext);
+                List<DeclarationPendingPM> myDeclarationPendingPM = declarationQuery.GetDeclarationPendingListPMByDeclarationId(declarationId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myDeclarationPendingPM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetCurrenciesCodesForDeclaration(string declarationId, int tenant)
         {
             try
