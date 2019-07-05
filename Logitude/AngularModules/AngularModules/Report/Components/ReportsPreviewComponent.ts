@@ -415,7 +415,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub = this.initializeStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer().subscribe(respose => {
 
 
-            if ((this.CurrentSession && this.CurrentSession.isDestroingSession) || !this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer ) {
+            if ((this.CurrentSession && this.CurrentSession.isDestroingSession) || !this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer) {
                 this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimersub.unsubscribe();
                 this.IsStartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer = false;
                 return;
@@ -479,7 +479,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         if (this.IsStartTimerWaitingFirstStimulReportBuildRunning) {
             this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();
         }
-       
+
 
         this.IsStartTimerWaitingFirstStimulReportBuildRunning = true;
         this.StartTimerWaitingFirstStimulReportBuildsub = this.initializeStartTimerWaitingFirstStimulReportBuild().subscribe(res => {
@@ -546,7 +546,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     StopBusyIndicator() {
 
-      
+
 
         if (this.IsStartTimerWaitingFirstStimulReportBuildRunning) {
             this.StartTimerWaitingFirstStimulReportBuildsub.unsubscribe();

@@ -6578,7 +6578,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
              AdvancedQueryFilter DebetorsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "AccountTypeCode" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "2",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id, Tenant = 0,Operator = "Equals"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
 
-             AdvancedQueryFilter DebetorsCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "LocalBalanceInDue" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id, Tenant = 0,Operator = "LargerThan"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
+             AdvancedQueryFilter DebetorsCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldId = GLAccountObjectFields.Where(d => d.FieldName == "BalanceInLocalCurrency" && d.ObjectTableId == GLAccountObjectTable.Id).FirstOrDefault().Id, PredefinedValue = "0",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id, Tenant = 0,Operator = "LargerThan"}, advancedQueryFiltersRepository, tenantAdvancedFilters);
 
   
 	      

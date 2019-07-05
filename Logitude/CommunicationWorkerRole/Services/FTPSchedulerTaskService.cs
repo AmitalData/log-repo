@@ -13,39 +13,19 @@ using System.Transactions;
 
 namespace CommunicationWorkerRole.Services
 {
-    public class FTPSchedulerTaskService
+    public class FTPSchedulerTaskService : FTPSchedulerTaskServiceBase
     {
         
 
-        public FTPSchedulerTaskService()
-        {
-            this.WarningsList = new List<string>();
-            this.MessagesList = new List<string>();
-        }
-
-        public List<string> WarningsList { get; set; }
-        public List<string> MessagesList { get; set; }
-
-        private void AddWarning(string warningMessage)
-        {
-            if (!string.IsNullOrEmpty(warningMessage) && !this.WarningsList.Contains(warningMessage))
-            {
-                this.WarningsList.Add(warningMessage);
-            }
-        }
-
-        private void AddMessage(string message)
-        {
-            if (!string.IsNullOrEmpty(message) && !this.MessagesList.Contains(message))
-            {
-                this.MessagesList.Add(message);
-            }
-        }
+      
         public void ReadFTPFilesBySchedulerDetailsToAnalyzeQueue(SchedulerDetails schedulerDetails)
         {
             FTPServiceMod ftpService = new FTPServiceMod(schedulerDetails.FTPDetails.Host, schedulerDetails.FTPDetails.UserName, schedulerDetails.FTPDetails.Password);
 
             List<string> directoryFiles = GetFilteredDirectoryFileNamesByFTPDetails(schedulerDetails);
+
+            this.DownloadedFilesCount = 0;
+            this.FailedFilesCount = 0;
 
             foreach (string fileName in directoryFiles)
             {
@@ -57,6 +37,8 @@ namespace CommunicationWorkerRole.Services
                     DeleteFTPFile(schedulerDetails, ftpService, fileName);
                 }
             }
+
+            AddMessage(FTPLogBuilder.BuildLogLine(this.GetFilesDownloadingSummery()));
         }
 
         public byte[] DownloadFTPFile(SchedulerDetails schedulerDetails, FTPServiceMod ftpService, string fileName)
@@ -68,6 +50,15 @@ namespace CommunicationWorkerRole.Services
                 byte[] fileData = ftpService.Download(filePath, out p_status, out p_message);
 
             AddStatusMessage(p_message, p_status);
+
+            if (p_status == "-1")
+            {
+                this.FailedFilesCount++;
+            }
+            else
+            {
+                this.DownloadedFilesCount++;
+            }
 
             return fileData;
           
@@ -84,17 +75,7 @@ namespace CommunicationWorkerRole.Services
             AddStatusMessage(p_message, p_status);
         }
 
-        private void AddStatusMessage(string p_message, string p_status)
-        {
-            if (p_status == "-1")
-            {
-                AddWarning(p_message);
-            }
-            else
-            {
-                AddMessage(p_message);
-            }
-        }
+       
 
 
         //private void DownloadFileToAnalyzeQueueAndDelete(SchedulerDetails schedulerDetails, FTPService ftpService, string fileName)

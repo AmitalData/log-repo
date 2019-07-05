@@ -66,6 +66,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using System.Text.RegularExpressions;
 using Logitude.Server.Tools.QueueService;
+using Simplog.Global.Data.GlobalModel;
 
 namespace Logitude.Update
 {
@@ -3743,6 +3744,30 @@ User/Pass",
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
                 queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+            }
+        }
+
+        private void button43_Click(object sender, EventArgs e)
+        {
+            //GlobalContact contact = null;
+            IGlobalContext globalObjectContext = GlobalContext.GetContext();
+            ContactPasswordRepository GCRepo = new ContactPasswordRepository(globalObjectContext);
+            var Tenants = new List<int>() { 493, 839, 1177, 558, 570, 545, 286, 996, 1264, 1573, 1402, 1427, 1245, 1604, 796, 1275, 1326, 1333, 42, 1256, 877, 1423, 1293, 2043 };
+            foreach (var tenant in Tenants)
+            {
+                var contacts = globalObjectContext.GlobalContacts.Where(c => c.GlobalTenantId == tenant && (c.IsUser == true) && c.InActive == false).ToList();
+                foreach (var contact in contacts)
+                {
+                    ContactPassword contactPassword = globalObjectContext.ContactPasswords.Where(a => a.Email == contact.Email).FirstOrDefault();//AuthenticationUtil.VerifyContactPassword(contact.Email, "123", globalObjectContext);
+                    if (contactPassword != null)
+                    {
+                        string HashedPass = PasswordGenerator.GetBCryptHashedPassword(contact.Email, "123");
+                        contactPassword.Password = HashedPass;
+                        contactPassword.IsBCrypt = true;
+                        GCRepo.SubmitChanges();
+                    }
+
+                }
             }
         }
     }

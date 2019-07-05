@@ -1258,7 +1258,7 @@ namespace Logitude.XSD.Artemus
             string folder = "";
             string username = "";
             string password = "";
-
+            bool useSFTP = false;
 
             CustomsInterfaceSettingRepository customsInterfaceSettingRepository = new CustomsInterfaceSettingRepository(tenant);
             CustomsInterfaceSetting interfaceSetting = (from d in commonContext.CustomsInterfaceSettings
@@ -1279,6 +1279,7 @@ namespace Logitude.XSD.Artemus
                     folder = fTPDetail.Folder;
                     username = fTPDetail.UserName;
                     password = fTPDetail.Password;
+                    useSFTP = fTPDetail.UseSFTP;
                 }
 
                 if (communicationSubject == "BOL")
@@ -1286,7 +1287,7 @@ namespace Logitude.XSD.Artemus
                     communicationSubject = "BL";
                 }
                 string filename = communicationSubject + "_" + shipmentNumber;
-                var settings = new CommunicationLogSettings() { host = host, folder = folder, username = username, password = password, filename = filename };
+                var settings = new CommunicationLogSettings() { host = host, folder = folder, username = username, password = password, filename = filename,UseSFTP = useSFTP };
                 var settingsData = JsonConvert.SerializeObject(settings);
 
                 Document document = new Document()
@@ -1627,5 +1628,7 @@ namespace Logitude.XSD.Artemus
         public string username { get; set; }
         public string password { get; set; }
         public string filename { get; set; }
+
+        public bool UseSFTP { get; set; }
     }
 }

@@ -15,31 +15,9 @@ using System.Transactions;
 
 namespace CommunicationWorkerRole.Services
 {
-    public class SFTPSchedulerTaskService
+    public class SFTPSchedulerTaskService: FTPSchedulerTaskServiceBase
     {
-        public List<string> WarningsList { get; set; }
-        public List<string> MessagesList { get; set; }
-        public SFTPSchedulerTaskService()
-        {
-            this.WarningsList = new List<string>();
-            this.MessagesList = new List<string>();
-        }
-
-        private void AddWarning(string warningMessage)
-        {
-            if (!string.IsNullOrEmpty(warningMessage) && !this.WarningsList.Contains(warningMessage))
-            {
-                this.WarningsList.Add(warningMessage);
-            }
-        }
-
-        private void AddMessage(string message)
-        {
-            if (!string.IsNullOrEmpty(message) && !this.MessagesList.Contains(message))
-            {
-                this.MessagesList.Add(message);
-            }
-        }
+     
 
         public void ReadSFTPFilesBySchedulerDetailsToAnalyzeQueue(SchedulerDetails schedulerDetails)
         {
@@ -51,12 +29,15 @@ namespace CommunicationWorkerRole.Services
 
             if (p_status == "-1")
             {
-                this.AddWarning("SFTP upload file failed: " + p_message);
+                AddWarning("SFTP upload file failed: " + p_message);
                 return;
             }
 
 
             List<string> directoryFiles = GetFilteredDirectoryFileNamesByFTPDetails(schedulerDetails, sftpService);
+
+            this.DownloadedFilesCount = 0;
+            this.FailedFilesCount = 0;
 
             foreach (string fileName in directoryFiles)
             {
@@ -73,6 +54,9 @@ namespace CommunicationWorkerRole.Services
                 }
             }
 
+
+            AddMessage(FTPLogBuilder.BuildLogLine(this.GetFilesDownloadingSummery()));
+
         }
 
         public byte[] DownloadFTPFile(SchedulerDetails schedulerDetails, SFTPService sftpService, string fileName, out string p_status)
@@ -84,12 +68,15 @@ namespace CommunicationWorkerRole.Services
             byte[] fileData = sftpService.DownloadFile(fileName, out p_status, out p_message);
             if (p_status == "-1")
             {
-                AddWarning(p_message);
+                this.FailedFilesCount++;
             }
             else
             {
-                AddMessage(p_message);
+                this.DownloadedFilesCount++;
             }
+
+            AddStatusMessage(p_message, p_status);
+
             return fileData;
         }
 
@@ -99,14 +86,7 @@ namespace CommunicationWorkerRole.Services
             string p_status = "";
             string filePath = GetFilePath(schedulerDetails, fileName, out p_message);
             sftpService.DeleteFile(fileName, out p_status, out p_message);
-            if (p_status == "-1")
-            {
-                AddWarning(p_message);
-            }
-            else
-            {
-                AddMessage(p_message);
-            }
+            AddStatusMessage(p_message, p_status);
         }
 
 
@@ -158,14 +138,7 @@ namespace CommunicationWorkerRole.Services
                 (!string.IsNullOrWhiteSpace(schedulerDetails.FTPDetails.Extension) ? "." + schedulerDetails.FTPDetails.Extension.TrimStart('.') : "");
 
                            directoryFiles = sftpService.DirList(pattern, true, false, out p_status, out p_message);
-            if (p_status == "-1")
-            {
-                AddWarning(p_message);
-            }
-            else
-            {
-                AddMessage(p_message);
-            }
+            AddStatusMessage(p_message, p_status);
 
             //.Where(f => !string.IsNullOrWhiteSpace(f) && !string.IsNullOrWhiteSpace(Path.GetExtension(f))).ToList();
 

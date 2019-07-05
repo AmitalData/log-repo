@@ -156,7 +156,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (string.IsNullOrEmpty(theEntityPm.GLAccountId))
                     throw new ApplicationException("Hey! no glaccount provided!!");
-
+              
                 FillPaymentInvoices(theEntityPm, (bool) gla.IsMultiCurrency);
             }
 
@@ -1127,21 +1127,23 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
 
+
             if (theEntityPm.PaymentInvoices.Any())
             {
                 var AutoReconcileARPaymentServiceExt = ContainerAccessor.Container.Resolve(typeof(IAutoReconcileServiceExt), "AutoReconcileServiceExt", new ParameterOverride("", 1)) as IAutoReconcileServiceExt;
-                
 
+             
                 var AutoReconcileRecordList = new List<AutoReconcileRecord>();
                 theEntityPm.PaymentInvoices.ForEach(r =>
                 {
+                    //JournalPM invoiceJournal=  GetJournalByInvoiceNumber(r);
                     var item = new AutoReconcileRecord()
                     {
                         AccountingEntityId = r.ARInvoiceId,
                         LocalAmountToReconcile = Convert.ToDecimal(r.LocalAmount.GetValueOrDefault()),
                         ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()),
                         ForeignCurrencyIdReconcile = r.ForeignCurrencyId,
-                        JournalId = journal.Id,
+                        
                       
                     };
                     AutoReconcileRecordList.Add(item);
@@ -1155,7 +1157,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journalUpdate.Update(journal);
         }
 
-  
+        private JournalPM GetJournalByInvoiceNumber(ARPaymentInvoicePM paymentInvoice)
+        {
+            ARInvoiceQuery invoiceQuery = new ARInvoiceQuery(paymentInvoice.Tenant);
+            ARInvoicePM invoicePM = invoiceQuery.GetSingleInvoiceByInvoiceNumber(paymentInvoice.ARInvoiceNumber, paymentInvoice.Tenant);
+
+            return null;
+
+        }
 
         private GLAccountPM getGLAccount(string billToId, int tenant)
         {

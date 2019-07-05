@@ -175,7 +175,7 @@
     </QueryColumns>
     <QueryFilters>
       <QueryFilter QueryCode="&quot;DebetorsCustomers&quot;" PredefinedValue="&quot;2&quot;" ObjectFieldName="&quot;AccountTypeCode&quot;" IsPredefined="true" Operator="&quot;Equals&quot;" IndexOrder="0" />
-      <QueryFilter QueryCode="&quot;DebetorsCustomers&quot;" PredefinedValue="&quot;0&quot;" ObjectFieldName="&quot;LocalBalanceInDue&quot;" IsPredefined="true" Operator="&quot;LargerThan&quot;" IndexOrder="0" />
+      <QueryFilter QueryCode="&quot;DebetorsCustomers&quot;" PredefinedValue="&quot;0&quot;" ObjectFieldName="&quot;BalanceInLocalCurrency&quot;" IsPredefined="true" Operator="&quot;LargerThan&quot;" IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query Code="&quot;ActiveCustomersGLAccounts&quot;" TextCode="&quot;Active Customers&quot;" LocalTextCode="&quot;לקוחות פעילים&quot;" QueryGroupCode="&quot;GLAC&quot;" IndexOrder="5" ObjectTableName="&quot;GLAccount&quot;" QuerySection="&quot;GLAccount&quot;" SystemLevel="true" IsAddNewEntity="false" IsPackagable="true" QueryGroupName="&quot;GLAccount&quot;" TextCodeCode="&quot;GLAccounts.Q.ActiveCustomers&quot;" FeatureCode="&quot;activeCustomersGLA&quot;" FeatureTextCodeCode="&quot;GLAccount.Features.activeCustomersGLA&quot;" FeatureDefaultText="&quot;Active Customers&quot;" IsSpellChecked="false">
