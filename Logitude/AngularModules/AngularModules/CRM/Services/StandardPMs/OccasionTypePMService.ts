@@ -19,6 +19,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {OccasionTypePM} from '../../EntityPMs/OccasionTypePM';
 
+import {OccasionTypePMInitService} from '../../EntityPMInitServices/OccasionTypePMInitService';
 
 @Injectable()
 
@@ -48,6 +49,8 @@ export class OccasionTypePMService {
 					if(pm)
 					{
                       entity = this.MapJsonToEntityPM(pm);
+                      OccasionTypePMInitService.InitValues(entity, false);
+                      OccasionTypePMInitService.ApplyUIPoperties(entity, false);
                     }
 
                 var serviceResponse: ServiceResponse;
@@ -247,6 +250,10 @@ export class OccasionTypePMService {
 		    var entityPM: OccasionTypePM;
 			entityPM = new OccasionTypePM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+
+			OccasionTypePMInitService.InitValues(entityPM, true);
+			OccasionTypePMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 
