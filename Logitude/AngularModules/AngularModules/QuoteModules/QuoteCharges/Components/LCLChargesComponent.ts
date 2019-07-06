@@ -777,6 +777,15 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "VOLU" && f.SaleQuantity != entityQuantity).length > 0) {
                     isDifferentOrders = true;
                 }
+
+                //"VCBM"
+                entityQuantity = this.EntityPM.VolumeInCBM;
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "VCBM" && f.CostQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "VCBM" && f.SaleQuantity != entityQuantity).length > 0) {
+                    isDifferentOrders = true;
+                }
                 
                 //"BTEU"
                 entityQuantity = this.EntityPM.TEU;
@@ -1102,7 +1111,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "CHWT":
                 case "CWKG":
                 case "GWKG":
-                //case "VOLU":
+                case "VCBM":
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
@@ -1187,7 +1196,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "CHWT":
                 case "CWKG":
                 case "GWKG":
-                //case "VOLU":
+                case "VCBM":
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
@@ -1859,7 +1868,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
                 case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
-
+                case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 default: { break; }
             }
         }
@@ -2174,7 +2183,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
                 case "CWKG": { myResult = this.QuotePM.ChargeableWeightInKG; break; }
                 case "GWKG": { myResult = this.QuotePM.GrossWeightInKG; break; }
-
+                case "VCBM": { myResult = this.QuotePM.VolumeInCBM; break; }
                 default: { break; }
             }
         }

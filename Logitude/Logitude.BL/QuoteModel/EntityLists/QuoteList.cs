@@ -45,7 +45,8 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public double? GrossWeight { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }
-
+        public double? VolumeInCBM { get; set; }
+        
         public string ShipmentType { get; set; }
         
         public string FromPort { get; set; }

@@ -119,6 +119,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? GrossWeight { get; set; }
         public double? GrossWeightInKG { get; set; }
         public double? GrossWeightPerTon { get; set; }
+        public double? VolumeInCBM { get; set; }
 
         public byte[] LastModified { get; set; }
         public bool IsClosed { get; set; }

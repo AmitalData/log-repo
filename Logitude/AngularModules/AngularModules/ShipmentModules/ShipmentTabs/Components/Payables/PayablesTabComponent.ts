@@ -972,6 +972,7 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                         }
                         break;
                     }
+
                     case "GRWT": {
 
                         if (item.Quantity != this.EntityPM.GrossWeight) {
@@ -1056,6 +1057,15 @@ export class PayablesTabComponent implements OnInit, OnDestroy {
                             if (this.EntityPM.ShipmentPayables.filter(f => f.MeasurementCode == "PRFR" && f.Quantity != FRT_Quantity).length > 0) {
                                 isDifferentPRFR = true;
                             }
+                        }
+
+                        break;
+                    }
+
+                    case "VCBM": {
+
+                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
+                            isDifferentOrders = true;
                         }
 
                         break;
@@ -1600,6 +1610,7 @@ export class ShipmentPayableItem extends BaseComponent {
                                 case "QTY": { this.Quantity = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
                                 case "CWKG": { this.Quantity = this.ShipmentPM.ChargeableWeightInKG; break;}
                                 case "GWKG": { this.Quantity = this.ShipmentPM.GrossWeightInKG; break; }
+                                case "VCBM": { this.Quantity = this.ShipmentPM.VolumeInCBM; break; }
                                 case "PRVL": {
                                     this.Quantity = this.ShipmentPM.ValueOfGoods;
                                     this.CurrencyId = this.ShipmentPM.ValueOfGoodsCurrencyId;
@@ -2346,6 +2357,14 @@ export class ShipmentPayableItem extends BaseComponent {
 
                     this.InsideItemsSource.forEach(item => {
                         switch (this.MeasurementCode) {
+                            case "VCBM": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "VolumeInCBM");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.VolumeInCBM;
+                                break;
+                            }
+
                             case "VOLU": {
                                 _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "Volume");
                                 _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
@@ -2526,6 +2545,7 @@ export class ShipmentPayableItem extends BaseComponent {
             case "QTY": { result = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
             case "CWKG": { result = this.ShipmentPM.ChargeableWeightInKG; break; }
             case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
+            case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
             case "BCNT": {
                 break;
             }
@@ -2592,6 +2612,7 @@ export class InsidePayableViewModel {
     get NumberOfContainers() { return this.ShipmentPM.NumberOfContainers; }
     get ChargeableWeightInKG() { return this.ShipmentPM.ChargeableWeightInKG; }
     get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
+    get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
 
     // Payable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -2676,6 +2697,14 @@ export class InsidePayableViewModel {
             case "GWKG": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.GrossWeightInKG;
+                }
+
+                break;
+            }
+
+            case "VCBM": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.VolumeInCBM;
                 }
 
                 break;

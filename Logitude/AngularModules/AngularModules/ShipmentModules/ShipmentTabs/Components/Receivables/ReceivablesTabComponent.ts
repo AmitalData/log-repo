@@ -1236,6 +1236,15 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                         break;
                     }
 
+                    case "VCBM": {
+
+                        if (item.Quantity != this.EntityPM.VolumeInCBM) {
+                            isDifferentOrders = true;
+                        }
+
+                        break;
+                    }
+
                     case "GRWT": {
 
                         if (item.Quantity != this.EntityPM.GrossWeight) {
@@ -1726,6 +1735,7 @@ export class ShipmentReceivableItem extends BaseComponent {
                                 case "QTY": { this.Quantity = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
                                 case "CWKG": { this.Quantity = this.ShipmentPM.ChargeableWeightInKG; break; }
                                 case "GWKG": { this.Quantity = this.ShipmentPM.GrossWeightInKG; break; }
+                                case "VCBM": { this.Quantity = this.ShipmentPM.VolumeInCBM; break; }
                                 case "PRVL": {
                                     this.Quantity = this.ShipmentPM.ValueOfGoods;
                                     this.CurrencyId = this.ShipmentPM.ValueOfGoodsCurrencyId;
@@ -2261,6 +2271,14 @@ export class ShipmentReceivableItem extends BaseComponent {
 
                     this.InsideItemsSource.forEach(item => {
                         switch (this.MeasurementCode) {
+                            case "VCBM": {
+                                _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "VolumeInCBM");
+                                _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
+                                unitPrice = _Ratio * this.UnitPrice;
+                                quantity = item.VolumeInCBM;
+                                break;
+                            }
+
                             case "VOLU": {
                                 _QuantityTotal = ArrayTool.Sum(this.InsideItemsSource, "Volume");
                                 _Ratio = _QuantityTotal == 0 ? 0 : this.Quantity / _QuantityTotal;
@@ -2462,6 +2480,7 @@ export class ShipmentReceivableItem extends BaseComponent {
             case "QTY": { result = this.fatherComponent.IsLCLEntity ? this.ShipmentPM.NumberOfPackages : this.ShipmentPM.NumberOfContainers; break; }
             case "CWKG": { result = this.ShipmentPM.ChargeableWeightInKG; break; }
             case "GWKG": { result = this.ShipmentPM.GrossWeightInKG; break; }
+            case "VCBM": { result = this.ShipmentPM.VolumeInCBM; break; }
             case "BCNT": {
                 break;
             }
@@ -2527,6 +2546,7 @@ export class InsideReceivableViewModel {
     get NumberOfContainers() { return this.ShipmentPM.NumberOfContainers; }
     get ChargeableWeightInKG() { return this.ShipmentPM.ChargeableWeightInKG; }
     get GrossWeightInKG() { return this.ShipmentPM.GrossWeightInKG; }
+    get VolumeInCBM() { return this.ShipmentPM.VolumeInCBM; }
 
     // Receivable Properties
     get ShipmentId() { return this.EntityPM.ShipmentId; }
@@ -2597,6 +2617,14 @@ export class InsideReceivableViewModel {
             case "GWKG": {
                 if (this.ShipmentPM) {
                     myQuantity = this.ShipmentPM.GrossWeightInKG;
+                }
+
+                break;
+            }
+
+            case "VCBM": {
+                if (this.ShipmentPM) {
+                    myQuantity = this.ShipmentPM.VolumeInCBM;
                 }
 
                 break;

@@ -108,7 +108,7 @@ export class QuoteTool {
                                 case "QTY": { myCostQuantity = entityPM.NumberOfPackages; break; }
                                 case "CWKG": { myCostQuantity = entityPM.ChargeableWeightInKG; break; }
                                 case "GWKG": { myCostQuantity = entityPM.GrossWeightInKG; break; }
-
+                                case "VCBM": { myCostQuantity = entityPM.VolumeInCBM; break; }
                                 default: { break; }
                             }
 
@@ -125,7 +125,7 @@ export class QuoteTool {
                                 case "QTY": { mySaleQuantity = entityPM.NumberOfPackages; break; }
                                 case "CWKG": { mySaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                 case "GWKG": { mySaleQuantity = entityPM.GrossWeightInKG; break; }
-
+                                case "VCBM": { mySaleQuantity = entityPM.VolumeInCBM; break; }
                                 default: { break; }
                             }                            
 

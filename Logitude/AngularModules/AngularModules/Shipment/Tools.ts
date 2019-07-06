@@ -1822,6 +1822,7 @@ export class ShipmentTool {
                                     case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
                                     case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
                                     case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
+                                    case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
                                     default: { break; }
                                 }
 
@@ -1855,6 +1856,7 @@ export class ShipmentTool {
                                     case "QTY": { myQuantity = entityPM.NumberOfPackages; break; }
                                     case "CWKG": { myQuantity = entityPM.ChargeableWeightInKG; break; }
                                     case "GWKG": { myQuantity = entityPM.GrossWeightInKG; break; }
+                                    case "VCBM": { myQuantity = entityPM.VolumeInCBM; break; }
                                     default: { break; }
                                 }
 
@@ -2116,6 +2118,7 @@ export class ShipmentGenerator {
                         case "GWTN":
                         case "CWKG": 
                         case "GWKG":
+                        case "VCBM":
                         case "QTY":
                             {
                                 this.CreateNewPayableFromOriginShipment(item);
@@ -2182,6 +2185,7 @@ export class ShipmentGenerator {
                     case "GWTN":
                     case "CWKG": 
                     case "GWKG":
+                    case "VCBM":
                     case "QTY":
                         {
                             break;
@@ -2276,7 +2280,8 @@ export class ShipmentGenerator {
                 case "FIXD":
                 case "PRVL":
                 case "GWTN":
-                case "CWKG": 
+                case "CWKG":
+                case "VCBM":
                 case "GWKG": 
                 case "QTY":
                     {
@@ -2314,6 +2319,7 @@ export class ShipmentGenerator {
             case "CWKG": { myQuantity = this.EntityPM.ChargeableWeightInKG; break; }
             case "GWKG": { myQuantity = this.EntityPM.GrossWeightInKG; break; }
             case "QTY": { myQuantity = this.EntityPM.NumberOfPackages; break; }
+            case "VCBM": { myQuantity = this.EntityPM.VolumeInCBM; break; }
             default: { break; }
         }
         myRecordPM.Quantity = AppTool.Round(myQuantity, 2);
@@ -2581,6 +2587,7 @@ export class ShipmentGenerator {
             case "CWKG": { newRecord.Quantity = this.EntityPM.ChargeableWeightInKG; break; }
             case "GWKG": { newRecord.Quantity = this.EntityPM.GrossWeightInKG; break; }
             case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; break; }
+            case "VCBM": { newRecord.Quantity = this.EntityPM.VolumeInCBM; break; }
             default: { break; }
         }
 
@@ -2811,7 +2818,8 @@ export class ShipmentGenerator {
                         case "PRFR":
                         case "GWTN":
                         case "CWKG": 
-                        case "GWKG": 
+                        case "GWKG":
+                        case "VCBM":    
                         case "QTY":
                             {
                                 this.CreateNewReceivableFromOriginShipment(item);
@@ -2878,7 +2886,8 @@ export class ShipmentGenerator {
                     case "PRFR":
                     case "GWTN":
                     case "CWKG": 
-                    case "GWKG": 
+                    case "GWKG":
+                    case "VCBM":   
                     case "QTY":
                         {
                             break;
@@ -2968,7 +2977,8 @@ export class ShipmentGenerator {
                 case "PRVL":
                 case "GWTN":
                 case "CWKG": 
-                case "GWKG": 
+                case "GWKG":
+                case "VCBM":   
                 case "QTY":
                     {
                         var itemCharge: QuoteChargePM = this.BaseQuote.QuoteCharges.filter(f => f.Id == item.QuoteChargeId)[0];
@@ -3005,6 +3015,7 @@ export class ShipmentGenerator {
             case "CWKG": { myQuantity = this.EntityPM.ChargeableWeightInKG; break; }
             case "GWKG": { myQuantity = this.EntityPM.GrossWeightInKG; break; }
             case "QTY": { myQuantity = this.EntityPM.NumberOfPackages; break; }
+            case "VCBM": { myQuantity = this.EntityPM.VolumeInCBM; break; }
             default: { break; }
         }
         myRecordPM.Quantity = AppTool.Round(myQuantity, 2);
@@ -3294,6 +3305,7 @@ export class ShipmentGenerator {
             case "QTY": { newRecord.Quantity = this.EntityPM.NumberOfPackages; }
             case "CWKG": { newRecord.Quantity = this.EntityPM.ChargeableWeightInKG; break; }
             case "GWKG": { newRecord.Quantity = this.EntityPM.GrossWeightInKG; break; }
+            case "VCBM": { newRecord.Quantity = this.EntityPM.VolumeInCBM; break; }
             default: { break; }
         }
 

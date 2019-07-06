@@ -373,6 +373,11 @@ export class QuotePM {
     public set GrossWeightPerTon(newValue: number) { if (this.grossWeightPerTon != newValue) { this.grossWeightPerTon = newValue; this.MarkAsDirty("GrossWeightPerTon"); } }
        
 	 
+    private volumeInCBM: number;
+    public get VolumeInCBM() { return this.volumeInCBM; }
+    public set VolumeInCBM(newValue: number) { if (this.volumeInCBM != newValue) { this.volumeInCBM = newValue; this.MarkAsDirty("VolumeInCBM"); } }
+       
+	 
     private lastModified: string;
     public get LastModified() { return this.lastModified; }
     public set LastModified(newValue: string) { if (this.lastModified != newValue) { this.lastModified = newValue; this.MarkAsDirty("LastModified"); } }
