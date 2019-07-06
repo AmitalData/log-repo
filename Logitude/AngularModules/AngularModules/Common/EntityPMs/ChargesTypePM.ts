@@ -323,6 +323,16 @@ export class ChargesTypePM {
     public set IsDrop(newValue: boolean) { if (this.isDrop != newValue) { this.isDrop = newValue; this.MarkAsDirty("IsDrop"); } }
        
 	 
+    private receivablesDefaultCurrencyId: string;
+    public get ReceivablesDefaultCurrencyId() { return this.receivablesDefaultCurrencyId; }
+    public set ReceivablesDefaultCurrencyId(newValue: string) { if (this.receivablesDefaultCurrencyId != newValue) { this.receivablesDefaultCurrencyId = newValue; this.MarkAsDirty("ReceivablesDefaultCurrencyId"); } }
+       
+	 
+    private payablesDefaultCurrencyId: string;
+    public get PayablesDefaultCurrencyId() { return this.payablesDefaultCurrencyId; }
+    public set PayablesDefaultCurrencyId(newValue: string) { if (this.payablesDefaultCurrencyId != newValue) { this.payablesDefaultCurrencyId = newValue; this.MarkAsDirty("PayablesDefaultCurrencyId"); } }
+       
+	 
 
     public OldEntityPM: ChargesTypePM;
 		

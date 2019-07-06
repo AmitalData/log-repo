@@ -73,5 +73,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsDomestic { get; set; }
         public bool IsExport { get; set; }
         public bool IsDrop { get; set; }
+
+        public string ReceivablesDefaultCurrencyId { get; set; }
+        public string PayablesDefaultCurrencyId { get; set; }
     }
 }

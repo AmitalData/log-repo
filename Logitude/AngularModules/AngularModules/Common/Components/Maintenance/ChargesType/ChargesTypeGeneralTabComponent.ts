@@ -211,6 +211,20 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         }
     }
 
+    get PayablesDefaultCurrencyId() { return this.EntityPM.PayablesDefaultCurrencyId; }
+    set PayablesDefaultCurrencyId(newValue: string) {
+        if (this.EntityPM.PayablesDefaultCurrencyId != newValue) {
+            this.EntityPM.PayablesDefaultCurrencyId = newValue;
+        }
+    }
+
+    get ReceivablesDefaultCurrencyId() { return this.EntityPM.ReceivablesDefaultCurrencyId; }
+    set ReceivablesDefaultCurrencyId(newValue: string) {
+        if (this.EntityPM.ReceivablesDefaultCurrencyId != newValue) {
+            this.EntityPM.ReceivablesDefaultCurrencyId = newValue;
+        }
+    }
+
     //get IsBackToBack() { return this.EntityPM.IsBackToBack; }
     //set IsBackToBack(newValue: boolean) {
     //    if (this.EntityPM.IsBackToBack != newValue) {

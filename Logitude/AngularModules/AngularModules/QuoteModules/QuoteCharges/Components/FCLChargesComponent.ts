@@ -1872,12 +1872,18 @@ export class FCLQuoteChargeItem extends BaseComponent {
             this.CostMeasurementId = !AppTool.IsNullOrEmpty(list.ContainerMeasurementId) ? list.ContainerMeasurementId : list.MeasurementId;
             this.EntityPM.IsBackToBack = list.IsBackToBack;
 
-            if (this.ChargesGroupCode == "FRT" || this.ChargesGroupCode == "SCH") {
-                this.CostCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-            }
 
+            if (!AppTool.IsNullOrEmpty(list.PayablesDefaultCurrencyId)) {
+                this.CostCurrencyId = list.PayablesDefaultCurrencyId;
+            }
             else {
-                this.CostCurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                if (this.ChargesGroupCode == "FRT" || this.ChargesGroupCode == "SCH") {
+                    this.CostCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                }
+
+                else {
+                    this.CostCurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                }
             }
         }
 

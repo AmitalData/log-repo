@@ -147,7 +147,25 @@
                                                 </td>
 
                                                 <td>
-                                                    <LogCheckBox [ObjectFieldName]="'IsReceivable'" [Value]="IsReceivable"  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:16px;">
+                                                                <LogCheckBox [ObjectFieldName]="'IsReceivable'" [Value]="IsReceivable" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            </td>
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'ReceivablesDefaultCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td>
+                                                                <LogLov [ObjectFieldName]="'ReceivablesDefaultCurrencyId'"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [SelectedValue]="ReceivablesDefaultCurrencyId"
+                                                                        [LookUpTableName]="'Currency'"
+                                                                        >
+                                                                </LogLov>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
 
@@ -157,7 +175,25 @@
                                                 </td>
 
                                                 <td>
-                                                    <LogCheckBox [ObjectFieldName]="'IsPayable'" [Value]="IsPayable" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width:16px;">
+                                                                <LogCheckBox [ObjectFieldName]="'IsPayable'" [Value]="IsPayable" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            </td>
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'PayablesDefaultCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td>
+                                                                <LogLov [ObjectFieldName]="'PayablesDefaultCurrencyId'"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [SelectedValue]="PayablesDefaultCurrencyId"
+                                                                        [LookUpTableName]="'Currency'">
+                                                                </LogLov>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
                                             </tr>
 

@@ -81,6 +81,13 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsExport { get; set; }
         public bool IsDrop { get; set; }
 
+        [ForeignKey("ReceivablesDefaultCurrencyId")]
+        public virtual Currency ReceivablesDefaultCurrency  { get; set; }
+        public string ReceivablesDefaultCurrencyId { get; set; }
+
+        [ForeignKey("PayablesDefaultCurrencyId")]
+        public virtual Currency PayablesDefaultCurrency { get; set; }
+        public string PayablesDefaultCurrencyId { get; set; }
 
     }
 }
