@@ -24,7 +24,7 @@
                             <li id="{{'CRMACT' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'ACT'" (click)="SelectedItem = 'ACT'">Activities</li>
                             <li id="{{'CRMOPP' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'OPP'" (click)="SelectedItem = 'OPP'">Opportunities</li>
 
-                            <li id="{{'CRMOCC' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'OCC'" (click)="SelectedItem = 'OCC'" *ngIf="IsOccasionVisible">Occasion</li>
+                            <li id="{{'CRMOCC' | IdGeneratorPipe}}" [class.SelectedPageMenu]="SelectedItem == 'OCC'" (click)="SelectedItem = 'OCC'" *ngIf="IsOccasionVisible">Occasions</li>
 
                             <li style="width:100px;" [class.SelectedPageMenu]="SelectedItem == 'CON'" (click)="SelectedItem = 'CON'" *ngIf="IsContactsVisible">
                                 <table>
