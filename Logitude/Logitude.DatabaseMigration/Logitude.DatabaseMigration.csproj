@@ -1213,6 +1213,10 @@
     <Compile Include="Migrations\201907062057504_CustomersTextCodesMigration.Designer.cs">
       <DependentUpon>201907062057504_CustomersTextCodesMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907071201307_CustomerGLAccountDebetorsQueryFilterMigration.cs" />
+    <Compile Include="Migrations\201907071201307_CustomerGLAccountDebetorsQueryFilterMigration.Designer.cs">
+      <DependentUpon>201907071201307_CustomerGLAccountDebetorsQueryFilterMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.cs" />
     <Compile Include="Migrations\201810181206425_AddDurationFieldsToTMEmployeeTimeTable_Maheera.Designer.cs">
@@ -2064,6 +2068,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907062057504_CustomersTextCodesMigration.resx">
       <DependentUpon>201907062057504_CustomersTextCodesMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907071201307_CustomerGLAccountDebetorsQueryFilterMigration.resx">
+      <DependentUpon>201907071201307_CustomerGLAccountDebetorsQueryFilterMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
