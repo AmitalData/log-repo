@@ -9,6 +9,8 @@ namespace Logitude.DatabaseMigration.Migrations
         {
             AddColumn("dbo.Quotes", "VolumeInCBM", c => c.Double());
             Sql("update Quotes set VolumeInCBM = round(Volume, 3) where Volume is not null and VolumeUnitCode = 'CBM'");
+            Sql("update Quotes set VolumeInCBM = round(Volume / 61024, 3) where Volume is not null and VolumeUnitCode = 'CBI'");
+            Sql("update Quotes set VolumeInCBM = round(Volume / 35.315, 3) where Volume is not null and VolumeUnitCode = 'CBF'");
 
         }
 
