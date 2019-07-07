@@ -7,7 +7,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { TariffDomainService } from '../../../TariffModule/Services/TariffDomainService';
 import { TariffSearchSummary } from '../../../TariffModule/Services/TariffDomainService';
 import { Validator } from '../../../Infrastructure/Validators/Validator';
-
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 @Component({
     moduleId: module.id,
     templateUrl: './TariffSearchAirFreightPricesComponent.html',
@@ -150,16 +150,12 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
 
     PriceClick(item: TariffSearchSummary) {
         if (item) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({
-                        EntityId: item.Id,
-                        ObjectTableName: "Tariff",
-                        SelectedTabCode: item.VersionId,
-
-                    });
-                });
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            editWindow.ShowEditComponent(item.Id, "Tariff", item.VersionId);
         }
 
     }
