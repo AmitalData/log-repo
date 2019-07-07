@@ -35,7 +35,7 @@ import { CourierPendingReasonPM } from '../../../../Customs/EntityPMs/CourierPen
 export class DeclarationPendingsGeneralComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.DeclarationPending";
     public DataContext = this;
-    public ItemsSource: ObservableCollection;
+    public DeclarationPendingItemsSource: ObservableCollection;
     DeclarationPendingsList: DeclarationPendingPM[] = [];
     public declarationPM: DeclarationPM;
     FIELD_IS_REQUIERD: string;
@@ -52,7 +52,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
 
     constructor() {
         super();
-        this.ItemsSource = new ObservableCollection([]);
+        this.DeclarationPendingItemsSource = new ObservableCollection([]);
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         console.log("....|| DeclarationPendingsGeneralComponent ||....");
     }
@@ -66,6 +66,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
 
 
                 this.IsVisibile = true;
+                this.DeclarationPendingsList = args.DeclarationIdList;
                 this.BuildDeclarationPendingList();
                 this.IsDisplayOnly = args.IsDisplayOnly;
                 this.parent = args.parent;
@@ -155,15 +156,15 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
             item.Status = "A";
 
             if (!this.DeclarationPendingsList.includes(item)) {
-                this.ItemsSource.Insert(new DeclarationPendingLine(item, this));
+                this.DeclarationPendingItemsSource.Insert(new DeclarationPendingLine(item, this));
             }
         }
     }
 
     BuildDeclarationPendingList() {
-        this.ItemsSource.Clear();
+        this.DeclarationPendingItemsSource.Clear();
         for (let item of this.DeclarationPendingsList) {
-            this.ItemsSource.Insert(new DeclarationPendingLine(item, this));
+            this.DeclarationPendingItemsSource.Insert(new DeclarationPendingLine(item, this));
         }
     }
 
@@ -317,15 +318,15 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
     }
 
     OnRowEnded($event) {
-        console.log("this.ItemsSource.Length : " + this.ItemsSource.Length);
-        if (($event) == this.ItemsSource.Length) {
+        console.log("this.ItemsSource.Length : " + this.DeclarationPendingItemsSource.Length);
+        if (($event) == this.DeclarationPendingItemsSource.Length) {
             this.Add();
 
         }
     }
 
     OnFocus() {
-        if (this.ItemsSource.Length == 0) {
+        if (this.DeclarationPendingItemsSource.Length == 0) {
             this.Add();
         }
     }
@@ -404,7 +405,7 @@ export class DeclarationPendingLine extends BaseComponent {
 
     DeleteButtonClicked() {
 
-        this.parent.ItemsSource.Remove(this);
+        this.parent.DeclarationPendingItemsSource.Remove(this);
         if (this.parent.DeclarationPendingsList.includes(this.entityPM)) {
             const index = this.parent.DeclarationPendingsList.indexOf(this.entityPM, 0);
             if (index > -1) {

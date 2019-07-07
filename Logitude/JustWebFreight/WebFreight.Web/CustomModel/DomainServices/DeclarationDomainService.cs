@@ -97,6 +97,29 @@ namespace WebFreight.Web.CustomModel.DomainServices
         }
 
         [Query]
+        public List<DeclarationPendingPM> GetDeclarationPendingListPMByDeclarationId(string declarationId, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            if (customContext == null)
+            {
+                customContext = CustomContext.GetContext(tenant);
+            }
+
+            customContext = CustomContext.GetContext(tenant);
+            DeclarationRepository declarationRep = new DeclarationRepository(customContext);
+
+            if (string.IsNullOrWhiteSpace(declarationId))
+            {
+                return null;
+            }
+            declarationQuery = new DeclarationQueryService(customContext);
+            List<DeclarationPendingPM> myDeclarationPendingPM = declarationQuery.GetDeclarationPendingListPMByDeclarationId(declarationId, tenant);
+
+            return myDeclarationPendingPM;
+        }
+
+        [Query]
         public List<DeclarationPM> GetSingleDeclarationPMByCargoIdentifiers(string cargoTypeCode, string manifestNumber, string secondCargoID, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);

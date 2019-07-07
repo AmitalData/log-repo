@@ -38,7 +38,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 var prevCourierPendingReasonList = _MyDeclarationCourierStatusPM.CourierPendingReasonList;
                 DeclarationPendingQueryService myCourierPendingReasonQueryService = new DeclarationPendingQueryService(context);
-                List<DeclarationPendingPM> declarationPendingPMList = myCourierPendingReasonQueryService.GetDeclarationPendingsByDeclrationId(_MyDeclarationCourierStatusPM.DeclarationId, _MyDeclarationCourierStatusPM.Tenant);
+                List<DeclarationPendingPM> declarationPendingPMList = myCourierPendingReasonQueryService.GetDeclarationPendingsByDeclarationId(_MyDeclarationCourierStatusPM.DeclarationId, _MyDeclarationCourierStatusPM.Tenant);
                 _MyDeclarationCourierStatusPM.CourierPendingReasonList = null;
                 foreach (var declarationPending in declarationPendingPMList)
                 {

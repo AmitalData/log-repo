@@ -56,18 +56,34 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 ConsignmentPM dbOccConsignmentPM = GetDBEntity(entityPM);
                 if(entityPM.CargoDescription != dbOccConsignmentPM.CargoDescription)
                 {
+                    List<string> pendingReasonCodeList = null;
                     var pendingByKeywordQueryService = new PendingByKeywordQueryService(entityPM.Tenant);
-                    var courierReasonCode = pendingByKeywordQueryService.GetCourierPendingReasonCodeBykeyWords(entityPM.CargoDescription, entityPM.Tenant);
-                    if (!String.IsNullOrWhiteSpace(courierReasonCode))
+                    var courierReasonCodeList = pendingByKeywordQueryService.GetCourierPendingReasonCodeBykeyWords(entityPM.CargoDescription, entityPM.Tenant);
+                    foreach (var courierReasonCode in courierReasonCodeList)
                     {
-                        DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(entityPM.Tenant);
-                        DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(entityPM.DeclarationId, false, false);
-                        if (currentDeclarationCourierStatusPM != null)
+                        
+                        if (!String.IsNullOrWhiteSpace(courierReasonCode) && !pendingReasonCodeList.Contains(courierReasonCode))
                         {
-                            DeclarationCourierStatusUpdateService declarationCourierStatusUpdateService = new DeclarationCourierStatusUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-                            currentDeclarationCourierStatusPM.CourierPendingReasonCode = courierReasonCode;
-                            currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
-                            declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
+                            pendingReasonCodeList.Add(courierReasonCode);
+                            ICustomContext context = MainContext as CustomContext;
+                            DeclarationPendingQueryService myCourierPendingReasonQueryService = new DeclarationPendingQueryService(context);
+                            DeclarationPendingUpdateService declarationPendingUpdateService = new DeclarationPendingUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                            DeclarationPendingPM declarationPendingPM = myCourierPendingReasonQueryService.GetSingle(entityPM.DeclarationId, courierReasonCode, false, false);
+                            if (declarationPendingPM != null && declarationPendingPM.Status != "A")
+                            {
+                                declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
+                                declarationPendingPM.Status = "A";
+                                declarationPendingUpdateService.Update(declarationPendingPM, true);
+                            }
+                            else
+                            {
+                                declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
+                                declarationPendingPM.Status = "A";
+                                declarationPendingPM.DeclarationID = entityPM.DeclarationId;
+                                declarationPendingPM.Tenant = entityPM.Tenant;
+                                declarationPendingPM.CourierPendingReasonCode = courierReasonCode;
+                                declarationPendingUpdateService.Update(declarationPendingPM, true);
+                            }
                         }
                     }
                 }

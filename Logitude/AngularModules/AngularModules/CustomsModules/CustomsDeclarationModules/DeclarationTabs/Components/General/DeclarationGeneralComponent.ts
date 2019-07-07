@@ -7,10 +7,11 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
-import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
+import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
-
+import { LuhnAlgorithm } from '../../../../../Customs/Utilities/LuhnAlgorithm';
 import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
 import {ConsignmentPM} from '../../../../../Customs/EntityPMs/ConsignmentPM';
 import {ClientList} from '../../../../../Customs/EntityLists/ClientList';
@@ -647,11 +648,48 @@ export class DeclarationGeneralComponent extends BaseComponent implements AfterV
         }
         this.isImporterClicked = false;
 
-        if (this.EntityPM.IsCourierDeclaration) {
-            this.ImporterLostFocus4CourierDeclaration(type, item, importerSearchBox);
+        var valid: boolean = true;
+        var errorMessage : string = "";
+        if (type == "Importer" && !AppTool.IsNullOrEmpty(item)) {
+            this.ImporterCode = item;
+            if (item.length < 9) {
+                valid = false;
+                errorMessage = "מספר יבואן קצר מידיי";
+                //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.CodeShort"));
+            }
+            else if (item.length > 9) {
+                valid = false;
+                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode");
+                //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
+            }
+            else {
+                var digit: string = item.toString().substring(8);
+                var checkDigit: number = LuhnAlgorithm.CalculateLuhnAlgorithm(item.substring(0, 8));
+
+                if (digit != checkDigit.toString()) {
+                    valid = false;
+                    errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString();
+                    //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.CorrectDigit") + checkDigit.toString());
+                }
+            }
+        }
+
+        if (!valid) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
+            messageWindow.Width = 250;
+            messageWindow.Height = 150;
+            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            messageWindow.Show(errorMessage);
+            return;
         }
         else {
-            this.ImporterLostFocusChange(type, item, importerSearchBox);
+            if (this.EntityPM.IsCourierDeclaration) {
+                this.ImporterLostFocus4CourierDeclaration(type, item, importerSearchBox);
+            }
+            else {
+                this.ImporterLostFocusChange(type, item, importerSearchBox);
+            }
         }
     }
 

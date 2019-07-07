@@ -43,10 +43,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
                 string[] courierPendingReasonList = dirtyDeclarationCourierStatusPM.CourierPendingReasonList.Split(',').Select(sValue => sValue.Trim()).ToArray();
+                string[] prevCourierPendingReasonList = dbOccDeclarationCourierStatusPM.CourierPendingReasonList.Split(',').Select(sValue => sValue.Trim()).ToArray();
                 //CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(dirtyDeclarationCourierStatusPM.CourierPendingReasonCode, false, false);
                 foreach (var courierPendingReason in courierPendingReasonList)
                 {
-                    if (!string.IsNullOrWhiteSpace(courierPendingReason))
+                    if (!string.IsNullOrWhiteSpace(courierPendingReason) && !prevCourierPendingReasonList.Contains(courierPendingReason))
                     {
                         CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReason, false, false);
 

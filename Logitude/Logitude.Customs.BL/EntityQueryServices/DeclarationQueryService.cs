@@ -255,6 +255,22 @@ namespace Logitude.Customs.BL.EntityQueryServices
             //    base.GetComposition(entityKeys);
         }
 
+        public List<DeclarationPendingPM> GetDeclarationPendingListPMByDeclarationId(string declarationId, int tenant)
+        {
+            if (string.IsNullOrWhiteSpace(declarationId))
+            {
+                return null;
+            }
+
+            var myDeclarationPendingQueryService = new DeclarationPendingQueryService(context);
+            List<DeclarationPendingPM> MyDeclarationPendingPMList = myDeclarationPendingQueryService.GetDeclarationPendingsByDeclarationId(declarationId, tenant);
+            if (MyDeclarationPendingPMList == null)
+            {
+                return null;
+            }
+            return MyDeclarationPendingPMList;
+        }
+
         public string GetIdByDeclarationNumber(string declarationNumber, int tenant)
         {
             if (String.IsNullOrWhiteSpace(declarationNumber)) return "";

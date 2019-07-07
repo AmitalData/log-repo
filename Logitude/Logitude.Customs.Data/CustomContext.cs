@@ -190,6 +190,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ContinuousMessagesTypeCodeMap());
 	
+            modelBuilder.Configurations.Add(new ContinuousRequestTypeMap());
+	
             modelBuilder.Configurations.Add(new ConverterTypeMap());
 	
             modelBuilder.Configurations.Add(new CountryGroupMap());
@@ -1444,6 +1446,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ContinuousMessagesTypeCode> ContinuousMessagesTypeCodes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ContinuousRequestType> ContinuousRequestTypes 
 	 {
 	      get; set;
 	 

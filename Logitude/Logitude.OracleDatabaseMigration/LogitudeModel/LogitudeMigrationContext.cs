@@ -915,6 +915,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<ContinuousRequestType> ContinuousRequestType { get; set; }
 
         #endregion
 
@@ -4020,6 +4021,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new UpdateCodeMap());
             modelBuilder.Configurations.Add(new GatepassRequestMap());
             modelBuilder.Configurations.Add(new PendingByKeywordMap());
+            modelBuilder.Configurations.Add(new ContinuousRequestTypeMap());
 
             #endregion
 

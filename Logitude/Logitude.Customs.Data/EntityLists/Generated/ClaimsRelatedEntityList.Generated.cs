@@ -86,6 +86,14 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? DepositingAmount  { get; set; }
        [DataMember]
        public decimal? RefundAmount  { get; set; }
+       [DataMember]
+       public string ContinuousRequestTypeCode  { get; set; }
+       [DataMember]
+       public string ContinuousRequestTypeName  { get; set; }
+       [DataMember]
+       public string Explanation  { get; set; }
+       [DataMember]
+       public string Note  { get; set; }
    }
 
 }

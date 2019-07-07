@@ -157,6 +157,7 @@
     <Compile Include="EntityPMs\Generated\ConstraintTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContactRoleTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ContinuousMessagesTypeCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ContinuousRequestTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConverterTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CountryGroupPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CourierCustomStatusPM.Generated.cs" />

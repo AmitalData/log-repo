@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
@@ -107,6 +107,24 @@ export class DeclarationExtendedListService {
 
         return Observable.defer(() => {
             return this._http.get(this._apiUrl + '/GetConsignmentListPMByCustomFileNo/?' + 'customFileNo=' + customFileNo,
+                { headers: authHeader }).map(response => {
+
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.json();
+                    return serviceResponse;
+                }).catch(ServiceHelper.HandleServiceError);
+        });
+    }
+
+    GetDeclarationPendingListPMByDeclarationId(declarationId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        var url = this._apiUrl + '/GetDeclarationPendingListPMByDeclarationId';
+
+        return Observable.defer(() => {
+            return this._http.get(this._apiUrl + '/GetDeclarationPendingListPMByDeclarationId/?' + 'declarationId=' + declarationId,
                 { headers: authHeader }).map(response => {
 
 
