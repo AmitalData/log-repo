@@ -470,7 +470,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 result.ActiveCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.Inactive == false).Count();
                 result.InactiveCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.Inactive == true).Count();
                 result.CollectorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2").Count();
-                result.DebitorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.BalanceInLocalCurrency > 0).Count();
+                result.DebitorsCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2" && d.LocalBalanceInDue > 0).Count();
                 result.AllCustomersCount = iQueryable_Data.Where(d => d.AccountTypeCode == "2").Count();
 
                 // Vendors GLAccounts

@@ -116,6 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Simplog.InvoiceLib.NewARPaymentCommand",
+			      				    LocalDefaultText =  "קבלה",
 			      				    DefaultText =  "A/R Payment",
 			      				    Code =  "ARPT",
 			      				    Name =  "AR Payments",

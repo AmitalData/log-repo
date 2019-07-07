@@ -436,6 +436,10 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     
 
     SaveChanges() {
+        if (this.isSaveClicked == true) {
+            return;
+        }
+        this.isSaveClicked = true;
         this.ValidationErrorsList = [];
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -493,6 +497,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                                 this.SaveData();
                                             }
                                             else {
+                                                this.isSaveClicked = false;
                                                 //this.LoadImporterShipments(true);
                                             }
                                         });
@@ -517,6 +522,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                                 this.SaveData();
                                             }
                                             else {
+                                                this.isSaveClicked = false;
                                                 //this.LoadImporterShipments(true);
                                             }
                                         });
@@ -545,6 +551,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                             this.SaveData();
                                         }
                                         else {
+                                            this.isSaveClicked = false;
                                             //this.LoadImporterShipments(true);
                                         }
                                     });
@@ -569,6 +576,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
                                             this.SaveData();
                                         }
                                         else {
+                                            this.isSaveClicked = false;
                                             //this.LoadImporterShipments(true);
                                         }
                                     });
@@ -587,12 +595,14 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
 
                     //if (!this.SelectedTransportationTypes) {
                     this.ValidationErrorsList.push("Transportation Type Port is not defined in your tenant.");
+                    this.isSaveClicked = false;
                     //}
                     //this.SaveData();
                 }
             });
         }
         else {
+            this.isSaveClicked = false;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
 
@@ -600,7 +610,8 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
     isInt(n) {
         return n % 1 === 0;
     }
-    SaveData() {
+    isSaveClicked: boolean = false;
+    SaveData() { 
         this.ValidationErrorsList = [];
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -645,6 +656,7 @@ export class AddEditPrivateLabelShipmentComponent extends BaseComponent implemen
         //}
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
+            this.isSaveClicked = false;
             this.EntityPM.IsImporterShipment = true;
             this.EntityPM.MainCarriageFromPortId = this.EntityPM.FromPortId;
             this.EntityPM.MainCarriageToPortId = this.EntityPM.ToPortId;

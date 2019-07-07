@@ -1021,8 +1021,10 @@ div#two {
                     
                 </li>
                 <li>
-                    
             <asp:Button ID="ButtonYearTransfer" runat="server" Text="YearTransfer(LastY)" OnClick="ButtonYearTransfer_Click" />        
+            <asp:Button ID="ButtonYearTransferCancel" runat="server" Text="CancelYearTransfer(LastY)" OnClick="ButtonYearTransferCancel_Click" />        
+                </li>
+                <li>
             <asp:Button ID="ButtonGetSystem1000" runat="server" Text="Get System 1000(Tenant)" OnClick="ButtonGetSystem1000_Click" />        
             <asp:Button ID="ButtonLoadSystem1000" runat="server" Text="Load System 1000(Tenant)" OnClick="ButtonLoadSystem1000_Click" />        
                 </li>
