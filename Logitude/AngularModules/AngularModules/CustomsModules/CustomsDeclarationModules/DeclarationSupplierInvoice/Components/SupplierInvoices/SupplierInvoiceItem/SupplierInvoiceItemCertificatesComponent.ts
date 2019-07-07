@@ -94,7 +94,7 @@ export class SupplierInvoiceItemCertificatesComponent extends BaseComponent {
 
                 //Select a line
                 this.LineNumber = args.LineNumber;
-                this.LineNumber = this.LineNumber.split(",")[0];
+                this.LineNumber = this.LineNumber.split(",")[2];
                 var selectedRow = this.ItemsSource.Collection.find(d => d.SequenceNumeric == this.LineNumber);
                 this.SelectedRow = selectedRow;
 

@@ -33,6 +33,7 @@
         <xs:element minOccurs="0" maxOccurs="1" ref="SI_COUNTER" />
         <xs:element minOccurs="0" maxOccurs="1" ref="INCOTERM_ID" />
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="INVOICEITEMS" />
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="EXPENSES" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -105,6 +106,18 @@
   <xs:element name="APPROV_TYPE" type="xs:string" />
   <xs:element name="ADD_REQUEST_NO" type="xs:string" />
   <xs:element name="REQUEST_NO" type="xs:string" />
+  <xs:element name="EXPENSES">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="TypeCode" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="Amount" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="CurrencyTypeCode" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TypeCode" type="xs:string" />
+  <xs:element name="Amount" type="xs:string" />
+  <xs:element name="CurrencyTypeCode" type="xs:string" />
   <xs:element name="CustomsDocuments">
     <xs:complexType>
       <xs:sequence>

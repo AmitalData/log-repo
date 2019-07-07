@@ -113,6 +113,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         try
                         {
                             customsDocumentPMItem.ChangeSetOp = ChangeSetOperation.Update;
+                            customsDocumentPMItem.IsSendToQueue = false;
+                            myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPMItem);
+                            myCustomsDocumentUpdateService.Update(customsDocumentPMItem, true);
+
+                            customsDocumentPMItem.ChangeSetOp = ChangeSetOperation.Update;
                             customsDocumentPMItem.IsSendToQueue = true;
                             myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                             myCustomsDocumentUpdateService.Update(customsDocumentPMItem, true);

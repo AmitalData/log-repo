@@ -1482,6 +1482,14 @@ implements OnDestroy
 
     SendUncorrectDocuments() {
 
+        if (this._DOC_U_Total == 0) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            return;
+        }
+
         var currRequestParams = new SendUnCorrectDocumentsRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
