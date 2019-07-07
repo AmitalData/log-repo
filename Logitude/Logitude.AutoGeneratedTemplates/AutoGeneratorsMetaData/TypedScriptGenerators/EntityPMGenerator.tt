@@ -297,7 +297,11 @@ public string BuildImportEntitesString( dynamic entity,string entityPmname)
 			   if(tableName.ToLower() != "string")
                {
 					string pmname = tableName + "PM";
-					importentitystring += Environment.NewLine + "import {"+pmname+"} from './" + pmname + "';";
+                    string newImport = Environment.NewLine + "import {"+pmname+"} from './" + pmname + "';";
+                    if(!importentitystring.Contains(newImport))
+                    {
+                        importentitystring += newImport;//Environment.NewLine + "import {"+pmname+"} from './" + pmname + "';";
+                    }
                }
            }
 		   
