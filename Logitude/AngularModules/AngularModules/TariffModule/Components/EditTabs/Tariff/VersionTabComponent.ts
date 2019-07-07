@@ -122,15 +122,29 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     }
                 }
+
+                else {
+                    this.StopAllFlags();
+                }
             });
         }
     }
-    
+
+    StopAllFlags() {
+
+        if (this.EntityPM.IsApprovingDraftVersion) {
+            this.EntityPM.IsApprovingDraftVersion = false;
+        }
+
+        this.isApproveButtonClicked = false;
+        this.isUploadExcelFinished = false;
+        this.isCopyButtonClicked = false;
+    }
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
     
-
     private loadedTariffLines: TariffLinePM[];
     private compareTariffLines: TariffLinePM[];
     private LoadTariffLines(type: string) {

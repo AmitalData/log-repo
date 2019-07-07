@@ -140,15 +140,27 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
                     this.SetSurchargesLabelsAndVisibility();
                 }
+
+                else {
+                    this.StopAllFlags();
+                }
             });
         }
+    }
+
+    StopAllFlags() {
+
+        if (this.EntityPM.IsApprovingDraftVersion) {
+            this.EntityPM.IsApprovingDraftVersion = false;
+        }
+
+        this.isApproveButtonClicked = false;
+        this.isUploadExcelFinished = false;
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
-
-
 
     private GetTariffSettings() {
         this.TariffDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {

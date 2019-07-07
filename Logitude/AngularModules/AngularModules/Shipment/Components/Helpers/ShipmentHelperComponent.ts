@@ -27,14 +27,15 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsAnalyzeChampXMLButtonVisible: boolean = false;
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {        
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
-
+      
         this.EntityPM = this.entityArgs.EntityPM;
 
         if (this.EntityPM) {
             this.ShowHideShippingInstructionsButton();
-
+            this.ShowHideSendBookingButton();
             if (this.EntityPM.DirectionId == "E" && this.EntityPM.TransportModeId == "A") {
                 if (FeatureLocator.IsPackage_DVMT()) {
                     this.IsAnalyzeChampXMLButtonVisible = true;
@@ -71,6 +72,10 @@ export class ShipmentHelperComponent implements OnDestroy {
                             this.ShowINTTRAWizard();
                         }
 
+                        else if (this.isSendBookingClicked) {
+                            this.ShowINTTRABookingWizard();
+                        }
+
                         else if (this.isShareManifestRequested) {
                             this.StartShareManifest();
                         }
@@ -91,6 +96,7 @@ export class ShipmentHelperComponent implements OnDestroy {
                     this.isAWBButtonClicked = false;
                     this.isSendToCustomClicked = false;
                     this.isShippingInstructionsClicked = false;
+                    this.isSendBookingClicked = false;
                 });
             }
 
@@ -122,6 +128,20 @@ export class ShipmentHelperComponent implements OnDestroy {
                     var isFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
                     if (isFCLEntity) {
                         this.IsShippingInstructionsVisible = true;
+                    }
+                }
+            }
+        }
+    }
+
+    private ShowHideSendBookingButton() {
+        this.IsSendBookingVisible = false;
+        if (FeatureLocator.HasFeaturePermession("Shipment", "INTTRABookingSimulator")) {
+            if (this.EntityPM.TransportModeId == "O" && this.EntityPM.DirectionId == "E") {
+                if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "C") {
+                    var isFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                    if (isFCLEntity) {
+                        this.IsSendBookingVisible = true;
                     }
                 }
             }
@@ -202,10 +222,12 @@ export class ShipmentHelperComponent implements OnDestroy {
 
     private isSendToCustomClicked: boolean = false;  
     private isShippingInstructionsClicked: boolean = false;
+    private isSendBookingClicked: boolean = false;
     public IsAWBWizardButtonVisible: boolean = false
     public IsImportAWBWizardButtonVisible: boolean = false;
     public IsSendToCustomVisible: boolean = false
     public IsShippingInstructionsVisible: boolean = false;
+    public IsSendBookingVisible: boolean = false;
     setImportAWBWizardButton() {
         this.IsImportAWBWizardButtonVisible = false;
         if (FeatureLocator.HasFeaturePermession("Shipment", "IMPORTAWBWIZARD")) {
@@ -503,6 +525,24 @@ export class ShipmentHelperComponent implements OnDestroy {
         logWindow.Title = "Shipping Instructions Wizard";
         logWindow.WindowArgs = { Shipment: this.EntityPM, EntityArgs: this.entityArgs };
         logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/WizardComponent');
+    }
+
+    SendBookingClicked() {
+        if (!this.isSendBookingClicked) {
+            this.isSendBookingClicked = true;
+
+            if (this.entityArgs.EditComponent) {
+                this.entityArgs.EditComponent.SaveChanges();
+            }
+        }
+
+    }
+
+    ShowINTTRABookingWizard() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "INTTRA e-booking Wizard";
+        logWindow.WindowArgs = this.EntityPM.Id;
+        logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/SimulatorBookingComponent');
     }
 
     AnalyzeChampXMLClicked() {

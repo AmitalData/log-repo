@@ -29,7 +29,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="SimulateClicked()">Send</button>
+                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -37,15 +37,12 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelClicked()">Cancel</button>
-                    </td>
-
-                    <td style="width: 5px;">
-                        <div></div>
+                        <button class="RedButton" (click)="SendButtonClicked()" [disabled]="IsLimited">Send</button>
                     </td>
                 </tr>
             </table>
         </td>
     </tr>
+
 </table>
 

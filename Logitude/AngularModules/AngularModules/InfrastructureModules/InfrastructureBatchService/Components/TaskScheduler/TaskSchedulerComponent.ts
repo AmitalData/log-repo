@@ -97,7 +97,6 @@ export class TaskSchedulerComponent implements OnInit  {
             this.ItemsSource.push(new TaskSchedulerItemClass(item, this));
             this.FixedItemsSource.push(new TaskSchedulerItemClass(item, this));
         });
-
         if (this.filterTypeCode) {
 
             if (this.filterTypeCode == "AL") {
@@ -161,8 +160,8 @@ export class TaskSchedulerComponent implements OnInit  {
         
         newItem.Type = this.SchedulerType;
         var logWindow = new LogitudeWindow();
-        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 730 : 620;
-        logWindow.Width = 800;
+        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 820 : 750;
+        logWindow.Width = 900;
         logWindow.Title = this.SchedulerType + " Scheduler Details";
         logWindow.DataContext = new TaskSchedulerItemClass(newItem, this, true);
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
@@ -177,8 +176,8 @@ export class TaskSchedulerComponent implements OnInit  {
         var logWindow = new LogitudeWindow();
         logWindow.Title = this.SchedulerType  + " Scheduler Details";
         logWindow.DataContext = item;
-        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 730 : 620;
-        logWindow.Width = 800;
+        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 820 : 750;
+        logWindow.Width = 900;
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
@@ -302,8 +301,10 @@ export class TaskSchedulerComponent implements OnInit  {
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
        
         filters = new ApiQueryFilters();
-
-        sortingDir = "Descending"; 
+        //filters.SortBy = "StatusDate";
+     // filters.SortDirection = "Desc";
+        sortingCol = "StartDateTimeUTC";
+        sortingDir = "descending"; 
         if (!this.SelectedRow) {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
                 filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
@@ -420,6 +421,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     public EntityPM: TasksSchedulerPM;
     public ObjectTableName: string = "TasksScheduler";
     public IsNew: boolean = false;
+    private newValueinDateFormat: Date;
 
  
 
@@ -485,19 +487,25 @@ export class TaskSchedulerItemClass extends BaseComponent {
             this.EntityPM.TriggerType = newValue;
         }
     }
-
+   
     get StartDateTime() { return this.EntityPM.StartDateTime; }
     set StartDateTime(newValue: Date) {
+
         if (this.EntityPM.StartDateTime != newValue) {
             this.EntityPM.StartDateTime = newValue;
-            this.EntityPM.StartDateTimeUTC = new Date(newValue.getUTCFullYear(), newValue.getUTCMonth(), newValue.getUTCDate(), newValue.getUTCHours(), newValue.getUTCMinutes(), newValue.getUTCSeconds(), newValue.getUTCMilliseconds());
-        }
+            this.newValueinDateFormat = new Date(newValue);
+            this.EntityPM.StartDateTimeUTC = new Date(this.newValueinDateFormat.getUTCFullYear(), this.newValueinDateFormat.getUTCMonth(), this.newValueinDateFormat.getUTCDate(), this.newValueinDateFormat.getUTCHours(), this.newValueinDateFormat.getUTCMinutes(), this.newValueinDateFormat.getUTCSeconds(), this.newValueinDateFormat.getUTCMilliseconds());
+           
+        } 
     }
 
     get RepeatInMinutes() { return this.EntityPM.RepeatInMinutes; }
     set RepeatInMinutes(newValue: number) {
         if (this.EntityPM.RepeatInMinutes != newValue) {
-            this.EntityPM.RepeatInMinutes = newValue;
+            
+            
+                this.EntityPM.RepeatInMinutes = newValue;
+            
         }
     }
 

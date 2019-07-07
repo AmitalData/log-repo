@@ -40,7 +40,7 @@ namespace WebFreight.Web.Helpers
                 DepositionRequestAM depositionRequestAM = new DepositionRequestAM();
                 MapDepositionRequestPMToDepositionRequestAM(depositionRequestPM, depositionRequestAM);
                 depositionRequestAM.CustomerTenant = (int)customerTenant;
-
+                string logId = AddAPILogs(depositionRequestAM, depositionRequestPM.Tenant,"start sending Deposition Request to LogBox .. ");
                 string token = string.Empty;
                 APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
                 {
@@ -71,6 +71,9 @@ namespace WebFreight.Web.Helpers
                         if (resultData.StatusCode == System.Net.HttpStatusCode.OK)
                         {
                             response.Result = resultData.Content.ReadAsStringAsync().Result;
+                            string msg = "Deposition Request sent to logbox Successfully ..";
+                            APILogsUtility.UpdateAPILogStatus(logId, depositionRequestPM.Tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(depositionRequestAM), null, null, "");
+
                         }
                         else
                         {
@@ -78,6 +81,9 @@ namespace WebFreight.Web.Helpers
                             APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
                             if (EXC != null)
                             {
+                                string msg = "Fail to send Deposition Request to logbox ..";
+                                APILogsUtility.UpdateAPILogStatus(logId, depositionRequestPM.Tenant, "F", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(depositionRequestAM), null, EXC.ErrorMessage, "");
+
                                 throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
                             }
                         }
@@ -86,11 +92,41 @@ namespace WebFreight.Web.Helpers
                 }
                 else
                 {
+                    string msg = "Fail to send Deposition Request to logbox .. user is not authorized!";
+                    APILogsUtility.UpdateAPILogStatus(logId, depositionRequestPM.Tenant, "F", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(depositionRequestAM), null, msg, "");
+
                     response.Result = "Sorry! this user is not authorized!";
                 }
             }
             else
             {
+                APILogsPM LogPM = new APILogsPM()
+                {
+                    Id = IdCounter.GetNumber("APILogs", depositionRequestPM.Tenant),
+                    CorrelationId = Guid.NewGuid().ToString(),
+                    CreateDate = DateTime.Now,
+                    CreateDateUTC = DateTime.UtcNow,
+                    Direction = "I",
+                    LastUpdateDate = DateTime.Now,
+                    LastUpdateDateUTC = DateTime.UtcNow,
+                    NumberOfRetries = 1,
+                    ExpirationDate = DateTime.Now.AddDays(90),
+                    Status = "I",
+                    Tenant = depositionRequestPM.Tenant,
+                    Subject = "Importer Deposition",
+                    Refrence = depositionRequestPM.ForwarderShipmentNumber,
+                };
+
+                //HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(importerDepositionAM.CustomerTenant);
+                //string partnerName = hybridPartnerQuery.GetPartnerNameByPartnerTenant(importerDepositionAM.CustomerTenant);
+                //LogPM.PartnerName = partnerName;
+
+                IWebFreightContext webFreightContext = WebFreightContext.GetContext(depositionRequestPM.Tenant);
+                APILogsService apiLogsService = new APILogsService(webFreightContext, depositionRequestPM.Tenant);
+                apiLogsService.Create(LogPM); 
+                string msg = "Shipment not found ..";
+                APILogsUtility.UpdateAPILogStatus(LogPM.Id, depositionRequestPM.Tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(depositionRequestPM), null, null, "");
+
                 response.Result = "Shipment not found";
             }
 
@@ -136,13 +172,13 @@ namespace WebFreight.Web.Helpers
 
         #region API Logs
 
-        public string AddAPILogs(DepositionRequestAM depositionRequestAM)
+        public string AddAPILogs(DepositionRequestAM depositionRequestAM,int tenant,string message = null)
         {
-            int tenant = depositionRequestAM.CustomerTenant;
+            //int tenant = depositionRequestAM.CustomerTenant;
 
             APILogsPM LogPM = new APILogsPM()
             {
-                Id = IdCounter.GetNumber("APILogs", depositionRequestAM.CustomerTenant),
+                Id = IdCounter.GetNumber("APILogs", tenant),
                 CorrelationId = Guid.NewGuid().ToString(),
                 CreateDate = DateTime.Now,
                 CreateDateUTC = DateTime.UtcNow,
@@ -162,7 +198,12 @@ namespace WebFreight.Web.Helpers
             apiLogsService.Create(LogPM);
 
 
-            var msg = "Deposition request tasK send to cloud";
+            var msg = message;
+            if (string.IsNullOrEmpty(msg))
+            {
+                msg = "Deposition request tasK send to cloud";
+            }
+            
             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "I", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(depositionRequestAM), null, null, "");
             return LogPM.Id;
 

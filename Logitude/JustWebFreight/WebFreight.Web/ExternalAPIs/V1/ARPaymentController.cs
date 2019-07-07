@@ -50,7 +50,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     Result = Service.GetARPaymentByNumber(number, tenant);
                 }
-              //  Result.PaymentInvoices = null;
+                Result.PaymentInvoices = null;
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
@@ -75,7 +75,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        int tenant = entity.Tenant;
+                        int tenant = authToken.Tenant;
 
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
 
@@ -84,24 +84,24 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARPayment>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
 
-                        IInvoiceContext MyContext = InvoiceContext.GetContext(entity.Tenant);
-                        ARPaymentQueryService mappingService = new ARPaymentQueryService(entity.Tenant);
+                        IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+                        ARPaymentQueryService mappingService = new ARPaymentQueryService(tenant);
                         
-                        ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, entity.Tenant);
+                        ARPaymentPM entityPM = mappingService.ARPaymentDataMappingAndValidatin(entity, tenant);
                         entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
-                        entityPM.Tenant = entity.Tenant;
+                        entityPM.Tenant = tenant;
                         entityPM.SetApproved = true;
                         entityPM.IsExternalEntity = true;
                         mappingService.CheckARPaymentNumber(entityPM.PaymentNo,entityPM.Id, entityPM.Tenant);
                        
-                        ARPaymentService service = new ARPaymentService(MyContext, entity.Tenant);
+                        ARPaymentService service = new ARPaymentService(MyContext, tenant);
                         entityPM = mappingService.SetARPaymentPMFields(entityPM);
                         service.Create(entityPM);
 
                        
 
-                        entity = mappingService.ARPaymentDataMapping(entityPM, entity.Tenant);
-                        APIHelper.AddCommunicationLog("D", oldEntity, entity, "ARPayment", entityPM.Id, "ARPayment API", entity.Tenant);
+                        entity = mappingService.ARPaymentDataMapping(entityPM, tenant);
+                        APIHelper.AddCommunicationLog("D", oldEntity, entity, "ARPayment", entityPM.Id, "ARPayment API", tenant);
 
                         scope.Complete();
 

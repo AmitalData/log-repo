@@ -66,6 +66,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using System.Text.RegularExpressions;
 using Logitude.Server.Tools.QueueService;
+using Simplog.Global.Data.GlobalModel;
 
 namespace Logitude.Update
 {
@@ -3390,9 +3391,9 @@ User/Pass",
             //if (contact != null)
             //{
 
-               var logitudeUser = (from a in commonDataContext.Users
+            var logitudeUser = (from a in commonDataContext.Users
                                 where a.Id == "1-149534"
-                                   select a).FirstOrDefault();
+                                select a).FirstOrDefault();
 
             //    if (logitudeUser != null)
             //    {
@@ -3728,21 +3729,45 @@ User/Pass",
                 DbConnection connection = DatabaseInitializer.GetConnection("logbox-main,logboxadmin,London2015!London2015!,logboxdbs.database.windows.net");// "Main,sa,Saas256,amitaldata.cloudapp.net");
                 CommonDataContext context = new CommonDataContext(connection);
                 result = (from a in context.Documents
-                              join b in context.DocumentsFilings on a.Id equals b.DocumentId
-                              where b.ForwarderDocumentId != null && b.IsDeleted == false && a.HasFile == false
-                              select b).ToList();
-                scope.Complete(); 
+                          join b in context.DocumentsFilings on a.Id equals b.DocumentId
+                          where b.ForwarderDocumentId != null && b.IsDeleted == false && a.HasFile == false
+                          select b).ToList();
+                scope.Complete();
             }
-           
+
             foreach (var item1 in result)
             {
                 DocumentRepository DocR = new DocumentRepository(0);
-                var item = (from a in DocR.context.DocumentsFilings 
-                              where a.Id == item1.ForwarderDocumentId
-                              select a).FirstOrDefault();
+                var item = (from a in DocR.context.DocumentsFilings
+                            where a.Id == item1.ForwarderDocumentId
+                            select a).FirstOrDefault();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
                 queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
+            }
+        }
+
+        private void button43_Click(object sender, EventArgs e)
+        {
+            //GlobalContact contact = null;
+            IGlobalContext globalObjectContext = GlobalContext.GetContext();
+            ContactPasswordRepository GCRepo = new ContactPasswordRepository(globalObjectContext);
+            var Tenants = new List<int>() { 493, 839, 1177, 558, 570, 545, 286, 996, 1264, 1573, 1402, 1427, 1245, 1604, 796, 1275, 1326, 1333, 42, 1256, 877, 1423, 1293, 2043 };
+            foreach (var tenant in Tenants)
+            {
+                var contacts = globalObjectContext.GlobalContacts.Where(c => c.GlobalTenantId == tenant && (c.IsUser == true) && c.InActive == false).ToList();
+                foreach (var contact in contacts)
+                {
+                    ContactPassword contactPassword = globalObjectContext.ContactPasswords.Where(a => a.Email == contact.Email).FirstOrDefault();//AuthenticationUtil.VerifyContactPassword(contact.Email, "123", globalObjectContext);
+                    if (contactPassword != null)
+                    {
+                        string HashedPass = PasswordGenerator.GetBCryptHashedPassword(contact.Email, "123");
+                        contactPassword.Password = HashedPass;
+                        contactPassword.IsBCrypt = true;
+                        GCRepo.SubmitChanges();
+                    }
+
+                }
             }
         }
     }
@@ -3750,23 +3775,23 @@ User/Pass",
 
 
     public class MyFeature
-{
+    {
 
-    public string Id { get; set; }
-    public int Tenant { get; set; }
-    public string Code { get; set; }
-    public string ObjectTableId { get; set; }
-    public string Name { get; set; }
-    public string FeatureTypeCode { get; set; }
-    public bool Packagable { get; set; }
-    public bool IsBusinessUnitEnabled { get; set; }
-    public bool IsOld { get; set; }
-    public bool IsCoreFeature { get; set; }
+        public string Id { get; set; }
+        public int Tenant { get; set; }
+        public string Code { get; set; }
+        public string ObjectTableId { get; set; }
+        public string Name { get; set; }
+        public string FeatureTypeCode { get; set; }
+        public bool Packagable { get; set; }
+        public bool IsBusinessUnitEnabled { get; set; }
+        public bool IsOld { get; set; }
+        public bool IsCoreFeature { get; set; }
 
-}
+    }
 
 
-public class HtmlStringParsingParams
+    public class HtmlStringParsingParams
     {
         public string Company { get; set; }
         public string Country { get; set; }

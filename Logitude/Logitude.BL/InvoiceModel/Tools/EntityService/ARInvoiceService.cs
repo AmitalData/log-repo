@@ -503,7 +503,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     ARPaymentRepository repository = new ARPaymentRepository(tenant);
                     ARPayment payment = repository.GetSingleARPayment(paymentPM.Id, tenant);
-                    service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, false);
+                    service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.objectContext, this.myCommonContext, false, paymentPM.SetReSendQBO, false);
                 }
             }
 
