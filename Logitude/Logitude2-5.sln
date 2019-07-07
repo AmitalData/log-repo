@@ -204,8 +204,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TariffModule", "TariffModule", "{864DF1B1-209F-46F9-B1E6-4D60E67CC5B3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.TariffModule.BL", "Logitude.TariffModule.BL\Logitude.TariffModule.BL.csproj", "{312A7909-04D0-49B5-8D73-77598451F22E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9B477A08-8EE2-4457-88FE-17E8A6EC4D00} = {9B477A08-8EE2-4457-88FE-17E8A6EC4D00}
+		{9FFC5B97-F09A-4EED-A66E-D4160374AE6E} = {9FFC5B97-F09A-4EED-A66E-D4160374AE6E}
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56} = {A663E7EF-B858-4BB6-BC33-E473F51B8E56}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.TariffModule.Data", "Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj", "{0A2A3AB8-4D14-4140-BE2F-2D95B235BB7C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9B477A08-8EE2-4457-88FE-17E8A6EC4D00} = {9B477A08-8EE2-4457-88FE-17E8A6EC4D00}
+		{ACC2EA9E-E150-4099-8AA1-66326AB14BE8} = {ACC2EA9E-E150-4099-8AA1-66326AB14BE8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.TariffModule.MetaData", "Logitude.TariffModule.MetaData\Logitude.TariffModule.MetaData.csproj", "{F0459A30-5730-4F49-A631-2488FC3D6AAE}"
 EndProject
