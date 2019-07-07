@@ -3391,9 +3391,9 @@ User/Pass",
             //if (contact != null)
             //{
 
-               var logitudeUser = (from a in commonDataContext.Users
+            var logitudeUser = (from a in commonDataContext.Users
                                 where a.Id == "1-149534"
-                                   select a).FirstOrDefault();
+                                select a).FirstOrDefault();
 
             //    if (logitudeUser != null)
             //    {
@@ -3729,18 +3729,18 @@ User/Pass",
                 DbConnection connection = DatabaseInitializer.GetConnection("logbox-main,logboxadmin,London2015!London2015!,logboxdbs.database.windows.net");// "Main,sa,Saas256,amitaldata.cloudapp.net");
                 CommonDataContext context = new CommonDataContext(connection);
                 result = (from a in context.Documents
-                              join b in context.DocumentsFilings on a.Id equals b.DocumentId
-                              where b.ForwarderDocumentId != null && b.IsDeleted == false && a.HasFile == false
-                              select b).ToList();
-                scope.Complete(); 
+                          join b in context.DocumentsFilings on a.Id equals b.DocumentId
+                          where b.ForwarderDocumentId != null && b.IsDeleted == false && a.HasFile == false
+                          select b).ToList();
+                scope.Complete();
             }
-           
+
             foreach (var item1 in result)
             {
                 DocumentRepository DocR = new DocumentRepository(0);
-                var item = (from a in DocR.context.DocumentsFilings 
-                              where a.Id == item1.ForwarderDocumentId
-                              select a).FirstOrDefault();
+                var item = (from a in DocR.context.DocumentsFilings
+                            where a.Id == item1.ForwarderDocumentId
+                            select a).FirstOrDefault();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
                 queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() }, { "CorrelationId", Guid.NewGuid().ToString() } });
@@ -3775,23 +3775,23 @@ User/Pass",
 
 
     public class MyFeature
-{
+    {
 
-    public string Id { get; set; }
-    public int Tenant { get; set; }
-    public string Code { get; set; }
-    public string ObjectTableId { get; set; }
-    public string Name { get; set; }
-    public string FeatureTypeCode { get; set; }
-    public bool Packagable { get; set; }
-    public bool IsBusinessUnitEnabled { get; set; }
-    public bool IsOld { get; set; }
-    public bool IsCoreFeature { get; set; }
+        public string Id { get; set; }
+        public int Tenant { get; set; }
+        public string Code { get; set; }
+        public string ObjectTableId { get; set; }
+        public string Name { get; set; }
+        public string FeatureTypeCode { get; set; }
+        public bool Packagable { get; set; }
+        public bool IsBusinessUnitEnabled { get; set; }
+        public bool IsOld { get; set; }
+        public bool IsCoreFeature { get; set; }
 
-}
+    }
 
 
-public class HtmlStringParsingParams
+    public class HtmlStringParsingParams
     {
         public string Company { get; set; }
         public string Country { get; set; }

@@ -24,6 +24,10 @@
             </div>
         </td>
 
+        <td style="padding-right: 5px;" *ngIf="IsSendBookingVisible">
+            <button class="Button" (click)="SendBookingClicked()">Send e-booking</button>
+        </td>
+
         <td style="padding-right: 5px;" *ngIf="IsShippingInstructionsVisible">
             <button class="Button" (click)="ShippingInstructionsClicked()">Send Shipping Instructions</button>
         </td>
@@ -32,7 +36,7 @@
             <button class="Button" (click)="AWBButtonClicked()">{{AWBWizardButtonLabel}}</button>
         </td>
 
-        <td *ngIf="IsImportAWBWizardButtonVisible"  style="padding-left: 10px; padding-right: 5px;">
+        <td *ngIf="IsImportAWBWizardButtonVisible" style="padding-left: 10px; padding-right: 5px;">
             <button class="Button" (click)="AWBImportButtonClicked()">{{AWBImportWizardButtonLabel}}</button>
         </td>
 

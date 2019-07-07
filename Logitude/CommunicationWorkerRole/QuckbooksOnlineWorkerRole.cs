@@ -1078,7 +1078,7 @@ namespace CommunicationWorkerRole
                             ARPaymentHelper service = new ARPaymentHelper();
                             ARPaymentQuery PaymentQuery = new ARPaymentQuery(paymentRepository);
                             ARPaymentPM paymentPM = PaymentQuery.GetSinglePM(payment.Id, tenant);
-                            service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.Invoicecontext, this.Commoncontext, false, false, true);
+                            service.ARPaymentQuickbooksValidating(paymentPM, true, false, payment, this.Invoicecontext, this.Commoncontext, false, false, paymentPM.SetReSendQBO, true);
                         }
                     }
 

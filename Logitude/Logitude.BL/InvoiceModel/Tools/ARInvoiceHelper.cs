@@ -96,7 +96,7 @@ namespace Logitude.BL.InvoiceModel.Tools
         }
         public  void ARInvoiceQuickbooksValidating(ARInvoicePM entityPM, Boolean IsSetApproved, Boolean isNewEntity, IInvoiceContext InvoiceContext, ICommonDataContext CommonContext,Boolean isSetVoided)
         {
-            if (isSetVoided && entityPM.ARInvoiceTypeCode !="CD" && entityPM.ARInvoiceTypeCode != "CC")
+            if ((isSetVoided && entityPM.ARInvoiceTypeCode !="CD" && entityPM.ARInvoiceTypeCode != "CC") || (entityPM.StatusCode=="VD" && entityPM.SetReSendQBO==true))
             {
                 commonContext = CommonContext;
                 this.globalContext = GlobalContext.GetContext(tenant);
