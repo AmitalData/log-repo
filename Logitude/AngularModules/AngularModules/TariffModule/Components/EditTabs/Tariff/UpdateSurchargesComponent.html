@@ -321,7 +321,7 @@
                                                                             </td>
 
                                                                             <td style="width:100px;">
-                                                                                {{item.DisplayText}}
+                                                                                <LogLabel [ObjectFieldName]="'NewPrice'" [DataContext]="item.DataContext" [Text]="item.DisplayText"></LogLabel>
                                                                             </td>
 
                                                                             <td style="width:180px;">
@@ -360,9 +360,11 @@
                                 <td>
                                     <table>
                                         <tr>
-                                            <td style="width:70px;" class="Label">Start Date:</td>
+                                            <td style="width:70px;">
+                                                <LogLabel [ObjectFieldName]="'StartDate'" [DataContext]="DataContext" [Text]="'Start Date'"></LogLabel>
+                                            </td>
                                             <td style="width:180px;">
-                                                <LogDatePicker [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'StartDate'" [SelectedDateValue]="StartDate" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                             </td>
                                             <td>
                                                 <div></div>

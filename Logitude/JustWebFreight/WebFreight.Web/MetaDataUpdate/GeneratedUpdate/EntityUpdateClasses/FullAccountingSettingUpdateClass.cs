@@ -118,7 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות הנהלת חשבונות",
 			      				    DefaultText =  "Full Accounting Settings",
-			      				    Code =  "568f",
+			      				    Code =  "d444",
 			      				    Name =  "FullAccountingSetting Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Accounting",
@@ -2731,6 +2731,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   ObjectTable FullAccountingSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "FullAccountingSetting" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOCounterLengthBetween8n15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.CounterLengthBetween8n15", DefaultText = "Counter length must be between 8 and 15 characters",LocalDefaultText = @"אורך המונה חייב להיות בין 8 ל 15 תווים", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOCantChangeCounterLength = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.CantChangeCounterLength", DefaultText = "Can't change counter length",LocalDefaultText = @"לא ניתן לשנות אורך מונה", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

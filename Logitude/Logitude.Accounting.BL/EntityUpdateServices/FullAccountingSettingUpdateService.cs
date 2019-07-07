@@ -39,9 +39,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             tenantRepository.SubmitChanges();
         }
 
-        protected override void OnUpdating(FullAccountingSettingPM entityPM)
+        protected override void OnUpdating(FullAccountingSettingPM entityPM, FullAccountingSetting entityPOCO)
         {
 
+
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Update 
+                && entityPM.GLAccounterCounterLength != entityPOCO.GLAccounterCounterLength
+                && entityPOCO.GLAccounterCounterLength != null)
+            {
+                bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(EntityPM.Tenant);
+                string msg = TextCodesTranslator.TranslateText("FullAccountingSetting.O.CantChangeCounterLength", entityPM.Tenant, showLocal);
+                throw new ApplicationException(msg);
+            }
 
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
             Tenant tenant = tenantRepository.GetSingleTenant(entityPM.Tenant);
@@ -55,6 +64,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CacheManager.CacheWrapper.Invalidate(key);
         }
 
+        
+
         protected override void Validate(FullAccountingSettingPM entityPM)
         {
 
@@ -65,6 +76,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 string msg = TextCodesTranslator.TranslateText("FullAccountingSetting.O.CounterLengthBetween8n15", entityPM.Tenant, useLocal);
                 throw new ApplicationException(msg);
             }
+
 
         }
 
