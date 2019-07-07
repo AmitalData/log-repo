@@ -83,9 +83,31 @@ namespace Logitude.CustomsMessaging.Dca
 
             _AllInterface = interfaceTypeQueryService.GetWithInterfaceManagementDefinition(_CustomsSettingPM.Tenant);
 
+
             _InterfaceListDCA = //(new IIGMessageQueryService()).GetAll().Where(mess => mess.Interactive.HasFlag(InterfaceType.InteractiveMode.DCA)); ;
                    _AllInterface
-                   .Where(r=>r.Active==true)
+                   .Where(r => r.OverrideActive == true)
+
+                    //להתייחס לשדה Active מרמת ניהול מסרים
+                    .Where(r => r.InterfaceManagement.Active == true)
+
+
+
+                    .Where(
+                       r =>
+                    //INTERFACETYPE
+                    //ערכים NULL== הכל, C == רק עמילות, B == רק בלדרות
+                    string.IsNullOrWhiteSpace(r.InterfaceManagement.InterfaceType)//All
+
+                    ||
+                    (
+                    !string.IsNullOrWhiteSpace(r.InterfaceManagement.InterfaceType)
+                    &&
+                    //COMPANYTYPE שם שדה ערכים C -דיפולטיבי(בסקריפט), או B == בלדרות - אסור ריק יאותחל עם הפצה ראשונה + DEFAULT == C
+                     r.InterfaceManagement.InterfaceType == customsSettingPM.CompanyType
+                     )
+                     )
+
                    .Where(rec =>
                        //rec.InterfaceManagement.INOUT ==  Logitude.Customs.BL.ClosedTable.InOutType.In  &&
                        //!string.IsNullOrWhiteSpace(rec.InterfaceManagement.DcaPrefixName) && 
