@@ -56,7 +56,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 ConsignmentPM dbOccConsignmentPM = GetDBEntity(entityPM);
                 if(entityPM.CargoDescription != dbOccConsignmentPM.CargoDescription)
                 {
-                    List<string> pendingReasonCodeList = null;
+                    List<string> pendingReasonCodeList = new List<string>();
                     var pendingByKeywordQueryService = new PendingByKeywordQueryService(entityPM.Tenant);
                     var courierReasonCodeList = pendingByKeywordQueryService.GetCourierPendingReasonCodeBykeyWords(entityPM.CargoDescription, entityPM.Tenant);
                     foreach (var courierReasonCode in courierReasonCodeList)
@@ -77,6 +77,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             }
                             else
                             {
+                                declarationPendingPM = new DeclarationPendingPM();
                                 declarationPendingPM.ChangeSetOp = ChangeSetOperation.Insert;
                                 declarationPendingPM.Status = "A";
                                 declarationPendingPM.DeclarationID = entityPM.DeclarationId;
