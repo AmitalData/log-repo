@@ -2732,6 +2732,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOCounterLengthBetween8n15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.CounterLengthBetween8n15", DefaultText = "Counter length must be between 8 and 15 characters",LocalDefaultText = @"אורך המונה חייב להיות בין 8 ל 11 תווים", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOCantChangeCounterLength = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.CantChangeCounterLength", DefaultText = "Can't change counter length",LocalDefaultText = @"לא ניתן לשנות אורך מונה", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }
