@@ -52,6 +52,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                 EilatVatRefoundDecision = a.EilatVatRefoundDecision,
                                                 DepositingAmount = a.DepositingAmount,
                                                 RefundAmount = a.RefundAmount,
+                                                ContinuousRequestTypeCode = a.ContinuousRequestTypeCode,
+                                                ContinuousRequestTypeName = a.ContinuousRequestType != null ? a.ContinuousRequestType.LocalName : null,
+                                                Explanation = a.Explanation,
+                                                Note = a.Note,
 		                    	            });
             return query;
 		}

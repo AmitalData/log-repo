@@ -340,6 +340,10 @@
     <Compile Include="Migrations\201907070559384_AddContinuousRequestType.Designer.cs">
       <DependentUpon>201907070559384_AddContinuousRequestType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907070654471_AddMigrationClaimRERequestType.cs" />
+    <Compile Include="Migrations\201907070654471_AddMigrationClaimRERequestType.Designer.cs">
+      <DependentUpon>201907070654471_AddMigrationClaimRERequestType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -581,6 +585,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907070559384_AddContinuousRequestType.resx">
       <DependentUpon>201907070559384_AddContinuousRequestType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907070654471_AddMigrationClaimRERequestType.resx">
+      <DependentUpon>201907070654471_AddMigrationClaimRERequestType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

@@ -24,22 +24,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<ContinuousRequestTypeList> query = (from a in iQueryable
                                             select new ContinuousRequestTypeList()
 											{
-                     
-					                          Code = a.Code,
-					
-					                          LocalName = a.LocalName,
-					
-					                          SearchFields = a.SearchFields,
-					
-		                    	            });
+                                                Code = a.Code,
+                                                EnglishName = a.EnglishName,
+                                                LocalName = a.LocalName,
+                                                SearchFields = a.SearchFields,
+                                                Inactive = a.Inactive
+                                            });
             return query;
 		}
 
 		private IQueryable<ContinuousRequestType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ContinuousRequestType> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+        }
+	}
 
 
 }
