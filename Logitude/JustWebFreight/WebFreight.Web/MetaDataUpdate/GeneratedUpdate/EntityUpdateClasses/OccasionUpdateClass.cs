@@ -1396,7 +1396,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OCGN",HtmlComponentName = "",HtmlComponentUrl = "./CRMModules/CRMOccasion/Components/EditTabs/OccasionGeneralTabComponent", FeatureId = OccasionGeneralFeature_TH0.Id, ControlPath = "./CRMModules/CRMOccasion/Components/EditTabs/OccasionGeneralTabComponent", ObjectTableId = OccasionObjectTable.Id, TabNameTextCodeId = OccasionGeneralTextCode_TH0.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OccasionEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OccasionObjectTable.Id, TabNameTextCodeId = OccasionEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OCEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OccasionEventsFeature_TH1.Id, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OccasionObjectTable.Id, TabNameTextCodeId = OccasionEventsTextCode_TH1.Id, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
