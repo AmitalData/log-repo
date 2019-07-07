@@ -33,13 +33,13 @@ namespace WebFreight.Web.Helpers
 {
     public class ImporterDepositionHelper
     {
-        public async Task<Response> SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM , int tenant)
+        public async Task<Response> SendImporterDepositionToLogBox(ImporterDepositionPM importerDepositionPM, int tenant)
         {
             Response response = new Response();
             CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
-            IQueryable<CustomerTenantAccessList> customerTenantAccessLists = customerTenantAccessQuery.GetCustomerTenantAccessesByImporterVat(importerDepositionPM.ImporterVat );
+            IQueryable<CustomerTenantAccessList> customerTenantAccessLists = customerTenantAccessQuery.GetCustomerTenantAccessesByImporterVat(importerDepositionPM.ImporterVat);
             if (importerDepositionPM.Tenant != null) customerTenantAccessLists = customerTenantAccessLists.Where(d => d.Tenant == importerDepositionPM.Tenant);
-      
+
 
             if (customerTenantAccessLists.Count() > 0)
             {
@@ -65,7 +65,7 @@ namespace WebFreight.Web.Helpers
                 ImporterDepositionAM importerDepositionAM = new ImporterDepositionAM();
                 MapImporterDepositionPMToImporterDepositionAM(importerDepositionPM, importerDepositionAM);
                 importerDepositionAM.CustomerTenant = (int)customerTenant;
-
+                string logId = AddAPILogs(importerDepositionAM, "Start Sending Importer Deposition to LogBox ..",tenant);
 
                 string token = string.Empty;
                 APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
@@ -99,6 +99,9 @@ namespace WebFreight.Web.Helpers
                         if (resultData.StatusCode == System.Net.HttpStatusCode.OK)
                         {
                             response.Result = resultData.Content.ReadAsStringAsync().Result;
+                            string msg = "Importer Deposition sent to logbox Successfully ..";
+                            APILogsUtility.UpdateAPILogStatus(logId, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
+
                         }
                         else
                         {
@@ -106,16 +109,48 @@ namespace WebFreight.Web.Helpers
                             APIException EXC = JsonConvert.DeserializeObject<APIException>(temp1);
                             if (EXC != null)
                             {
+                                string msg = "Fail to send Importer Deposition to logbox ..";
+                                APILogsUtility.UpdateAPILogStatus(logId, tenant, "F", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, EXC.ErrorMessage, "");
                                 throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
                             }
                         }
 
                     }
                 }
-              
+
             }
             else
             {
+                //int tenant = importerDepositionAM.CustomerTenant;
+
+                APILogsPM LogPM = new APILogsPM()
+                {
+                    Id = IdCounter.GetNumber("APILogs", tenant),
+                    CorrelationId = Guid.NewGuid().ToString(),
+                    CreateDate = DateTime.Now,
+                    CreateDateUTC = DateTime.UtcNow,
+                    Direction = "I",
+                    LastUpdateDate = DateTime.Now,
+                    LastUpdateDateUTC = DateTime.UtcNow,
+                    NumberOfRetries = 1,
+                    ExpirationDate = DateTime.Now.AddDays(90),
+                    Status = "I",
+                    Tenant = tenant,
+                    Subject = "Importer Deposition",
+                    Refrence = importerDepositionPM.DepositionNumber,
+                };
+
+                //HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(importerDepositionAM.CustomerTenant);
+                //string partnerName = hybridPartnerQuery.GetPartnerNameByPartnerTenant(importerDepositionAM.CustomerTenant);
+                //LogPM.PartnerName = partnerName;
+
+                IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+                APILogsService apiLogsService = new APILogsService(webFreightContext, tenant);
+                apiLogsService.Create(LogPM); 
+                var msg = "There is no LogBox Tenant To Send this Composition to ..";
+
+                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
+
                 response.Result = "Importer Deposition Send to cloud Successfully";
             }
 
@@ -162,7 +197,7 @@ namespace WebFreight.Web.Helpers
                 CustomerDeposition validCustomerDeposition = customerDepositionRepository.GetValidityCustomerDepositionByCustomsShipperId(customsShipperPM.Id, customsShipperPM.Tenant);
                 if (validCustomerDeposition != null)
                 {
-                    if(customerDeposition.ValidityEndDate > validCustomerDeposition.ValidityEndDate) validCustomerDeposition = customerDeposition;
+                    if (customerDeposition.ValidityEndDate > validCustomerDeposition.ValidityEndDate) validCustomerDeposition = customerDeposition;
                     if (customsShipperPM.ValidityStartDate != validCustomerDeposition.ValidityStartDate || customsShipperPM.ValidityEndDate != validCustomerDeposition.ValidityEndDate)
                     {
                         customsShipperPM.ValidityStartDate = validCustomerDeposition.ValidityStartDate;
@@ -234,13 +269,13 @@ namespace WebFreight.Web.Helpers
 
         #region API Logs
 
-        public string AddAPILogs(ImporterDepositionAM importerDepositionAM)
+        public string AddAPILogs(ImporterDepositionAM importerDepositionAM, string message = null,int tenant = 0)
         {
-            int tenant = importerDepositionAM.CustomerTenant;
+            //int tenant = importerDepositionAM.CustomerTenant;
 
             APILogsPM LogPM = new APILogsPM()
             {
-                Id = IdCounter.GetNumber("APILogs", importerDepositionAM.CustomerTenant),
+                Id = IdCounter.GetNumber("APILogs", tenant),
                 CorrelationId = Guid.NewGuid().ToString(),
                 CreateDate = DateTime.Now,
                 CreateDateUTC = DateTime.UtcNow,
@@ -255,8 +290,8 @@ namespace WebFreight.Web.Helpers
                 Refrence = importerDepositionAM.DepositionNumber,
             };
 
-            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(importerDepositionAM.CustomerTenant);
-            string partnerName =  hybridPartnerQuery.GetPartnerNameByPartnerTenant(importerDepositionAM.CustomerTenant);
+            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(tenant);
+            string partnerName = hybridPartnerQuery.GetPartnerNameByPartnerTenant(tenant);
             LogPM.PartnerName = partnerName;
 
             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
@@ -264,10 +299,15 @@ namespace WebFreight.Web.Helpers
             apiLogsService.Create(LogPM);
 
 
-            var msg = "Importer Deposition Send to cloud";
+            var msg = message;
+            if (string.IsNullOrEmpty(msg))
+            {
+                msg = "Importer Deposition Send to cloud";
+            }
+
             APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
             return LogPM.Id;
-            
+
 
         }
 
@@ -291,7 +331,7 @@ namespace WebFreight.Web.Helpers
 
         public async Task<HttpResponseMessage> SendVDCStatusToUNF(string directionId, string forwardershipmentNumber, int tenant, int partnerTenant, APILogsPM LogPM)
         {
-               return await SendVDCStatus(directionId, forwardershipmentNumber, tenant, partnerTenant, LogPM);
+            return await SendVDCStatus(directionId, forwardershipmentNumber, tenant, partnerTenant, LogPM);
         }
 
         private static async Task<HttpResponseMessage> SendVDCStatus(string directionId, string forwardershipmentNumber, int tenant, int partnerTenant, APILogsPM LogPM)
@@ -330,7 +370,7 @@ namespace WebFreight.Web.Helpers
                 ApiCredential User = JsonConvert.DeserializeObject<ApiCredential>(tempUser);
                 token = User.Token;
             }
-          
+
 
             using (var client = new HttpClient())
             {

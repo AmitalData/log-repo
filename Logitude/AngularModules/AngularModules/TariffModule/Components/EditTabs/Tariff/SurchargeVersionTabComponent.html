@@ -1,16 +1,14 @@
 
 <div class="TabHolder">
     <table>
-        <tr style="height:1px;" class="BlueTitle">
-            <td style="left:10px;">
-                Version {{ VersionNumber}}
-            </td>
-        </tr>
 
         <tr style="height: 1px;">
             <td>
                 <table>
                     <tr>
+                        <td style="width: 1px;" class="BlueTitle">
+                            Version {{ VersionNumber}}
+                        </td>
 
                         <td>
                             <div></div>
@@ -181,7 +179,7 @@
                         <log-column [header]="'TariffLine.F.StartDate' | TextCodeTranslationPipe" [width]="'120'">
                             <log-cell-template template="let item" #logcelltemplate [IsEnabled]="item.IsEditEnabled">
                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode" style="text-align:left;">
-                                    <span>{{item.StartDate | DateTimePipe}}</span>
+                                    <span>{{item.StartDate | DateTimePipe:'SD'}}</span>
                                 </div>
 
                                 <div *ngIf="logcelltemplate.IsEditMode">
