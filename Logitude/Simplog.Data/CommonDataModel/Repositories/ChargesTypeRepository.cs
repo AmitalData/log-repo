@@ -25,7 +25,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<ChargesType> GetChargesTypes(int tenant)
         {
-            return (from record in context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount") where record.Tenant == tenant select record);
+            return (from record in context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("ReceivableAccount").Include("PayableAccount").Include("PayablesDefaultCurrency").Include("ReceivablesDefaultCurrency") where record.Tenant == tenant select record);
         }
 
         public IQueryable<ChargesType> GetQuoteDefaultChargesTypes(int tenant)

@@ -85,6 +85,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           IsImport = a.IsImport, 
                           IsDrop = a.IsDrop, 
                           IsExport = a.IsExport, 
+                          ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId, 
+                          PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                       }).FirstOrDefault();
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -150,6 +152,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         IsImport = a.IsImport,
                                         IsDrop = a.IsDrop,
                                         IsExport = a.IsExport,
+                                        ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
+                                        PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                                     }).FirstOrDefault();
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -222,6 +226,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsImport = a.IsImport,
                                   IsDrop = a.IsDrop,
                                   IsExport = a.IsExport,
+                                  ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
+                                  PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                               }).FirstOrDefault();
 
                     ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
@@ -302,6 +308,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               IsImport = a.IsImport,
                               IsDrop = a.IsDrop,
                               IsExport = a.IsExport,
+                              ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
+                              PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                           }).FirstOrDefault();
 
 
@@ -368,6 +376,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     IsImport = a.IsImport,
                                                     IsDrop = a.IsDrop,
                                                     IsExport = a.IsExport,
+                                                    ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
+                                                    PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                                                 };
             return charges;
         }
@@ -431,6 +441,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              IsImport = a.IsImport,
                              IsDrop = a.IsDrop,
                              IsExport = a.IsExport,
+                             ReceivablesDefaultCurrencyId = a.ReceivablesDefaultCurrencyId,
+                             PayablesDefaultCurrencyId = a.PayablesDefaultCurrencyId,
                          }).AsQueryable();
 
             IQueryable<ChargesTypePM> query2 = null;
@@ -517,6 +529,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      IsImport = f.IsImport,
                                                      IsDrop = f.IsDrop,
                                                      IsExport = f.IsExport,
+                                                     ReceivablesDefaultCurrencyId = f.ReceivablesDefaultCurrencyId,
+                                                     PayablesDefaultCurrencyId = f.PayablesDefaultCurrencyId,
                                                  };
             return result;
         }
@@ -576,6 +590,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    IsImport = f.IsImport,
                                                    IsDrop = f.IsDrop,
                                                    IsExport = f.IsExport,
+                                                   ReceivablesDefaultCurrencyId = f.ReceivablesDefaultCurrencyId,
+                                                   PayablesDefaultCurrencyId = f.PayablesDefaultCurrencyId,
                                                }).FirstOrDefault();
 
             return chargesTypeList;
@@ -639,6 +655,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              IsImport = f.IsImport,
                              IsDrop = f.IsDrop,
                              IsExport = f.IsExport,
+                             ReceivablesDefaultCurrencyId = f.ReceivablesDefaultCurrencyId,
+                             PayablesDefaultCurrencyId = f.PayablesDefaultCurrencyId,
                          }).OrderBy(d=>d.Code).Skip(skip).Take(take);
 
 
