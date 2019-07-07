@@ -13,14 +13,14 @@ namespace Logitude.Server.Tools.FTP
 
         public static string  AppendLogLine(string message, string currentLogString)
         {
-            string newLogMessage = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ssFFF") + " " + message;//DateTime.UtcNow.ToString("u")
+            string newLogMessage = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:FFF") + " " + message;//DateTime.UtcNow.ToString("u")
 
             return currentLogString + Environment.NewLine + newLogMessage;
         }
 
         public static string BuildLogLine(string message)
         {
-            string newLogMessage = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ssFFF") + " " + message;
+            string newLogMessage = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:FFF") + " " + message;
 
             return newLogMessage;
 
