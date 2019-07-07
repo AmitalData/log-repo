@@ -377,7 +377,27 @@ export class ClaimsRelatedEntityPM {
         }
     }
     //public ClaimsRelatedEntitiesRefunds: Array<ClaimsRelatedEntitiesRefundPM>= [];
- 
+     private continuousRequestTypeCode: string;
+    public get ContinuousRequestTypeCode() { return this.continuousRequestTypeCode; }
+    public set ContinuousRequestTypeCode(newValue: string) { if (this.continuousRequestTypeCode != newValue) { this.continuousRequestTypeCode = newValue; this.MarkAsDirty("ContinuousRequestTypeCode"); } }
+       
+	 
+    private continuousRequestTypeName: string;
+    public get ContinuousRequestTypeName() { return this.continuousRequestTypeName; }
+    public set ContinuousRequestTypeName(newValue: string) { if (this.continuousRequestTypeName != newValue) { this.continuousRequestTypeName = newValue; this.MarkAsDirty("ContinuousRequestTypeName"); } }
+       
+	 
+    private explanation: string;
+    public get Explanation() { return this.explanation; }
+    public set Explanation(newValue: string) { if (this.explanation != newValue) { this.explanation = newValue; this.MarkAsDirty("Explanation"); } }
+       
+	 
+    private note: string;
+    public get Note() { return this.note; }
+    public set Note(newValue: string) { if (this.note != newValue) { this.note = newValue; this.MarkAsDirty("Note"); } }
+       
+	 
+
     public OldEntityPM: ClaimsRelatedEntityPM;
 	
     private entityParentPM: any;

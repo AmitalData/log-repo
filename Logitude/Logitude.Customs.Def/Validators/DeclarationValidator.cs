@@ -41,7 +41,7 @@ namespace Logitude.Customs.Def.Validators
         {
             bool isValid = true;
 
-            if (declaration.ImporterCode != null )
+            if (!string.IsNullOrEmpty(declaration.ImporterCode))
             {
                 if (declaration.ImporterCode.Contains("P") || declaration.ImporterCode.Contains("F"))
                 {

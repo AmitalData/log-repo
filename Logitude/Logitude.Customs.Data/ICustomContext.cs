@@ -78,6 +78,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ConstraintType> ConstraintTypes { get; }
 		 IDbSet<ContactRoleType> ContactRoleTypes { get; }
 		 IDbSet<ContinuousMessagesTypeCode> ContinuousMessagesTypeCodes { get; }
+		 IDbSet<ContinuousRequestType> ContinuousRequestTypes { get; }
 		 IDbSet<ConverterType> ConverterTypes { get; }
 		 IDbSet<CountryGroup> CountryGroups { get; }
 		 IDbSet<CourierCustomStatus> CourierCustomStatuses { get; }

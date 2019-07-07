@@ -100,6 +100,15 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal? DepositingAmount { get; set; }
         [Column("RefundAmount")]
 	    public decimal? RefundAmount { get; set; }
+        [ForeignKey("ContinuousRequestType")]
+        [Column("ContinuousRequestTypeCode")]
+	    public string ContinuousRequestTypeCode { get; set; }
+	      
+        public virtual ContinuousRequestType ContinuousRequestType { get; set; }
+        [Column("Explanation")]
+	    public string Explanation { get; set; }
+        [Column("Note")]
+	    public string Note { get; set; }
     }
 }
 	 
