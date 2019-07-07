@@ -11,6 +11,7 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -55,7 +56,27 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
-            {
+              {
+                //ExceptionHandler.HandleException
+                string filePath = @"E:\Error.txt";
+
+            
+
+                 using (StreamWriter writer = new StreamWriter(filePath, true))
+                {
+                    writer.WriteLine("-----------------------------------------------------------------------------");
+                    writer.WriteLine("Date : " + DateTime.Now.ToString());
+                    writer.WriteLine();
+
+                    while (ex != null)
+                    {
+                        writer.WriteLine(ex.GetType().FullName);
+                        writer.WriteLine("Message : " + ex.Message);
+                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                        ex = ex.InnerException;
+                    }
+                }
                 var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
