@@ -97,25 +97,25 @@ export class QuoteValidator {
                     errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate(textCode)));
                 }
 
-                if (entityPM.DirectionId == "D") {
-                    if (!AppTool.IsNullOrEmpty(entityPM.FromPortId) && !AppTool.IsNullOrEmpty(entityPM.ToPortId)) {
-                        if (entityPM.FromCountryId != entityPM.ToCountryId) {
-                            errors.push("Both Ports must be in the same country since the direction is Domestic");
-                        }
-                    }
-                }
+                //if (entityPM.DirectionId == "D") {
+                //    if (!AppTool.IsNullOrEmpty(entityPM.FromPortId) && !AppTool.IsNullOrEmpty(entityPM.ToPortId)) {
+                //        if (entityPM.FromCountryId != entityPM.ToCountryId) {
+                //            errors.push("Both Ports must be in the same country since the direction is Domestic");
+                //        }
+                //    }
+                //}
             }
             
             //InlandDomestic
-            if (isInlandDomestic) {
-                if (!AppTool.IsNullOrEmpty(entityPM.ShipperId) && !AppTool.IsNullOrEmpty(entityPM.ConsigneeId)) {
-                    if (entityPM.FromCountryId != entityPM.ToCountryId) {
-                        if (entityPM.FromCountryIsEC == false || entityPM.ToCountryIsEC == false) {
-                            errors.push("Both Addresses must be in the same country since the direction is Domestic");
-                        }
-                    }
-                }
-            }
+            //if (isInlandDomestic) {
+            //    if (!AppTool.IsNullOrEmpty(entityPM.ShipperId) && !AppTool.IsNullOrEmpty(entityPM.ConsigneeId)) {
+            //        if (entityPM.FromCountryId != entityPM.ToCountryId) {
+            //            if (entityPM.FromCountryIsEC == false || entityPM.ToCountryIsEC == false) {
+            //                errors.push("Both Addresses must be in the same country since the direction is Domestic");
+            //            }
+            //        }
+            //    }
+            //}
 
             this.ValidateFCLDuplicatedPackages(entityPM, errors);
 
