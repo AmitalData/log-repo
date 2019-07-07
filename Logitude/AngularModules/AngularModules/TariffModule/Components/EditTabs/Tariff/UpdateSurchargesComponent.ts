@@ -24,11 +24,19 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public Logs= [];
     public ValidationErrorsList: string[] = [];
     public TariffChargesObsList: TariffCharge[];
-    public AirlineAreas: AirlineAreaClass[];
-    public SearchText: string = "";
-    public SearchAreaButtonId: string = "SearchAreaButtonId";
+    public FromAirlineAreas: AirlineAreaClass[];
+    public ToAirlineAreas: AirlineAreaClass[];
+    public FromTariffAreaDropButton: string = "FromTariffAreaDropButton";
+    public ToTariffAreaDropButton: string = "ToTariffAreaDropButton";
+    public FromSearchAreaId: string = "FromSearchAreaId";
+    public ToSearchAreaId: string = "ToSearchAreaId";
     constructor() {
-        super();        
+        super();
+
+        this.FromTariffAreaDropButton += this.CurrentSession.GetNewId("FromTariffAreaDropButton_1");
+        this.FromSearchAreaId += this.CurrentSession.GetNewId("FromSearchAreaId_1");
+        this.ToTariffAreaDropButton += this.CurrentSession.GetNewId("ToTariffAreaDropButton_1");
+        this.ToSearchAreaId += this.CurrentSession.GetNewId("ToSearchAreaId_1");
     }
     
     SetWindowArgs(arg: UpdateTariffArgs) {
@@ -38,13 +46,56 @@ export class UpdateSurchargesComponent extends BaseComponent {
         this.LoadAirlineAreas(arg.AirlineId);
     }
 
+    private AreasList: AirlineAreaList[] =[];
     private LoadAirlineAreas(airlineId: string) {
         var service: CommonDomainService = new CommonDomainService();
         service.GetAirlineAreas(airlineId).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                //this.AirlineAreas = myResponse.Result;
+                this.AreasList = myResponse.Result;
+                this.FillAirlineAreas("From");
+                this.FillAirlineAreas("To");
             }
         });
+    }
+
+    FillAirlineAreas(type: string) {
+        if (type == "From") {
+            var data: AirlineAreaList[] = [];
+            if (this.FromSearchText == null || this.FromSearchText == "") {
+                data = this.AreasList;
+            }
+
+            else {
+                data = this.AreasList.filter(f => f.Name.toLowerCase().indexOf(this.FromSearchText.toLowerCase()) > -1);
+
+            }
+
+            this.FromAirlineAreas = [];
+
+            data.forEach((i) => {
+                var itemTogleButton: AirlineAreaClass = new AirlineAreaClass(i, this);
+                this.FromAirlineAreas.push(itemTogleButton);
+            });
+        }
+
+        else if (type == "To") {
+            var data: AirlineAreaList[] = [];
+            if (this.ToSearchText == null || this.ToSearchText == "") {
+                data = this.AreasList;
+            }
+
+            else {
+                data = this.AreasList.filter(f => f.Name.toLowerCase().indexOf(this.ToSearchText.toLowerCase()) > -1);
+
+            }
+
+            this.ToAirlineAreas = [];
+
+            data.forEach((i) => {
+                var itemTogleButton: AirlineAreaClass = new AirlineAreaClass(i, this);
+                this.ToAirlineAreas.push(itemTogleButton);
+            });
+        }
     }
 
     FillTariffCharges(myList: CodeNameClass[]) {
@@ -68,22 +119,131 @@ export class UpdateSurchargesComponent extends BaseComponent {
         }
     }
 
-    setToggleButtonMenuTemp() {
-        var ToggleBTN = document.getElementById(this.SearchAreaButtonId) as HTMLDivElement;
-        ToggleBTN.className = "ToggleButtonMenuTemp";
+    setToggleButtonMenuTemp(type: string) {
+        if (type == "From") {
+            var ToggleBTN = document.getElementById(this.FromTariffAreaDropButton) as HTMLDivElement;
+            ToggleBTN.className = "ToggleButtonMenuTemp";
+        }
+
+        else if (type == "To") {
+            var ToggleBTN = document.getElementById(this.ToTariffAreaDropButton) as HTMLDivElement;
+            ToggleBTN.className = "ToggleButtonMenuTemp";
+        }
     }
-    setToggleButtonMenu() {
-        var ToggleBTN = document.getElementById(this.SearchAreaButtonId) as HTMLDivElement;
-        ToggleBTN.className = "ToggleButtonMenu";
+    setToggleButtonMenu(type: string) {
+        if (type == "From") {
+            var ToggleBTN = document.getElementById(this.FromTariffAreaDropButton) as HTMLDivElement;
+            ToggleBTN.className = "ToggleButtonMenu";
+        }
+
+        else if (type == "To") {
+            var ToggleBTN = document.getElementById(this.ToTariffAreaDropButton) as HTMLDivElement;
+            ToggleBTN.className = "ToggleButtonMenu";
+        }
+    }
+    ClearPlaceHolder(type: string) {
+        if (type == "From") {
+            var temp = document.getElementById(this.FromSearchAreaId) as HTMLInputElement;
+            temp.placeholder = "";
+            temp.style.background = "rgba(0, 0, 0, 0)";
+            var ToggleBTN = document.getElementById(this.FromTariffAreaDropButton) as HTMLDivElement;
+            ToggleBTN.className = "ToggleButtonMenuTemp";
+        }
+
+        else if (type == "To") {
+            var temp = document.getElementById(this.ToSearchAreaId) as HTMLInputElement;
+            temp.placeholder = "";
+            temp.style.background = "rgba(0, 0, 0, 0)";
+            var ToggleBTN = document.getElementById(this.ToTariffAreaDropButton) as HTMLDivElement;
+            ToggleBTN.className = "ToggleButtonMenuTemp";
+        }
+    }
+    FillPlaceHolder(type: string) {
+        if (type == "From") {
+            if (!this.FromSearchText) {
+                var temp = document.getElementById(this.FromSearchAreaId) as HTMLInputElement;
+                temp.placeholder = "Search";
+                temp.style.background = "url(Images/Search.png) no-repeat scroll";
+                temp.style.backgroundPosition = "right center";
+                temp.style.paddingRight = "30px";
+            }
+            var ToggleBTN = document.getElementById(this.FromTariffAreaDropButton) as HTMLDivElement;
+            ToggleBTN.className = "ToggleButtonMenu";
+        }
+
+        else if (type == "To") {
+            if (!this.ToSearchText) {
+                var temp = document.getElementById(this.ToSearchAreaId) as HTMLInputElement;
+                temp.placeholder = "Search";
+                temp.style.background = "url(Images/Search.png) no-repeat scroll";
+                temp.style.backgroundPosition = "right center";
+                temp.style.paddingRight = "30px";
+            }
+            var ToggleBTN = document.getElementById(this.ToTariffAreaDropButton) as HTMLDivElement;
+            ToggleBTN.className = "ToggleButtonMenu";
+        }
+    }
+    OnDeleteValue(type: string) {
+        if (type == "From") {
+            var temp = document.getElementById(this.FromSearchAreaId) as HTMLInputElement;
+            temp.value = null;
+            this.FromSearchText = null;
+            temp.focus();
+        }
+
+        else if (type == "To") {
+            var temp = document.getElementById(this.ToSearchAreaId) as HTMLInputElement;
+            temp.value = null;
+            this.ToSearchText = null;
+            temp.focus();
+        }
+    }
+    
+    public fromSearchText: string = null;
+    public get FromSearchText() { return this.fromSearchText; }
+    public set FromSearchText(newValue: string) {
+        this.fromSearchText = newValue;
+        this.FillAirlineAreas("From");
     }
 
-    AddArea(item: AirlineAreaClass, i: number=null, type: string=null) {
-        if (item.IsChecked == true) {
+    public toSearchText: string = null;
+    public get ToSearchText() { return this.toSearchText; }
+    public set ToSearchText(newValue: string) {
+        this.toSearchText = newValue;
+        this.FillAirlineAreas("To");
+    }
+
+    AddArea(item: AirlineAreaClass, i, type: string) {
+        if (item.IsChecked) {
             if (type == "From") {
-                if (!this.FromObsList.filter(d => d.Indication == "Area" && d.DisplayText == item.Name)) {
-                   
+                if (this.FromObsList.filter(d => d.Id == item.Id && d.Indication == "Area").length == 0) {
+                    var newItem: DestinationClass = new DestinationClass(this, "From", null, item.entityList)
+                    this.FromObsList.push(newItem);
+                }
+            }
 
+            else if (type == "To") {
+                if (this.ToObsList.filter(d => d.Id == item.Id && d.Indication == "Area").length == 0) {
+                    var newItem: DestinationClass = new DestinationClass(this, "To", null, item.entityList)
+                    this.ToObsList.push(newItem);
+                }
+            }
+        }
 
+        else {
+            if (type == "From") {
+                var deleteItem: DestinationClass = this.FromObsList.filter(d => d.Id == item.Id && d.Indication == "Area")[0];
+                var index = this.FromObsList.indexOf(deleteItem);
+                if (index > -1) {
+                    this.FromObsList.splice(index);
+                }
+            }
+
+            else if (type == "To") {
+                var deleteItem: DestinationClass = this.ToObsList.filter(d => d.Id == item.Id && d.Indication == "Area")[0];
+                var index = this.ToObsList.indexOf(deleteItem);
+                if (index > -1) {
+                    this.ToObsList.splice(index);
                 }
             }
         }
@@ -94,7 +254,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
         logWindow.Width = 320;
         logWindow.Height = 170;
 
-        var itemComponent = new DestinationClass(this, type, null);
+        var itemComponent = new DestinationClass(this, type, null, null);
         logWindow.DataContext = itemComponent;
 
         logWindow.Title = "Add " + type + " Port";
@@ -107,12 +267,20 @@ export class UpdateSurchargesComponent extends BaseComponent {
             if (index > -1) {
                 this.FromObsList.splice(index);
             }
+
+            if (item.Indication == "Area") {
+                this.FillAirlineAreas("From");
+            }
         }
 
         else {
             var index = this.ToObsList.indexOf(item);
             if (index > -1) {
                 this.ToObsList.splice(index);
+            }
+
+            if (item.Indication == "Area") {
+                this.FillAirlineAreas("To");
             }
         }
     }
@@ -242,7 +410,7 @@ export class DestinationClass extends BaseComponent{
     public Code: string;
     public Id: string;
     public Type: string;
-    constructor(public fatherComponent: UpdateSurchargesComponent, type: string, Port: PortList) {
+    constructor(public fatherComponent: UpdateSurchargesComponent, type: string, Port: PortList, airlineArea: AirlineAreaList) {
         super();
 
         this.Type = type;
@@ -253,107 +421,33 @@ export class DestinationClass extends BaseComponent{
             this.Code = Port.Code;
             this.Id = Port.Id;
         }
+
+        if (airlineArea != null) {
+            this.Indication = "Area";
+            this.DisplayText = airlineArea.Name;
+            this.Id = airlineArea.Id;
+        }
     }
 }
 
 export class AirlineAreaClass {
-    private entityList: AirlineAreaList;
-
+    public entityList: AirlineAreaList;
     public get Name() { return this.entityList.Name; }
 
-    public get Foreground() { return this.IsChecked ? "#FF6E7172" : "#FF282E30"; }   
+    public get Foreground() { return this.IsChecked ? "#FF6E7172" : "#FF282E30"; }
 
-    public ProductTypesByTenantList = [];
+    public get Id() { return this.entityList.Id; }
 
-    constructor(itemList: AirlineAreaList, private Parent: any, private productTypeList: Array<any>) {       
-        this.ProductTypesByTenantList = productTypeList;
+    constructor(itemList: AirlineAreaList, private Parent: UpdateSurchargesComponent) {
         this.entityList = itemList;
-       
-        //var isChecked = null;
-        //var productPM = this.entityPM.CustomerProducts.filter(d => d.ProductTypeCode == this.entityList.Code)[0];
-        //this.isChecked = false;
-        //if (productPM != null) {
-        //    isChecked = true;
-        //    this.IsChecked = true;
-        //}
+        this.isChecked = Parent.FromObsList.filter(d => d.Id == this.entityList.Id && d.Indication == "Area")[0] != null;
     }
-    
+
     private isChecked: boolean;
     public get IsChecked() { return this.isChecked; }
     public set IsChecked(value: boolean) {
         if (this.isChecked != value) {
-            this.isChecked = value;
-
-            //if (value) {
-            //    var newItem: CustomerProductPM = new CustomerProductPM(null);
-            //    newItem.Tenant = this.TenantPM.Id;
-            //    newItem.CustomerId = this.entityPM.Id;
-            //    newItem.ProductTypeCode = this.Code;
-            //    newItem.CommitmentChargeableWeight = 0;
-            //    newItem.PotentialChargeableWeight = 0;
-            //    newItem.CommitmentTEU = 0;
-            //    newItem.PotentialTEU = 0;
-            //    newItem.CommitmentNumberOfShipments = 0;
-            //    newItem.PotentialNumberOfShipments = 0;
-            //    newItem.CommitmentRevenue = 0;
-            //    newItem.PotentialRevenue = 0;
-
-
-            //    var type: string = null;
-
-            //    var ProductsToggleButtonList = [];
-
-            //    this.ProductTypesByTenantList.forEach((i) => {
-            //        if (!i.InActive) {
-            //            var item = new ProductTypeList();
-            //            item.Code = i.Code;
-            //            item.Name = i.Name;
-            //            item.InActive = i.InActive;
-            //            item.Id = i.Id;
-            //            item.SearchFields = i.SearchFields;
-
-            //            ProductsToggleButtonList.push(i);
-
-            //        }
-            //        else {
-
-
-            //        }
-            //    });
-
-            //    ProductsToggleButtonList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
-            //    var typelist: ProductTypeList = ProductsToggleButtonList.filter(d => d.Code == this.Code)[0];
-            //    if (typelist != null) {
-            //        type = typelist.Name;
-            //    }
-            //    newItem.ProductTypeName = type;
-            //    var flag: boolean = true;
-            //    for (var i = 0; i < this.entityPM.CustomerProducts.length; i++) {
-            //        if (this.entityPM.CustomerProducts[i].ProductTypeCode == newItem.ProductTypeCode) {
-            //            flag = false; break;
-            //        }
-            //    }
-            //    if (flag) {
-            //        this.entityPM.AddCustomerProductPM(newItem);
-            //    }
-
-            //    if (!this.entityPM.ActivityWatch)
-            //        this.entityPM.ActivityWatch = true;
-            //}
-            //else {
-            //    var item: CustomerProductPM = this.entityPM.CustomerProducts.filter(d => d.ProductTypeCode == this.Code)[0];
-            //    if (item != null) {
-            //        if (this.entityPM.CustomerProducts.includes(item)) {
-            //            var CustomerProdArr: Array<CustomerProductPM> = [];
-            //            this.entityPM.CustomerProducts.forEach(i => {
-            //                if (i.ProductTypeCode != item.ProductTypeCode) {
-            //                    CustomerProdArr.push(i);
-            //                }
-            //            });
-            //            this.entityPM.RemoveCustomerProductPM(this.entityPM.CustomerProducts.filter(p => p.ProductTypeCode == this.Code)[0]);
-            //        }
-            //    }
-            //}
+            this.isChecked = value;            
         }
     }
 }
