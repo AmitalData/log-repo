@@ -30,7 +30,6 @@ export class WizardComponent extends BaseComponent {
     public IsLimited: boolean = false;
     public IsDevelopment: boolean = false;
     public SimulatorIsVisible: boolean = false;
-    public SimulatorBookingIsVisible: boolean = false;
     public IsEditingEnabled: boolean = false;
     public IsDemoAreaVisible: boolean = false;
     private myService: INTRAWebService;
@@ -53,7 +52,6 @@ export class WizardComponent extends BaseComponent {
         this.ShipmentId = this.EntityPM.Id;
         this.IsDevelopment = FeatureLocator.IsPackage_DVMT();
         this.SimulatorIsVisible = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "INTTRASimulator") ? true : false;
-        this.SimulatorBookingIsVisible = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "INTTRABookingSimulator") ? true : false;
 
         this.SetSendingLimitation(this.EntityPM.INTTRASIStatusCode);
         this.Clone();
@@ -453,11 +451,5 @@ export class WizardComponent extends BaseComponent {
         logWindow.Title = "INTTRA Simulator";
         logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/SimulatorComponent');
     }
-    SendBookingClicked() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "INTTRA Simulator";
-        logWindow.WindowArgs = this.ShipmentId;
-        logWindow.Show('./ShipmentModules/ShipmentINTTRA/Components/Wizard/SimulatorBookingComponent');
-
-    }
+   
 }
