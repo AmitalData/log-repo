@@ -176,8 +176,8 @@ export class TaskSchedulerComponent implements OnInit  {
         var logWindow = new LogitudeWindow();
         logWindow.Title = this.SchedulerType  + " Scheduler Details";
         logWindow.DataContext = item;
-        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 730 : 620;
-        logWindow.Width = 800;
+        logWindow.Height = (this.SchedulerType == "FTP" || this.SchedulerType == "SFTP") ? 820 : 750;
+        logWindow.Width = 900;
         logWindow.Show('./InfrastructureModules/InfrastructureBatchService/Components/TaskScheduler/AddEditTaskSchedulerComponent');
         logWindow.WindowClosed.subscribe(s => {
             if (s) {

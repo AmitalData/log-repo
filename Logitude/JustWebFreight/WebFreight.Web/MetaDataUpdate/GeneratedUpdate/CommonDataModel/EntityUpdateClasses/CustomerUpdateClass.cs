@@ -118,6 +118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  10,
 			      				    NewWizardControlName =  "Simplog.FreightLib.NewCustomerCommand",
+			      				    LocalDefaultText =  "לקוח",
 			      				    DefaultText =  "Customer",
 			      				    Code =  "CLNT",
 			      				    Name =  "Customers",
