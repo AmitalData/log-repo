@@ -298,7 +298,7 @@
                                             <td style="height:25px;width:100%;">
                                                 <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
                                                     <div style="float:left;">
-                                                        <label style="margin:5px;vertical-align: middle;">Available Fields</label><!--{{'General.O.AvailableColumns' | TextCodeTranslationPipe}}-->
+                                                        <div style="margin-left:21px;vertical-align: middle;margin-top:3px;">Available Fields</div><!--{{'General.O.AvailableColumns' | TextCodeTranslationPipe}}-->
                                                     </div>
                                                     <!--{{General.O<!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
                                                 </div>
@@ -319,15 +319,16 @@
                                                     <tr>
                                                         <td>
                                                             <div style="overflow:hidden;overflow-x:hidden;">
-                                                                <table style="vertical-align:top;top:0px;">
-                                                                    <tr style="text-align:left;vertical-align:top" *ngFor="let Group of DataSource">
+                                                                <table style="vertical-align:middle;">
+                                                                    <!--top:0px;-->
+                                                                    <tr style="text-align:left;vertical-align:middle" *ngFor="let Group of DataSource">
                                                                         <td style="min-height:30px;">
                                                                             <table class="noselect">
                                                                                 <tr>
                                                                                     <td>
                                                                                         <div (click)="Group.GroupClicked()" style="width:100%;height:100%;padding-top:2px;background-color: #E4E4E4;border-bottom: 1px solid;border-top: 1px solid;border-color:rgb(167, 169, 172);height: 27px;">
                                                                                             <div style="text-align: left;width: 100%;height: 100%;">
-                                                                                                <img [src]="Group.DetailsIcon" style="margin-top:3px;float: left" />
+                                                                                                <img [src]="Group.DetailsIcon" style="vertical-align: middle;float: left" />
                                                                                                 <label style="margin:5px;vertical-align: middle;">{{Group.Key}}</label>
                                                                                             </div>
                                                                                         </div>
@@ -389,7 +390,7 @@
                                                                                                                 </table>
                                                                                                             </div>
                                                                                                         </div>
-                                                                                                    
+
                                                                                                         <table>
                                                                                                             <tr>
                                                                                                                 <td *ngIf="item &&  item.HasTree" style="width:20px">
@@ -481,7 +482,7 @@
                                                                                                                 </td>
                                                                                                             </tr>
                                                                                                         </table>
-                                                                                                    </div> 
+                                                                                                    </div>
                                                                                                 </td>
                                                                                             </tr>
                                                                                         </table>
@@ -536,8 +537,8 @@
                                                                         <table>
                                                                             <tr>
                                                                                 <td style="width:1px;">
-                                                                                    <label style="margin:5px;vertical-align: middle;">Selected Query Columns</label><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
-                                                                                    <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
+                                                                                    <div style="margin-top:2px;margin-left:5px;">Selected Query Columns</div><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
+                                                                                    <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}vertical-align: middle;-->
                                                                                 </td>
                                                                                 <td width="3px;">
                                                                                     <div></div>
@@ -563,6 +564,7 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
+                                                            <!---->
                                                             <td style="height:95px;">
                                                                 <div class="EmailBoxMultiLinesText" style="height:100%;white-space: normal;max-width: 812px;overflow-y: auto;background:linear-gradient(#F2F8FF, #E6EBF0);">
                                                                     <div class="ItemBox" *ngFor="let item of SelectedFieldsDataSource" [class.SelectedItemBox]="FieldSelectedItem == item" (mouseover)="ShowOrderArrows(item)" (click)="SetFieldSelectedItem(item)">
@@ -576,7 +578,7 @@
                                                                                         <span style="margin-left:2px;cursor: default;">{{item.DisplayName.replace('[', '').replace(']', '')}}</span>
                                                                                     </td>
                                                                                     <td>
-                                                                                        <span><img (click)="btnRemove_Click(item)" src="./Images/RedX2.png" class="RemoveBtn" /></span>
+                                                                                        <span><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnRemove_Click(item)" src="./Images/RedX2.png" class="RemoveBtn" /></span>
                                                                                     </td>
                                                                                     <td>
                                                                                         <span style="width:20px;"><img [class.Visible]="FieldSelectedItem == item" [class.Hidden]="FieldSelectedItem != item" (click)="btnDown_Click(item)" src="./Images/ArrowRight.png" class="ArrowBtn" /></span>
@@ -589,15 +591,15 @@
 
                                                                 </div>
                                                                 <!--<table class="BodyBackground">
-                                    <tr>
-                                        <td>
-                                            <ul style="width:100%;margin-top:5px;height:120px;overflow:auto;background-color:transparent;max-height:120px">
-                                                <li *ngFor="let item of SelectedFieldsDataSource" class="ListBoxItem" [class.SelectedListBoxItem]="FieldSelectedItem == item" (click)="SetFieldSelectedItem(item)">{{item.DisplayName}}</li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr><td style="height:100%;"></td></tr>
-                                </table>-->
+            <tr>
+                <td>
+                    <ul style="width:100%;margin-top:5px;height:120px;overflow:auto;background-color:transparent;max-height:120px">
+                        <li *ngFor="let item of SelectedFieldsDataSource" class="ListBoxItem" [class.SelectedListBoxItem]="FieldSelectedItem == item" (click)="SetFieldSelectedItem(item)">{{item.DisplayName}}</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr><td style="height:100%;"></td></tr>
+        </table>-->
 
                                                             </td>
                                                         </tr>
@@ -616,7 +618,7 @@
                                                             <td style="height:25px;width:100%;">
                                                                 <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
                                                                     <div style="float:left;">
-                                                                        <label style="margin:5px;vertical-align: middle;">Selected Filters </label><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
+                                                                        <div style="margin:5px;margin-top:2px;vertical-align: middle;">Selected Filters </div><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
                                                                         <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
                                                                     </div>
                                                                 </div>
@@ -672,7 +674,7 @@
                                                             <td style="height:25px;width:100%;">
                                                                 <div class="TitleBackGround" style="width:100%;height:100%;border-radius:5px 5px 0px 0px;">
                                                                     <div style="float:left;">
-                                                                        <label style="margin:5px;vertical-align: middle;">Preview Data (up to 100 records)</label><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
+                                                                        <div style="margin-left:5px;margin-top:2px;vertical-align: middle;">Preview Data (up to 100 records)</div><!--{{'General.O.SelectedColumns' | TextCodeTranslationPipe}}-->
                                                                         <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
                                                                     </div>
                                                                     <div style="float:right;">

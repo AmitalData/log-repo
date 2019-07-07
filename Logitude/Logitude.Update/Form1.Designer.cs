@@ -167,6 +167,7 @@
             this.lblUInvoice = new System.Windows.Forms.Label();
             this.lblUQuote = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button42 = new System.Windows.Forms.Button();
             this.btnCompareData = new System.Windows.Forms.Button();
             this.button40 = new System.Windows.Forms.Button();
             this.HarmonizeCodesLabel = new System.Windows.Forms.Label();
@@ -1595,6 +1596,16 @@
             this.tabPage2.Size = new System.Drawing.Size(743, 558);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Other";
+            // 
+            // button42
+            // 
+            this.button42.Location = new System.Drawing.Point(271, 441);
+            this.button42.Name = "button42";
+            this.button42.Size = new System.Drawing.Size(184, 23);
+            this.button42.TabIndex = 94;
+            this.button42.Text = "Fix LogBox Docs";
+            this.button42.UseVisualStyleBackColor = true;
+            this.button42.Click += new System.EventHandler(this.button42_Click);
             // 
             // btnCompareData
             // 

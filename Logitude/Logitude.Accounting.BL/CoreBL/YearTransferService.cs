@@ -59,12 +59,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
-                List<JournalPM> journalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j =>!j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
-                if (journalPMs != null)
+                List<JournalPM> notVoidedJournalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j =>!j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
+                if (notVoidedJournalPMs != null)
                 {
                     bool problem = false;
                     string journalNo = "";
-                    JournalPM jPM = journalPMs.Where(j => String.IsNullOrEmpty(j.OriginalJournalId)).FirstOrDefault();  
+                    JournalPM jPM = notVoidedJournalPMs.Where(j => String.IsNullOrEmpty(j.OriginalJournalId)).FirstOrDefault();  
                     if (jPM != null) // at least one journal without OriginalJournalId
                     {
                         problem = true;
@@ -72,10 +72,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     else
                     { 
-                        List<String> originalJournalIds = journalPMs.Select(j => j.OriginalJournalId).ToList();
+                        List<String> originalJournalIds = notVoidedJournalPMs.Select(j => j.OriginalJournalId).ToList();
                         List<JournalPM> notVoidedOriginalJournals = journalQueryService.GetJournalPMsByIds(originalJournalIds, tenant).Where(originalJournal => !originalJournal.IsVoided.HasValue || !originalJournal.IsVoided.Value).ToList();
                         List<String> notVoidedOriginalIds = notVoidedOriginalJournals.Select(k => k.Id).ToList();
-                        List<JournalPM> realJournals = journalPMs.Where(j => notVoidedOriginalIds.Contains(j.OriginalJournalId)).ToList();
+                        List<JournalPM> realJournals = notVoidedJournalPMs.Where(j => notVoidedOriginalIds.Contains(j.OriginalJournalId)).ToList();
                         if (realJournals != null)
                         {
                             jPM = realJournals.FirstOrDefault();
@@ -90,7 +90,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         string transText = "";
                         bool useLocal = true;
-                        transText = TranslateTextsClassTranslate("Accounting.O.AccountingPeriodAlready", 0, useLocal) + journalNo;
+                        transText = TranslateTextsClassTranslate("Accounting.O.YearTransferredAlready", 0, useLocal) + journalNo;
                         if (String.IsNullOrWhiteSpace(transText))
                         {
                             transText = "The chosen year is transferred already, In order to transfer it again, you must void Journal " + journalNo;
@@ -140,7 +140,128 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return journalPM;
         }
-        
+
+
+        public JournalPM CancelJournal(IAccountingContext accountingContext, int YYyear, int tenant)
+        {
+            _sb.AppendLine($"CheckYear({YYyear})");
+            _EndOfYearUserInput = CheckYear(YYyear);
+            DateTime accountingDate = _EndOfYearUserInput.AddDays(1);//1.1.(yyyy+1)
+            JournalPM origPM = null;
+
+            if (accountingDate != null)
+            {
+                AccountingPeriodQueryService accountingPeriodQueryService = new AccountingPeriodQueryService(accountingContext);
+                List<AccountingPeriodPM> accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodsByTenantAndType("1", tenant);
+                if (accountingPeriodsByTypeRegular != null)
+                {
+                    if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), accountingDate))
+                    {
+                        string transText = "";
+                        bool useLocal = true;
+                        transText = TranslateTextsClassTranslate("Accounting.O.AccountingPeriodClosed", 0, useLocal);
+                        if (String.IsNullOrWhiteSpace(transText))
+                        {
+                            transText = "Closed Month";
+                        }
+                        throw new Exception(transText);
+                    }
+                }
+                JournalQueryService journalQueryService = new JournalQueryService(accountingContext);
+                List<JournalPM> notVoidedJournalPMs = journalQueryService.GetJournalsByAccountingEntityCodeAndDate("11", accountingDate, tenant).Where(j => !j.IsVoided.HasValue || !j.IsVoided.Value).ToList();
+                if (notVoidedJournalPMs == null)
+                {
+                    string transText = "";
+                    bool useLocal = true;
+                    transText = TranslateTextsClassTranslate("Accounting.O.AccountingPeriodYet", 0, useLocal);
+                    if (String.IsNullOrWhiteSpace(transText))
+                    {
+                        transText = "The chosen year is not yet transferred";
+                    }
+
+                    throw new Exception(transText);
+
+                }
+
+                else //if (notVoidedJournalPMs != null)
+                {
+                    JournalPM jPM = notVoidedJournalPMs.Where(j => String.IsNullOrEmpty(j.OriginalJournalId)).FirstOrDefault();
+                    if (jPM != null) // at least one journal without OriginalJournalId
+                    {
+                        origPM = jPM; // that's the one to void it
+                    }
+                    else
+                    {
+                        string journalNo = "";
+                        List<String> originalJournalIds = notVoidedJournalPMs.Select(j => j.OriginalJournalId).ToList();
+                        List<JournalPM> notVoidedOriginalJournals = journalQueryService.GetJournalPMsByIds(originalJournalIds, tenant).Where(originalJournal => !originalJournal.IsVoided.HasValue || !originalJournal.IsVoided.Value).ToList();
+                        List<String> notVoidedOriginalIds = notVoidedOriginalJournals.Select(k => k.Id).ToList();
+                        List<JournalPM> realJournals = notVoidedJournalPMs.Where(j => notVoidedOriginalIds.Contains(j.OriginalJournalId)).ToList();
+                        if (realJournals != null)
+                        {
+                            jPM = realJournals.OrderByDescending(j => j.JournalNumber).FirstOrDefault();
+                            if (jPM != null) // at least one journal where OriginalJournalId is not voided
+                            {
+                                journalNo = jPM.JournalNumber;
+                            }
+                        }
+                        else //OUR problem: OriginalJournalId is not a voided journal; 
+                             // so the question is: 
+                                 // can the notVoidedJournalPMs.FirstOrDefault()  serve as the journal to void id? 
+                        {
+                            JournalPM nvjPM = notVoidedJournalPMs.OrderByDescending(j => j.JournalNumber).Where(j => String.IsNullOrEmpty(j.OriginalJournalId)).FirstOrDefault();
+
+                            if (nvjPM != null)
+                            {
+                                journalNo = nvjPM.Id; // cannot be there because OriginalJournalId IS NOT NULL  <==> the journal is s storno of the OriginalJournalId  
+                            }
+                            else
+                            {
+                                journalNo = "0";
+                            }
+                         }
+
+
+                        string transText = "";
+                        string transText_1 = "";
+                        string transText_22 = "";
+                        bool useLocal = true;
+                        transText_1 = TranslateTextsClassTranslate("Accounting.O.TheYearTransferJournal", 0, useLocal) + journalNo;
+                        if (String.IsNullOrWhiteSpace(transText))
+                        {
+                            transText_1 = "The Year Transfer Journal " + journalNo;
+                        }
+                        transText_22 = TranslateTextsClassTranslate("Accounting.O.YearTransferCancelledAlready", 0, useLocal) + journalNo;
+                        if (String.IsNullOrWhiteSpace(transText))
+                        {
+                            transText_22 = " for chosen yead is cancelled already" + journalNo;
+                        }
+                        transText = $"{transText_1}{journalNo}{transText_22}";
+
+                        throw new Exception(transText);
+                    }
+                }
+
+            }
+            if (origPM != null)
+
+            {
+                origPM.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Voided;
+                origPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                JournalUpdateService JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+                JournalUP.Update(origPM, true);
+
+                return origPM;
+            }
+            else
+            {
+                throw new Exception("Original Journal not found");
+            }
+
+        }
+
+
+
         public virtual JournalPM CreateJournal(DateTime endOfYearUserInput,  IQueryable<GLAccountAndMoreDTO> allRevenueExpenseCards, List<CurrencySum> totalBalance,string RevenueExpenseGLAccountId, string usrid,DateTime @now, int tenant)
         {
 
