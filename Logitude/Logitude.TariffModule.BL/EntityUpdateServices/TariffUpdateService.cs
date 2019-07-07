@@ -280,35 +280,37 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
 
         private void ApproveDraftVersion(TariffPM entityPM)
         {
-            bool isValid = true;
-            TariffVersionPM iDraftVersion = entityPM.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
-
-            if (iDraftVersion == null)
+            if (entityPM.IsApprovingDraftVersion)
             {
-                isValid = false;
-                throw new ApplicationException("No Draft version to approve");
-            }
+                TariffVersionPM iDraftVersion = entityPM.TariffVersions.Where(d => d.IsDraft).FirstOrDefault();
+                List<TariffLinePM> iDraftVersionLines = new List<TariffLinePM>();
 
-            if (iDraftVersion.TariffLines.Where(d => d.HasErrors).Count() > 0)
-            {
-                isValid = false;
-                throw new ApplicationException("Invalid Tariff Lines");
-            }
-
-            if (entityPM.TypeCode == "AFC")
-            {
-                if (iDraftVersion.ExpirationDate != null)
+                if (iDraftVersion == null)
                 {
-                    if (iDraftVersion.ExpirationDate.Value.Date < entityPM.UpdateDate.Date)
+                    throw new ApplicationException("No Draft version to approve");
+                }
+
+                else
+                {
+                    iDraftVersionLines = iDraftVersion.TariffLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+                }
+
+                if (iDraftVersionLines.Where(d => d.HasErrors).Count() > 0)
+                {
+                    throw new ApplicationException("Invalid Tariff Lines");
+                }
+
+                if (entityPM.TypeCode == "AFC")
+                {
+                    if (iDraftVersion.ExpirationDate != null)
                     {
-                        isValid = false;
-                        throw new ApplicationException("Approving past version is not allowed, please update the dates");
+                        if (iDraftVersion.ExpirationDate.Value.Date < entityPM.UpdateDate.Date)
+                        {
+                            throw new ApplicationException("Approving past version is not allowed, please update the dates");
+                        }
                     }
                 }
-            }
 
-            if(isValid)
-            {
                 iDraftVersion.IsDraft = false;
                 iDraftVersion.ApprovedByUserId = entityPM.UpdatedByUserId;
                 iDraftVersion.ApproveDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
@@ -332,24 +334,29 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                         TariffLineRepository iTariffLineRepository = new TariffLineRepository(entityPM.Tenant);
                         List<TariffLine> iPreviousVersionLines = iTariffLineRepository.GetTariffLinesByTariffAndVersion(entityPM.Id, iPreviousVersion.Version, entityPM.Tenant);
 
-                        foreach (TariffLinePM linePM in iDraftVersion.TariffLines)
+                        foreach (TariffLinePM linePM in iDraftVersionLines)
                         {
                             if (linePM.StartDate != null)
                             {
-                                //var iPreviousLine = iPreviousVersion.TariffLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
                                 var iPreviousLine = iPreviousVersionLines.Where(d => d.OriginPortId == linePM.OriginPortId && d.DestinationPortId == linePM.DestinationPortId).FirstOrDefault();
                                 if (iPreviousLine != null)
                                 {
+                                    if (iPreviousLine.StartDate != null)
+                                    {
+                                        if (linePM.StartDate < iPreviousLine.StartDate)
+                                        {
+                                            string msg = "Line (" + linePM.OriginPortCode + " > " + linePM.DestinationPortCode + ") Start Date is less than the previous version line";
+                                            throw new ApplicationException(msg);
+                                        }
+                                    }
+
                                     iPreviousLine.ExpirationDate = linePM.StartDate.Value.AddDays(-1);
                                     iTariffLineRepository.Update(iPreviousLine);
-                                    //iPreviousLine.ChangeSetOp = ChangeSetOperation.Update;
                                 }
                             }
                         }
 
                         iTariffLineRepository.SubmitChanges();
-                        //TariffVersionUpdateService tariffVersionUpdateService = new TariffVersionUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                        //tariffVersionUpdateService.Update(iPreviousVersion, true);
                     }
                 }
             }

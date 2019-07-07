@@ -606,7 +606,7 @@ namespace Logitude.Server.Tools.FTP
             {
                 sftp.RemoteFile = p_filename;
 
-                p_message = FTPLogBuilder.BuildLogLine("Start downloading file " + sftp.RemotePath + p_filename + " " + FTPLogBuilder.GetFileSizeString(sftp.FileAttributes.Size));
+                p_message = FTPLogBuilder.BuildLogLine("Start downloading file " + sftp.RemotePath + p_filename + " " + FTPLogBuilder.GetFileSizeStringInBytes(sftp.FileAttributes.Size));
                  
                 sftp.SetDownloadStream(downloadStream);
                 //sftp.LocalFile = p_localpath + @"\" + p_filename;

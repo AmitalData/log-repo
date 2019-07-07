@@ -34,6 +34,7 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Simplog.Data.Helpers;
+using Logitude.Accounting.BL.CoreBL;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -64,8 +65,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
         protected override void OnCreating(GLAccountPM entityPM, EntityPM entityParentPM)
-
         {
+            if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4")
+                SetDisplayNumber(entityPM);
+
             AddAcitivityLog(entityPM, "N");
             entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName;
 
@@ -78,6 +81,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (!String.IsNullOrWhiteSpace(entityPM.ChartOfAccountsId) && (entityPM.ChartOfAccountsId.ToLower() == "bla" || entityPM.ChartOfAccountsId.ToLower() == "get")) entityPM.ChartOfAccountsId = null;
             if (!String.IsNullOrWhiteSpace(entityPM.ChartOfAccountsTypeCode) && (entityPM.ChartOfAccountsTypeCode.ToLower() == "bla" || entityPM.ChartOfAccountsTypeCode.ToLower() == "get")) entityPM.ChartOfAccountsTypeCode = null;
+            if (!String.IsNullOrWhiteSpace(entityPM.DeductionTypeId) && (entityPM.DeductionTypeId.ToLower() == "bla" || entityPM.DeductionTypeId.ToLower() == "get")) entityPM.DeductionTypeId = null;
+            if (!String.IsNullOrWhiteSpace(entityPM.AssessingOfficeCode) && (entityPM.AssessingOfficeCode.ToLower() == "bla" || entityPM.AssessingOfficeCode.ToLower() == "get")) entityPM.AssessingOfficeCode = null;
+            if (!String.IsNullOrWhiteSpace(entityPM.DeductionFileTypeId) && (entityPM.DeductionFileTypeId.ToLower() == "bla" || entityPM.DeductionFileTypeId.ToLower() == "get")) entityPM.DeductionFileTypeId = null;
 
 
             if (entityPM.AccountTypeCode == "4") // Job
@@ -360,6 +366,26 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             base.OnCreating(entityPM, entityParentPM);
 
         }
+
+        private void SetDisplayNumber(GLAccountPM entityPM)
+        {
+            GLAccountCounterService gLAccountCounterService = new GLAccountCounterService(entityPM.Tenant);
+            string _displayNumber = gLAccountCounterService.GetNewDisplayNumber(entityPM);
+
+            //check exist
+            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(entityPM.Tenant);
+            GLAccountPM gla = gLAccountQuery.GetByDisplayNumber(_displayNumber, entityPM.Tenant).FirstOrDefault();
+            if(gla == null)
+            {
+                entityPM.DisplayNumber = _displayNumber;
+            }
+            else
+            {
+                //skip this counter, get next
+                SetDisplayNumber(entityPM);
+            }
+        }
+
         protected override void UpdateComposition(GLAccountPM entityPM)
         {
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)

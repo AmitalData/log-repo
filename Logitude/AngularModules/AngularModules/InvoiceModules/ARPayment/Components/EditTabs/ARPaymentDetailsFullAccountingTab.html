@@ -366,8 +366,8 @@
 
                                                 <td *ngIf="FullAccounting  && IsCashBookValid">
                                                     <div [style.text-align]="isRTL ? 'right' : 'left'" float-start
-                                                        style="display: block;">
-                                                        Cashbook: {{CashBookName}} (
+                                                        style="display: block;padding-top: 5px;">
+                                                        {{ 'Cashbook.O.Name'|TextCodeTranslationPipe }}: {{CashBookName}} (
                                                         <span (click)="EditGLAccount('CB')" class="hyperlink">
                                                             {{BranchGLAccountNumber}} </span>)
                                                     </div>

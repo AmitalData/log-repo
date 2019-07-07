@@ -67,6 +67,7 @@
     </Compile>
     <None Include="EntityFiles\AccountingCompanyType.lxml" />
     <None Include="EntityFiles\AccountingNote.lxml" />
+    <None Include="EntityFiles\GLAccountCounter.lxml" />
     <None Include="EntityFiles\IntegrityCheckStatus.lxml">
       <SubType>Designer</SubType>
     </None>

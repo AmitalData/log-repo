@@ -71,7 +71,7 @@ export class ChoosePortComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
         
         if (errors.length == 0) {
-            var newItem: DestinationClass = new DestinationClass(this.UpdateClass.fatherComponent, this.UpdateClass.Type, this.Port)
+            var newItem: DestinationClass = new DestinationClass(this.UpdateClass.fatherComponent, this.UpdateClass.Type, this.Port, null)
 
             if (this.UpdateClass.Type == "From") {
                 this.UpdateClass.fatherComponent.FromObsList.push(newItem);

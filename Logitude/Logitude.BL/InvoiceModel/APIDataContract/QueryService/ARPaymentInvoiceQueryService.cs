@@ -1,4 +1,5 @@
-﻿using Logitude.BL.InvoiceModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel;
 using System;
@@ -13,12 +14,14 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     {
 
         ARInvoicePaymentQuery query;
+        ARInvoiceQuery invoiceQuery;
         IInvoiceContext context;
         public ARPaymentInvoiceQueryService(int tenant)
         {
             context = InvoiceContext.GetContext(tenant);
 
             query = new ARInvoicePaymentQuery(tenant);
+            invoiceQuery = new ARInvoiceQuery(tenant);
         }
 
 
@@ -51,9 +54,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 {
 
                     var temp = new ARPaymentInvoice();
+                   
                     temp.ARInvoiceNumber = item.ARInvoiceNumber;
                     temp.ForeignAmount = item.ForeignAmount;
-                    temp.ForeignCurrencyId = item.ForeignCurrencyId;
+                    if (item.ForeignCurrencyId != null)
+                    {
+                        CurrencyQueryService CurrencyService1 = new CurrencyQueryService(Tenant);
+                        temp.ForeignCurrency = CurrencyService1.CurrencyCustomDataMapping(item.ForeignCurrencyId, Tenant);
+
+                    }
                     temp.LocalAmount = item.LocalAmount;
                     ARPaymentInvoices.Add(temp);
                 }
@@ -75,21 +84,33 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 foreach (var item in ARPaymentInvoices)
                 {
                     var temp = new ARPaymentInvoicePM();
+                    ARInvoicePM invoicePM = new ARInvoicePM();
                     if (!string.IsNullOrEmpty(item.ARInvoiceNumber))
                     {
-                        temp = query.GetARPaymentInvoicePMsByInvoiceNumber(item.ARInvoiceNumber, Tenant);
+                        invoicePM = invoiceQuery.GetSingleInvoiceByInvoiceNumber(item.ARInvoiceNumber, Tenant);
                     }
 
-                    if (temp == null)
+                    if (invoicePM != null)
                     {
-                        throw new ApplicationException("ARPaymentInvoice with invoice number " + item.ARInvoiceNumber + " doesn't exist");
-                    }
+                        //  throw new ApplicationException("ARInvoice with invoice number " + item.ARInvoiceNumber + " doesn't exist");
 
-                    temp.ARInvoiceNumber = item.ARInvoiceNumber;
-                    temp.LocalAmount = item.LocalAmount;
-                    temp.ForeignAmount = item.ForeignAmount;
-                    temp.ForeignCurrencyId = item.ForeignCurrencyId;
-                    ARPaymentInvoicePMs.Add(temp);
+                        temp.ARInvoiceId = invoicePM.Id;
+
+                        temp.ARInvoiceNumber = invoicePM.InvoiceNumber;
+                        temp.LocalAmount = item.LocalAmount;
+                        temp.ForeignAmount = item.ForeignAmount;
+                        CurrencyQueryService ForiegnCurrencyCurrencyService = new CurrencyQueryService(Tenant);
+                        if (item.ForeignCurrency != null)
+                        {
+                            var ForiegnCurrencyPM = ForiegnCurrencyCurrencyService.CurrencyCustomDataMappingAndValidatin(item.ForeignCurrency, Tenant);
+                            if (ForiegnCurrencyPM != null)
+                            {
+                                temp.ForeignCurrencyId = ForiegnCurrencyPM.Id;
+                            }
+                        }
+                        temp.Tenant = Tenant;
+                        ARPaymentInvoicePMs.Add(temp);
+                    }
 
                 }
                 return ARPaymentInvoicePMs;

@@ -71,7 +71,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 					SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
 					ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
-					string logId = importerDepositionHelper.AddAPILogs(importerDepositionAM);
+					string logId = importerDepositionHelper.AddAPILogs(importerDepositionAM,null, importerDepositionAM.CustomerTenant);
 					importerDepositionHelper.StartImporterDeposition(importerDepositionAM);
 					var msg = "Importer Deposition Send to cloud Successfully";
 					APILogsUtility.UpdateAPILogStatus(logId, importerDepositionAM.CustomerTenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");

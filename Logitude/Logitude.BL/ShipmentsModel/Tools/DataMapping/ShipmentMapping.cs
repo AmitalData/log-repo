@@ -107,11 +107,15 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             entityPoco.NoFreightFile = entityPM.NoFreightFile;
 
-            CheckNextLeg(ref entityPM);
-            CheckNextETAAndETD(ref entityPM);
-            entityPoco.NextETA = entityPM.NextETA;
-            entityPoco.NextETD = entityPM.NextETD;
-            entityPoco.NextLegCode = entityPM.NextLegCode;
+            if (entityPM.ShipmentLevelCode != "H")
+            {
+                CheckNextLeg(ref entityPM);
+                CheckNextETAAndETD(ref entityPM);
+                entityPoco.NextETA = entityPM.NextETA;
+                entityPoco.NextETD = entityPM.NextETD;
+                entityPoco.NextLegCode = entityPM.NextLegCode;
+            }
+
             entityPoco.FreelancerId = entityPM.FreelancerId;
             entityPoco.FreelancerAddressId = entityPM.FreelancerAddressId;
             entityPoco.FreelancerContactId = entityPM.FreelancerContactId;

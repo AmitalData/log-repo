@@ -24,7 +24,7 @@ namespace Logitude.Accounting.BL
 		    var all = new List<WithholdingTaxDeductionTypeDetails>();  
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+              Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "01", 
                 SearchFields = "01,מקבלי ריבית והפרשי הצמדה, תשלומים בעד דמי השאלה, תשלומים תמורת מכירת נייר ערך זר.,", 
                 Inactive = false, 
@@ -35,7 +35,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "02", 
                 SearchFields = "02,מקבלי עמלות ביטוח.,", 
                 Inactive = false, 
@@ -46,7 +46,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "03", 
                 SearchFields = "03,מקבלי שכר סופרים, אמנים, בוחנים, מרצים, מעניקי שרותי משרד וספורטאים שאינם שכירים, דירקטורים.,", 
                 Inactive = false, 
@@ -57,7 +57,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "05", 
                 SearchFields = "05,תשלומים בעד עבודה חקלאית או תוצרת חקלאית,", 
                 Inactive = false, 
@@ -68,7 +68,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "06", 
                 SearchFields = "06,מקבלי תשלומים בעד שירותים,", 
                 Inactive = false, 
@@ -79,7 +79,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "11", 
                 SearchFields = "11,תשלום שלא כדין מקופת גמל.,", 
                 Inactive = false, 
@@ -90,7 +90,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "12", 
                 SearchFields = "12,החזר תשלום למעביד מקופת גמל לפיצויים.,", 
                 Inactive = false, 
@@ -101,7 +101,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "13", 
                 SearchFields = "13,תשלומים בעד שכירות מקרקעין שניתן לתבוע כהוצאה.,", 
                 Inactive = false, 
@@ -112,7 +112,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "14", 
                 SearchFields = "14,תשלום מקרן השתלמות לעצמאי.,", 
                 Inactive = false, 
@@ -123,7 +123,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "15", 
                 SearchFields = "15,תשלומים מהשתכרות או רווח שמקורם בהימורים, הגרלות ופעילות נושאת פרסים.,", 
                 Inactive = false, 
@@ -134,7 +134,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "16", 
                 SearchFields = "16,ניכוי מתשלומים בעד מטבעות וירטואליים,", 
                 Inactive = false, 
@@ -145,7 +145,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "18", 
                 SearchFields = "18,תשלום דיבידנד,", 
                 Inactive = false, 
@@ -156,7 +156,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "19", 
                 SearchFields = "19,רווח הון מפדיון מניות/ אופציות לפי סעיף 102.,", 
                 Inactive = false, 
@@ -167,7 +167,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "20", 
                 SearchFields = "20,סוג זה מיוחד אך ורק לתיק המוסד לביטוח לאומי לצורך דיווח תשלומי גמלאות וקצבאות.,", 
                 Inactive = false, 
@@ -178,7 +178,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "21", 
                 SearchFields = "21,הכנסה מהפקת חשמל במסלול פטור,", 
                 Inactive = false, 
@@ -189,7 +189,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "22", 
                 SearchFields = "22,הכנסה מהפקת חשמל במסלול מס מופחת,", 
                 Inactive = false, 
@@ -200,7 +200,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "53", 
                 SearchFields = "53,החזרת סכומים מקופת הגמל למעסיק.,", 
                 Inactive = false, 
@@ -211,7 +211,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "54", 
                 SearchFields = "54,החזרת סכומים מקופת הגמל למעסיק לפי אישור פקיד שומה.,", 
                 Inactive = false, 
@@ -222,7 +222,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "56", 
                 SearchFields = "56,מענק פרישה פטור ממס,", 
                 Inactive = false, 
@@ -233,7 +233,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "57", 
                 SearchFields = "57,מענק פרישה עקב מוות פטור ממס,", 
                 Inactive = false, 
@@ -244,7 +244,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "58", 
                 SearchFields = "58,מענק פרישה חייב במס,", 
                 Inactive = false, 
@@ -255,7 +255,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "59", 
                 SearchFields = "59,מענק פרישה עקב מוות חייב במס,", 
                 Inactive = false, 
@@ -266,7 +266,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "60", 
                 SearchFields = "60,מענק פרישה שחויב בשווי בעת ההפקדה (פטור).,", 
                 Inactive = false, 
@@ -277,7 +277,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "61", 
                 SearchFields = "61,רווחים צבורים מהפקדות שחויבו בשווי בעת ההפקדה (15%).,", 
                 Inactive = false, 
@@ -288,7 +288,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "63", 
                 SearchFields = "63,משיכה של קרן ורווחים מקופת הגמל, שניתן למשוך בפטור,", 
                 Inactive = false, 
@@ -299,7 +299,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "64", 
                 SearchFields = "64,משיכה מקופת הגמל בניגוד להוראות סעיף 87 לפקודה,", 
                 Inactive = false, 
@@ -310,7 +310,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "65", 
                 SearchFields = "65,משיכה מקופת הגמל בעילה של העדר הכנסות (פטור).,", 
                 Inactive = false, 
@@ -321,7 +321,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "66", 
                 SearchFields = "66,משיכה אחרת מקופת הגמל באישור פקיד שומה.,", 
                 Inactive = false, 
@@ -332,7 +332,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "67", 
                 SearchFields = "67,משיכה מקופת הגמל בעילה סוציאלית ולפי אישור פקיד שומה.,", 
                 Inactive = false, 
@@ -343,7 +343,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "68", 
                 SearchFields = "68,היוון קצבה מזכה על פי אישור פש,", 
                 Inactive = false, 
@@ -354,7 +354,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "69", 
                 SearchFields = "69,היוון קצבה בפטור על פי אישור פש,", 
                 Inactive = false, 
@@ -365,7 +365,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "70", 
                 SearchFields = "70,היוון סכום צבירה מזערי על פי אישור פקיד שומה (פטור).,", 
                 Inactive = false, 
@@ -376,7 +376,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "74", 
                 EnglishName = " ", 
                 LocalName = "קרן השתלמות - משיכת קרן ורווחים שמקורם ב-הפקדה מוטבת- לשם השתלמות או הגעה ל\''גיל פרישה (פטור).", 
@@ -387,7 +387,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "75", 
                 EnglishName = " ", 
                 LocalName = "קרן השתלמות - משיכת \''סכומים מקרן השתלמות\'' כהגדרתם בתקנות מקרן השתלמות לשכירים.", 
@@ -398,7 +398,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "76", 
                 EnglishName = " ", 
                 LocalName = "קרן השתלמות - משיכת \''סכומים מקרן השתלמות\'' כהגדרתם בתקנות מקרן השתלמות לעצמאים.", 
@@ -409,7 +409,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "77", 
                 EnglishName = " ", 
                 LocalName = "קרן השתלמות - משיכת סכומים שמועטו מהגדרת \''סכומים מקרן השתלמות\'' (פטור).", 
@@ -420,7 +420,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {    
-               Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "78", 
                 EnglishName = " ", 
                 LocalName = "קרן השתלמות - משיכת הפקדה שאינה \''הפקדה מוטבת\'' בתוספת הפרשי הצמדה (פטור) בהתאם לסעיף 3(ה4)(1) לפקודה.", 
@@ -431,7 +431,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "79", 
                 EnglishName = " ", 
                 LocalName = "קרן השתלמות - משיכת רווחים צבורים מהפקדה שאינה \''הפקדה מוטבת\'' (15%) בהתאם לסעיף 3(ה4)(1)לפקודה", 
@@ -442,7 +442,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "80", 
                 EnglishName = " ", 
                 LocalName = "קרן השתלמות - משיכת רווחים צבורים מהפקדה שאינה \''הפקדה מוטבת\'' (20%) בהתאם לסעיף 3(ה4)(1) לפקודה.", 
@@ -453,7 +453,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "81", 
                 EnglishName = " ", 
                 LocalName = "קרן השתלמות - משיכת רווחים צבורים מהפקדה שאינה ''הפקדה מוטבת'' (25%) בהתאם לסעיף 3(ה4)(1) לפקודה.", 
@@ -464,7 +464,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "82", 
                 SearchFields = "82,העברה לחשבונו של בן הזוג לשעבר - העברת סכומים שמתחת לתקרה (פטור).,", 
                 Inactive = false,
@@ -475,7 +475,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "83", 
                 SearchFields = "83,העברה לחשבונו של בן הזוג לשעבר - העברת סכומים שמעל לתקרה (סעיף 124ג).,", 
                 Inactive = false, 
@@ -486,7 +486,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+              Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "85", 
                 SearchFields = "85,משיכת סכומים בגין ימי חופשה, מחלה או חג במהלך תקופת עבודה (25%/40%).,", 
                 Inactive = false, 
@@ -497,7 +497,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "86", 
                 SearchFields = "86,משיכת סכומים בגין ימי חופשה, מחלה או חג במועד סיום עבודה (40%/25%).,", 
                 Inactive = false, 
@@ -508,7 +508,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "87", 
                 SearchFields = "87,תשלום מחשבון חדש או קופת גמל להשקעה - קרן כולל הפרשי הצמדה על הקרן (פטור).,", 
                 Inactive = false, 
@@ -519,7 +519,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "88", 
                 LocalName = "תשלום מחשבון חדש או קופת גמל להשקעה - \''ריבית ורווחים אחרים\'' (25%).", 
                 EnglishName = " ", 
@@ -530,7 +530,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "91", 
                 SearchFields = "91,קופת גמל פנסיה לעצמאים - משיכת סכומים במצב אבטלה (פטור).,", 
                 Inactive = false, 
@@ -541,7 +541,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "92", 
                 SearchFields = "92,קופת גמל פנסיה לעצמאים - משיכת סכומים במצב אבטלה (לפי אישור).,", 
                 Inactive = false, 
@@ -552,7 +552,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "95", 
                 SearchFields = "95,תשלום חד פעמי בגין אובדן כושר עבודה - סכום הקצבאות ששולמו בסכום חד פעמי.,", 
                 Inactive = false, 
@@ -563,7 +563,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "07", 
                 EnglishName = " ", 
                 LocalName = "תשלומים לתושב חוץ לפי סעיף 170 לפקודה כשהמס נוכה והועבר לפקיד השומה ע\''י המנכה.", 
@@ -574,7 +574,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "08", 
                 EnglishName = " ", 
                 LocalName = "תשלומים לתושב חוץ לפי סעיף 170 לפקודה כשהמס נוכה והועבר לפקיד השומה ע\''י הבנק.", 
@@ -585,7 +585,7 @@ namespace Logitude.Accounting.BL
 			 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "71", 
                 EnglishName = " ", 
                 LocalName = "היוון קצבה מוכרת, חלק \''תשלומים פטורים\'' (פטור).", 
@@ -596,7 +596,7 @@ namespace Logitude.Accounting.BL
 
             all.Add(new WithholdingTaxDeductionTypeDetails()
             {
-                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
+               Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0),
                 Code = "72",
                 EnglishName = " ",
                 LocalName = "היוון קצבה מוכרת, חלק \''מרכיב הרווח היחסי\'' (15%).",
@@ -604,7 +604,40 @@ namespace Logitude.Accounting.BL
                 Inactive = false,
                 Tenant = 0,
 			});
-			
+
+            all.Add(new WithholdingTaxDeductionTypeDetails()
+            {
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0) ,
+                Code = "73",
+                EnglishName = " ",
+                LocalName = "קרן השתלמות - משיכת קרן ורווחים שמקורם ב\"הפקדה מוטבת\" (פטור).",
+                SearchFields = "73,קרן השתלמות - משיכת קרן ורווחים שמקורם ב\"הפקדה מוטבת\" (פטור).",
+                Inactive = false,
+                Tenant = 0,
+            });
+
+
+            all.Add(new WithholdingTaxDeductionTypeDetails()
+            {
+                Id = IdCounter.GetNumber("WithholdingTaxDeductionType", 0) ,
+                Code = "96",
+                EnglishName = " ",
+                LocalName = "תשלום חד פעמי בגין אובדן כושר עבודה - החזר הוצאות שכ\"ט והוצאות משפטיות.",
+                SearchFields = "96,תשלום חד פעמי בגין אובדן כושר עבודה - החזר הוצאות שכ\"ט והוצאות משפטיות.",
+                Inactive = false,
+                Tenant = 0,
+            });
+
+            all.Add(new WithholdingTaxDeductionTypeDetails()
+            {
+                Id =  IdCounter.GetNumber("WithholdingTaxDeductionType", 0) ,
+                Code = "97",
+                EnglishName = " ",
+                LocalName = "תשלום חד פעמי בגין אובדן כושר עבודה - החזר פרמיות",
+                SearchFields = "97,תשלום חד פעמי בגין אובדן כושר עבודה - החזר פרמיות",
+                Inactive = false,
+                Tenant = 0,
+            });
             return all;
        }
 
@@ -615,6 +648,7 @@ namespace Logitude.Accounting.BL
 		    newPoco.Inactive = this.Inactive;  
 		    newPoco.EnglishName = this.EnglishName;  
 		    newPoco.LocalName = this.LocalName;
+            if (newPoco.Id == null)
             newPoco.Id = this.Id;
             newPoco.Tenant = this.Tenant;
         }

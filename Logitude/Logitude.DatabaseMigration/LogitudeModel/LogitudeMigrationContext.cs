@@ -3378,7 +3378,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks { get; set; }
         public IDbSet<IntegrityCheckStatus> IntegrityCheckStatuses { get; set; }
         public IDbSet<AccountingNote> AccountingNotes { get; set; }
-   
+        public IDbSet<GLAccountCounter> GLAccountCounters { get; set; }
+
 
         #endregion
 
@@ -4300,6 +4301,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new OpenFormatReportMap());
         //    modelBuilder.Configurations.Add(new OpenFormatDateTypeMap());
             modelBuilder.Configurations.Add(new OpenFormatReportStatusMap());
+            modelBuilder.Configurations.Add(new GLAccountCounterMap());
             #endregion
 
             #region WareHouse

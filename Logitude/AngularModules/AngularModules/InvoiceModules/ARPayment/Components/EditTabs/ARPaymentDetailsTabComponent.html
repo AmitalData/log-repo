@@ -273,7 +273,7 @@
 
                                                 <td *ngIf="FullAccounting  && IsCashBookValid">
                                                     <div [style.text-align]="isRTL ? 'right' : 'left'" float-start style="display: block;">
-                                                        Cashbook: {{CashBookName}} (
+                                                        {{ 'Cashbook.O.Name'|TextCodeTranslationPipe }}: {{CashBookName}} (
                                                         <span (click)="EditGLAccount('CB')" class="hyperlink"> {{BranchGLAccountNumber}} </span>)
                                                     </div>
                                                 </td>
@@ -343,7 +343,7 @@
                                                 <td style="width:150px; left: -10px;">
                                                     <LogLabel [ObjectFieldName]="'Account'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
-                                               
+
                                                 <td *ngIf="FullAccounting && AccountingPaymentMethodCode == 'CH'" style="width:150px; left: -10px;">
                                                     <LogLabel [Text]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe"  [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                                                 </td>

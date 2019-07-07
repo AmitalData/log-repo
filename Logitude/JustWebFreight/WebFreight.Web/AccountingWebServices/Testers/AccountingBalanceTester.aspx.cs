@@ -81,6 +81,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             _ButtonLoadBankPages_Click,
             _ButtonGetSystem1000_Click,
             _ButtonLoadSystem1000_Click,
+            _ButtonYearTransferCancel_Click,
         }
 
         //DateTime _MyDate;
@@ -1399,6 +1400,83 @@ namespace WebFreight.Web.AccountingWebServices.Testers
             finally
             {
                 _MyLastAction.Value = MyLastAction._ButtonYearTransfer_Click.ToString();
+                if (param == null)
+                {
+                    param = paramDefault;
+                }
+                var SerializeObjectByteParam = JsonConvert.SerializeObject(param);
+                _TextBoxParam.Text = SerializeObjectByteParam;
+                _LabelLog.Text = LogMessagingUtil.Instance.ToString();
+            }
+
+
+        }
+
+
+        protected void ButtonYearTransferCancel_Click(object sender, EventArgs e)
+        {
+            dynamic param = null;
+
+            var paramDefault = new
+            {
+                Tenant = 989,
+                YY = 17,
+            };
+            try
+            {
+
+                if (GetMyLastAction() != MyLastAction._ButtonYearTransferCancel_Click)
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(_TextBoxParam.Text))
+                {
+                    return;
+                }
+
+                param = JsonConvert.DeserializeObject(_TextBoxParam.Text);
+                int YY = param.YY;
+                int tenant = param.Tenant;
+                JournalPM journal = null;
+                using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
+                {
+                    var accountingContext = AccountingContext.GetContext(tenant);
+                    IYearTransferService yearTransferService = new YearTransferService();
+                    journal = yearTransferService.CancelJournal(accountingContext, YY, tenant);
+                    if (journal != null)
+                    {
+                        //var parser = new JournalApproveParser(journal, false,
+                        //AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal)
+                        //);
+                        //parser.ParseIt();
+                        bool toComplete = false;
+                        if (!toComplete)
+                        {
+                            throw new Exception("ddd");
+                        }
+                        scope.Complete();
+                    }
+
+
+                }
+                if (journal != null)
+                {
+                    var journalJson = JsonConvert.SerializeObject(journal);
+                    _LabelResult.Text = journalJson;
+                }
+                else
+                {
+                    _LabelResult.Text = "No journal";
+                }
+            }
+            catch (Exception)
+            {
+                param = null;
+                throw;
+            }
+            finally
+            {
+                _MyLastAction.Value = MyLastAction._ButtonYearTransferCancel_Click.ToString();
                 if (param == null)
                 {
                     param = paramDefault;

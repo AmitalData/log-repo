@@ -154,11 +154,11 @@
                                                                         <table>
                                                                             <tr>
                                                                                 <td style="width:10px"></td>
-                                                                                <td style="width:105px">
+                                                                                <!--<td style="width:105px">
                                                                                     <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsOneTime == true" (Checked)="SetTigger('O')" [Text]="'One Time'" [Top]="5"></RadioButton>
 
 
-                                                                                </td>
+                                                                                </td>-->
                                                                                 <td style="width:80px">
 
                                                                                     <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsDaily == true" (Checked)="SetTigger('D')" [Text]="'Daily'" [Top]="5"></RadioButton>
@@ -218,9 +218,9 @@
                                                                                 </tr>
 
 
-                                                                                <tr class="FormFieldRow">
+                                                                                <tr *ngIf="DataContext.TriggerType == 'D'"  class="FormFieldRow">
                                                                                     <td>
-                                                                                        <LogLabel [ObjectFieldName]="'RepeatInMinutes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                                        <LogLabel  [ObjectFieldName]="'RepeatInMinutes'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                                     </td>
 
                                                                                     <td>

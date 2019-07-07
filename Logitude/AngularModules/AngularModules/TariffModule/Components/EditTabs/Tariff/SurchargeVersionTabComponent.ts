@@ -140,15 +140,27 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
                     this.SetSurchargesLabelsAndVisibility();
                 }
+
+                else {
+                    this.StopAllFlags();
+                }
             });
         }
+    }
+
+    StopAllFlags() {
+
+        if (this.EntityPM.IsApprovingDraftVersion) {
+            this.EntityPM.IsApprovingDraftVersion = false;
+        }
+
+        this.isApproveButtonClicked = false;
+        this.isUploadExcelFinished = false;
     }
 
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
     }
-
-
 
     private GetTariffSettings() {
         this.TariffDomainService.GetTenantTariffSetting().subscribe((myResponse: ServiceResponse) => {
@@ -679,7 +691,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                 var fileName = myResponse.Result;
                 var tempDate = new Date();
                 var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + "Tariffs" + "_" + MyDate + "&Type=SaveToMicrosoftExcel2007";
+                var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + fileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + fileName;
                 {
                     window.open(url);
                 }

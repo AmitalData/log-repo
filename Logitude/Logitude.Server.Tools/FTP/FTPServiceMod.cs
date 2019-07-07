@@ -67,7 +67,7 @@ namespace Logitude.Server.Tools.FTP
                     bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
                 }
 
-                p_message += FTPLogBuilder.GetFileSizeString(stream.ToArray().Length);
+                p_message += FTPLogBuilder.GetFileSizeStringInBytes(stream.ToArray().Length);
 
                 stream.Close();
                 ftpStream.Close();
@@ -568,6 +568,8 @@ namespace Logitude.Server.Tools.FTP
                     else
                         p_message = directoryList.Count() + " files found with path/pattern '" + host + "/" + directory + "/" + v_pattern;
                 }
+
+                p_message = FTPLogBuilder.BuildLogLine(p_message);
             }
             catch (WebException ex)
             {
