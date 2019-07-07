@@ -291,34 +291,35 @@
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'A'" src="./Images/Airline.png" style="width:23px;height:18px;vertical-align:middle;" />
                             <img *ngIf="SelectedShipment && SelectedShipment.TransportModeId == 'I'" src="./Images/Trucker.png" style="width:23px;height:18px;vertical-align:middle;" />
                             <span style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" [title]="SelectedShipment ? SelectedShipment.ShipmentNumber : ''">{{SelectedShipment ? (SelectedShipment.ForwarderShipmentNumber ? SelectedShipment.ForwarderShipmentNumber : SelectedShipment.CustomerReference1) : ''}}</span>
-                            <span *ngIf="IsPrivateLabel == true" style="vertical-align:middle;font-size:18px;color:#6E7172;margin-left: 10px;" >{{SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( '( ' + SelectedShipment.IncotermCode + ' )' ) : '' ): ''}}</span>
-                        </td>
-                        <!--<td style="width:1px;" *ngIf="!IsPrivateLabel && this.SelectedShipment && !this.SelectedShipment.ForwarderShipmentNumber"> 
-                            <button class="IconButton" style="width:140px;height:26px;margin-right:5px;float:right;" (click)="ShareDocumentsClick()" [class.Disable]="AllowSendingDocsToAgent == false || DocsSentToAgent == true">
-                                <img src="./Images/LogBox/Share.png" style="position:relative;width:25px;margin-left:-5px;" />
-                                <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == false">Share Documents</span>
-                                <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == true">Shared with agent</span>
-                            </button>
-                            <div class="tooltip" style="float:left;margin-top:5px;">
-                                <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" />
-                                <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == true">
-                                    <table>
-                                        <tr><td> This option allows you to digitally send the shared </td></tr>
-                                        <tr><td> documents to your agent before he created the shipment. </td></tr> 
-                                    </table>
-                                </div>
-                                <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == false">
-                                    <table>
-                                        <tr><td> Sorry , this option is not supported for this agent. </td></tr>
-                                    </table>
-                                </div>
-                                <div class="tooltiptext" *ngIf="DocsSentToAgent == true">
-                                    <table>
-                                        <tr><td> Documents was already shared with Agent. </td></tr>
-                                    </table>
-                                </div>
-                            </div> 
-                        </td>-->
+                            <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:green;margin-left: 10px;">ATA : {{SelectedShipment.MainCarriageATA  | DateTimePipe: 'SMD'}}</span>
+                            <span *ngIf="SelectedShipment && SelectedShipment.MainCarriageETA && !SelectedShipment.MainCarriageATA" style="vertical-align:middle;font-size:15px;color:darkorange;margin-left: 10px;">ETA : {{SelectedShipment.MainCarriageETA | DateTimePipe: 'SMD'}}</span>
+                        </td> 
+                        <!--<td style="width:1px;" *ngIf="!IsPrivateLabel && this.SelectedShipment && !this.SelectedShipment.ForwarderShipmentNumber">
+        <button class="IconButton" style="width:140px;height:26px;margin-right:5px;float:right;" (click)="ShareDocumentsClick()" [class.Disable]="AllowSendingDocsToAgent == false || DocsSentToAgent == true">
+            <img src="./Images/LogBox/Share.png" style="position:relative;width:25px;margin-left:-5px;" />
+            <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == false">Share Documents</span>
+            <span style="vertical-align:middle;" *ngIf="DocsSentToAgent == true">Shared with agent</span>
+        </button>
+        <div class="tooltip" style="float:left;margin-top:5px;">
+            <img src="./Images/SharedNote.png" style="width:22px;height:22px;float:left" class="ActionButtons" />
+            <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == true">
+                <table>
+                    <tr><td> This option allows you to digitally send the shared </td></tr>
+                    <tr><td> documents to your agent before he created the shipment. </td></tr>
+                </table>
+            </div>
+            <div class="tooltiptext" *ngIf="AllowSendingDocsToAgent == false">
+                <table>
+                    <tr><td> Sorry , this option is not supported for this agent. </td></tr>
+                </table>
+            </div>
+            <div class="tooltiptext" *ngIf="DocsSentToAgent == true">
+                <table>
+                    <tr><td> Documents was already shared with Agent. </td></tr>
+                </table>
+            </div>
+        </div>
+    </td>-->
                         <td style="float:right;">
                             <div style="border-radius:15px;border:1px solid #5AACE5;margin:10px;min-width:100px;text-align:center;">
                                 <span style="margin:5px;">{{SelectedShipment ? SelectedShipment.StatusName : ''}}</span>
@@ -331,7 +332,7 @@
                             <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageFromPortCode : ''}} , </span>
                             <img *ngIf="SelectedShipment && SelectedShipment.MainCarriageToPortCode != '---'" src="{{SelectedShipment.MainCarriageToPortCountryCode | CountryFlagPipe}}" style="width:17px;height:18px;vertical-align:middle;" />
                             <span style="vertical-align:middle;font-size:12px;color:#6E7172;">{{SelectedShipment ? SelectedShipment.MainCarriageToPortCode : ''}}</span>
-                            <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId == ShipmentPM.ForwardingPartnerId" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'(' + AgentLable + ' Forwarding)'}}</span>
+                            <span *ngIf="ShipmentPM && IsPrivateLabel == true && ShipmentPM.ForwarderPartnerId == ShipmentPM.ForwardingPartnerId" style="vertical-align:middle;font-size:12px;color:#6E7172;">{{'( ' + AgentLable + ' Forwarding ' + (SelectedShipment ? (SelectedShipment.IncotermCode && SelectedShipment.IncotermCode != '---' ? ( ' - ' + SelectedShipment.IncotermCode + ' ' ) : '' ): '') + ')'}}</span>
                         </td> 
                         <td style="float:right;min-width:170px;">
                             <span style="vertical-align:middle;font-size:12px;color:#6E7172;float:left;">{{SelectedShipment ? ((SelectedShipment.CustomerReference1? SelectedShipment.CustomerReference1 : '') + '/' + (SelectedShipment.CustomerReference2 ? SelectedShipment.CustomerReference2 : '')) : ''}}</span>

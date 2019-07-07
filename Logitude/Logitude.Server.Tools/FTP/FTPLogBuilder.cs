@@ -13,16 +13,17 @@ namespace Logitude.Server.Tools.FTP
 
         public static string  AppendLogLine(string message, string currentLogString)
         {
-            string newLogMessage = DateTime.UtcNow.ToString("u") + " " + message;
+            string newLogMessage = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:FFF") + " " + message;//DateTime.UtcNow.ToString("u")
 
             return currentLogString + Environment.NewLine + newLogMessage;
         }
 
         public static string BuildLogLine(string message)
         {
-            string newLogMessage = DateTime.UtcNow.ToString("u") + " " + message;
+            string newLogMessage = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:FFF") + " " + message;
 
             return newLogMessage;
+
         }
 
         public static string GetFileSizeString(long? fileBytes)
@@ -55,6 +56,23 @@ namespace Logitude.Server.Tools.FTP
                 double result = fileSizeDouble / (Byte * Byte * Byte);
                 FileSize = string.Format("{0:0.00}", result) + " GB";
             }
+
+            return FileSize;
+        }
+
+        public static string GetFileSizeStringInBytes(long? fileBytes)
+        {
+          
+            string FileSize = "";
+            double fileSizeDouble;
+            if (fileBytes == null)
+            {
+                fileBytes = 0;
+            }
+
+            double.TryParse(fileBytes.Value.ToString(), out fileSizeDouble);
+
+            FileSize = string.Format("{0:#,0}", fileSizeDouble) + " bytes";
 
             return FileSize;
         }

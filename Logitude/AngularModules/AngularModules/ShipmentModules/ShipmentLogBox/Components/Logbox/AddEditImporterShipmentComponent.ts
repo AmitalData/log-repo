@@ -137,7 +137,14 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
     public get FromPortId() { return this.EntityPM.FromPortId }
     public set FromPortId(newValue: string) { this.EntityPM.FromPortId = newValue; }
     public _PortExtendedPMService: PortExtendedPMService;
+
+    isSaveClicked: boolean = false;
     SaveChanges() {
+
+        if (this.isSaveClicked == true) {
+            return;
+        }
+        this.isSaveClicked = true;
         this.ValidationErrorsList = [];
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -202,6 +209,7 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
                         this.ValidationErrorsList = myResult.ErrorsArray;
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
+                    this.isSaveClicked = false;
                 });
             }
             else {
@@ -214,12 +222,14 @@ export class AddEditImporterShipmentComponent extends BaseComponent implements O
                         this.ValidationErrorsList = myResult.ErrorsArray;
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
                     }
+                    this.isSaveClicked = false;
                 });
             }
             //ShipmentContext.SubmitChanges().Completed += AddEditImporterShipmentViewModel_Completed;
 
         }
         else {
+            this.isSaveClicked = false;
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
         }
     }
