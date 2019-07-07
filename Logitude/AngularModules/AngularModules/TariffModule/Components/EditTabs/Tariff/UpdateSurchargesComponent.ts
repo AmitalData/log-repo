@@ -10,6 +10,7 @@ import { AirlineAreaList } from '../../../../Common/EntityLists/AirlineAreaList'
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffDomainService, UpdateSurchargeArgs } from '../../../Services/TariffDomainService';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
@@ -37,13 +38,26 @@ export class UpdateSurchargesComponent extends BaseComponent {
         this.FromSearchAreaId += this.CurrentSession.GetNewId("FromSearchAreaId_1");
         this.ToTariffAreaDropButton += this.CurrentSession.GetNewId("ToTariffAreaDropButton_1");
         this.ToSearchAreaId += this.CurrentSession.GetNewId("ToSearchAreaId_1");
+
+        this.SetUIProperties();
     }
     
     SetWindowArgs(arg: UpdateTariffArgs) {
         this.EntityPM = arg.Version;
 
+        
         this.FillTariffCharges(arg.TariffCharges);
         this.LoadAirlineAreas(arg.AirlineId);
+    }
+
+    SetUIProperties() {
+        var isStartDateRequired: boolean = false;
+
+        if (this.StartDate == null || this.StartDate == undefined) {
+            isStartDateRequired = true;
+        }
+
+        this.UIProperties.SetRequired("StartDate", null, isStartDateRequired);
     }
 
     private AreasList: AirlineAreaList[] =[];
@@ -116,6 +130,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
     set StartDate(value: Date) {
         if (this.startDate != value) {
             this.startDate = value;
+            this.SetUIProperties();
         }
     }
 
@@ -297,12 +312,18 @@ export class UpdateSurchargesComponent extends BaseComponent {
             errors.push("You have to choose to ports/areas");
         }
 
-        if (this.StartDate == null) {
+        if (this.StartDate == null || this.StartDate == undefined) {
             errors.push("Start date is required");
         }
 
         if (this.TariffChargesObsList.filter(d => d.IsChargeChecked).length == 0) {
             errors.push("No surcharges updated");
+        }
+
+        else {
+            if (this.TariffChargesObsList.filter(d => d.IsChargeChecked && AppTool.IsNullOrZero(d.NewPrice)).length > 0) {
+                errors.push("No surcharges updated");
+            }
         }
 
         this.ValidationErrorsList = errors;
@@ -372,13 +393,15 @@ export class TariffCharge extends BaseComponent{
     }
 
     SetUIProperties() {
-        var newPriceEnabled: boolean = false;
-
+        var isPriceRequired: boolean = false;
         if (this.IsChargeChecked) {
-            newPriceEnabled = true;
+            if (AppTool.IsNullOrZero(this.NewPrice)) {
+                isPriceRequired = true;
+            }
         }
 
-        this.UIProperties.SetEnabled("NewPrice", null, newPriceEnabled);
+        this.UIProperties.SetEnabled("NewPrice", null, this.IsChargeChecked);
+        this.UIProperties.SetRequired("NewPrice", null, isPriceRequired);
     }
 
     private isChargeChecked: boolean;
@@ -400,6 +423,8 @@ export class TariffCharge extends BaseComponent{
     set NewPrice(value: number) {
         if (this.newPrice != value) {
             this.newPrice = value;
+
+            this.SetUIProperties();
         }
     }
 }
