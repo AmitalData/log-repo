@@ -59,6 +59,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
             ValidateMultiVatPercentages(entityPM, myCommonContext);
             ValidateConvertQuote(entityPM);
             ValidateFCLDuplicatedPackages(entityPM);
+            ValidateDomesticQuote(entityPM);
         }
 
         private static void ValidateConvertQuote(QuotePM entityPM)
@@ -352,5 +353,99 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                 }
             }
         }
+        private static void ValidateDomesticQuote(QuotePM entityPM)
+        {
+            if (entityPM.DirectionId.ToUpper() == "D")
+            {
+                bool isInlandDomestic = entityPM.TransportModeId.ToUpper() == "I" && entityPM.DirectionId == "D" ? true : false;
+
+                if (isInlandDomestic)
+                {
+                    List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
+                    AddDomesticAddress(iDomesticCountries, entityPM.FromPartnerAddressId, entityPM.Tenant);
+                    AddDomesticAddress(iDomesticCountries, entityPM.ToPartnerAddressId, entityPM.Tenant);
+
+                    if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
+                    {
+                        bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
+                        bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+
+                        if (!isAllPortsEC && !isAllPortsNA)
+                        {
+                            throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
+                        }
+                    }
+                }
+                else
+                {
+                    List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
+                    AddDomesticPort(iDomesticCountries, entityPM.FromPortId, entityPM.Tenant);
+                    AddDomesticPort(iDomesticCountries, entityPM.ToPortId, entityPM.Tenant);
+   
+                    if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
+                    {
+                        bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
+                        bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+
+                        if (!isAllPortsEC && !isAllPortsNA)
+                        {
+                            throw new ApplicationException("All Ports must be in the same country since the direction is Domestic");
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iPortId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iPortId).Any())
+                {
+                    PortPM iPort = PortQuery.GetSinglePort(iTenant, iPortId, true);
+
+                    if (iPort != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iPort.Id,
+                            CountryId = iPort.CountryId,
+                            CountryIsEC = iPort.CountryEC,
+                            CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
+                        });
+                    }
+                }
+            }
+        }
+        private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iAddressId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iAddressId).Any())
+                {
+                    AddressRepository addressRepository = new AddressRepository(iTenant);
+                    Address iAddress = addressRepository.GetSingleAddress(iAddressId, iTenant);
+
+                    if (iAddress != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iAddress.Id,
+                            CountryId = iAddress.CountryId,
+                            CountryIsEC = iAddress.Country.EC,
+                            CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    public class DomesticCountry
+    {
+        public string Id { get; set; }
+        public string CountryId { get; set; }
+        public bool CountryIsEC { get; set; }
+        public bool CountryIsNorthAmerica { get; set; }
     }
 }
