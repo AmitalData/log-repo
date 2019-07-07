@@ -149,7 +149,7 @@ namespace WebFreight.Web.Helpers
                 apiLogsService.Create(LogPM); 
                 var msg = "There is no LogBox Tenant To Send this Composition to ..";
 
-                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionAM), null, null, "");
+                APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", 0, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(importerDepositionPM), null, null, "");
 
                 response.Result = "Importer Deposition Send to cloud Successfully";
             }
