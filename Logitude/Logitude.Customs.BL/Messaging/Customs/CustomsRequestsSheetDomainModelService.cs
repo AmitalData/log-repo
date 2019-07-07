@@ -119,63 +119,12 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 CheckRequestParamsBase(requestParams);
 
                 CheckMessageInContainer(requestParams.InterfaceTypeCode, requestParams.MainInterfaceCode);
-                if (reqSheetDetails != null)
-                {
-                    ///Task 40564: טיפול בשליחת בקשות בו זמנית CALL#311773
-                    bool tryConcurrentKiller = true; //ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
-                    if (tryConcurrentKiller) 
-                    {
-                        if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
-                        {
+                ConcurrentKiller(requestParams, reqSheetDetails);//Leave the campground cleaner than the way you found it.” found it.
 
-                            string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
-                            var concurrentKiller = new ConcurrentKiller();
-                            concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
-                            bool ReleaseConcurrentKeyOn1stStep = true;
-                            if (!ReleaseConcurrentKeyOn1stStep)
-                            {
-                                Transaction.Current.TransactionCompleted +=
-                                    (sender, e) =>
-                                    {
-                                        if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)
-                                        {
-                                            CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
-                                        }
-                                    };
-                            }
-                        }
-                    }
-                    var listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
-                        requestParams.Tenant, requestParams.InterfaceTypeCode,
-                    reqSheetDetails.ObjectTableId1, reqSheetDetails.EntityId1,
-                    reqSheetDetails.ObjectTableId2, reqSheetDetails.EntityId2,
-                    reqSheetDetails.CustomFileNo);
-                    if (listRequestInProgress != null)
-                    {
-                        if (requestParams.SplitterModeLetCreateMyType)
-                        {
-                            listRequestInProgress = listRequestInProgress.Where(r => r.InterfaceTypeCode != requestParams.InterfaceTypeCode).ToList();
-                        }
-
-                        if (listRequestInProgress.Count > 0)
-                        {
-                            var RequestInProgressInterfaceTypeName = listRequestInProgress.First().InterfaceTypeName;
-                            var text = //TranslateTextsClass.GetTranslation("Customs.General.RequestInProgress", "", null, null, this._Tenant);
-                                TranslateTextsClass.Translate("Customs.General.RequestInProgress", this._Tenant);
-                            text = String.Format(text, RequestInProgressInterfaceTypeName);
-                            NoteClientNoRequestSheet4U(requestParams, text);
-
-
-                            var ex = new CustomsRequestsSheetDomainModelServiceException(
-                            CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
-                                text, null);
-                            ex.SuppressExceptionTostring = true;
-                            throw ex;
-                        }
-                    }
-                }
                 this.RequestParams = requestParams;
                 InitMessageDefinition();
+                ThrowIfInterfaceNotActiveOrBelongOurCompanyType();
+
                 SendRequestVIA requestVIA = _RequestParams.RequestVIA;
 
                 bool avoidSign = false;
@@ -240,6 +189,104 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 LogMessagingUtil.Instance.AppendLine("CustomsRequestsSheetDomainModelService.CreateNew():took(total):" + sw.ElapsedMilliseconds);
 
+            }
+        }
+
+        private void ThrowIfInterfaceNotActiveOrBelongOurCompanyType()
+        {
+            bool throwIt = false;
+            string errorText = "";
+            if (!_InterfaceTenantDefinitionManagement.Active)
+            {
+                errorText = "!_InterfaceTenantDefinitionManagement.Active";
+                throwIt = true;
+            }
+            if (!_InterfaceTenantDefinitionManagement.InterfaceManagement.Active)
+            {
+                errorText = "!_InterfaceTenantDefinitionManagement.InterfaceManagement.Active";
+                throwIt = true;
+            }
+
+            if (!String.IsNullOrWhiteSpace(_InterfaceTenantDefinitionManagement.InterfaceManagement.InterfaceType))
+            {
+                
+            
+            
+                var customsSettingQueryService = new CustomsSettingQueryService(_Tenant);
+                var customsSettingPM = customsSettingQueryService.GetSingle(_Tenant.ToString(), false, true);
+                if (customsSettingPM.CompanyType != _InterfaceTenantDefinitionManagement.InterfaceManagement.InterfaceType)
+                {
+                    throwIt = true;
+                    errorText = "customsSettingPM.CompanyType != _InterfaceTenantDefinitionManagement.InterfaceManagement.InterfaceType";
+                }
+            }
+            if (!throwIt)
+            {
+                return;
+            }
+            var ex = new CustomsRequestsSheetDomainModelServiceException(
+               CustomsRequestsSheetDomainModelServiceException.WhereEnum.InterfaceNotActiveOrBelongOurCompanyType, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
+                   errorText, null);
+            ex.SuppressExceptionTostring = true;
+            throw ex;
+        }
+
+        private void ConcurrentKiller(TRequestParams requestParams, RequestSheetParam reqSheetDetails)
+        {
+            if (reqSheetDetails != null)
+            {
+                ///Task 40564: טיפול בשליחת בקשות בו זמנית CALL#311773
+                bool tryConcurrentKiller = true; //ConfigurationManager.AppSettings["20180718.ConcurrentKiller"] == "1";
+                if (tryConcurrentKiller)
+                {
+                    if (CustomsRequestsSheetQueryService.GetintrefaceTypeListDisplayOnly().ToList().Contains(requestParams.InterfaceTypeCode))
+                    {
+
+                        string CRSKey = CustomsRequestsSheetDomainModelUtil.GetCRSVirtualKey(requestParams);
+                        var concurrentKiller = new ConcurrentKiller();
+                        concurrentKiller.LockOrCrashOnCommitDueUnique(CRSKey, requestParams.Tenant);
+                        bool ReleaseConcurrentKeyOn1stStep = true;
+                        if (!ReleaseConcurrentKeyOn1stStep)
+                        {
+                            Transaction.Current.TransactionCompleted +=
+                                (sender, e) =>
+                                {
+                                    if (e.Transaction.TransactionInformation.Status == TransactionStatus.Committed)
+                                    {
+                                        CustomsRequestsSheetDomainModelUtil.ReleaseConcurrentVirtualKey(requestParams);
+                                    }
+                                };
+                        }
+                    }
+                }
+                var listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
+                    requestParams.Tenant, requestParams.InterfaceTypeCode,
+                reqSheetDetails.ObjectTableId1, reqSheetDetails.EntityId1,
+                reqSheetDetails.ObjectTableId2, reqSheetDetails.EntityId2,
+                reqSheetDetails.CustomFileNo);
+                if (listRequestInProgress != null)
+                {
+                    if (requestParams.SplitterModeLetCreateMyType)
+                    {
+                        listRequestInProgress = listRequestInProgress.Where(r => r.InterfaceTypeCode != requestParams.InterfaceTypeCode).ToList();
+                    }
+
+                    if (listRequestInProgress.Count > 0)
+                    {
+                        var RequestInProgressInterfaceTypeName = listRequestInProgress.First().InterfaceTypeName;
+                        var text = //TranslateTextsClass.GetTranslation("Customs.General.RequestInProgress", "", null, null, this._Tenant);
+                            TranslateTextsClass.Translate("Customs.General.RequestInProgress", this._Tenant);
+                        text = String.Format(text, RequestInProgressInterfaceTypeName);
+                        NoteClientNoRequestSheet4U(requestParams, text);
+
+
+                        var ex = new CustomsRequestsSheetDomainModelServiceException(
+                        CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
+                            text, null);
+                        ex.SuppressExceptionTostring = true;
+                        throw ex;
+                    }
+                }
             }
         }
 

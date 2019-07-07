@@ -23,7 +23,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
             RequestCancelled,
             AggregateDCAAnalyzerIsMust,
             AggregateDCAAnalyzerLockIt,
-            DcaMessageNotBelongOurEnvironment
+            DcaMessageNotBelongOurEnvironment,
+            InterfaceNotActiveOrBelongOurCompanyType,//*** שיפור במנגנון הבקשות - בניית בקשה רק באם הבקשה אקטיבית + מתאימה לסביבה - 2.5
+
 
         }
         public enum What2DoEnum
