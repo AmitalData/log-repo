@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.Repsitories
             {
                 keyWordsList = keyWordsList.Replace(",,", ",");
             }
-            List<string> pendingReasonCodeList = null;
+            List<string> pendingReasonCodeList = new List<string>();
             List<string> keyWordsList2 = keyWordsList.Split(',').ToList();
             foreach (string word in keyWordsList2)
             {
