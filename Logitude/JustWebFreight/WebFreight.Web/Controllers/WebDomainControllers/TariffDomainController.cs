@@ -2196,6 +2196,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private List<FromToClass> ComputeRoutsList(List<string> fromList, List<string> toList, int tenant)
         {
             List<FromToClass> myResult = new List<FromToClass>();
+            AirlineAreasPortRepository airlineAreasPortRepository = new AirlineAreasPortRepository(tenant);
 
             foreach (string item_from in fromList)
             {
@@ -2217,16 +2218,68 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                             myResult.Add(routItem);
                         }
+
+                        else if (to[0] == "Area")
+                        {                           
+                            List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
+                            if (areasPorts != null && areasPorts.Count > 0)
+                            {
+                                foreach (AirlineAreasPort port in areasPorts)
+                                {
+                                    FromToClass routItem = new FromToClass()
+                                    {
+                                        FromCode = from[1],
+                                        ToCode = port.PortId,
+                                    };
+
+                                    myResult.Add(routItem);
+                                }
+                            }
+                        }
                     }
                 }
 
                 else if (from[0] == "Area")
                 {
-                    AirlineAreasPortRepository airlineAreasPortRepository = new AirlineAreasPortRepository(tenant);
                     List<AirlineAreasPort> areasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(from[1], tenant);
                     if (areasPorts != null && areasPorts.Count > 0)
                     {
+                        foreach(AirlineAreasPort port in areasPorts)
+                        {
+                            foreach (string item_to in toList)
+                            {
+                                string[] to = item_to.Split(',');
 
+                                if (to[0] == "Port")
+                                {
+                                    FromToClass routItem = new FromToClass()
+                                    {
+                                        FromCode = port.PortId,
+                                        ToCode = to[1],
+                                    };
+
+                                    myResult.Add(routItem);
+                                }
+
+                                else if (to[0] == "Area")
+                                {
+                                    List<AirlineAreasPort> toAreasPorts = airlineAreasPortRepository.GetAirlineAreasPortByAreaId(to[1], tenant);
+                                    if (toAreasPorts != null && toAreasPorts.Count > 0)
+                                    {
+                                        foreach (AirlineAreasPort toTort in toAreasPorts)
+                                        {
+                                            FromToClass routItem = new FromToClass()
+                                            {
+                                                FromCode = port.PortId,
+                                                ToCode = toTort.PortId,
+                                            };
+
+                                            myResult.Add(routItem);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

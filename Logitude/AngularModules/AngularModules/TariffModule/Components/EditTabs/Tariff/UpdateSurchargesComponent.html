@@ -74,38 +74,32 @@
                                                                                         </td>
                                                                                     </tr>
                                                                                 </table>
-                                                                                
-                                                                                <div style="width:180px; right:-50px;" [id]="SearchAreaButtonId" class="ToggleButtonMenu">
-                                                                                    <div style="overflow-x:hidden; overflow-y:auto; height:200px;">
-                                                                                        <div style="margin:5px;">
-                                                                                            <table>
-                                                                                                <tr style="height:22px">
-                                                                                                    <td style="width:150px;">
-                                                                                                        <SearchBox [ObjectTableName]="'AirlineArea'" (TextChanged)="SearchText = $event" [UseTimer]="true"></SearchBox>
-                                                                                                    </td>
-                                                                                                </tr>
+                                                                                <div style="width:180px; right:-50px;" [attr.id]="FromTariffAreaDropButton" class="ToggleButtonMenu">
+                                                                                    <input type="text" [attr.id]="FromSearchAreaId" placeholder="Search" (focus)="ClearPlaceHolder('From');" (blur)="FillPlaceHolder('From');" [(ngModel)]="FromSearchText" style="background: url(Images/Search.png) no-repeat scroll;background-position: right center;margin: 7px;width:150px;">
 
-                                                                                                <tr style="height:3px">
-                                                                                                    <td></td>
-                                                                                                </tr>
+                                                                                    <img *ngIf="FromSearchText" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 7px;" src="Images/RedX.png" (click)="OnDeleteValue('From')" />
 
-                                                                                                <tr style="margin-top:5px; margin-left:5px; height:22px;" *ngFor="let item of AirlineAreas; let i = index">
+                                                                                    <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
+                                                                                        <div style="float:left;width: 100%;margin-top:5px;margin-left:5px">
+                                                                                            <table style="width:100%">
+                                                                                                <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of FromAirlineAreas; let i = index">
                                                                                                     <td style="width:22px">
-                                                                                                        <div>
-                                                                                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i, 'From')"></CheckBox>
+                                                                                                        <div style="width:22px">
+                                                                                                           <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i,'From')"></CheckBox>                                                                                                            
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td style="width:5px"></td>
                                                                                                     <td style="width:100%">
                                                                                                         <div style="margin-left:5px;margin-top:0px">
-                                                                                                            <label style="font-size:small" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" *ngIf="!item.IsChecked">{{item.Name}}</label>
-                                                                                                            <label style="font-size:small;color:lightgray" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" *ngIf="item.IsChecked">{{item.Name}}</label>
+                                                                                                            <label style="font-size:xx-small" (focus)="setToggleButtonMenuTemp('From');" (blur)="setToggleButtonMenu('From');" *ngIf="!item.IsChecked">{{item.Name}}</label>
+                                                                                                            <label style="font-size:xx-small;color:lightgray" (focus)="setToggleButtonMenuTemp('From');" (blur)="setToggleButtonMenu('From');" *ngIf="item.IsChecked">{{item.Name}}</label>
                                                                                                         </div>
                                                                                                     </td>
                                                                                                     <td style="width:100%">
                                                                                                         <div style="width:100%"></div>
                                                                                                     </td>
                                                                                                 </tr>
+
                                                                                             </table>
                                                                                         </div>
                                                                                     </div>
@@ -190,10 +184,48 @@
                                                                         </td>
 
                                                                         <td style="width: 50px;">
-                                                                            <button style="height:20px;" class="Button"> <!-- (click)="AddArea('To')">-->
-                                                                                <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
-                                                                                Area
-                                                                            </button>
+                                                                            <div class="ToggleButton" style="height:20px;" tabindex="1">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td style="width:10px;">
+                                                                                            <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <label>Area</label>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                                <div style="width:180px; right:-50px;" [attr.id]="ToTariffAreaDropButton" class="ToggleButtonMenu">
+                                                                                    <input type="text" [attr.id]="ToSearchAreaId" placeholder="Search" (focus)="ClearPlaceHolder('To');" (blur)="FillPlaceHolder('To');" [(ngModel)]="ToSearchText" style="background: url(Images/Search.png) no-repeat scroll;background-position: right center;margin: 7px;width:150px;">
+
+                                                                                    <img *ngIf="ToSearchText" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 7px;" src="Images/RedX.png" (click)="OnDeleteValue('To')" />
+
+                                                                                    <div style="overflow-x: hidden;overflow-y: auto;height: 208px;">
+                                                                                        <div style="float:left;width: 100%;margin-top:5px;margin-left:5px">
+                                                                                            <table style="width:100%">
+                                                                                                <tr style="width:100%;margin-top:5px;margin-left:5px;height:22px;min-height:22px" *ngFor="let item of ToAirlineAreas; let i = index">
+                                                                                                    <td style="width:22px">
+                                                                                                        <div style="width:22px">
+                                                                                                            <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event;AddArea(item,i,'To')"></CheckBox>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                    <td style="width:5px"></td>
+                                                                                                    <td style="width:100%">
+                                                                                                        <div style="margin-left:5px;margin-top:0px">
+                                                                                                            <label style="font-size:xx-small" (focus)="setToggleButtonMenuTemp('To');" (blur)="setToggleButtonMenu('To');" *ngIf="!item.IsChecked">{{item.Name}}</label>
+                                                                                                            <label style="font-size:xx-small;color:lightgray" (focus)="setToggleButtonMenuTemp('To');" (blur)="setToggleButtonMenu('To');" *ngIf="item.IsChecked">{{item.Name}}</label>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                    <td style="width:100%">
+                                                                                                        <div style="width:100%"></div>
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </td>
 
                                                                         <td style="width: 5px;">
