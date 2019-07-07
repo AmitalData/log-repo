@@ -562,23 +562,23 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     private UpdateCharges() {
         var sum = 0;
         //if (!AppTool.IsNullOrEmpty(this.EntityPM.PackageType1Id)) {
-            sum = sum + this.PackageType1Quantity;
+        sum = sum + (AppTool.IsNullOrEmpty(this.PackageType1Quantity) ? 0 : this.PackageType1Quantity);
         //}
 
         //if (!AppTool.IsNullOrEmpty(this.EntityPM.PackageType2Id)) {
-            sum = sum + this.PackageType2Quantity;
+        sum = sum + (AppTool.IsNullOrEmpty(this.PackageType2Quantity) ? 0 : this.PackageType2Quantity);
         //}
 
         //if (!AppTool.IsNullOrEmpty(this.EntityPM.PackageType3Id)) {
-            sum = sum + this.PackageType3Quantity;
+        sum = sum + (AppTool.IsNullOrEmpty(this.PackageType3Quantity) ? 0 : this.PackageType3Quantity);
         //}
 
         //if (!AppTool.IsNullOrEmpty(this.EntityPM.PackageType4Id)) {
-            sum = sum + this.PackageType4Quantity;
+        sum = sum + (AppTool.IsNullOrEmpty(this.PackageType4Quantity) ? 0 : this.PackageType4Quantity);
         //}
 
         //if (!AppTool.IsNullOrEmpty(this.EntityPM.PackageType5Id)) {
-            sum = sum + this.PackageType5Quantity;
+        sum = sum + (AppTool.IsNullOrEmpty(this.PackageType5Quantity) ? 0 : this.PackageType5Quantity);
         //}
 
         if (this.QuoteIsFCL) {
