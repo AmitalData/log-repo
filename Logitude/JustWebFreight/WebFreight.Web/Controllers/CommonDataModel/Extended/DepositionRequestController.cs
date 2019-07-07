@@ -30,7 +30,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                     DepositionRequestHelper depositionRequestHelper = new DepositionRequestHelper();
-                    string logId = depositionRequestHelper.AddAPILogs(depositionRequestAM);
+                    string logId = depositionRequestHelper.AddAPILogs(depositionRequestAM, depositionRequestAM.CustomerTenant);
 
                     string ShipmentId = depositionRequestHelper.StartDepositionRequestTask(depositionRequestAM);
                     var msg = "Importer Deposition Send to cloud Successfully";

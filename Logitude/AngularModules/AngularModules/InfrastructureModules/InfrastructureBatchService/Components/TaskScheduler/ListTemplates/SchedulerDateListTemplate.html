@@ -13,7 +13,7 @@
     }
 </style>
 <div *ngIf="fieldName != 'Duration' && fieldName != 'Log'" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;">{{dateValue | DateTimePipe:'DTL12NW'}}</div>
-<div *ngIf="fieldName == 'Duration'" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;">{{dateValue | NumbersPipe:'N3'}}</div>
+<div *ngIf="fieldName == 'Duration'" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;">{{dateValue}}</div>
 <table *ngIf="fieldName == 'Log'" style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;">
     <tr>
         <td style="min-width:10px;width:10px;max-width:50px">
