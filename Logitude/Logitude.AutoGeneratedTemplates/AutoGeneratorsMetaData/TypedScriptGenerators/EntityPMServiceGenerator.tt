@@ -769,7 +769,7 @@ if(Directory.Exists(xmlFilePath) || File.Exists(xmlFilePath))
  
 }
 
-
+    List<string> AddeMappingFunctions = new  List<string>();
 private void GenerateCompositionFieldMap(dynamic entity,dynamic field,bool insideComposition = false){
 			
 	string multitableName = GetFieldMultiTableName(field);
@@ -786,6 +786,12 @@ private void GenerateCompositionFieldMap(dynamic entity,dynamic field,bool insid
                {
 				   return;
                }
+
+        string newMapMethod= fieldName + parentpmname;
+        if(AddeMappingFunctions.Contains(newMapMethod))
+            return;
+        else
+            AddeMappingFunctions.Add(newMapMethod);
 #>
     Map<#= fieldName #>(entityPM: <#= parentpmname #>, jsonPM: any, mapParent: boolean = true) {
 
@@ -1058,6 +1064,11 @@ private void GenerateNonCompositionFieldMap(dynamic entity,dynamic field){
 				   return;
                }
 
+         string newMapMethod= fieldName + parentpmname;
+        if(AddeMappingFunctions.Contains(newMapMethod))
+            return;
+        else
+            AddeMappingFunctions.Add(newMapMethod);
 #>
     Map<#= fieldName #>(entityPM: <#= parentpmname #>, jsonPM: any, mapParent: boolean = true) {
 
