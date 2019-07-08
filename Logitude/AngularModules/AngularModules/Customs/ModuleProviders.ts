@@ -43,6 +43,7 @@ import { ConstraintStatusListService } from './Services/StandardLists/Constraint
 import { ConstraintTypeListService } from './Services/StandardLists/ConstraintTypeListService';
 import { ContactRoleTypeListService } from './Services/StandardLists/ContactRoleTypeListService';
 import { ContinuousMessagesTypeCodeListService } from './Services/StandardLists/ContinuousMessagesTypeCodeListService';
+import { ContinuousRequestTypeListService } from './Services/StandardLists/ContinuousRequestTypeListService';
 import { ConverterTypeListService } from './Services/StandardLists/ConverterTypeListService';
 import { CountryGroupListService } from './Services/StandardLists/CountryGroupListService';
 import { CourtInstanceListService } from './Services/StandardLists/CourtInstanceListService';
@@ -388,6 +389,7 @@ export class ModuleProviders {
             case "ConstraintTypeListService": { myResult = new ConstraintTypeListService(); break; }
             case "ContactRoleTypeListService": { myResult = new ContactRoleTypeListService(); break; }
             case "ContinuousMessagesTypeCodeListService": { myResult = new ContinuousMessagesTypeCodeListService(); break; }
+            case "ContinuousRequestTypeListService": { myResult = new ContinuousRequestTypeListService(); break; }
             case "ConverterTypeListService": { myResult = new ConverterTypeListService(); break; }
             case "CountryGroupListService": { myResult = new CountryGroupListService(); break; }
             case "CourtInstanceListService": { myResult = new CourtInstanceListService(); break; }
