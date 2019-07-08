@@ -118,15 +118,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 AppendLogLine("MoreParams after Deserialize: " + unifreightListsParams);
                 mode = UnifreightListsUtil.GetValue(ref unifreightListsParams, "MODE");
                 AppendLogLine("mode: " + mode);
-                if (mode == "UMS2L")
-                {
-                    mode = "INSERT_UPDATE_DELETE";
-                    messageType = "UMS2L";
-                }
-                else
-                {
-                    messageType = "US2L";
-                }
+                if (mode == "UMS2L") mode = "INSERT_ONLY";
             }
 
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
