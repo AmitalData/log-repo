@@ -137,7 +137,7 @@ namespace WarehouseData
                             #endregion
 
                             warehouseHelper.RunSqlFunctions(destinationConnectionString);
-
+                            warehouseHelper.BuildCustomObjectFieldsTable(destinationConnectionString,true);
 
                             #region Update Dimensions Table
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())

@@ -331,7 +331,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
         this.ItemsCollection = [];        
 
-        tariffLines.sort(p => p.Index).forEach(item => {
+        tariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
             this.ItemsCollection.push(new TariffLineData(item, this));
         });
 
@@ -350,7 +350,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
 
     ComaredLines() {
         this.ItemsCollection.forEach((item: TariffLineData) => {
-            var line = this.compareTariffLines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+            var line = this.compareTariffLines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line) {
                 item.ComparedEntity = line;
                 item.SetCellsComparingText();
@@ -370,8 +370,8 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
             lines = this.loadedTariffLines;
         }
 
-        this.compareTariffLines.sort(p => p.Index).forEach(item => {
-            var line = lines.sort(p => p.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
+        this.compareTariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
+            var line = lines.sort((a, b) => a.Index - b.Index).filter(a => a.DestinationPortId == item.DestinationPortId && a.OriginPortId == item.OriginPortId)[0];
             if (line == null) {
                 this.DeletedTariffsLines.push(new TariffLineData(item, this));// Deleted 
             }
@@ -780,7 +780,7 @@ export class SurchargeVersionTabComponent extends BaseComponent implements OnDes
                     copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
                     copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
                     this.EntityPM.AddTariffVersion(copiedVersion);
-                    this.loadedTariffLines.sort(p => p.Index).forEach(item => {
+        this.loadedTariffLines.sort((a, b) => a.Index - b.Index).forEach(item => {
                         var tariffLine = new TariffLinePM(copiedVersion);
                         tariffLine.StartDate = item.StartDate;
                         tariffLine.ExpirationDate = item.ExpirationDate;

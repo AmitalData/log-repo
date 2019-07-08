@@ -1201,6 +1201,10 @@
     <Compile Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.Designer.cs">
       <DependentUpon>201907010918213_WithholdingTaxDeductionTypeMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs" />
+    <Compile Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.Designer.cs">
+      <DependentUpon>201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201907031511508_NewTable_GLAccountCounters.cs" />
     <Compile Include="Migrations\201907031511508_NewTable_GLAccountCounters.Designer.cs">
       <DependentUpon>201907031511508_NewTable_GLAccountCounters.cs</DependentUpon>
@@ -2059,6 +2063,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.resx">
       <DependentUpon>201907010918213_WithholdingTaxDeductionTypeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907061502331_AddDefaultCurrencyInChargesType_Maheera.resx">
+      <DependentUpon>201907061502331_AddDefaultCurrencyInChargesType_Maheera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907031511508_NewTable_GLAccountCounters.resx">
       <DependentUpon>201907031511508_NewTable_GLAccountCounters.cs</DependentUpon>

@@ -40,7 +40,7 @@ namespace WebFreight.Web.WcfApi
                 if (importerDepositionPM != null)
                 {
                     ImporterDepositionHelper importerDepositionHelper = new ImporterDepositionHelper();
-                    response = await importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM, authToken.Tenant);
+                    response = await importerDepositionHelper.SendImporterDepositionToLogBox(importerDepositionPM, importerDepositionPM.Tenant != null ? (int)importerDepositionPM.Tenant : authToken.Tenant);
                 }
 
                 return response;
