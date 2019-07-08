@@ -1585,12 +1585,17 @@ export class ShipmentReceivableItem extends BaseComponent {
 
             this.SetPrepaidCollectId();
 
-            if (list.ChargesGroupCode == "FRT" || list.ChargesGroupCode == "SCH") {
-                this.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+            if (!AppTool.IsNullOrEmpty(list.ReceivablesDefaultCurrencyId)) {
+                this.CurrencyId = list.ReceivablesDefaultCurrencyId;
             }
-
             else {
-                this.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                if (list.ChargesGroupCode == "FRT" || list.ChargesGroupCode == "SCH") {
+                    this.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                }
+
+                else {
+                    this.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                }
             }
 
             if (this.fatherComponent.IsLCLEntity) {

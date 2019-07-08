@@ -60,5 +60,7 @@ export class ChargesTypeList {
 		IsDomestic: boolean;
 		IsExport: boolean;
 		IsDrop: boolean;
+		ReceivablesDefaultCurrencyId: string;
+		PayablesDefaultCurrencyId: string;
 	
 }
