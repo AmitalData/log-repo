@@ -12771,17 +12771,22 @@ namespace WebFreight.Web.ReportsWebServices
                 List<string> valueOfGoodsCurrencyIds = Shipments.GroupBy(d => d.ValueOfGoodsCurrencyId).Select(d => d.FirstOrDefault().ValueOfGoodsCurrencyId).ToList();
                 List<string> departmentIdIds = Shipments.GroupBy(d => d.DepartmentId).Select(d => d.FirstOrDefault().DepartmentId).ToList();
                 List<string> shipmentdelevriesIds = Shipments.Select(d => d.Id).ToList();
-                List<string> FromPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromPartnerCardId).ToList();
-                List<string> FromAddressCountryIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromAddressCountryId).ToList();
-                List<string> ToPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d.ToPartnerCardId).ToList();
+                List<string> FromPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where d.PickUpDeliveryTypeCode == "PICK" && shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromPartnerCardId).ToList();
+                List<string> FromAddressCountryIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where d.PickUpDeliveryTypeCode == "PICK" && shipmentdelevriesIds.Contains(d.ShipmentId) select d.FromAddressCountryId).ToList();
+                List<string> ToPartnerCardIds = (from d in shipmentsContext.ShipmentPickUpDeliveries where d.PickUpDeliveryTypeCode == "DELV" && shipmentdelevriesIds.Contains(d.ShipmentId) select d.ToPartnerCardId).ToList();
 
                 List<Currency> currencyLists = (from d in commonContext.Currencies where valueOfGoodsCurrencyIds.Contains(d.Id) select d).ToList();
                 List<Department> departmentLists = (from d in commonContext.Departments where departmentIdIds.Contains(d.Id) select d).ToList();
                 List<ShipmentPickUpDelivery> shipmentPickUpDeliveriesLists = (from d in shipmentsContext.ShipmentPickUpDeliveries where shipmentdelevriesIds.Contains(d.ShipmentId) select d).ToList();
-                List<Address> FromPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && FromPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
-                List<Country> FromAddressCountryLists = (from record in commonContext.Countries.Include("GlobalZone") where FromAddressCountryIds.Contains(record.Id) && record.Tenant == tenant select record).ToList();
-                List<Address> ToPartnerAddressLists = (from a in commonContext.Addresses.Include("Country").Include("State") where a.Tenant == tenant && ToPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
+                List<Address> FromPartnerAddressLists = (from a in commonContext.Addresses where a.Tenant == tenant && FromPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
+                List<Country> FromAddressCountryLists = (from record in commonContext.Countries where FromAddressCountryIds.Contains(record.Id) && record.Tenant == tenant select record).ToList();
+                List<Address> ToPartnerAddressLists = (from a in commonContext.Addresses where a.Tenant == tenant && ToPartnerCardIds.Contains(a.CardId) && a.AddressTypeId.ToUpper() == "M" select a).ToList();
                 List<ShipmentPackage> ShipmentPackages = (from d in shipmentsContext.ShipmentPackages where shipmentdelevriesIds.Contains(d.ShipmentId) && d.Reference1 != null && d.Reference2 != null && d.Reference3 != null && d.Reference4 != null select d).ToList();
+                List<Card> CardList = commonContext.Cards.Where(d => d.Tenant == tenant).ToList();
+
+
+
+
 
                 totalData.Shipments = new List<ShipmentDetals>();
                 foreach (ShipmentDataView Item in Shipments)
@@ -12858,10 +12863,10 @@ namespace WebFreight.Web.ReportsWebServices
                     shipment.LocalInspection = Item.SalesmanUserName;
                     shipment.CountofLegalisedDocuments = Item.AMSBL;
                     shipment.ShipperInvoiceValue = Item.ValueOfGoods;
-                    shipment.CurrencyofShipperInvoice = ValueOfgoodsCurrency != null ? ValueOfgoodsCurrency.Code : null;                   
-                    if(Item.ShipmentNumber== "E9069")
+                    shipment.CurrencyofShipperInvoice = ValueOfgoodsCurrency != null ? ValueOfgoodsCurrency.Code : null;
+                    if (Item.ShipmentNumber == "E9069")
                     {
-                        var test="z";
+                        var test = "z";
                     }
                     if (Item.DirectionId == "D" && Item.TransportModeId == "I")
                     {
@@ -12870,7 +12875,7 @@ namespace WebFreight.Web.ReportsWebServices
                             Address myPartnerAddress = addressRepository.GetSingleAddress(Item.MainCarriageToAddressId, tenant);
                             if (myPartnerAddress != null)
                             {
-                               shipment.FinalCountryofDestination = myPartnerAddress.Country!=null? myPartnerAddress.Country.EnglishName:null;
+                                shipment.FinalCountryofDestination = myPartnerAddress.Country != null ? myPartnerAddress.Country.EnglishName : null;
                             }
                         }
                     }
@@ -12899,13 +12904,13 @@ namespace WebFreight.Web.ReportsWebServices
                                     {
                                         if (!string.IsNullOrEmpty(myLastDelivery.ToPortId))
                                         {
-                                            PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.ToPortId,true);
+                                            PortPM myPort = PortQuery.GetSinglePort(tenant, myLastDelivery.ToPortId, true);
                                             if (myPort != null)
                                             {
                                                 shipment.FinalCountryofDestination = myPort.CountryName;
-                                                  shipment.FinalPortofDestination = myPort.Code;
+                                                shipment.FinalPortofDestination = myPort.Code;
 
-                                                    
+
                                             }
                                         }
 
@@ -12914,7 +12919,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                                 case "CASL":
                                     {
-                                        string myCountry = myLastDelivery.ToAddressCountry!=null? myLastDelivery.ToAddressCountry.EnglishName:null;
+                                        string myCountry = myLastDelivery.ToAddressCountry != null ? myLastDelivery.ToAddressCountry.EnglishName : null;
                                         if (!string.IsNullOrEmpty(myCountry))
                                         {
                                             shipment.FinalCountryofDestination = myCountry;
@@ -12929,7 +12934,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         else if (Item.DirectionId == "I" && !string.IsNullOrEmpty(Item.WarehouseLegWarehouseId))
                         {
-                            Card warehouse = CardRepository.GetSingleCard(Item.WarehouseLegWarehouseId, tenant, true); 
+                            Card warehouse = CardList.Where(p => p.Id == Item.WarehouseLegWarehouseId).FirstOrDefault();
                             if (warehouse != null)
                             {
                                 shipment.FinalCountryofDestination = warehouse.CountryName;
@@ -12940,7 +12945,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         else if (!string.IsNullOrEmpty(Item.OnCarriageToPortId))
                         {
-                            PortPM onCarriageToPort = PortQuery.GetSinglePort(tenant, Item.OnCarriageToPortId,true);
+                            PortPM onCarriageToPort = PortQuery.GetSinglePort(tenant, Item.OnCarriageToPortId, true);
                             if (onCarriageToPort != null)
                             {
                                 shipment.FinalCountryofDestination = onCarriageToPort.CountryName;
@@ -12953,7 +12958,7 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             if (!string.IsNullOrEmpty(Item.Transshipment3ToPortId))
                             {
-                                PortPM transshipment3ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment3ToPortId,true);
+                                PortPM transshipment3ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment3ToPortId, true);
                                 if (transshipment3ToPort != null)
                                 {
                                     shipment.FinalCountryofDestination = transshipment3ToPort.CountryName;
@@ -12964,7 +12969,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                             else if (!string.IsNullOrEmpty(Item.Transshipment2ToPortId))
                             {
-                                PortPM transshipment2ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment2ToPortId,true);
+                                PortPM transshipment2ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment2ToPortId, true);
                                 if (transshipment2ToPort != null)
                                 {
                                     shipment.FinalCountryofDestination = transshipment2ToPort.CountryName;
@@ -12975,7 +12980,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                             else if (!string.IsNullOrEmpty(Item.Transshipment1ToPortId))
                             {
-                                PortPM transshipment1ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment1ToPortId,true);
+                                PortPM transshipment1ToPort = PortQuery.GetSinglePort(tenant, Item.Transshipment1ToPortId, true);
                                 if (transshipment1ToPort != null)
                                 {
                                     shipment.FinalCountryofDestination = transshipment1ToPort.CountryName;
@@ -12986,7 +12991,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                             else if (!string.IsNullOrEmpty(Item.MainCarriageToPortId))
                             {
-                                PortPM mainCarriageToPort = PortQuery.GetSinglePort(tenant, Item.MainCarriageToPortId,true);
+                                PortPM mainCarriageToPort = PortQuery.GetSinglePort(tenant, Item.MainCarriageToPortId, true);
                                 if (mainCarriageToPort != null)
                                 {
                                     shipment.FinalCountryofDestination = mainCarriageToPort.CountryName;
@@ -13006,8 +13011,8 @@ namespace WebFreight.Web.ReportsWebServices
                     }
 
 
-                  //  Item.FinalDistenationPortId = Item.Transshipment3ToPortId != null ? Item.Transshipment3ToPortId : Item.Transshipment2ToPortId != null ? Item.Transshipment2ToPortId : Item.Transshipment1ToPortId != null ? Item.Transshipment1ToPortId : Item.MainCarriageToPortId;
-                 //   shipment.FinalCountryofDestination = Item.LastFinalDestination;
+                    //  Item.FinalDistenationPortId = Item.Transshipment3ToPortId != null ? Item.Transshipment3ToPortId : Item.Transshipment2ToPortId != null ? Item.Transshipment2ToPortId : Item.Transshipment1ToPortId != null ? Item.Transshipment1ToPortId : Item.MainCarriageToPortId;
+                    //   shipment.FinalCountryofDestination = Item.LastFinalDestination;
 
 
 
@@ -13055,7 +13060,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         if (!string.IsNullOrEmpty(Item.ConsigneeId))
                         {
-                            Card consignee = commonContext.Cards.Where(d => d.Id == Item.ConsigneeId).FirstOrDefault();
+                            Card consignee = CardList.Where(d => d.Id == Item.ConsigneeId).FirstOrDefault();
                             if (consignee != null)
                             {
                                 shipment.ShipperConsigneeExternalID = consignee.ReceivablesAccountingCard;
@@ -13066,23 +13071,22 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         if (!string.IsNullOrEmpty(Item.ShipperId))
                         {
-                            Card shipper = commonContext.Cards.Where(d => d.Id == Item.ShipperId).FirstOrDefault();
+                            Card shipper = CardList.Where(d => d.Id == Item.ShipperId).FirstOrDefault();
                             if (shipper != null)
                             {
                                 shipment.ShipperConsigneeExternalID = shipper.ReceivablesAccountingCard;
                             }
                         }
                     }
-                    
+
                     if (!string.IsNullOrEmpty(Item.OperationalClosedByUserId))
                     {
-                        ContactRepository contactRepository = new ContactRepository(commonContext);
-                        Contact contact = contactRepository.GetSingleContact(Item.OperationalClosedByUserId, tenant);
+                        Contact contact = ContactRepository.GetSingleContact(Item.OperationalClosedByUserId, tenant, true);
                         if (contact != null)
                         {
                             shipment.OperationalClosedby = contact.EnglishName;
                         }
-                    }                    
+                    }
 
                     if (firstShipmentPackage != null)
                     {
@@ -13145,7 +13149,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (!string.IsNullOrEmpty(myLastDelivery.CarrierId))
                         {
-                            Card truckerCard = CardRepository.GetSingleCard(myLastDelivery.CarrierId, tenant, true);
+                            Card truckerCard = CardList.Where(p => p.Id == myLastDelivery.CarrierId).First();
                             if (truckerCard != null)
                             {
                                 shipment.TruckerName = truckerCard.EnglishName;
@@ -13158,7 +13162,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 {
                                     if (!string.IsNullOrEmpty(myLastDelivery.ToPartnerCardId))
                                     {
-                                        Card myPartner = CardRepository.GetSingleCard(myLastDelivery.ToPartnerCardId, tenant, true);
+                                        Card myPartner = CardList.Where(p => p.Id == myLastDelivery.ToPartnerCardId).First();
                                         if (myPartner != null)
                                         {
                                             shipment.DeliveryToName = myPartner.EnglishName;
@@ -13199,10 +13203,10 @@ namespace WebFreight.Web.ReportsWebServices
                                 }
                         }
                     }
-                    
+
                     if (!string.IsNullOrEmpty(Item.CustomerId))
                     {
-                        Card customer = commonContext.Cards.Where(d => d.Id == Item.CustomerId).FirstOrDefault();
+                        Card customer = CardList.Where(d => d.Id == Item.CustomerId).FirstOrDefault();
                         if (customer != null)
                         {
                             shipment.CustomerExternalID = customer.ReceivablesAccountingCard;
@@ -13219,6 +13223,8 @@ namespace WebFreight.Web.ReportsWebServices
 
             return totalData;
         }
+
+
         #endregion
 
         #region License Management
