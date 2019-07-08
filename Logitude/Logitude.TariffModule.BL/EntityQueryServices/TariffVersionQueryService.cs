@@ -20,7 +20,10 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
             TariffVersionKeys tariffVersionKeys = entityKeys as TariffVersionKeys;
 
             TariffLineQueryService tariffLineQueryService = new TariffLineQueryService(context);
+            TariffVersionAllInChargeQueryService tariffVersionAllInChargeQueryService = new TariffVersionAllInChargeQueryService(context);
+
             entityPM.TariffLines = tariffLineQueryService.GetMulti(tariffVersionKeys, true);
+            entityPM.TariffAllInCharges = tariffVersionAllInChargeQueryService.GetMulti(tariffVersionKeys, true);
         }
 
         public List<TariffVersionPM> GetDraftVersion(TariffKeys tariffKeys, bool getComposition = true)
@@ -45,13 +48,24 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
         public List<TariffVersionPM> GetActiveVersions(string tariffId, int tenant, string typeCode)
         {
-            TariffVersionRepository repository = new TariffVersionRepository(tenant);
+            ITariffModuleContext context = MainContext as ITariffModuleContext;
+            TariffVersionRepository repository = new TariffVersionRepository(context);
+            TariffVersionAllInChargeQueryService tariffVersionAllInChargeQueryService = new TariffVersionAllInChargeQueryService(context);
+
             List<TariffVersionPM> entityPMs = new List<TariffVersionPM>();
             List<TariffVersion> entityPOCOs = repository.GetActiveVersions(tariffId, tenant, typeCode);
 
             foreach (TariffVersion entityPOCO in entityPOCOs)
             {
-                TariffVersionPM entityPM = new TariffVersionPM();                
+                TariffVersionPM entityPM = new TariffVersionPM();
+
+                EntityKeyFields entityKeys = GetKeys(entityPOCO);
+                if (entityKeys != null)
+                {
+                    TariffVersionKeys tariffVersionKeys = entityKeys as TariffVersionKeys;                    
+                    entityPM.TariffAllInCharges = tariffVersionAllInChargeQueryService.GetMulti(tariffVersionKeys, true);
+                }
+
                 mapping.CustomPOCOToPM(entityPM, entityPOCO);
                 mapping.POCOToPM(entityPM, entityPOCO);
                 entityPMs.Add(entityPM);
@@ -62,13 +76,24 @@ namespace Logitude.TariffModule.BL.EntityQueryServices
 
         public List<TariffVersionPM> GetAllVersionsForTariff(string tariffId, int tenant)
         {
-            TariffVersionRepository repository = new TariffVersionRepository(tenant);
+            ITariffModuleContext context = MainContext as ITariffModuleContext;
+            TariffVersionRepository repository = new TariffVersionRepository(context);
+            TariffVersionAllInChargeQueryService tariffVersionAllInChargeQueryService = new TariffVersionAllInChargeQueryService(context);
+
             List<TariffVersionPM> entityPMs = new List<TariffVersionPM>();
             List<TariffVersion> entityPOCOs = repository.GetAllVersions(tariffId, tenant);
 
             foreach (TariffVersion entityPOCO in entityPOCOs)
             {
                 TariffVersionPM entityPM = new TariffVersionPM();
+
+                EntityKeyFields entityKeys = GetKeys(entityPOCO);
+                if (entityKeys != null)
+                {
+                    TariffVersionKeys tariffVersionKeys = entityKeys as TariffVersionKeys;
+                    entityPM.TariffAllInCharges = tariffVersionAllInChargeQueryService.GetMulti(tariffVersionKeys, true);
+                }
+
                 mapping.CustomPOCOToPM(entityPM, entityPOCO);
                 mapping.POCOToPM(entityPM, entityPOCO);
                 entityPMs.Add(entityPM);

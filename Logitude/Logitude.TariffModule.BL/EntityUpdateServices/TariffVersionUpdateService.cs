@@ -46,7 +46,10 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
             this.ComputeLinesUniqueKey(entityPM);
 
             TariffLineUpdateService tariffLineUpdateService = new TariffLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            TariffVersionAllInChargeUpdateService tariffVersionAllInChargeUpdateService = new TariffVersionAllInChargeUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+
             tariffLineUpdateService.UpdateMulti(entityPM.TariffLines, entityPM.DeletedTariffLines, entityPM, false);
+            tariffVersionAllInChargeUpdateService.UpdateMulti(entityPM.TariffAllInCharges, entityPM.DeletedTariffAllInCharges, entityPM, false);
         }
 
         private void ComputeLinesUniqueKey(TariffVersionPM entityPM)

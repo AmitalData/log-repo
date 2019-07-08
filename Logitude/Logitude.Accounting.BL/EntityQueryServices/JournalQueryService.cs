@@ -313,11 +313,20 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  StatusName = a.JournalStatusType != null ? a.JournalStatusType.LocalName : null,
                                                  Id = a.Id,
                                                  IsVoided = a.IsVoided,
+                                                 OriginalJournalId = a.OriginalJournalId,
                                              };
 
             return journals;
         }
 
+        public JournalPM GetSinglePMByOriginal(string originalId, int tenant)
+        {
+            Journal poco = repository.GetByOriginal(originalId, tenant).FirstOrDefault();
+
+            JournalPM journalPM = this.GetEntityPM(poco);
+
+            return journalPM;
+        }
 
         public JournalPM GetSinglePM(string id, int tenant)
         {
