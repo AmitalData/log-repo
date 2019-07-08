@@ -477,6 +477,10 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                 (from j in context.Journals
                  where j.Tenant == tenant
                  where j.AccountingEntityCode == "11"//yeartransfer
+
+                 where string.IsNullOrWhiteSpace(j.VoidedByJournalId)
+                 where string.IsNullOrWhiteSpace(j.OriginalJournalId)
+
                  select j
                 );
             DateTime beginOfYear = new DateTime(year, 1, 1);
