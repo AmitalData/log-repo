@@ -1956,6 +1956,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             excelPackage.HasErrors = true;
                         }
                     }
+
+                    else
+                    {
+                        excelPackage.HasErrors = true;
+                    }
                 }
 
                 if (rowData.Length > 1)
