@@ -158,33 +158,33 @@ namespace CommunicationWorkerRole
                                     }
                                     else
                                     {
-                                        if (response.RetryNumber <= 11)
+                                        if (response.RetryNumber <= 4)
                                         {
-                                            if (response.RetryNumber < 3)
+                                            if (response.RetryNumber <= 1)
                                             {
-                                                queueservice.Delay(new TimeSpan(0, 0, 0, 1));
+                                                queueservice.Delay(new TimeSpan(0, 0, 0, 4));
                                             }
 
-                                            if (response.RetryNumber >= 3 && response.RetryNumber <= 5)
+                                            if (response.RetryNumber >= 2 && response.RetryNumber < 3)
                                             {
-                                                queueservice.Delay(new TimeSpan(0, 0, 0, 5));
+                                                queueservice.Delay(new TimeSpan(0, 0, 0, 8));
                                             }
 
-                                            if (response.RetryNumber > 5 && response.RetryNumber <= 10)
-                                            {
+                                            //if (response.RetryNumber > 5 && response.RetryNumber <= 10)
+                                            //{
 
-                                                queueservice.Delay(new TimeSpan(0, 0, 0, 10));
-                                                AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
-                                                    + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                                                Thread.Sleep(3000);
-                                            }
-                                            if (response.RetryNumber == 11)
+                                            //    queueservice.Delay(new TimeSpan(0, 0, 0, 10));
+                                            //    AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
+                                            //        + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
+                                            //    Thread.Sleep(3000);
+                                            //}
+                                            if (response.RetryNumber == 3)
                                             {
 
                                                 queueservice.Delay(new TimeSpan(0, 0, 2, 0));
                                                 AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
                                                 + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
-                                                Thread.Sleep(10000);
+                                                //Thread.Sleep(10000);
 
                                             }
                                         }
