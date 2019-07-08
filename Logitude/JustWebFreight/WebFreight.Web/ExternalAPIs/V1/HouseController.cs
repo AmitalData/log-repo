@@ -354,10 +354,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 {
                                     if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
                                     {
-                                        if (item.Quantity == null)
-                                        {
-                                            throw new ApplicationException("Inside Packages Quantity is required");
-                                        }
+                                       
 
                                         hasContainerInsidePackages = true;
                                         item.Weight = 0;
@@ -372,6 +369,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                             if (inside.Volume != null)
                                             {
                                                 item.Volume += inside.Volume;
+                                            }
+
+                                            if (inside.Quantity == null)
+                                            {
+                                                throw new ApplicationException("Inside Packages Quantity is required");
                                             }
                                         });
                                     }
