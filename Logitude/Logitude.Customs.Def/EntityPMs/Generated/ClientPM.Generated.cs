@@ -872,7 +872,30 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedClientDrivingLicenses = value; }
 	    }
-	     }
+	  	  private string nationalIdentificationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string NationalIdentificationNumber  
+	   {
+	    
+	     get
+		{
+		   return nationalIdentificationNumber;
+		 }
+		 set
+		 {
+		   if(nationalIdentificationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NationalIdentificationNumber",OldValue=nationalIdentificationNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   nationalIdentificationNumber=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

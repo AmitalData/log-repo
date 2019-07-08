@@ -3,7 +3,9 @@ import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {CourierMasterPM} from '../../../Customs/EntityPMs/CourierMasterPM';
+import { CourierMasterPM } from '../../../Customs/EntityPMs/CourierMasterPM';
+import { CourierMasterValidator } from '../../../Customs/Validators/CourierMasterValidator';
+import { CustomsRequestsSheetPM } from '../../../Customs/EntityPMs/CustomsRequestsSheetPM';
 
 @Component({
     moduleId: module.id,
@@ -19,7 +21,11 @@ export class CourierConnectedDeclarationListTemplate {
     IsConnectedDeclarationChecked: boolean = true;
     IsNotConnectedDeclarationChecked: boolean = false;
 
+    public IsDisplayOnly: boolean = false;
+    _CourierMasterValidator: CourierMasterValidator = new CourierMasterValidator();
+
     constructor(private CD: ChangeDetectorRef) {
+        
     }
 
     setVariables(rowData: any, fieldName: string, additionalData: any)
@@ -28,6 +34,7 @@ export class CourierConnectedDeclarationListTemplate {
         this.fieldName = fieldName;
         this.entityPM = SessionLocator.CurrentSession.CurrentEditComponent.EntityPM as CourierMasterPM;
 
+        this.DisplayOnlyCheck();
         this.BuildDeclarationsCheckBox();       
         this.CD.detectChanges();
     }
@@ -100,25 +107,21 @@ export class CourierConnectedDeclarationListTemplate {
     }
 
 
-    //public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {
-       
+    DisplayOnlyCheck() {
+        this.IsDisplayOnly = false;
 
-    //    var editWindow = new LogitudeWindow();
-
-    //    editWindow.ShowHeaderButtons = true;
-    //    editWindow.Title = windowTitle;
-    //    editWindow.Height = 1000;
-    //    editWindow.Width = 1500;
-       
-    //    this.CD.detach();
-    //    editWindow.ShowEditComponent(entityId, objectTableName, defaultSelectedTabCode);
-    //    editWindow.WindowClosed.subscribe(res => {
-    //        this.CD.reattach();
-           
-           
-    //    });
-
-    //}
+        //Check if changing StorageSiteCode
+        this._CourierMasterValidator.SetEntityPM(this.entityPM);
+        this._CourierMasterValidator.CheckRequestInProgressForCourierMaster(this.entityPM.Tenant, "UCBCMSS", this.entityPM.Id).subscribe((response: any) => {
+            var displayOnlyCheckResult = response.Result;
+            if (displayOnlyCheckResult != null && displayOnlyCheckResult.length > 0) {
+                let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
+                if (customsRequestsSheetPM != null) {
+                    this.IsDisplayOnly = true;
+                }
+            }
+        });
+    }
 
 
 }

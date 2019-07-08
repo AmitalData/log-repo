@@ -36,6 +36,7 @@ export class GetStorageSiteCodeComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.CourierMasterPM = args.CourierMasterPM;
+            this.StorageSiteCode = this.CourierMasterPM.StorageSiteCode;
         }
     }
 
@@ -51,9 +52,10 @@ export class GetStorageSiteCodeComponent extends BaseComponent {
     }
 
     // Properties
-    public get StorageSiteCode() { return this.CourierMasterPM.StorageSiteCode; }
+    private _StorageSiteCode: string;
+    public get StorageSiteCode() { return this._StorageSiteCode; }
     public set StorageSiteCode(newValue: string) {
-        this.CourierMasterPM.StorageSiteCode = newValue;
+        this._StorageSiteCode = newValue;
         this.ValidationErrorsList = [];
     }
    
@@ -87,6 +89,7 @@ export class GetStorageSiteCodeComponent extends BaseComponent {
     ChangeStorageSiteCode() {
 
         SessionLocator.CurrentSession.StartBusyIndicatorSaving();
+        this.CourierMasterPM.StorageSiteCode = this.StorageSiteCode;
         this._CourierMasterPMService.update(this.CourierMasterPM).subscribe((response: ServiceResponse) => {
             SessionLocator.CurrentSession.StopBusyIndicator();
             this.SendALLChangeStorageSiteCode();

@@ -1,6 +1,8 @@
 ﻿using Devart.Data.Oracle;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -8,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.Data
 {
-    public static class CustomContextExt
+    public partial class CustomContext : DbContextBase, ICustomContext
     {
-        public static void CommandExecuteNonQuery(this CustomContext customContext,int tenant, string cmd)
+        public static void CommandExecuteNonQuery(int tenant, string cmd)
         {
             var context = CustomContext.GetContext(tenant);
-
+            var strConnString = context.GetConnection().ConnectionString;
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                var strConnString =customContext.GetConnection().ConnectionString;
+                
                 using (var cn = (context.GetConnection() as OracleConnection))  //new OracleConnection(strConnString))
                 {
                     Debug.WriteLine($"CommandExecuteNonQuery({cmd})");
@@ -33,7 +35,16 @@ namespace Logitude.Customs.Data
 
             else
             {
-                throw new System.Exception("CustomContext is 4 oracle ");
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    Debug.WriteLine($"CommandExecuteNonQuery({cmd})");
+
+                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
+
+                    cn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
             }
 
 

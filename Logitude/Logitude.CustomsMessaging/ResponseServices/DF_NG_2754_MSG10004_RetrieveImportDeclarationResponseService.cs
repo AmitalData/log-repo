@@ -45,7 +45,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             ser = XmlGenericUtil<UnifreightIIG.Common.ImportDeclarationServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse>.DeSerializeObject(xml);
             _DF_NG_2754_MSG10004_ImportDeclarationResponseService = new DF_NG_2754_MSG10004_ImportDeclarationResponseService();
             //ITZIK+MIRT  _DF_NG_2754_MSG10004_ImportDeclarationResponseService._ResponseHeaderExeption = _ResponseHeaderExeption;
-
+            _DF_NG_2754_MSG10004_ImportDeclarationResponseService._IsRetrieveDeclarationResponse = true;
             _DF_NG_2754_MSG10004_ImportDeclarationResponseService.Update(ser, requestParams);
 
             //<--- Yuval Chalup 13.05.2015 TASK-11915

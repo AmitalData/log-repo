@@ -1,6 +1,7 @@
 <div class="container">
         
-        <button (click)="DropdownMenuButtonClick($event)"
+        <button [disabled]="IsDisabled"
+                (click)="DropdownMenuButtonClick($event)"
                 [attr.id]="_DropdownMenuFilterComponentId" 
                 style="background-color: transparent;cursor:pointer">
             <ng-content select=".class-filter-content"></ng-content>

@@ -45,7 +45,7 @@ namespace Logitude.Customs.BL.TraceEvents
                     loggedContactId = loggedContact.Id;
                 }
 
-                
+
                 UpsertFUStatusLE2U(Tenant, loggedContactId, new UnifreightFUStatusParam()
                 {
                     Entname = "CFIFILEM",
@@ -55,26 +55,31 @@ namespace Logitude.Customs.BL.TraceEvents
                     StatusRemarks = "",
 
                 });
-                string unifrieghtEvent = "INAD";
-                string eventRemarks = "";
-                var MyUnifreightEventParam = new UnifreightEventParam()
-                {
-                    Code = unifrieghtEvent,
-                    Mode = UnifreightEventMode.@new,
-                    EventDateTime = DateTime.Now,
-                    Entname = "CFIFILEM",
-                    PrimaryNum = CustomFileNo,
-                    EventRemarks = eventRemarks,
-                };
-
-                var myOpenUnifreighTask = new UnifreightEventTaskService();
-                myOpenUnifreighTask.UpsertEventLE2U(
-                    Tenant,
-                    loggedContactId,
-                    MyUnifreightEventParam);
+                //SendINVAD(Tenant, CustomFileNo, loggedContactId);
 
             }
 
+        }
+
+        private static void SendINVAD(int Tenant, string CustomFileNo, string loggedContactId)
+        {
+            string unifrieghtEvent = "INAD";
+            string eventRemarks = "";
+            var MyUnifreightEventParam = new UnifreightEventParam()
+            {
+                Code = unifrieghtEvent,
+                Mode = UnifreightEventMode.@new,
+                EventDateTime = DateTime.Now,
+                Entname = "CFIFILEM",
+                PrimaryNum = CustomFileNo,
+                EventRemarks = eventRemarks,
+            };
+
+            var myOpenUnifreighTask = new UnifreightEventTaskService();
+            myOpenUnifreighTask.UpsertEventLE2U(
+                Tenant,
+                loggedContactId,
+                MyUnifreightEventParam);
         }
 
         public void UpsertFUStatusLE2U(int tenant, string logitudeUserId, UnifreightFUStatusParam myUnifreightFUStatusParam)

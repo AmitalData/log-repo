@@ -55,6 +55,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" שידור מסמכים שגויים " + customsResponse.master + " "
             };
+            if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
+
+            {
+                genericRequestParams.RequestName += " ראשי - מפצל";
+                genericRequestParams.SplitterModeLetCreateMyType = false;
+
+            }
+            else
+            {
+                genericRequestParams.RequestName += " מפוצל";
+                genericRequestParams.SplitterModeLetCreateMyType = true;
+
+            }
             return genericRequestParams;
         }
 
@@ -86,7 +99,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 CourierMasterId = mySendUnCorrectDocumentsRequestParams.CourierMasterId,
                 LoggingUserId = LoggingUserId,
                 master = mySendUnCorrectDocumentsRequestParams.HAWB,
-                DeclarationsList = mySendUnCorrectDocumentsRequestParams.Declarations,
+                ClientFilterDeclarationsList = mySendUnCorrectDocumentsRequestParams.Declarations,
                 SelectedAvailableValue = mySendUnCorrectDocumentsRequestParams.SelectedAvailableValue,
                 SelectedBOLValue = mySendUnCorrectDocumentsRequestParams.SelectedBOLValue,
                 SelectedStatusValue = mySendUnCorrectDocumentsRequestParams.SelectedStatusValue,
@@ -190,7 +203,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string CourierMasterId { get; set; }
         public string master { get; set; }
         public string CourierDeclarationStatusCode { get; set; }
-        public List<string> DeclarationsList { get; set; }
+        public List<string> ClientFilterDeclarationsList { get; set; }
+        public List<string> ServerSplitDeclarationsList { get; set; }
+        
         public string MyMoreParams { get; set; }
 
         public string SelectedBOLValue { get; set; }

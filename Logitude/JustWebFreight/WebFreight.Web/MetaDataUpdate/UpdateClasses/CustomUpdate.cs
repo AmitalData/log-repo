@@ -13498,8 +13498,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddTextCodes.AddTextCode(new TextCodeDetails()
             {
                 Code = "Customs.General.O.DocumentSizeLimit",
-                DefaultText = "Document Size is above limit (30MB) , you must split it to smaller files",
-                LocalDefaultText = @"לא ניתן לקשר את המסמך מכיוון שהוא חורג מהגודל המותר (30 מ""ב) , יש לפצל תחילה את המסמך",
+                DefaultText = "Document Size is above limit (200MB) , you must split it to smaller files",
+                LocalDefaultText = @"לא ניתן לקשר את המסמך מכיוון שהוא חורג מהגודל המותר (200 מ""ב) , יש לפצל תחילה את המסמך",
                 ObjectTableId = objectTable.Id,
                 Tenant = 0,
                 TextCodeTypeCode = "O",

@@ -18,9 +18,25 @@ import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/observable/fromEvent';
 import {FormGroup} from '@angular/forms';
 import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
-import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+import { timer } from 'rxjs/observable/timer';
+import { timeInterval, pluck, take } from 'rxjs/operators';
 declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
 
+interface BeforeOnDestroy {
+    ngxBeforeOnDestroy();
+}
+type NgxInstance = BeforeOnDestroy & Object;
+type Descriptor = TypedPropertyDescriptor<Function>;
+type Key = string | symbol;
+export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descriptor) {
+    return {
+        value: async function (...args: any[]) {
+            await target.ngxBeforeOnDestroy();
+            return descriptor.value.apply(target, args);
+        }
+    }
+}
 @Component({
     moduleId: module.id,
 
@@ -31,7 +47,7 @@ declare var keyBoardWhich, keyBoardKey, selectionStart, numberWithCommas: any;
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
+export class LogTextBoxComponent implements BeforeOnDestroy,OnInit, AfterViewInit, OnDestroy {
     public AllowPercentage: boolean;
     public IsAccumulative: boolean;
     public ShowHelp: boolean = false;
@@ -235,7 +251,8 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
                             }
                         });
                         //this.TextValueChanges(this.TextValue);
-                        if (this.cd) {
+                        var isDestroyed: boolean = this.cd && this.cd['destroyed'];
+                        if (!isDestroyed) {
                             this.cd.detectChanges();
                         }
                     }
@@ -460,7 +477,23 @@ export class LogTextBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
-    ngOnDestroy() {
+    private WaitFunction(resolve) {
+        const sourcef = timer(100)
+            .pipe(take(1))
+            .subscribe(() => {
+                resolve();
+            });
+    }
+
+    public ngxBeforeOnDestroy() {
+        //console.log('1. BEFORE ONDESTROY INVOKE METHOD (await 2 sec)');
+        return new Promise((resolve) => {
+            setTimeout(() => this.WaitFunction(resolve), 100);
+        });
+    }
+
+    async ngOnDestroy() {
+        await this.ngxBeforeOnDestroy();
         console.log("LogTextBox:ngOnDestroy");
         this.cd = null;
         if (this._debounceTimeSub) {

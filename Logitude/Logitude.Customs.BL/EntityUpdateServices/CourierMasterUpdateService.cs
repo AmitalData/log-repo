@@ -332,36 +332,49 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (errorsForCourierDeclaration == null || (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields == null) ||
                     (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields != null && errorsForCourierDeclaration.RequiredFields.Count == 0))
                 {
-                    CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
-                    List<string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);
-                    if (declarations != null)
-                    {
-                        DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(entityPM.Tenant);
-                        foreach (var declarationId in declarations)
-                        {
-                            DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationId, false, false);
-                            if (myDeclarationCourierStatusPM.CourierManifestStatusCode != "M" && myDeclarationCourierStatusPM.CourierManifestStatusCode != "R")
-                            {
-                                if (setDeclarationsList == "")
-                                {
-                                    setDeclarationsList = string.Concat("'", declarationId, "'");
-                                }
-                                else
-                                {
-                                    setDeclarationsList = string.Concat(setDeclarationsList, ",", "'", declarationId, "'");
-                                }
-                            }
-                        }
+                    string CourierMasterId = EntityPM.Id;
+                    //string toCourierManifestStatusCode = "R";
+                    string updateCourierManifestStatusCodeToR =
+                        $"Update DECLARATIONCOURIERSTATUSES set CourierManifestStatusCode ='{setCourierManifestStatusCode}' where DECLARATIONID  in (select DECLARATIONID   from CourierDeclarations  where CourierMasterId ='{CourierMasterId}' and tenant ={EntityPM.Tenant} ) and CourierManifestStatusCode !='M' and CourierManifestStatusCode !='R' ";
 
-                        if (!string.IsNullOrWhiteSpace(setDeclarationsList))
-                        {
-                            this.SetDeclarationChanged(setDeclarationsList, setCourierManifestStatusCode, entityPM.Tenant);
-                        }
-                    }
+                    CustomContext.CommandExecuteNonQuery(EntityPM.Tenant, updateCourierManifestStatusCodeToR);
+
+                    //setDeclarationsList = OldNotInUse(entityPM, setCourierManifestStatusCode, setDeclarationsList);
                 }
             }
         }
 
+        private string OldNotInUse(CourierMasterPM entityPM, string setCourierManifestStatusCode, string setDeclarationsList)
+        {
+            CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
+            List<string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);
+            if (declarations != null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(entityPM.Tenant);
+                foreach (var declarationId in declarations)
+                {
+                    DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationId, false, false);
+                    if (myDeclarationCourierStatusPM.CourierManifestStatusCode != "M" && myDeclarationCourierStatusPM.CourierManifestStatusCode != "R")
+                    {
+                        if (setDeclarationsList == "")
+                        {
+                            setDeclarationsList = string.Concat("'", declarationId, "'");
+                        }
+                        else
+                        {
+                            setDeclarationsList = string.Concat(setDeclarationsList, ",", "'", declarationId, "'");
+                        }
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(setDeclarationsList))
+                {
+                    this.SetDeclarationChanged(setDeclarationsList, setCourierManifestStatusCode, entityPM.Tenant);
+                }
+            }
+
+            return setDeclarationsList;
+        }
 
         private void OpenUnifreighTask(CourierMasterPM dirtyCourierMasterPM, string taskType, string status, bool raiseStatus, string xmlStatus)
         {

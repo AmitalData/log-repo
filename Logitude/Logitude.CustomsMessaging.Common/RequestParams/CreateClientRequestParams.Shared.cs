@@ -67,7 +67,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
 
         public DateTime? PassportIssueDate { get; set; }
 
-
+        public string NationalIdentificationNumber { get; set; }
 
         List<ClientAdressParams> clientAddresses;
         public List<ClientAdressParams> ClientAddresses
