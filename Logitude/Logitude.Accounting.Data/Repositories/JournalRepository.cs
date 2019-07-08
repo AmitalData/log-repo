@@ -353,6 +353,15 @@ namespace Logitude.Accounting.Data.Repositories
 
             return journals;
         }
+        public IQueryable<Journal> GetByOriginal(string originalId, int tenant)
+        {
+            var journals = (from a in context.Journals.Include("JournalStatusType")
+                            where a.Tenant == tenant
+                            where a.OriginalJournalId == originalId
+                            select a);
+
+            return journals;
+        }
         public IQueryable<Journal> GetByJournalsAccountingEntityCodeAndDate(string entityCode, DateTime acccountingDate, int tenant)
         {
             var journals = (from a in context.Journals.Include("JournalStatusType")

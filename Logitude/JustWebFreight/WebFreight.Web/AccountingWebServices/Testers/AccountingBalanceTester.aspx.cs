@@ -1442,7 +1442,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
                     IYearTransferService yearTransferService = new YearTransferService();
-                    journal = yearTransferService.CancelJournal(accountingContext, YY, tenant);
+                    journal = yearTransferService.CancelYear(accountingContext, YY, tenant);
                     if (journal != null)
                     {
                         //var parser = new JournalApproveParser(journal, false,
