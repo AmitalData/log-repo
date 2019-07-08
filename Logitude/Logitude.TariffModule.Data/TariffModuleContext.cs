@@ -77,6 +77,8 @@ namespace Logitude.TariffModule.Data
             modelBuilder.Configurations.Add(new TariffTypeMap());
 	
             modelBuilder.Configurations.Add(new TariffVersionMap());
+	
+            modelBuilder.Configurations.Add(new TariffVersionAllInChargeMap());
 				
 				
 			modelBuilder.Entity<TariffLine>().Property(x => x.MinPrice).HasPrecision(18, 3);
@@ -420,6 +422,12 @@ namespace Logitude.TariffModule.Data
 	 }
 	
 	 public IDbSet<TariffVersion> TariffVersions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TariffVersionAllInCharge> TariffVersionAllInCharges 
 	 {
 	      get; set;
 	 
