@@ -23,28 +23,28 @@ using Simplog.Data.ShipmentsModel;
 
  namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 { 
-   public partial class OceanOrInlandPackageQueryService
+   public partial class InsidePackageQueryService
    {
    
-		ShipmentPackageQuery query; 
+		InsideShipmentPackageQuery query; 
 
-        public OceanOrInlandPackageQueryService(int tenant)
+        public InsidePackageQueryService(int tenant)
         {
 		
-			query = new ShipmentPackageQuery(tenant);
+			query = new InsideShipmentPackageQuery(tenant);
         }
 
 		
-		public List<OceanOrInlandPackage> OceanOrInlandPackageDataMapping(List<ShipmentPackagePM> MyEntityPM,int Tenant,string ComputingPartnerName = "")
+		public List<InsidePackage> InsidePackageDataMapping(List<InsideShipmentPackagePM> MyEntityPM,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				var MyList = new List<OceanOrInlandPackage>();
+				var MyList = new List<InsidePackage>();
 				foreach (var item in MyEntityPM)
 				{
 				   
-				   var temp = new OceanOrInlandPackage(); 
+				   var temp = new InsidePackage(); 
 				   temp.Id = item.Id;			  
 				   if(item.PackageTypeId != null)
 				   {
@@ -53,37 +53,18 @@ using Simplog.Data.ShipmentsModel;
 			       
 					   				   }
 				   
-				   temp.Length = item.Length;
+				   temp.Quantity = item.Quantity;
 				   temp.Width = item.Width;
+				   temp.Length = item.Length;
 				   temp.Height = item.Height;
-				   temp.Pieces = item.Quantity;
 				   temp.Volume = item.Volume;
 				   temp.GrossWeight = item.Weight;
-				   temp.Seal = item.ShipperSeal;
-				   temp.Seal2 = item.CarrierSeal;
+				   temp.Commodity = item.CommodityNumber;
 				   temp.Reference1 = item.Reference1;
 				   temp.Reference2 = item.Reference2;
 				   temp.Reference3 = item.Reference3;
-				   temp.Harmonize = item.Harmonize;
-				   temp.Temperature = item.Temperature;
-				   temp.Ventilation = item.Ventilation;
-				   temp.IsDangerous = item.IsDangerous;
-				   temp.ClassNumber = item.ClassNumber;
-				   temp.UnNumber = item.UnNumber;
-				   temp.PackagingGroup = item.PackagingGroup;
-				   temp.IMDGCode = item.IMDGCode;
-				   temp.FlashPoint = item.FlashPoint;
-				   temp.MaterialDescription = item.MaterialDescription;
-				   temp.CommodityNumber = item.CommodityNumber;
 				   temp.Reference4 = item.Reference4;
-				   temp.Notes = item.Notes;
-				if(item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
-				{
-					 InsidePackageQueryService InsidePackageService1 = new InsidePackageQueryService(Tenant);
-					 temp.InsidePackages = InsidePackageService1.InsidePackageDataMapping(item.InsideShipmentPackages,Tenant);
-				}
-
-							 					
+				   temp.Description = item.Description;					
 					MyList.Add(temp);
 				}
 					
@@ -96,15 +77,15 @@ using Simplog.Data.ShipmentsModel;
             }
         } 
 
-		public List<ShipmentPackagePM> OceanOrInlandPackageDataMappingAndValidatin(List<OceanOrInlandPackage> MyEntity,int Tenant,string ComputingPartnerName = "")
+		public List<InsideShipmentPackagePM> InsidePackageDataMappingAndValidatin(List<InsidePackage> MyEntity,int Tenant,string ComputingPartnerName = "")
         {
 		    try
             {
 				   
-				var MyList = new List<ShipmentPackagePM>();
+				var MyList = new List<InsideShipmentPackagePM>();
 				foreach (var item in MyEntity)
 				{
-					   					var temp = new ShipmentPackagePM();								  
+					   					var temp = new InsideShipmentPackagePM();								  
 					if (!string.IsNullOrEmpty(item.Id))
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
@@ -112,7 +93,7 @@ using Simplog.Data.ShipmentsModel;
 										   
 					if(temp == null)
 					{
-					    throw new ApplicationException("ShipmentPackage with Id " + item.Id + " doesn't exist");
+					    throw new ApplicationException("InsideShipmentPackage with Id " + item.Id + " doesn't exist");
 					} 
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -129,38 +110,18 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-					temp.Length = item.Length;
+					temp.Quantity = item.Quantity;
 					temp.Width = item.Width;
+					temp.Length = item.Length;
 					temp.Height = item.Height;
-					temp.Quantity = item.Pieces;
 					temp.Volume = item.Volume;
 					temp.Weight = item.GrossWeight;
-					temp.ShipperSeal = item.Seal;
-					temp.CarrierSeal = item.Seal2;
+					temp.CommodityNumber = item.Commodity;
 					temp.Reference1 = item.Reference1;
 					temp.Reference2 = item.Reference2;
 					temp.Reference3 = item.Reference3;
-					temp.Harmonize = item.Harmonize;
-					temp.Temperature = item.Temperature;
-					temp.Ventilation = item.Ventilation;
-					temp.IsDangerous = item.IsDangerous;
-					temp.ClassNumber = item.ClassNumber;
-					temp.UnNumber = item.UnNumber;
-					temp.PackagingGroup = item.PackagingGroup;
-					temp.IMDGCode = item.IMDGCode;
-					temp.FlashPoint = item.FlashPoint;
-					temp.MaterialDescription = item.MaterialDescription;
-					temp.CommodityNumber = item.CommodityNumber;
 					temp.Reference4 = item.Reference4;
-					temp.Notes = item.Notes; 
-
-					if(item.InsidePackages != null && item.InsidePackages.Count > 0)
-					{
-						InsidePackageQueryService InsidePackageService1 = new InsidePackageQueryService(Tenant);
-						temp.InsideShipmentPackages = InsidePackageService1.InsidePackageDataMappingAndValidatin(item.InsidePackages,Tenant,ComputingPartnerName);
-					}
-
-								 					   
+					temp.Description = item.Description;					   
 						MyList.Add(temp);
 					}
 						
