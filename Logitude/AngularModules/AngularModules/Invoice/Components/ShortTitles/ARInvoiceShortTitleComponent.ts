@@ -14,10 +14,12 @@ export class ARInvoiceShortTitleComponent {
     public EntityPM: ARInvoicePM;
     public DisplaySATSettings: boolean = false;
     public isRTL: boolean = false;
+    public showLocal: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
         this.EntityPM = this.entityArgs.EntityPM;
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");   
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
         this.BuildComponent();
         this.Listen();
 
@@ -49,7 +51,7 @@ export class ARInvoiceShortTitleComponent {
         if (this.EntityPM != null) {
             if (this.EntityPM.IsConstituentInvoice && this.EntityPM.ConsolidationInvoiceId != null) {
                 this.IsConnectedToConsolidation = true;
-                
+
             }
 
             this.GetEntityNumber();
