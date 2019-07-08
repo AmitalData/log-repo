@@ -159,6 +159,7 @@
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclBCTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\Refund\ClaimRefundDetailsTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityAdditionalDataTabComponent.html" />
+    <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityCancelOrObjectionTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityClaimDecisionTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityCustomAnswerTabComponent.html" />
     <Content Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityGeneralTabComponent.html" />
@@ -426,6 +427,7 @@
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\ImporterDeclaration\ClaimImporterDeclBCTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\Refund\ClaimRefundDetailsTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityAdditionalDataTabComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityCancelOrObjectionTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityClaimDecisionTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityCustomAnswerTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClaim\Components\EditTabs\RelatedEntity\ClaimRelatedEntityGeneralTabComponent.ts" />
@@ -538,6 +540,7 @@
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\CargoSplitRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\GatepassRequestMessageRequestParams.ts" />
     <TypeScriptCompile Include="Customs\DataContract\RequestParams\SendALLStorageSiteRequestParams.ts" />
+    <TypeScriptCompile Include="Customs\EntityLists\ContinuousRequestTypeList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CourierCustomStatusList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CourierPendingReasonList.ts" />
     <TypeScriptCompile Include="Customs\EntityLists\CustomsAirlineList.ts" />
@@ -555,6 +558,7 @@
     <TypeScriptCompile Include="Customs\EntityLists\UpdateCodeList.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesRefundPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\ClaimsRelatedEntitiesSeizurePM.ts" />
+    <TypeScriptCompile Include="Customs\EntityPMs\ContinuousRequestTypePM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CourierCustomStatusPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CourierPendingReasonPM.ts" />
     <TypeScriptCompile Include="Customs\EntityPMs\CustomsAirlinePM.ts" />
@@ -577,6 +581,7 @@
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsAirlineExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsPartnerFtpExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\AgentTalkBackTypeListService.ts" />
+    <TypeScriptCompile Include="Customs\Services\StandardLists\ContinuousRequestTypeListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierCustomStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierPaymentStatusListService.ts" />
     <TypeScriptCompile Include="Customs\Services\StandardLists\CourierPendingReasonListService.ts" />

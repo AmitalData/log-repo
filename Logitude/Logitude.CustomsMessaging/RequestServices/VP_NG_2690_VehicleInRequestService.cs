@@ -331,7 +331,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
                 {
-                    vehicleAttachmentList.Add(customsDocumentPM.DocumentsFilingId);
+                    vehicleAttachmentList.Add(customsDocumentPM.ExternalAttachmentId);
                 }
             }
             if (vehicleAttachmentList.Count > 5)
