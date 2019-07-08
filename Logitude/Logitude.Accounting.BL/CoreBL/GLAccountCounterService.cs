@@ -120,7 +120,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 var showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
                 var msg = TextCodesTranslator.TranslateText("FullAccountingSetting.O.CantChangeCounterLength", tenant, showLocal);
 
-                throw new ApplicationException("Counter is not defined, please check accounting settings");
+                throw new ApplicationException(msg);
             }
         }
 

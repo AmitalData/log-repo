@@ -149,16 +149,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 newJournal.AccountingEntityCode = "6"; // Cheque Deposit
             }
         }
-        void CreateCreditJournalLines(BankDepositPM entityPM,int LineNumber, CashBookPM cashBook, JournalPM newJournal)
+        void CreateCreditJournalLines(BankDepositPM depositPM,int LineNumber, CashBookPM cashBook, JournalPM newJournal)
         {
-            IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+            IAccountingContext MyContext = AccountingContext.GetContext(depositPM.Tenant);
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(depositPM.Tenant);
 
-            ARPaymentChequeQueryService arpChequeQueryService = new ARPaymentChequeQueryService(entityPM.Tenant);
-            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
+            ARPaymentChequeQueryService arpChequeQueryService = new ARPaymentChequeQueryService(depositPM.Tenant);
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(depositPM.Tenant);
+            BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(depositPM.Tenant);
             GLAccountPM gLAccount;
 
-            if (entityPM.IsCashDeposit)  //Cash Deposit
+
+            BankAccountPM bankAccount = bankAccountQueryService.GetByAccountNumber(depositPM.BankAccountNumber, depositPM.Tenant);
+            GLAccountPM bankGLAccount = gLAccountQueryService.GetSinglePM(bankAccount.GLAccountId, depositPM.Tenant);
+            GLAccountPM bankDeferedGLAccount = gLAccountQueryService.GetSinglePM(bankAccount.DeferredGLAccountId, depositPM.Tenant);
+
+            if (depositPM.IsCashDeposit)  //Cash Deposit
             {
 
                 LineNumber++;
@@ -167,13 +173,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 newCreditJournalLine.Tenant = newJournal.Tenant;
                 newCreditJournalLine.Line = LineNumber;
                 newCreditJournalLine.ActionCode = "1"; //Credit
-                newCreditJournalLine.DueDate = entityPM.CreateDate;
-                newCreditJournalLine.LocalAmount = entityPM.LocalDepositAmount;
-                newCreditJournalLine.ForeignAmount = entityPM.ForeignAmount;
-                newCreditJournalLine.CurrencyId = entityPM.DepositCurrencyId;
-                newCreditJournalLine.DocumentDate = entityPM.CreateDate;
-                newCreditJournalLine.AccountingDate = entityPM.AccountingDate;
-                newCreditJournalLine.ExchangeRate = entityPM.LocalDepositAmount / entityPM.ForeignAmount;
+                newCreditJournalLine.DueDate = depositPM.CreateDate;
+                newCreditJournalLine.LocalAmount = depositPM.LocalDepositAmount;
+                newCreditJournalLine.ForeignAmount = depositPM.ForeignAmount;
+                newCreditJournalLine.CurrencyId = depositPM.DepositCurrencyId;
+                newCreditJournalLine.DocumentDate = depositPM.CreateDate;
+                newCreditJournalLine.AccountingDate = depositPM.AccountingDate;
+                newCreditJournalLine.ExchangeRate = depositPM.LocalDepositAmount / depositPM.ForeignAmount;
 
                 newCreditJournalLine.CreditAccountId = cashBook.AccountId;
                 gLAccount = gLAccountQueryService.GetSingle(cashBook.AccountId, false, true);
@@ -182,7 +188,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     newCreditJournalLine.CreditControlAccountId = gLAccount.ControlAccountId;
                 }
 
-                newCreditJournalLine.Reference1 = entityPM.DepositNumber.ToString();
+                // opposit account
+                newCreditJournalLine.DebitAccountId = bankGLAccount.Id;
+
+                newCreditJournalLine.Reference1 = depositPM.DepositNumber.ToString();
 
 
                 newJournal.JournalLines.Add(newCreditJournalLine);
@@ -190,7 +199,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
-                foreach (BankDepositLinePM item in entityPM.BankDepositLines)
+                foreach (BankDepositLinePM item in depositPM.BankDepositLines)
                 {
                     CashBookLinePM cashBookLine = cashBook.CashBookLines.Where(d => d.ARPChequeId == item.ARPaymentChequeId).FirstOrDefault();
                     ARPaymentChequePM cheque = arpChequeQueryService.GetSingle(item.ARPaymentChequeId, false, false);
@@ -213,9 +222,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     newCreditJournalLine.DueDate = cheque.ValueDate;
                     newCreditJournalLine.LocalAmount = item.LocalAmount;
                     newCreditJournalLine.ForeignAmount = item.ForeignAmount;
-                    newCreditJournalLine.CurrencyId = entityPM.DepositCurrencyId;
-                    newCreditJournalLine.DocumentDate = entityPM.AccountingDate;
-                    newCreditJournalLine.AccountingDate = entityPM.AccountingDate;
+                    newCreditJournalLine.CurrencyId = depositPM.DepositCurrencyId;
+                    newCreditJournalLine.DocumentDate = depositPM.AccountingDate;
+                    newCreditJournalLine.AccountingDate = depositPM.AccountingDate;
                     newCreditJournalLine.ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount;
 
                     newCreditJournalLine.CreditAccountId = cashBook.AccountId;
@@ -225,8 +234,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         newCreditJournalLine.CreditControlAccountId = gLAccount.ControlAccountId;
                     }
 
+
+                    // opposit account
+                    newCreditJournalLine.DebitAccountId
+                        = cheque.ValueDate <= TenantServerConfigration.GetCurrentDateTime(depositPM.Tenant)
+                                            ? bankGLAccount.Id : bankDeferedGLAccount.Id;
+
                     newCreditJournalLine.Reference1 = cheque.ChequeNumber;
-                    newCreditJournalLine.Reference2 = entityPM.DepositNumber.ToString();
+                    newCreditJournalLine.Reference2 = depositPM.DepositNumber.ToString();
 
 
                     newJournal.JournalLines.Add(newCreditJournalLine);
@@ -235,7 +250,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         cheque.StatusCode = (cheque.ValueDate > todayDateTime ? "2" : "3");  // 2-In Bank , 3-In Bank Account
                         cheque.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                        var myChequeUpdateService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                        var myChequeUpdateService = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), depositPM.Tenant);
                         myChequeUpdateService.Update(cheque, true);
                     }
                 }
@@ -251,7 +266,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             GLAccountPM gLAccount;
             BankAccountQueryService bankAccountQueryService = new BankAccountQueryService(entityPM.Tenant);
             BankAccountPM bankAccount = bankAccountQueryService.GetSingle(entityPM.DepositBankAccountId, true, false);
-
 
             if (entityPM.IsCashDeposit)  //Cash Deposit
             {
@@ -271,6 +285,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     newDebitJournalLine.DebitControlAccountId = gLAccount.ControlAccountId;
                 }
+
+                // opposit account
+                newDebitJournalLine.CreditAccountId = cashBook.AccountId;
 
                 newDebitJournalLine.DueDate = entityPM.CreateDate;
                 newDebitJournalLine.LocalAmount = entityPM.LocalDepositAmount;
@@ -318,6 +335,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         newDebitJournalLine.DebitControlAccountId = gLAccount.ControlAccountId;
                     }
+
+                    //opposit account
+                    newDebitJournalLine.CreditAccountId = cashBook.AccountId;
+
 
                     newJournal.JournalLines.Add(newDebitJournalLine);
 

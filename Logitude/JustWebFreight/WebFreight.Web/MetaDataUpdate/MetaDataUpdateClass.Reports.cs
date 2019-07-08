@@ -18,7 +18,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             ReportGroup statisticsGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RSTA", EnglishName = "Statistics", LocalName = "Statistics", Tenant = 0, OrderNumber = 0 }, reportGroupRepository, TenantReportGroups);
             ReportGroup operationalGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "ROPR", EnglishName = "Operational", LocalName = "Operational", Tenant = 0, OrderNumber = 1 }, reportGroupRepository, TenantReportGroups);
-            ReportGroup accountingGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RACC", EnglishName = "Accounting", LocalName = "Accounting", Tenant = 0, OrderNumber = 3 }, reportGroupRepository, TenantReportGroups);
+            ReportGroup accountingGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RACC", EnglishName = "Accounting", LocalName = "דוחות הנהח\"ש", Tenant = 0, OrderNumber = 3 }, reportGroupRepository, TenantReportGroups);
             ReportGroup quotesGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RQUO", EnglishName = "Quotes", LocalName = "Quotes", Tenant = 0, OrderNumber = 2 }, reportGroupRepository, TenantReportGroups);
             ReportGroup CRMGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RQCR", EnglishName = "CRM", LocalName = "CRM", Tenant = 0, OrderNumber = 5 }, reportGroupRepository, TenantReportGroups);
             ReportGroup TFSGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RTFS", EnglishName = "TFS", LocalName = "TFS", Tenant = 0, OrderNumber = 6 }, reportGroupRepository, TenantReportGroups);
