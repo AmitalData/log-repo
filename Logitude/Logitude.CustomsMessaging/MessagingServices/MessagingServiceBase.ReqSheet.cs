@@ -1225,7 +1225,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var customsRequestLength = memstream.Length;
             LogMessagingUtil.Instance.AppendLine("customsRequestLength  = " + customsRequestLength.ToString());
 
-            if (customsRequestLength > HugeFileSize)
+            if (customsRequestLength > (HugeFileSize * 1.2))
             {
                 this._HugeFile = true;
             }
@@ -1462,7 +1462,7 @@ Exception:" + ee.Message
 
         private void CreateNewDcaRequestDue9MBcustomsRequestLength()
         {
-            throw new NotImplementedException();
+            ///throw new NotImplementedException();
         }
 
 
