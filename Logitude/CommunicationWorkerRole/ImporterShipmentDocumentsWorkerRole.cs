@@ -91,9 +91,9 @@ namespace CommunicationWorkerRole
                 return false;
             }
         }
-        private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
+        private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM, int tenant)
         {
-            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant))
+            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant,tenant))
             {
                 return false;
             }
@@ -231,7 +231,7 @@ namespace CommunicationWorkerRole
                                             string EntityNumber = "";
                                             if (ForwarderShipment != null)
                                             {
-                                                if (!IsImporterTenantHasExportFeatureForExportShipments(importerTenant, ForwarderShipment))
+                                                if (!IsImporterTenantHasExportFeatureForExportShipments(importerTenant, ForwarderShipment,tenant))
                                                 {
                                                     queueservice.Complete(); 
                                                 }
