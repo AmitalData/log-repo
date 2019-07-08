@@ -2264,6 +2264,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\Delivery.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Direct.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\House.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\InsidePackage.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Master.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\OceanOrInlandPackage.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Payable.Generated.cs" />
@@ -2281,6 +2282,7 @@
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\DirectQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\HouseQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\HouseQueryService.Generated.cs" />
+    <Compile Include="ShipmentsModel\APIDataContract\QueryService\InsidePackageQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\MasterQueryService.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\MasterQueryService.Generated.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\QueryService\OceanOrInlandPackageQueryService.Generated.cs" />
