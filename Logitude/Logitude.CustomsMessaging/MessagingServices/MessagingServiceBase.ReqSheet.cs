@@ -37,6 +37,7 @@ using Logitude.Server.Tools.Utils;
 using Logitude.Customs.Def.Messaging.Customs;
 using System.Linq;
 using System.Configuration;
+using Logitude.Customs.BL.EntityUpdateServices;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -1249,6 +1250,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             get
             {
+                return CustomsDocumentUpdateService.HugeFileSizeSendToDCA;
+                
                 var my9mb = 9000000;
                 return my9mb;
             }
