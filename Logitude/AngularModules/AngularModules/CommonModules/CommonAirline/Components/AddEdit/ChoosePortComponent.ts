@@ -15,12 +15,19 @@ export class ChoosePortComponent extends BaseComponent {
     public ParentClass: DestinationClass;
     public ObjectTableName = "AirlineAreasPort";
     public ValidationErrorsList: string[] = [];
+    public ForceFocus: any ;
     constructor() {
         super();
     }
 
     SetDataContext(dataContext: DestinationClass) {
         this.ParentClass = dataContext;        
+    }
+
+    KeyDownEvent(event) {
+        if (event == 13 && (this.Port != null && this.PortId != null)) {
+            this.AddButtonClicked();
+        }
     }
 
     private portId: string;
@@ -64,6 +71,7 @@ export class ChoosePortComponent extends BaseComponent {
         if (errors.length == 0) {
             var newItem: DestinationClass = new DestinationClass(this.ParentClass.fatherComponent, this.Port,true)
             this.ParentClass.fatherComponent.ItemList.push(newItem);
+            this.ForceFocus = this.PortId;
             this.Port = null;
             this.PortId = null;
 
