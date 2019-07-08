@@ -196,7 +196,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
         {
             bool throwIt = false;
             string errorText = "";
-            if (!_InterfaceTenantDefinitionManagement.Active)
+            if (!_InterfaceTenantDefinitionManagement.OverrideActive)
             {
                 errorText = "!_InterfaceTenantDefinitionManagement.Active";
                 throwIt = true;
@@ -224,6 +224,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 return;
             }
+            NoteClientNoRequestSheet4U(RequestParams, errorText);
             var ex = new CustomsRequestsSheetDomainModelServiceException(
                CustomsRequestsSheetDomainModelServiceException.WhereEnum.InterfaceNotActiveOrBelongOurCompanyType, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
                    errorText, null);
