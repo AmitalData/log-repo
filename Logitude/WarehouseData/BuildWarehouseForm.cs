@@ -338,7 +338,12 @@ namespace WarehouseData
                         catch (Exception ex)
                         {
                             IsBuildDataRunning = false;
-                            MessageBox.Show( ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : ""), stepName);
+
+                            string message = ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : "");
+                            if (message.Length > 1500)  message = message.Substring(0, 1500);
+
+
+                            MessageBox.Show(message, stepName);
                         }
                     }
 
@@ -349,7 +354,9 @@ namespace WarehouseData
             catch (Exception ex)
             {
                 IsBuildDataRunning = false;
-                MessageBox.Show(ex.Message, ex.Message + (ex.InnerException!=null? ex.InnerException.ToString():""));
+                string message = ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : "");
+                if (message.Length > 1500) message = message.Substring(0, 1500);
+                MessageBox.Show(message);
 
             }
 
