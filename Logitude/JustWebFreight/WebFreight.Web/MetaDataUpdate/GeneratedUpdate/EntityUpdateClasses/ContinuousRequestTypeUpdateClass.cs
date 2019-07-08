@@ -71,6 +71,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.ContinuousRequestType",
 			      				    IsNew =  true,
 			      				    DBTableName =  "Customs.ContinuousRequestTypes",
+			      				    OldDBTableName =  "Customs.ContinuousRequestTypes",
 			      				    ObjectTableSingular =  "ContinuousRequestType",
 			      				    ObjectTablePlural =  "ContinuousRequestTypes",
 			      				    HasCustomFilter =  false,
@@ -104,7 +105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוג בקשה לתביעה",
 			      				    DefaultText =  "Continuous Request Type",
-			      				    Code =  "0649",
+			      				    Code =  "cc88",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -131,6 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
+					  						OldFieldName =  "Code",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -199,6 +201,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
+					  						OldFieldName =  "LocalName",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -267,6 +270,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
+					  						OldFieldName =  "SearchFields",
 					  						IsNew =  false,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -289,6 +293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SearchFields",
 					  						ListPropertyPath =  "SearchFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -331,6 +336,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
+					  						OldFieldName =  "EnglishName",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -354,6 +360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EnglishName",
 					  						ListPropertyPath =  "EnglishName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -398,6 +405,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
+					  						OldFieldName =  "Inactive",
 					  						IsNew =  true,
 					  						IsChecked =  true,
 					  						IsDeleted =  false,
@@ -420,6 +428,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Inactive",
 					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -466,7 +475,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        FeatureRepository featureRepository = new FeatureRepository(0); 
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
             IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-	        QueryGroup ContinuousRequestTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0649", Name = " Query Group" }, queryGroupRepository);
+	        QueryGroup ContinuousRequestTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "cc88", Name = " Query Group" }, queryGroupRepository);
 	        queryGroupRepository.SubmitChanges();
 
 	        ObjectTable ContinuousRequestTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ContinuousRequestType" && d.Tenant == 0).FirstOrDefault();
@@ -486,6 +495,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			 QueryColumn ContinuousRequestTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id, IndexOrder = 1, ObjectFieldId = ContinuousRequestTypeObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == ContinuousRequestTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
 
 			 QueryColumn ContinuousRequestTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id, IndexOrder = 2, ObjectFieldId = ContinuousRequestTypeObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == ContinuousRequestTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 100 }, queryColumnsRepository, tenantQueryColumns);
+
+			 QueryColumn ContinuousRequestTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ContinuousRequestTypeQuery.Id, IndexOrder = 3, ObjectFieldId = ContinuousRequestTypeObjectFields.Where(d => d.FieldName == "Inactive" && d.ObjectTableId == ContinuousRequestTypeObjectTable.Id).FirstOrDefault().Id, ColumnWidth = 50 }, queryColumnsRepository, tenantQueryColumns);
 	   
 	    }
 
