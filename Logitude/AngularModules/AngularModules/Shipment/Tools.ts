@@ -2018,12 +2018,18 @@ export class ShipmentGenerator {
                                     newRecord.MeasurementCode = itemGrouped.MeasurementCode;
                                     newRecord.MeasurementShortName = itemGrouped.MeasurementShortName;
                                     newRecord.IsBackToBack = myChargeType.IsBackToBack;
-                                    if (myChargeType.ChargesGroupCode == "FRT" || myChargeType.ChargesGroupCode == "SCH") {
-                                        newRecord.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
-                                    }
 
+                                    if (!AppTool.IsNullOrEmpty(myChargeType.PayablesDefaultCurrencyId)) {
+                                        newRecord.CurrencyId = myChargeType.PayablesDefaultCurrencyId;
+                                    }
                                     else {
-                                        newRecord.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                                        if (myChargeType.ChargesGroupCode == "FRT" || myChargeType.ChargesGroupCode == "SCH") {
+                                            newRecord.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                                        }
+
+                                        else {
+                                            newRecord.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                                        }
                                     }
 
                                     this.GetCurrencyCode(newRecord);
@@ -2584,12 +2590,17 @@ export class ShipmentGenerator {
             default: { break; }
         }
 
-        if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH") {
-            newRecord.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+        if (!AppTool.IsNullOrEmpty(item.PayablesDefaultCurrencyId)) {
+            newRecord.CurrencyId = item.PayablesDefaultCurrencyId;
         }
-
         else {
-            newRecord.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+            if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH") {
+                newRecord.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+            }
+
+            else {
+                newRecord.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+            }
         }
 
         this.GetCurrencyCode(newRecord);
@@ -2676,6 +2687,7 @@ export class ShipmentGenerator {
 
                             this.EntityPM.ShipmentReceivables.filter(f => f.MeasurementCode == "PRFR").forEach(item => {
                                 item.Quantity = ArrayTool.Sum(this.EntityPM.ShipmentReceivables.filter(d => d.ChargesGroupCode == "FRT" && AppTool.IsNullOrEmpty(d.ShipmentReceivableParentId)), "TotalAmount");
+                               
                             });
                         }
 
@@ -2709,13 +2721,19 @@ export class ShipmentGenerator {
                                         newReceivable.IsBackToBack = myChargeType.IsBackToBack;
                                         newReceivable.IsExpense = myChargeType.IsExpense;
 
-                                        if (myChargeType.ChargesGroupCode == "FRT" || myChargeType.ChargesGroupCode == "SCH") {
-                                            newReceivable.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                                        if (!AppTool.IsNullOrEmpty(myChargeType.ReceivablesDefaultCurrencyId)) {
+                                            newReceivable.CurrencyId = myChargeType.ReceivablesDefaultCurrencyId;
+                                        }
+                                        else {
+                                            if (myChargeType.ChargesGroupCode == "FRT" || myChargeType.ChargesGroupCode == "SCH") {
+                                                newReceivable.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+                                            }
+
+                                            else {
+                                                newReceivable.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+                                            }
                                         }
 
-                                        else {
-                                            newReceivable.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
-                                        }
                                         
                                         this.GetCurrencyCode(newReceivable);
                                         newReceivable.ProfitCurrencyExchangeRate = this.GetCurrencyRate(this.EntityPM.ProfitCurrencyId);
@@ -3283,6 +3301,7 @@ export class ShipmentGenerator {
         newRecord.IsExpense = item.IsExpense;
         newRecord.IsBackToBack = item.IsBackToBack;
 
+       
         switch (item.MeasurementCode) {
             case "GRWT": { newRecord.Quantity = this.EntityPM.GrossWeight; break; }
             case "CHWT": { newRecord.Quantity = this.EntityPM.ChargeableWeight; break; }
@@ -3297,12 +3316,18 @@ export class ShipmentGenerator {
             default: { break; }
         }
 
-        if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH") {
-            newRecord.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+        if (!AppTool.IsNullOrEmpty(item.ReceivablesDefaultCurrencyId)) {
+            newRecord.CurrencyId = item.ReceivablesDefaultCurrencyId;
         }
 
         else {
-            newRecord.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+            if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH") {
+                newRecord.CurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+            }
+
+            else {
+                newRecord.CurrencyId = SessionLocator.TenantPM.OtherChargesCurrencyId;
+            }
         }
 
         this.GetCurrencyCode(newRecord);
