@@ -373,6 +373,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                             {
                                                 item.Volume += inside.Volume;
                                             }
+                                            inside.VolumetricWeight = ComputeHelper.ComputeInsideVolumetricWeight(inside, entityPM);
+
                                         });
                                     }
                                 }

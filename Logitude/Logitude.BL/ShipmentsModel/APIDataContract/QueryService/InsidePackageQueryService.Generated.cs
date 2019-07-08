@@ -45,8 +45,14 @@ using Simplog.Data.ShipmentsModel;
 				{
 				   
 				   var temp = new InsidePackage(); 
-				   temp.Id = item.Id;
-				   temp.Type = item.PackageTypeCode;
+				   temp.Id = item.Id;			  
+				   if(item.PackageTypeId != null)
+				   {
+					   PackageTypeQueryService PackageTypeService0 = new PackageTypeQueryService(Tenant);
+					   					   temp.PackageType = PackageTypeService0.GetPackageTypeById(item.PackageTypeId,Tenant); 
+			       
+					   				   }
+				   
 				   temp.Quantity = item.Quantity;
 				   temp.Width = item.Width;
 				   temp.Length = item.Length;
@@ -92,8 +98,18 @@ using Simplog.Data.ShipmentsModel;
 					if(string.IsNullOrEmpty(temp.Id))
 					{
 						temp.Id = item.Id;
+					}					PackageTypeQueryService PackageTypePackageTypeService = new PackageTypeQueryService(Tenant);
+					if(item.PackageType != null)
+					{
+						var myPackageTypePM = PackageTypePackageTypeService.PackageTypeDataMappingAndValidatin(item.PackageType,Tenant,ComputingPartnerName);
+												if(myPackageTypePM != null)
+						{
+							temp.PackageTypeId = myPackageTypePM.Id;
+						}
+						 
 					}
-					temp.PackageTypeCode = item.Type;
+			
+					
 					temp.Quantity = item.Quantity;
 					temp.Width = item.Width;
 					temp.Length = item.Length;

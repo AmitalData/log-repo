@@ -22,7 +22,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 	    
     public string Id { get; set; }
     
-    public string Type { get; set; }
+    public PackageType PackageType { get; set; }
     
     public int? Quantity { get; set; }
     

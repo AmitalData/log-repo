@@ -228,6 +228,16 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return myResult;
         }
+
+
+        public static double? ComputeInsideVolumetricWeight(InsideShipmentPackagePM package, ShipmentPM entityPM)
+        {
+            double? myResult = null;
+            myResult = ComputePackageVolumetricWeight(package.Quantity, package.Width, package.Height, package.Length, package.Volume, package.Weight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
+
+            return myResult;
+        }
+
         public static double? ComputePackageVolumetricWeight(double? quantity, double? width, double? height, double? length, double? volume, double? weight, double? ratio, string dimentionCode, string volumeCode, string grossWeightCode, string chargeableWeightCode)
         {
             double? myWidth = null;
