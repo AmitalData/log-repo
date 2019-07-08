@@ -1827,7 +1827,7 @@ export class ShipmentTool {
                                 }
 
                                 if (itemPayable.Quantity != myQuantity) {
-                                    itemPayable.Quantity = AppTool.Round(myQuantity, 2);
+                                    itemPayable.Quantity = AppTool.Round(myQuantity, 3);
 
                                     if (itemPayable.IsChargeBySteps) {
                                         //this.SetPayableUnitPriceBySteps(itemPayable, this.fatherComponent.BaseQuote);
@@ -1861,7 +1861,7 @@ export class ShipmentTool {
                                 }
 
                                 if (itemReceivable.Quantity != myQuantity) {
-                                    itemReceivable.Quantity = AppTool.Round(myQuantity, 2);
+                                    itemReceivable.Quantity = AppTool.Round(myQuantity, 3);
 
                                     if (itemReceivable.IsChargeBySteps) {
                                         //this.SetReceivableUnitPriceBySteps(itemReceivable, this.fatherComponent.BaseQuote);
