@@ -73,9 +73,9 @@ namespace CommunicationWorkerRole
                     //TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
                     Task.Status = null;
                     Task.Version = Task.Version + 1;
-                   
-                    var Msg = "The Task " + Task.Name + " Stopped UpNormaly and reschedualed to start again on " + Task.NextRunTime; 
-                    LogInfoToDB(Msg, Task.Id);
+
+                    var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
+                    LogInfoToDB(Msg, Task);
                     AddSchedulerQueue(Task);
                     //service.Update(Task);
                 }
@@ -84,8 +84,9 @@ namespace CommunicationWorkerRole
             //Thread.Sleep(new TimeSpan(0, 1, 0));
         }
 
-        public void LogInfoToDB(string Message, string TaskId)
+        public void LogInfoToDB(string Message, TasksSchedulerPM Task)
         {
+            var Tenant = Task.Tenant;
             if (!string.IsNullOrEmpty(Message))
             {
                 IWebFreightContext objectContext = WebFreightContext.GetContext(Tenant);
@@ -93,36 +94,39 @@ namespace CommunicationWorkerRole
                 SchedulerLogsService SchedulerLogsService = new SchedulerLogsService(objectContext, Tenant);
                 TaskSchedulerHistoryQuery TaskSchedulerHistoryQuery = new TaskSchedulerHistoryQuery(Tenant);
                 SchedulerLogsQuery SchedulerLogsQuery = new SchedulerLogsQuery(Tenant);
-                var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetLastTaskSchedulerHistoryPM(TaskId);
-                if (TaskSchedulerHistory != null)
+                TaskSchedulerHistoryPM TaskSchedulerHistory = new TaskSchedulerHistoryPM() { Tenant = Tenant, TaskId = Task.Id };
+                TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
+                TaskSchedulerHistory.StartDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
+                TaskSchedulerHistory.EndDateTimeUTC = DateTime.UtcNow;
+                TaskSchedulerHistory.StartDateTimeUTC = DateTime.UtcNow;
+
+                //var TaskSchedulerHistory = TaskSchedulerHistoryQuery.GetLastTaskSchedulerHistoryPM(TaskId);
+                //if (TaskSchedulerHistory != null)
+                //{
+
+                TaskSchedulerHistory.LogType = "Warning";
+                TaskSchedulerHistory.RunResult = "Warning";
+                TaskSchedulerHistory.LogFirstLine = Message;
+                TaskSchedulerHistoryService.Create(TaskSchedulerHistory);
+
+                StringBuilder MyFinalLog = new StringBuilder();
+                MyFinalLog.AppendLine(Message.ToString());
+                SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskSchedulerHistory.Id);
+                if (SchedulerLog == null)
                 {
-
-                    TaskSchedulerHistory.LogType = "Warning";
-                    TaskSchedulerHistory.RunResult = "Warning";
-                    TaskSchedulerHistory.LogFirstLine = Message;
-
-                    StringBuilder MyFinalLog = new StringBuilder();
-                    MyFinalLog.AppendLine(Message.ToString());
-                    SchedulerLogsPM SchedulerLog = SchedulerLogsQuery.GetSchedulerLogsByHistory(TaskSchedulerHistory.Id);
-                    if (SchedulerLog == null)
-                    {
-                        SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskSchedulerHistory.Id };
-                        SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
-                        SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
-                        SchedulerLogsService.Create(SchedulerLog);
-                    }
-                    else
-                    {
-                        SchedulerLog.Log += StringHelper.TruncateLongString(Environment.NewLine + MyFinalLog.ToString(), 4000);
-                        SchedulerLogsService.Update(SchedulerLog);
-                    }
-
-
-                    TaskSchedulerHistory.EndDateTime = TenantServerConfigration.GetCurrentDateTime(TaskSchedulerHistory.Tenant);
-                    TaskSchedulerHistory.EndDateTimeUTC = DateTime.UtcNow;
-                    TaskSchedulerHistoryService.Update(TaskSchedulerHistory);
-
+                    SchedulerLog = new SchedulerLogsPM() { Tenant = Tenant, HistoryId = TaskSchedulerHistory.Id };
+                    SchedulerLog.CreateDate = TenantServerConfigration.GetCurrentDateTime(SchedulerLog.Tenant);
+                    SchedulerLog.Log = StringHelper.TruncateLongString(MyFinalLog.ToString(), 4000);
+                    SchedulerLogsService.Create(SchedulerLog);
                 }
+                else
+                {
+                    SchedulerLog.Log += StringHelper.TruncateLongString(Environment.NewLine + MyFinalLog.ToString(), 4000);
+                    SchedulerLogsService.Update(SchedulerLog);
+                }
+                 
+
+                //}
             }
         }
 
@@ -135,6 +139,8 @@ namespace CommunicationWorkerRole
             {
                 Task.Status = null;
                 Task.Version = Task.Version + 1;
+                var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
+                LogInfoToDB(Msg, Task);
                 AddSchedulerQueue(Task);
             }
         }
