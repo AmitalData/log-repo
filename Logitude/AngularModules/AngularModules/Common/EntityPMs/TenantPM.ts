@@ -655,6 +655,11 @@ export class TenantPM {
     public set CheckDigitControlAlgorithmCode(newValue: string) { if (this.checkDigitControlAlgorithmCode != newValue) { this.checkDigitControlAlgorithmCode = newValue; this.MarkAsDirty("CheckDigitControlAlgorithmCode"); } }
        
 	 
+    private applyVATForAllPartners: boolean;
+    public get ApplyVATForAllPartners() { return this.applyVATForAllPartners; }
+    public set ApplyVATForAllPartners(newValue: boolean) { if (this.applyVATForAllPartners != newValue) { this.applyVATForAllPartners = newValue; this.MarkAsDirty("ApplyVATForAllPartners"); } }
+       
+	 
 
     public OldEntityPM: TenantPM;
 		
