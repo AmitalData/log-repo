@@ -1449,7 +1449,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                         //AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal)
                         //);
                         //parser.ParseIt();
-                        bool toComplete = false;
+                        bool toComplete = true;
                         if (!toComplete)
                         {
                             throw new Exception("ddd");
