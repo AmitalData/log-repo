@@ -237,7 +237,6 @@ namespace WarehouseData
 
                             #endregion
 
-                            warehouseHelper.BuildCustomObjectFieldsTable(destinationConnectionString);
 
                             #region Create and Build Dimensions Table
 
@@ -245,8 +244,15 @@ namespace WarehouseData
                               stepName = "BuildDateDimensionsTable";
                             warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
 
-                            stepName = "RunSqlFunctions";
-                            warehouseHelper.RunSqlFunctions(destinationConnectionString);
+                            Stopwatch stopWatchRunOtherScripte = new Stopwatch();
+                            stopWatchRunOtherScripte.Start();
+                            stepName = "RunOtherScripte";
+                            warehouseHelper.RunOtherScripte(destinationConnectionString);
+                            stopWatchRunOtherScripte.Stop();
+                            TimeSpan stopWatchRunOtherScripteTs = stopWatchRunOtherScripte.Elapsed;
+                            SetControlPropertyValue("ForeColor", Color.Green, "Ports");
+                            SetControlPropertyValue("Text", "RunOtherScripte ( " + stopWatchRunOtherScripteTs.ToString(@"hh\:mm\:ss") + " )", "Ports");
+
 
 
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
