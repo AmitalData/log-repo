@@ -1048,9 +1048,7 @@ export class FCLChargesComponent extends BaseComponent implements OnDestroy {
 
             this.UpdateQuantitiesMessage = updateMessage;
             this.UpdateQuantitiesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
-            this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
-            this.UpdateCharges();
-            this.UpdateQuantitiesClicked();
+            this.IsUpdateQuantitiesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;        
         }
     }
     UpdateQuantitiesClicked() {
