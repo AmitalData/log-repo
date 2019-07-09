@@ -327,6 +327,16 @@ export class TariffLinePM {
     public set AddedManually(newValue: boolean) { if (this.addedManually != newValue) { this.addedManually = newValue; this.MarkAsDirty("AddedManually"); } }
        
 	 
+    private isFromAllOtherPorts: boolean;
+    public get IsFromAllOtherPorts() { return this.isFromAllOtherPorts; }
+    public set IsFromAllOtherPorts(newValue: boolean) { if (this.isFromAllOtherPorts != newValue) { this.isFromAllOtherPorts = newValue; this.MarkAsDirty("IsFromAllOtherPorts"); } }
+       
+	 
+    private isToAllOtherPorts: boolean;
+    public get IsToAllOtherPorts() { return this.isToAllOtherPorts; }
+    public set IsToAllOtherPorts(newValue: boolean) { if (this.isToAllOtherPorts != newValue) { this.isToAllOtherPorts = newValue; this.MarkAsDirty("IsToAllOtherPorts"); } }
+       
+	 
 
     public OldEntityPM: TariffLinePM;
 	
