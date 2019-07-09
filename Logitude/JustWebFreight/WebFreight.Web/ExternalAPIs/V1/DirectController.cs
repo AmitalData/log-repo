@@ -105,7 +105,36 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 {
                                     foreach (OceanOrInlandPackage item in entity.OceanOrInlandPackages)
                                     {
-                                        if (item.PackageType == null)
+
+                                        if (item.InsidePackages != null && item.InsidePackages.Count > 0)
+                                        {
+                                            foreach (InsidePackage itemInside in item.InsidePackages)
+                                            {
+                                                if (itemInside.PackageType != null)
+                                                {
+                                                    Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PackageTypeQueryService PackageTypeService0 = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.PackageTypeQueryService(authToken.Tenant);
+                                                    PackageTypePM PackageTypePM = PackageTypeService0.PackageTypeDataMappingAndValidatin(itemInside.PackageType, authToken.Tenant);
+                                                    if (PackageTypePM != null)
+                                                    {
+                                                        if (PackageTypePM.IsContainer == true)
+                                                        {
+                                                            throw new ApplicationException("Invalid Inside Package Type Code") ;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        itemInside.PackageType = null;
+                                                    }
+                                                }
+
+                                            }
+
+                                        }
+                                             
+                                        
+
+
+                                            if (item.PackageType == null)
                                         {
                                             string message = entity.ShipmentType.Code.Contains("LCL") ? "Package Type is required" : "Container Type is required";
                                             throw new ApplicationException(message);
@@ -115,6 +144,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                         {
                                             if (entity.ShipmentType.Code.Contains("FCL") || entity.ShipmentType.Code.Contains("FTL"))
                                             {
+
                                                 if (item.Pieces == null || item.Pieces == 0)
                                                 {
                                                     item.Pieces = 1;
@@ -377,16 +407,57 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         {
                             foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
                             {
-                                if(entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "FTL")
+
+                                if (entityPM.ShipmentTypeId == "FCLD" || entityPM.ShipmentTypeId == "FTL")
                                 {
-                                    item.IsContainer = true;
+                                    item.IsContainer = true;                                   
                                 }
 
                                 if (item.Width != null || item.Height != null || item.Length != null)
                                 {
                                     item.Volume = ComputeHelper.ComputeVolume(item, entityPM);
                                 }
-                                
+                                if (!item.IsContainer)
+                                {
+                                    if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
+                                    {
+                                        throw new ApplicationException("Inside Packages allowed in FCL/FTL shipments only");
+                                    }
+                                    
+                                }
+
+                                else
+                                {
+                                    if (item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
+                                    {
+                                   
+                                        item.Weight = 0;
+                                        item.Volume = 0;
+                                        item.InsideShipmentPackages.ForEach(inside =>
+                                        {
+                                            if (inside.Weight != null)
+                                            {
+                                                item.Weight += inside.Weight;
+                                            }
+
+                                            if (inside.Volume != null)
+                                            {
+                                                item.Volume += inside.Volume;
+                                            }
+
+                                            if (inside.Quantity == null)
+                                            {
+                                                throw new ApplicationException("Inside Packages Quantity is required");
+                                            }
+                                            inside.Volume = ComputeHelper.ComputeInsideVolume(inside, entityPM);
+
+                                            inside.VolumetricWeight = ComputeHelper.ComputeInsideVolumetricWeight(inside, entityPM);
+
+                                        });
+                                    }
+                                }
+
+
                                 item.VolumetricWeight = ComputeHelper.ComputeVolumetricWeight(item, entityPM);
                             }
                         }
