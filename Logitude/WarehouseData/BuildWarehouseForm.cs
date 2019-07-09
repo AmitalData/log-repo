@@ -243,15 +243,9 @@ namespace WarehouseData
 
                               stepName = "BuildDateDimensionsTable";
                             warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
-
-                            Stopwatch stopWatchRunOtherScripte = new Stopwatch();
-                            stopWatchRunOtherScripte.Start();
                             stepName = "RunOtherScripte";
                             warehouseHelper.RunOtherScripte(destinationConnectionString);
-                            stopWatchRunOtherScripte.Stop();
-                            TimeSpan stopWatchRunOtherScripteTs = stopWatchRunOtherScripte.Elapsed;
-                            SetControlPropertyValue("ForeColor", Color.Green, "Ports");
-                            SetControlPropertyValue("Text", "RunOtherScripte ( " + stopWatchRunOtherScripteTs.ToString(@"hh\:mm\:ss") + " )", "Ports");
+               
 
 
 
