@@ -145,10 +145,10 @@ namespace CommunicationWorkerRole
                                     UpdateReportExecutionLogArgs updateReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository,  ExceptionMessage = "Report fliter not found", queueservice = queueservice, StatusCode = "F" };
                                     this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
                                     queueservice.Complete();
-
+                                    LogDoneItemInMemory();
                                 }
 
-                                LogDoneItemInMemory();
+                             
                             }
                             catch (Exception ex)
                             {
@@ -210,6 +210,7 @@ namespace CommunicationWorkerRole
                     handleReportExecutionLogArgs.StatusCode = "D";
                     this.UpdateReportExecutionLog(handleReportExecutionLogArgs);
                     queueservice.Complete();
+                    LogDoneItemInMemory();
                 }
                 else
                 {
