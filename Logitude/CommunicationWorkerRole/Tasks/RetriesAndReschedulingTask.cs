@@ -16,7 +16,7 @@ namespace CommunicationWorkerRole.Tasks
         }
         public override void StartTask()
         {
-            throw new System.Exception("Exceptins to test Retries And Rescheduling !");
+            //throw new System.Exception("Exceptins to test Retries And Rescheduling !");
 
         }
     }
