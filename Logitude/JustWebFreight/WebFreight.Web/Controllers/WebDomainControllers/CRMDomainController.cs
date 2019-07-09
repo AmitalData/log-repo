@@ -51,6 +51,28 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
     {
         #region Ticket
 
+        public HttpResponseMessage GetUpdateCorrespondence(string entityId, bool rightToLeft)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+                CRMDomainService crmDomain = new CRMDomainService();
+                CorrespondencePM entityPM = crmDomain.GetSingleCorrespondencePM(entityId, tenant);
+                entityPM.RightToLeft = rightToLeft;
+                crmDomain.UpdateCorrespondence(entityPM);
+
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetActiveSLAbyTenant()
         {
             try
