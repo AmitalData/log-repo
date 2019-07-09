@@ -52,7 +52,7 @@ namespace WebFreight.Web.Monitoring
             List<GlobalDB> GlobalDatabases = new List<GlobalDB>();
 
             bool isFailed = false;
-
+            bool IsWaiting = false;
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
@@ -76,14 +76,24 @@ namespace WebFreight.Web.Monitoring
             {
                 CommonDataContext Context = CommonDataContext.GetContextByDBId(db.Id);
 
-                DateTime twoDaysBefore = todayDateTime.AddDays(-1);
+                DateTime oneDaysBefore = todayDateTime.AddDays(-1);
 
                 try
                 {
                     isFailed = (from a in Context.CommunicationLogs
                                 where a.CommunicationStatusTypeCode == "f"
-                                && (a.CreateDateUTC > twoDaysBefore) && ((a.To == "INTTRA" && a.Subject== "Shipping Instructions") || (a.From=="INTTRA" && a.Subject== "Status")) 
+                                 && a.To == "INTTRA" && a.Subject== "Shipping Instructions"
                                 select a).Any();
+
+                    IsWaiting = (from b in Context.CommunicationLogs
+                                 where
+                                 b.CommunicationStatusTypeCode == "W"
+                                 &&  ((b.To == "INTTRA" && b.Subject == "Shipping Instructions") || (b.From == "INTTRA" && b.Subject == "Status"))
+                                && (b.CreateDateUTC > oneDaysBefore)
+                                 && (System.Data.Entity.DbFunctions.DiffMinutes(b.CreateDateUTC, DateTime.Now) > 5)
+                                 select b).Any();
+
+                   
                 }
 
                 catch (Exception errorInfo)
@@ -91,13 +101,13 @@ namespace WebFreight.Web.Monitoring
                     ExceptionHandler.HandleException(errorInfo, todayDateTime, 0, "", "INTTRA", "Bug in AnyFailedStatus Method : IsFaild = (from a in Context.CommunicationLogs [INTTRA] ...", null);
                 }
 
-                if (isFailed)
+                if (isFailed || IsWaiting)
                 {
                     break;
                 }
             }
 
-            return isFailed;
+            return (isFailed || IsWaiting);
         }
     }
 }
