@@ -19,6 +19,38 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
     public partial class LedgerTransactionBalanceServiceUnderTest
     {
+        [TestMethod]
+        public void Run_ByAccountingDate_YearTransferButVoided_Ignored()
+        {
+            bool voidedYearTransferTest = true;
+            bool myYearTransferTest = true;
+            var myIAccountingContext = GetIAccountingContextDateType(myYearTransferTest, voidedYearTransferTest);
+            var fltr = new LedgerTransactionBalanceFilter()
+            {
+                Tenant = _MyTenant,
+                GLAccountId = _MainGLAccountIdTeva,
+                IncludeRelatedCurrenciesAccount = false,
+                IncludeChildAccounts = false,
+                //CurrencyId = _CurrencyIdEUR,
+                From = new DateTime(2018, 01, 1),
+                To = new DateTime(2018, 11, 1),
+                PageSize = 100,
+                PageStartAtRecordIndex = 0,
+                DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate
+            };
+            var classUnderTest = new LedgerTransactionBalanceService(myIAccountingContext, fltr);
+
+
+            //Act 
+            classUnderTest.Run();
+            Assert.IsNotNull(classUnderTest.Response);
+            Assert.AreEqual(100m, classUnderTest.Response.StartBalanceLocal);
+            Assert.AreEqual(400m, classUnderTest.Response.EndBalanceLocal);
+            Assert.IsNotNull(classUnderTest.Response.MyLedgerTransactionList);
+            Assert.AreEqual(3, classUnderTest.Response.MyLedgerTransactionList.Count());
+            Assert.AreEqual("1", classUnderTest.Response.MyLedgerTransactionList.First().Id);
+            Assert.AreEqual("3", classUnderTest.Response.MyLedgerTransactionList.Last().Id);
+        }
 
         [TestMethod]
         public void Run_ByAccountingDate_YearTransfer()
@@ -183,7 +215,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
 
 
-        IAccountingContext GetIAccountingContextDateType(bool myYearTransferTest=false)
+        IAccountingContext GetIAccountingContextDateType(bool myYearTransferTest=false, bool voidedYearTransferTest = false)
         {
             var accountingCurrency = _CurrencyIdUSD;
             var myGLAccount = new GLAccount()
@@ -304,6 +336,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             };
 
             var mockJournal = new MockObjectSet<Journal>();
+
             if (myYearTransferTest)
             {
                 var l=listLedgerTransaction.First();
@@ -315,6 +348,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                         AccountingDate = l.AccountingDate,
                         Tenant = l.Tenant,
                         AccountingEntityCode = "11",
+                        VoidedByJournalId= voidedYearTransferTest? "voidJ":""
                     }
                 );
 
