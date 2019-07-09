@@ -1698,9 +1698,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
                     }
 
                     else {
-                        this.saveAfterDeletePackages = true;
-                        this.StartDelete();
-                        this.CurrentSession.CurrentEditComponent.SaveChanges();
+                        this.CreatePackagesFromExcel();
                     }
                 }
             }
