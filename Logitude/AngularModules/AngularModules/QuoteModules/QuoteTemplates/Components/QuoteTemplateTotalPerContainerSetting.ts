@@ -88,7 +88,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
     }
 
 
-
+    //ShowTotalSplitToMultipleCurrencies
     get TotalPerContainersCurrencyType() {
         var totalPerContainersCurrencyType: string = "";
         if (this.QuoteTemplateSettingPM) totalPerContainersCurrencyType = this.QuoteTemplateSettingPM.TotalPerContainersCurrencyType;
@@ -99,6 +99,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
             this.QuoteTemplateSettingPM.TotalPerContainersCurrencyType = value;
         }
     }
+
 
     get ShowTitleTotalPerContainersTable() {
         var showTitleTotalPerContainersTable: boolean = false;

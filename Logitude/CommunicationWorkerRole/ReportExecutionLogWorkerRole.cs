@@ -56,7 +56,7 @@ namespace CommunicationWorkerRole
     class ReportExecutionLogWorkerRole : WorkerEntryPoint
     {
 
-        IQueueService queueservice;
+        DbQueueService queueservice;
         int tenant = 0;
       
 
@@ -144,11 +144,11 @@ namespace CommunicationWorkerRole
                                 {
                                     UpdateReportExecutionLogArgs updateReportExecutionLogArgs = new UpdateReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository,  ExceptionMessage = "Report fliter not found", queueservice = queueservice, StatusCode = "F" };
                                     this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
-                                    queueservice.Complete();
-
+                                    //queueservice.Complete();
+                                    LogDoneItemInMemory();
                                 }
+                                queueservice.Complete();
 
-                                LogDoneItemInMemory();
                             }
                             catch (Exception ex)
                             {
@@ -196,7 +196,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void BuildReport(ReportFliter reportFliter, ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository, IQueueService queueservice , QueueResponse response)
+        private void BuildReport(ReportFliter reportFliter, ReportExecutionLog reportExecutionLog, ReportExecutionLogRepository reportExecutionLogRepository, DbQueueService queueservice , QueueResponse response)
         {
 
             try
@@ -209,7 +209,8 @@ namespace CommunicationWorkerRole
                 {
                     handleReportExecutionLogArgs.StatusCode = "D";
                     this.UpdateReportExecutionLog(handleReportExecutionLogArgs);
-                    queueservice.Complete();
+                    //queueservice.Complete();
+                    LogDoneItemInMemory();
                 }
                 else
                 {
@@ -234,30 +235,24 @@ namespace CommunicationWorkerRole
                 ExceptionHandler.HandleException(updateReportExecutionLogArgs.Exception, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
             }
 
-
-            if (updateReportExecutionLogArgs.ReportExecutionLog != null && updateReportExecutionLogArgs.ReportExecutionLogRepository != null)
+            if (updateReportExecutionLogArgs.response != null && updateReportExecutionLogArgs.response.MessageValues.Keys.Contains("ReportExecutionLogId") && !updateReportExecutionLogArgs.IsInternalException)
             {
-                if (updateReportExecutionLogArgs.response != null && updateReportExecutionLogArgs.response.MessageValues.Keys.Contains("ReportExecutionLogId") && !updateReportExecutionLogArgs.IsInternalException)
+                if (updateReportExecutionLogArgs.response.RetryNumber <= 1)
                 {
-                    if (updateReportExecutionLogArgs.response.RetryNumber <= 1)
-                    {
-                        updateReportExecutionLogArgs.queueservice.Delay(new TimeSpan(0, 0, 0, 5));
-                    }
-
-                    if (updateReportExecutionLogArgs.response.RetryNumber >= 2)
-                    {
-                        queueservice.CompleteAsFailed();
-                        if (isupdateReportExecutionLog) this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
-
-                    }
+                    updateReportExecutionLogArgs.queueservice.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), updateReportExecutionLogArgs.response.MessageId);
                 }
-                else
+
+                if (updateReportExecutionLogArgs.response.RetryNumber >= 2)
                 {
                     queueservice.CompleteAsFailed();
                     if (isupdateReportExecutionLog) this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
-                }
 
-                
+                }
+            }
+            else
+            {
+                queueservice.CompleteAsFailed();
+                if (isupdateReportExecutionLog) this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
             }
 
          
@@ -314,7 +309,7 @@ namespace CommunicationWorkerRole
         public ReportExecutionLogRepository ReportExecutionLogRepository { get; set; }
         public string StatusCode { get; set; }
         public string ExceptionMessage { get; set; }
-        public IQueueService queueservice { get; set; }
+        public DbQueueService queueservice { get; set; }
         public bool IsInternalException { get; set; }
         public QueueResponse response { get; set; }
         

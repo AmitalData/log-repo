@@ -237,14 +237,22 @@ namespace WarehouseData
 
                             #endregion
 
+
                             #region Create and Build Dimensions Table
 
 
-                            stepName = "BuildDateDimensionsTable";
+                              stepName = "BuildDateDimensionsTable";
                             warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
 
-                            stepName = "RunSqlFunctions";
-                            warehouseHelper.RunSqlFunctions(destinationConnectionString);
+                            Stopwatch stopWatchRunOtherScripte = new Stopwatch();
+                            stopWatchRunOtherScripte.Start();
+                            stepName = "RunOtherScripte";
+                            warehouseHelper.RunOtherScripte(destinationConnectionString);
+                            stopWatchRunOtherScripte.Stop();
+                            TimeSpan stopWatchRunOtherScripteTs = stopWatchRunOtherScripte.Elapsed;
+                            SetControlPropertyValue("ForeColor", Color.Green, "Ports");
+                            SetControlPropertyValue("Text", "RunOtherScripte ( " + stopWatchRunOtherScripteTs.ToString(@"hh\:mm\:ss") + " )", "Ports");
+
 
 
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
@@ -336,7 +344,12 @@ namespace WarehouseData
                         catch (Exception ex)
                         {
                             IsBuildDataRunning = false;
-                            MessageBox.Show( ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : ""), stepName);
+
+                            string message = ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : "");
+                            if (message.Length > 1500)  message = message.Substring(0, 1500);
+
+
+                            MessageBox.Show(message, stepName);
                         }
                     }
 
@@ -347,7 +360,9 @@ namespace WarehouseData
             catch (Exception ex)
             {
                 IsBuildDataRunning = false;
-                MessageBox.Show(ex.Message, ex.Message + (ex.InnerException!=null? ex.InnerException.ToString():""));
+                string message = ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : "");
+                if (message.Length > 1500) message = message.Substring(0, 1500);
+                MessageBox.Show(message);
 
             }
 

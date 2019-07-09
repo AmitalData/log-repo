@@ -42,6 +42,12 @@ SET @MyValueOut = CONVERT(NUMERIC(38,3), @FieldValue)
 end
 
 
+ELSE if(@DataTypeCode = ''Text'' or @DataTypeCode = ''nText'') 
+begin 
+SET @MyValueOut = @FieldValue;
+end
+
+
 ELSE begin set @MyValueOut = null; end
 
   RETURN(@MyValueOut); 

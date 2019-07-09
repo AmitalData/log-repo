@@ -1,7 +1,6 @@
-import {Component, AfterContentInit, Output, EventEmitter, ChangeDetectorRef, OnDestroy}  from '@angular/core';
+import {Component, AfterContentInit, Output, EventEmitter, OnDestroy}  from '@angular/core';
 import {EntityArgs} from '../DataContracts/EntityArgs';
 import {BaseComponent} from '../Components/LogitudeComponents/BaseComponent';
-import {UIProperty, UIProperties}  from '../Components/LogitudeComponents/UIProperties'
 import {ObjectFieldPM} from '../EntityPMs/ObjectFieldPM';
 import {SessionInfo} from '../Utilities/SessionInfo';
 import { AppTool } from '../Tools';
@@ -16,7 +15,7 @@ declare var window: any;
 
 export class GeneratedComponent extends BaseComponent implements AfterContentInit, OnDestroy {
     public EntityPM: any;
-    public EntityArgs: EntityArgs;
+    //public EntityArgs: EntityArgs;
     public ObjectTableId: string;
     public ObjectTableName: string;
     public ScreenCode: string;
@@ -26,10 +25,8 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     public ShowNoFieldsText: boolean = false;
     ShowTitle: boolean = false;
     public IsCustomerCare: boolean = false;
-
     @Output() LoadCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-    constructor(private cd: ChangeDetectorRef) {
+    constructor(private entityArgs: EntityArgs) {
         super();
         this.IsCustomerCare = SessionLocator.LoggedUserPM.IsCustomerCare;
 
@@ -49,19 +46,19 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private Listen() {
-        if (this.EntityArgs) {
-            if (this.EntityArgs.EditComponent) {
+        if (this.entityArgs) {
+            if (this.entityArgs.EditComponent) {
 
-                this.SaveCompletedEvent = this.EntityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
-                        this.EntityPM = this.EntityArgs.EditComponent.EntityPM;
+                        this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                         this.BuildScreen();                        
                     }
                 });
 
-                this.LoadCompletedEvent = this.EntityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                     if (isLoadSuccess) {
-                        this.EntityPM = this.EntityArgs.EditComponent.EntityPM;
+                        this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                         this.BuildScreen();
                     }
                 });
