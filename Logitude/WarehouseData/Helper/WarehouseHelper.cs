@@ -454,18 +454,8 @@ namespace WarehouseData.Helper
 
         private string CreateCustomObjectFieldsTempTable(string connectionString)
         {
-
-            int i = 1;
-            string fieldsName = string.Empty;
-            while (i <= CustomFieldsCount)
-            {
-                fieldsName += "Field" + i + "DataType varchar(10) ,";
-                i += 1;
-            }
-
-
             string tableName = "dw_CustomObjectFields";
-            string cmd = "If(OBJECT_ID('tempdb..#" + tableName + "Temp') Is Not Null) Begin  Drop Table #" + tableName + "Temp End ; CREATE TABLE #" + tableName + "Temp (Tenant int not null,ObjectTableName varchar(50)," + fieldsName + ");";
+            string cmd = "If(OBJECT_ID('tempdb..#" + tableName + "Temp') Is Not Null) Begin  Drop Table #" + tableName + "Temp End ; CREATE TABLE #" + tableName + "Temp (Tenant int not null,ObjectTableName varchar(50),CustomFields  varchar(4000));";
       
             return cmd;
         }
@@ -473,6 +463,7 @@ namespace WarehouseData.Helper
         private string FillCustomObjectFieldsTempTable(int tenant, DataTable customObjectFieldsTable ,bool isIncrementDataWarehouse)
         {
             string result = "";
+            string customFields = "";
             string customObjectFieldTableName = isIncrementDataWarehouse ? "dw_CustomObjectFields" : "#dw_CustomObjectFieldsTemp";
             List<string> tablesAddedCustomField = new List<string>();
 
@@ -485,19 +476,15 @@ namespace WarehouseData.Helper
             foreach (var customObjectFieldsGroup in customObjectFieldsGroups)
             {
                 
-                string sqlFieldName = "(Tenant,ObjectTableName,";
-                string sqlFieldTypeValue = " Values (" + tenant.ToString() + ",'ObjectTableName'" + ",";
 
                 List<DataRow> fields = customObjectFieldsGroup.ToList();
                 string objectTableName = string.Empty;
                 foreach (DataRow row in fields)
                 {
                     string fieldName = row["FieldName"].ToString();
-                    string dataTypeCode = "'" + row["DataTypeCode"].ToString() + "'";
+                    string dataTypeCode = row["DataTypeCode"].ToString();
                     string objectTableId = row["ObjectTableId"].ToString();
 
-                    sqlFieldName += fieldName + "DataType ,";
-                    sqlFieldTypeValue += dataTypeCode + ",";
 
                     var table = tableLists.Where(d => d.ObjectTableId == objectTableId).FirstOrDefault();
                     if (table != null)
@@ -505,20 +492,10 @@ namespace WarehouseData.Helper
                         objectTableName = table.TableName;
                         tablesAddedCustomField.Add(objectTableName);
                     }
-
+                    customFields += (fieldName + ":" + dataTypeCode + ",");
                 }
 
-
-                sqlFieldName += ")";
-                sqlFieldName = sqlFieldName.Replace(",)", ")");
-                sqlFieldTypeValue += ")";
-
-
-                sqlFieldTypeValue = sqlFieldTypeValue.Replace("ObjectTableName", objectTableName);
-                sqlFieldTypeValue = sqlFieldTypeValue.Replace(",)", ")");
-   
-
-                result += "insert into " + customObjectFieldTableName + " " + sqlFieldName + sqlFieldTypeValue + "\n";
+                result += "insert into " + customObjectFieldTableName + " (Tenant, ObjectTableName , CustomFields) Values (" + tenant.ToString() + ", '" + objectTableName + "' , '" + customFields + "') \n";
             }
 
             foreach (string tableName in TableUsedCustomFields)
@@ -526,7 +503,7 @@ namespace WarehouseData.Helper
                 var table = tablesAddedCustomField.Where(d => d == tableName).FirstOrDefault();
                 if (table == null)
                 {
-                    result += "insert into " + customObjectFieldTableName + " (Tenant, ObjectTableName ) Values (" + tenant.ToString() + ", '" + tableName + "' ) \n";
+                    result += "insert into " + customObjectFieldTableName + " (Tenant, ObjectTableName , CustomFields) Values (" + tenant.ToString() + ", '" + tableName + "' , null) \n";
 
                 }
             }
@@ -589,10 +566,9 @@ namespace WarehouseData.Helper
                 while (i <= CustomFieldsCount)
                 {
                     result += "@Field" + i + ",";
-                    result += "@Field" + i + "DataTypeCode,"; 
                     i += 1;
                 }
-  
+                result += "@CustomFields,";
                 result += "^";
                 result = result.Replace(",^", "");
                 sql = sql.Replace("@CursorCustomFieldsVariable", result);
@@ -611,10 +587,10 @@ namespace WarehouseData.Helper
                 while (i <= CustomFieldsCount)
                 {
                     result += "dw_Shipments.Field" + i + ",";
-                    result += "dw_CustomObjectFields.Field" + i + "DataType,";
-
                     i += 1;
                 }
+                result += "dw_CustomObjectFields.CustomFields,";
+
                 result += "^";
                 result = result.Replace(",^", "");
                 sql = sql.Replace("@dw_Shipments.CustomFieldsVariable", result);
@@ -633,7 +609,7 @@ namespace WarehouseData.Helper
                 result = string.Empty;
                 while (i <= CustomFieldsCount)
                 {
-                    result += "dbo.ResolveCustomFieldValue(@Field" + i + ",@Field" + i + "DataTypeCode)" + (i < CustomFieldsCount ? "," : "");
+                    result += "dbo.ResolveCustomFieldValue(@Field" + i + ",'Field" + i + "' ,@CustomFields)" + (i < CustomFieldsCount ? "," : "");
 
                     i += 1;
                 }
@@ -673,10 +649,10 @@ namespace WarehouseData.Helper
                 while (i <= CustomFieldsCount)
                 {
                     result += "   declare @Field" + i + " as varchar(2000) \r\n";
-                    result += "   declare @Field" + i + "DataTypeCode as varchar(10) \r\n";
-
-                        i += 1;
+             
+                    i += 1;
                 }
+                result += "   declare @CustomFields as varchar(4000) \r\n";
 
                 //DataTypeCode
                 sql = sql.Replace("--@[DeclareCustomFieldsVariable]", result);
