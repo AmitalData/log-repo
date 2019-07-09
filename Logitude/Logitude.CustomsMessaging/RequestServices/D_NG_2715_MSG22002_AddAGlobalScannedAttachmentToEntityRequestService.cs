@@ -210,6 +210,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                         relatedEntity.entityIdKey1 = myCustomsCollateralPM.CollateralRequestNumber;
                     }
                 }
+                else if (customsDocumentPointerPM.ParentEntityCode == "Vehicle")
+                {
+                    this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Vehicle");
+                    this.MyRequestSheetParam.EntityId1 = customsDocumentPointerPM.ParentEntityId;
+                }
             }
 
             return relatedEntity;
