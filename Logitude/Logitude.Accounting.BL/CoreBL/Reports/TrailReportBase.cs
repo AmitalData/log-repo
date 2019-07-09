@@ -1,6 +1,7 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Simplog.Server.Infrastructure;
@@ -51,6 +52,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         protected IQueryable<Data.EntityPOCOs.LedgerTransaction> QBasePeriodTransaction_TransEnd_BeginOfMonthToDate_Till_ToDateInculde;
 
         protected IQueryable<ChartOfAccount5LevelM> QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy;
+        private IQueryable<LedgerTransaction> _qYearTransferLedgerTransaction;
 
         public TrailReportBase(TrailReportParam trailReportParam, int timeOutInMinutes)
         {
@@ -131,7 +133,48 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         private void Create4MainQueriesPeriod()
         {
-            QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate =
+            
+            if (_FromBeginOfMonth.Month == 1 && _FromBeginOfMonth.Day == 1)
+            {
+                _qYearTransferLedgerTransaction = Enumerable.Empty<LedgerTransaction>().AsQueryable();
+                //var myLedgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
+                //_qYearTransferLedgerTransaction = myLedgerTransactionRepository
+                //    .GetYearTransferLedgerTransaction(null, _FromBeginOfMonth.Year, _TrailReportParam.Tenant);
+
+            }
+            else
+            {
+                _qYearTransferLedgerTransaction = Enumerable.Empty<LedgerTransaction>().AsQueryable();
+            }
+            var qYearTransferLedgerTransactionTotByMonth =
+(from lt in _qYearTransferLedgerTransaction
+ group lt by new
+ {
+     lt.AccountId,
+     lt.CurrencyId
+ }
+into groupBy_currency
+ select new Data.EntityPOCOs.GLAccountTotalByMonth()
+ {
+     Tenant = _TrailReportParam.Tenant,
+     AccountId = groupBy_currency.Key.AccountId,
+     DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate,
+     Year = _FromBeginOfMonth.Year,
+     Month = _FromBeginOfMonth.Month,
+     CurrencyId = groupBy_currency.Key.CurrencyId,
+
+
+     LocalAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountDebit),
+     LocalAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountCredit),
+
+     ForeignAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountDebit),
+     ForeignAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountCredit),
+
+ });
+
+   
+
+    QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate =
                  (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
                   where tot.Tenant == _TrailReportParam.Tenant
                   where tot.Year < _FromBeginOfMonth.Year ||
@@ -139,7 +182,28 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      tot.Month < _FromBeginOfMonth.Month)
                   select tot
                      );
+            QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate = 
+                ( from a in QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate.Concat(qYearTransferLedgerTransactionTotByMonth)
+                  group a by new { a.Tenant, a.AccountId, a.DateTypeCode, a.Year,  a.Month, a.CurrencyId }
+                  into groupBy_currency
+                  select new Data.EntityPOCOs.GLAccountTotalByMonth()
+                  {
+                      Tenant = groupBy_currency.Key.Tenant,
+                      AccountId = groupBy_currency.Key.AccountId,
+                      DateTypeCode = groupBy_currency.Key.DateTypeCode,
+                      Year = groupBy_currency.Key.Year,
+                      Month = groupBy_currency.Key.Month,
+                      CurrencyId = groupBy_currency.Key.CurrencyId,
 
+
+                      LocalAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountDebit),
+                      LocalAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.LocalAmountCredit),
+
+                      ForeignAmountDebit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountDebit),
+                      ForeignAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountCredit),
+
+                  }
+                  );
 
 
 
