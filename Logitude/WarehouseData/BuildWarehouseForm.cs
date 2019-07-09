@@ -237,16 +237,16 @@ namespace WarehouseData
 
                             #endregion
 
-                            warehouseHelper.BuildCustomObjectFieldsTable(destinationConnectionString);
 
                             #region Create and Build Dimensions Table
 
 
                               stepName = "BuildDateDimensionsTable";
                             warehouseHelper.ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
+                            stepName = "RunOtherScripte";
+                            warehouseHelper.RunOtherScripte(destinationConnectionString);
+               
 
-                            stepName = "RunSqlFunctions";
-                            warehouseHelper.RunSqlFunctions(destinationConnectionString);
 
 
                             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())

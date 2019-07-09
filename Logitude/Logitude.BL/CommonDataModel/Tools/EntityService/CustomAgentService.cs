@@ -85,7 +85,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            CustomAgentValidating.Validate(entityPM);
 
             foreach (AddressPM itemPM in entityPM.Addresses)
             {
@@ -108,6 +107,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             CustomAgentMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+            CustomAgentValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
@@ -132,7 +132,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            CustomAgentValidating.Validate(entityPM);
             if (mapComposition)
             {
                 this.SetChangeSet(this.entityPM.CardExternalCodeByCurrencies);
@@ -161,6 +160,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             
             CustomAgentMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+            CustomAgentValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);

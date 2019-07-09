@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {AddressPM} from '../../../../Common/EntityPMs/AddressPM';
@@ -20,7 +20,7 @@ import {CountryFlagPipe} from '../../../../Controls/Pipes/CountryFlagPipe';
     templateUrl: './AddressesTabComponent.html',
 })
 
-export class AddressesTabComponent {
+export class AddressesTabComponent implements OnDestroy {
     public ItemsSource: AddressItemClass[];
     public EntityPM: any = null;
     public EntityId: string = null;
@@ -56,23 +56,26 @@ export class AddressesTabComponent {
         });
     }
 
+    private SessionEvent: any = null;
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
     private Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
-            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.entityArgs.EditComponent != null) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                 }
             });
 
-            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                 }
             });
 
-            this.CurrentSession.SessionEvent.subscribe(s => {
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "EntityActivated") {
                     if (this.ObjectTableName == "Customer") {
                         this.SetUIProperties();
@@ -81,6 +84,13 @@ export class AddressesTabComponent {
             });
         }
     }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
     
     public IsEditingEnabled: boolean = false;
     public IsBlockingUnifreightCustomer: boolean = false;

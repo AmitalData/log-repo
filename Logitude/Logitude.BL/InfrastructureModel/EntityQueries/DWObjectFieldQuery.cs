@@ -185,7 +185,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          IsCustom = a.IsCustom,
                                      }
                   ).ToList();
-                FinalList = FinalList.Concat(TempInnerList).ToList();
+                FinalList = FinalList.Concat(TempInnerList).OrderBy(a => a.DisplayName).ToList();
             }
             return FinalList;
         }
