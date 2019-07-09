@@ -89,8 +89,7 @@ namespace WebFreight.Web.Monitoring
                                  where
                                  b.CommunicationStatusTypeCode == "W"
                                  &&  ((b.To == "INTTRA" && b.Subject == "Shipping Instructions") || (b.From == "INTTRA" && b.Subject == "Status"))
-                                && (b.CreateDateUTC > oneDaysBefore)
-                                 && (System.Data.Entity.DbFunctions.DiffMinutes(b.CreateDateUTC, DateTime.Now) > 5)
+                                 && (System.Data.Entity.DbFunctions.DiffMinutes(b.CreateDateUTC, DateTime.Now) > 1440)
                                  select b).Any();
 
                    
