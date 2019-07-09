@@ -1192,6 +1192,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             {
                 Card billto = CardRepository.GetSingleCard(invoice.BillToId, invoice.Tenant, true);
                 invoice.BillToName = billto.EnglishName;
+                invoice.BillToLocalName = billto.LocalName;
                 invoice.BillToType = billto.PartnerTypeId;
             }
 
@@ -1731,6 +1732,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 if (myBillTo != null)
                 {
                     entityPM.BillToName = myBillTo.EnglishName;
+                    entityPM.BillToLocalName = myBillTo.LocalName;
                     entityPM.BillToCode = myBillTo.Code;
                     entityPM.BillToPartnerTypeId = myBillTo.PartnerTypeId;
                     entityPM.IsBillToAllowConsolidation = myBillTo.EnableConsolidationInvoices;

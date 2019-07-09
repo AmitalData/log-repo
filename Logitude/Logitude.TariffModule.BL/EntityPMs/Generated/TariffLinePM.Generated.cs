@@ -1400,6 +1400,52 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isFromAllOtherPorts ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFromAllOtherPorts  
+	   {
+	    
+	     get
+		{
+		   return isFromAllOtherPorts;
+		 }
+		 set
+		 {
+		   if(isFromAllOtherPorts != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromAllOtherPorts",OldValue=isFromAllOtherPorts,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isFromAllOtherPorts=value;
+		   }
+			
+		 }
+	   }
+	  private bool isToAllOtherPorts ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsToAllOtherPorts  
+	   {
+	    
+	     get
+		{
+		   return isToAllOtherPorts;
+		 }
+		 set
+		 {
+		   if(isToAllOtherPorts != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsToAllOtherPorts",OldValue=isToAllOtherPorts,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isToAllOtherPorts=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
