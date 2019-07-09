@@ -478,9 +478,14 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                  where j.Tenant == tenant
                  where j.AccountingEntityCode == "11"//yeartransfer
 
-                 where string.IsNullOrWhiteSpace(j.VoidedByJournalId)
-                 where string.IsNullOrWhiteSpace(j.OriginalJournalId)
 
+
+                 where
+                 //string.IsNullOrWhiteSpace(j.VoidedByJournalId)
+                 (j.VoidedByJournalId == null || j.VoidedByJournalId.Trim() == string.Empty)
+                 where
+                 //string.IsNullOrWhiteSpace(j.OriginalJournalId)
+                 (j.OriginalJournalId == null || j.OriginalJournalId.Trim() == string.Empty)
                  select j
                 );
             DateTime beginOfYear = new DateTime(year, 1, 1);
@@ -490,7 +495,8 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             {
                 qLedgerTransaction = (from record in context.LedgerTransactions
 
-                                      where record.Tenant == tenant && record.AccountId == gLAccountId
+                                      where record.Tenant == tenant 
+                                      ///&& record.AccountId == gLAccountId
                                       where record.AccountingDate.Date == beginOfYear
                                       select record
                  );
@@ -499,11 +505,16 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             {
                 qLedgerTransaction = (from record in context.LedgerTransactions
 
-                 where record.Tenant == tenant && record.AccountId == gLAccountId
+                 where record.Tenant == tenant 
+                 //&& record.AccountId == gLAccountId
                  where EntityFunctions.TruncateTime(record.AccountingDate) == beginOfYear
                  select record
                  );
 
+            }
+            if (!string.IsNullOrWhiteSpace(gLAccountId))
+            {
+                qLedgerTransaction = qLedgerTransaction.Where(record => record.AccountId == gLAccountId);
             }
 
             var qYeartransferLedgerTransaction =

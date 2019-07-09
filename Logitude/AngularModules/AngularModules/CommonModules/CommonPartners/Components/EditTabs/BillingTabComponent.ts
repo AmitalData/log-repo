@@ -1,20 +1,20 @@
-﻿import {Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef, OnDestroy} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     moduleId: module.id,
     templateUrl: './BillingTabComponent.html',
 })
 
-export class BillingTabComponent extends BaseComponent {
+export class BillingTabComponent extends BaseComponent implements OnDestroy {
     private ScreenCode: string;
     public DisplaySATSettings: boolean = false;
     public EntityPM: any;
     public ObjectTableName: string;
     public DataContext = this;
-
     @ViewChild('Child', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -26,6 +26,29 @@ export class BillingTabComponent extends BaseComponent {
         }
     }
 
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null; 
+    private Listen() {
+        if (this.entityArgs.EditComponent != null) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                }
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                }
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
     RunComponent() {
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.EntityPM = this.entityArgs.EntityPM;
@@ -35,6 +58,8 @@ export class BillingTabComponent extends BaseComponent {
                 .then(cmpRef => {
                     cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, this.ScreenCode);
                 });
+
+            this.Listen();
         }
 
         else {
