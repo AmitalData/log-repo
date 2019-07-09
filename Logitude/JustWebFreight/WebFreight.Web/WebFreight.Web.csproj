@@ -2885,6 +2885,7 @@
     <Content Include="Monitoring\MonitorServiceLastUpdate.aspx" />
     <Content Include="Monitoring\MonitorTechnicalFNA.aspx" />
     <Content Include="Monitoring\ProfactMonitoring.aspx" />
+    <Content Include="Monitoring\INTTRAMonitoring.aspx" />
     <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
@@ -5000,6 +5001,13 @@
     </Compile>
     <Compile Include="Monitoring\ProfactMonitoring.aspx.designer.cs">
       <DependentUpon>ProfactMonitoring.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\INTTRAMonitoring.aspx.cs">
+      <DependentUpon>INTTRAMonitoring.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\INTTRAMonitoring.aspx.designer.cs">
+      <DependentUpon>INTTRAMonitoring.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\QuickbooksOnlineQueue.aspx.cs">
       <DependentUpon>QuickbooksOnlineQueue.aspx</DependentUpon>
