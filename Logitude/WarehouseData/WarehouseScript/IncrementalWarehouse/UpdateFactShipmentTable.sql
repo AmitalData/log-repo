@@ -188,7 +188,7 @@
 	inner JOIN DIM_MoveTypes  ON dw_Shipments.MoveTypeId = DIM_MoveTypes.Id
 	inner JOIN DIM_Vessels   ON dw_ShipmentMasterDatas.MainCarriageVesselId = DIM_Vessels.Id
 	inner JOIN DIM_SpecialServicesTypes  ON dw_Shipments.SpecialServicesTypeId = DIM_SpecialServicesTypes.Id
-	inner JOIN dw_CustomObjectFields  ON dw_Shipments.Tenant = dw_CustomObjectField.Tenant
+	inner JOIN dw_CustomObjectFields  ON dw_Shipments.Tenant = dw_CustomObjectFields.Tenant
 	
 	where dw_Shipments.AutomaticLastUpdateDate > @LastUpdateDate and dw_Shipments.ShipmentLevelCode in ('H','D')
 	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO   @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type , @Department , @Branch , @ShipmentNumber , @House , @Master , @Shipper , @Consignee , @Agent, @Customer 
