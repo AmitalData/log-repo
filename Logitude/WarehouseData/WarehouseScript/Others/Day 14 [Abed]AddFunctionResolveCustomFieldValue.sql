@@ -16,9 +16,9 @@ BEGIN
   set @MyValueOut = null;
   if(@CustomFieldsValues is not null)
   begin
-  --set @CustomFieldsValues = dbo.SplitString(@CustomFieldsValues,@FieldName + '':'', 2) ;
- -- set @CustomFieldsValues = dbo.SplitString(@CustomFieldsValues,'','',1);
-  --set @DataTypeCode = dbo.SplitString(@CustomFieldsValues,'':'',2)
+ --set @CustomFieldsValues = dbo.SplitString(@CustomFieldsValues,@FieldName + '':'', 2) ;
+ --set @CustomFieldsValues = dbo.SplitString(@CustomFieldsValues,'','',1);
+ -- set @DataTypeCode = dbo.SplitString(@CustomFieldsValues,'':'',2)
 
      set @CustomFieldsValues =( SELECT value  FROM STRING_SPLIT(@CustomFieldsValues, '','')  WHERE RTRIM(value) LIKE ''%'' + @FieldName + '':%'');
 	 if(@CustomFieldsValues is not null)
@@ -57,6 +57,10 @@ if(len(@FieldValue)>=15)begin  set @FieldValue = STUFF(@FieldValue, len(@FieldVa
 SET @MyValueOut = CONVERT(NUMERIC(38,3), @FieldValue)
 end
 
+ELSE if(@DataTypeCode = ''Text'' or @DataTypeCode = ''nText'') 
+begin 
+SET @MyValueOut = @FieldValue;
+end
 
 ELSE begin set @MyValueOut = null; end
 

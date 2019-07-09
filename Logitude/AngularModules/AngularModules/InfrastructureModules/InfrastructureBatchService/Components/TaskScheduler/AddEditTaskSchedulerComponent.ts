@@ -324,10 +324,13 @@ export class AddEditTaskSchedulerComponent  {
         if (this.EntityPM.Status == "In progress") {
             errors.push("The task is in progress. You are not allowed to edit it");// the start time field
         }
-        if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
+  
     
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
+
+            if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") this.EntityPM.SchedulerDetailsData = this.DataContext.SchedulerDetailsData;
+
             this.CurrentSession.StartBusyIndicatorSaving();
           
 
