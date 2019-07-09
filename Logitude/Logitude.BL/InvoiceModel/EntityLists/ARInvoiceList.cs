@@ -15,6 +15,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string BillToPartnerName { get; set; }       
         public string BillToId { get; set; }
         public string BillToName { get; set; }
+        public string BillToLocalName { get; set; }
         public string BillToCode { get; set; }
         public string BillToAddressId { get; set; }
         public string VatNumber { get; set; }       

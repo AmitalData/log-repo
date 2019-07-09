@@ -76,7 +76,14 @@ using Simplog.Data.ShipmentsModel;
 				   temp.MaterialDescription = item.MaterialDescription;
 				   temp.CommodityNumber = item.CommodityNumber;
 				   temp.Reference4 = item.Reference4;
-				   temp.Notes = item.Notes;					
+				   temp.Notes = item.Notes;
+				if(item.InsideShipmentPackages != null && item.InsideShipmentPackages.Count > 0)
+				{
+					 InsidePackageQueryService InsidePackageService1 = new InsidePackageQueryService(Tenant);
+					 temp.InsidePackages = InsidePackageService1.InsidePackageDataMapping(item.InsideShipmentPackages,Tenant);
+				}
+
+							 					
 					MyList.Add(temp);
 				}
 					
@@ -145,7 +152,15 @@ using Simplog.Data.ShipmentsModel;
 					temp.MaterialDescription = item.MaterialDescription;
 					temp.CommodityNumber = item.CommodityNumber;
 					temp.Reference4 = item.Reference4;
-					temp.Notes = item.Notes;					   
+					temp.Notes = item.Notes; 
+
+					if(item.InsidePackages != null && item.InsidePackages.Count > 0)
+					{
+						InsidePackageQueryService InsidePackageService1 = new InsidePackageQueryService(Tenant);
+						temp.InsideShipmentPackages = InsidePackageService1.InsidePackageDataMappingAndValidatin(item.InsidePackages,Tenant,ComputingPartnerName);
+					}
+
+								 					   
 						MyList.Add(temp);
 					}
 						

@@ -76,7 +76,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LineUniqueKey, 
 	         LineUniqueKeyText, 
 	         Index, 
-	         Notes,
+	         Notes, 
+	         IsFromAllOtherPorts, 
+	         IsToAllOtherPorts,
 	      }
 
 
@@ -142,7 +144,9 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 	         LineUniqueKeyText, 
 	         Index, 
 	         Notes, 
-	         AddedManually,
+	         AddedManually, 
+	         IsFromAllOtherPorts, 
+	         IsToAllOtherPorts,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -419,6 +423,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
             {
 				entityPOCO.Notes = entityPM.Notes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsFromAllOtherPorts))
+            {
+				entityPOCO.IsFromAllOtherPorts = entityPM.IsFromAllOtherPorts;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsToAllOtherPorts))
+            {
+				entityPOCO.IsToAllOtherPorts = entityPM.IsToAllOtherPorts;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -702,6 +716,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 					entityPM.Notes = entityPOCO.Notes;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsFromAllOtherPorts))
+            {
+					entityPM.IsFromAllOtherPorts = entityPOCO.IsFromAllOtherPorts;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsToAllOtherPorts))
+            {
+					entityPM.IsToAllOtherPorts = entityPOCO.IsToAllOtherPorts;
+            }
+
 		}
 
 		public void PMToOldPM(TariffLinePM entityPM, TariffLinePM oldEntityPM)
@@ -976,6 +1000,16 @@ namespace Logitude.TariffModule.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Notes))
             {
                 oldEntityPM.Notes = entityPM.Notes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsFromAllOtherPorts))
+            {
+                oldEntityPM.IsFromAllOtherPorts = entityPM.IsFromAllOtherPorts;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsToAllOtherPorts))
+            {
+                oldEntityPM.IsToAllOtherPorts = entityPM.IsToAllOtherPorts;
             }
 			
 		}
