@@ -172,6 +172,7 @@
     <Compile Include="MessagingServices\CBC_NG_8361_MSG01_CustomsBookInMessagingService.cs" />
     <Compile Include="MessagingServices\CB_NG_8316_CustomItemLegalDemandsMessagingService.cs" />
     <Compile Include="MessagingServices\CLAIM_2340_ClaimRequestMessagingService.cs" />
+    <Compile Include="MessagingServices\CLAIM_5005_ContinuousRequestOnClaimFileMessagingService.cs" />
     <Compile Include="MessagingServices\CL_3630_AddUpdateDeleteAddressContactMassagingService.cs" />
     <Compile Include="MessagingServices\CL_MSG100_AddClientMassagingService.cs" />
     <Compile Include="MessagingServices\CL_NG_8343_ClientSearchByIDParamMessagingService.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="RequestServices\CBC_NG_8361_MSG01_CustomsBookInRequestService.cs" />
     <Compile Include="RequestServices\CB_NG_8316_CustomItemLegalDemandsRequestService.cs" />
     <Compile Include="RequestServices\CLAIM_2340_ClaimRequestRequestService.cs" />
+    <Compile Include="RequestServices\CLAIM_5005_ContinuousRequestOnClaimFileRequestService.cs" />
     <Compile Include="RequestServices\CL_3630_AddUpdateDeleteAddressContactRequestService.cs" />
     <Compile Include="RequestServices\CL_MSG100_AddClientRequestService.cs" />
     <Compile Include="RequestServices\CL_NG_8343_ClientSearchByIDRequestService.cs" />
@@ -284,6 +286,7 @@
     <Compile Include="ResponseServices\CB_NG_8316_CustomItemLegalDemandsResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2300_MissingDocumentRequestResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_2345_ClaimAnswerResponseService.cs" />
+    <Compile Include="ResponseServices\CLAIM_5013_ContinuousResponseOnClaimFileResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_5114_AcceptanceOrRejectionClaimMessageResponseService.cs" />
     <Compile Include="ResponseServices\CLAIM_5115_ContinuousMessageResponseService.cs" />
     <Compile Include="ResponseServices\CL_3630_AddUpdateDeleteAddressContactResponseService.cs" />
