@@ -1000,7 +1000,7 @@ namespace Logitude.BL.Helpers
 
                     string fieldName = GetNameColum("CHARGEGROUP", textcodes, "TotalPerContainers");
 
-                    HtmlTemplate.Append(BuildTableColumn(fieldName, totalPerContainersTableHeader, totalPerContainersTableDesign, "Header", null,setting.RightToLeft));
+                    HtmlTemplate.Append(BuildTableColumn(fieldName, totalPerContainersTableHeader, totalPerContainersTableDesign, "Header", null, setting.RightToLeft));
                     foreach (IGrouping<string, TotalPerContainerClass> totalPerContainer in totalPerContainerGroupingListsByFieldCode)
                     {
                         TotalPerContainerClass totalPerContainerClass = totalPerContainer.FirstOrDefault();
@@ -1031,7 +1031,7 @@ namespace Logitude.BL.Helpers
 
                             }
 
-                            if (setting.TotalPerContainersCurrencyType != "SALE")
+                            if (setting.TotalPerContainersCurrencyType == "LOCAL")
                             {
                                 value = value * (double)totalPerContainersLists[0].SaleExchangeRate;
                             }
@@ -1041,32 +1041,43 @@ namespace Logitude.BL.Helpers
                         HtmlTemplate.Append("</tr>");
                     }
 
-                    HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
+                   
+                    AppendPerContainerTotalBySaleCurrency(quotePM, setting, HtmlTemplate, totalPerContainersTableDesign, totalPerContainersTableLines, totals);
 
-
-                    string totalPerContainersCurrencyLable = setting.TotalPerContainersCurrencyType == "SALE" ? "Total By Sale Currency" : "Total By Local Currency";
-
-                    HtmlTemplate.Append(BuildTableColumn(totalPerContainersCurrencyLable, totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, setting.RightToLeft));
-
-                    TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, true);
-                    IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerList = totals.GroupBy(q => q.FieldCode);
-                    foreach (IGrouping<string, TotalPerContainerClass> totalPer in totalPerList)
+                    if (setting.TotalPerContainersCurrencyType == "MULTIPLE")
                     {
-                        List<TotalPerContainerClass> totalPerContainersLists = totalPer.ToList();
-                        double value = 0;
-                        foreach (TotalPerContainerClass item in totalPerContainersLists)
+                        HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
+                        HtmlTemplate.Append(BuildTableColumn("Total", totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, setting.RightToLeft));
+                        foreach (IGrouping<string, TotalPerContainerClass> totalPerContainer in totalPerContainerGroupingListsByFieldCode)
                         {
-                            value += item.Value;
 
+                            List<TotalPerContainerClass> items = new List<TotalPerContainerClass>();
+                            IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerContainersGroupByCurrencyCodeLists = totalPerContainer.ToList().GroupBy(d => d.CurrencyCode).ToList();
+                            foreach (IGrouping<string, TotalPerContainerClass> totalPerContainersGroupByCurrencyCodeList in totalPerContainersGroupByCurrencyCodeLists)
+                            {
+
+                                var totalPerContainersGroupByCurrencyCode = totalPerContainersGroupByCurrencyCodeList.ToList();
+                                var totalPerContainerClass = new TotalPerContainerClass() { CurrencyCode = totalPerContainersGroupByCurrencyCode[0].CurrencyCode };
+                                double orginalValue = 0;
+                                foreach (TotalPerContainerClass item in totalPerContainersGroupByCurrencyCode)
+                                {
+                                    orginalValue += ((double)item.OrginalValue);
+                                }
+                                totalPerContainerClass.OrginalValue = orginalValue;
+                                items.Add(totalPerContainerClass);
+                            }
+
+
+                            string value = string.Empty;
+                            foreach (TotalPerContainerClass item in items.OrderBy(d => d.Name).ToList())
+                            {
+                                var x = (double)item.OrginalValue;
+                                value += ((x.ToString("N") + " " + item.CurrencyCode) + "<br/>");
+                            }
+                            HtmlTemplate.Append(BuildTableColumn(value, totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, true));
                         }
-
-                        string currencyCode = setting.TotalPerContainersCurrencyType != "SALE" ? tenantPM.CurrencyCode : quotePM.SaleCurrencyCode;
-
-                        HtmlTemplate.Append(BuildTableColumn(value.ToString("N") + " " + currencyCode, totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, setting.RightToLeft, true));
+                        HtmlTemplate.Append("</tr>");
                     }
-                    HtmlTemplate.Append("</tr>");
-
-
 
                     HtmlTemplate.Append("</table>");
                     HtmlTemplate.Append("<div style='height:10px ;'>" + "&nbsp" + "&nbsp" + "&nbsp" + "&nbsp" + "</div>");
@@ -1078,6 +1089,34 @@ namespace Logitude.BL.Helpers
             #endregion
 
             return Encoding.UTF8.GetBytes(HtmlTemplate.ToString());
+        }
+
+        private void AppendPerContainerTotalBySaleCurrency(QuotePM quotePM, QuoteTemplateSettingPM setting,  StringBuilder HtmlTemplate, QuoteTemplateTableDesignPM totalPerContainersTableDesign, QuoteTemplateTextDesignPM totalPerContainersTableLines, List<TotalPerContainerClass> totals)
+        {
+            HtmlTemplate.Append("<tr style= 'height:auto; width:auto;vertical-align:central'>");
+
+            int tenant = setting.Tenant;
+            string totalPerContainersCurrencyLable = setting.TotalPerContainersCurrencyType != "LOCAL" ? "Total By Sale Currency" : "Total By Local Currency";
+
+            HtmlTemplate.Append(BuildTableColumn(totalPerContainersCurrencyLable, totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, setting.RightToLeft));
+
+            TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, true);
+            IEnumerable<IGrouping<string, TotalPerContainerClass>> totalPerList = totals.GroupBy(q => q.FieldCode);
+            foreach (IGrouping<string, TotalPerContainerClass> totalPer in totalPerList)
+            {
+                List<TotalPerContainerClass> totalPerContainersLists = totalPer.ToList();
+                double value = 0;
+                foreach (TotalPerContainerClass item in totalPerContainersLists)
+                {
+                    value += item.Value;
+
+                }
+
+                string currencyCode = setting.TotalPerContainersCurrencyType == "LOCAL" ? tenantPM.CurrencyCode : quotePM.SaleCurrencyCode;
+
+                HtmlTemplate.Append(BuildTableColumn(value.ToString("N") + " " + currencyCode, totalPerContainersTableLines, totalPerContainersTableDesign, "Field", null, setting.RightToLeft, true));
+            }
+            HtmlTemplate.Append("</tr>");
         }
 
         private void AppendTotalCurrencyHtml(QuotePM quotePM, QuoteTemplateSettingPM setting, StringBuilder HtmlTemplate, bool showTotalInSaleCurrency, bool showTotalInLocalCurrency, QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsLabel, QuoteTemplateTextDesignPM quoteTemplateTextDesignTotalsValue, string Name, string SaleTotalAmountInSaleCurrency, string SaleTotalAmountInLocalCurrency)
@@ -3220,6 +3259,14 @@ namespace Logitude.BL.Helpers
         private void ComputedTotalPerContainer(List<TotalPerContainerClass> totalPerContainerClassLists, string PackageTypeId, double? saleUnitPriceInSaleCurrency, int? packageTypeQuantity, string fieldCode, QuoteSaleChargePM chargePM)
         {
             double value = 0;
+            double? orginalValue = 0;
+            if (fieldCode == "PackageType1Id") orginalValue = chargePM.SaleContainerType1UnitPrice;
+            else if (fieldCode == "PackageType2Id") orginalValue = chargePM.SaleContainerType2UnitPrice;
+            else if (fieldCode == "PackageType3Id") orginalValue = chargePM.SaleContainerType3UnitPrice;
+            else if (fieldCode == "PackageType4Id") orginalValue = chargePM.SaleContainerType4UnitPrice;
+            else if (fieldCode == "PackageType5Id") orginalValue = chargePM.SaleContainerType5UnitPrice;
+
+
             PackageType packageType = PackageTypeRepository.GetSinglePackageType(PackageTypeId, chargePM.Tenant, true);
             string printAs = packageType.PrintAs;
             string name = packageTypeQuantity != null ? packageTypeQuantity + " x " + printAs : " x " + printAs;
@@ -3227,10 +3274,13 @@ namespace Logitude.BL.Helpers
             if (chargePM.SaleMeasurementCode == "BCNT" && packageTypeQuantity != null && saleUnitPriceInSaleCurrency != null)
             {
                 value = (double)packageTypeQuantity * (double)saleUnitPriceInSaleCurrency;
+                orginalValue = packageTypeQuantity * orginalValue;
+
             }
             else if (chargePM.SaleMeasurementCode == "BTEU" && chargePM.SaleUnitPriceInSaleCurrency != null && packageTypeQuantity != null)
             {
                 value = (double)chargePM.SaleUnitPriceInSaleCurrency * (double)packageTypeQuantity * (double)packageType.TEU;
+                orginalValue = packageTypeQuantity * orginalValue * (double)packageType.TEU; 
             }
             else
             {
@@ -3239,10 +3289,10 @@ namespace Logitude.BL.Helpers
                     value = (double)chargePM.SaleAmountInSaleCurrency;
                 }
             }
-            AddPerContainerClassToLists(totalPerContainerClassLists, value, name, fieldCode, chargePM);
+            AddPerContainerClassToLists(totalPerContainerClassLists, value, name, fieldCode, chargePM, (double)orginalValue);
 
         }
-        private static void AddPerContainerClassToLists(List<TotalPerContainerClass> totalPerContainerClassLists, double value, string name, string fieldCode, QuoteSaleChargePM chargePM)
+        private static void AddPerContainerClassToLists(List<TotalPerContainerClass> totalPerContainerClassLists, double value, string name, string fieldCode, QuoteSaleChargePM chargePM , double orginalValue)
         {
             if (totalPerContainerClassLists != null)
             {
@@ -3253,6 +3303,8 @@ namespace Logitude.BL.Helpers
                     Name = name,// "PackageType1Id",
                     FieldCode = fieldCode,
                     SaleExchangeRate = chargePM.SaleExchangeRate,
+                    CurrencyCode = chargePM.CurrencyCode,
+                    OrginalValue = orginalValue,
                 };
                 totalPerContainerClassLists.Add(totalPerContainerClass);
             }
@@ -3425,7 +3477,9 @@ namespace Logitude.BL.Helpers
         public string FieldCode { get; set; }
         public string ChargeGroupCode { get; set; }
         public double? SaleExchangeRate { get; set; }
-
+        public string CurrencyCode { get; set; }
+        public double? OrginalValue { get; set; }
+       
     }
 
     public class QuoteTemplateBuildArges

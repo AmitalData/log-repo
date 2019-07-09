@@ -19,6 +19,7 @@ import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/TariffVersionExtendedPMService';
 import { DatePipe } from '@angular/common';
+import { TariffVersionAllInChargePM } from '../../../EntityPMs/TariffVersionAllInChargePM';
 declare var ResultAsArray: any;
 
 @Component({
@@ -569,15 +570,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         //    }
         //}
     }
-
-    //private DoApprove() {
-    //    this.TariffDomainService.ApproveVersion(this.EntityPM.Id, this.CurrentVersion.Version).subscribe((response: ServiceResponse) => {
-    //        if (!response.HasError) {
-    //            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-    //        }
-    //    });
-    //}
-
+    
     CopyVersionClicked() {
         if (this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0]) {
             var messageWindow: MessageWindow = new MessageWindow();
@@ -615,6 +608,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                     copiedVersion.Tenant = SessionInfo.LoggedUserTenant;
                     copiedVersion.ParentVersionNumber = this.CurrentVersion.Version;
                     this.EntityPM.AddTariffVersion(copiedVersion);
+
                     this.loadedTariffLines.forEach(item => {
                         var tariffLine = new TariffLinePM(copiedVersion);
                         tariffLine.StartDate = this.StartDate;
@@ -639,6 +633,17 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                         tariffLine.Index = item.Index;
                         tariffLine.Notes = item.Notes;
                         copiedVersion.AddTariffLine(tariffLine);
+                    });
+
+                    this.CurrentVersion.TariffAllInCharges.forEach(item => {
+                        var allInCharge = new TariffVersionAllInChargePM(copiedVersion);
+                        allInCharge.ChargesTypeId = item.ChargesTypeId;
+                        allInCharge.TariffId = this.EntityPM.Id;
+                        allInCharge.Tenant = SessionLocator.Tenant;
+                        allInCharge.Version = copiedVersion.Version;
+                        allInCharge.AddDate = DateTool.GetCurrentDateAsUtc();
+                        allInCharge.AddedByUserId = SessionInfo.LoggedUserId;
+                        copiedVersion.AddTariffVersionAllInCharge(allInCharge);
                     });
 
                     this.CurrentSession.CurrentEditComponent.SaveChanges("Creating...");
@@ -711,6 +716,18 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
                 this.FillTariffLines(this.loadedTariffLines);
             }
         }
+    }
+
+    AllInChargesClicked() {
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = { TariffPM: this.EntityPM, VersionPM: this.CurrentVersion, IsEditingEnabled: this.IsDraftVersion };
+        logWindow.Title = "All-In Charges";
+        logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditAllInChargesComponent");
+        logWindow.WindowClosed.subscribe(s => {
+            if (s) {
+                
+            }
+        });
     }
 }
 

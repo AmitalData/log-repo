@@ -234,30 +234,24 @@ namespace CommunicationWorkerRole
                 ExceptionHandler.HandleException(updateReportExecutionLogArgs.Exception, DateTime.Now, 0, null, "Report Execution Log Queue worker role start", null, null);
             }
 
-
-            if (updateReportExecutionLogArgs.ReportExecutionLog != null && updateReportExecutionLogArgs.ReportExecutionLogRepository != null)
+            if (updateReportExecutionLogArgs.response != null && updateReportExecutionLogArgs.response.MessageValues.Keys.Contains("ReportExecutionLogId") && !updateReportExecutionLogArgs.IsInternalException)
             {
-                if (updateReportExecutionLogArgs.response != null && updateReportExecutionLogArgs.response.MessageValues.Keys.Contains("ReportExecutionLogId") && !updateReportExecutionLogArgs.IsInternalException)
+                if (updateReportExecutionLogArgs.response.RetryNumber <= 1)
                 {
-                    if (updateReportExecutionLogArgs.response.RetryNumber <= 1)
-                    {
-                        updateReportExecutionLogArgs.queueservice.Delay(new TimeSpan(0, 0, 0, 5));
-                    }
-
-                    if (updateReportExecutionLogArgs.response.RetryNumber >= 2)
-                    {
-                        queueservice.CompleteAsFailed();
-                        if (isupdateReportExecutionLog) this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
-
-                    }
+                    updateReportExecutionLogArgs.queueservice.Delay(new TimeSpan(0, 0, 0, 5));
                 }
-                else
+
+                if (updateReportExecutionLogArgs.response.RetryNumber >= 2)
                 {
                     queueservice.CompleteAsFailed();
                     if (isupdateReportExecutionLog) this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
-                }
 
-                
+                }
+            }
+            else
+            {
+                queueservice.CompleteAsFailed();
+                if (isupdateReportExecutionLog) this.UpdateReportExecutionLog(updateReportExecutionLogArgs);
             }
 
          

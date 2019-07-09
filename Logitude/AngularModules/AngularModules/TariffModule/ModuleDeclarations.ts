@@ -15,6 +15,7 @@ import { SurchargeVersionTabComponent } from './Components/EditTabs/Tariff/Surch
 import { TariffDatesValidationComponent } from './Components/EditTabs/Tariff/TariffDatesValidationComponent';
 import { UpdateSurchargesComponent } from './Components/EditTabs/Tariff/UpdateSurchargesComponent';
 import { ChoosePortComponent } from './Components/EditTabs/Tariff/ChoosePortComponent';
+import { AddEditAllInChargesComponent } from './Components/EditTabs/Tariff/AddEditAllInChargesComponent';
 
 export const Components =
     [
@@ -33,6 +34,7 @@ export const Components =
         TariffDatesValidationComponent,
         UpdateSurchargesComponent,
         ChoosePortComponent,
+        AddEditAllInChargesComponent,
     ];
 
 export const ControlsComponents =
@@ -60,6 +62,7 @@ export class ModuleDeclarations {
             case "TariffDatesValidationComponent": { myResult = TariffDatesValidationComponent; break; }
             case "UpdateSurchargesComponent": { myResult = UpdateSurchargesComponent; break; }
             case "ChoosePortComponent": { myResult = ChoosePortComponent; break; }
+            case "AddEditAllInChargesComponent": { myResult = AddEditAllInChargesComponent; break; }
         }
 
         return myResult;
