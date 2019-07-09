@@ -20,7 +20,7 @@ namespace Logitude.BL.QuoteModel.BusinessUnitFilters
         public QuoteBusinessUnitFilter(int tenant)
         {
             this.myCurrentTenant = tenant;
-            this.loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+            this.loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser(tenant);
 
             UserRepository userRepository = new UserRepository(myCurrentTenant);
             this.loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, myCurrentTenant, true);

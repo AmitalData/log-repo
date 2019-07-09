@@ -103,7 +103,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            VendorValidating.Validate(entityPM);
 
             foreach (AddressPM itemPM in entityPM.Addresses)
             {
@@ -126,6 +125,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             VendorMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+            VendorValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
@@ -155,7 +155,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.UpdateGLAccount(this.entityPM, this.entityPOCO);
 
-            VendorValidating.Validate(entityPM);
 
             if (CacheManager.CacheWrapper != null)
             {
@@ -194,6 +193,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             VendorMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+            VendorValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
