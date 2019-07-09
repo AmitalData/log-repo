@@ -16,6 +16,92 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return myResult;
         }
+
+
+        public static double? ComputeInsideVolume(InsideShipmentPackagePM package, ShipmentPM entityPM)
+        {
+            double? myResult = null;
+            myResult = ComputeInsidePackageVolume(package.Quantity, package.Width, package.Height, package.Length,package.Volume, package.Weight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode);
+
+            return myResult;
+        }
+
+        public static double? ComputeInsidePackageVolume(double? quantity, double? width, double? height, double? length, double? volume, double? weight, double? ratio, string dimentionCode, string volumeCode, string fromWeightCode)
+        {
+            double? myWidth = null;
+            double? myHeight = null;
+            double? myLength = null;
+            double? myWeight = null;
+            double? myRatio = null;
+            double? myQuantity = null;
+            double? myVolume = null;
+
+            if (width != null)
+            {
+                myWidth = Convert.ToDouble(width);
+            }
+
+            if (height != null)
+            {
+                myHeight = Convert.ToDouble(height);
+            }
+
+            if (length != null)
+            {
+                myLength = Convert.ToDouble(length);
+            }
+
+            if (weight != null)
+            {
+                myWeight = Convert.ToDouble(weight);
+            }
+
+            if (ratio != null)
+            {
+                myRatio = Convert.ToDouble(ratio);
+            }
+
+            if (quantity != null)
+            {
+                myQuantity = Convert.ToDouble(quantity);
+            }
+
+            if (volume != null)
+            {
+                myVolume = Convert.ToDouble(volume);
+            }
+
+            double? myResult = null;
+
+
+            if (myWidth == null || myHeight == null || myLength == null || myQuantity == null)
+            {
+                if (myVolume != null)
+                {
+                    myResult = myVolume;// GetWeightFromVolume(volumeCode, fromWeightCode, myVolume, myRatio);
+                }
+
+              else  if (myWeight != null)
+                {
+                    myResult = GetVolumeFromWeight(fromWeightCode, volumeCode, myWeight, myRatio);
+                }
+            }
+
+            else
+            {
+                myResult = GetVolumeFromDimentions(dimentionCode, volumeCode, myWidth, myHeight, myLength, myQuantity);
+            }
+
+            if (myResult != null)
+            {
+                myResult = Round(myResult.Value, 3);
+            }
+
+            return myResult;
+        }
+
+
+
         public static double? ComputePackageVolume(double? quantity, double? width, double? height, double? length, double? weight, double? ratio, string dimentionCode, string volumeCode, string fromWeightCode)
         {
             double? myWidth = null;
@@ -228,6 +314,16 @@ namespace WebFreight.Web.Helpers.APIHelpers
 
             return myResult;
         }
+
+
+        public static double? ComputeInsideVolumetricWeight(InsideShipmentPackagePM package, ShipmentPM entityPM)
+        {
+            double? myResult = null;
+            myResult = ComputePackageVolumetricWeight(package.Quantity, package.Width, package.Height, package.Length, package.Volume, package.Weight, entityPM.Ratio, entityPM.DimensionsUnitCode, entityPM.VolumeUnitCode, entityPM.GrossWeightUnitCode, entityPM.ChargeableWeightUnitCode);
+
+            return myResult;
+        }
+
         public static double? ComputePackageVolumetricWeight(double? quantity, double? width, double? height, double? length, double? volume, double? weight, double? ratio, string dimentionCode, string volumeCode, string grossWeightCode, string chargeableWeightCode)
         {
             double? myWidth = null;
