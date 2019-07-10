@@ -313,11 +313,11 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
         this.CurrentSession.StartBusyIndicator("Generating...");
         this.tariffDomainService.GenerateTariffsFromExcel(filter).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                //this.batchEntity = response.Result;
+                this.batchEntity = response.Result;
 
-                //if (this.batchEntity != null) {
-                //    this.timer = setInterval(() => { this.GetBTE(); }, this.timerInterval);
-                //}
+                if (this.batchEntity != null) {
+                    this.timer = setInterval(() => { this.GetBTE(); }, this.timerInterval);
+                }
                 this.CurrentSession.StopBusyIndicator();
             }
             else {
