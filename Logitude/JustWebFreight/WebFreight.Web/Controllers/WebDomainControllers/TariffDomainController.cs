@@ -787,7 +787,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     { "Tenant", authToken.Tenant.ToString() }
                 });
 
-                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+                return Request.CreateResponse(HttpStatusCode.OK, taskExe);
             }
             catch (Exception ex)
             {
