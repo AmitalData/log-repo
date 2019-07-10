@@ -2326,7 +2326,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Code = "1171",
                 InOut = InOutEnum.I.ToString(),
                 Description = "משוב למסר מצהר",
-                DcaPrefixName = "SaveMN_MSG1170_1171_MANIFESTRequest_Out",
+                DcaPrefixName = "SaveMN_MSG1170_1171_MANIFESTRequest_Out.",
                 DcaPrefixName2 = "SendMN_MSG1171_SendManifestFeedBack_Message_Out.",
                 DefaultSendOptionsCode = null,
                 DefaultPriority = 5,
