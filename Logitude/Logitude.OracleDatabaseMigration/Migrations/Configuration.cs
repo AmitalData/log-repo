@@ -28,9 +28,9 @@
             var connectionInfo =
                 //OracleConnectionInfo.CreateConnection("User Id=devart;  Password=devart; Server=srv64bit;");
                 OracleConnectionInfo.CreateConnection(
-               "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ57;port=1521;sid=amital"
+               //"User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ57;port=1521;sid=amital"
                // "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ56;port=1521;sid=amital"
-                //"User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ58;port=1521;sid=amital"
+                "User Id=AMINET_MAIN;  Password=AMINET_MAIN;Direct=True;Data Source=Univ58;port=1521;sid=amital"
 
                 );
 

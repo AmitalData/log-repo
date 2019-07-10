@@ -300,6 +300,10 @@
     <Compile Include="Migrations\201905201531217_AddIntegratorFieldToCourierMaster.Designer.cs">
       <DependentUpon>201905201531217_AddIntegratorFieldToCourierMaster.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905290826398_fuuscreenabdullah.cs" />
+    <Compile Include="Migrations\201905290826398_fuuscreenabdullah.Designer.cs">
+      <DependentUpon>201905290826398_fuuscreenabdullah.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -511,6 +515,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905201531217_AddIntegratorFieldToCourierMaster.resx">
       <DependentUpon>201905201531217_AddIntegratorFieldToCourierMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905290826398_fuuscreenabdullah.resx">
+      <DependentUpon>201905290826398_fuuscreenabdullah.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>
