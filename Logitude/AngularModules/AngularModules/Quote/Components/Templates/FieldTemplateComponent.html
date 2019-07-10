@@ -1,4 +1,4 @@
-﻿
+
 <table *ngIf="Entity">
     <tr>
         <td>
@@ -76,7 +76,7 @@
                     </tr>
                 </table>
 
-                <div *ngIf="FieldName == 'GrossWeight'|| FieldName == 'GrossWeightInKG' || FieldName == 'GrossWeightPerTon'" class="TemplateTrimming">
+                <div *ngIf="FieldName == 'GrossWeight'|| FieldName == 'GrossWeightInKG' || FieldName == 'GrossWeightPerTon' || FieldName == 'VolumeInCBM'" class="TemplateTrimming">
                     <div class="TemplateTrimmingChild TextRight">{{FieldValue | NumbersPipe:'N2'}}</div>
                 </div>
 

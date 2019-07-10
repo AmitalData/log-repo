@@ -44,6 +44,7 @@ export class QuoteList {
 		GrossWeight: number;
 		GrossWeightInKG: number;
 		GrossWeightPerTon: number;
+		VolumeInCBM: number;
 		ShipmentType: string;
 		FromPort: string;
 		FromPortName: string;
