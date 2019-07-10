@@ -40,16 +40,17 @@
                                                 (RowEnded)="OnRowEnded($event)"
                                                 (Ondblclick)="OnFocus()"
                                                 [IsReadOnly]="IsDisplayOnly"
+                                                [Disabled]="IsDisplayOnly"
                                                 [ItemSource]="DeclarationPendingItemsSource"
                                                 (SelectedItemChanged)="OnRowSelected($event)"
                                                 [SelectedRow]="SelectedRow">
 
 
-
+                                <!-- CourierPendingReasonCode -->
                                 <log-column [header]="'Customs.DeclarationCourierStatus.F.CourierPendingReasonCode' | TextCodeTranslationPipe" [binding]="'CourierPendingReasonCode'" [width]="'130'" [Alignment]="'right'">
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div style="text-align:right" class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{CourierPendingReasonName}}</span>
+                                            <span>{{item.CourierPendingReasonName}}</span>
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
                                             <LogLov #CourierPendingReasonLovBox
@@ -68,36 +69,34 @@
                                     </log-cell-template>
                                 </log-column>
 
-
-
-
-
+                                <!-- PendingRemarks --> <!-- [Text]="PendingRemarks" -->
                                 <log-column [header]="'Customs.DeclarationCourierStatus.F.PendingRemarks' | TextCodeTranslationPipe" [binding]="'PendingRemarks'" [width]="'150'" [Editable]="true" [Alignment]="'right'">
                                     <log-cell-template template="let item" #logcelltemplate>
                                         <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                                            <span>{{PendingRemarks}}</span>
+                                            <span>{{item.PendingRemarks}}</span>
                                         </div>
                                         <div *ngIf="logcelltemplate.IsEditMode">
                                             <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'PendingRemarks'" [InputType]="'ntext'" [DataContext]="item"
-                                                        [Text]="PendingRemarks" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"></LogTextBox>
 
                                         </div>
                                     </log-cell-template>
                                 </log-column>
-                                <!--
-    <log-column [header]="'Customs.DeclarationPending.F.Status' | TextCodeTranslationPipe" [binding]="'Status'" [width]="'130'" [Editable]="true" [Alignment]="'right'">
-        <log-cell-template template="let item" #logcelltemplate>
-            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
-                <span>{{item.Status}}</span>
-            </div>
-            <div *ngIf="logcelltemplate.IsEditMode">
-                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Status'" [DataContext]="item"
-                            [Text]="item.Status" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
-            </div>
-        </log-cell-template>
-    </log-column>
-        -->
+                                <!-- Status --> <!-- [Text]="item.Status" -->
+                                <log-column [header]="'Customs.DeclarationPending.F.Status' | TextCodeTranslationPipe" [binding]="'Status'" [width]="'70'" [Editable]="true" [Alignment]="'right'">
+                                    <log-cell-template template="let item" #logcelltemplate>
+                                        <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                            <span>{{item.Status}}</span>
+                                        </div>
+                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                            <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'Status'" [DataContext]="item"
+                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+
+                                        </div>
+                                    </log-cell-template>
+                                </log-column>
+
 
                                 <log-column [width]="'40'" [Editable]="true" [Alignment]="'right'" [visibility]="'collapsed'">
                                     <log-cell-template [IgnoreMods]="true" template="let item" #logcelltemplate>

@@ -20,10 +20,11 @@ import { DeclarationCourierStatusPMService } from '../../../../Customs/Services/
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { DeclarationPendingPM } from '../../../../Customs/EntityPMs/DeclarationPendingPM';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
-import { DeclarationPendingPMService } from '../../../../Customs/Services/StandardPMs/DeclarationPendingPMService';
+//import { DeclarationPendingPMService } from '../../../../Customs/Services/StandardPMs/DeclarationPendingPMService';
 import { DeclarationPM } from '../../../../Customs/EntityPMs/DeclarationPM';
 import { DeclarationPMService } from '../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { CourierPendingReasonPM } from '../../../../Customs/EntityPMs/CourierPendingReasonPM';
+import { DeclarationExtendedListService } from '../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     moduleId: module.id,
@@ -37,14 +38,18 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
     public DataContext = this;
     public DeclarationPendingItemsSource: ObservableCollection;
     DeclarationPendingsList: DeclarationPendingPM[] = [];
-    public declarationPM: DeclarationPM;
+    DeclarationCourierStatus: DeclarationCourierStatusPM = new DeclarationCourierStatusPM();
+    _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
+    public DeclarationId: string;
+    //public declarationPM: DeclarationPM;
     FIELD_IS_REQUIERD: string;
     IsDisplayOnly: boolean;
     public ValidationErrorsList: string[] = [];
     public entityResourceService: EntityResourceService = new EntityResourceService();
+    private _DeclarationCourierStatusPMService: DeclarationCourierStatusPMService = new DeclarationCourierStatusPMService();
 
-    declarationPendingPMService: DeclarationPendingPMService = new DeclarationPendingPMService();
-    declarationPMService: DeclarationPMService = new DeclarationPMService();
+    //declarationPendingPMService: DeclarationPendingPMService = new DeclarationPendingPMService();
+    //declarationPMService: DeclarationPMService = new DeclarationPMService();
     IsVisibile: boolean;
     _IsNewPending: boolean = true;
     IsHeaderVisible: boolean = false;
@@ -66,27 +71,40 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
 
 
                 this.IsVisibile = true;
-                this.DeclarationPendingsList = args.DeclarationIdList;
+                //this.DeclarationPendingsList = args.DeclarationIdList;
+                this.DeclarationCourierStatus = args.DeclarationCourierStatus;
+                if (!AppTool.IsNullOrEmpty(this.DeclarationCourierStatus.DeclarationPendings)) {
+                    this.DeclarationPendingsList = this.DeclarationCourierStatus.DeclarationPendings;
+                }
+                this.DeclarationId = args.DeclarationId;
                 this.BuildDeclarationPendingList();
                 this.IsDisplayOnly = args.IsDisplayOnly;
                 this.parent = args.parent;
                 var table = window.ObjectTables.filter(d => d.Name === 'Customs.DeclarationPending')[0];
-
-
-                // });
+                /*
+                if (!AppTool.IsNullOrEmpty(args.DeclarationId)) {
+                    this._DeclarationExtendedListService.GetDeclarationPendingListPMByDeclarationId(args.DeclarationId).subscribe((response: ServiceResponse) => {
+                        if (!response.HasError) {
+                            this.DeclarationPendingsList.push(response.Result);
+                        }
+                    });
+                }
+                */
             });
 
-            SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-            this.declarationPMService.get(args.DeclarationId).subscribe((response: ServiceResponse) => {
-                SessionLocator.CurrentSession.StopBusyIndicator();
-                this.declarationPM = response.Result;
-            });
+            //SessionLocator.CurrentSession.StartBusyIndicatorLoading();
+            //this.declarationPMService.get(args.DeclarationId).subscribe((response: ServiceResponse) => {
+            //    SessionLocator.CurrentSession.StopBusyIndicator();
+            //    this.declarationPM = response.Result;
+            //});
             //this.CourierHawb = args.CourierHawb;
+            /*
             if (args.Mode == "FromDeclaration") {
                 SessionLocator.CurrentSession.StartBusyIndicatorLoading();
-                this.declarationPendingPMService.get(args.DeclarationId, "").subscribe((response: ServiceResponse) => {
-                    SessionLocator.CurrentSession.StopBusyIndicator();
-                    var declarationPendingPM: DeclarationPendingPM = response.Result;
+                //this.declarationPendingPMService.get(args.DeclarationId, "").subscribe((response: ServiceResponse) => {
+                //    SessionLocator.CurrentSession.StopBusyIndicator();
+                  //  var declarationPendingPM: DeclarationPendingPM = response.Result;
+                var declarationPendingPM: DeclarationPendingPM = this.DeclarationCourierStatus.;
                     if (declarationPendingPM != null) {
                         this.DeclarationPendingsList.push(declarationPendingPM);
                         if (!AppTool.IsNullOrEmpty(declarationPendingPM.CourierPendingReasonCode) || !AppTool.IsNullOrEmpty(declarationPendingPM.PendingRemarks)) {
@@ -109,6 +127,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                     });
                 }
             }
+            */
         }
     }
     /*
@@ -148,10 +167,10 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
     Add() {
         if (!this.IsDisplayOnly) {
 
-            var item: DeclarationPendingPM = new DeclarationPendingPM();
+            var item: DeclarationPendingPM = new DeclarationPendingPM(this.DeclarationCourierStatus);
 
-            item.DeclarationID = this.declarationPM.Id;
-            item.Tenant = this.declarationPM.Tenant;
+            item.DeclarationID = this.DeclarationCourierStatus.DeclarationId;
+            item.Tenant = this.DeclarationCourierStatus.Tenant;
             item.IsDirty = true;
             item.Status = "A";
 
@@ -248,17 +267,17 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                         var isSave = 1;
                         if (isSave == 1) {
                             SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-                            this.DeclarationPendingsList.forEach((declarationPendingPM: DeclarationPendingPM) => {
+                            this._DeclarationCourierStatusPMService.update(this.DeclarationCourierStatus).subscribe((response: ServiceResponse) => {
+                                //this.DeclarationPendingsList.forEach((declarationPendingPM: DeclarationPendingPM) => {
                                 //declarationPendingPM.CourierPendingReasonCode = this.CourierPendingReasonCode;
                                 //declarationPendingPM.PendingRemarks = this.PendingRemarks;
                                 //declarationPendingPM.Status = this.Status;
                                 //declarationPendingPM.IsDirty = true;
                                 //declarationPendingPM.DeclarationID = this.declarationPM.Id;
                                 //declarationPendingPM.Tenant = this.declarationPM.Tenant;
-                                this.declarationPendingPMService.update(declarationPendingPM).subscribe((response: ServiceResponse) => {
-                                    SessionLocator.CurrentSession.StopBusyIndicator();
-                                    SessionLocator.CurrentSession.CloseCurrentWindow();
-                                });
+                                //this.declarationPendingPMService.update(declarationPendingPM).subscribe((response: ServiceResponse) => {
+                                SessionLocator.CurrentSession.StopBusyIndicator();
+                                SessionLocator.CurrentSession.CloseCurrentWindow();
                             });
 
                         }
@@ -284,17 +303,9 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
                 var isSave = 1;
                 if (isSave == 1) {
                     SessionLocator.CurrentSession.StartBusyIndicatorSaving();
-                    this.DeclarationPendingsList.forEach((declarationPendingPM: DeclarationPendingPM) => {
-                        //declarationPendingPM.CourierPendingReasonCode = this.CourierPendingReasonCode;
-                        //declarationPendingPM.PendingRemarks = this.PendingRemarks;
-                        //declarationPendingPM.Status = this.Status;
-                        //declarationPendingPM.IsDirty = true;
-                        //declarationPendingPM.DeclarationID = this.declarationPM.Id;
-                        //declarationPendingPM.Tenant = this.declarationPM.Tenant;
-                        this.declarationPendingPMService.update(declarationPendingPM).subscribe((response: ServiceResponse) => {
-                            SessionLocator.CurrentSession.StopBusyIndicator();
-                            SessionLocator.CurrentSession.CloseCurrentWindow();
-                        });
+                    this._DeclarationCourierStatusPMService.update(this.DeclarationCourierStatus).subscribe((response: ServiceResponse) => {
+                        SessionLocator.CurrentSession.StopBusyIndicator();
+                        SessionLocator.CurrentSession.CloseCurrentWindow();
                     });
                 }
                 else {
@@ -343,7 +354,6 @@ export class DeclarationPendingLine extends BaseComponent {
         this.entityPM = EntityPM;
 
         this.parent = Parent;
-
     }
 
     //#region properties
@@ -360,6 +370,7 @@ export class DeclarationPendingLine extends BaseComponent {
 
     get CourierPendingReasonName() { return this.entityPM.CourierPendingReasonName; }
     set CourierPendingReasonName(value: string) {
+        DeclarationExtendedListService
         if (this.entityPM.CourierPendingReasonName != value) {
             this.entityPM.CourierPendingReasonName = value;
 
