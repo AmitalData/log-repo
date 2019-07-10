@@ -376,6 +376,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private byte[] ExportAirSurchargesCostLinesToExcel(TariffPM tariff, List<TariffLinePM> tariffLines, int tenant, string type)
         {
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
+            tariffLines = tariffLines.Where(d => !d.IsFromAllOtherPorts && !d.IsToAllOtherPorts).ToList();
             tariffLines = tariffLines.OrderBy(P => P.Index).ToList();
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;

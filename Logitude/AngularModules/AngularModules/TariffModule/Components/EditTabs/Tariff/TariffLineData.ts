@@ -770,192 +770,196 @@ export class AirSurchargeTariffLineData extends BaseComponent {
     public IsNewEntity: boolean = false;
     public IsEditEnabled: boolean = false;
     public ComparedEntity: TariffLinePM;
+    private initialIndex: number;
     constructor(entity: TariffLinePM, public FatherComponent: SurchargeVersionTabComponent, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
         this.IsNewEntity = isNew;
+        this.initialIndex = entity.Index;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
         this.SetUIProperties();
     }
     
     private CheckIfLineHasError() {
-        var error: boolean = false;
-        var errorText: string;
+        if (this.ErrorText != 'Line is a duplicate') {
+            var error: boolean = false;
+            var errorText: string;
 
-        if (!this.IsFromAllOtherPorts) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+            if (!this.IsFromAllOtherPorts) {
+                if (!AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+                    error = true;
+
+                    if (AppTool.IsNullOrEmpty(errorText)) {
+                        errorText = "Port with code " + this.EntityPM.OriginPortText + " not found";
+                    }
+
+                    else {
+                        errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
+                    }
+                }
+                else if (AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+                    error = true;
+
+                    if (AppTool.IsNullOrEmpty(errorText)) {
+                        errorText = "Missing Origin Port";
+                    }
+
+                    else {
+                        errorText = errorText + ", Missing Origin Port"
+                    }
+                }
+            }
+
+            if (!this.IsToAllOtherPorts) {
+                if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+                    error = true;
+
+                    if (AppTool.IsNullOrEmpty(errorText)) {
+                        errorText = "Port with code " + this.EntityPM.DestinationPortText + " not found";
+                    }
+
+                    else {
+                        errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
+                    }
+                }
+                else if (AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+                    error = true;
+
+                    if (AppTool.IsNullOrEmpty(errorText)) {
+                        errorText = "Missing Destination Port";
+                    }
+
+                    else {
+                        errorText = errorText + ", Missing Destination Port"
+                    }
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Port with code " + this.EntityPM.OriginPortText + " not found";
+                    errorText = "Surcharge 1 price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Port with code " + this.EntityPM.OriginPortText + " not found"
+                    errorText = errorText + ", Surcharge 1 price format is invalid"
                 }
             }
-            else if (AppTool.IsNullOrEmpty(this.EntityPM.OriginPortText) && AppTool.IsNullOrEmpty(this.EntityPM.OriginPortId)) {
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge2Price)) {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Missing Origin Port";
+                    errorText = "Surcharge 2 price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Missing Origin Port"
+                    errorText = errorText + ", Surcharge 2 price format is invalid"
                 }
             }
-        }
 
-        if (!this.IsToAllOtherPorts) {
-            if (!AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge3Price)) {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Port with code " + this.EntityPM.DestinationPortText + " not found";
+                    errorText = "Surcharge 3 price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Port with code " + this.EntityPM.DestinationPortText + " not found"
+                    errorText = errorText + ", Surcharge 3 price format is invalid"
                 }
             }
-            else if (AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortText) && AppTool.IsNullOrEmpty(this.EntityPM.DestinationPortId)) {
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge4Price)) {
                 error = true;
 
                 if (AppTool.IsNullOrEmpty(errorText)) {
-                    errorText = "Missing Destination Port";
+                    errorText = "Surcharge 4 price format is invalid";
                 }
 
                 else {
-                    errorText = errorText + ", Missing Destination Port"
+                    errorText = errorText + ", Surcharge 4 price format is invalid"
                 }
             }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge5Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Surcharge 5 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Surcharge 5 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge6PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge6Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Surcharge 6 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Surcharge 6 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge7PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge7Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Surcharge 7 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Surcharge 7 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge8PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge8Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Surcharge 8 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Surcharge 8 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge9PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge9Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Surcharge 9 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Surcharge 9 price format is invalid"
+                }
+            }
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge10PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge10Price)) {
+                error = true;
+
+                if (AppTool.IsNullOrEmpty(errorText)) {
+                    errorText = "Surcharge 10 price format is invalid";
+                }
+
+                else {
+                    errorText = errorText + ", Surcharge 10 price format is invalid"
+                }
+            }
+
+            this.HasErrors = error;
+            this.ErrorText = errorText;
         }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge1PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge1Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Surcharge 1 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Surcharge 1 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge2PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge2Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Surcharge 2 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Surcharge 2 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge3PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge3Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Surcharge 3 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Surcharge 3 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge4PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge4Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Surcharge 4 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Surcharge 4 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge5PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge5Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Surcharge 5 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Surcharge 5 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge6PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge6Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Surcharge 6 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Surcharge 6 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge7PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge7Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Surcharge 7 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Surcharge 7 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge8PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge8Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Surcharge 8 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Surcharge 8 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge9PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge9Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Surcharge 9 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Surcharge 9 price format is invalid"
-            }
-        }
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.Surcharge10PriceText) && AppTool.IsNullOrZero(this.EntityPM.Surcharge10Price)) {
-            error = true;
-
-            if (AppTool.IsNullOrEmpty(errorText)) {
-                errorText = "Surcharge 10 price format is invalid";
-            }
-
-            else {
-                errorText = errorText + ", Surcharge 10 price format is invalid"
-            }
-        }
-
-        this.HasErrors = error;
-        this.ErrorText = errorText;
     }
-
+    
     private SetUIProperties() {
         this.SetUIProperties_From();
         this.SetUIProperties_To();
@@ -1639,11 +1643,14 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.IsFromAllOtherPorts != value) {
             this.EntityPM.IsFromAllOtherPorts = value;
 
-            this.OriginPortId = null;
-            this.EntityPM.OriginPortText = null;
+            if (value) {
+                this.OriginPortId = null;
+                this.EntityPM.OriginPortText = null;
+            }
 
             this.SetUIProperties_From();
             this.CheckIfLineHasError();
+            this.ComputeIndex();
         }
     }
 
@@ -1652,11 +1659,37 @@ export class AirSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.IsToAllOtherPorts != value) {
             this.EntityPM.IsToAllOtherPorts = value;
 
-            this.DestinationPortId = null;
-            this.EntityPM.DestinationPortText = null;
+            if (value) {
+                this.DestinationPortId = null;
+                this.EntityPM.DestinationPortText = null;
+            }
 
             this.SetUIProperties_To();
             this.CheckIfLineHasError();
+            this.ComputeIndex();
+        }
+    }
+
+    private ComputeIndex() {
+        if (this.IsFromAllOtherPorts || this.IsToAllOtherPorts) {
+            this.EntityPM.Index = -1;
+        }
+
+        else {
+            if (this.IsNewEntity) {
+                this.EntityPM.Index = this.initialIndex;
+            }
+
+            else {
+                if (this.initialIndex == -1) {
+                    this.EntityPM.Index = 0;
+
+                }
+
+                else {
+                    this.EntityPM.Index = this.initialIndex;
+                }
+            }            
         }
     }
 }

@@ -55,6 +55,10 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     line.OriginPortCode = line.OriginPortCode.Trim().ToUpper();
                     iUniqueKey = line.OriginPortCode;
                 }
+                else if(line.IsFromAllOtherPorts)
+                {
+                    iUniqueKey = "From All Other Ports";
+                }
 
                 if (!string.IsNullOrEmpty(line.DestinationPortCode))
                 {
@@ -68,6 +72,18 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     else
                     {
                         iUniqueKey += "," + line.DestinationPortCode;
+                    }
+                }
+                else if (line.IsToAllOtherPorts)
+                {
+                    if (iUniqueKey == null)
+                    {
+                        iUniqueKey = "To All Other Ports";
+                    }
+
+                    else
+                    {
+                        iUniqueKey += "," + "To All Other Ports";
                     }
                 }
 
