@@ -72,11 +72,10 @@ namespace CommunicationWorkerRole
                 {
                     //TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
                     Task.Status = null;
-                    Task.Version = Task.Version + 1;
-
+                    Task.Version = Task.Version + 1; 
+                    AddSchedulerQueue(Task);
                     var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
                     LogInfoToDB(Msg, Task);
-                    AddSchedulerQueue(Task);
                     //service.Update(Task);
                 }
 
@@ -139,9 +138,10 @@ namespace CommunicationWorkerRole
             {
                 Task.Status = null;
                 Task.Version = Task.Version + 1;
+                AddSchedulerQueue(Task);
                 var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
                 LogInfoToDB(Msg, Task);
-                AddSchedulerQueue(Task);
+               
             }
         }
 

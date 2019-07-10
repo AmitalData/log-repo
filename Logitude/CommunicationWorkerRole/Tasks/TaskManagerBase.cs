@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -69,6 +70,11 @@ namespace CommunicationWorkerRole.Tasks
 
                     scope.Complete();
                 }
+            }
+            catch (ThreadAbortException e)
+            {
+                //LogInfoToDB("After Aborting the thread ..");
+                //Thread.ResetAbort();
             }
             catch (Exception ex)
             {
