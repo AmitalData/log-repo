@@ -101,6 +101,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     DefaultTranslations = new List<ComputingPartnerTranslationList>();
 
                 List<TranslateItemClass> Obslist = new List<TranslateItemClass>();
+            
                 ObjectTableQuery query = new ObjectTableQuery(Tenant);
                 ObjectTablePM objectTablePM = query.GetObjectTableByName(filters.objectTableName, Tenant);
                 if (myTableDataList.Count > 0)
@@ -216,13 +217,18 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                 ServiceResponse response = new ServiceResponse();
                 Obslist.Sort(new Comparison<TranslateItemClass>((x, y) => String.Compare(y.PartnerCode, x.PartnerCode)));
-                if (filters.SearchingFields != "null" && filters.SearchingFields != "undefined" && filters.SearchingFields != null)
-                    Obslist = Obslist.Where(fl => fl.OurCode.ToLower().StartsWith(filters.SearchingFields.ToLower())).ToList();
-                response.Result = Obslist;
-                response.Count = Obslist.Count;
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-                return reponseMessage;
+                if (filters.SearchingFields != null && filters.SearchingFields != "null" && filters.SearchingFields != "undefined"  )
+                    
+                    Obslist = Obslist.Where(fl => (fl.OurCode.ToLower().StartsWith(filters.SearchingFields.ToLower()))|| (fl.PartnerCode != null && fl.PartnerCode.ToLower().StartsWith(filters.SearchingFields.ToLower()))).ToList();
+               
+                    response.Result = Obslist;
+                    response.Count = Obslist.Count;
+              
+                    HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                
+                    return reponseMessage;
+                
 
             }
 

@@ -87,7 +87,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.InitializeComponent();
 
-            ShippingAgentValidating.Validate(entityPM);
             if (!entityPM.IsHybrid)
             {
                 ShippingAgentTracing.Trace(entityPM, entityPOCO, isNewEntity);
@@ -109,6 +108,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             ShippingAgentMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+            ShippingAgentValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
@@ -133,7 +133,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 this.SetChangeSet(this.entityPM.CardExternalCodeByCurrencies);
             }
-            ShippingAgentValidating.Validate(entityPM);
             if (!entityPM.IsHybrid)
             {
                 ShippingAgentTracing.Trace(entityPM, entityPOCO, isNewEntity);
@@ -158,7 +157,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateCardExternalCodeByCurrencyCollection();
 
             ShippingAgentMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
-            
+            ShippingAgentValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
+
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();

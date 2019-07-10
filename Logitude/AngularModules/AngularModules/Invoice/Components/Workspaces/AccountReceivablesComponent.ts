@@ -219,7 +219,7 @@ export class AccountReceivablesComponent implements OnInit {
         this.BarData.forEach(element => {
             if (element.Amount > max)
                 max = element.Amount;
-            dataProvider.push({ category: element.DateRange, ammount: element.Amount});            
+            dataProvider.push({ category: element.DateRange, ammount: element.Amount.toFixed(2)});            
         });
         var poisition = this.isRTL == true ? "right" : "left";
         makeAmBarChart(this.ReceivablesChartId, Graphs, dataProvider, max, null, null, null, null, poisition );  
