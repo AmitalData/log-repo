@@ -316,14 +316,48 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
                 this.batchEntity = response.Result;
 
                 if (this.batchEntity != null) {
-                    this.timer = setInterval(() => { this.GetBTE(); }, this.timerInterval);
+                    this.CurrentSession.StartBusyIndicator("Uploading File...");
+                    this.CheckBatchTaskExecution(this.batchEntity.Id);
                 }
-                this.CurrentSession.StopBusyIndicator();
+
+                //this.CurrentSession.StopBusyIndicator();
             }
             else {
                 this.CurrentSession.StopBusyIndicator();
                 var window = new MessageWindow();
                 window.Show(response.ErrorsArray[0]);
+            }
+        });
+    }
+
+    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
+        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: BatchTaskExecutionList = myResponse.Result;
+
+                if (list.StatusCode == "D") {
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var window = new MessageWindow();
+                    window.Show("File uploaded successfully");
+                }
+
+                else if (list.StatusCode == "F") {
+                    this.CurrentSession.StopBusyIndicator();
+                    var window = new MessageWindow();
+                    window.Show("There was an error uploading excel file. Please try again later");
+                }
+
+                else {
+                    this.CheckBatchTaskExecution(BatchTaskExecutionId);
+                }
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                var window = new MessageWindow();
+                window.Show(myResponse.ErrorsArray[0]);
             }
         });
     }
