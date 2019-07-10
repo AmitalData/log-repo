@@ -39,7 +39,7 @@ export class NewVendor {
     this.Helper.WaitByIdAndClick('Activate');
     this.Helper.WaitByIdAndFill('GLAccount_ChartOfAccountsId', 'ven');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
-    this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
+   // this.Helper.WaitByIdAndFill('GLAccount_DisplayNumber', DisplayNumber);
    // this.Helper.WaitByIdAndFill('GLAccount_LocalName', Name + DisplayNumber);
     this.Helper.WaitByIdAndFill('GLAccount_CurrencyId', 'Nis');
     this.Helper.WaitByCssAndClick_FromTagInsideList('.DropDownListItem', 0);
