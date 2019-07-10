@@ -3259,12 +3259,12 @@ namespace Logitude.BL.Helpers
         private void ComputedTotalPerContainer(List<TotalPerContainerClass> totalPerContainerClassLists, string PackageTypeId, double? saleUnitPriceInSaleCurrency, int? packageTypeQuantity, string fieldCode, QuoteSaleChargePM chargePM)
         {
             double value = 0;
-            double? orginalValue = 0;
-            if (fieldCode == "PackageType1Id") orginalValue = chargePM.SaleContainerType1UnitPrice;
-            else if (fieldCode == "PackageType2Id") orginalValue = chargePM.SaleContainerType2UnitPrice;
-            else if (fieldCode == "PackageType3Id") orginalValue = chargePM.SaleContainerType3UnitPrice;
-            else if (fieldCode == "PackageType4Id") orginalValue = chargePM.SaleContainerType4UnitPrice;
-            else if (fieldCode == "PackageType5Id") orginalValue = chargePM.SaleContainerType5UnitPrice;
+            double orginalValue = 0;
+            if (fieldCode == "PackageType1Id") orginalValue = chargePM.SaleContainerType1UnitPrice!=null ? (double)chargePM.SaleContainerType1UnitPrice:0;
+            else if (fieldCode == "PackageType2Id") orginalValue = chargePM.SaleContainerType2UnitPrice != null ? (double)chargePM.SaleContainerType2UnitPrice : 0;
+            else if (fieldCode == "PackageType3Id") orginalValue = chargePM.SaleContainerType3UnitPrice != null ? (double)chargePM.SaleContainerType3UnitPrice : 0;
+            else if (fieldCode == "PackageType4Id") orginalValue = chargePM.SaleContainerType4UnitPrice != null ? (double)chargePM.SaleContainerType4UnitPrice : 0;
+            else if (fieldCode == "PackageType5Id") orginalValue = chargePM.SaleContainerType5UnitPrice != null ? (double)chargePM.SaleContainerType5UnitPrice : 0;
 
 
             PackageType packageType = PackageTypeRepository.GetSinglePackageType(PackageTypeId, chargePM.Tenant, true);
@@ -3274,13 +3274,13 @@ namespace Logitude.BL.Helpers
             if (chargePM.SaleMeasurementCode == "BCNT" && packageTypeQuantity != null && saleUnitPriceInSaleCurrency != null)
             {
                 value = (double)packageTypeQuantity * (double)saleUnitPriceInSaleCurrency;
-                orginalValue = packageTypeQuantity * orginalValue;
+                orginalValue = (double)packageTypeQuantity * (double)orginalValue;
 
             }
             else if (chargePM.SaleMeasurementCode == "BTEU" && chargePM.SaleUnitPriceInSaleCurrency != null && packageTypeQuantity != null)
             {
-                value = (double)chargePM.SaleUnitPriceInSaleCurrency * (double)packageTypeQuantity * (double)packageType.TEU;
-                orginalValue = packageTypeQuantity * orginalValue * (double)packageType.TEU; 
+                value = (double)chargePM.SaleUnitPriceInSaleCurrency * (double)packageTypeQuantity * packageType.TEU;
+                orginalValue = (double)packageTypeQuantity * (double)orginalValue * packageType.TEU; 
             }
             else
             {
