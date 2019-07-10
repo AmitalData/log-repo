@@ -308,18 +308,19 @@ export class TaskSchedulerComponent implements OnInit  {
         sortingCol = "StartDateTimeUTC";
         sortingDir = "descending"; 
         if (!this.SelectedRow) {
-            if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
-                filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
-            }
-            filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
-        }
-        else {
-            if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
-                if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
-                    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
-                }
-                filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
-            }
+        //    if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
+        //        filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+        //    }
+        //    filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
+        //}
+        //else {
+        //    if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
+        //        if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
+        //            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+        //        }
+        //        filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
+        //    }
+            return
         }
 
         filters.GetCount = getCount;
