@@ -17,7 +17,7 @@
 	(
 	(InOut = 'i' and Subject in ('FNA', 'FMA', 'FSA', 'FSU', 'FFA'))
 	OR
-	(InOut = 'o' and Subject in ('FWB', 'FHL', 'FFR', 'Cargonaut FWB', 'Cargonaut FHL', 'DEXX FWB', 'DEXX FHL'))
+	(InOut = 'o' and Subject in ('FWB', 'FHL', 'FFR', 'FSR', 'Cargonaut FWB', 'Cargonaut FHL', 'DEXX FWB', 'DEXX FHL'))
 	)
 	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @EntityId, @ObjectTableId, @AWBNumber, @Subject
 	WHILE @@FETCH_STATUS = 0
