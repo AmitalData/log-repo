@@ -137,7 +137,8 @@ namespace WebFreight.Web.ReportsWebServices
                 deliveryNotedataprovider.ShipperReference2 = shipment.ShipperReference2;
                 deliveryNotedataprovider.ConsigneeReference2 = shipment.ConsigneeReference2;
                 deliveryNotedataprovider.ShipmentSalesman = shipment.SalesmanUserName;
-                deliveryNotedataprovider.LastFreeDate = shipment.WarehouseLegLastFreeDate;                
+                deliveryNotedataprovider.LastFreeDate = shipment.WarehouseLegLastFreeDate;
+                deliveryNotedataprovider.FinalDestinationCode = shipment.MainCarriageFinalDestinationPortCode;
 
                 if (!string.IsNullOrEmpty(shipment.FreightLocationId))
                 {
@@ -943,6 +944,7 @@ namespace WebFreight.Web.ReportsWebServices
                 deliveryNotedataprovider.ConsigneeReference2 = shipment.ConsigneeReference2;
                 deliveryNotedataprovider.ShipmentSalesman = shipment.SalesmanUserName;
                 deliveryNotedataprovider.LastFreeDate = shipment.WarehouseLegLastFreeDate;
+                deliveryNotedataprovider.FinalDestinationCode = shipment.MainCarriageFinalDestinationPortCode;
 
                 if (!string.IsNullOrEmpty(shipment.FreightLocationId))
                 {
