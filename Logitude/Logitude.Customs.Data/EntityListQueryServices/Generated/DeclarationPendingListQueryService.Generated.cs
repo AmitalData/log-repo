@@ -104,7 +104,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.DeclarationID);
+                                query2 = query2.OrderBy(d => d.CourierPendingReasonCode);
                                 break;
                             }
                     }
@@ -113,7 +113,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.DeclarationID);
+                query2 = query2.OrderBy(d => d.CourierPendingReasonCode);
             }
 			if(!queryOperations.GetAll)
 			{

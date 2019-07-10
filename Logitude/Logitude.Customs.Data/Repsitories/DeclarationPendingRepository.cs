@@ -9,6 +9,8 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+//using System.Data.Entity;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -17,10 +19,10 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<DeclarationPending> GetMulti(EntityKeyFields entityKeys)
         {
-            DeclarationKeys keys = entityKeys as DeclarationKeys;
+            DeclarationCourierStatusKeys keys = entityKeys as DeclarationCourierStatusKeys;
             List<DeclarationPending> pendings;
-            pendings = (from a in context.DeclarationPendings//.Include("CourierPendingReason")
-                           where a.DeclarationID == keys.Id
+            pendings = (from a in context.DeclarationPendings.Include("CourierPendingReason")
+                           where a.DeclarationID == keys.DeclarationId
                            select a).ToList();
 
 
@@ -31,7 +33,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
 
             List<DeclarationPending> pendings;
-            pendings = (from a in context.DeclarationPendings//.Include("CourierPendingReason")
+            pendings = (from a in context.DeclarationPendings.Include("CourierPendingReason")
                            where a.DeclarationID == declarationId
                            select a).ToList();
 
@@ -59,7 +61,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
 
             List<DeclarationPending> pendings;
-            pendings = (from a in context.DeclarationPendings//.Include("CourierPendingReason")
+            pendings = (from a in context.DeclarationPendings.Include("CourierPendingReason")
                            where a.CourierPendingReasonCode == pending && a.Tenant == tenant
                            select a).ToList();
 

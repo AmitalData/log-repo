@@ -48,6 +48,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void UpdateComposition(DeclarationCourierStatusPM entityPM)
         {
+            DeclarationPendingUpdateService declarationPendingUpdateService = new DeclarationPendingUpdateService(MainContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), Tenant);
+            declarationPendingUpdateService.UpdateMulti(entityPM.DeclarationPendings, entityPM.DeletedDeclarationPendings, entityPM, false);
+
             base.UpdateComposition(entityPM);
         }
 

@@ -11,7 +11,7 @@ using Logitude.Server.Tools;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
-    public partial class DeclarationPendingQueryService : EntityQueryService<DeclarationPending, DeclarationPendingKeys, DeclarationPendingPM, object, DeclarationPendingKeys>
+    public partial class DeclarationPendingQueryService : EntityQueryService<DeclarationPending, DeclarationPendingKeys, DeclarationPendingPM, DeclarationCourierStatusPM, DeclarationCourierStatusKeys>
     {
 
 

@@ -22,14 +22,15 @@ using System.Data.Entity.Core;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
-    public partial class DeclarationPendingUpdateService //: EntityUpdateService<DeclarationPending, DeclarationPendingPM, DeclarationPM>
+    public partial class DeclarationPendingUpdateService: EntityUpdateService<DeclarationPending, DeclarationPendingPM, DeclarationCourierStatusPM>
     {
-        protected override void OnCreating(DeclarationPendingPM entityPM, EntityPM entityParentPM)
+        protected override void OnCreating(DeclarationPendingPM entityPM, DeclarationCourierStatusPM entityParentPM)
         {
-            base.OnCreating(entityPM, entityParentPM);
+            entityPM.DeclarationID = entityParentPM.DeclarationId;
+            //base.OnCreating(entityPM, entityParentPM);
         }
 
-        protected override void AfterUpdating(DeclarationPendingPM entityPM, EntityPM entityParentPM)
+        protected override void AfterUpdating(DeclarationPendingPM entityPM, DeclarationCourierStatusPM entityParentPM)
         {
             ICustomContext context = MainContext as CustomContext;
             DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
@@ -63,6 +64,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
         }
 
-
+        public void FastDeleteComposition(Logitude.Customs.Data.EntityKeys.DeclarationKeys entityKeyFields)
+        {
+            (Repository as Logitude.Customs.Data.Repsitories.DeclarationPendingRepository).FastDeleteMulti(entityKeyFields);
+        }
     }
 }

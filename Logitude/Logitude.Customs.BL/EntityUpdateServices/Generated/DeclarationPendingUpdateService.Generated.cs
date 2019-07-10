@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class DeclarationPendingUpdateService:EntityUpdateService<DeclarationPending,DeclarationPendingPM,EntityPM>
+   public partial class DeclarationPendingUpdateService:EntityUpdateService<DeclarationPending,DeclarationPendingPM,DeclarationCourierStatusPM>
    {
    
         DeclarationPendingRepository entityRepository;

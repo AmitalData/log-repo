@@ -29,7 +29,7 @@ export class DeclarationPendingPMService {
         this._http = ServiceHelper.Http;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/declarationpendings';      
     }
-
+    /*
  get(declarationid: string, courierpendingreasoncode: string) {
          
          
@@ -250,5 +250,5 @@ export class DeclarationPendingPMService {
 			return entityPM;
     }
 		 
-
+         */
 }
