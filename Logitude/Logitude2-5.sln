@@ -43,6 +43,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Update", "Logitude.Update\Logitude.Update.csproj", "{1A81F8C5-FBDC-47FE-954A-E248FB8B3F19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.DatabaseMigration", "Logitude.DatabaseMigration\Logitude.DatabaseMigration.csproj", "{160CFF77-92DB-4578-BD3D-BF78A9258B00}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0A2A3AB8-4D14-4140-BE2F-2D95B235BB7C} = {0A2A3AB8-4D14-4140-BE2F-2D95B235BB7C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.AmitalMessaging", "Logitude.AmitalMessaging\Logitude.AmitalMessaging.csproj", "{E177D993-3117-420C-A59B-88F5398019ED}"
 EndProject
