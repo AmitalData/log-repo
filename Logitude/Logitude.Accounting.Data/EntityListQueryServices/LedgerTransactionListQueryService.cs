@@ -322,14 +322,19 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
 
 
-        public GenericCallBack GetOpenReconciliationFilterCallBack(QueryOperations queryOperations, 
-            string AccountId,
-            int tenant)
-        {
+        public GenericCallBack GetReconciliationFilterCallBack(QueryOperations queryOperations, string AccountId,  int tenant, bool getOpenReconciliations = true) {
+
             IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+
             const int MaxTotal=99001;
-            query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
-            var callback11 =
+
+            if(getOpenReconciliations == true)
+                query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
+            else
+                query2 = ReconciliationFilter(AccountId, query2);
+            
+
+        var callback11 =
                 (from r in query2
                  group r by 1 into gb
                  select new
@@ -368,6 +373,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 .Where(rec => rec.AccountId == AccountId)
                 .OrderBy(rec => rec.AccountingDate)
                 //.Take(MaxTotal);
+                ;
+            return query2;
+        }
+
+        private static IQueryable<LedgerTransactionList> ReconciliationFilter(string AccountId, IQueryable<LedgerTransactionList> query2)
+        {
+            query2 = query2
+                .Where(rec => rec.AccountId == AccountId)
+                .OrderBy(rec => rec.AccountingDate)
                 ;
             return query2;
         }
