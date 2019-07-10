@@ -289,6 +289,11 @@ export class DeclarationCourierStatusPM {
     public set StorageSiteStatusName(newValue: string) { if (this.storageSiteStatusName != newValue) { this.storageSiteStatusName = newValue; this.MarkAsDirty("StorageSiteStatusName"); } }
        
 	 
+    private courierPendingReasonList: string;
+    public get CourierPendingReasonList() { return this.courierPendingReasonList; }
+    public set CourierPendingReasonList(newValue: string) { if (this.courierPendingReasonList != newValue) { this.courierPendingReasonList = newValue; this.MarkAsDirty("CourierPendingReasonList"); } }
+       
+	 
 
     public OldEntityPM: DeclarationCourierStatusPM;
 		

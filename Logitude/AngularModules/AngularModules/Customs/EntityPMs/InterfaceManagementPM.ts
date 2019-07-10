@@ -139,6 +139,11 @@ export class InterfaceManagementPM {
     public set DcaRenameFilePrefix(newValue: string) { if (this.dcaRenameFilePrefix != newValue) { this.dcaRenameFilePrefix = newValue; this.MarkAsDirty("DcaRenameFilePrefix"); } }
        
 	 
+    private interfaceType: string;
+    public get InterfaceType() { return this.interfaceType; }
+    public set InterfaceType(newValue: string) { if (this.interfaceType != newValue) { this.interfaceType = newValue; this.MarkAsDirty("InterfaceType"); } }
+       
+	 
 
     public OldEntityPM: InterfaceManagementPM;
 		

@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
 import { BaseComponent } from       '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TextCodeTranslator } from  '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -26,6 +26,7 @@ import { InterfaceManagementList } from '../../../Customs/EntityLists/InterfaceM
 import { InterfaceManagementPMExtendService } from '../../../Customs/Services/ExtendedPMs/InterfaceManagementPMExtendService';
 
 import { InterfaceManagementListService } from '../../../Customs/Services/StandardLists/InterfaceManagementListService';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 
 
 @Component({
@@ -63,7 +64,15 @@ export class AddEditInterfaceManagementComponent
         super();
     }
     Loaded: boolean = false;
+    public InterfaceTypeList: CodeNameClass[];
     ngOnInit() {
+        this.InterfaceTypeList = [];
+        this.InterfaceTypeList.push(new CodeNameClass("", "הכל"));
+        this.InterfaceTypeList.push(new CodeNameClass("C", "עמילות"));
+        this.InterfaceTypeList.push(new CodeNameClass("B", "בלדרות"));
+        this.SelectedInterfaceType = this.InterfaceTypeList[0];
+        
+        //ערכים NULL==הכל, C==רק עמילות, B==רק בלדרות
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this._entityResourceService.getEntityResourceByTableName("Customs.InterfaceTenantDefinition").subscribe(response => {
             });
@@ -73,6 +82,10 @@ export class AddEditInterfaceManagementComponent
         });
 
     }
+
+    private selectedInterfaceType: CodeNameClass;
+    get SelectedInterfaceType() { return this.selectedInterfaceType; }
+    set SelectedInterfaceType(val) {  this.selectedInterfaceType = val; }
     SetWindowArgs(WinArg) {
         ;
         this._TenantInterfaceManagementList = WinArg.SelectedItem;
@@ -85,6 +98,9 @@ export class AddEditInterfaceManagementComponent
                     (this._TenantInterfaceManagementList.Code, SessionLocator.Tenant)
                     .subscribe(rsp => {
                         this.entityPM = rsp.Result;
+                        if (!AppTool.IsNullOrEmpty(this.entityPM.InterfaceType)) {
+                            this.SelectedInterfaceType = this.InterfaceTypeList.filter(r => r.Code == this.entityPM.InterfaceType)[0];
+                        }
                         this.ValidScreen()
                         SessionLocator.CurrentSession.StopBusyIndicator();
                     });

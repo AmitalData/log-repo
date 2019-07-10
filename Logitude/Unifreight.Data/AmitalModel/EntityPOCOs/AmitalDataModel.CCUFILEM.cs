@@ -1788,6 +1788,89 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private string _DRAWNON;
 
+        /// <summary>
+        /// There are no comments for DRAWNON in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string PRATMEHESLIST
+        {
+            get
+            {
+                return _PRATMEHESLIST;
+            }
+            set
+            {
+                if (_PRATMEHESLIST != value)
+                {
+                    _PRATMEHESLIST = value;
+                    OnPropertyChanged("PRATMEHESLIST");
+                }
+            }
+        }
+        private string _PRATMEHESLIST;
+
+        /// <summary>
+        /// There are no comments for DRAWNON in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string ALLPRATMEHESLIST
+        {
+            get
+            {
+                return _ALLPRATMEHESLIST;
+            }
+            set
+            {
+                if (_ALLPRATMEHESLIST != value)
+                {
+                    _ALLPRATMEHESLIST = value;
+                    OnPropertyChanged("ALLPRATMEHESLIST");
+                }
+            }
+        }
+        private string _ALLPRATMEHESLIST;
+
+        /// <summary>
+        /// There are no comments for DRAWNON in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual int? NOOFINVOICES
+        {
+            get
+            {
+                return _NOOFINVOICES;
+            }
+            set
+            {
+                if (_NOOFINVOICES != value)
+                {
+                    _NOOFINVOICES = value;
+                    OnPropertyChanged("NOOFINVOICES");
+                }
+            }
+        }
+        private int? _NOOFINVOICES;
+
+        /// <summary>
+        /// There are no comments for DRAWNON in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual int? TOTALINVOICELINESNO
+        {
+            get
+            {
+                return _TOTALINVOICELINESNO;
+            }
+            set
+            {
+                if (_TOTALINVOICELINESNO != value)
+                {
+                    _TOTALINVOICELINESNO = value;
+                    OnPropertyChanged("TOTALINVOICELINESNO");
+                }
+            }
+        }
+        private int? _TOTALINVOICELINESNO;
 
         #endregion
 

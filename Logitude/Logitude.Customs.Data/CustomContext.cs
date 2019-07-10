@@ -190,6 +190,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ContinuousMessagesTypeCodeMap());
 	
+            modelBuilder.Configurations.Add(new ContinuousRequestTypeMap());
+	
             modelBuilder.Configurations.Add(new ConverterTypeMap());
 	
             modelBuilder.Configurations.Add(new CountryGroupMap());
@@ -333,6 +335,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new DeclarationPaymentMethodMap());
 	
             modelBuilder.Configurations.Add(new DeclarationPaymentProtestMap());
+	
+            modelBuilder.Configurations.Add(new DeclarationPendingMap());
 	
             modelBuilder.Configurations.Add(new DeclarationStatementTypeMap());
 	
@@ -679,7 +683,7 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<CustomsCollateralsAnswer>().Property(x => x.RequestFileAmount).HasPrecision(18, 2);
 				
-			modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(12, 10);
+			modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(15, 10);
 				
 			modelBuilder.Entity<Declaration>().Property(x => x.LoadingFactor).HasPrecision(18, 10);
 				
@@ -1447,6 +1451,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<ContinuousRequestType> ContinuousRequestTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ConverterType> ConverterTypes 
 	 {
 	      get; set;
@@ -1874,6 +1884,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DeclarationPaymentProtest> DeclarationPaymentProtests 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DeclarationPending> DeclarationPendings 
 	 {
 	      get; set;
 	 

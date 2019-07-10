@@ -40,6 +40,7 @@ export class ClientList {
 	IsImporter: boolean;
 	IsExporter: boolean;
 	FacilitationTypeCode: string;
+	NationalIdentificationNumber: string;
 	
 }
  

@@ -60,9 +60,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             this.MyResponseData.StorageEntryTransportCurrencyType = customResponse.BlockDetails.StorageEntryTransportCurrencyType;
             this.MyResponseData.StorageEntryInsuranceBalance = string.Format("{0:N2}", customResponse.BlockDetails.StorageEntryInsuranceBalance.Value);
-            if(!string.IsNullOrEmpty(customResponse.BlockDetails.StorageEntryInsuranceCurrencyType))
+            if (!string.IsNullOrEmpty(customResponse.BlockDetails.StorageEntryInsuranceCurrencyType))
             {
-                this.MyResponseData.StorageEntryInsuranceBalance = string.Concat(this.MyResponseData.StorageEntryInsuranceBalance," (", customResponse.BlockDetails.StorageEntryInsuranceCurrencyType, ")");
+                this.MyResponseData.StorageEntryInsuranceBalance = string.Concat(this.MyResponseData.StorageEntryInsuranceBalance, " (", customResponse.BlockDetails.StorageEntryInsuranceCurrencyType, ")");
             }
             this.MyResponseData.StorageEntryInsuranceCurrencyType = customResponse.BlockDetails.StorageEntryInsuranceCurrencyType;
             //Get Block Special Activities

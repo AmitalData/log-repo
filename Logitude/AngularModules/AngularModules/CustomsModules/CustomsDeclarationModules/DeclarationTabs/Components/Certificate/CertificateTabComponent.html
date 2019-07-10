@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .GrayBox {
         height: 70px;
@@ -444,28 +444,28 @@
                                             <tr style="height:35px">
                                                 <td style="width:5px"></td>
                                                 <td style="height:25px;width:35px; ">
-                                                    <div *ngIf="IsCheckBoxVisible" >
+                                                    <div *ngIf="IsCheckBoxVisible">
                                                         <div class="Button" style="width: 29px;height:25px;">
                                                             <!--<span style="width:5px"></span>-->
                                                             <!--<div class="LogitudeCheckBox" >
-                <input [attr.id]="ControlId" type="checkbox"  [checked]="IsChecked" (click)="OnClick()" />
+                    <input [attr.id]="ControlId" type="checkbox"  [checked]="IsChecked" (click)="OnClick()" />
 
-            </div>-->
-                                                            <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected"  [IsEnabled]="!IsDisplayOnly"  (Checked)="IsSelected = $event "></CheckBox>
+                </div>-->
+                                                            <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected" [IsEnabled]="!IsDisplayOnly" (Checked)="IsSelected = $event "></CheckBox>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td style="width:5px"></td>
                                                 <td style="width:75px;">
-                                                    <button *ngIf="IsVisible" (click)="CreateMethod()"  [disabled]="IsDisplayOnly"  class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Create' | TextCodeTranslationPipe}}</button>
+                                                    <button *ngIf="IsVisible" (click)="CreateMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Create' | TextCodeTranslationPipe}}</button>
                                                 </td>
-                                               <!-- <td style="width:5px"></td>-->
+                                                <!-- <td style="width:5px"></td>-->
                                                 <td style="width:75px;">
-                                                    <button *ngIf="IsVisible" (click)="MoveMethod()"  [disabled]="IsDisplayOnly"  class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Move' | TextCodeTranslationPipe}}</button>
+                                                    <button *ngIf="IsVisible" (click)="MoveMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Move' | TextCodeTranslationPipe}}</button>
                                                 </td>
-                                             <!--   <td style="width:5px"></td>-->
+                                                <!--   <td style="width:5px"></td>-->
                                                 <td style="width:90px">
-                                                    <div *ngIf="IsVisible"  style="width: 100%;text-align:center;  height:30px;">
+                                                    <div *ngIf="IsVisible" style="width: 100%;text-align:center;  height:30px;">
                                                         <div class="DisbleBox">
 
                                                             {{SelectedItemsCountText}}
@@ -475,6 +475,9 @@
                                                     </div>
                                                 </td>
                                                 <td></td>
+                                                <td style="width:120px">
+                                                    <SearchTextBox [PlaceHolder]="'Customs.CustomsDocument.SupplierInvoiceItem' | TextCodeTranslationPipe" (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>

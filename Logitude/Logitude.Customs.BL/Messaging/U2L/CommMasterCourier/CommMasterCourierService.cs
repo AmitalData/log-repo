@@ -143,13 +143,20 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                 }
                 else
                 {
+                    if (_CourierMasterPM.IsOpen != true)
+                    {
+                        MyGenericResponseObj.StatusType = GenericResponseObj.StatusEnum.BusinessError;
+                        MyGenericResponseObj.Message = "Courier Master " + _CourierMasterPM.AirlinePrefix + "-" + _CourierMasterPM.MAWB + "is closed";
+                        AppendLogLine(MyGenericResponseObj.Message);
+                        return;
+                    }
                     this._CourierMasterPM.ChangeSetOp = ChangeSetOperation.Update;
                 }
                 
                 _CourierMasterPM.AirlineId = airlineId;
                 _CourierMasterPM.MAWB = _LogitudeMasterCourier.MAWB;
                 if(string.IsNullOrWhiteSpace(_CourierMasterPM.MAWBTypeCode))_CourierMasterPM.MAWBTypeCode = "740";
-                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.HAWB)) _CourierMasterPM.HAWB = _LogitudeMasterCourier.HAWB;
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.HAWB) && string.IsNullOrWhiteSpace(_CourierMasterPM.HAWB)) _CourierMasterPM.HAWB = _LogitudeMasterCourier.HAWB;
                 decimal grossMassMeasure = 0;
                 if (_CourierMasterPM.GrossMassMeasure == null)
                 {
@@ -158,13 +165,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                         _CourierMasterPM.GrossMassMeasure = grossMassMeasure;
                     }
                 }
+                /*
                 else if(!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.GrossMassMeasure))
                 {
                     if (decimal.TryParse(_LogitudeMasterCourier.GrossMassMeasure, out grossMassMeasure))
                     {
                         _CourierMasterPM.GrossMassMeasure = grossMassMeasure;
                     }
-                }
+                }*/
                 int packageQuantity = 0;
                 if (_CourierMasterPM.PackageQuantity == null)
                 {
@@ -173,15 +181,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                         _CourierMasterPM.PackageQuantity = packageQuantity;
                     }
                 }
+                /*
                 else if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.PackageQuantityTy))
                 {
                     if (int.TryParse(_LogitudeMasterCourier.PackageQuantityTy, out packageQuantity))
                     {
                         _CourierMasterPM.PackageQuantity = packageQuantity;
                     }
-                }
+                }*/
                 DateTime temp;
-                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.EstimatedArrivalDate))
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.EstimatedArrivalDate) && _CourierMasterPM.EstimatedArrivalDate.HasValue == false)
                 {
                     if (DateTime.TryParse(_LogitudeMasterCourier.EstimatedArrivalDate, out temp))
                     {
@@ -192,7 +201,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                         _CourierMasterPM.EstimatedArrivalDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.EstimatedArrivalDate, "LogitudeMasterCourier.EstimatedArrivalDate");
                     }
                 }
-                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.DepartureDate))
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.DepartureDate) && _CourierMasterPM.DepartureDate.HasValue == false)
                 {
                     if (DateTime.TryParse(_LogitudeMasterCourier.DepartureDate, out temp))
                     {
@@ -203,14 +212,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.CommMasterCourier
                         _CourierMasterPM.DepartureDate = AmitalConvertUtil.GetUnifreightFormatedDate(_LogitudeMasterCourier.DepartureDate, "LogitudeMasterCourier.DepartureDate");
                     }
                 }
-                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.GatewayPortCode)) _CourierMasterPM.GatewayPortCode = TranslateInternationalSite(_LogitudeMasterCourier.GatewayPortCode);
-                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.OriginPortCode)) _CourierMasterPM.OriginPortCode = TranslateInternationalSite(_LogitudeMasterCourier.OriginPortCode);
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.GatewayPortCode) && string.IsNullOrWhiteSpace(_CourierMasterPM.GatewayPortCode)) _CourierMasterPM.GatewayPortCode = TranslateInternationalSite(_LogitudeMasterCourier.GatewayPortCode);
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.OriginPortCode) && string.IsNullOrWhiteSpace(_CourierMasterPM.OriginPortCode)) _CourierMasterPM.OriginPortCode = TranslateInternationalSite(_LogitudeMasterCourier.OriginPortCode);
                 if (_CourierMasterPM.Tenant < 1) _CourierMasterPM.Tenant = ResolvedTenant();
-                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.FlightNumber)) _CourierMasterPM.FlightNumber = _LogitudeMasterCourier.FlightNumber;
-                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.WeightValueCode)) _CourierMasterPM.WeightValueCode = TranslateWeightValue(_LogitudeMasterCourier.WeightValueCode);
-                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.IntegratorIndex)) _CourierMasterPM.IntegratorCode = TranslateIntegratorIndex(_LogitudeMasterCourier.IntegratorIndex);
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.FlightNumber) && string.IsNullOrWhiteSpace(_CourierMasterPM.FlightNumber)) _CourierMasterPM.FlightNumber = _LogitudeMasterCourier.FlightNumber;
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.WeightValueCode) && string.IsNullOrWhiteSpace(_CourierMasterPM.WeightValueCode)) _CourierMasterPM.WeightValueCode = TranslateWeightValue(_LogitudeMasterCourier.WeightValueCode);
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.IntegratorIndex) && string.IsNullOrWhiteSpace(_CourierMasterPM.IntegratorCode)) _CourierMasterPM.IntegratorCode = TranslateIntegratorIndex(_LogitudeMasterCourier.IntegratorIndex);
                 _CourierMasterPM.CurrentContextTag = UpsertActionConst;
-                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.StorageSiteCode)) _CourierMasterPM.StorageSiteCode = TranslateStorageSite(_LogitudeMasterCourier.StorageSiteCode);
+                if (!string.IsNullOrWhiteSpace(_LogitudeMasterCourier.StorageSiteCode) && string.IsNullOrWhiteSpace(_CourierMasterPM.StorageSiteCode)) _CourierMasterPM.StorageSiteCode = TranslateStorageSite(_LogitudeMasterCourier.StorageSiteCode);
                 myCourierMasterUpdateService.Update(this._CourierMasterPM, true);
 
                 AppendLogLine("CourierMasterUpdate:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();

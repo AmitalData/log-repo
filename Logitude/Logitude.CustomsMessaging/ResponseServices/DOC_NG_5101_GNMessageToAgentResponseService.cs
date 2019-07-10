@@ -89,13 +89,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     notificationStatusCode = "VAN";
                     break;
-                case 6:
-                    notificationDefinitionCode = "";
-                    notificationDescription = "הודעה על תצהיר יבואן חדש ";
-                    break;
+                //case 6:
                 case 11:
-                    /*notificationDefinitionCode = "5101I";
-                    assigneToNotificationTypeCode = "I"; */
                     if (customResponse.MessageToAgent.RelatedEntity.entityType == 1053 || customResponse.MessageToAgent.RelatedEntity.entityType == 1054) //Deposition
                     {
                         string importerVAT = null;
@@ -118,7 +113,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             LogMessagingUtil.Instance.AppendLine("בדיקת דיפולט - שליפת ספק בהודעה על תצהיר");
                             var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_RET_VEND", "NON", _MyDeclarationPM.CustomerCode, false, true);
+                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_RET_VEND", "NON", "NON", false, true);
                             bool isRetrieveVendorActive = def.DEFDATA == "Y";
                             if (isRetrieveVendorActive)
                             {
@@ -133,8 +128,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     else
                     {
                         notificationDefinitionCode = "";
-                        notificationDescription = "הודעה על תצהיר תקופתי העומד לפוג ";
+                        notificationDescription = "הודעה על תצהיר יבואן חדש ";
                     }
+                    break;
+                //case 11:
+                case 6:
+                    /*notificationDefinitionCode = "5101I";
+                    assigneToNotificationTypeCode = "I"; */
+                    notificationDefinitionCode = "";
+                    notificationDescription = "הודעה על תצהיר תקופתי העומד לפוג ";
                     break;
                 case 7:
                     notificationDefinitionCode = "5101D";
@@ -334,12 +336,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
                     switch (customResponse.MessageToAgent.msgCode)
                     {
+                        case 3:
+                        case 4:
+                        case 5:
+                            notificationDefinitionCode = null;
+                            break;
                         case 7:
                             this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                             this._MyDeclarationPM.CourierCustomStatusCode = "2";
                             this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
                             this._MyDeclarationPM.CourierSuspentionCode = "25";
                             declarationUpdateService.Update(this._MyDeclarationPM, true);
+                            notificationDefinitionCode = null;
                             break;
                         case 8:
                         case 9:
@@ -349,6 +357,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this._MyDeclarationPM.CourierSuspentionReasonCode = customResponse.MessageToAgent.msgCode.ToString();
                             declarationUpdateService.Update(this._MyDeclarationPM, true);
                             SendDeclarationStatusRequest(this._MyDeclarationPM);
+                            notificationDefinitionCode = null;
                             break;
                         case 17:
                             notificationDefinitionCode = "5101M";

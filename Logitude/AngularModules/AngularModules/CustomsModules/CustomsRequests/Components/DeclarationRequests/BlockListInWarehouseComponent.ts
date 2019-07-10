@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CustomMessageWrapperComponent} from '../../../../CustomsModules/CustomsControls/Components/CustomMessageWrapperComponent'
 
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -191,6 +191,7 @@ export class BlockListInWarehouseComponent
             "שליחת שאילתא לגושים במחסן", true)
             .then((res) => {
                 this.ResponseData = res;
+                this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {

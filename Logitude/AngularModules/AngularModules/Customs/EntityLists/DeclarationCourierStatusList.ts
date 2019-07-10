@@ -61,6 +61,7 @@ export class DeclarationCourierStatusList {
 	StorageSiteStatusCode: string;
 	StorageSiteErrorText: string;
 	StorageSiteStatusName: string;
+	CourierPendingReasonList: string;
 	
 }
  

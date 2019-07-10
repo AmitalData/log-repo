@@ -239,7 +239,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
                 }
 
-                response.Result = entityLists;
+                response.Result = entityLists.ToList();
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
 

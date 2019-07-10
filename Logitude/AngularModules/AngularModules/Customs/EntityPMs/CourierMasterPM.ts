@@ -229,6 +229,11 @@ export class CourierMasterPM {
     public set IntegratorName(newValue: string) { if (this.integratorName != newValue) { this.integratorName = newValue; this.MarkAsDirty("IntegratorName"); } }
        
 	 
+    private integratorNumber: string;
+    public get IntegratorNumber() { return this.integratorNumber; }
+    public set IntegratorNumber(newValue: string) { if (this.integratorNumber != newValue) { this.integratorNumber = newValue; this.MarkAsDirty("IntegratorNumber"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

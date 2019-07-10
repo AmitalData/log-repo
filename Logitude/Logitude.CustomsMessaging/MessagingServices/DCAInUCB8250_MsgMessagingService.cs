@@ -54,6 +54,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LoggingUserId = customsResponse.LoggingUserId,
                 RequestName = $" שידור סטטוס הצהרות לבלדר " + customsResponse.CourierMasterId + " "
             };
+            if (customsResponse.ServerSplitDeclarationsList == null || (customsResponse.ServerSplitDeclarationsList != null && customsResponse.ServerSplitDeclarationsList.Count == 0))
+
+            {
+                genericRequestParams.RequestName += " ראשי - מפצל";
+                genericRequestParams.SplitterModeLetCreateMyType = false;
+
+            }
+            else
+            {
+                genericRequestParams.RequestName += " מפוצל";
+                genericRequestParams.SplitterModeLetCreateMyType = true;
+
+            }
             return genericRequestParams;
         }
 
@@ -166,7 +179,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string LoggingUserId { get; set; }
         public string CourierMasterId { get; set; }
         public string MyMoreParams { get; set; }
-
+        public List<string> ServerSplitDeclarationsList { get; set; }
+        
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 }

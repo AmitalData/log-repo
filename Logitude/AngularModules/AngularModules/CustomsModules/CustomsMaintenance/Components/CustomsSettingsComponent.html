@@ -1,4 +1,4 @@
-﻿
+
 <style>
 
 </style>
@@ -324,6 +324,37 @@
                                         [ObjectTableName]="ObjectTableName"
                                         [HideColumns]="true"
                                         [Text]="PaymentOrderAccCard"></LogTextBox>
+
+
+                        </td>
+
+                        <td><div></div></td>
+
+                        <td class="tbl1LastCol"><div></div></td>
+
+                    </tr>
+
+
+
+
+                    <!--CompanyType-->
+
+                    <tr class="FormFieldRow">
+                        <td class="tbl1Label">
+                            <LogLabel
+                                      [Text]="'סוג חברה'"
+                                      [NoObjectField]="true"
+                                      [ObjectFieldName]="'CompanyType1'"
+                                      [ObjectTableName]="ObjectTableName"
+                                      [DataContext]="DataContext">
+
+                            </LogLabel>
+                        </td>
+                        <td class="tbl1Col0"></td>
+
+                        <td class="tbl1Col1">
+
+                            <ComboBox  [ItemsSource]="CompanyTypeList" [Binding]="'Name'" [SelectedItem]="SelectedCompanyType" (SelectedItemChanged)="SelectedCompanyType = $event" ></ComboBox>
 
 
                         </td>

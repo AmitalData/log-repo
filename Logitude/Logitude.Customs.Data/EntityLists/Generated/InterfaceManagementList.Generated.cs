@@ -60,6 +60,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool DcaRenameFileEnable  { get; set; }
        [DataMember]
        public string DcaRenameFilePrefix  { get; set; }
+       [DataMember]
+       public string InterfaceType  { get; set; }
+       [DataMember]
+       public string InterfaceTypeName  { get; set; }
    }
 
 }

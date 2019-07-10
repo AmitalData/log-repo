@@ -75,7 +75,7 @@ namespace Logitude.Customs.Data.Repsitories
             return certificates;
         }
 
-        public IQueryable<CertificateConnectedItems> GetCertificateConnectedItems(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant, string invoiceNumber, int skip, int take, bool getAll)
+        public IQueryable<CertificateConnectedItems> GetCertificateConnectedItems(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant, string invoiceNumber, string ClassificationCode, int skip, int take, bool getAll)
         {
             IQueryable<SupplierInvoiceItemsProdIdent> prodIdents = context.SupplierInvoiceItemsProdIdents.Where(d => d.TypeCode == "MN");
             IQueryable<SupplierInvoice> supplierInvoices = null;
@@ -125,6 +125,10 @@ namespace Logitude.Customs.Data.Repsitories
                 if (!string.IsNullOrEmpty(ResConfirmationTypeCode) && ResConfirmationTypeCode != "null")
                 {
                     wherestring += " and SupplierInvioceItemCertificats.ResConfirmationTypeCode = '" + ResConfirmationTypeCode + "'";
+                }
+                if (!string.IsNullOrEmpty(ClassificationCode) && ClassificationCode != "null")
+                {
+                    wherestring += " and SupplierInvoiceItems.ClassificationCode Like '%" + ClassificationCode + "%'";
                 }
                 if (!string.IsNullOrEmpty(invoiceNumber) && invoiceNumber != "null")
                 {
@@ -177,6 +181,10 @@ INNER JOIN SupplierInvoices ON SupplierInvoiceItems.DeclarationId = SupplierInvo
                 {
                     wherestring += " and Customs.SupplierInvioceItemCertificats.ResConfirmationTypeCode = '" + ResConfirmationTypeCode + "'";
                 }
+                if (!string.IsNullOrEmpty(ClassificationCode) && ClassificationCode != "null")
+                {
+                    wherestring += " and SupplierInvoiceItems.ClassificationCode Like '%" + ClassificationCode + "%'";
+                }
                 if (!string.IsNullOrEmpty(invoiceNumber) && invoiceNumber != "null")
                 {
                     wherestring += " and Customs.SupplierInvoices.InvoiceNumber = '" + invoiceNumber + "'";
@@ -223,7 +231,7 @@ INNER JOIN Customs.SupplierInvoices ON Customs.SupplierInvoiceItems.DeclarationI
 
         }
 
-        public int GetCertificateConnectedItemsCount(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant, string invoiceNumber)
+        public int GetCertificateConnectedItemsCount(string declarationId, string attachmentTypeCode, string reqConfirmationTypeCode, string CertificateExemptionTypeCode, string CertificateNumber, string ResConfirmationTypeCode, int tenant, string invoiceNumber, string ClassificationCode)
         {
 
 
@@ -277,6 +285,10 @@ INNER JOIN Customs.SupplierInvoices ON Customs.SupplierInvoiceItems.DeclarationI
                 {
                     wherestring += " and SupplierInvioceItemCertificats.ResConfirmationTypeCode = '" + ResConfirmationTypeCode + "'";
                 }
+                if (!string.IsNullOrEmpty(ClassificationCode) && ClassificationCode != "null")
+                {
+                    wherestring += " and SupplierInvoiceItems.ClassificationCode Like '%" + ClassificationCode + "%'";
+                }
                 if (!string.IsNullOrEmpty(invoiceNumber)  && invoiceNumber != "null")
                 {
                     wherestring += " and SupplierInvoices.InvoiceNumber = '" + invoiceNumber + "'";
@@ -317,6 +329,10 @@ INNER JOIN SupplierInvoices ON SupplierInvoiceItems.DeclarationId = SupplierInvo
                 if (!string.IsNullOrEmpty(ResConfirmationTypeCode) && ResConfirmationTypeCode != "null")
                 {
                     wherestring += " and Customs.SupplierInvioceItemCertificats.ResConfirmationTypeCode = '" + ResConfirmationTypeCode + "'";
+                }
+                if (!string.IsNullOrEmpty(ClassificationCode) && ClassificationCode != "null")
+                {
+                    wherestring += " and SupplierInvoiceItems.ClassificationCode Like '%" + ClassificationCode + "%'";
                 }
                 if (!string.IsNullOrEmpty(invoiceNumber) && invoiceNumber != "null")
                 {

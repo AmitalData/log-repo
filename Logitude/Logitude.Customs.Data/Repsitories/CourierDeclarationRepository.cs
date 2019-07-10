@@ -32,6 +32,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.CourierMasterId == courierMasterId && a.Tenant == tenant
                     select a).Max(rec => rec.SequenceNumeric);
         }
+       
 
         public IQueryable<CourierDeclaration> GetByCourierMasterId(int tenant, string courierMasterId)
         {

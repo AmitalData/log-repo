@@ -300,6 +300,50 @@
     <Compile Include="Migrations\201905201531217_AddIntegratorFieldToCourierMaster.Designer.cs">
       <DependentUpon>201905201531217_AddIntegratorFieldToCourierMaster.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905300822387_AddMigrationClientNationalIdentification.cs" />
+    <Compile Include="Migrations\201905300822387_AddMigrationClientNationalIdentification.Designer.cs">
+      <DependentUpon>201905300822387_AddMigrationClientNationalIdentification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906041017285_AddMigrationSignedByUser.cs" />
+    <Compile Include="Migrations\201906041017285_AddMigrationSignedByUser.Designer.cs">
+      <DependentUpon>201906041017285_AddMigrationSignedByUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.cs" />
+    <Compile Include="Migrations\201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.Designer.cs">
+      <DependentUpon>201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.cs" />
+    <Compile Include="Migrations\201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.Designer.cs">
+      <DependentUpon>201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906130950285_NewTableDeclarationPendings.cs" />
+    <Compile Include="Migrations\201906130950285_NewTableDeclarationPendings.Designer.cs">
+      <DependentUpon>201906130950285_NewTableDeclarationPendings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906241435332_sync_null.cs" />
+    <Compile Include="Migrations\201906241435332_sync_null.Designer.cs">
+      <DependentUpon>201906241435332_sync_null.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906241448200_CustomsSettingCompanyType.cs" />
+    <Compile Include="Migrations\201906241448200_CustomsSettingCompanyType.Designer.cs">
+      <DependentUpon>201906241448200_CustomsSettingCompanyType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906250644067_InterfaceManagement_InterfaceType.cs" />
+    <Compile Include="Migrations\201906250644067_InterfaceManagement_InterfaceType.Designer.cs">
+      <DependentUpon>201906250644067_InterfaceManagement_InterfaceType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907030608414_AddMigrationPhysicalCheckChassis.cs" />
+    <Compile Include="Migrations\201907030608414_AddMigrationPhysicalCheckChassis.Designer.cs">
+      <DependentUpon>201907030608414_AddMigrationPhysicalCheckChassis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907070559384_AddContinuousRequestType.cs" />
+    <Compile Include="Migrations\201907070559384_AddContinuousRequestType.Designer.cs">
+      <DependentUpon>201907070559384_AddContinuousRequestType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907070654471_AddMigrationClaimRERequestType.cs" />
+    <Compile Include="Migrations\201907070654471_AddMigrationClaimRERequestType.Designer.cs">
+      <DependentUpon>201907070654471_AddMigrationClaimRERequestType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201905290826398_fuuscreenabdullah.cs" />
     <Compile Include="Migrations\201905290826398_fuuscreenabdullah.Designer.cs">
       <DependentUpon>201905290826398_fuuscreenabdullah.cs</DependentUpon>
@@ -518,6 +562,39 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905290826398_fuuscreenabdullah.resx">
       <DependentUpon>201905290826398_fuuscreenabdullah.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905300822387_AddMigrationClientNationalIdentification.resx">
+      <DependentUpon>201905300822387_AddMigrationClientNationalIdentification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906041017285_AddMigrationSignedByUser.resx">
+      <DependentUpon>201906041017285_AddMigrationSignedByUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.resx">
+      <DependentUpon>201906051018404_UpdateCustomsExchangeRatesExchangeRatetk2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.resx">
+      <DependentUpon>201906121410338_AddDeclarationCourierStatusesCourierPendingReasonListField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906130950285_NewTableDeclarationPendings.resx">
+      <DependentUpon>201906130950285_NewTableDeclarationPendings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906241435332_sync_null.resx">
+      <DependentUpon>201906241435332_sync_null.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906241448200_CustomsSettingCompanyType.resx">
+      <DependentUpon>201906241448200_CustomsSettingCompanyType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906250644067_InterfaceManagement_InterfaceType.resx">
+      <DependentUpon>201906250644067_InterfaceManagement_InterfaceType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907030608414_AddMigrationPhysicalCheckChassis.resx">
+      <DependentUpon>201907030608414_AddMigrationPhysicalCheckChassis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907070559384_AddContinuousRequestType.resx">
+      <DependentUpon>201907070559384_AddContinuousRequestType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907070654471_AddMigrationClaimRERequestType.resx">
+      <DependentUpon>201907070654471_AddMigrationClaimRERequestType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\logitude.oracledatabasemigration.dll.licenses" />
   </ItemGroup>

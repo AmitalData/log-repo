@@ -145,7 +145,21 @@ export class InterfaceManagementComponent implements OnInit {
             Styles: { width: '100px' },
             IsCustomTemplate: true
         });
-        
+        let textInterfaceTypeName = TextCodeTranslator.Translate("Customs.InterfaceManagement.F.InterfaceTypeName");
+        if (AppTool.IsNullOrEmpty(textInterfaceTypeName)) {
+            textInterfaceTypeName = "InterfaceTypeName";
+        }
+
+        this.columns.push({
+            HtmlListComponentName: 'InterfaceManagementsListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/InterfaceManagementsListTemplate',
+            FieldName: 'InterfaceTypeName',
+            DataTypeCode: 'String',//'Number',
+            Display: textInterfaceTypeName,
+            Styles: { width: '120px' },
+            IsCustomTemplate: true
+        });
+
  
     }
     DataSource = {

@@ -963,6 +963,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string integratorNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IntegratorNumber  
+	   {
+	    
+	     get
+		{
+		   return integratorNumber;
+		 }
+		 set
+		 {
+		   if(integratorNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IntegratorNumber",OldValue=integratorNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   integratorNumber=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

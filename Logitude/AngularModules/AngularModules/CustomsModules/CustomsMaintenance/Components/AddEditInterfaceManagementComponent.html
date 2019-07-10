@@ -1,4 +1,4 @@
-﻿
+
 <style>
 
 </style>
@@ -26,8 +26,7 @@
                         <!--Code-->
                         <tr class="FormFieldRow">
                             <td class="tbl1Label">
-                                <LogLabel 
-                                          [ObjectFieldName]="'Code'"
+                                <LogLabel [ObjectFieldName]="'Code'"
                                           [ObjectTableName]="ObjectTableName"
                                           [DataContext]="DataContext">
 
@@ -128,14 +127,11 @@
                             <td class="tbl1Col1">
 
 
-                                <LogCheckBox 
-                                             [Checked]="AllowRestore"
+                                <LogCheckBox [Checked]="AllowRestore"
                                              [ObjectFieldName]="'AllowRestore'"
                                              [ObjectTableName]="ObjectTableName"
                                              [DataContext]="DataContext"
-                                             [NoObjectField]="true"
-                                             
-                                             ></LogCheckBox>
+                                             [NoObjectField]="true"></LogCheckBox>
 
                             </td>
 
@@ -145,14 +141,31 @@
 
                         </tr>
 
-
-                        <!--AllowRestore-->
+                        <!--InterfaceType-->
                         <tr class="FormFieldRow">
                             <td class="tbl1Label">
-                                <LogLabel 
-                                          
-                                         
-                                          *ngIf="SignatureTypeVisibility"
+                                <LogLabel [ObjectFieldName]="'InterfaceType'"
+                                          [ObjectTableName]="ObjectTableName"
+                                          [DataContext]="DataContext">
+
+                                </LogLabel>
+                            </td>
+                            <td class="tbl1Col0"></td>
+
+                            <td class="tbl1Col1">
+                                <ComboBox [IsDisabled]="'true'" [ItemsSource]="InterfaceTypeList" [Binding]="'Name'" [SelectedItem]="SelectedInterfaceType" ></ComboBox>
+                            </td>
+
+
+
+                            <td class="tbl1LastCol"><div></div></td>
+
+                        </tr>
+
+                        <!--SignatureTypeCode-->
+                        <tr class="FormFieldRow">
+                            <td class="tbl1Label">
+                                <LogLabel *ngIf="SignatureTypeVisibility"
                                           [ObjectFieldName]="'SignatureTypeCode'"
                                           [ObjectTableName]="ObjectTableName"
                                           [DataContext]="DataContext">
@@ -164,16 +177,15 @@
                             <td class="tbl1Col1">
 
 
-                                <ul 
-                                    *ngIf="SignatureTypeVisibility"
+                                <ul *ngIf="SignatureTypeVisibility"
                                     class="FiltersMenu" style="width: 165px; vertical-align: middle; position:relative;">
                                     <li style="width:55px;" [class.SelectedFilter]="(SignatureTypeCode != 'C' &&  SignatureTypeCode != 'P')">
-                                      N
+                                        N
                                     </li>
                                     <li style="width:55px;" [class.SelectedFilter]="SignatureTypeCode== 'C'">
-                                       C
+                                        C
                                     </li>
-                                    <li  style="width:55px;" [class.SelectedFilter]="SignatureTypeCode == 'P'">
+                                    <li style="width:55px;" [class.SelectedFilter]="SignatureTypeCode == 'P'">
                                         P
                                     </li>
 
@@ -187,13 +199,13 @@
                         </tr>
 
 
-                        
-                 
+
+
                         <!--placeholder-->
                         <tr class="FormFieldRow"></tr>
 
                         <!--placeholder-->
-                        <tr ></tr>
+                        <tr></tr>
 
 
                     </table>

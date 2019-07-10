@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CurrencyTypeCode).HasColumnName("CurrencyTypeCode").HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate").HasPrecision(12, 10);
+            this.Property(t => t.ExchangeRate).HasColumnName("ExchangeRate").HasPrecision(15, 10);
 
             this.Property(t => t.RateDate).HasColumnName("RateDate");
 

@@ -91,6 +91,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
     public NewInvoices: SupplierInvoicePM[] = [];
    
     _SkipAutoInsurance: boolean = false;
+    _IsNoIncotermCheck: string = "N";
+
     constructor//(private cd: ChangeDetectorRef) {
         () {
         super();
@@ -233,6 +235,17 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
 
+        var customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
+        customsSettingExtendedListService.GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", this.EntityPM.Tenant)
+            .subscribe((response: ServiceResponse) => {
+                let obj = response.Result;
+                if (obj) {
+                    let DefaultValue = obj['DefaultValue'];
+                    if (!AppTool.IsNullOrEmpty(DefaultValue)) {
+                        this._IsNoIncotermCheck = DefaultValue;
+                    }
+                }
+            });
         
         customsSettingExtendedListService.GetSkipAutoInsurancePromise(this.declarationPM.CustomerCode, this.declarationPM.Tenant).subscribe(myResult => {
             var res: ServiceResponse = myResult;
@@ -621,20 +634,23 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                     if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
                         SessionLocator.CurrentSession.StopBusyIndicator();
+                        if (this._IsNoIncotermCheck == "Y") {
+                            this.ConfirmWindowYesButton();
+                        }
+                        else {
+                            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                            confirmWindow.Show(msg);
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                        var confirmWindow = new ConfirmWindow();
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                        confirmWindow.Show(msg);
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                            if (confirmWindow.Yes) {
-                                this.ConfirmWindowYesButton();
-                            }
-                        });
-                        this.closeWindow = false;
-
+                                if (confirmWindow.Yes) {
+                                    this.ConfirmWindowYesButton();
+                                }
+                            });
+                            this.closeWindow = false;
+                        }
 
                     }
                     else {
@@ -653,22 +669,25 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
                     if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
 
-
                         SessionLocator.CurrentSession.StopBusyIndicator();
+                        if (this._IsNoIncotermCheck == "Y") {
+                            this.ConfirmWindowYesButton();
+                        }
+                        else {
+                            var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                            var confirmWindow = new ConfirmWindow();
+                            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                            confirmWindow.Show(msg);
+                            confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                        var confirmWindow = new ConfirmWindow();
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                        confirmWindow.Show(msg);
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
+                                if (confirmWindow.Yes) {
+                                    this.ConfirmWindowYesButton();
+                                }
+                            });
+                            this.closeWindow = false;
+                        }
 
-                            if (confirmWindow.Yes) {
-                                this.ConfirmWindowYesButton();
-                            }
-                        });
-
-                        this.closeWindow = false;
                     }
                     else {
                         this.closeWindow = false;
@@ -847,20 +866,23 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 if ((this.EntityPM.SupplierInvoiceFreightAmounts.length == 0 && !this.declarationPM.InvoiceHasFreight) || ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null))) {
 
                     SessionLocator.CurrentSession.StopBusyIndicator();
+                    if (this._IsNoIncotermCheck == "Y") {
+                        this.ConfirmWindowYesButton();
+                    }
+                    else {
+                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                        confirmWindow.Show(msg);
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                    confirmWindow.Show(msg);
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                        if (confirmWindow.Yes) {
-                            this.ConfirmWindowYesButton();
-                        }
-                    });
-
-                    this.closeWindow = false;
+                            if (confirmWindow.Yes) {
+                                this.ConfirmWindowYesButton();
+                            }
+                        });
+                        this.closeWindow = false;
+                    }
                 }
                 else {
                     this.closeWindow = true;
@@ -874,21 +896,23 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
                 if ((this.declarationPM.SupplierInvoices.length > 0 && this.EntityPM.SequenceNumeric == 1 && this.EntityPM.InsuranceAmount == null) || (this.declarationPM.SupplierInvoices.length == 0 && this.EntityPM.SequenceNumeric == null && this.EntityPM.InsuranceAmount == null)) {
                     SessionLocator.CurrentSession.StopBusyIndicator();
 
-                    SessionLocator.CurrentSession.StopBusyIndicator();
+                    if (this._IsNoIncotermCheck == "Y") {
+                        this.ConfirmWindowYesButton();
+                    }
+                    else {
+                        var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
+                        var confirmWindow = new ConfirmWindow();
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                        confirmWindow.Show(msg);
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
 
-                    var msg = TextCodeTranslator.Translate("Customs.Declaration.O.AmountsNotCompatableToIncoterm");
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                    confirmWindow.Show(msg);
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-
-                        if (confirmWindow.Yes) {
-                            this.ConfirmWindowYesButton();
-                        }
-                    });
-
-                    this.closeWindow = false;
+                            if (confirmWindow.Yes) {
+                                this.ConfirmWindowYesButton();
+                            }
+                        });
+                        this.closeWindow = false;
+                    }
                 }
                 else {
                     if (!this.loadingNextItems) {
@@ -1478,7 +1502,9 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         if (emptyItems != null && emptyItems.length > 0) {
             if (emptyItems.length == 1) {
-                errors.push( + emptyItems[0] + "ריקה");
+                var emptyMessage: string = "שים לב שורה  ";
+                emptyMessage = emptyMessage.concat(emptyItems[0] + " ריקה");
+                errors.push(emptyMessage);
             }
             else {
                 var emptyMessage: string = "שים לב שורות  ";
@@ -1533,7 +1559,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
         }
 
-        if (this.tariffErrorItems > 0) { errors.push("ישנן שורות עם קוד הסכם שגוי")}
+        //if (this.tariffErrorItems > 0) { errors.push("ישנן שורות עם קוד הסכם שגוי")}
 
         if (errors.length == 0) {
 
@@ -2203,81 +2229,91 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
 
             //var commission: VendorCommissionPM = response.Result;
 
-            var commission: VendorCommissionList = this.CustomerCommissionsList.filter(d => d.VendorId == this.EntityPM.VendorId && d.ModificationsTypeCode == "I10")[0];
-            if (commission) {
-                if (commission.CommisionPercentage) {
+            var commissionList: VendorCommissionList[] = this.CustomerCommissionsList.filter(d => d.VendorId == this.EntityPM.VendorId);
+            if (commissionList != null && commissionList.length > 0) {
+                var commissionMsgText: string = "";
+                for (let commission of commissionList) {
+                    if (commission) {
+                        if (commission.CommisionPercentage) {
 
-                    //init new mod values
-                    var newCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
-                    var newAmount = this.precisionRound((commission.CommisionPercentage / 100) * this.EntityPM.InvoiceAmount, 2);
+                            //init new mod values
+                            var newCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
+                            var newAmount = this.precisionRound((commission.CommisionPercentage / 100) * this.EntityPM.InvoiceAmount, 2);
 
-                    // if commission found:
-                    // 1- update Field VendorCommisionPercentage.SupplierInvoice
-                    this.EntityPM.VendorComissionPercentage = commission.CommisionPercentage;
-                    console.log("[!] invoice commission changed to:", this.EntityPM.VendorComissionPercentage);
+                            // if commission found:
+                            // 1- update Field VendorCommisionPercentage.SupplierInvoice
+                            this.EntityPM.VendorComissionPercentage = commission.CommisionPercentage;
+                            console.log("[!] invoice commission changed to:", this.EntityPM.VendorComissionPercentage);
 
-                    // 2- In case there’s mod record , update it
-                    var modTypeI10 = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == "I10")[0];
-                    if (modTypeI10) {
-                        // 3- In case there’s record with same type (I10) 
-                        //    and it's with different currency OR value ask user
-                        if (modTypeI10.Amount != newAmount || modTypeI10.CurrencyTypeCode != newCurrency) {
-                            //somthing changed, amount or currency
-                            //ask user to change it
-                            var confirm = new ConfirmWindow;
-                            var msgTxt = TextCodeTranslator.Translate("Customs.Declaration.O.CommissionChangedFromTo");
-                            msgTxt = msgTxt.replace("#oldValue", modTypeI10.Amount.toFixed(2).toString() + " " + modTypeI10.CurrencyTypeCode);
-                            msgTxt = msgTxt.replace("#newValue", newAmount.toFixed(2).toString() + " " + newCurrency); // new values
-                            confirm.Show(msgTxt);
-
-                            confirm.WindowClosed.subscribe((event: any) => {
-                                if (confirm.Yes) {
-                                    //update record
-                                    modTypeI10.CurrencyTypeCode = newCurrency;
-                                    modTypeI10.CurrencyTypeName = this.invoiceCurrencyName;
-                                    modTypeI10.Amount = newAmount;
-
-                                    this.UpdateModificationsList();
-
-                                    confirm.Close();
+                            // 2- In case there’s mod record , update it
+                            var modTypeI10 = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == commission.ModificationsTypeCode)[0];
+                            if (modTypeI10) {
+                                // 3- In case there’s record with same type 
+                                //    and it's with different currency OR value ask user
+                                if (modTypeI10.Amount != newAmount || modTypeI10.CurrencyTypeCode != newCurrency) {
+                                    //somthing changed, amount or currency
+                                    //ask user to change it
+                                    var msgTxt = TextCodeTranslator.Translate("Customs.Declaration.O.CommissionChangedFromTo");
+                                    msgTxt = msgTxt.replace("#typeCode", modTypeI10.TypeCode);
+                                    msgTxt = msgTxt.replace("#oldValue", modTypeI10.Amount.toFixed(2).toString() + " " + modTypeI10.CurrencyTypeCode);
+                                    msgTxt = msgTxt.replace("#newValue", newAmount.toFixed(2).toString() + " " + newCurrency); // new values
+                                    commissionMsgText = commissionMsgText.concat("\n" + msgTxt);
                                 }
                                 else {
-                                    //don't update
-                                    confirm.Close();
+                                    // same currency and amount
+                                    if (modTypeI10.Amount == newAmount && modTypeI10.CurrencyTypeCode == newCurrency) {
+                                        // no changes
+                                    }
                                 }
-                            });
 
+                            }
+                            else {
+                                //In case there’s no mod record I10, create a record in SupplierInvoiceModification 
+                                var newMod = new SupplierInvoiceModificationPM(this.EntityPM);
+                                newMod.Tenant = this.EntityPM.Tenant;
+                                newMod.DeclarationId = this.EntityPM.DeclarationId;
+                                newMod.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
+                                newMod.TypeCode = commission.ModificationsTypeCode;
+                                newMod.TypeName = commission.ModificationsTypeName;
+                                newMod.CurrencyTypeCode = newCurrency;
+                                newMod.CurrencyTypeName = this.EntityPM.InvoiceCurrencyTypeName;
+                                newMod.Amount = newAmount;
+
+                                this.EntityPM.SupplierInvoiceModifications.push(newMod);
+
+                                this.UpdateModificationsList();
+                            }
+
+
+                        }
+                    }
+                }
+
+
+                if (commissionMsgText != "") {
+                    //somthing changed, amount or currency
+                    //ask user to change it
+                    var confirm = new ConfirmWindow;
+                    var commissionFullMessage: string = "נתוני ההתאמות וההפחתות השתנו:";
+                    commissionMsgText = commissionMsgText.concat("\n" + "האם לאשר את עדכון הסכומים?");
+                    commissionFullMessage = commissionFullMessage.concat(commissionMsgText);
+                    confirm.Width = 350;
+                    confirm.Height = 200;
+                    confirm.Show(commissionFullMessage);
+                    confirm.WindowClosed.subscribe((event: any) => {
+                        if (confirm.Yes) {
+                            //update records
+                            this.UpdateModificationsByType(commissionList);
+                            confirm.Close();
                         }
                         else {
-                            // same currency and amount
-                            if (modTypeI10.Amount == newAmount && modTypeI10.CurrencyTypeCode == newCurrency) {
-                                // no changes
-                            }
+                            //don't update
+                            confirm.Close();
                         }
-
-                    }
-                    else {
-                        //In case there’s no mod record I10, create a record in SupplierInvoiceModification 
-                        var newMod = new SupplierInvoiceModificationPM(this.EntityPM);
-                        newMod.Tenant = this.EntityPM.Tenant;
-                        newMod.DeclarationId = this.EntityPM.DeclarationId;
-                        newMod.InvoiceCounterKey = this.EntityPM.InvoiceCounterKey;
-
-                        newMod.TypeCode = "I10";
-                        newMod.TypeName = this.typeNameForI10;
-
-                        newMod.CurrencyTypeCode = newCurrency;
-                        newMod.CurrencyTypeName = this.invoiceCurrencyName;
-
-                        newMod.Amount = newAmount;
-
-                        this.EntityPM.SupplierInvoiceModifications.push(newMod);
-
-                        this.UpdateModificationsList();
-                    }
-
-
+                    });
                 }
+
+
             } else {
                 //No commission for this vendor , delete existing commission ?
                 var msg = "לא קיימים נתוני עמלה לספק זה , האם למחוק נתוני עמלה קיימים ?";
@@ -2314,6 +2350,40 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         }
     }
 
+
+    UpdateModificationsByType(commissionList: VendorCommissionList[]) {
+        for (let commission of commissionList) {
+            if (commission) {
+                if (commission.CommisionPercentage) {
+
+                    //init new mod values
+                    var newCurrency = this.EntityPM.InvoiceCurrencyTypeCode;
+                    var newAmount = this.precisionRound((commission.CommisionPercentage / 100) * this.EntityPM.InvoiceAmount, 2);
+
+                    // if commission found:
+                    // 1- update Field VendorCommisionPercentage.SupplierInvoice
+                    this.EntityPM.VendorComissionPercentage = commission.CommisionPercentage;
+                    console.log("[!] invoice commission changed to:", this.EntityPM.VendorComissionPercentage);
+
+                    // 2- In case there’s mod record , update it
+                    var modTypeI10 = this.EntityPM.SupplierInvoiceModifications.filter(d => d.TypeCode == commission.ModificationsTypeCode)[0];
+                    if (modTypeI10) {
+                        // 3- In case there’s record with same type 
+                        //    and it's with different currency OR value ask user
+                        if (modTypeI10.Amount != newAmount || modTypeI10.CurrencyTypeCode != newCurrency) {
+                            modTypeI10.CurrencyTypeCode = newCurrency;
+                            modTypeI10.CurrencyTypeName = this.EntityPM.InvoiceCurrencyTypeName;
+                            modTypeI10.Amount = newAmount;
+                            modTypeI10.TypeCode = commission.ModificationsTypeCode;
+                            modTypeI10.TypeName = commission.ModificationsTypeName;
+                        }
+                    }
+                }
+            }
+        }
+        this.UpdateModificationsList();
+    }
+
     UpdateModificationsList() {
         this.ReloadModificationEvent.emit("");
     }
@@ -2334,6 +2404,7 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         });
 
     }
+
     DropdownDisplayClose() {
         this._DropdownDisplay = 'none';
     }

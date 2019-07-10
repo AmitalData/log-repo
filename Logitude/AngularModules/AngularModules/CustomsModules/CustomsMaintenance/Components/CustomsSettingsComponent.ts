@@ -1,4 +1,4 @@
-﻿declare var window: any;
+declare var window: any;
 import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
 import { BaseComponent } from       '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TextCodeTranslator } from  '../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -24,6 +24,7 @@ import { CustomsSettingList } from '../../../Customs/EntityLists/CustomsSettingL
 //C: \LW\Customs\AngularModules\AngularModules\Customs\Services\StandardPMs\CustomsSettingPMService.ts
 import { CustomsSettingPMService } from '../../../Customs/Services/StandardPMs/CustomsSettingPMService';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
+import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 
 
 @Component({
@@ -38,6 +39,7 @@ import { CustomsSettingListService } from '../../../Customs/Services/StandardLis
 export class CustomsSettingsComponent
     extends BaseComponent
     implements OnInit {
+    
 
     public DataContext: CustomsSettingsComponent = this;
     public ObjectTableName: string = "Customs.CustomsSetting";
@@ -54,13 +56,22 @@ export class CustomsSettingsComponent
     entityPM: CustomsSettingPM;
 
     ValidationErrorsList: string[] = [];
-
+    
 
     constructor() {
         super();
     }
     Loaded: boolean = false;
+    public CompanyTypeList: CodeNameClass[];
     ngOnInit() {
+        //ערכים C - דיפולטיבי (בסקריפט), או B == בלדרות - אסור ריק יאותחל עם הפצה ראשונה + DEFAULT == C
+
+        this.CompanyTypeList = [];
+        
+        this.CompanyTypeList.push(new CodeNameClass("C", "עמילות"));
+        this.CompanyTypeList.push(new CodeNameClass("B", "בלדרות"));
+        this._SelectedCompanyType= this.CompanyTypeList[0];
+
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
 
             var filters = new ApiQueryFilters(true);
@@ -74,7 +85,7 @@ export class CustomsSettingsComponent
 
                             if (!AppTool.IsNullOrEmpty(listCustomsSetting)) {
                                 this._TenantCustomsSettingList = listCustomsSetting[0];
-
+                                this.SelectedCompanyType = this.CompanyTypeList.filter(r => r.Code == this._TenantCustomsSettingList.CompanyType)[0];
                                 this._CustomsSettingPMService.get(this._TenantCustomsSettingList.Id)
                                     .subscribe((myResponse: ServiceResponse) => {
                                         this.entityPM = myResponse.Result;
@@ -109,6 +120,14 @@ export class CustomsSettingsComponent
 
     //IsUnifreightCertificateActivatedEnabled: boolean = true;
 
+    _SelectedCompanyType: CodeNameClass;
+    get SelectedCompanyType() { return this._SelectedCompanyType; }
+    set SelectedCompanyType(val) {
+        this._SelectedCompanyType = val;
+        if (this._SelectedCompanyType != null && this.entityPM !=null) {
+            this.entityPM.CompanyType = this._SelectedCompanyType.Code;
+        }
+    }
 
     get UnifreightCertificateActivated() { return this.entityPM != null ? this.entityPM.UnifreightCertificateActivated : false; }
     set UnifreightCertificateActivated(value: boolean) { this.entityPM.UnifreightCertificateActivated = value; }

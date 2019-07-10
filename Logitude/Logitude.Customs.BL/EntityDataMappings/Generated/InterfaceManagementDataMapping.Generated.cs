@@ -36,7 +36,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SignatureTypeCode, 
 	         DcaPrefixName2, 
 	         DcaPrefixName3, 
-	         DcaPrefixName4,
+	         DcaPrefixName4, 
+	         InterfaceType,
 	      }
 
 
@@ -65,7 +66,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         DcaPrefixName4, 
 	         SignatureTypeName, 
 	         DcaRenameFileEnable, 
-	         DcaRenameFilePrefix,
+	         DcaRenameFilePrefix, 
+	         InterfaceType,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -142,6 +144,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DcaPrefixName4))
             {
 				entityPOCO.DcaPrefixName4 = entityPM.DcaPrefixName4;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterfaceType))
+            {
+				entityPOCO.InterfaceType = entityPM.InterfaceType;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -225,6 +232,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DcaPrefixName4 = entityPOCO.DcaPrefixName4;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InterfaceType))
+            {
+					entityPM.InterfaceType = entityPOCO.InterfaceType;
+            }
+
 		}
 
 		public void PMToOldPM(InterfaceManagementPM entityPM, InterfaceManagementPM oldEntityPM)
@@ -299,6 +311,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DcaPrefixName4))
             {
                 oldEntityPM.DcaPrefixName4 = entityPM.DcaPrefixName4;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InterfaceType))
+            {
+                oldEntityPM.InterfaceType = entityPM.InterfaceType;
             }
 			
 		}

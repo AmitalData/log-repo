@@ -61,6 +61,7 @@
     <Compile Include="RequestParams\AddAddressContactForClient.Shared.cs" />
     <Compile Include="RequestParams\CargoSplitRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CLAIM_2340_ClaimRequestRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\ContinuousRequestOnClaimFileRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CourierBOLQueryRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CreateClientRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CustomItemLegalDemandsRequestParams.Shared.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="RequestParams\SendALLCorrectRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLStorageSiteRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendPayReadyLowRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\SendUnCorrectDocumentsRequestParams.Shared.cs" />
     <Compile Include="RequestParams\StorageEntranceUnloadingRequestParams.Shared.cs" />
     <Compile Include="RequestParams\TPG_NG_8244_ClaimFileFilterRequestParams.Shared.cs" />
     <Compile Include="RequestParams\TSH_NG_8285_Web01_PaymentRequestParams.Shared.cs" />
@@ -132,6 +134,7 @@
     <Compile Include="ResponseData\ClientSearchByIDResponseData.Shared.cs" />
     <Compile Include="ResponseData\ClientSearchResponseData.Shared.cs" />
     <Compile Include="ResponseData\ConstraintAgentAnswerResponseData.Shared.cs" />
+    <Compile Include="ResponseData\ContinuousResponseOnClaimFileResponseData.Shared.cs" />
     <Compile Include="ResponseData\CourierBOLQueryResponseData.Shared.cs" />
     <Compile Include="ResponseData\CustomItemLegalDemandsResponseData.Shared.cs" />
     <Compile Include="ResponseData\CustomsBookInResponseData.Shared.cs" />

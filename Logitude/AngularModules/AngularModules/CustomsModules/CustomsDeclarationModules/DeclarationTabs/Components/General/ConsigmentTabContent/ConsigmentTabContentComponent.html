@@ -521,9 +521,10 @@
                                                 <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
                                                     <span>{{item.MarksNumbers}}</span>
                                                 </div>
-                                                <div *ngIf="logcelltemplate.IsEditMode">
-                                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'MarksNumbers'" [InputType]="'ntext'" [DataContext]="item"
-                                                                [ObjectTableName]="'Customs.ConsignmentPackage'" [HideColumns]="true"></LogTextBox>
+                                                <div *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 90%;">
+                                                    <LogTextBox [ObjectFieldName]="'MarksNumbers'" [InputType]="'ntext'" [DataContext]="item"
+                                                                [ObjectTableName]="'Customs.ConsignmentPackage'" [HideColumns]="true"
+                                                                [IsMultiline]="true"></LogTextBox>
                                                 </div>
                                             </div>
                                         </log-cell-template>

@@ -264,7 +264,12 @@ export class ClientPM {
         }
     }
     //public ClientDrivingLicenses: Array<ClientDrivingLicensePM>= [];
- 
+     private nationalIdentificationNumber: string;
+    public get NationalIdentificationNumber() { return this.nationalIdentificationNumber; }
+    public set NationalIdentificationNumber(newValue: string) { if (this.nationalIdentificationNumber != newValue) { this.nationalIdentificationNumber = newValue; this.MarkAsDirty("NationalIdentificationNumber"); } }
+       
+	 
+
     public OldEntityPM: ClientPM;
 		
     public IsDirty: boolean;

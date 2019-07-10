@@ -139,6 +139,11 @@ export class CustomsSettingPM {
     public set AutoUnitMeasurement(newValue: boolean) { if (this.autoUnitMeasurement != newValue) { this.autoUnitMeasurement = newValue; this.MarkAsDirty("AutoUnitMeasurement"); } }
        
 	 
+    private companyType: string;
+    public get CompanyType() { return this.companyType; }
+    public set CompanyType(newValue: string) { if (this.companyType != newValue) { this.companyType = newValue; this.MarkAsDirty("CompanyType"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		

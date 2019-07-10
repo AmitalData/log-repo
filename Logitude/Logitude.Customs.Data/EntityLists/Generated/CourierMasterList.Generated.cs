@@ -90,6 +90,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string IntegratorCode  { get; set; }
        [DataMember]
        public string IntegratorName  { get; set; }
+       [DataMember]
+       public string IntegratorNumber  { get; set; }
    }
 
 }

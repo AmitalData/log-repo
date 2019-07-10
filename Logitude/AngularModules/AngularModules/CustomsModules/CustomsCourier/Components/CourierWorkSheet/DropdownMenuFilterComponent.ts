@@ -116,6 +116,13 @@ export class DropdownMenuFilterComponent implements OnInit {
             
             document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
                 (myTop/*itemRect.top*/ /*+ 27*/ /*-5*/) + 'px';
+
+            let DDLHeight = 65+20;//    height: 22px; * 3 +30 
+            let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN 
+            if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {//this.PaintTop = true                
+                document.getElementById(this._DropdownMenuFilterComponentMenuId).style.top =
+                    (itemRect.top - DDLHeight - Extra) + 'px';
+            }
             document.getElementById(this._DropdownMenuFilterComponentMenuId).style.left =
                 (myleft/*itemRect.left*/ /*- 50*/ - 100 /*+5*/) + 'px';//min-width: 80px
             this._DropdownDisplay = 'block';
@@ -124,5 +131,17 @@ export class DropdownMenuFilterComponent implements OnInit {
       }
       this._CD.detectChanges();
     }
+    getScreenHeight() {
+        if (self.innerHeight) {
+            return self.innerHeight;
+        }
 
+        if (document.documentElement && document.documentElement.clientHeight) {
+            return document.documentElement.clientHeight;
+        }
+
+        if (document.body) {
+            return document.body.clientHeight;
+        }
+    }
 }

@@ -129,6 +129,14 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [StringLength(100, MinimumLength = 0)]
         [Column("CustomerName", TypeName = "nvarchar")]
         public string CustomerName { get; set; }
-	      
+
+        [StringLength(15, MinimumLength = 0)]
+        [Column("SignedByUserId", TypeName = "varchar")]
+        public string SignedByUserId { get; set; }
+
+        [StringLength(40, MinimumLength = 0)]
+        [Column("SignedByUserName", TypeName = "nvarchar")]
+        public string SignedByUserName { get; set; }
+
     }
 }

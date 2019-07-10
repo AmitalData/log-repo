@@ -73,6 +73,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
             }
             AppendLogLine("GetSingle:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart(); 
             ICustomContext dbContext = CustomContext.GetContext(ResolvedTenant());
+            
             MyGenericResponseObj.Stage = "Add Ticket for file " + this._MyDeclarationPM.CustomFileNo;
 
             if (!String.IsNullOrWhiteSpace(this._LogitudeDocs.COM_ID))
@@ -219,6 +220,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     throw new BusinessErrorException("Document with Id " + this._LogitudeDocs.COM_ID + " not found");
                 }
             }
+
+            DeclarationUpdateService DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
+            this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
+            this._MyDeclarationPM.MarkAsChanged = true;
+            DeclarationUpdateService.Update(this._MyDeclarationPM, true);
 
             MyGenericResponseObj.Stage = "Add Ticket Done ";
             AppendLogLine("Add Ticket:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();

@@ -896,7 +896,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<PointerLevel> PointerLevel { get; set; }
         public IDbSet<ClientDrivingLicense> ClientDrivingLicense { get; set; }
         public IDbSet<ClientDrivingLicenseType> ClientDrivingLicenseType { get; set; }
-        public IDbSet<PendingErrorPlace> PendingErrorPlace { get; set; }
+        public IDbSet<PendingErrorPlace> PendingErrorPlaces { get; set; }
         public IDbSet<DecisionType> DecisionType { get; set; }
         public IDbSet<SeizureMethodType> SeizureMethodType { get; set; }
         public IDbSet<ClaimsRelatedEntitiesSeizure> ClaimsRelatedEntitiesSeizure { get; set; }
@@ -915,6 +915,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             get;
             set;
         }
+        public IDbSet<ContinuousRequestType> ContinuousRequestType { get; set; }
 
         #endregion
 
@@ -2278,6 +2279,12 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         {
             get;
             set;
+
+        }
+
+        public IDbSet<DeclarationPending> DeclarationPendings
+        {
+            get; set;
 
         }
 
@@ -3713,6 +3720,8 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Configurations.Add(new DeclarationPaymentProtestMap());
 
+            modelBuilder.Configurations.Add(new DeclarationPendingMap());
+
             modelBuilder.Configurations.Add(new DeclarationStatusTypeMap());
 
             modelBuilder.Configurations.Add(new DeclarationTaxMap());
@@ -4012,6 +4021,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new UpdateCodeMap());
             modelBuilder.Configurations.Add(new GatepassRequestMap());
             modelBuilder.Configurations.Add(new PendingByKeywordMap());
+            modelBuilder.Configurations.Add(new ContinuousRequestTypeMap());
 
             #endregion
 
@@ -4168,7 +4178,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             //modelBuilder.Entity<SupplierInvoiceItemsTaxesMod>().Property(x => x.Amount).HasPrecision(16, 2);
 
-            modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(12, 10);
+            //modelBuilder.Entity<CustomsExchangeRate>().Property(x => x.ExchangeRate).HasPrecision(12, 10);
 
             modelBuilder.Entity<Deposit>().Property(x => x.DepositAmount).HasPrecision(16, 2);
 

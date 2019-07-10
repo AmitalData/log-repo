@@ -68,6 +68,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.SignedByUserId).HasColumnName("SignedByUserId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

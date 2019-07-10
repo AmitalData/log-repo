@@ -99,11 +99,13 @@
     </Compile>
     <None Include="EntityFiles\ClaimsRelatedEntitiesRefund.lxml" />
     <None Include="EntityFiles\ClaimsRelatedEntitiesSeizure.lxml" />
+    <None Include="EntityFiles\ContinuousRequestType.lxml" />
     <None Include="EntityFiles\CustomsPartnerFtp.lxml" />
     <None Include="EntityFiles\DecisionType.lxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\DeclarationMamanSpecialAction.lxml" />
+    <None Include="EntityFiles\DeclarationPending.lxml" />
     <None Include="EntityFiles\GatepassRequest.lxml" />
     <None Include="EntityFiles\GatepassReturnCode.lxml" />
     <None Include="EntityFiles\MamanSpecialAction.lxml" />

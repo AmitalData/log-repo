@@ -268,14 +268,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 foreach (ConsignmentPackagePM consignmentPackagePM in consignmentPM.ConsignmentPackages)
                 {
-                    DeclarationConsignmentConsignmentItem declarationConsignmentConsignmentItem = new DeclarationConsignmentConsignmentItem();
-                    declarationConsignmentConsignmentItem = BuildConsignmentItem(consignmentPM, consignmentPackagePM);
-                    declarationConsignmentConsignmentItem.SequenceNumeric = consignmentPackagePM.LineNumber;
-                    declarationConsignmentConsignmentItem.SequenceNumericSpecified = true;
-                    declarationConsignmentConsignmentItemList.Add(declarationConsignmentConsignmentItem);
-
                     if (consignmentPackagePM.PackageMeasureQualifierCode == "2")
                     {
+                        DeclarationConsignmentConsignmentItem declarationConsignmentConsignmentItem = new DeclarationConsignmentConsignmentItem();
+                        declarationConsignmentConsignmentItem = BuildConsignmentItem(consignmentPM, consignmentPackagePM);
+                        declarationConsignmentConsignmentItem.SequenceNumeric = consignmentPackagePM.LineNumber;
+                        declarationConsignmentConsignmentItem.SequenceNumericSpecified = true;
+                        declarationConsignmentConsignmentItemList.Add(declarationConsignmentConsignmentItem);
+
                         decimal packageQuantity = 0;
                         if (consignmentPackagePM.PackageQuantity.HasValue)
                         {

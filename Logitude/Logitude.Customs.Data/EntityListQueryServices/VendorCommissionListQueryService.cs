@@ -51,7 +51,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                         CustomerId = a.CustomerId,
                         ModificationsTypeCode = a.ModificationsTypeCode,
                         CommisionPercentage = a.CommisionPercentage,
-
+                        ModificationsTypeName = a.ModificationAndDiscountType != null ? (a.ModificationAndDiscountType.LocalName != null ? a.ModificationAndDiscountType.LocalName : a.ModificationAndDiscountType.EnglishName) : null,
                     }).ToList();
         }
 

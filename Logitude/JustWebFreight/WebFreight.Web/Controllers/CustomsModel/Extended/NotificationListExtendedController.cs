@@ -790,11 +790,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         notificationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
                         service.Update(notificationPM, true);
+
+                        if (!string.IsNullOrEmpty(notificationPM.CustomerId))
+                        {
+                            CustomerRepository customerRepository = new CustomerRepository(notificationPM.Tenant);
+                            Customer customerCard = customerRepository.GetSingleCustomer(notificationPM.CustomerId, notificationPM.Tenant, false);
+                            if (customerCard != null && customerCard.Card != null)
+                            {
+                                notificationPM.CustomerName = customerCard.Card.LocalName;
+                            }
+                        }
                     }
                 }
-
-
-            
 
                 ServiceResponse response = new ServiceResponse();
 

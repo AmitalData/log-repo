@@ -33,6 +33,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          InvoiceAmount = a.InvoiceAmount,
                                                          InvoiceCounterKey = a.InvoiceCounterKey,
                                                          InvoiceCurrencyTypeCode = a.InvoiceCurrencyTypeCode,
+                                                         InvoiceCurrencyTypeName = a.CurrencyType != null ? a.CurrencyType.LocalName : null,
                                                          InvoiceNumber = a.InvoiceNumber,
                                                          IsPreference = a.IsPreference,
                                                          IssueCountryCode = a.IssueCountryCode,

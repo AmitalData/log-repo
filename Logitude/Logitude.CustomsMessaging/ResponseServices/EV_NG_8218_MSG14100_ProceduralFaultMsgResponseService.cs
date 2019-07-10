@@ -98,6 +98,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 this._MyProceduralFaultPM.DeclarationId = myDeclarationPM.Id;
                                 this._MyProceduralFaultPM.CustomFileNo = myDeclarationPM.CustomFileNo;
                                 this._MyProceduralFaultPM.DeclarationNumber = myDeclarationPM.DeclarationNumber;
+                                this._MyProceduralFaultPM.SignedByUserId = myDeclarationPM.SignedByUserId;
 
                                 //Event data initialization
                                 myInsertEventContextTagModel.EventCode = "LIK";

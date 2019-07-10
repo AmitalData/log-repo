@@ -2318,6 +2318,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "1171",
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2333,6 +2334,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2407,6 +2409,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "1035",
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2421,6 +2424,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2438,6 +2442,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
+                InterfaceType = "B",
                 //  NeedSignature = false
             });
 
@@ -2458,6 +2463,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2472,6 +2478,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
+                InterfaceType = "B",
             });
 
 
@@ -2490,6 +2497,25 @@ namespace Logitude.Customs.Def.ClosedTable
                 Active = true,
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
+                InterfaceType = "B",
+                //  NeedSignature = false
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "UCB2715",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "שידור מסמכים שגויים ",// "Unifreight Courier *2715* Batch Send",
+                DcaPrefixName = "UnifreightCourier_UCB2715_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                InterfaceType = "B",
                 //  NeedSignature = false
             });
 
@@ -2510,6 +2536,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
+                InterfaceType = "B",
             });
 
             all.Add(new InterfaceManagementDetails()
@@ -2529,6 +2556,40 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = "",
                 //  NeedSignature = false
+                InterfaceType = "B",
+            });
+
+            //CLAIM_5005_ContinuousRequestOnClaimFileMessagingService
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "5005",
+                InOut = InOutEnum.O.ToString(),
+                Description = "מסר בקשה לביטול/ערר תביעה",
+                DcaPrefixName = "",
+                DefaultSendOptionsCode = Logitude.Customs.Def.ClosedTable.InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //   NotificationId = "",//NotificationDefinitionDetails.GetAll().FirstOrDefault(rec=> rec.Code="").Code
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "5013",
+                //      NeedSignature = false
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
+                Code = "5013",
+                InOut = InOutEnum.I.ToString(),
+                Description = "משוב לביטול/ערר תביעה",
+                DcaPrefixName = "GetCLAIM_MSG9_ContinuousRequestOnClaimFile_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = 5,
+                AllowRestore = true,
+                //NotificationId = "",
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = null,
+                //    NeedSignature = false
             });
 
 
@@ -2569,6 +2630,7 @@ namespace Logitude.Customs.Def.ClosedTable
             newPoco.SendAsDual = this.SendAsDual;
             newPoco.ResponseInterfaceCode = this.ResponseInterfaceCode;
             newPoco.SignatureTypeCode = this.SignatureTypeCode;
+            newPoco.InterfaceType = this.InterfaceType;
             //   newPoco.NeedSignature = this.NeedSignature;
         }
 

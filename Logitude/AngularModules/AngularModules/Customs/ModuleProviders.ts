@@ -43,6 +43,7 @@ import { ConstraintStatusListService } from './Services/StandardLists/Constraint
 import { ConstraintTypeListService } from './Services/StandardLists/ConstraintTypeListService';
 import { ContactRoleTypeListService } from './Services/StandardLists/ContactRoleTypeListService';
 import { ContinuousMessagesTypeCodeListService } from './Services/StandardLists/ContinuousMessagesTypeCodeListService';
+import { ContinuousRequestTypeListService } from './Services/StandardLists/ContinuousRequestTypeListService';
 import { ConverterTypeListService } from './Services/StandardLists/ConverterTypeListService';
 import { CountryGroupListService } from './Services/StandardLists/CountryGroupListService';
 import { CourtInstanceListService } from './Services/StandardLists/CourtInstanceListService';
@@ -215,6 +216,7 @@ import { RefundCustomerActivityTypeListService } from './Services/StandardLists/
 import { TransferCargoMethodTypeListService } from './Services/StandardLists/TransferCargoMethodTypeListService';
 import { UpdateCodeListService } from './Services/StandardLists/UpdateCodeListService';
 import { GatepassReturnCodeListService } from './Services/StandardLists/GatepassReturnCodeListService';
+import { CourierCustomStatusListService } from './Services/StandardLists/CourierCustomStatusListService';
 import { PendingByKeywordListService } from './Services/StandardLists/PendingByKeywordListService';
 
 
@@ -368,7 +370,7 @@ export class ModuleProviders {
             case "CheckTypeLookupListService": { myResult = new CheckTypeLookupListService(); break; }
             case "CityListService": { myResult = new CityListService(); break; }
             case "AgentTalkBackTypeListService": { myResult = new AgentTalkBackTypeListService(); break; }
-            case "AcceptanceStatusListService": { myResult = new AcceptanceStatusListService(); break; }   
+            case "AcceptanceStatusListService": { myResult = new AcceptanceStatusListService(); break; } 
             case "ClaimEntityListService": { myResult = new ClaimEntityListService(); break; }
             case "ClaimExplanationCodeListService": { myResult = new ClaimExplanationCodeListService(); break; }
             case "ClaimListService": { myResult = new ClaimListService(); break; }
@@ -387,6 +389,7 @@ export class ModuleProviders {
             case "ConstraintTypeListService": { myResult = new ConstraintTypeListService(); break; }
             case "ContactRoleTypeListService": { myResult = new ContactRoleTypeListService(); break; }
             case "ContinuousMessagesTypeCodeListService": { myResult = new ContinuousMessagesTypeCodeListService(); break; }
+            case "ContinuousRequestTypeListService": { myResult = new ContinuousRequestTypeListService(); break; }
             case "ConverterTypeListService": { myResult = new ConverterTypeListService(); break; }
             case "CountryGroupListService": { myResult = new CountryGroupListService(); break; }
             case "CourtInstanceListService": { myResult = new CourtInstanceListService(); break; }
@@ -562,6 +565,7 @@ export class ModuleProviders {
             case "GatepassReturnCodeListService": { myResult = new GatepassReturnCodeListService(); break; }
             case "PendingByKeywordListService": { myResult = new PendingByKeywordListService(); break; }
                 
+            case "CourierCustomStatusListService": { myResult = new CourierCustomStatusListService(); break; }
             //#endregion                
 
             //#region StandardPMs

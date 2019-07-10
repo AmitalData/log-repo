@@ -10,6 +10,7 @@ export class CourierWorksheetSharedDataService {
     private messageSource = new BehaviorSubject('default message');
     CurrentMessage = this.messageSource.asObservable();
     WebAPICourierGWMessageECTHRDataMaman: string;
+    public IsDisplayOnly: boolean = false;
     constructor() { }
 
     SendNextMessage(message: string) {

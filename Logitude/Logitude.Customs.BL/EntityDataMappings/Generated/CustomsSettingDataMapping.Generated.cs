@@ -42,7 +42,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UnifreightCertificateActivated, 
 	         AutoFillPaymentScreen, 
 	         AutoFillAccountType, 
-	         AutoUnitMeasurement,
+	         AutoUnitMeasurement, 
+	         CompanyType,
 	      }
 
 
@@ -71,7 +72,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UnifreightCertificateActivated, 
 	         AutoFillPaymentScreen, 
 	         AutoFillAccountType, 
-	         AutoUnitMeasurement,
+	         AutoUnitMeasurement, 
+	         CompanyType,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -178,6 +180,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoUnitMeasurement))
             {
 				entityPOCO.AutoUnitMeasurement = entityPM.AutoUnitMeasurement;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CompanyType))
+            {
+				entityPOCO.CompanyType = entityPM.CompanyType;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -291,6 +298,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AutoUnitMeasurement = entityPOCO.AutoUnitMeasurement;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CompanyType))
+            {
+					entityPM.CompanyType = entityPOCO.CompanyType;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -395,6 +407,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoUnitMeasurement))
             {
                 oldEntityPM.AutoUnitMeasurement = entityPM.AutoUnitMeasurement;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CompanyType))
+            {
+                oldEntityPM.CompanyType = entityPM.CompanyType;
             }
 			
 		}

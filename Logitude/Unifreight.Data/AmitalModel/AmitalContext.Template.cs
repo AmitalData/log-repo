@@ -1871,6 +1871,31 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"DRAW_NO_N")
                     .HasMaxLength(35)
                     .HasColumnType("varchar2");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.PRATMEHESLIST)
+                    .HasColumnName(@"PRAT_MEHES_LIST")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.ALLPRATMEHESLIST)
+                    .HasColumnName(@"ALL_PRAT_MEHES_LIST")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.NOOFINVOICES)
+                    .HasColumnName(@"NO_OF_INVOICES")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.TOTALINVOICELINESNO)
+                    .HasColumnName(@"TOTAL_INVOICE_LINES_NO")
+                    .HasColumnType("int");
+
+
+
+
+
+
+
 
             #endregion
 

@@ -67,6 +67,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool AutoFillAccountType { get; set; }
         [Column("AutoUnitMeasurement")]
 	    public bool AutoUnitMeasurement { get; set; }
+        [Column("CompanyType")]
+	    public string CompanyType { get; set; }
     }
 }
 	 

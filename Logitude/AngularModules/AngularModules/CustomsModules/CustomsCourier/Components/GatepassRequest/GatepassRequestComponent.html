@@ -96,10 +96,13 @@
                                               [Text]="'קוד פעולה'"></LogLabel>
                                 </td>
                                 <td style="width: 150px; ">
-                                    <select (change)="ResetUpdateCodeListChangeSelected($event.target.value)"
+                                    <!--<select (change)="ResetUpdateCodeListChangeSelected($event.target.value)"
                                             style="width:150px; border:1px solid gray;border-radius:3px; float:right">
                                         <option *ngFor="let item of UpdateCodeList" [value]="item.EnumId">{{item.Name}}</option>
-                                    </select>
+                                    </select>-->
+
+                                    <ComboBox [ItemsSource]="UpdateCodeList" [Binding]="'Name'" [SelectedItem]="MyUpdateCodeClass" (SelectedItemChanged)="this.MyUpdateCodeClass =$event"></ComboBox>
+
                                 </td>
 
                                 <td><div></div></td>
