@@ -8,42 +8,58 @@
 	declare @EntityPrefix as varchar(50)
 	declare @EntityMaster as varchar(50)
 
-	DECLARE DataCursor CURSOR READ_ONLY
-	FOR
-	SELECT top 100 Id, EntityId, ObjectTableId, AWBNumber, [Subject]
-	FROM CommunicationLogs
-	WHERE EntityId is not null AND ObjectTableId is not null 
-	and 
-	(
-	(InOut = 'i' and Subject in ('FNA', 'FMA', 'FSA', 'FSU', 'FFA'))
-	OR
-	(InOut = 'o' and Subject in ('FWB', 'FHL', 'FFR', 'FSR', 'Cargonaut FWB', 'Cargonaut FHL', 'DEXX FWB', 'DEXX FHL'))
-	)
-	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @EntityId, @ObjectTableId, @AWBNumber, @Subject
-	WHILE @@FETCH_STATUS = 0
-	BEGIN
+	declare @ShipmentObjectTableId as varchar(15)
+	declare @BookingObjectTableId as varchar(15)
+	declare @MasterObjectTableId as varchar(15)
+	set @ShipmentObjectTableId = (select Id from ObjectTables where Name = 'Shipment' and Tenant = 0)
+	set @BookingObjectTableId = (select Id from ObjectTables where Name = 'Booking' and Tenant = 0)
+	set @MasterObjectTableId = (select Id from ObjectTables where Name = 'Master' and Tenant = 0)
 
-		set @ObjectTableName = (select [Name] from ObjectTables where Id = @ObjectTableId)
+	if (@ShipmentObjectTableId is null OR @BookingObjectTableId is null OR @MasterObjectTableId is null)
+	print 'Missing Object Table'
 
-		if (@ObjectTableName = 'Booking')		
-		select @EntityPrefix = AirlinePrefix, @EntityMaster = Master from Bookings where Id = @EntityId		
+	else
+	begin
+		DECLARE DataCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id, EntityId, ObjectTableId, AWBNumber, [Subject]
+		FROM CommunicationLogs
+		WHERE EntityId is not null
+		AND ObjectTableId in (@ShipmentObjectTableId, @BookingObjectTableId, @MasterObjectTableId)
+		and 
+		(
+		(InOut = 'i' and Subject in ('FNA', 'FMA', 'FSA', 'FSU', 'FFA'))
+		OR
+		(InOut = 'o' and Subject in ('FWB', 'FHL', 'FFR', 'Cargonaut FWB', 'Cargonaut FHL', 'DEXX FWB', 'DEXX FHL'))
+		)
+		OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @EntityId, @ObjectTableId, @AWBNumber, @Subject
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
 
-		else if (@ObjectTableName = 'Shipment')
-		select @EntityPrefix = AirlinePrefix, @EntityMaster = Master from ShipmentMasterDatas where Id = @EntityId
+			set @ObjectTableName = (select [Name] from ObjectTables where Id = @ObjectTableId)
 
-			
-		if (@EntityPrefix is not null)
-			begin
-				if(@AWBNumber = @EntityMaster)
-				--update CommunicationLogs set AWBNumber = (@EntityPrefix + '-' + @EntityMaster) where Id = @Id
+			if (@ObjectTableName = 'Booking')		
+			select @EntityPrefix = AirlinePrefix, @EntityMaster = Master from Bookings where Id = @EntityId		
 
-				print '(' + @Subject + '):(' + @AWBNumber + '):(' + @EntityPrefix + '-' + @EntityMaster + ')'
+			else if (@ObjectTableName = 'Shipment' OR @ObjectTableName = 'Master')
+			select @EntityPrefix = AirlinePrefix, @EntityMaster = Master from ShipmentMasterDatas where Id = @EntityId
 
-				--else
-				--print 'huh shipment (' + @Subject + '):(' + @AWBNumber + '):(' + @EntityPrefix + '-' + @EntityMaster + ')'
-			end
 
-	FETCH NEXT FROM DataCursor INTO @Id, @EntityId, @ObjectTableId, @AWBNumber,@Subject
-	END
-	CLOSE DataCursor
-	DEALLOCATE DataCursor
+			if (@EntityPrefix is not null)
+				begin
+					if(@AWBNumber = @EntityMaster)
+					--update CommunicationLogs set AWBNumber = (@EntityPrefix + '-' + @EntityMaster) where Id = @Id
+
+					print '(' + @Subject + ':' + @Id +'):(' + @AWBNumber + '):(' + @EntityPrefix + '-' + @EntityMaster + ')'
+
+					--else
+					--print 'huh shipment (' + @Subject + '):(' + @AWBNumber + '):(' + @EntityPrefix + '-' + @EntityMaster + ')'
+				end
+
+				
+		FETCH NEXT FROM DataCursor INTO @Id, @EntityId, @ObjectTableId, @AWBNumber,@Subject
+		END
+		CLOSE DataCursor
+		DEALLOCATE DataCursor
+	end
+
