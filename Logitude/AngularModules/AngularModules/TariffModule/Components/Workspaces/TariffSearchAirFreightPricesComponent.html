@@ -37,106 +37,136 @@
                                 <td>
                                     <table>
                                         <tr>
-                                            <td style="width:50px;">
-                                                <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td style="width:180px;">
-                                                <LogLov [ObjectFieldName]="'OriginPortId'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [LookUpTableName]="'Port'"
-                                                        [DataContext]="DataContext"
-                                                        (SelectedItemChanged)="OriginPortId"
-                                                        [DisplayMemberPath]="'Code'"
-                                                        [SelectedValue]="OriginPortId">
-                                                </LogLov>
-                                            </td>
-
-                                            <td style="width:100px">
-                                                <div>
-
-                                                </div>
-                                            </td>
-
-
-                                            <td style="width:70px">
-                                                <LogLabel [ObjectFieldName]="'Weight'" [NoObjectField]="true" [Text]="'Weight'" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td style="width:240px">
+                                            <td>
                                                 <table>
                                                     <tr>
-                                                        <td style="width:100px">
-                                                            <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Weight'" [HideColumns]="true"
-                                                                        (ValueChanged)="Weight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-
+                                                        <td style="width:130px;">
+                                                            <LogLabel [ObjectFieldName]="'OriginPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
-                                                        <td style="width:4px">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:100px">
-                                                            <LogLov [ObjectFieldName]="'WeightCode'"
-                                                                    [SelectedValue]="WeightCode"
-                                                                    [NoObjectField]="true"
+                                                        <td style="width:220px;">
+                                                            <LogLov [ObjectFieldName]="'OriginPortId'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [LookUpTableName]="'Port'"
                                                                     [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'WeightUnit'"
-                                                                    [HideLastColumn]="true"
-                                                                    [RunToggleMode]="true"
-                                                                    >
+                                                                    (SelectedItemChanged)="OriginPortId"
+                                                                    [DisplayMemberPath]="'Code'"
+                                                                    [SelectedValue]="OriginPortId">
+                                                            </LogLov>
+                                                        </td>
+
+                                                        <td style="width:20px">
+                                                            <div>
+
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="width:82px;">
+                                                            <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+                                                        <td style="width:180px;">
+                                                            <LogLov [ObjectFieldName]="'DestinationPortId'"
+                                                                    [ObjectTableName]="ObjectTableName"
+                                                                    [LookUpTableName]="'Port'"
+                                                                    [DataContext]="DataContext"
+                                                                    (SelectedItemChanged)="DestinationPortId"
+                                                                    [DisplayMemberPath]="'Code'"
+                                                                    [SelectedValue]="DestinationPortId">
                                                             </LogLov>
 
                                                         </td>
-                                                        <td style="width:36px"><div></div></td>
+
+
+                                                        <td style="width:75px">
+                                                            <LogLabel [ObjectFieldName]="'Date'" [NoObjectField]="true" [Text]="'Date'" [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td style="width:155px">
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
+
+                                                                    </td>
+                                                                    <td style="width:18px">
+                                                                        <div></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+
+                                                        <td></td>
+
                                                     </tr>
                                                 </table>
                                             </td>
-
-
-
-
-
-                                            <td></td>
+                               
                                         </tr>
 
                                         <tr>
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'DestinationPortId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-                                            <td>
-                                                <LogLov [ObjectFieldName]="'DestinationPortId'"
-                                                        [ObjectTableName]="ObjectTableName"
-                                                        [LookUpTableName]="'Port'"
-                                                        [DataContext]="DataContext"
-                                                        (SelectedItemChanged)="DestinationPortId"
-                                                        [DisplayMemberPath]="'Code'"
-                                                        [SelectedValue]="DestinationPortId">
-                                                </LogLov>
-                                           
-                                            </td>
-                                            <td style="width:100px">
-                                                <div>
-
-                                                </div>
-                                            </td>
-                                            <td style="width:70px">
-                                                <LogLabel [ObjectFieldName]="'Date'" [NoObjectField]="true" [Text]="'Date'" [DataContext]="DataContext"></LogLabel>
-                                            </td>
-
-                                            <td style="width:240px">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
-                                                            
-                                                        </td>
-                                                        <td style="width:18px">
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
+                                          <td>
+                                              <table>
+                                                  <tr>
+                                                      <td style="width:130px">
+                                                          <LogLabel [ObjectFieldName]="'Weight'" [NoObjectField]="true" [Text]="'Chargeable weight'" [DataContext]="DataContext"></LogLabel>
+                                                      </td>
 
 
-                                            <td></td>
+                                                      <td style="width:100px">
+                                                          <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Weight'" [HideColumns]="true"
+                                                                      (ValueChanged)="Weight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+
+                                                      </td>
+                                                      <td style="width:4px">
+                                                          <div></div>
+                                                      </td>
+                                                      <td style="width:100px">
+                                                          <LogLov [ObjectFieldName]="'WeightCode'"
+                                                                  [SelectedValue]="WeightCode"
+                                                                  [NoObjectField]="true"
+                                                                  [DataContext]="DataContext"
+                                                                  [LookUpTableName]="'WeightUnit'"
+                                                                  [HideLastColumn]="true"
+                                                                  [RunToggleMode]="true">
+                                                          </LogLov>
+
+                                                      </td>
+                                                      <td style="width:25px"><div></div></td>
+                                                      <td style="width:90px">
+                                                          <LogLabel [ObjectFieldName]="'GrossWeight'" [NoObjectField]="true" [Text]="'Gross Weight'" [DataContext]="DataContext"></LogLabel>
+                                                      </td>
+                                                      <td style="width:4px">
+                                                          <div></div>
+                                                      </td>
+                                                      <td style="width:142px">
+                                                          <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Volume'" [HideColumns]="true"
+                                                                      (ValueChanged)="GrossWeight=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+
+                                                      </td>
+
+                                                      <td style="width:38px">
+                                                          <div></div>
+                                                      </td>
+                                                      <td style="width:70px">
+                                                          <LogLabel [ObjectFieldName]="'Volume'" [NoObjectField]="true" [Text]="'Volume'" [DataContext]="DataContext"></LogLabel>
+                                                      </td>
+                                                      <td style="width:4px">
+                                                          <div></div>
+                                                      </td>
+
+                                                      <td style="width:100px">
+                                                          <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'Volume'" [HideColumns]="true"
+                                                                      (ValueChanged)="Volume=$event" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+
+                                                      </td>
+
+                                                      <td></td>
+                                                  </tr>
+                                              </table>
+                                          </td>
+                                         
+
+
 
                                         </tr>
                                     </table>
