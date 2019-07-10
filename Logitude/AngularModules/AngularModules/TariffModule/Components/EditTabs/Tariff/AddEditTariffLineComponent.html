@@ -30,7 +30,7 @@
                                 </LogLov>
                             </td>
 
-                            <td>
+                            <td *ngIf="TariffType == 'AFC'">
                                 <div class="MediaFill">
                                     <table *ngIf="!DataContext.OriginPortId">
                                         <tr>
@@ -40,6 +40,24 @@
                                         </tr>
                                     </table>
                                 </div>
+                            </td>
+
+                            <td *ngIf="TariffType == 'ASC'">
+                                <table>
+                                    <tr>
+                                        <td style="width:130px;">
+                                            <LogLabel [ObjectFieldName]="'IsFromAllOtherPorts'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width:25px;">
+                                            <LogCheckBox [ObjectFieldName]="'IsFromAllOtherPorts'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsFromAllOtherPorts"></LogCheckBox>
+                                        </td>
+
+                                        <td style="color:red; padding-left: 10px;">
+                                            <span *ngIf="!DataContext.OriginPortId">{{OriginPortText}}</span>
+                                        </td>
+                                    </tr>
+                                </table>                                
                             </td>
                         </tr>
 
@@ -61,7 +79,7 @@
                                 </LogLov>
                             </td>
 
-                            <td>
+                            <td *ngIf="TariffType == 'AFC'">
                                 <div class="MediaFill">
                                     <table *ngIf="!DataContext.DestinationPortId">
                                         <tr>
@@ -71,6 +89,24 @@
                                         </tr>
                                     </table>
                                 </div>
+                            </td>
+
+                            <td *ngIf="TariffType == 'ASC'">
+                                <table>
+                                    <tr>
+                                        <td style="width:130px;">
+                                            <LogLabel [ObjectFieldName]="'IsToAllOtherPorts'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td style="width:25px;">
+                                            <LogCheckBox [ObjectFieldName]="'IsToAllOtherPorts'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Checked]="DataContext.IsToAllOtherPorts"></LogCheckBox>
+                                        </td>
+
+                                        <td style="color:red; padding-left: 10px;">
+                                            <span *ngIf="!DataContext.DestinationPortId">{{DestinationPortText}}</span>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
 

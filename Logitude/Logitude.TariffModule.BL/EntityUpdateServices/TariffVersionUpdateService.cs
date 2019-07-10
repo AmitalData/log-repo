@@ -29,15 +29,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {  
-                //if(entityPM.StartDate != entityPOCO.StartDate)
-                //{
-
-                //}
-
-                //if (entityPM.ExpirationDate != entityPOCO.ExpirationDate)
-                //{
-
-                //}
+                
             }            
         }
 
@@ -84,12 +76,7 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     line.HasErrors = false;
                     line.ErrorText = null;
                 }
-
-                //if (iUniqueKey == null)
-                //{
-                //    iUniqueKey = "";
-                //}
-
+                
                 line.LineUniqueKey = iUniqueKey;
                 line.LineUniqueKeyText = iUniqueKey;
 
@@ -138,9 +125,6 @@ namespace Logitude.TariffModule.BL.EntityUpdateServices
                     }
                 }
             }
-
-
         }
-
     }
 }

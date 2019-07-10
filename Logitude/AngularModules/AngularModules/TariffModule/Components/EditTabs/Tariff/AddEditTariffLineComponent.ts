@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TariffLineData } from './VersionTabComponent';
 import { TariffLinePM } from '../../../../TariffModule/EntityPMs/TariffLinePM';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { Cloner } from '../../../../Infrastructure/Utilities/Cloner';
@@ -15,18 +14,18 @@ import { Validator } from '../../../../Infrastructure/Validators/Validator';
 export class AddEditTariffLineComponent  {
     public TariffType: string;
     public EntityPM: TariffLinePM;
-    public DataContext: TariffLineData;
+    public DataContext: any;
     public ObjectTableName: string = "TariffLine";
     private CurrentSession = SessionLocator.SelectedSession;
     public ValidationErrorsList: string[];
     constructor() {
 
     }
-
-    SetDataContext(dataContext: TariffLineData) {
-        this.DataContext = dataContext;
-        this.EntityPM = dataContext.EntityPM;
-        this.TariffType = dataContext.FatherComponent.EntityPM.TypeCode;
+    
+    SetWindowArgs(args) {
+        this.DataContext = args['DataContext'];
+        this.EntityPM = args['EntityPM'];
+        this.TariffType = args['TariffType'];
         this.Clone();
     }
 
@@ -64,13 +63,25 @@ export class AddEditTariffLineComponent  {
 
         var msg: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId)) {
-            errors.push(msg.replace("%FieldName", "To"));
+        if (this.TariffType == "AFC") {
+            if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId)) {
+                errors.push(msg.replace("%FieldName", "To"));
+            }
+
+            if (AppTool.IsNullOrEmpty(this.DataContext.OriginPortId)) {
+                errors.push(msg.replace("%FieldName", "From"));
+            }
         }
 
-        if (AppTool.IsNullOrEmpty(this.DataContext.OriginPortId)) {
-            errors.push(msg.replace("%FieldName", "From"));
-        }
+        else if (this.TariffType == "ASC") {
+            if (AppTool.IsNullOrEmpty(this.DataContext.DestinationPortId) && !this.DataContext.IsToAllOtherPorts) {
+                errors.push("To port or To All Other Ports is required");
+            }
+
+            if (AppTool.IsNullOrEmpty(this.DataContext.OriginPortId) && !this.DataContext.IsFromAllOtherPorts) {
+                errors.push("From port or From All Other Ports is required");
+            }
+        }       
 
         this.ValidationErrorsList = errors;
         if (this.ValidationErrorsList.length == 0) {
@@ -78,6 +89,12 @@ export class AddEditTariffLineComponent  {
             if (this.DataContext.IsNewEntity) {
 
                 this.DataContext.IsNewEntity = false;
+
+                //if (this.TariffType == "ASC") {
+                //    if (this.DataContext.IsFromAllOtherPorts || this.DataContext.IsToAllOtherPorts) {
+                //        this.EntityPM.Index = -1;
+                //    }
+                //}
 
                 if (this.DataContext.FatherComponent.CurrentVersion.TariffLines.indexOf(this.EntityPM) == -1) {
                     this.DataContext.FatherComponent.CurrentVersion.AddTariffLine(this.EntityPM);
