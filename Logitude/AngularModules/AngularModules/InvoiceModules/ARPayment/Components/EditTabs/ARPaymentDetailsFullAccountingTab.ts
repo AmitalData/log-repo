@@ -67,6 +67,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public IsEditExchangeRateVisible: boolean = false;
     get IsNegativeAmountEnabled() { return this.EnableNegativeOffsetARPayments == true && this.AccountingPaymentMethodCode == "FS" ? true : false; }
     public isRTL: boolean = false;
+    public showLocal: boolean = false;
     public ARPaymentChequeStatus = "";
     public ARPaymentChequeStatusColor = "black";
 
@@ -85,6 +86,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         }
+
+        this.showLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
 
         this.EntityPM = entityArgs.EntityPM;
         this.FullAccounting = SessionLocator.TenantPM.AccountingActivated;
@@ -1252,40 +1255,55 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         if (this.FullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH")) {
             var service: InvoiceDomainService = new InvoiceDomainService();
+
             service.CheckARPaymentCashBook(this.AccountingPaymentMethodCode, this.PaymentCurrencyId, this.BranchId).subscribe((myResponse: ServiceResponse) => {
-                if (myResponse != null && !myResponse.HasError) {
-                    var cashbook: CashBookPM[] = myResponse.Result;
-                    if (cashbook != null && cashbook.length > 0) {
-                        if (cashbook.length == 1) {
-                            var data: CashBookPM = cashbook[0];
-                            this.CashBookName = data.EnglishName;
-                            this.BranchGLAccountNumber = data.AccountNumber;
-                            this.BranchGLAccountId = data.AccountId;
-                            this.IsCashBookValid = true;
+                if (myResponse != null && !myResponse.HasError)
+                {
+                    var cashbooks: CashBookPM[] = myResponse.Result;
+                    if (cashbooks != null && cashbooks.length > 0)
+                    {
+                        if (cashbooks.length == 1) {
+
+                            var _cashbook: CashBookPM = cashbooks[0];
+
+                            this.setCashbookFields(_cashbook);
+
                             if (AppTool.IsNullOrEmpty(this.EntityPM.CashbookId)) {
-                                this.EntityPM.CashbookId = data.Id;
+                                this.EntityPM.CashbookId = _cashbook.Id;
                             }
                             this.UIProperties.SetValidity("BranchId", this.ObjectTableName, true, "");
                         }
                         else {
-                            var branchesText = "";
-                            cashbook.forEach((item: CashBookPM) => {
-                                if (!AppTool.IsNullOrEmpty(item.EnglishName)) {
-                                    branchesText += item.EnglishName + ",";
-                                }
-                            });
-                            branchesText = branchesText.replace(/,\s*$/, "");
-                            var msg = "There is no cashbook for this branch, Cashbooks for branches: " + branchesText + "  was found, change the branch please";
-                            this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg);
+                            this.setBranchesText(cashbooks);
                         }
                     }
-                    else {
+                    else
+                    {
                         var msg = "There is no cashbook that compatible to this ARPayment, create one please";
                         this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg);
                     }
                 }
             });
         }
+    }
+
+    private setBranchesText(cashbooks: CashBookPM[]) {
+        var branchesText = "";
+        cashbooks.forEach((item: CashBookPM) => {
+            if (!AppTool.IsNullOrEmpty(item.EnglishName)) {
+                branchesText += item.EnglishName + ",";
+            }
+        });
+        branchesText = branchesText.replace(/,\s*$/, "");
+        var msg2 = "There is no cashbook for this branch, Cashbooks for branches: " + branchesText + "  was found, change the branch please";
+        this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg2);
+    }
+
+    private setCashbookFields(_cashbook: CashBookPM) {
+        this.CashBookName = this.showLocal ? _cashbook.LocalName : _cashbook.EnglishName;
+        this.BranchGLAccountNumber = _cashbook.AccountNumber;
+        this.BranchGLAccountId = _cashbook.AccountId;
+        this.IsCashBookValid = true;
     }
 
     //Payment Line Properties
