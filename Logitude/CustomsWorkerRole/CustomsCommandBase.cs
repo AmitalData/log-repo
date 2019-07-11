@@ -83,7 +83,7 @@ namespace CustomsWorkerRole
             //{
             if (_OnStartDone) return true;
             _OnStartDone = true;
-
+            DoneItemsInRange = new Dictionary<DateTime, int>();
             var myClass = this.GetType().Name;
             if (!string.IsNullOrWhiteSpace(_QueueNameOverride))
             {
@@ -414,7 +414,7 @@ namespace CustomsWorkerRole
                         }
 
 
-
+                        LastActivity = DateTime.UtcNow;
                         proccesDone = true;
                         ProcessMessage_Db(response);
                         scope.Complete();
