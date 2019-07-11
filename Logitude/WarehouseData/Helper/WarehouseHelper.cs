@@ -143,7 +143,7 @@ namespace WarehouseData.Helper
         public void RunSqlFunctions(string connectionString)
         {
             ExecuteScript("Others", connectionString, "Day 06 [Abed]Add Function Date");
-          //  ExecuteScript("Others", connectionString, "Day 18[AbedAddFuncationSplitString]");
+            ExecuteScript("Others", connectionString, "Day 18[AbedAddFuncationSplitString]");
             ExecuteScript("Others", connectionString, "Day 17[AbedAddFuncationResolveCustomFieldDateValue]");
             ExecuteScript("Others", connectionString, "Day 14 [Abed]AddFunctionResolveCustomFieldValue");
         }

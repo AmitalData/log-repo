@@ -780,7 +780,27 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     foreach (var line in entityPM.GLAccountWithholdingTaxes)
                     {
-                        if (line.Changed)
+                        if (line.ChangeSetOp == ChangeSetOperation.Insert)
+                        {
+                            var currentContextTag = line.CurrentContextTag ?? "";
+                            if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventAWNCConst)
+                            {
+                                String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingLineCreated", entityPM.Tenant).Replace(":", line.LineNumber + ":");
+                                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                                {
+                                    EntityId = entityPM.Id,
+                                    Tenant = entityPM.Tenant,
+                                    UserId = contact.Id,
+                                    ObjectTableName = "GLAccount",
+                                    IsAddedManually = false,
+                                    EventTypeCode = "AWNC",
+                                    Notes = notes,
+                                });
+                            }
+                        }
+
+
+                        else if (line.Changed)  
                         {
                             var currentContextTag = line.CurrentContextTag ?? "";
                             if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventWBLKConst)
@@ -808,20 +828,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                     ObjectTableName = "GLAccount",
                                     IsAddedManually = false,
                                     EventTypeCode = "AWDA",
-                                    Notes = notes,
-                                });
-                            }
-                            else if (currentContextTag.ToString() == GLAccountWithholdingTaxUpdateService.RaiseEventAWNCConst)
-                            {
-                                String notes = TranslateTextsClass.Translate("Accounting.O.WithholdingLineCreated", entityPM.Tenant).Replace(":", line.LineNumber + ":");
-                                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                                {
-                                    EntityId = entityPM.Id,
-                                    Tenant = entityPM.Tenant,
-                                    UserId = contact.Id,
-                                    ObjectTableName = "GLAccount",
-                                    IsAddedManually = false,
-                                    EventTypeCode = "AWNC",
                                     Notes = notes,
                                 });
                             }

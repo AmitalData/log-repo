@@ -167,7 +167,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                                      PackageCodeSearchField = a.PackageCodeSearchField,
                                                      IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
-
+                                                     MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -336,6 +336,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   PackageCodeSearchField = a.PackageCodeSearchField,
                                                   IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                                   IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
+                                                  MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
@@ -503,6 +504,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         StockTypeCode = a.StockTypeCode,
                         IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                         IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
+                        MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -628,6 +630,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     IsINTTRAStockPrepaid = entity.IsINTTRAStockPrepaid,
                     PackageCodeSearchField = entity.PackageCodeSearchField,
                     IsINTTRAOnlyDemo = entity.IsINTTRAOnlyDemo,
+                    MainAdditionalPackageApplied = entity.MainAdditionalPackageApplied,
                 };
             }
 
@@ -752,6 +755,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                        PackageCodeSearchField = a.PackageCodeSearchField,
                        IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
+                       MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                    };
         }
 
@@ -956,6 +960,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                              PackageCodeSearchField = a.PackageCodeSearchField,
                                              IsINTTRAOnlyDemo = a.IsINTTRAOnlyDemo,
+                                             MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
                                          }).FirstOrDefault();
 
             return tenant;

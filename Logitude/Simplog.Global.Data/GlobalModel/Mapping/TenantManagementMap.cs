@@ -29,8 +29,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapEAWBContractId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BluesnapEAWBSContractId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BluesnapInttraStockContractId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.BluesnapOneTimeContract).HasMaxLength(40).IsUnicode(false); 
-           
+            this.Property(t => t.BluesnapOneTimeContract).HasMaxLength(40).IsUnicode(false);            
             this.Property(t => t.AWBMessagesCCSTypeCode).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.PIMA).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.TenantTypeCode).HasMaxLength(3).IsUnicode(false);
@@ -106,7 +105,6 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.BluesnapEAWBSContractId).HasColumnName("BluesnapEAWBSContractId");
             this.Property(t => t.BluesnapInttraStockContractId).HasColumnName("BluesnapInttraStockContractId");            
             this.Property(t => t.BluesnapOneTimeContract).HasColumnName("BluesnapOneTimeContract");
-
             this.Property(t => t.AWBMessagesCCSTypeCode).HasColumnName("AWBMessagesCCSTypeCode");
             this.Property(t => t.PIMA).HasColumnName("PIMA");
             this.Property(t => t.IsEAWBOnlyDemo).HasColumnName("IsEAWBOnlyDemo");
@@ -154,7 +152,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.IsINTTRAStockPrepaid).HasColumnName("IsINTTRAStockPrepaid");
             this.Property(t => t.PackageCodeSearchField).HasColumnName("PackageCodeSearchField");
             this.Property(t => t.IsINTTRAOnlyDemo).HasColumnName("IsINTTRAOnlyDemo");
-
+            this.Property(t => t.MainAdditionalPackageApplied).HasColumnName("MainAdditionalPackageApplied");
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
