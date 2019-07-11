@@ -42,6 +42,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     private FileName: string;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsFirstDraft = false;
+    public SelectedVersionNumber: number;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;       
@@ -54,6 +55,7 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.TariffDomainService = new TariffDomainService();
 
         this.CurrentVersion = args['CurrentVersion'];
+        this.SelectedVersionNumber = args['SelectedVersionNumber'];
 
         if (this.CurrentVersion != null) {
             this.IsDraftVersion = this.CurrentVersion.IsDraft;
@@ -92,19 +94,15 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         if (this.entityArgs.EditComponent != null) {
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.CurrentVersion.Version)[0];
-
-                    if (this.CurrentVersion == null) {
-                        // after creating new version
-                        this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.EntityPM.LastVersion)[0];
-                    }
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                    
 
                     if (this.CurrentVersion.IsDraft) {
+                        this.CurrentVersion = this.EntityPM.TariffVersions.filter(d => d.Version == this.CurrentVersion.Version)[0];                        
                         this.FillTariffLines(this.CurrentVersion.TariffLines);
                     }
 
                     else {
+                        this.CurrentVersion = this.EntityPM.ActiveVersions.filter(d => d.Version == this.SelectedVersionNumber)[0];                        
                         this.LoadTariffLines("currentVersion");
                     }
 
@@ -132,7 +130,6 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
     }
 
     StopAllFlags() {
-
         if (this.EntityPM.IsApprovingDraftVersion) {
             this.EntityPM.IsApprovingDraftVersion = false;
         }
@@ -142,8 +139,12 @@ export class VersionTabComponent extends BaseComponent implements OnDestroy {
         this.isCopyButtonClicked = false;
     }
 
-    ngOnDestroy() {
+    KillEvents() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
+    }
+
+    ngOnDestroy() {
+        this.KillEvents();
     }
     
     private loadedTariffLines: TariffLinePM[];
