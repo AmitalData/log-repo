@@ -291,9 +291,10 @@ namespace Logitude.Customs.BL.BL
         {
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
             //Set TotalInvoiceAmountInUSD - sum field InvoiceAmountInUSD from all SupplierInvoices
-            myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD = 0;
+            
             if (declarationPM.SupplierInvoices != null && declarationPM.SupplierInvoices.Count() > 0)
             {
+                myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD = 0;
                 myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD = declarationPM.SupplierInvoices.Sum(r => r.InvoiceAmountInUSD);
             }
         }
