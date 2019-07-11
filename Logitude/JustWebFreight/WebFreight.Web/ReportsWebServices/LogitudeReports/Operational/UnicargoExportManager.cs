@@ -110,9 +110,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement
 
 
 
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
-            List<ShipmentDataView> shipmentsView = shipmentRepository.GetShipmentViewsByTenant(tenant).ToList();
-            shipmentsView.ForEach(item =>
+            //ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            //List<ShipmentDataView> shipmentsView = shipmentRepository.GetShipmentViewsByTenant(tenant).ToList();
+            shipments.ForEach(item =>
             {
                 UnicargoExport Shipment = new UnicargoExport();
 
