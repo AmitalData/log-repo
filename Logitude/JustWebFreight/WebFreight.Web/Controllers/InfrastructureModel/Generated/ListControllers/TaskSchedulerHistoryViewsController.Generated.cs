@@ -308,8 +308,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 			  }
 			  	if(!queryOperations.GetAll)
 				 {
-
-                  entityLists = entityLists.Skip(skippedEntities);
+                 
+                    entityLists = entityLists.Skip(skippedEntities);
 				  entityLists = entityLists.Take(queryOperations.PageSize);
 
 				}

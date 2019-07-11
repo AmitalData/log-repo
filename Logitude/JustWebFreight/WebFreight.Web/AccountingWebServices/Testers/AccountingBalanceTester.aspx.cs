@@ -1442,14 +1442,14 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 {
                     var accountingContext = AccountingContext.GetContext(tenant);
                     IYearTransferService yearTransferService = new YearTransferService();
-                    journal = yearTransferService.CancelJournal(accountingContext, YY, tenant);
+                    journal = yearTransferService.CancelYear(accountingContext, YY, tenant);
                     if (journal != null)
                     {
                         //var parser = new JournalApproveParser(journal, false,
                         //AccountingValidationContextServiceProvider.NewJournalValidatorContextByAContext(accountingContext, journal)
                         //);
                         //parser.ParseIt();
-                        bool toComplete = false;
+                        bool toComplete = true;
                         if (!toComplete)
                         {
                             throw new Exception("ddd");

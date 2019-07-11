@@ -122,7 +122,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 this.InitializeComponent();
 
-                AirlineValidating.Validate(entityPM);
 
                 foreach (CardExternalCodeByCurrencyPM item in entityPM.CardExternalCodeByCurrencies)
                 {
@@ -135,7 +134,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 AirlineMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
-                 
+                AirlineValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
+
                 cardRepository.Add(entityCard);
                 entityRepository.Add(entityPOCO);
                 entityRepository.SubmitChanges();
@@ -173,7 +173,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                 this.InitializeComponent();
 
-                AirlineValidating.Validate(entityPM);
                 if (mapComposition)
                 {
                     this.SetChangeSet(this.entityPM.CardExternalCodeByCurrencies);
@@ -206,6 +205,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 AirlineMapping.MapEntity(entityPM, entityPOCO, isNewEntity, entityCard);
+                AirlineValidating.Validate(entityPM, this.entityCard, objectContext, isNewEntity);
 
                 cardRepository.Update(entityCard);
                 entityRepository.Update(entityPOCO);

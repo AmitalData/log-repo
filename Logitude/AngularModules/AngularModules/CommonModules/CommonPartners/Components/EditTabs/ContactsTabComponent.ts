@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ContactPM} from '../../../../Common/EntityPMs/ContactPM';
@@ -17,7 +17,7 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
     templateUrl: './ContactsTabComponent.html',
 })
 
-export class ContactsTabComponent {
+export class ContactsTabComponent implements OnDestroy {
     public ItemsSource: ContactItemClass[];
     public EntityPM: any = null;
     public EntityId: string = null;
@@ -54,25 +54,34 @@ export class ContactsTabComponent {
         });
     }
 
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
     private Listen() {
-        if (this.CurrentSession.CurrentEditComponent != null) {
-            this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+        if (this.entityArgs.EditComponent != null) {
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadData();
                 }
             });
 
-            this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.SetUIProperties();
                     this.LoadData();
                 }
             });
         }
     }
+
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
 
     public IsEditingEnabled: boolean = false;
     public IsBlockingUnifreightCustomer: boolean = false;

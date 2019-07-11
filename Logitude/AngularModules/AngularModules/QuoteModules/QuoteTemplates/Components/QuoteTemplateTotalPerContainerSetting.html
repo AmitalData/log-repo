@@ -91,7 +91,22 @@
                                                                                                         </td>
 
                                                                                                     </tr>
+
+                                                                                                    <tr style="height:5px;"><td style="height:5px" colspan="2"><div></div></td></tr>
+
+                                                                                                    <tr style="height:20px">
+                                                                                                        <td style="width:8px"></td>
+                                                                                                        <td>
+
+                                                                                                            <RadioButton [Name]="'TotalCurrency'" [IsChecked]="TotalPerContainersCurrencyType == 'MULTIPLE'" (Checked)="TotalPerContainersCurrencyType = 'MULTIPLE'" [Text]="'QuoteTemplate.S.ShowTotalSplitToMultipleCurrencies' | TextCodeTranslationPipe"></RadioButton>
+
+                                                                                                        </td>
+
+                                                                                                    </tr>
                                                                                                     <tr style="height:10px;"><td style="height:10px" colspan="2"><div></div></td></tr>
+
+
+
                                                                                                 </table>
                                                                                             </td>
                                                                                         </tr>

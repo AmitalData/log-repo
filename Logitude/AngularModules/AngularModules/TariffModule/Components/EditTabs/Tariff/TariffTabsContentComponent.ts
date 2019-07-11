@@ -179,8 +179,8 @@ export class TariffTabsContentComponent implements OnDestroy {
                         SessionLocator.DynamicLoader.Load(this.SelectedTabItem.ComponentPath, location.viewContainerRef).then(cmpRef => {
                             this.SelectedTabItem.IsTabLoaded = true;
 
-                            if (this.SelectedTabItem.VersionPM) {                                
-                                cmpRef.instance.Intialize({ CurrentVersion: this.SelectedTabItem.VersionPM });
+                            if (this.SelectedTabItem.VersionPM) {
+                                cmpRef.instance.Intialize({ CurrentVersion: this.SelectedTabItem.VersionPM, SelectedVersionNumber: this.SelectedTabItem.VersionPM.Version });
                             }
                         });
                     }

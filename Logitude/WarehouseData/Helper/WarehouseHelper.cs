@@ -308,7 +308,8 @@ namespace WarehouseData.Helper
 
             TableClass objectFieldTable = tableLists.Where(d => d.TableName == "ObjectField").FirstOrDefault();
             TableClass tenantTable = tableLists.Where(d => d.TableName == "Tenant").FirstOrDefault();
-            string tenants = tenantTable.RefreshIds;
+            List<string> tenantNumbersLists = !string.IsNullOrEmpty(tenantTable.RefreshIds) ? tenantTable.RefreshIds.Replace("(", "").Replace(")", "").Replace("'", "").Split(',').ToList() : new List<string>();
+            string result = string.Empty;
             if (!string.IsNullOrEmpty(objectFieldTable.RefreshIds))
             {
                 var customObjectFields = new DataTable();
@@ -324,22 +325,33 @@ namespace WarehouseData.Helper
                     reader.Close();
                 }
 
-                var tenantLists = customObjectFields.AsEnumerable().GroupBy(row => row.Field<Int32>("Tenant").ToString()).Select(d => d.First().Field<string>("Tenant").ToString());
+                var tenantLists = customObjectFields.AsEnumerable().GroupBy(row => row.Field<Int32>("Tenant").ToString()).Select(d => d.First().Field<Int32>("Tenant").ToString());
                 if (tenantLists.Count() > 0)
                 {
-                    tenants = tenants.Replace(")", "");
+
                     foreach (var tenant in tenantLists)
                     {
-                        tenants += ("," + tenant);
+                        if (!tenantNumbersLists.Contains(tenant)) tenantNumbersLists.Add(tenant);
 
                     }
-                    tenants += ")";
+
                 }
 
             }
 
-            return tenants;
+            if (tenantNumbersLists.Count() > 0)
+            {
+                foreach (string item in tenantNumbersLists)
+                {
+                    result += item + ",";
+                }
 
+                result += "@";
+                result = result.Replace(",@", "");
+
+            }
+
+            return result;
         }
 
         #region CustomObjectField
@@ -363,14 +375,9 @@ namespace WarehouseData.Helper
             else
             {
                 DeleteRecordFromCustomObjectField(desconnectionString, tenantUpdated);
-
-                tenantUpdated = tenantUpdated.Replace("(", "").Replace(")", "").Replace("'", "");
                 foreach (string id in tenantUpdated.Split(','))
                 {
-                    if (!string.IsNullOrEmpty(id))
-                    {
-                        tenantLists.Add(Int32.Parse(id));
-                    }
+                    if (!string.IsNullOrEmpty(id)) tenantLists.Add(Int32.Parse(id));
                 }
 
             }
@@ -382,21 +389,25 @@ namespace WarehouseData.Helper
 
             if (!isIncrementDataWarehouse)
             {
-                string tableName = "dw_CustomObjectField";
+                string tableName = "dw_CustomObjectFields";
                 customFieldSql += "\n" + "If OBJECT_ID('" + tableName + "','U')  IS NOT NULL Begin  Drop Table " + tableName + " End \r\n";
                 customFieldSql += (" SELECT *  INTO " + tableName + " FROM #" + tableName + "Temp \r\n");
                 customFieldSql += (" If(OBJECT_ID('tempdb..#" + tableName + "Temp') Is Not Null) Begin  Drop Table #" + tableName + "Temp End \r\n\r\n");
+                customFieldSql += "  CREATE NONCLUSTERED INDEX [IX_" + tableName + "_" + "Tenant" + "] ON[dbo].[" + tableName + "]([" + "Tenant" + "])";
+                customFieldSql += "  CREATE NONCLUSTERED INDEX [IX_" + tableName + "_" + "ObjectTableName" + "] ON[dbo].[" + tableName + "]([" + "ObjectTableName" + "])";
+
             }
 
             ExecuteSql(customFieldSql, desconnectionString);
         }
+
 
         private  void DeleteRecordFromCustomObjectField(string desconnectionString, string tenantUpdated)
         {
             using (SqlConnection sourceConnection = new SqlConnection(desconnectionString))
             {
                 sourceConnection.Open();
-                string sql = "delete dw_CustomObjectField  where tenant in  (" + tenantUpdated + ")";
+                string sql = "delete dw_CustomObjectFields  where tenant in  (" + tenantUpdated + ")";
                 SqlCommand commandSourceData = new SqlCommand(sql, sourceConnection);
                 SqlDataReader reader = commandSourceData.ExecuteReader();
                 reader.Close();
@@ -430,7 +441,7 @@ namespace WarehouseData.Helper
 
                 if (!string.IsNullOrEmpty(tenantUpdated))
                 {
-                    sql += " and tenant in " + tenantUpdated;
+                    sql += " and tenant in (" + tenantUpdated + ")";
                 }
                 SqlCommand commandSourceData = new SqlCommand(sql, sourceConnection);
                 SqlDataReader reader = commandSourceData.ExecuteReader();
@@ -443,11 +454,9 @@ namespace WarehouseData.Helper
 
         private string CreateCustomObjectFieldsTempTable(string connectionString)
         {
-            string fieldName = "CustomFields  varchar(4000) ";
-
-            string tableName = "dw_CustomObjectField";
-
-            string cmd = "If(OBJECT_ID('tempdb..#" + tableName + "Temp') Is Not Null) Begin  Drop Table #" + tableName + "Temp End ; CREATE TABLE #" + tableName + "Temp (Tenant int not null,ObjectTableName varchar(100)," + fieldName + ");";
+            string tableName = "dw_CustomObjectFields";
+            string cmd = "If(OBJECT_ID('tempdb..#" + tableName + "Temp') Is Not Null) Begin  Drop Table #" + tableName + "Temp End ; CREATE TABLE #" + tableName + "Temp (Tenant int not null,ObjectTableName varchar(50),CustomFields  varchar(4000));";
+      
             return cmd;
         }
 
@@ -455,7 +464,7 @@ namespace WarehouseData.Helper
         {
             string result = "";
             string customFields = "";
-            string customObjectFieldTableName = isIncrementDataWarehouse ? "dw_CustomObjectField" : "#dw_CustomObjectFieldTemp";
+            string customObjectFieldTableName = isIncrementDataWarehouse ? "dw_CustomObjectFields" : "#dw_CustomObjectFieldsTemp";
             List<string> tablesAddedCustomField = new List<string>();
 
             var customObjectFields = from rowfield in customObjectFieldsTable.AsEnumerable()
@@ -466,6 +475,8 @@ namespace WarehouseData.Helper
 
             foreach (var customObjectFieldsGroup in customObjectFieldsGroups)
             {
+                
+
                 List<DataRow> fields = customObjectFieldsGroup.ToList();
                 string objectTableName = string.Empty;
                 foreach (DataRow row in fields)
@@ -474,6 +485,7 @@ namespace WarehouseData.Helper
                     string dataTypeCode = row["DataTypeCode"].ToString();
                     string objectTableId = row["ObjectTableId"].ToString();
 
+
                     var table = tableLists.Where(d => d.ObjectTableId == objectTableId).FirstOrDefault();
                     if (table != null)
                     {
@@ -481,11 +493,9 @@ namespace WarehouseData.Helper
                         tablesAddedCustomField.Add(objectTableName);
                     }
                     customFields += (fieldName + ":" + dataTypeCode + ",");
-
                 }
 
                 result += "insert into " + customObjectFieldTableName + " (Tenant, ObjectTableName , CustomFields) Values (" + tenant.ToString() + ", '" + objectTableName + "' , '" + customFields + "') \n";
-
             }
 
             foreach (string tableName in TableUsedCustomFields)
@@ -494,6 +504,7 @@ namespace WarehouseData.Helper
                 if (table == null)
                 {
                     result += "insert into " + customObjectFieldTableName + " (Tenant, ObjectTableName , CustomFields) Values (" + tenant.ToString() + ", '" + tableName + "' , null) \n";
+
                 }
             }
 
@@ -501,6 +512,9 @@ namespace WarehouseData.Helper
 
         }
         #endregion
+
+
+
 
 
 
@@ -555,8 +569,6 @@ namespace WarehouseData.Helper
                     i += 1;
                 }
                 result += "@CustomFields,";
-
-
                 result += "^";
                 result = result.Replace(",^", "");
                 sql = sql.Replace("@CursorCustomFieldsVariable", result);
@@ -577,9 +589,7 @@ namespace WarehouseData.Helper
                     result += "dw_Shipments.Field" + i + ",";
                     i += 1;
                 }
-
-                result += "dw_CustomObjectField.CustomFields,";
-
+                result += "dw_CustomObjectFields.CustomFields,";
 
                 result += "^";
                 result = result.Replace(",^", "");
@@ -599,7 +609,8 @@ namespace WarehouseData.Helper
                 result = string.Empty;
                 while (i <= CustomFieldsCount)
                 {
-                    result += "dbo.ResolveCustomFieldValue(@Field" + i + ",'Field"+ i + "' ,@CustomFields)" + (i < CustomFieldsCount ? "," : "");
+                    result += "dbo.ResolveCustomFieldValue(@Field" + i + ",'Field" + i + "' ,@CustomFields)" + (i < CustomFieldsCount ? "," : "");
+
                     i += 1;
                 }
 
@@ -638,10 +649,10 @@ namespace WarehouseData.Helper
                 while (i <= CustomFieldsCount)
                 {
                     result += "   declare @Field" + i + " as varchar(2000) \r\n";
+             
                     i += 1;
                 }
-
-                result += "   declare @CustomFields as varchar(2000) \r\n";
+                result += "   declare @CustomFields as varchar(4000) \r\n";
 
                 //DataTypeCode
                 sql = sql.Replace("--@[DeclareCustomFieldsVariable]", result);
@@ -652,6 +663,16 @@ namespace WarehouseData.Helper
         #endregion
 
         #endregion
+
+
+
+        public void RunOtherScripte(string connectionString, bool isIncrement = false)
+        {
+           
+            BuildCustomObjectFieldsTable(connectionString, isIncrement);
+          
+            RunSqlFunctions(connectionString);
+        }
 
 
         public void ExecuteScript(string forderName, string connectionString, string scriptName)
@@ -1010,7 +1031,8 @@ namespace WarehouseData.Helper
             }
 
             ExecuteScript("BuildWarehouse", destinationConnectionString, "BuildDateDimensionsTable");
-            RunSqlFunctions(destinationConnectionString);
+
+            RunOtherScripte(destinationConnectionString);
 
             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())
             {
@@ -1438,6 +1460,10 @@ namespace WarehouseData.Helper
 
                 }
             }
+
+
+            RunOtherScripte(destinationConnectionString, true);
+
 
             #region Update Dimensions Table
             foreach (TableClass table in tableNameLists.Where(d => d.HasDimensionTable).ToList())

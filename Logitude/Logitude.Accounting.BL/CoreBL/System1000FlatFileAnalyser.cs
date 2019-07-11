@@ -69,6 +69,21 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         }
                     }
+                    if (MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Count > 0)
+                    {
+                        string text = MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.FirstOrDefault();
+                        throw new Exception($"{text}");
+                    }
+                    if (MyResultLoadFlatFile.ErrorRowList.Count > 0)
+                    {
+                        string text = MyResultLoadFlatFile.ErrorRowList.FirstOrDefault();
+                        throw new Exception($"{text}");
+                    }
+                    if (MyResultLoadFlatFile.ExceptionVendorList.Count > 0)
+                    {
+                        string text = MyResultLoadFlatFile.ExceptionVendorList.FirstOrDefault();
+                        throw new Exception($"{text}");
+                    }
                     scope.Complete();
 
 
@@ -119,7 +134,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 string text_44 = TranslateTextsClassTranslate("System1000.O.NotFound", 0, useLocal);
                 string text_2 = TranslateTextsClassTranslate("System1000.O.VendorNo", 0, useLocal);
-                MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"{text_2} {vendorLineDTO.VendorCode} - GLAccount {text_44} ");
+                string text_acc = TranslateTextsClassTranslate("GLTransactionReport.O.GLAccountNo", 0, useLocal);
+                MyResultLoadFlatFile.ValidateVendorLineAgainstDBErrors.Add($"{text_2} {vendorLineDTO.VendorCode} - {text_acc} {text_44} ");
                 return;
             }
 
@@ -298,14 +314,14 @@ namespace Logitude.Accounting.BL.CoreBL
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.LocatedDeductionFile", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} {text_2} {text_44}");
+                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode}) {text_2} {text_44}");
                 }
                 if (vendorLine.LocatedVATNum.TrimStart('0') == "")
                 {
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsMissing", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.LocatedVATNumber", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} {text_2} {text_44}");
+                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode}) {text_2} {text_44}");
                 }
                 if (vendorLine.StartDateString == VendorLineDTO._EmptyDate && vendorLine.EndDateString != VendorLineDTO._EmptyDate)
 
@@ -313,7 +329,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.StartDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} {text_2} {text_44} ");
+                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode}) {text_2} {text_44} ");
                 }
                 if (vendorLine.StartDateString != VendorLineDTO._EmptyDate && vendorLine.EndDateString == VendorLineDTO._EmptyDate)
 
@@ -321,21 +337,21 @@ namespace Logitude.Accounting.BL.CoreBL
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.EndDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} {text_2} {text_44} ");
+                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode}) {text_2} {text_44} ");
                 }
                 if (vendorLine.DeductionPercentage != 100m && vendorLine.StartDateString == VendorLineDTO._EmptyDate) // 100m = no deduction  
                 {
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.StartDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count}  {text_2} {text_44} ");
+                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode})  {text_2} {text_44} ");
                 }
                 if (vendorLine.DeductionPercentage != 100m && vendorLine.EndDateString == VendorLineDTO._EmptyDate) // 100m = no deduction  
                 {
                     text = TranslateTextsClassTranslate("System1000.O.VendorLineNo", 0, useLocal);
                     text_44 = TranslateTextsClassTranslate("System1000.O.IsEmpty", 0, useLocal);
                     text_2 = TranslateTextsClassTranslate("System1000.O.EndDate", 0, useLocal);
-                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count}  {text_2} {text_44} ");
+                    this.AddErrorRow($"{vendorLine.RawLine} {text}{count} ({vendorLine.VendorCode})  {text_2} {text_44} ");
                 }
 
 

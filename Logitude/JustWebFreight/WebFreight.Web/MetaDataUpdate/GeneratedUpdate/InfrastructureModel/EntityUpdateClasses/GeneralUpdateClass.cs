@@ -539,6 +539,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_General_Occasion_OccasionType = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Occasion.OccasionType", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Occasion.OccasionType", NameTextCodeDefaultText = @"Occasion Types" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
 
+		   Feature GeneralFeature_General_Features_VATSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.VATSettings", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.VATSettings", NameTextCodeDefaultText = @"VAT Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes);
+
    
 	    
 		}

@@ -118,9 +118,9 @@ namespace Logitude.Accounting.BL.CoreBL
             if (fullAccountingSettings.GLAccounterCounterLength == null)
             {
                 var showLocal = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
-                var msg = TextCodesTranslator.TranslateText("FullAccountingSetting.O.CantChangeCounterLength", tenant, showLocal);
+                var msg = TextCodesTranslator.TranslateText("GLAccount.O.CounterIsntDefined", tenant, showLocal);
 
-                throw new ApplicationException("Counter is not defined, please check accounting settings");
+                throw new ApplicationException(msg);
             }
         }
 

@@ -174,6 +174,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.ITNumber = shipmentpm.ITNumber;
                 prealertDataProvider.ITDate = shipmentpm.ITDate;
                 prealertDataProvider.BookingConfirmationNumber = shipmentpm.BookingConfirmationNumber;
+                prealertDataProvider.IncotermCode = shipmentpm.IncotermCode;
 
                 if (shipmentpm.DocumentsClosingDate != null)
                 {

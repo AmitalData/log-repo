@@ -133,12 +133,28 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         quoteChargePM.CostMeasurementShortName = iMeasurement.ShortName;
                                         quoteChargePM.SaleMeasurementShortName = iMeasurement.ShortName;
                                     }
-                                }                                
+                                }
+
+
+                                if (!string.IsNullOrEmpty(chargesType.PayablesDefaultCurrencyId))
+                                {
+                                    quoteChargePM.CostCurrencyId = chargesType.PayablesDefaultCurrencyId;
+                                }
+                                else
+                                {
+                                    if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
+                                    {
+                                        quoteChargePM.CostCurrencyId = loggedTenant.FreightCurrencyId;
+                                    }
+
+                                    else
+                                    {
+                                        quoteChargePM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
+                                    }
+                                }
 
                                 if (chargesType.ChargesGroupCode == "FRT" || chargesType.ChargesGroupCode == "SCH")
                                 {
-                                    quoteChargePM.CostCurrencyId = loggedTenant.FreightCurrencyId;
-
                                     if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
                                     {
                                         quoteChargePM.CostExchangeRate = null;
@@ -157,8 +173,6 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                                 else
                                 {
-                                    quoteChargePM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
-
                                     if (string.IsNullOrEmpty(quoteChargePM.CostCurrencyId))
                                     {
                                         quoteChargePM.CostExchangeRate = null;
@@ -189,7 +203,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { quoteChargePM.CostQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { quoteChargePM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { quoteChargePM.CostQuantity = entityPM.GrossWeightInKG; break; }
-
+                                        case "VCBM": { quoteChargePM.CostQuantity = entityPM.VolumeInCBM; break; }
                                         default: { break; }
                                     }
 
@@ -205,6 +219,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { quoteChargePM.SaleQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { quoteChargePM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { quoteChargePM.SaleQuantity = entityPM.GrossWeightInKG; break; }
+                                        case "VCBM": { quoteChargePM.SaleQuantity = entityPM.VolumeInCBM; break; }
                                         default: { break; }
                                     }
 
@@ -299,10 +314,26 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     itemPM.SaleMeasurementShortName = iMeasurement.ShortName;
                                 }
 
-                                if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
+                                if (!string.IsNullOrEmpty(item.PayablesDefaultCurrencyId))
                                 {
-                                    itemPM.CostCurrencyId = loggedTenant.FreightCurrencyId;
+                                    itemPM.CostCurrencyId = item.PayablesDefaultCurrencyId;
+                                }
+                                else
+                                {
+                                    if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
+                                    {
+                                        itemPM.CostCurrencyId = loggedTenant.FreightCurrencyId;
+                                    }
 
+                                    else
+                                    {
+                                        itemPM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
+
+                                    }
+                                }
+
+                                if (item.ChargesGroupCode == "FRT" || item.ChargesGroupCode == "SCH")
+                                { 
                                     if (string.IsNullOrEmpty(itemPM.CostCurrencyId))
                                     {
                                         itemPM.CostExchangeRate = null;
@@ -321,13 +352,10 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                                 else
                                 {
-                                    itemPM.CostCurrencyId = loggedTenant.OtherChargesCurrencyId;
-
                                     if (string.IsNullOrEmpty(itemPM.CostCurrencyId))
                                     {
                                         itemPM.CostExchangeRate = null;
                                     }
-
                                     else if (itemPM.CostCurrencyId == loggedTenant.CurrencyId)
                                     {
                                         itemPM.CostExchangeRate = 1;
@@ -353,6 +381,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { itemPM.CostQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { itemPM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { itemPM.CostQuantity = entityPM.GrossWeightInKG; break; }
+                                        case "VCBM": { itemPM.CostQuantity = entityPM.VolumeInCBM; break; }
                                         default: { break; }
                                     }
 
@@ -368,6 +397,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "QTY": { itemPM.SaleQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { itemPM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { itemPM.SaleQuantity = entityPM.GrossWeightInKG; break; }
+                                        case "VCBM": { itemPM.SaleQuantity = entityPM.VolumeInCBM; break; }
                                         default: { break; }
                                     }
 
@@ -462,6 +492,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
                     case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
+                    case "VCBM": { myResult = entityPM.VolumeInCBM; break; }
+
                     default:
                         {
                             if (this.isFCLQuote)
@@ -509,6 +541,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
                     case "GWKG": { myResult = entityPM.GrossWeightInKG; break; }
+                    case "VCBM": { myResult = entityPM.VolumeInCBM; break; }
                     default:
                         {
                             if (this.isFCLQuote)
