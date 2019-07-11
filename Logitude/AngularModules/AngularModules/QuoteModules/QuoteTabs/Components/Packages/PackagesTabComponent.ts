@@ -878,11 +878,35 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
             this.EntityPM.Volume = AppTool.Round(newValue, 3);
+            this.ComputeVolume_CBM();
 
             if (this.EntityPM.QuotePackages.length == 0) {
                 this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
             }
         }
+    }
+
+    private ComputeVolume_CBM() {
+        var volume_CBM: number = null;
+
+        if (this.Volume != null) {
+            var factorOfConvert: number = 1;
+
+            if (!AppTool.IsNullOrEmpty(this.EntityPM.VolumeUnitCode)) {
+                switch (this.EntityPM.VolumeUnitCode.toUpperCase()) {
+                    case "CBM": { factorOfConvert = 1; break; }
+                    case "CBI": { factorOfConvert = 61024; break; }      // 1m³ = 61024in³
+                    case "CBF": { factorOfConvert = 35.315; break; }     // 1m³ = 35.315ft³
+                }
+            }
+
+            volume_CBM = this.Volume / factorOfConvert;
+        }
+
+        if (volume_CBM != null) {
+            volume_CBM = AppTool.Round(volume_CBM, 3);
+        }
+        this.EntityPM.VolumeInCBM = volume_CBM;
     }
 
     get VolumetricWeight() { return this.EntityPM.VolumetricWeight == null ? 0 : this.EntityPM.VolumetricWeight; }
