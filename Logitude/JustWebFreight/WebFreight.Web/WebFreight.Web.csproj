@@ -629,6 +629,7 @@
     <Content Include="bin\Microsoft.WindowsAzure.Diagnostics.dll" />
     <Content Include="bin\Simplog.Data.Global.dll" />
     <Content Include="bin\Simplog.Server.Infrastructure.dll" />
+    <Content Include="BluesnapPaymentLogitude.aspx" />
     <Content Include="ChampMessaging.aspx" />
     <Content Include="CustomWebServices\ClaimWebService.asmx" />
     <Content Include="ContainerPush.aspx" />
@@ -980,6 +981,13 @@
       <DependentUpon>AtlasRegistrationPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Azure\TopicQueues\SignalRHubMessageHandler.cs" />
+    <Compile Include="BluesnapPaymentLogitude.aspx.cs">
+      <DependentUpon>BluesnapPaymentLogitude.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BluesnapPaymentLogitude.aspx.designer.cs">
+      <DependentUpon>BluesnapPaymentLogitude.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ChampMessaging.aspx.cs">
       <DependentUpon>ChampMessaging.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2888,6 +2896,7 @@
     <Content Include="Monitoring\MonitorServiceLastUpdate.aspx" />
     <Content Include="Monitoring\MonitorTechnicalFNA.aspx" />
     <Content Include="Monitoring\ProfactMonitoring.aspx" />
+    <Content Include="Monitoring\INTTRAMonitoring.aspx" />
     <Content Include="Monitoring\QuickbooksOnlineQueue.aspx" />
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="QuickbooksOnline.aspx" />
@@ -4271,6 +4280,7 @@
     <Content Include="Silverlight.js" />
     <Content Include="Simplog.InfrastructureTestPage.aspx" />
     <Content Include="TaxesApprovalModel\TaxesApprovalWebService.asmx" />
+    <Content Include="BluesnapPaymentAmital.aspx" />
     <Content Include="TFSWebPage.aspx" />
     <Content Include="TrainingResourcesHTML\html\cancel-invoice.html" />
     <Content Include="TrainingResourcesHTML\html\change-measurements.html" />
@@ -5004,6 +5014,13 @@
     <Compile Include="Monitoring\ProfactMonitoring.aspx.designer.cs">
       <DependentUpon>ProfactMonitoring.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Monitoring\INTTRAMonitoring.aspx.cs">
+      <DependentUpon>INTTRAMonitoring.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\INTTRAMonitoring.aspx.designer.cs">
+      <DependentUpon>INTTRAMonitoring.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Monitoring\QuickbooksOnlineQueue.aspx.cs">
       <DependentUpon>QuickbooksOnlineQueue.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -5698,6 +5715,13 @@
     </Compile>
     <Compile Include="TestCompression.aspx.designer.cs">
       <DependentUpon>TestCompression.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BluesnapPaymentAmital.aspx.cs">
+      <DependentUpon>BluesnapPaymentAmital.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BluesnapPaymentAmital.aspx.designer.cs">
+      <DependentUpon>BluesnapPaymentAmital.aspx</DependentUpon>
     </Compile>
     <Compile Include="TFSWebPage.aspx.cs">
       <DependentUpon>TFSWebPage.aspx</DependentUpon>

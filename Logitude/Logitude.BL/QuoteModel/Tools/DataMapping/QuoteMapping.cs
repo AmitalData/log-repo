@@ -71,6 +71,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             entityPoco.ChargeableWeightUnitCode = entityPM.ChargeableWeightUnitCode;
             entityPoco.Volume = entityPM.Volume;
             entityPoco.VolumetricWeight = entityPM.VolumetricWeight;
+            entityPoco.VolumeInCBM = GetVolumeInCBM(entityPM.VolumeUnitCode, entityPM.Volume);
             entityPoco.GrossWeight = entityPM.GrossWeight;
             entityPoco.GrossWeightInKG = entityPM.GrossWeightInKG = GetWeightInKG(entityPM.GrossWeightUnitCode, entityPM.GrossWeight);
             entityPoco.GrossWeightPerTon = entityPM.GrossWeightPerTon = GetWeightInTon(entityPM.GrossWeightInKG);
@@ -343,6 +344,34 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
                 }
 
                 myResult = weight * factorOfConvert;
+            }
+
+            if (myResult != null)
+            {
+                myResult = MethodHelper.Round(myResult.Value, 3);
+            }
+
+            return myResult;
+        }
+        public static double? GetVolumeInCBM(string volumeCode, double? volume)
+        {
+            double? myResult = null;
+
+            if (volume != null)
+            {
+                double? factorOfConvert = 1;
+
+                if (!string.IsNullOrEmpty(volumeCode))
+                {
+                    switch (volumeCode.ToUpper())
+                    {
+                        case "CBM": { factorOfConvert = 1; break; }
+                        case "CBI": { factorOfConvert = 61024; break; }      // 1m³ = 61024in³
+                        case "CBF": { factorOfConvert = 35.315; break; }     // 1m³ = 35.315ft³
+                    }
+                }
+
+                myResult = volume / factorOfConvert;
             }
 
             if (myResult != null)

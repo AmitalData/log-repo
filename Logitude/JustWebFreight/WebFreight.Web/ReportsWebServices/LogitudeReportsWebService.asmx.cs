@@ -76,6 +76,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.Resolvers;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -13558,17 +13559,8 @@ namespace WebFreight.Web.ReportsWebServices
 
         private ContactPM GetLoggedContact(int tenant)
         {
-            //email
-            string email = "";
-            if (HttpContext.Current != null)
-                email = HttpContext.Current.User.Identity.Name;
-            else
-                email = "system@tenant" + tenant.ToString() + ".com";
-
-            //contact
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            ContactPM contactPM = contactQuery.GetContactByEmailOnly(email, tenant);
-            return contactPM;
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+            return loggedContact;
         }
     }
 
