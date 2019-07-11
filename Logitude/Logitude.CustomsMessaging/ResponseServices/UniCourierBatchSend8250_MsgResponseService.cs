@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Utils;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -89,25 +90,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DeclarationPM declarationPM = myDeclarationQueryService.GetSingle(itemPoco.DeclarationId, false, false);
                     if (declarationPM != null && !string.IsNullOrEmpty(declarationPM.DeclarationNumber))
                     {
-                        var requestParams8250 = new DeclarationStatusRequestParams()
-                        {
-                            Tenant = requestParams.Tenant,
-                            LoggingEnabled = true,
-                            LoggingObjectTableId = objectTableId,
-                            LoggingEntityId = itemPoco.DeclarationId,
-                            LoggingObjectTableId2 = objectTableIdCourierMaster,
-                            LoggingEntityId2 = requestParams.LoggingEntityId,
-                            InterfaceTypeCode = "8250",
-                            LoggingEntityReference = declarationPM.DeclarationNumber,
-                            LoggingUserId = requestParams.LoggingUserId,
-                            RequestVIA = SendRequestVIA.WebServiceBatch,
-                            DeclarationNumber = declarationPM.DeclarationNumber,
-                            DeclarationRadio = true,
-                        };
 
-                        SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams8250, false);
-                        LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
-                        mess.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
+                        using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
+                        {
+                            var requestParams8250 = new DeclarationStatusRequestParams()
+                            {
+                                Tenant = requestParams.Tenant,
+                                LoggingEnabled = true,
+                                LoggingObjectTableId = objectTableId,
+                                LoggingEntityId = itemPoco.DeclarationId,
+                                LoggingObjectTableId2 = objectTableIdCourierMaster,
+                                LoggingEntityId2 = requestParams.LoggingEntityId,
+                                InterfaceTypeCode = "8250",
+                                LoggingEntityReference = declarationPM.DeclarationNumber,
+                                LoggingUserId = requestParams.LoggingUserId,
+                                RequestVIA = SendRequestVIA.WebServiceBatch,
+                                DeclarationNumber = declarationPM.DeclarationNumber,
+                                DeclarationRadio = true,
+                            };
+
+                            SBQMessageService.CreateSheetSBQMessage<DeclarationStatusRequestParams>(requestParams8250, false);
+                            LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
+                            mess.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
+
+                            scopeNewCRS.Complete();
+                        }
                     }
 
                 }

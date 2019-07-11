@@ -14,6 +14,7 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -124,29 +125,36 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 try
                 {
-                    var requestParams2755 = new GenericRequestParams()
+                    using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                     {
-                        Tenant = requestParams.Tenant,
-                        //IsFakeResponse = true,
-                        //RequestName = requestName,
-                        //ResponseName = responseName,
-                        LoggingEnabled = true,
-                        LoggingObjectTableId = objectTableId,
-                        LoggingEntityId = itemPoco.DeclarationId,
-                        LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
-                        LoggingEntityId2 = objectTableIdCourierMaster,
-                        AppicationId = itemPoco.DeclarationId,
-                        InterfaceTypeCode = "2755",
-                        //LoggingEntityReference = declarationNumber,
-                        LoggingUserId = requestParams.LoggingUserId,
-                        RequestVIA = SendRequestVIA.WebServiceBatch,
-                        UnifreightListOnServerOnly = UnifreightListOnServerOnly_BankeId,
+                        var requestParams2755 = new GenericRequestParams()
+                        {
+                            Tenant = requestParams.Tenant,
+                            //IsFakeResponse = true,
+                            //RequestName = requestName,
+                            //ResponseName = responseName,
+                            LoggingEnabled = true,
+                            LoggingObjectTableId = objectTableId,
+                            LoggingEntityId = itemPoco.DeclarationId,
+                            LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
+                            LoggingEntityId2 = objectTableIdCourierMaster,
+                            AppicationId = itemPoco.DeclarationId,
+                            InterfaceTypeCode = "2755",
+                            //LoggingEntityReference = declarationNumber,
+                            LoggingUserId = requestParams.LoggingUserId,
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
+                            UnifreightListOnServerOnly = UnifreightListOnServerOnly_BankeId,
 
-                    };
+                        };
 
-                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
-                    LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
-                    mess.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
+                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                        LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
+                        mess.AppendLine($" CreateSheetSBQMessage({itemPoco.DeclarationId})");
+
+                        scopeNewCRS.Complete();
+                    }
+                    
+
                     realUpdatedList.Add(itemPoco.DeclarationId);
 
                 }
