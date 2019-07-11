@@ -408,7 +408,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
             IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
             const int MaxTotal = 99001;
+
             query2 = OpenReconciliationFilter(AccountId, query2, MaxTotal);
+
             DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
             query2 = query2
                 .Where(rec => rec.CreateDate <= maxCreateDate)
@@ -420,7 +422,26 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             var mylist = query2.ToList();
             return mylist;
         }
-        
+        public List<LedgerTransactionList> GetReconciliationFilterList(QueryOperations queryOperations, GenericCallBack callback,
+            string AccountId,
+            int tenant)
+        {
+            IQueryable<LedgerTransactionList> query2 = BasicListFilter(queryOperations, tenant);
+            const int MaxTotal = 99001;
+
+            query2 = ReconciliationFilter(AccountId, query2);
+
+            DateTime maxCreateDate = DateTime.Parse(callback.MaxValueAsString);
+            query2 = query2
+                .Where(rec => rec.CreateDate <= maxCreateDate)
+                .Take(callback.TotalRecord);
+            var skipped = (queryOperations.PageIndex - 1);// * queryOperations.PageSize;
+            query2 = query2
+                .Skip(skipped)
+                .Take(queryOperations.PageSize);
+            var mylist = query2.ToList();
+            return mylist;
+        }
 
         private IQueryable<LedgerTransactionList> BasicListFilter(QueryOperations queryOperations, int tenant)
         {
