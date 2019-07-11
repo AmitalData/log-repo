@@ -83,7 +83,7 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
         this._entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             var logWindow = new LogitudeWindow();
             logWindow.IsFillScreenHeight = true;
-            logWindow.Width = 900;
+            logWindow.Width = 1000;
             logWindow.Title = "Price Check";
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });      
@@ -313,17 +313,51 @@ export class TariffModuleWorkspaceComponent implements OnInit, OnDestroy {
         this.CurrentSession.StartBusyIndicator("Generating...");
         this.tariffDomainService.GenerateTariffsFromExcel(filter).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-                //this.batchEntity = response.Result;
+                this.batchEntity = response.Result;
 
-                //if (this.batchEntity != null) {
-                //    this.timer = setInterval(() => { this.GetBTE(); }, this.timerInterval);
-                //}
-                this.CurrentSession.StopBusyIndicator();
+                if (this.batchEntity != null) {
+                    this.CurrentSession.StartBusyIndicator("Uploading File...");
+                    this.CheckBatchTaskExecution(this.batchEntity.Id);
+                }
+
+                //this.CurrentSession.StopBusyIndicator();
             }
             else {
                 this.CurrentSession.StopBusyIndicator();
                 var window = new MessageWindow();
                 window.Show(response.ErrorsArray[0]);
+            }
+        });
+    }
+
+    CheckBatchTaskExecution(BatchTaskExecutionId: string) {
+        var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+        iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var list: BatchTaskExecutionList = myResponse.Result;
+
+                if (list.StatusCode == "D") {
+                    this.CurrentSession.StopBusyIndicator();
+
+                    var window = new MessageWindow();
+                    window.Show("File uploaded successfully");
+                }
+
+                else if (list.StatusCode == "F") {
+                    this.CurrentSession.StopBusyIndicator();
+                    var window = new MessageWindow();
+                    window.Show("There was an error uploading excel file. Please try again later");
+                }
+
+                else {
+                    this.CheckBatchTaskExecution(BatchTaskExecutionId);
+                }
+            }
+
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                var window = new MessageWindow();
+                window.Show(myResponse.ErrorsArray[0]);
             }
         });
     }

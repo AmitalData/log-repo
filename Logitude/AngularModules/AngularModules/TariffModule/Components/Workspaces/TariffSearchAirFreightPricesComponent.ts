@@ -85,6 +85,20 @@ export class TariffSearchAirFreightPricesComponent extends BaseComponent {
         }
     }
 
+
+
+
+    private grossWeight: number;
+    get GrossWeight() {
+        return this.grossWeight;
+    }
+    set GrossWeight(value: number) {
+        if (this.grossWeight != value) {
+            this.grossWeight = value;
+            this.SetUIProperties();
+        }
+    }
+
     SearchButtonClicked() {
         this.ValidationErrorsList = [];
         if (AppTool.IsNullOrEmpty(this.OriginPortId)) {
