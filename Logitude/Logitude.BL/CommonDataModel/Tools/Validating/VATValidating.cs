@@ -137,6 +137,10 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
         {
             if (!string.IsNullOrEmpty(entityPM.VatNumber))
             {
+                bool isValidated = false;
+                string ExceptionMessage = "";
+                Regex vatFormatRegex;
+
                 if (myTenant.VatFormatTypeCode != "NOF")
                 {
                     int tenant = entityPM.Tenant;
@@ -145,25 +149,8 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
                     if (myTenant.VatFormatTypeCode == "FAC")
                     {
-                        Regex vatFormatRegex;
+                        isValidated = true;
 
-                        if (myTenant.IsNumeric)
-                        {
-                            vatFormatRegex = new Regex("^[0-9]*$");
-
-                            if (!vatFormatRegex.IsMatch(entityPM.VatNumber))
-                            {
-                                throw new ApplicationException("VAT Number must be Numeric");
-                            }
-                        }
-
-                        if (myTenant.VatSize != null && myTenant.VatSize > 0)
-                        {
-                            if (myTenant.VatSize != entityPM.VatNumber.Length)
-                            {
-                                throw new ApplicationException("VAT Number size must be " + myTenant.VatSize);
-                            }
-                        }
                     }
 
                     else if (myTenant.VatFormatTypeCode == "FSC")
@@ -172,45 +159,55 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                         {
                             if (myTenant.VatFormatCountryId == entityPM.CountryId)
                             {
-                                Regex vatFormatRegex;
-
-                                if (myTenant.IsNumeric)
-                                {
-                                    vatFormatRegex = new Regex("^[0-9]*$");
-
-                                    if (!vatFormatRegex.IsMatch(entityPM.VatNumber))
-                                    {
-                                        throw new ApplicationException("VAT Number must be Numeric for " + entityCountryName);
-                                    }
-                                }
-
-                                if (myTenant.VatSize != null && myTenant.VatSize > 0)
-                                {
-                                    if (myTenant.VatSize != entityPM.VatNumber.Length)
-                                    {
-                                        throw new ApplicationException("VAT Number size must be " + myTenant.VatSize + " for " + entityCountryName);
-                                    }
-                                }
+                                isValidated = true;
                             }
                         }
                     }
 
-                    if (myTenant.CheckDigitControlAlgorithmCode == "LUHN")
+                    if (isValidated)
                     {
-                        entityPM.VatNumber = entityPM.VatNumber.Trim();
-
-                        string numberWithoutCheckDigit = entityPM.VatNumber.Substring(0, entityPM.VatNumber.Length - 1);
-
-                        string checkDigit = MethodHelper.CalculateLuhnAlgorithm(numberWithoutCheckDigit).ToString();
-                        string lastNumber = entityPM.VatNumber.LastOrDefault().ToString();
-
-                        if (checkDigit != lastNumber)
+                        if (myTenant.IsNumeric)
                         {
-                            throw new ApplicationException("Luhn Algorithm: Invalid VAT Number");
+                            vatFormatRegex = new Regex("^[0-9]*$");
+
+                            if (!vatFormatRegex.IsMatch(entityPM.VatNumber))
+                            {
+                                ExceptionMessage = myTenant.VatFormatTypeCode == "FAC" ? "VAT Number must be Numeric" : "VAT Number must be Numeric for " + entityCountryName;
+                                throw new ApplicationException(ExceptionMessage);
+                            }
                         }
+
+                        if (myTenant.VatSize != null && myTenant.VatSize > 0)
+                        {
+                            if (myTenant.VatSize != entityPM.VatNumber.Length)
+                            {
+                                ExceptionMessage = myTenant.VatFormatTypeCode == "FAC" ? "VAT Number size must be " + myTenant.VatSize : "VAT Number size must be " + myTenant.VatSize + " for " + entityCountryName;
+                                throw new ApplicationException(ExceptionMessage);
+                            }
+                        }
+
+                        if (myTenant.CheckDigitControlAlgorithmCode == "LUHN")
+                        {
+                            entityPM.VatNumber = entityPM.VatNumber.Trim();
+
+                            string numberWithoutCheckDigit = entityPM.VatNumber.Substring(0, entityPM.VatNumber.Length - 1);
+
+                            string checkDigit = MethodHelper.CalculateLuhnAlgorithm(numberWithoutCheckDigit).ToString();
+                            string lastNumber = entityPM.VatNumber.LastOrDefault().ToString();
+
+                            if (checkDigit != lastNumber)
+                            {
+                                throw new ApplicationException("Luhn Algorithm: Invalid VAT Number");
+                            }
+                        }
+
+
                     }
+
+
                 }
             }
+
         }
     }
 }
