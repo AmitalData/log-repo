@@ -913,12 +913,6 @@ insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,Is
 declare @Fact_ShipmentsConsolidatorNewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsConsolidatorNewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsConsolidatorNewId,0,'Fact_Shipments','[Consolidator]','Consolidator','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false')  
-declare @Fact_ShipmentsCutoffDateNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ShipmentsCutoffDateNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,Category2,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsCutoffDateNewId,0,'Fact_Shipments','[Cutoff Date]','Cutoff Date','DateTime','false',0,0,'false','false','true','Operational ','Dates','false','false','false')  
-declare @Fact_ShipmentsConsolidatorNewId varchar(15)
-execute usp_GetNextTableIdValue @Fact_ShipmentsConsolidatorNewId OUTPUT,'DWObjectField' 
-insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,DimensionTableCode,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsConsolidatorNewId,0,'Fact_Shipments','[Consolidator]','Consolidator','Dimension','false',0,0,'DIM_Partners','false','false','true','Partners','false','false','false')  
 declare @Fact_ShipmentsConsolidatorRef1NewId varchar(15)
 execute usp_GetNextTableIdValue @Fact_ShipmentsConsolidatorRef1NewId OUTPUT,'DWObjectField' 
 insert into DWObjectFields(Id,Tenant,DWObjectTableCode,Code,Name,DataTypeCode,IsRequired,MinLength,MaxLength,IsPrimaryKey,IsMeasurement,DisplayInQueryBuilder,Category1,HideTree,CannotFilter,IsCustom) Values(@Fact_ShipmentsConsolidatorRef1NewId,0,'Fact_Shipments','[Consolidator Ref1]','Consolidator Ref1','Text','false',0,50,'false','false','true','References ','false','false','false')  
