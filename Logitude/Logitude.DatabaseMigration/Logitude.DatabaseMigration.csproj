@@ -1201,6 +1201,10 @@
     <Compile Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.Designer.cs">
       <DependentUpon>201907010918213_WithholdingTaxDeductionTypeMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907060950563_AddVolumeInCBMToQuote_Maheera.cs" />
+    <Compile Include="Migrations\201907060950563_AddVolumeInCBMToQuote_Maheera.Designer.cs">
+      <DependentUpon>201907060950563_AddVolumeInCBMToQuote_Maheera.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201907040809015_AddApplyVATSettingsForAllPartners_Samar.cs" />
     <Compile Include="Migrations\201907040809015_AddApplyVATSettingsForAllPartners_Samar.Designer.cs">
       <DependentUpon>201907040809015_AddApplyVATSettingsForAllPartners_Samar.cs</DependentUpon>
@@ -2079,6 +2083,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907010918213_WithholdingTaxDeductionTypeMigration.resx">
       <DependentUpon>201907010918213_WithholdingTaxDeductionTypeMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907060950563_AddVolumeInCBMToQuote_Maheera.resx">
+      <DependentUpon>201907060950563_AddVolumeInCBMToQuote_Maheera.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907040809015_AddApplyVATSettingsForAllPartners_Samar.resx">
       <DependentUpon>201907040809015_AddApplyVATSettingsForAllPartners_Samar.cs</DependentUpon>

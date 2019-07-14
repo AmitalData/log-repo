@@ -182,5 +182,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
         public bool IsINTTRAOnlyDemo { get; set; }
 
+        public bool MainAdditionalPackageApplied { get; set; }
+
     }
 }
