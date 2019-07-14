@@ -942,7 +942,7 @@ export class CertificateTicketListItem extends BaseComponent {
         this.parent.SelectedItem = this;
         this.parent.IsVisible = false;
         this.parent.selecteCertificate = this.ticket;
-        this.parent.activeItem = item;
+        this.parent.activeItem = this;
 
         this.parent.SelectedItemsCountText = null;
         this.parent.SelectedItemsCount = 0;
@@ -984,10 +984,11 @@ export class CertificateTicketListItem extends BaseComponent {
             logWindow.WindowArgs = windowArgs;
             logWindow.ComponentLoaded.subscribe(s => {
                 logWindow.WindowClosed.subscribe($event => {
-                    this.ticket = s.certificateTicke;
+                   
                     if ($event == "ok") {
+                        this.ticket = s.certificateTicke;
                         this.ReloadCertificates($event);
-                        this.parent.CD.reattach();
+                       // this.parent.CD.reattach();
                         //  this.parent.RefreshEntity();
                     } 
                 });
@@ -1000,7 +1001,7 @@ export class CertificateTicketListItem extends BaseComponent {
             //      //  this.parent.RefreshEntity();
             //    }
             //});
-            this.parent.CD.detach();
+         //   this.parent.CD.detach();
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Certificate/CreateEditTicketComponent');
                     //}
 
