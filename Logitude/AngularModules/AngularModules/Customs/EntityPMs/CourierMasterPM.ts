@@ -219,6 +219,21 @@ export class CourierMasterPM {
     public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
        
 	 
+    private integratorCode: string;
+    public get IntegratorCode() { return this.integratorCode; }
+    public set IntegratorCode(newValue: string) { if (this.integratorCode != newValue) { this.integratorCode = newValue; this.MarkAsDirty("IntegratorCode"); } }
+       
+	 
+    private integratorName: string;
+    public get IntegratorName() { return this.integratorName; }
+    public set IntegratorName(newValue: string) { if (this.integratorName != newValue) { this.integratorName = newValue; this.MarkAsDirty("IntegratorName"); } }
+       
+	 
+    private integratorNumber: string;
+    public get IntegratorNumber() { return this.integratorNumber; }
+    public set IntegratorNumber(newValue: string) { if (this.integratorNumber != newValue) { this.integratorNumber = newValue; this.MarkAsDirty("IntegratorNumber"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

@@ -66,7 +66,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
         public string BuildComm2Maman(string declarationId, int tenant, string messageToMaman)
         {
-            using (var scop = TransactionFactory.GetTransaction())
+            //using (var scop = TransactionFactory.GetTransaction())
             {
                 byte[] bytearray = Encoding.UTF8.GetBytes(messageToMaman);
 
@@ -77,7 +77,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 var webAPISendMessage2MamanService = new WebAPISendMessage2MasofService();
                 webAPISendMessage2MamanService.BuildCommunicationLog(bytearray, tenant, declarationId, CustomsPartnerFtpDetails.InterfaceName_ECMMNTHR_REQUEST, CustomsPartnerFtpDetails.PartnerCode_Mamam);
 
-                scop.Complete();
+                //scop.Complete();
                 //output  ftp://192.168.10.88/FTP_MAMAN/  
             }
             return "המסר לממן נבנה בהצלחה וישלח בתהליך רקע ";

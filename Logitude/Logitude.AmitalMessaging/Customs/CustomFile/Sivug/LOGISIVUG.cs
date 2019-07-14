@@ -149,6 +149,8 @@
 
         private INVOICEITEMS[] iNVOICEITEMSField;
 
+        private EXPENSES[] eXPENSESField;
+
         /// <remarks/>
         public string INVOICELINENO
         {
@@ -292,6 +294,20 @@
                 this.iNVOICEITEMSField = value;
             }
         }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("EXPENSES")]
+        public EXPENSES[] EXPENSES
+        {
+            get
+            {
+                return this.eXPENSESField;
+            }
+            set
+            {
+                this.eXPENSESField = value;
+            }
+        }
     }
 
     /// <remarks/>
@@ -331,6 +347,10 @@
         private string uNIT_IDField;
 
         private string tAXEXEMPTCODEField;
+
+        private string statisticQuantityField;
+
+        private string statisticQuantityTypeField;
 
         private CERTIFICATES[] cERTIFICATESField;
 
@@ -517,6 +537,32 @@
         }
 
         /// <remarks/>
+        public string StatisticQuantity
+        {
+            get
+            {
+                return this.statisticQuantityField;
+            }
+            set
+            {
+                this.statisticQuantityField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string StatisticQuantityType
+        {
+            get
+            {
+                return this.statisticQuantityTypeField;
+            }
+            set
+            {
+                this.statisticQuantityTypeField = value;
+            }
+        }
+
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("CERTIFICATES")]
         public CERTIFICATES[] CERTIFICATES
         {
@@ -654,6 +700,62 @@
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGISIVUG")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGISIVUG", IsNullable = false)]
+    public partial class EXPENSES
+    {
+
+        private string typeCodeField;
+
+        private string amountField;
+
+        private string currencyTypeCodeField;
+
+        /// <remarks/>
+        public string TypeCode
+        {
+            get
+            {
+                return this.typeCodeField;
+            }
+            set
+            {
+                this.typeCodeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string Amount
+        {
+            get
+            {
+                return this.amountField;
+            }
+            set
+            {
+                this.amountField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string CurrencyTypeCode
+        {
+            get
+            {
+                return this.currencyTypeCodeField;
+            }
+            set
+            {
+                this.currencyTypeCodeField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGISIVUG")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGISIVUG", IsNullable = false)]
     public partial class CustomsDocuments
     {
 
@@ -747,4 +849,5 @@
             }
         }
     }
+
 }

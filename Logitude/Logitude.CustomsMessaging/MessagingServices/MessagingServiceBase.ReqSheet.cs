@@ -37,6 +37,7 @@ using Logitude.Server.Tools.Utils;
 using Logitude.Customs.Def.Messaging.Customs;
 using System.Linq;
 using System.Configuration;
+using Logitude.Customs.BL.EntityUpdateServices;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -1224,7 +1225,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var customsRequestLength = memstream.Length;
             LogMessagingUtil.Instance.AppendLine("customsRequestLength  = " + customsRequestLength.ToString());
 
-            if (customsRequestLength > HugeFileSize)
+            if (customsRequestLength > (HugeFileSize * 1.2))
             {
                 this._HugeFile = true;
             }
@@ -1249,6 +1250,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             get
             {
+                return CustomsDocumentUpdateService.HugeFileSizeSendToDCA;
+                
                 var my9mb = 9000000;
                 return my9mb;
             }
@@ -1459,7 +1462,7 @@ Exception:" + ee.Message
 
         private void CreateNewDcaRequestDue9MBcustomsRequestLength()
         {
-            throw new NotImplementedException();
+            ///throw new NotImplementedException();
         }
 
 

@@ -49,7 +49,7 @@ using <#= pocosspacestring #>
 namespace <#= contextnamespacestring #>
 {
 
-    public interface I<#= contextname #> : IContext
+    public partial interface I<#= contextname #> : IContext
     {
 <#+
        #>   <#=""#>
@@ -186,7 +186,7 @@ using <#= pocosspacestring #>
 
 namespace <#= contextnamespacestring #>
 {
-   public class <#= contextname #>: DbContextBase, I<#= contextname #>
+   public partial class <#= contextname #>: DbContextBase, I<#= contextname #>
     {
         public <#= contextname #>()
         {

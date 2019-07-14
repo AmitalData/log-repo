@@ -30,16 +30,20 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
 
     public IsDisplayOnly: boolean = false;
     public DisplayOnlyMessage: string = "";
+    timerToken: any;
 
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.WeightValueFilterItems = new ApiQueryFilters();
-        this.WeightValueFilterItems.addAdditionalFilter("Code", "CC,CA,NC,PO,PP", null, null, "InListExact", false, false, false, "string", false, true);
+        this.WeightValueFilterItems.addAdditionalFilter("PaymentMethodCode", "CC,CA,NC,PO,PP", null, null, "InListExact", true, false, false, "string", false, true);
         this.UIProperties.SetEnabled("StorageSiteCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("IntegratorCode", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("IntegratorName", this.ObjectTableName, false);
         this.DisplayOnlyCheck();
         this.CarrierDependencyProperty1 = "TR";
         this.Listen();
+
     }
 
     private Listen() {
@@ -64,7 +68,7 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
                 SessionLocator.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.CurrentEditComponentId == SessionLocator.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "COGN") {
-
+                            this.SetScreenFieldsEditability();
                         }
                     }
                 })
@@ -193,6 +197,21 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get IntegratorCode() { return this.EntityPM.IntegratorCode; }
+    set IntegratorCode(value: string) {
+        if (this.EntityPM.IntegratorCode != value) {
+            this.EntityPM.IntegratorCode = value;
+        }
+    }
+
+    get IntegratorName() { return this.EntityPM.IntegratorName; }
+    set IntegratorName(value: string) {
+        if (this.EntityPM.IntegratorName != value) {
+            this.EntityPM.IntegratorName = value;
+
+        }
+    }
+
     AirLineIdLostFocus(value: any) {
 
         //this.CourierMasterService.GetIfCourierMasterExists(this.EntityPM.Id, this.EntityPM.AirlineId, this.EntityPM.HAWB, this.EntityPM.MAWB).subscribe(Result => {
@@ -227,9 +246,15 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
                     this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי אתר איחסון ברקע ";
+                    this.SetScreenFieldsEditability();
+
+                    this.timerToken = setTimeout(() => {
+                        this.SetScreenFieldsEditability();
+                        clearTimeout(this.timerToken);
+                        //this.CD.detectChanges();
+                    }, 900);
                 }
             }
-            this.SetScreenFieldsEditability();
         });
     }
 
@@ -242,11 +267,13 @@ export class CourierMasterGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("OriginPortCode", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("FlightNumber", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("DepartureDate", this.ObjectTableName, !this.IsDisplayOnly);
-        this.UIProperties.SetEnabled("EstimatedArrivalTimeOnly", this.ObjectTableName, !this.IsDisplayOnly);
+        //this.UIProperties.SetEnabled("EstimatedArrivalTimeOnly", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("EstimatedArrivalTimeOnly_timepicker", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("EstimatedArrivalDateOnly", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("PackageQuantity", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("GrossMassMeasure", this.ObjectTableName, !this.IsDisplayOnly);
         this.UIProperties.SetEnabled("WeightValueCode", this.ObjectTableName, !this.IsDisplayOnly);
+        this.UIProperties.SetEnabled("TruckerId", this.ObjectTableName, !this.IsDisplayOnly);
     }
 
     RefreshEntity() {

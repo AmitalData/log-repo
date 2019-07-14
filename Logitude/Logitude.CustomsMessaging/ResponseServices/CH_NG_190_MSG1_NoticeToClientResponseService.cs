@@ -23,7 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
-using UnifreightIIG.Common.MessageLib.PhysicalCheck;
+using UnifreightIIG.Common.MessageLib.PhysicalCheck190;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {

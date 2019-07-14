@@ -184,7 +184,7 @@ export class CustomSendOptionsComponent implements OnInit {
             
             let DDLHeight = 67;//    height: 22px; * 3 +30 
             let Extra =  22+1+1; //    height: 22px; +1 UP +1 DOWN 
-            if (itemRect.bottom + DDLHeight > this.getScreenHeight()) {//this.PaintTop = true                
+            if (itemRect.bottom + DDLHeight + Extra > this.getScreenHeight()) {//this.PaintTop = true                
                 document.getElementById(this._CustomSendOptionsComponentMenuId).style.top =
                     (itemRect.top - DDLHeight - Extra) + 'px';
             }

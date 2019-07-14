@@ -260,7 +260,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public const string LoadTestSendMessageToQueue = "LoadTestSendMessageToQueue";
         public const string WhileAnalayzeCostomResponseSendDEC = "WhileAnalayzeCostomResponseSendDEC";
-
+        public const int HugeFileSizeSendToDCA = 10 * 1000000;
+        public const int MaxFileSizeDONOTSendToDCA = 200 * 1000000;
 
         protected override void OnUpdating(CustomsDocumentPM entityPM)
         {
@@ -564,7 +565,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     requestParams.ForcePersonalSign = true;
                 }
                 var my9mb = 9000000;
-                var my3mb = 3000000;
+                //var my3mb = 3000000;
+                
+                
                 //if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > my3mb)
                 //{
                 //    SendDCA(requestParams);
@@ -580,9 +583,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         var lastGDMFILEVER = list.First(r => r.VERSION == lastVer);
                         //9558452
                         //7000000
-                        if (lastGDMFILEVER.FILESIZE > my3mb)
+                        if (lastGDMFILEVER.FILESIZE > HugeFileSizeSendToDCA)
                         {
-
+                            if (lastGDMFILEVER.FILESIZE > MaxFileSizeDONOTSendToDCA)
+                            {
+                                throw new Exception("המסמך מעל 200MB - לא תתאפשר שליחה");
+                            }
                             hugeFile = true;
 
                         }
@@ -590,7 +596,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     else
                     {
 
-                        if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > my3mb)
+                        if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > HugeFileSizeSendToDCA)
                         {
                             hugeFile = true;
                         }
@@ -630,7 +636,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.NoAvailableSignServer)
                     {
-
+                        
                     }
                     throw;
                 }

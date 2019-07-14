@@ -37,12 +37,13 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
         private SIVUG _SIVUG;
         private Logitude.Customs.Def.EntityPMs.SupplierInvoicePM _MySupplierInvoicePM;
         private ICustomContext _context;
-
+        private AmitalContext amitalContext;
         public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.Sivug.SivugUpsertService.Upsert()";
         private INVOICE _INVOICE;
         private DeclarationPM _MyDeclarationPM;
         private Stopwatch _Stopwatch;
         private string mode;
+        private string messageType;
         List<LineToSequenceNumeric> lineToSequence;
         private int? lastSequenceNumeric = 0;
 
@@ -626,6 +627,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             {
                 this._MySupplierInvoicePM.SupplierInvoiceItems = GetSupplierInvoiceItemPM(this._INVOICE);
             }
+            this._MySupplierInvoicePM.SupplierInvoiceModifications = GetSupplierInvoiceModificationsPM(this._INVOICE);
             if (this._MySupplierInvoicePM.ChangeSetOp != ChangeSetOperation.Update)
             {
                 this._MySupplierInvoicePM.Tenant = ResolvedTenant();
@@ -726,6 +728,18 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                     }
                 }
 
+                if (invoiceItem.StatisticQuantity != null && !String.IsNullOrWhiteSpace(invoiceItem.StatisticQuantity))
+                {
+                    if (decimal.TryParse(invoiceItem.StatisticQuantity, out decimal1))
+                    {
+                        SupplierInvoiceItemPM.StatisticQuantity = decimal1;
+                    }
+                    else
+                    {
+                        throw new BusinessErrorException("Error in parsing Statistic Quantity (" + invoiceItem.StatisticQuantity + ") into integer");
+                    }
+                }
+
                 if (invoiceItem.ITEMPRICE != null && !String.IsNullOrWhiteSpace(invoiceItem.ITEMPRICE))
                 {
                     if (decimal.TryParse(invoiceItem.ITEMPRICE, out decimal1))
@@ -764,6 +778,15 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 if(string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.InvoiceQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.UNIT_ID))
                 {
                     SupplierInvoiceItemPM.InvoiceQuantityType = TranslateMeasurmentUnit(invoiceItem.UNIT_ID);
+                }
+                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.StatisticQuantityType) && !string.IsNullOrWhiteSpace(invoiceItem.StatisticQuantityType))
+                {
+                    SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
+                }
+                
+                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.TaxExemptCode) && !string.IsNullOrWhiteSpace(invoiceItem.TAXEXEMPTCODE))
+                {
+                    SupplierInvoiceItemPM.TaxExemptCode = invoiceItem.TAXEXEMPTCODE; //TranslateTaxExemptCode(invoiceItem.TAXEXEMPTCODE);
                 }
 
                 if (invoiceItem.CERTIFICATES != null && invoiceItem.CERTIFICATES.Count() > 0)
@@ -814,6 +837,24 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
 
             return SupplierInvoiceItemPMList;
+        }
+
+        private string TranslateTaxExemptCode(string amitalTaxExemptCode)
+        {
+            if (String.IsNullOrWhiteSpace(amitalTaxExemptCode))
+            {
+                AppendLogLine("amitalTaxExemptCode is null");
+                return null;
+            }
+            var taxExemptCode = new ValidCustomsItemQueryService(ResolvedTenant());
+            var myTaxExemptCode = taxExemptCode.GetSingle(amitalTaxExemptCode,false,true);
+            if (myTaxExemptCode == null)
+            {
+                AppendLogLine("amitalTaxExemptCode = " + amitalTaxExemptCode + " could not translate to Logitude Id");
+                return null;
+            }
+            AppendLogLine("amitalTaxExemptCode = " + amitalTaxExemptCode + " Translated to " + myTaxExemptCode.Code);
+            return myTaxExemptCode.Code;
         }
 
         public CustomsMessaging.Common.RequestParams.Unifreight_L2US01RequestParam RequestParams { get; set; }
@@ -869,6 +910,132 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
 
             return supplierInvoiceItemCertificatePMList;
+        }
+
+
+        private List<SupplierInvoiceModificationPM> GetSupplierInvoiceModificationsPM(INVOICE iNVOICE) 
+        {
+            var SupplierInvoiceModificationPMList = new List<SupplierInvoiceModificationPM>();
+            if (this._MySupplierInvoicePM.SupplierInvoiceModifications != null && this._MySupplierInvoicePM.SupplierInvoiceModifications.Count() > 0)
+            {
+                SupplierInvoiceModificationPMList = this._MySupplierInvoicePM.SupplierInvoiceModifications;
+            }
+            
+            decimal decimal1 = 0;
+
+            {
+
+                if (iNVOICE.EXPENSES != null)
+                {
+
+                    foreach (var expense in iNVOICE.EXPENSES)
+                    {
+                        if (!String.IsNullOrWhiteSpace(expense.TypeCode))
+                        {
+                            if (SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault() != null)
+                            {
+                                if (!String.IsNullOrWhiteSpace(expense.CurrencyTypeCode))
+                                {
+                                    if (SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != expense.CurrencyTypeCode)
+                                    {
+                                        var expenseCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                                        var myexpenseCurrency = expenseCurrency.GetSingle(expense.CurrencyTypeCode);
+                                        if (myexpenseCurrency == null)
+                                        {
+                                            string expenseCurrencyCode = "";
+                                            expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
+
+                                            if (!string.IsNullOrWhiteSpace(expenseCurrencyCode) && SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != expenseCurrencyCode)
+                                            {
+                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode = expenseCurrencyCode;
+                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (!string.IsNullOrWhiteSpace(myexpenseCurrency.Code) && SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode != myexpenseCurrency.Code)
+                                            {
+                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().CurrencyTypeCode = myexpenseCurrency.Code;
+                                                SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (decimal.TryParse(expense.Amount, out decimal1))
+                                {
+                                    if (SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().Amount != decimal1)
+                                    {
+                                        SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().Amount = decimal1;
+                                        SupplierInvoiceModificationPMList.Where(d => d.TypeCode != expense.TypeCode).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Update;
+                                    }
+                                }
+                                else
+                                {
+                                    throw new BusinessErrorException("Error in parsing expense.Amount (" + expense.Amount + ") into decimal");
+                                }
+                            }
+                            else
+                            {
+                                var SupplierInvoiceModificationPM = new SupplierInvoiceModificationPM();
+                                if (decimal.TryParse(expense.Amount, out decimal1))
+                                {
+                                    SupplierInvoiceModificationPM.Amount = decimal1;
+                                }
+                                else
+                                {
+                                    throw new BusinessErrorException("Error in parsing expense.Amount (" + expense.Amount + ") into decimal");
+                                }
+                                if (!String.IsNullOrWhiteSpace(expense.CurrencyTypeCode))
+                                {
+                                    var expenseCurrency = new CurrencyTypeRepository(ResolvedTenant());
+                                    var myexpenseCurrency = expenseCurrency.GetSingle(expense.CurrencyTypeCode);
+                                    if (myexpenseCurrency == null)
+                                    {
+                                        string expenseCurrencyCode = "";
+                                        expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
+
+                                        if (!string.IsNullOrWhiteSpace(expenseCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = expenseCurrencyCode;
+                                    }
+                                    else
+                                    {
+                                        SupplierInvoiceModificationPM.CurrencyTypeCode = myexpenseCurrency.Code.ToString();
+                                    }
+                                }
+                                if (!String.IsNullOrWhiteSpace(expense.TypeCode))
+                                {
+                                    var modificationAndDiscountType = new ModificationAndDiscountTypeRepository(ResolvedTenant());
+                                    var mymodificationAndDiscountType = modificationAndDiscountType.GetSingle(expense.TypeCode);
+                                    if (mymodificationAndDiscountType != null && !String.IsNullOrWhiteSpace(mymodificationAndDiscountType.Code))
+                                    {
+                                        SupplierInvoiceModificationPM.TypeCode = mymodificationAndDiscountType.Code;
+                                    }
+                                }
+                                SupplierInvoiceModificationPM.DeclarationId = this._MySupplierInvoicePM.DeclarationId;
+                                if (this._MySupplierInvoicePM.InvoiceCounterKey > 0) SupplierInvoiceModificationPM.InvoiceCounterKey = this._MySupplierInvoicePM.InvoiceCounterKey;
+                                SupplierInvoiceModificationPM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
+                                SupplierInvoiceModificationPM.ChangeSetOp = ChangeSetOperation.Insert;
+
+                                SupplierInvoiceModificationPMList.Add(SupplierInvoiceModificationPM);
+                            }
+                        }
+                    }
+                }
+
+                return SupplierInvoiceModificationPMList;
+            }
+        }
+
+
+        public string GetTranslationL2P(string partnerID, string tableID, string localCode)
+        {
+            var rec = (from a in amitalContext.GTRTRANs
+                       where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
+                       select a).FirstOrDefault();
+            if (rec == null)
+            {
+                return null;
+            }
+            return rec.PARTNERCODE;
         }
 
         private string TranslateTermsOfSaleType(string amitalTermsOfSaleTypeCode)

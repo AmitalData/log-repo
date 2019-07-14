@@ -34,8 +34,19 @@ export class GatepassRequestComponent extends BaseComponent {
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _GatepassRequestPMService: GatepassRequestPMService = new GatepassRequestPMService()
 
-    UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' } ];
+    UpdateCodeList: UpdateCodeClass[] = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' } ];
     Loaded: boolean = false;
+    private _MyUpdateCodeClass: UpdateCodeClass;
+    public get MyUpdateCodeClass(): UpdateCodeClass {
+        return this._MyUpdateCodeClass;
+    }
+    public set MyUpdateCodeClass(value: UpdateCodeClass) {
+        this._MyUpdateCodeClass = value;
+        if (this._MyUpdateCodeClass != null) {
+            this.UpdateCode = this._MyUpdateCodeClass.EnumId.toString();
+        }
+    }
+    
     constructor() {
         super();
 
@@ -78,7 +89,7 @@ export class GatepassRequestComponent extends BaseComponent {
                 this.EntityPM.MasterCourierId = this.CourierMasterPM.Id;
                 this.EntityPM.Tenant = this.CourierMasterPM.Tenant;
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
-                this.UpdateCode = "1";
+                this.MyUpdateCodeClass = this.UpdateCodeList[0];//this.UpdateCode = "1";
             }
         });
     }
@@ -122,7 +133,7 @@ export class GatepassRequestComponent extends BaseComponent {
     public set GatepassRequestStatusName(newValue: string) {
         this._GatepassRequestStatusName = newValue;
     }
-
+    
     private _UpdateCode: string;
     public get UpdateCode() { return this._UpdateCode; }
     public set UpdateCode(newValue: string) {
@@ -168,47 +179,54 @@ export class GatepassRequestComponent extends BaseComponent {
     SetGatepassRequestStatus() {
         if (AppTool.IsNullOrEmpty(this.EntityPM.GatepassRequestStatus)) {
             this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
-            this.UpdateCode = "1";
+            this.MyUpdateCodeClass = this.UpdateCodeList[0] //this.UpdateCode = "1";
         }
 
         switch (this.EntityPM.GatepassRequestStatus) {
             case "2":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
-                this.UpdateCode = "1";
+                this.MyUpdateCodeClass = this.UpdateCodeList[0]//this.UpdateCode = "1";
                 this.GatepassRequestStatusName = "בקשת העברה שגויה";
                 break;
             case "4":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
-                this.UpdateCode = "1";
+                //this.UpdateCode = "1";
+                this.MyUpdateCodeClass = this.UpdateCodeList[0]
                 this.GatepassRequestStatusName = "בקשת העברה נדחתה";
                 break;
             case "7":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }];
-                this.UpdateCode = "1";
+                //this.UpdateCode = "1";
+                this.MyUpdateCodeClass = this.UpdateCodeList[0]
                 this.GatepassRequestStatusName = "בקשת ביטול העברה אושרה";
                 break;
             case "1":
                 this.UpdateCodeList = [{ 'EnumId': 2, 'Name': 'ביטול' }];
-                this.UpdateCode = "2";
+                //this.UpdateCode = "2";
+                this.MyUpdateCodeClass = this.UpdateCodeList[0]
                 this.GatepassRequestStatusName = "ממתין לאישור העברה";
                 break;
             case "3":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
-                this.UpdateCode = "1";
+                //this.UpdateCode = "1";
+                this.MyUpdateCodeClass = this.UpdateCodeList[0]
                 this.GatepassRequestStatusName = "בקשת העברה אושרה";
                 break;
             case "6":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
-                this.UpdateCode = "1";
+                //this.UpdateCode = "1";
+                this.MyUpdateCodeClass = this.UpdateCodeList[0]
                 this.GatepassRequestStatusName = "בקשת ביטול העברה שגויה";
                 break;
             case "8":
                 this.UpdateCodeList = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' }];
-                this.UpdateCode = "1";
+                //this.UpdateCode = "1";
+                this.MyUpdateCodeClass = this.UpdateCodeList[0]
                 this.GatepassRequestStatusName = "בקשת ביטול העברה נדחתה";
                 break;
             case "5":
                 this.UpdateCodeList = [];
+                this.MyUpdateCodeClass = null;
                 this.UpdateCode = "";
                 this.GatepassRequestStatusName = "ממתין לאישור ביטול העברה";
                 this.UIProperties.SetEnabled("UpdateCode", this.ObjectTableName, false);
@@ -301,3 +319,9 @@ export class GatepassRequestComponent extends BaseComponent {
         SessionLocator.CurrentSession.CloseCurrentWindow();
     }
 }
+
+export class UpdateCodeClass {
+    EnumId: number;
+    Name: string;
+}
+

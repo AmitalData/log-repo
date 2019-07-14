@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.Data.CustomFilters;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
@@ -35,6 +36,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<FreightPaymentMethod> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<FreightPaymentMethod> iQueryable)
         {
+            FreightPaymentMethodCustomFilters customFilters = new FreightPaymentMethodCustomFilters();
+            iQueryable = customFilters.GetFilteredQuery(queryOperations, iQueryable);
             return iQueryable;
         }
 	}

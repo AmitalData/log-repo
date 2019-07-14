@@ -93,6 +93,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual DeliverySiteType DeliverySiteType { get; set; }
         [Column("TruckerId")]
 	    public string TruckerId { get; set; }
+        [ForeignKey("Card")]
+        [Column("IntegratorCode")]
+	    public string IntegratorCode { get; set; }
+	      
+        public virtual Card Card { get; set; }
     }
 }
 	 

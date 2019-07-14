@@ -1,4 +1,4 @@
-﻿import {GenericRequestParams} from './GenericRequestParams';
+import {GenericRequestParams} from './GenericRequestParams';
 
 
 export class CreateClientRequestParams extends GenericRequestParams  {
@@ -70,6 +70,8 @@ export class CreateClientRequestParams extends GenericRequestParams  {
     public  FacilitationTypeCode: string;
 
     public ClientDrivingLicenses: ClientDrivingLicenseParams[];
+
+    public NationalIdentificationNumber: string;
 }
 
 export class ClientAdressParams {
