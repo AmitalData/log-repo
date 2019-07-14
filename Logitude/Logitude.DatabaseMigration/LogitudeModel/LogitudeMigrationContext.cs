@@ -1662,6 +1662,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ShipmentPackageHarmonize> ShipmentPackageHarmonizes { get; }
         public IDbSet<HarmonizeCode> HarmonizeCodes { get; }
 
+        public IDbSet<INTTRABookingStatus> INTTRABookingStatuses { get; }
+        public IDbSet<INTTRABookingTransStatus> INTTRABookingTransStatuses { get; }
+
         #endregion
 
         #region Invoice Context
@@ -4870,7 +4873,9 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DocumentFilingBackupSettingMap());
 
             modelBuilder.Configurations.Add(new INTTRADocumentTypeMap());
-           
+            modelBuilder.Configurations.Add(new INTTRABookingStatusMap());
+            modelBuilder.Configurations.Add(new INTTRABookingTransStatusMap());
+
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

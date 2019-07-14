@@ -16,6 +16,7 @@ export class ARInvoiceList {
 		BillToPartnerName: string;
 		BillToId: string;
 		BillToName: string;
+		BillToLocalName: string;
 		BillToCode: string;
 		BillToAddressId: string;
 		VatNumber: string;

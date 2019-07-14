@@ -2303,6 +2303,8 @@
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\AWBInformationDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\CustomsTransmissionsStatusDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\HarmonizeCodeDetails.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\INTTRABookingStatusDetails.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\INTTRABookingTransStatusDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\INTTRADocumentTypeDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\ManifestStatusDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\OBLTypeDetails.Generated.cs" />
@@ -2320,6 +2322,8 @@
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\AWBInformationStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\CustomsTransmissionsStatusStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\HarmonizeCodeStruct.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\INTTRABookingStatusStruct.Generated.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\INTTRABookingTransStatusStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\INTTRADocumentTypeStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\ManifestStatusStruct.Generated.cs" />
     <Compile Include="ShipmentsModel\CloseTables\EnumGenerated\OBLTypeStruct.Generated.cs" />
@@ -2345,6 +2349,8 @@
     <Compile Include="ShipmentsModel\EntityLists\AWBCustomsInformationList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBInformationList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\HarmonizeCodeList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\INTTRABookingStatusList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\INTTRABookingTransStatusList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\MessagingStockList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBOCIList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\AWBSpecialHandlingCodeList.cs" />
@@ -2448,6 +2454,8 @@
     <Compile Include="ShipmentsModel\EntityQueries\AWBCustomsInformationQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBInformationQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\HarmonizeCodeQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\INTTRABookingStatusQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\INTTRABookingTransStatusQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\MessagingStockQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBOCIQuery.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\AWBSpecialHandlingCodeQuery.cs" />
