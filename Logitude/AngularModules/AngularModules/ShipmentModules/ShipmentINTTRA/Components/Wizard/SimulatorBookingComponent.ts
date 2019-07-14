@@ -5,13 +5,14 @@ import { INTRAWebService, INTRAResult } from '../../../../Shipment/Services/INTR
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 
 @Component({
     moduleId: module.id,
     templateUrl: './SimulatorBookingComponent.html',
 })
 
-export class SimulatorBookingComponent {
+export class SimulatorBookingComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     public EntityPM: ShipmentPM = null;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -21,7 +22,7 @@ export class SimulatorBookingComponent {
     public ObjectTableName: string = "Shipment";
 
     constructor() {
-
+        super();
     }
 
     SetWindowArgs(args) {
